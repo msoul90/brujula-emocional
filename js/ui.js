@@ -80,8 +80,8 @@ export function createUI({
             card.title = displayName;
             card.innerHTML = `
                 <span>${shortRecentLabel(displayName)}</span>
-                <span class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-slate-800 text-white text-[10px] flex items-center justify-center sm:hidden shadow" aria-hidden="true">
-                    <i class="fa-solid fa-eye"></i>
+                <span class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-slate-800 text-white flex items-center justify-center sm:hidden shadow" aria-hidden="true">
+                    <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
                 </span>
             `;
             card.addEventListener("click", () => {
@@ -159,7 +159,7 @@ export function createUI({
             <div class="inline-block px-4 py-1 rounded-full mb-2" style="background-color:${e.color}; color:${quoteTextColor}">
                 <span class="text-xs font-black uppercase tracking-widest">${t("emotionTag")}</span>
             </div>
-            <h2 class="text-4xl font-black mb-6 text-slate-800">${getDisplayName(e.nombre)}</h2>
+            <h2 id="modal-emotion-title" class="text-4xl font-black mb-6 text-slate-800">${getDisplayName(e.nombre)}</h2>
 
             <div class="space-y-6">
                 <div class="grid grid-cols-1 gap-4">
@@ -171,12 +171,23 @@ export function createUI({
                         <p class="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-1">${t("triggerLabel")}</p>
                         <p class="text-slate-700 leading-relaxed font-medium">${getEmotionField(e, "dispara")}</p>
                     </div>
+                    <div class="bg-slate-50 p-4 rounded-2xl">
+                        <p class="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-1">${t("functionLabel")}</p>
+                        <p class="text-slate-700 leading-relaxed font-medium">${getEmotionField(e, "funcion")}</p>
+                    </div>
                 </div>
 
                 <div class="relative p-6 rounded-3xl overflow-hidden shadow-lg" style="background-color:${e.color}; color:${quoteTextColor}">
-                     <i class="fa-solid fa-quote-left absolute -top-2 -left-2 text-black/10 text-6xl"></i>
-                     <p class="text-[11px] font-black uppercase tracking-widest mb-2" style="color:${quoteLabelColor}">${t("messageLabel")}</p>
+                    <svg class="absolute -top-2 -left-2 text-black/10 w-16 h-16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/></svg>
+                    <p class="text-[11px] font-black uppercase tracking-widest mb-2" style="color:${quoteLabelColor}">${t("messageLabel")}</p>
                     <p class="text-[1.45rem] sm:text-[1.65rem] font-serif italic leading-[1.35] sm:leading-snug" style="color:${quoteTextColor}">"${getEmotionField(e, "mensaje")}"</p>
+                </div>
+
+                <div>
+                    <p class="text-[11px] font-black text-amber-600 uppercase tracking-widest mb-2 px-1">${t("impulseLabel")}</p>
+                    <div class="bg-amber-50 border-2 border-amber-100 p-4 rounded-2xl">
+                        <p class="text-amber-900 font-bold leading-relaxed">${getEmotionField(e, "impulso")}</p>
+                    </div>
                 </div>
 
                 <div>

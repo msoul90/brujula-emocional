@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://cdn.tailwindcss.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self';">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brújula Emocional</title>
     <meta name="theme-color" content="#0f172a">
@@ -10,7 +11,6 @@
     <link rel="manifest" href="pwa/manifest.webmanifest">
     <link rel="icon" href="pwa/icons/icon-192.svg" type="image/svg+xml">
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="styles.css" rel="stylesheet">
 </head>
 <body class="p-4 pb-24">
@@ -22,12 +22,12 @@
         </div>
         <div class="shrink-0 bg-white/80 backdrop-blur-sm border border-slate-200 rounded-2xl p-1.5 shadow-sm">
             <div class="relative">
-                <i class="fa-solid fa-globe absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 text-xs"></i>
+                <svg class="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500 w-3 h-3" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
                 <select id="language-select" class="language-select appearance-none bg-gradient-to-b from-white to-slate-50 border border-slate-200 rounded-xl pl-8 pr-8 py-2 text-sm font-semibold text-slate-700 shadow-sm focus:ring-2 focus:ring-blue-500/30 outline-none" aria-label="Selector de idioma">
                     <option value="es">ES</option>
                     <option value="en">EN</option>
                 </select>
-                <i class="fa-solid fa-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-[10px] pointer-events-none"></i>
+                <svg class="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 w-2.5 h-2.5 pointer-events-none" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 10l5 5 5-5z"/></svg>
             </div>
             <button id="install-app-button" class="hidden mt-2 w-full bg-slate-800 text-white text-xs font-bold py-2 rounded-xl hover:bg-slate-700 transition-colors" type="button">
                 Instalar app
@@ -37,7 +37,7 @@
 
     <div class="sticky top-2 z-40 mb-6">
         <div class="relative group">
-            <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+            <svg class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
             <input type="text" id="search" placeholder="¿Qué sientes hoy? (ej. Ansiedad, Placer...)" 
                    class="w-full pl-12 pr-4 py-4 rounded-2xl border-none shadow-lg focus:ring-4 focus:ring-blue-500/20 outline-none text-slate-700">
         </div>
@@ -52,7 +52,7 @@
         </div>
 
     <div id="modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden opacity-0 flex items-end sm:items-center justify-center z-50 transition-opacity duration-200">
-        <div id="modal-panel" class="bg-white rounded-t-[2.5rem] sm:rounded-3xl max-w-lg w-full max-h-[85vh] overflow-y-auto p-8 shadow-2xl hide-scroll transition-all duration-200 translate-y-8 sm:translate-y-0 sm:scale-95 opacity-0">
+        <div id="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modal-emotion-title" class="bg-white rounded-t-[2.5rem] sm:rounded-3xl max-w-lg w-full max-h-[85vh] overflow-y-auto p-8 shadow-2xl hide-scroll transition-all duration-200 translate-y-8 sm:translate-y-0 sm:scale-95 opacity-0">
             <div id="modal-content"></div>
             <button id="close-button" class="mt-8 w-full bg-slate-200 border border-slate-300 text-slate-900 py-4 rounded-2xl font-bold active:bg-slate-300 transition-colors">Entendido</button>
         </div>
@@ -69,22 +69,6 @@
         </div>
     </div>
 
-    <script>
-        const script = document.createElement('script');
-        if (location.protocol === 'file:') {
-            script.src = 'app.legacy.js';
-            script.defer = true;
-
-            const warning = document.createElement('div');
-            warning.className = 'fixed top-0 inset-x-0 z-[60] bg-amber-100 border-b border-amber-300 text-amber-900 text-xs sm:text-sm font-semibold px-4 py-2 text-center';
-            warning.textContent = 'Modo local (file://): para instalación y PWA completa usa http://localhost.';
-            document.body.prepend(warning);
-            document.body.classList.add('pt-10');
-        } else {
-            script.type = 'module';
-            script.src = 'app.js';
-        }
-        document.body.appendChild(script);
-    </script>
+    <script src="loader.js" defer></script>
 </body>
 </html>
