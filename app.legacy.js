@@ -241,6 +241,14 @@ const RECENT_KEY = "brujulaRecientes";
 const LANGUAGE_KEY = "brujulaIdioma";
 const RECENT_LIMIT = 5;
 
+function detectInitialLanguage() {
+    const saved = localStorage.getItem(LANGUAGE_KEY);
+    if (saved === "es" || saved === "en") return saved;
+
+    const browserLang = globalThis.navigator?.language?.toLowerCase() ?? "es";
+    return browserLang.startsWith("en") ? "en" : "es";
+}
+
 
 function createI18n({ getLang, setLang, onLanguageChanged }) {
     function t(key) {
@@ -256,14 +264,6 @@ function createI18n({ getLang, setLang, onLanguageChanged }) {
     function getEmotionField(emotion, field) {
         if (getLang() !== "en") return emotion[field];
         return EMOTION_CONTENT_TRANSLATIONS[emotion.nombre]?.[field] ?? emotion[field];
-    }
-
-    function detectInitialLanguage() {
-        const saved = localStorage.getItem(LANGUAGE_KEY);
-        if (saved === "es" || saved === "en") return saved;
-
-        const browserLang = globalThis.navigator?.language?.toLowerCase() ?? "es";
-        return browserLang.startsWith("en") ? "en" : "es";
     }
 
     function applyStaticTranslations() {

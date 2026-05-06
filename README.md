@@ -79,6 +79,5 @@ Nota técnica: `sw.js` se mantiene en raíz para conservar alcance sobre toda la
 ## Próximas mejoras sugeridas
 
 - Añadir pruebas manuales documentadas por escenario
-- Separar [app.js](app.js) en módulos pequeños
 - Incluir traducciones adicionales (por ejemplo PT/FR)
 - Agregar botón "Instalar app" en la interfaz usando `beforeinstallprompt`
