@@ -55,6 +55,16 @@
         </div>
     </div>
 
-    <script type="module" src="app.js"></script>
+    <script>
+        const script = document.createElement('script');
+        if (location.protocol === 'file:') {
+            script.src = 'app.legacy.js';
+            script.defer = true;
+        } else {
+            script.type = 'module';
+            script.src = 'app.js';
+        }
+        document.body.appendChild(script);
+    </script>
 </body>
 </html>
