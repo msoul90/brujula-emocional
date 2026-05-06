@@ -7,47 +7,61 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        .emotion-card { transition: all 0.3s ease; }
-        .emotion-card:active { transform: scale(0.98); }
-        body { background-color: #f8fafc; font-family: sans-serif; }
+        .emotion-card { transition: all 0.2s ease; border: 1px solid rgba(0,0,0,0.05); }
+        .emotion-card:active { transform: scale(0.96); opacity: 0.8; }
+        body { background-color: #f1f5f9; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        .hide-scroll::-webkit-scrollbar { display: none; }
     </style>
 </head>
-<body class="p-4 pb-20">
+<body class="p-4 pb-24">
 
-    <header class="mb-6 text-center">
-        <h1 class="text-2xl font-bold text-slate-800">Brújula Emocional</h1>
-        <p class="text-slate-500 text-sm">¿Qué estás sintiendo ahora?</p>
+    <header class="mb-6 mt-2">
+        <h1 class="text-3xl font-black text-slate-800 tracking-tight">Brújula Emocional</h1>
+        <p class="text-slate-500 font-medium">Encuentra claridad en lo que sientes.</p>
     </header>
 
-    <div class="mb-6">
-        <input type="text" id="search" placeholder="Busca una emoción..." 
-               class="w-full p-3 rounded-xl border border-slate-200 shadow-sm focus:ring-2 focus:ring-blue-400 outline-none">
+    <div class="sticky top-2 z-40 mb-6">
+        <div class="relative group">
+            <i class="fa-solid fa-magnifying-glass absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"></i>
+            <input type="text" id="search" placeholder="¿Qué sientes hoy? (ej. Ansiedad, Placer...)" 
+                   class="w-full pl-12 pr-4 py-4 rounded-2xl border-none shadow-lg focus:ring-4 focus:ring-blue-500/20 outline-none text-slate-700">
+        </div>
     </div>
 
-    <div id="emotion-grid" class="grid grid-cols-1 gap-4">
+    <div id="emotion-grid" class="grid grid-cols-1 gap-3">
         </div>
 
-    <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center p-4 z-50">
-        <div class="bg-white rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto p-6 shadow-2xl">
+    <div id="modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden flex items-end sm:items-center justify-center z-50 transition-opacity">
+        <div class="bg-white rounded-t-[2.5rem] sm:rounded-3xl max-w-lg w-full max-h-[85vh] overflow-y-auto p-8 shadow-2xl hide-scroll">
             <div id="modal-content"></div>
-            <button onclick="closeModal()" class="mt-6 w-full bg-slate-800 text-white py-3 rounded-xl font-semibold">Cerrar</button>
+            <button onclick="closeModal()" class="mt-8 w-full bg-slate-100 text-slate-800 py-4 rounded-2xl font-bold active:bg-slate-200 transition-colors">Entendido</button>
         </div>
     </div>
 
     <script>
         const emociones = [
-            { nombre: "Enojo", color: "#fecaca", texto: "text-red-900", siente: "Calor, tensión, energía alta, mandíbula apretada", dispara: "Injusticia, límite invadido, frustración", funcion: "Proteger límites, movilizar cambio", mensaje: "Algo no me está funcionando", impulso: "Atacar, reclamar, cortar", respuesta: "Pausar, nombrar límite, pedir cambio claro" },
-            { nombre: "Tristeza", color: "#bfdbfe", texto: "text-blue-900", siente: "Pesadez, llanto, cansancio, vacío", dispara: "Pérdida, decepción, distancia", funcion: "Procesar pérdida, pedir apoyo, bajar ritmo", mensaje: "Algo importante me dolió", impulso: "Aislarse, rendirse", respuesta: "Validar dolor, buscar apoyo, autocuidado" },
-            { nombre: "Miedo", color: "#ddd6fe", texto: "text-purple-900", siente: "Alerta, aceleración, tensión, nudo estomacal", dispara: "Riesgo, amenaza, incertidumbre", funcion: "Proteger y prepararse", mensaje: "Percibo peligro o vulnerabilidad", impulso: "Huir, congelarse, evitar", respuesta: "Evaluar riesgo real, respirar, avanzar gradual" },
-            { nombre: "Ansiedad", color: "#fed7aa", texto: "text-orange-900", siente: "Inquietud, mente acelerada, urgencia", dispara: "Incertidumbre, anticipación, presión", funcion: "Preparar recursos, enfocar atención", mensaje: "Algo importa y no lo controlo", impulso: "Sobrepensar, controlar, evitar", respuesta: "Reducir velocidad, priorizar, tolerar incertidumbre" },
-            { nombre: "Vergüenza", color: "#fbcfe8", texto: "text-pink-900", siente: "Calor facial, ganas de esconderse", dispara: "Crítica, exposición, error social", funcion: "Cuidar pertenencia social", mensaje: "Temo rechazo o juicio", impulso: "Ocultarse, justificarse", respuesta: "Autocompasión, perspectiva realista, reparar si aplica" },
-            { nombre: "Culpa", color: "#bbf7d0", texto: "text-green-900", siente: "Peso interno, inquietud, remordimiento", dispara: "Haber dañado o ir contra valores", funcion: "Reparar, reajustar conducta", mensaje: "Algo no estuvo alineado con mis valores", impulso: "Castigarse, sobreexplicar", respuesta: "Reparar, disculparse, aprender" },
-            { nombre: "Frustración", color: "#fca5a5", texto: "text-red-900", siente: "Tensión, irritación, impaciencia", dispara: "Obstáculos, demora, bloqueo", funcion: "Señalar meta bloqueada", mensaje: "Quiero algo y no está saliendo", impulso: "Forzar, explotar, abandonar", respuesta: "Flexibilidad, dividir pasos, pedir ayuda" },
-            { nombre: "Celos", color: "#d9f99d", texto: "text-lime-900", siente: "Activación, vigilancia, inseguridad", dispara: "Amenaza de pérdida, comparación", funcion: "Proteger vínculo, detectar necesidad", mensaje: "Temo perder conexión o valor", impulso: "Controlar, reclamar, revisar", respuesta: "Expresar necesidad, revisar evidencia, fortalecer autoestima" },
-            { nombre: "Soledad", color: "#93c5fd", texto: "text-blue-900", siente: "Vacío, nostalgia, desánimo", dispara: "Desconexión, falta de apoyo", funcion: "Motivar conexión", mensaje: "Necesito vínculo significativo", impulso: "Aislarse más", respuesta: "Buscar contacto gradual y genuino" },
-            { nombre: "Alegría", color: "#fef08a", texto: "text-yellow-900", siente: "Ligereza, energía, expansión", dispara: "Logro, conexión, disfrute", funcion: "Reforzar conductas valiosas", mensaje: "Esto me nutre", impulso: "Compartir, seguir", respuesta: "Saborear, agradecer, repetir conductas sanas" },
-            { nombre: "Calma", color: "#a5f3fc", texto: "text-cyan-900", siente: "Suavidad corporal, respiración estable", dispara: "Seguridad, descanso, claridad", funcion: "Recuperación y equilibrio", mensaje: "Por ahora estoy a salvo", impulso: "Bajar guardia total", respuesta: "Aprovechar para planear y recargar" },
-            { nombre: "Confusión", color: "#ffedd5", texto: "text-orange-900", siente: "Niebla mental, duda, bloqueo", dispara: "Información contradictoria, ambivalencia", funcion: "Señalar necesidad de claridad", mensaje: "Me falta información o tiempo", impulso: "Decidir impulsivo, congelarse", respuesta: "Hacer preguntas, esperar, ordenar ideas" }
+            // --- TABLA 1 ---
+            { nombre: "Enojo", color: "#fecaca", text: "#7f1d1d", siente: "Calor, tensión, energía alta, mandíbula apretada", dispara: "Injusticia, límite invadido, frustración", funcion: "Proteger límites, movilizar cambio", mensaje: "Algo no me está funcionando", impulso: "Atacar, reclamar, cortar", respuesta: "Pausar, nombrar límite, pedir cambio claro" },
+            { nombre: "Tristeza", color: "#bfdbfe", text: "#1e3a8a", siente: "Pesadez, llanto, cansancio, vacío", dispara: "Pérdida, decepción, distancia", funcion: "Procesar pérdida, pedir apoyo, bajar ritmo", mensaje: "Algo importante me dolió", impulso: "Aislarse, rendirse", respuesta: "Validar dolor, buscar apoyo, autocuidado" },
+            { nombre: "Miedo", color: "#ddd6fe", text: "#4c1d95", siente: "Alerta, aceleración, tensión, nudo estomacal", dispara: "Riesgo, amenaza, incertidumbre", funcion: "Proteger y prepararse", mensaje: "Percibo peligro o vulnerabilidad", impulso: "Huir, congelarse, evitar", respuesta: "Evaluar riesgo real, respirar, avanzar gradual" },
+            { nombre: "Ansiedad", color: "#fed7aa", text: "#7c2d12", siente: "Inquietud, mente acelerada, urgencia", dispara: "Incertidumbre, anticipación, presión", funcion: "Preparar recursos, enfocar atención", mensaje: "Algo importa y no lo controlo", impulso: "Sobrepensar, controlar, evitar", respuesta: "Reducir velocidad, priorizar, tolerar incertidumbre" },
+            { nombre: "Vergüenza", color: "#fbcfe8", text: "#831843", siente: "Calor facial, ganas de esconderse", dispara: "Crítica, exposición, error social", funcion: "Cuidar pertenencia social", mensaje: "Temo rechazo o juicio", impulso: "Ocultarse, justificarse", respuesta: "Autocompasión, perspectiva realista, reparar si aplica" },
+            { nombre: "Culpa", color: "#bbf7d0", text: "#064e3b", siente: "Peso interno, inquietud, remordimiento", dispara: "Haber dañado o ir contra valores", funcion: "Reparar, reajustar conducta", mensaje: "Algo no estuvo alineado con mis valores", impulso: "Castigarse, sobreexplicar", respuesta: "Reparar, disculparse, aprender" },
+            { nombre: "Frustración", color: "#fca5a5", text: "#7f1d1d", siente: "Tensión, irritación, impaciencia", dispara: "Obstáculos, demora, bloqueo", funcion: "Señalar meta bloqueada", mensaje: "Quiero algo y no está saliendo", impulso: "Forzar, explotar, abandonar", respuesta: "Flexibilidad, dividir pasos, pedir ayuda" },
+            { nombre: "Celos", color: "#d9f99d", text: "#365314", siente: "Activación, vigilancia, inseguridad", dispara: "Amenaza de pérdida, comparación", funcion: "Proteger vínculo, detectar necesidad", mensaje: "Temo perder conexión o valor", impulso: "Controlar, reclamar, revisar", respuesta: "Expresar necesidad, revisar evidencia, fortalecer autoestima" },
+            { nombre: "Soledad", color: "#93c5fd", text: "#1e3a8a", siente: "Vacío, nostalgia, desánimo", dispara: "Desconexión, falta de apoyo", funcion: "Motivar conexión", mensaje: "Necesito vínculo significativo", impulso: "Aislarse más", respuesta: "Buscar contacto gradual y genuino" },
+            { nombre: "Alegría", color: "#fef08a", text: "#713f12", siente: "Ligereza, energía, expansión", dispara: "Logro, conexión, disfrute", funcion: "Reforzar conductas valiosas", mensaje: "Esto me nutre", impulso: "Compartir, seguir", respuesta: "Saborear, agradecer, repetir conductas sanas" },
+            { nombre: "Calma", color: "#a5f3fc", text: "#164e63", siente: "Suavidad corporal, respiración estable", dispara: "Seguridad, descanso, claridad", funcion: "Recuperación y equilibrio", mensaje: "Por ahora estoy a salvo", impulso: "Bajar guardia total", respuesta: "Aprovechar para planear y recargar" },
+            { nombre: "Confusión", color: "#ffedd5", text: "#7c2d12", siente: "Niebla mental, duda, bloqueo", dispara: "Información contradictoria, ambivalencia", funcion: "Señalar necesidad de claridad", mensaje: "Me falta información o tiempo", impulso: "Decidir impulsivo, congelarse", respuesta: "Hacer preguntas, esperar, ordenar ideas" },
+            
+            // --- TABLA 2 ---
+            { nombre: "Preocupación", color: "#7e22ce", text: "#ffffff", siente: "Mente ocupada, tensión, anticipación, dificultad para soltar pensamientos", dispara: "Incertidumbre, responsabilidad, miedo a errores o consecuencias", funcion: "Anticipar posibles problemas y prepararse", mensaje: "Hay algo importante que quiero cuidar o controlar", impulso: "Sobrepensar, revisar excesivamente, buscar certeza", respuesta: "Priorizar, distinguir lo real de lo imaginado, regresar al presente" },
+            { nombre: "Felicidad", color: "#fde047", text: "#713f12", siente: "Ligereza, bienestar, relajación, sensación de plenitud", dispara: "Conexión, logro, seguridad, momentos agradables", funcion: "Reforzar experiencias valiosas y conexión", mensaje: "Esto me hace bien y quiero conservarlo", impulso: "Compartir, acercarse, disfrutar", respuesta: "Permitirse disfrutar y registrar lo positivo" },
+            { nombre: "Entusiasmo", color: "#67e8f9", text: "#164e63", siente: "Energía alta, motivación, emoción positiva, impulso de actuar", dispara: "Nuevos proyectos, interés, ilusión, conexión", funcion: "Movilizar acción y exploración", mensaje: "Hay algo que me inspira o importa mucho", impulso: "Hacer demasiado rápido, comprometerse impulsivamente", respuesta: "Mantener motivación con ritmo sostenible" },
+            { nombre: "Placer", color: "#f9a8d4", text: "#831843", siente: "Sensación agradable, comodidad, satisfacción corporal o emocional", dispara: "Descanso, disfrute, contacto, experiencias gratificantes", funcion: "Favorecer bienestar y recuperación", mensaje: "Esto se siente nutritivo o satisfactorio", impulso: "Buscar repetir inmediatamente", respuesta: "Disfrutar conscientemente y mantener equilibrio" },
+            { nombre: "Angustia", color: "#60a5fa", text: "#1e3a8a", siente: "Opresión, desesperación, sensación de no poder sostener algo", dispara: "Pérdida de control, miedo intenso, incertidumbre alta", funcion: "Señalar saturación emocional o amenaza percibida", mensaje: "Algo me está sobrepasando", impulso: "Escapar, aislarse, buscar alivio inmediato", respuesta: "Regular el cuerpo, pedir apoyo, reducir estímulos" },
+            { nombre: "Irritabilidad", color: "#bef264", text: "#365314", siente: "Tensión, impaciencia, sensibilidad alta, facilidad para molestarse", dispara: "Cansancio, estrés, frustración acumulada, sobrecarga", funcion: "Señalar saturación o necesidad de pausa", mensaje: "Estoy agotado o algo me está sobrepasando", impulso: "Responder cortante, discutir, alejarse", respuesta: "Descansar, bajar exigencia, expresar necesidad antes de explotar" },
+            { nombre: "Rechazo", color: "#d8b4fe", text: "#4c1d95", siente: "Distancia, incomodidad, desagrado o exclusión", dispara: "Crítica, desaprobación, falta de aceptación o incompatibilidad", funcion: "Proteger identidad, límites o pertenencia", mensaje: "Esto no se siente seguro o compatible para mí", impulso: "Alejarse, cerrarse, atacar o evitar", respuesta: "Explorar si el rechazo viene de daño o inseguridad y responder con claridad" }
         ];
 
         function renderEmociones(filter = "") {
@@ -57,12 +71,12 @@
             
             filtered.forEach(e => {
                 const card = document.createElement('div');
-                card.className = "emotion-card p-5 rounded-2xl shadow-sm cursor-pointer flex justify-between items-center";
-                card.style.backgroundColor = e.color;
+                card.className = "emotion-card p-5 rounded-2xl shadow-sm cursor-pointer flex justify-between items-center bg-white";
+                card.style.borderLeft = `8px solid ${e.color}`;
                 card.onclick = () => showDetail(e);
                 card.innerHTML = `
-                    <span class="font-bold text-lg ${e.texto}">${e.nombre}</span>
-                    <i class="fa-solid fa-chevron-right ${e.texto} opacity-50"></i>
+                    <span class="font-bold text-lg text-slate-700">${e.nombre}</span>
+                    <span class="text-xs font-bold px-3 py-1 rounded-full bg-slate-100 text-slate-400 uppercase tracking-wider">Ver</span>
                 `;
                 grid.appendChild(card);
             });
@@ -71,35 +85,48 @@
         function showDetail(e) {
             const content = document.getElementById('modal-content');
             content.innerHTML = `
-                <h2 class="text-3xl font-black mb-4 ${e.texto}" style="color:${e.color.replace('2', '9')}">${e.nombre}</h2>
-                <div class="space-y-4">
-                    <section>
-                        <p class="text-xs font-bold uppercase text-slate-400">¿Cómo se siente?</p>
-                        <p class="text-slate-700 font-medium">${e.siente}</p>
-                    </section>
-                    <section>
-                        <p class="text-xs font-bold uppercase text-slate-400">¿Qué la dispara?</p>
-                        <p class="text-slate-700 font-medium">${e.dispara}</p>
-                    </section>
-                    <section class="bg-white border-l-4 p-3 rounded-r-lg" style="border-color:${e.color}">
-                        <p class="text-xs font-bold uppercase text-slate-400">El mensaje</p>
-                        <p class="text-lg italic font-serif text-slate-800">"${e.mensaje}"</p>
-                    </section>
-                    <section>
-                        <p class="text-xs font-bold uppercase text-slate-400">Respuesta Útil</p>
-                        <p class="text-green-700 font-bold bg-green-50 p-2 rounded-lg">${e.respuesta}</p>
-                    </section>
+                <div class="inline-block px-4 py-1 rounded-full mb-2" style="background-color:${e.color}; color:${e.text}">
+                    <span class="text-xs font-black uppercase tracking-widest">Emoción</span>
+                </div>
+                <h2 class="text-4xl font-black mb-6 text-slate-800">${e.nombre}</h2>
+                
+                <div class="space-y-6">
+                    <div class="grid grid-cols-1 gap-4">
+                        <div class="bg-slate-50 p-4 rounded-2xl">
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">¿Cómo se siente?</p>
+                            <p class="text-slate-700 leading-relaxed font-medium">${e.siente}</p>
+                        </div>
+                        <div class="bg-slate-50 p-4 rounded-2xl">
+                            <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-1">¿Qué la dispara?</p>
+                            <p class="text-slate-700 leading-relaxed font-medium">${e.dispara}</p>
+                        </div>
+                    </div>
+
+                    <div class="relative p-6 rounded-3xl text-white overflow-hidden shadow-lg" style="background-color:${e.color}; color:${e.text}">
+                         <i class="fa-solid fa-quote-left absolute -top-2 -left-2 text-black/10 text-6xl"></i>
+                         <p class="text-[10px] font-black opacity-60 uppercase tracking-widest mb-2">Lo que te está diciendo:</p>
+                         <p class="text-xl font-serif italic leading-snug">"${e.mensaje}"</p>
+                    </div>
+
+                    <div>
+                        <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 px-1">Respuesta sugerida</p>
+                        <div class="bg-emerald-50 border-2 border-emerald-100 p-4 rounded-2xl">
+                            <p class="text-emerald-900 font-bold leading-relaxed">${e.respuesta}</p>
+                        </div>
+                    </div>
                 </div>
             `;
-            document.getElementById('modal').classList.remove('hidden');
+            const modal = document.getElementById('modal');
+            modal.classList.remove('hidden');
+            document.body.style.overflow = 'hidden';
         }
 
         function closeModal() {
             document.getElementById('modal').classList.add('hidden');
+            document.body.style.overflow = 'auto';
         }
 
         document.getElementById('search').addEventListener('input', (e) => renderEmociones(e.target.value));
-
         renderEmociones();
     </script>
 </body>
