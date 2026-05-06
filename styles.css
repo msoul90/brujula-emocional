@@ -1,0 +1,22 @@
+﻿.emotion-card { transition: all 0.2s ease; border: 1px solid rgba(0,0,0,0.05); }
+        .emotion-card:active { transform: scale(0.96); opacity: 0.8; }
+        .emotion-card:focus-visible {
+            outline: 3px solid #2563eb;
+            outline-offset: 2px;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2);
+        }
+        body { background-color: #f1f5f9; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        .hide-scroll::-webkit-scrollbar { display: none; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .emotion-card,
+            #modal,
+            #modal-panel {
+                transition: none !important;
+                animation: none !important;
+            }
+
+            #modal-panel {
+                transform: none !important;
+            }
+        }
