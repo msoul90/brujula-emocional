@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Brújula Emocional</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .emotion-card { transition: all 0.3s ease; }
+        .emotion-card:active { transform: scale(0.98); }
+        body { background-color: #f8fafc; font-family: sans-serif; }
+    </style>
+</head>
+<body class="p-4 pb-20">
+
+    <header class="mb-6 text-center">
+        <h1 class="text-2xl font-bold text-slate-800">Brújula Emocional</h1>
+        <p class="text-slate-500 text-sm">¿Qué estás sintiendo ahora?</p>
+    </header>
+
+    <div class="mb-6">
+        <input type="text" id="search" placeholder="Busca una emoción..." 
+               class="w-full p-3 rounded-xl border border-slate-200 shadow-sm focus:ring-2 focus:ring-blue-400 outline-none">
+    </div>
+
+    <div id="emotion-grid" class="grid grid-cols-1 gap-4">
+        </div>
+
+    <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-2xl max-w-md w-full max-h-[90vh] overflow-y-auto p-6 shadow-2xl">
+            <div id="modal-content"></div>
+            <button onclick="closeModal()" class="mt-6 w-full bg-slate-800 text-white py-3 rounded-xl font-semibold">Cerrar</button>
+        </div>
+    </div>
+
+    <script>
+        const emociones = [
+            { nombre: "Enojo", color: "#fecaca", texto: "text-red-900", siente: "Calor, tensión, energía alta, mandíbula apretada", dispara: "Injusticia, límite invadido, frustración", funcion: "Proteger límites, movilizar cambio", mensaje: "Algo no me está funcionando", impulso: "Atacar, reclamar, cortar", respuesta: "Pausar, nombrar límite, pedir cambio claro" },
+            { nombre: "Tristeza", color: "#bfdbfe", texto: "text-blue-900", siente: "Pesadez, llanto, cansancio, vacío", dispara: "Pérdida, decepción, distancia", funcion: "Procesar pérdida, pedir apoyo, bajar ritmo", mensaje: "Algo importante me dolió", impulso: "Aislarse, rendirse", respuesta: "Validar dolor, buscar apoyo, autocuidado" },
+            { nombre: "Miedo", color: "#ddd6fe", texto: "text-purple-900", siente: "Alerta, aceleración, tensión, nudo estomacal", dispara: "Riesgo, amenaza, incertidumbre", funcion: "Proteger y prepararse", mensaje: "Percibo peligro o vulnerabilidad", impulso: "Huir, congelarse, evitar", respuesta: "Evaluar riesgo real, respirar, avanzar gradual" },
+            { nombre: "Ansiedad", color: "#fed7aa", texto: "text-orange-900", siente: "Inquietud, mente acelerada, urgencia", dispara: "Incertidumbre, anticipación, presión", funcion: "Preparar recursos, enfocar atención", mensaje: "Algo importa y no lo controlo", impulso: "Sobrepensar, controlar, evitar", respuesta: "Reducir velocidad, priorizar, tolerar incertidumbre" },
+            { nombre: "Vergüenza", color: "#fbcfe8", texto: "text-pink-900", siente: "Calor facial, ganas de esconderse", dispara: "Crítica, exposición, error social", funcion: "Cuidar pertenencia social", mensaje: "Temo rechazo o juicio", impulso: "Ocultarse, justificarse", respuesta: "Autocompasión, perspectiva realista, reparar si aplica" },
+            { nombre: "Culpa", color: "#bbf7d0", texto: "text-green-900", siente: "Peso interno, inquietud, remordimiento", dispara: "Haber dañado o ir contra valores", funcion: "Reparar, reajustar conducta", mensaje: "Algo no estuvo alineado con mis valores", impulso: "Castigarse, sobreexplicar", respuesta: "Reparar, disculparse, aprender" },
+            { nombre: "Frustración", color: "#fca5a5", texto: "text-red-900", siente: "Tensión, irritación, impaciencia", dispara: "Obstáculos, demora, bloqueo", funcion: "Señalar meta bloqueada", mensaje: "Quiero algo y no está saliendo", impulso: "Forzar, explotar, abandonar", respuesta: "Flexibilidad, dividir pasos, pedir ayuda" },
+            { nombre: "Celos", color: "#d9f99d", texto: "text-lime-900", siente: "Activación, vigilancia, inseguridad", dispara: "Amenaza de pérdida, comparación", funcion: "Proteger vínculo, detectar necesidad", mensaje: "Temo perder conexión o valor", impulso: "Controlar, reclamar, revisar", respuesta: "Expresar necesidad, revisar evidencia, fortalecer autoestima" },
+            { nombre: "Soledad", color: "#93c5fd", texto: "text-blue-900", siente: "Vacío, nostalgia, desánimo", dispara: "Desconexión, falta de apoyo", funcion: "Motivar conexión", mensaje: "Necesito vínculo significativo", impulso: "Aislarse más", respuesta: "Buscar contacto gradual y genuino" },
+            { nombre: "Alegría", color: "#fef08a", texto: "text-yellow-900", siente: "Ligereza, energía, expansión", dispara: "Logro, conexión, disfrute", funcion: "Reforzar conductas valiosas", mensaje: "Esto me nutre", impulso: "Compartir, seguir", respuesta: "Saborear, agradecer, repetir conductas sanas" },
+            { nombre: "Calma", color: "#a5f3fc", texto: "text-cyan-900", siente: "Suavidad corporal, respiración estable", dispara: "Seguridad, descanso, claridad", funcion: "Recuperación y equilibrio", mensaje: "Por ahora estoy a salvo", impulso: "Bajar guardia total", respuesta: "Aprovechar para planear y recargar" },
+            { nombre: "Confusión", color: "#ffedd5", texto: "text-orange-900", siente: "Niebla mental, duda, bloqueo", dispara: "Información contradictoria, ambivalencia", funcion: "Señalar necesidad de claridad", mensaje: "Me falta información o tiempo", impulso: "Decidir impulsivo, congelarse", respuesta: "Hacer preguntas, esperar, ordenar ideas" }
+        ];
+
+        function renderEmociones(filter = "") {
+            const grid = document.getElementById('emotion-grid');
+            grid.innerHTML = "";
+            const filtered = emociones.filter(e => e.nombre.toLowerCase().includes(filter.toLowerCase()));
+            
+            filtered.forEach(e => {
+                const card = document.createElement('div');
+                card.className = "emotion-card p-5 rounded-2xl shadow-sm cursor-pointer flex justify-between items-center";
+                card.style.backgroundColor = e.color;
+                card.onclick = () => showDetail(e);
+                card.innerHTML = `
+                    <span class="font-bold text-lg ${e.texto}">${e.nombre}</span>
+                    <i class="fa-solid fa-chevron-right ${e.texto} opacity-50"></i>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function showDetail(e) {
+            const content = document.getElementById('modal-content');
+            content.innerHTML = `
+                <h2 class="text-3xl font-black mb-4 ${e.texto}" style="color:${e.color.replace('2', '9')}">${e.nombre}</h2>
+                <div class="space-y-4">
+                    <section>
+                        <p class="text-xs font-bold uppercase text-slate-400">¿Cómo se siente?</p>
+                        <p class="text-slate-700 font-medium">${e.siente}</p>
+                    </section>
+                    <section>
+                        <p class="text-xs font-bold uppercase text-slate-400">¿Qué la dispara?</p>
+                        <p class="text-slate-700 font-medium">${e.dispara}</p>
+                    </section>
+                    <section class="bg-white border-l-4 p-3 rounded-r-lg" style="border-color:${e.color}">
+                        <p class="text-xs font-bold uppercase text-slate-400">El mensaje</p>
+                        <p class="text-lg italic font-serif text-slate-800">"${e.mensaje}"</p>
+                    </section>
+                    <section>
+                        <p class="text-xs font-bold uppercase text-slate-400">Respuesta Útil</p>
+                        <p class="text-green-700 font-bold bg-green-50 p-2 rounded-lg">${e.respuesta}</p>
+                    </section>
+                </div>
+            `;
+            document.getElementById('modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.add('hidden');
+        }
+
+        document.getElementById('search').addEventListener('input', (e) => renderEmociones(e.target.value));
+
+        renderEmociones();
+    </script>
+</body>
+</html>
