@@ -4,9 +4,9 @@ const APP_SHELL = [
   "./index.html",
   "./styles.css",
   "./app.js",
-  "./manifest.webmanifest",
-  "./icons/icon-192.svg",
-  "./icons/icon-512.svg"
+  "./pwa/manifest.webmanifest",
+  "./pwa/icons/icon-192.svg",
+  "./pwa/icons/icon-512.svg"
 ];
 
 globalThis.addEventListener("install", (event) => {

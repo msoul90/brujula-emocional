@@ -48,7 +48,7 @@ Opcionalmente, puedes usar la extensión Live Server de VS Code si quieres recar
 
 ## Instalar en Chrome (PWA)
 
-La app ya incluye base PWA (`manifest.webmanifest` + `sw.js`).
+La app ya incluye base PWA (`pwa/manifest.webmanifest` + `sw.js`).
 
 Para que Chrome permita instalarla:
 
@@ -66,6 +66,8 @@ Ejemplo con Node (si lo tienes instalado):
 ```bash
 npx serve .
 ```
+
+Nota técnica: `sw.js` se mantiene en raíz para conservar alcance sobre toda la app.
 
 ## Accesibilidad y UX
 
