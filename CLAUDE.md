@@ -7,9 +7,11 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 This is a build-free project. No npm install or compilation needed.
 
 **Run locally:**
-```
+
+```bash
 npx serve .
 ```
+
 Or open `index.html` directly in a browser. Note: the service worker and PWA install prompt require `http://` or `https://` — they won't work on `file://`.
 
 There is no automated test suite. Manual test scenarios are documented in `README.md`.
@@ -21,7 +23,7 @@ The app is a vanilla JS PWA with no framework or bundler. Tailwind CSS is loaded
 **Module roles:**
 
 | File | Role |
-|---|---|
+| --- | --- |
 | `js/constants.js` | Emotion data array, all translations, localStorage key names, config constants |
 | `js/i18n.js` | Language detection, `t()` helper, applies translations to the DOM |
 | `js/ui.js` | Renders emotion cards and modal, handles search and all keyboard/click events |
@@ -41,7 +43,7 @@ The app is a vanilla JS PWA with no framework or bundler. Tailwind CSS is loaded
 Each emotion object in the `emociones` array in `js/constants.js` has these fields:
 
 | Field | Description |
-|---|---|
+| --- | --- |
 | `nombre` | Emotion name in Spanish |
 | `color` | Background hex color for the card |
 | `text` | Text hex color (dark, for contrast on the card) |
@@ -60,14 +62,11 @@ English translations for all fields live in `EMOTION_NAME_TRANSLATIONS` and `EMO
 
 ## Styling
 
-Custom styles are in `styles.css` (32 lines: card transitions, focus rings, scrollbar hiding, reduced-motion). All layout and spacing uses Tailwind utility classes directly in the HTML — no CSS build step.
-
-## Known trade-off: modal accessibility
-
-The modal uses `role="dialog"` with `aria-modal` and `aria-labelledby` on a `<div>`, rather than the native `<dialog>` element. Migrating to `<dialog>` (with `.showModal()` / `.close()` and `::backdrop`) would improve screen-reader support further but requires refactoring the animation and show/hide logic.
+Custom styles are in `styles.css` (card transitions, focus rings, scrollbar hiding, `<dialog>` positioning, reduced-motion). All layout and spacing uses Tailwind utility classes directly in the HTML — no CSS build step.
 
 ## Persistence
 
 Two localStorage keys, both defined as constants in `js/constants.js`:
+
 - `RECENT_KEY` — stores the 5 most recently viewed emotion names
 - `LANGUAGE_KEY` — stores the user's language preference (`"es"` or `"en"`)

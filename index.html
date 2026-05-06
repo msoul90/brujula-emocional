@@ -51,12 +51,14 @@
     <div id="emotion-grid" class="grid grid-cols-1 gap-3">
         </div>
 
-    <div id="modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden opacity-0 flex items-end sm:items-center justify-center z-50 transition-opacity duration-200">
-        <div id="modal-panel" role="dialog" aria-modal="true" aria-labelledby="modal-emotion-title" class="bg-white rounded-t-[2.5rem] sm:rounded-3xl max-w-lg w-full max-h-[85vh] overflow-y-auto p-8 shadow-2xl hide-scroll transition-all duration-200 translate-y-8 sm:translate-y-0 sm:scale-95 opacity-0">
-            <div id="modal-content"></div>
-            <button id="close-button" class="mt-8 w-full bg-slate-200 border border-slate-300 text-slate-900 py-4 rounded-2xl font-bold active:bg-slate-300 transition-colors">Entendido</button>
+    <dialog id="modal" aria-labelledby="modal-emotion-title">
+        <div id="modal-backdrop">
+            <div id="modal-panel" class="bg-white rounded-t-[2.5rem] sm:rounded-3xl max-w-lg w-full max-h-[85vh] overflow-y-auto p-8 shadow-2xl hide-scroll transition-all duration-200 translate-y-8 sm:translate-y-0 sm:scale-95 opacity-0">
+                <div id="modal-content"></div>
+                <button id="close-button" class="mt-8 w-full bg-slate-200 border border-slate-300 text-slate-900 py-4 rounded-2xl font-bold active:bg-slate-300 transition-colors">Entendido</button>
+            </div>
         </div>
-    </div>
+    </dialog>
 
     <div id="ios-install-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden z-[55] p-4 sm:p-6 flex items-end sm:items-center justify-center">
         <div id="ios-install-panel" class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl">

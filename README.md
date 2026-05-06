@@ -158,4 +158,3 @@ Para que la instalación esté disponible, la app debe ejecutarse en `http://` o
 ## Próximas mejoras sugeridas
 
 - Incluir traducciones adicionales (por ejemplo PT/FR)
-- Migrar el modal a elemento nativo `<dialog>` para mejor soporte en lectores de pantalla

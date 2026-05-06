@@ -529,12 +529,11 @@ function createUI({
         `;
         const modal = document.getElementById("modal");
         const panel = document.getElementById("modal-panel");
-        modal.classList.remove("hidden");
+        modal.showModal();
+        document.body.style.overflow = "hidden";
         requestAnimationFrame(() => {
-            modal.classList.remove("opacity-0");
             panel.classList.remove("translate-y-8", "sm:scale-95", "opacity-0");
         });
-        document.body.style.overflow = "hidden";
         saveRecentEmotion(e.nombre);
         const closeButton = document.getElementById("close-button");
         if (closeButton) closeButton.focus();
@@ -544,14 +543,13 @@ function createUI({
         const modal = document.getElementById("modal");
         const panel = document.getElementById("modal-panel");
 
-        if (modal.classList.contains("hidden") || getIsClosingModal()) return;
+        if (!modal.open || getIsClosingModal()) return;
 
         setIsClosingModal(true);
-        modal.classList.add("opacity-0");
         panel.classList.add("translate-y-8", "sm:scale-95", "opacity-0");
 
         setTimeout(() => {
-            modal.classList.add("hidden");
+            modal.close();
             setIsClosingModal(false);
         }, modalAnimationMs);
 
@@ -562,17 +560,17 @@ function createUI({
 
     function bindBaseEvents() {
         const modal = document.getElementById("modal");
+        const modalBackdrop = document.getElementById("modal-backdrop");
         const closeButton = document.getElementById("close-button");
         const search = document.getElementById("search");
 
-        modal.addEventListener("click", (event) => {
-            if (event.target.id === "modal") closeModal();
+        modalBackdrop.addEventListener("click", (event) => {
+            if (event.target === modalBackdrop) closeModal();
         });
 
-        document.addEventListener("keydown", (event) => {
-            if (event.key === "Escape" && !modal.classList.contains("hidden")) {
-                closeModal();
-            }
+        modal.addEventListener("cancel", (event) => {
+            event.preventDefault();
+            closeModal();
         });
 
         closeButton.addEventListener("click", closeModal);
