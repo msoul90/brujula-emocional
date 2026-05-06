@@ -1,4 +1,220 @@
-﻿const emociones = [
+﻿const TRANSLATIONS = {
+    es: {
+        langLabel: "Idioma",
+        title: "Brújula Emocional",
+        subtitle: "Encuentra claridad en lo que sientes.",
+        searchPlaceholder: "¿Qué sientes hoy? (ej. Ansiedad, Placer...)",
+        recentTitle: "Vistas recientemente",
+        closeButton: "Entendido",
+        emotionTag: "Emoción",
+        feelLabel: "¿Cómo se siente?",
+        triggerLabel: "¿Qué la dispara?",
+        messageLabel: "Lo que te está diciendo:",
+        responseLabel: "Respuesta sugerida",
+        emptyTitle: "No encontramos esa emoción",
+        emptyHint: "Prueba con otra palabra como \"incertidumbre\", \"calma\" o \"dolor\".",
+        openChip: "Ver",
+        openEmotionAria: "Abrir emoción",
+        openDetailAria: "Abrir detalle de"
+    },
+    en: {
+        langLabel: "Language",
+        title: "Emotional Compass",
+        subtitle: "Find clarity in what you feel.",
+        searchPlaceholder: "How are you feeling today? (e.g. Anxiety, Joy...)",
+        recentTitle: "Recently viewed",
+        closeButton: "Got it",
+        emotionTag: "Emotion",
+        feelLabel: "How does it feel?",
+        triggerLabel: "What triggers it?",
+        messageLabel: "What this feeling is telling you:",
+        responseLabel: "Suggested response",
+        emptyTitle: "We could not find that emotion",
+        emptyHint: "Try another word like \"uncertainty\", \"calm\" or \"pain\".",
+        openChip: "View",
+        openEmotionAria: "Open emotion",
+        openDetailAria: "Open details for"
+    }
+};
+
+const EMOTION_NAME_TRANSLATIONS = {
+    Enojo: "Anger",
+    Tristeza: "Sadness",
+    Miedo: "Fear",
+    Ansiedad: "Anxiety",
+    Vergüenza: "Shame",
+    Culpa: "Guilt",
+    Frustración: "Frustration",
+    Celos: "Jealousy",
+    Soledad: "Loneliness",
+    Alegría: "Joy",
+    Calma: "Calm",
+    Confusión: "Confusion",
+    Preocupación: "Worry",
+    Felicidad: "Happiness",
+    Entusiasmo: "Enthusiasm",
+    Placer: "Pleasure",
+    Angustia: "Distress",
+    Irritabilidad: "Irritability",
+    Rechazo: "Rejection"
+};
+
+const EMOTION_CONTENT_TRANSLATIONS = {
+    Enojo: {
+        siente: "Heat, tension, high energy, tight jaw",
+        dispara: "Injustice, boundaries crossed, frustration",
+        funcion: "Protect boundaries, mobilize change",
+        mensaje: "Something is not working for me",
+        impulso: "Attack, demand, cut off",
+        respuesta: "Pause, name your boundary, ask for a clear change"
+    },
+    Tristeza: {
+        siente: "Heaviness, crying, fatigue, emptiness",
+        dispara: "Loss, disappointment, distance",
+        funcion: "Process loss, seek support, slow down",
+        mensaje: "Something important hurt me",
+        impulso: "Isolate, give up",
+        respuesta: "Validate your pain, seek support, practice self-care"
+    },
+    Miedo: {
+        siente: "Alertness, acceleration, tension, knot in the stomach",
+        dispara: "Risk, threat, uncertainty",
+        funcion: "Protect and prepare",
+        mensaje: "I perceive danger or vulnerability",
+        impulso: "Run away, freeze, avoid",
+        respuesta: "Assess real risk, breathe, move forward gradually"
+    },
+    Ansiedad: {
+        siente: "Restlessness, racing mind, urgency",
+        dispara: "Uncertainty, anticipation, pressure",
+        funcion: "Prepare resources, focus attention",
+        mensaje: "This matters and I cannot control it",
+        impulso: "Overthink, control, avoid",
+        respuesta: "Slow down, prioritize, tolerate uncertainty"
+    },
+    "Vergüenza": {
+        siente: "Facial heat, urge to hide",
+        dispara: "Criticism, exposure, social mistakes",
+        funcion: "Protect social belonging",
+        mensaje: "I fear rejection or judgment",
+        impulso: "Hide, justify myself",
+        respuesta: "Self-compassion, realistic perspective, repair if needed"
+    },
+    Culpa: {
+        siente: "Inner weight, restlessness, remorse",
+        dispara: "Having hurt someone or gone against values",
+        funcion: "Repair, adjust behavior",
+        mensaje: "Something was not aligned with my values",
+        impulso: "Punish yourself, overexplain",
+        respuesta: "Repair, apologize, learn"
+    },
+    "Frustración": {
+        siente: "Tension, irritation, impatience",
+        dispara: "Obstacles, delay, blockage",
+        funcion: "Signal a blocked goal",
+        mensaje: "I want something and it is not working",
+        impulso: "Force, explode, quit",
+        respuesta: "Be flexible, split into steps, ask for help"
+    },
+    Celos: {
+        siente: "Activation, vigilance, insecurity",
+        dispara: "Threat of loss, comparison",
+        funcion: "Protect the bond, detect needs",
+        mensaje: "I fear losing connection or value",
+        impulso: "Control, demand, check",
+        respuesta: "Express your need, review evidence, strengthen self-esteem"
+    },
+    Soledad: {
+        siente: "Emptiness, nostalgia, low mood",
+        dispara: "Disconnection, lack of support",
+        funcion: "Motivate connection",
+        mensaje: "I need meaningful connection",
+        impulso: "Isolate even more",
+        respuesta: "Seek gradual and genuine contact"
+    },
+    "Alegría": {
+        siente: "Lightness, energy, expansion",
+        dispara: "Achievement, connection, enjoyment",
+        funcion: "Reinforce valuable behaviors",
+        mensaje: "This nourishes me",
+        impulso: "Share, continue",
+        respuesta: "Savor it, give thanks, repeat healthy behaviors"
+    },
+    Calma: {
+        siente: "Body softness, steady breathing",
+        dispara: "Safety, rest, clarity",
+        funcion: "Recovery and balance",
+        mensaje: "For now I am safe",
+        impulso: "Let your guard down completely",
+        respuesta: "Use it to plan and recharge"
+    },
+    "Confusión": {
+        siente: "Mental fog, doubt, blockage",
+        dispara: "Contradictory information, ambivalence",
+        funcion: "Signal the need for clarity",
+        mensaje: "I need more information or time",
+        impulso: "Decide impulsively, freeze",
+        respuesta: "Ask questions, wait, organize your thoughts"
+    },
+    "Preocupación": {
+        siente: "Busy mind, tension, anticipation, difficulty letting thoughts go",
+        dispara: "Uncertainty, responsibility, fear of mistakes or consequences",
+        funcion: "Anticipate possible problems and prepare",
+        mensaje: "There is something important I want to protect or control",
+        impulso: "Overthink, check excessively, seek certainty",
+        respuesta: "Prioritize, separate real from imagined, return to the present"
+    },
+    Felicidad: {
+        siente: "Lightness, well-being, relaxation, sense of fullness",
+        dispara: "Connection, achievement, safety, pleasant moments",
+        funcion: "Reinforce valuable experiences and connection",
+        mensaje: "This feels good and I want to keep it",
+        impulso: "Share, move closer, enjoy",
+        respuesta: "Allow yourself to enjoy and register the positive"
+    },
+    Entusiasmo: {
+        siente: "High energy, motivation, positive emotion, urge to act",
+        dispara: "New projects, interest, excitement, connection",
+        funcion: "Mobilize action and exploration",
+        mensaje: "There is something that inspires me or matters deeply",
+        impulso: "Do too much too fast, commit impulsively",
+        respuesta: "Keep motivation with a sustainable pace"
+    },
+    Placer: {
+        siente: "Pleasant sensation, comfort, physical or emotional satisfaction",
+        dispara: "Rest, enjoyment, contact, rewarding experiences",
+        funcion: "Support well-being and recovery",
+        mensaje: "This feels nourishing or satisfying",
+        impulso: "Try to repeat it immediately",
+        respuesta: "Enjoy consciously and keep balance"
+    },
+    Angustia: {
+        siente: "Pressure, despair, feeling unable to hold something",
+        dispara: "Loss of control, intense fear, high uncertainty",
+        funcion: "Signal emotional overload or perceived threat",
+        mensaje: "Something is overwhelming me",
+        impulso: "Escape, isolate, seek immediate relief",
+        respuesta: "Regulate your body, ask for support, reduce stimuli"
+    },
+    Irritabilidad: {
+        siente: "Tension, impatience, high sensitivity, easy annoyance",
+        dispara: "Fatigue, stress, accumulated frustration, overload",
+        funcion: "Signal saturation or need for a pause",
+        mensaje: "I am exhausted or something is too much",
+        impulso: "Respond sharply, argue, pull away",
+        respuesta: "Rest, lower demands, express your need before exploding"
+    },
+    Rechazo: {
+        siente: "Distance, discomfort, dislike or exclusion",
+        dispara: "Criticism, disapproval, lack of acceptance or incompatibility",
+        funcion: "Protect identity, boundaries, or belonging",
+        mensaje: "This does not feel safe or compatible for me",
+        impulso: "Pull away, shut down, attack or avoid",
+        respuesta: "Explore whether rejection comes from harm or insecurity and respond clearly"
+    }
+};
+
+const emociones = [
             // --- TABLA 1 ---
             { nombre: "Enojo", color: "#fecaca", text: "#7f1d1d", siente: "Calor, tensión, energía alta, mandíbula apretada", dispara: "Injusticia, límite invadido, frustración", funcion: "Proteger límites, movilizar cambio", mensaje: "Algo no me está funcionando", impulso: "Atacar, reclamar, cortar", respuesta: "Pausar, nombrar límite, pedir cambio claro" },
             { nombre: "Tristeza", color: "#bfdbfe", text: "#1e3a8a", siente: "Pesadez, llanto, cansancio, vacío", dispara: "Pérdida, decepción, distancia", funcion: "Procesar pérdida, pedir apoyo, bajar ritmo", mensaje: "Algo importante me dolió", impulso: "Aislarse, rendirse", respuesta: "Validar dolor, buscar apoyo, autocuidado" },
@@ -23,12 +239,67 @@
             { nombre: "Rechazo", color: "#d8b4fe", text: "#4c1d95", siente: "Distancia, incomodidad, desagrado o exclusión", dispara: "Crítica, desaprobación, falta de aceptación o incompatibilidad", funcion: "Proteger identidad, límites o pertenencia", mensaje: "Esto no se siente seguro o compatible para mí", impulso: "Alejarse, cerrarse, atacar o evitar", respuesta: "Explorar si el rechazo viene de daño o inseguridad y responder con claridad" }
         ];
 
-        const RECENT_KEY = 'brujulaRecientes';
-        const RECENT_LIMIT = 5;
-        const REDUCED_MOTION = globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
-        const MODAL_ANIMATION_MS = REDUCED_MOTION ? 0 : 200;
-        let lastFocusedCard = null;
-        let isClosingModal = false;
+const RECENT_KEY = 'brujulaRecientes';
+const LANGUAGE_KEY = 'brujulaIdioma';
+const RECENT_LIMIT = 5;
+const REDUCED_MOTION = globalThis.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
+const MODAL_ANIMATION_MS = REDUCED_MOTION ? 0 : 200;
+let currentLang = 'es';
+let lastFocusedCard = null;
+let isClosingModal = false;
+
+function t(key) {
+    return TRANSLATIONS[currentLang]?.[key] ?? TRANSLATIONS.es[key] ?? key;
+}
+
+function getDisplayName(nombre) {
+    if (currentLang === 'en') return EMOTION_NAME_TRANSLATIONS[nombre] ?? nombre;
+    return nombre;
+}
+
+function getEmotionField(emotion, field) {
+    if (currentLang !== 'en') return emotion[field];
+    return EMOTION_CONTENT_TRANSLATIONS[emotion.nombre]?.[field] ?? emotion[field];
+}
+
+function detectInitialLanguage() {
+    const saved = localStorage.getItem(LANGUAGE_KEY);
+    if (saved === 'es' || saved === 'en') return saved;
+
+    const browserLang = globalThis.navigator?.language?.toLowerCase() ?? 'es';
+    return browserLang.startsWith('en') ? 'en' : 'es';
+}
+
+function applyStaticTranslations() {
+    document.documentElement.lang = currentLang;
+
+    const appTitle = document.getElementById('app-title');
+    const appSubtitle = document.getElementById('app-subtitle');
+    const langLabel = document.getElementById('language-label');
+    const search = document.getElementById('search');
+    const recentTitle = document.getElementById('recent-title');
+    const closeButton = document.getElementById('close-button');
+    const languageSelect = document.getElementById('language-select');
+
+    if (appTitle) appTitle.textContent = t('title');
+    if (appSubtitle) appSubtitle.textContent = t('subtitle');
+    if (langLabel) langLabel.textContent = t('langLabel');
+    if (search) search.placeholder = t('searchPlaceholder');
+    if (recentTitle) recentTitle.textContent = t('recentTitle');
+    if (closeButton) closeButton.textContent = t('closeButton');
+    if (languageSelect) {
+        languageSelect.value = currentLang;
+        languageSelect.setAttribute('aria-label', t('langLabel'));
+    }
+}
+
+function setLanguage(lang) {
+    currentLang = lang === 'en' ? 'en' : 'es';
+    localStorage.setItem(LANGUAGE_KEY, currentLang);
+    applyStaticTranslations();
+    renderRecentEmotions();
+    renderEmociones(document.getElementById('search').value);
+}
 
         function normalizeText(value) {
             return value
@@ -77,11 +348,17 @@
 
                 const card = document.createElement('button');
                 card.type = 'button';
-                card.className = 'emotion-card shrink-0 w-20 h-20 rounded-full shadow-sm bg-white border-2 flex items-center justify-center text-center px-2 text-[11px] font-bold leading-tight text-slate-700';
+                card.className = 'emotion-card relative overflow-visible shrink-0 w-20 h-20 rounded-full shadow-sm bg-white border-2 flex items-center justify-center text-center px-2 text-[11px] font-bold leading-tight text-slate-700';
                 card.style.borderColor = emotion.color;
-                card.setAttribute('aria-label', `Abrir emoción ${emotion.nombre}`);
-                card.title = emotion.nombre;
-                card.innerHTML = `<span>${shortRecentLabel(emotion.nombre)}</span>`;
+                const displayName = getDisplayName(emotion.nombre);
+                card.setAttribute('aria-label', `${t('openEmotionAria')} ${displayName}`);
+                card.title = displayName;
+                card.innerHTML = `
+                    <span>${shortRecentLabel(displayName)}</span>
+                    <span class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-slate-800 text-white text-[10px] flex items-center justify-center sm:hidden shadow" aria-hidden="true">
+                        <i class="fa-solid fa-eye"></i>
+                    </span>
+                `;
                 card.addEventListener('click', () => {
                     lastFocusedCard = card;
                     showDetail(emotion);
@@ -95,7 +372,17 @@
             grid.innerHTML = "";
             const normalizedFilter = normalizeText(filter.trim());
             const filtered = emociones.filter(e => {
-                const haystack = [e.nombre, e.siente, e.dispara, e.mensaje]
+                const haystack = [
+                    e.nombre,
+                    getDisplayName(e.nombre),
+                    e.siente,
+                    e.dispara,
+                    e.mensaje,
+                    getEmotionField(e, 'siente'),
+                    getEmotionField(e, 'dispara'),
+                    getEmotionField(e, 'mensaje'),
+                    getEmotionField(e, 'respuesta')
+                ]
                     .map(normalizeText)
                     .join(' ');
                 return haystack.includes(normalizedFilter);
@@ -105,8 +392,8 @@
                 const emptyState = document.createElement('div');
                 emptyState.className = 'bg-white rounded-2xl p-5 text-center shadow-sm border border-slate-200';
                 emptyState.innerHTML = `
-                    <p class="text-slate-700 font-bold mb-1">No encontramos esa emoción</p>
-                    <p class="text-slate-500 text-sm">Prueba con otra palabra como "incertidumbre", "calma" o "dolor".</p>
+                    <p class="text-slate-700 font-bold mb-1">${t('emptyTitle')}</p>
+                    <p class="text-slate-500 text-sm">${t('emptyHint')}</p>
                 `;
                 grid.appendChild(emptyState);
                 return;
@@ -118,7 +405,7 @@
                 card.style.borderLeft = `8px solid ${e.color}`;
                 card.tabIndex = 0;
                 card.setAttribute('role', 'button');
-                card.setAttribute('aria-label', `Abrir detalle de ${e.nombre}`);
+                card.setAttribute('aria-label', `${t('openDetailAria')} ${getDisplayName(e.nombre)}`);
                 card.onclick = () => {
                     lastFocusedCard = card;
                     showDetail(e);
@@ -131,8 +418,8 @@
                     }
                 });
                 card.innerHTML = `
-                    <span class="font-bold text-lg text-slate-700">${e.nombre}</span>
-                    <span class="text-xs font-bold px-3 py-1 rounded-full bg-slate-100 text-slate-400 uppercase tracking-wider">Ver</span>
+                    <span class="font-bold text-lg text-slate-700">${getDisplayName(e.nombre)}</span>
+                    <span class="text-xs font-bold px-3 py-1 rounded-full bg-slate-100 text-slate-400 uppercase tracking-wider">${t('openChip')}</span>
                 `;
                 grid.appendChild(card);
             });
@@ -142,32 +429,32 @@
             const content = document.getElementById('modal-content');
             content.innerHTML = `
                 <div class="inline-block px-4 py-1 rounded-full mb-2" style="background-color:${e.color}; color:${e.text}">
-                    <span class="text-xs font-black uppercase tracking-widest">Emoción</span>
+                    <span class="text-xs font-black uppercase tracking-widest">${t('emotionTag')}</span>
                 </div>
-                <h2 class="text-4xl font-black mb-6 text-slate-800">${e.nombre}</h2>
+                <h2 class="text-4xl font-black mb-6 text-slate-800">${getDisplayName(e.nombre)}</h2>
                 
                 <div class="space-y-6">
                     <div class="grid grid-cols-1 gap-4">
                         <div class="bg-slate-50 p-4 rounded-2xl">
-                            <p class="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-1">¿Cómo se siente?</p>
-                            <p class="text-slate-700 leading-relaxed font-medium">${e.siente}</p>
+                            <p class="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-1">${t('feelLabel')}</p>
+                            <p class="text-slate-700 leading-relaxed font-medium">${getEmotionField(e, 'siente')}</p>
                         </div>
                         <div class="bg-slate-50 p-4 rounded-2xl">
-                            <p class="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-1">¿Qué la dispara?</p>
-                            <p class="text-slate-700 leading-relaxed font-medium">${e.dispara}</p>
+                            <p class="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-1">${t('triggerLabel')}</p>
+                            <p class="text-slate-700 leading-relaxed font-medium">${getEmotionField(e, 'dispara')}</p>
                         </div>
                     </div>
 
                     <div class="relative p-6 rounded-3xl text-white overflow-hidden shadow-lg" style="background-color:${e.color}; color:${e.text}">
                          <i class="fa-solid fa-quote-left absolute -top-2 -left-2 text-black/10 text-6xl"></i>
-                         <p class="text-[11px] font-black opacity-80 uppercase tracking-widest mb-2">Lo que te está diciendo:</p>
-                        <p class="text-[1.45rem] sm:text-[1.65rem] font-serif italic leading-[1.35] sm:leading-snug" style="color: rgba(0,0,0,0.78)">"${e.mensaje}"</p>
+                         <p class="text-[11px] font-black opacity-80 uppercase tracking-widest mb-2">${t('messageLabel')}</p>
+                        <p class="text-[1.45rem] sm:text-[1.65rem] font-serif italic leading-[1.35] sm:leading-snug" style="color: rgba(0,0,0,0.78)">"${getEmotionField(e, 'mensaje')}"</p>
                     </div>
 
                     <div>
-                        <p class="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2 px-1">Respuesta sugerida</p>
+                        <p class="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2 px-1">${t('responseLabel')}</p>
                         <div class="bg-emerald-50 border-2 border-emerald-100 p-4 rounded-2xl">
-                            <p class="text-emerald-900 font-bold leading-relaxed">${e.respuesta}</p>
+                            <p class="text-emerald-900 font-bold leading-relaxed">${getEmotionField(e, 'respuesta')}</p>
                         </div>
                     </div>
                 </div>
@@ -217,6 +504,12 @@
             }
         });
 
+        document.getElementById('language-select').addEventListener('change', (event) => {
+            setLanguage(event.target.value);
+        });
+
+        currentLang = detectInitialLanguage();
+        applyStaticTranslations();
         document.getElementById('search').addEventListener('input', (e) => renderEmociones(e.target.value));
         renderRecentEmotions();
         renderEmociones();
