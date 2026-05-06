@@ -76,8 +76,64 @@ Nota técnica: `sw.js` se mantiene en raíz para conservar alcance sobre toda la
 - Estados vacíos con mensaje amigable
 - Animaciones suaves con reducción automática cuando el sistema lo solicita
 
+## Pruebas manuales por escenario
+
+### Escenario 1: Carga inicial
+
+1. Abrir la app.
+2. Verificar que se muestran tarjetas de emociones.
+3. Verificar que el selector de idioma aparece en cabecera.
+
+### Escenario 2: Búsqueda
+
+1. Escribir una emoción exacta (por ejemplo `Ansiedad`).
+2. Confirmar que la lista se filtra correctamente.
+3. Probar con una palabra de contenido (por ejemplo `incertidumbre`).
+4. Probar una búsqueda sin resultados y verificar el estado vacío.
+
+### Escenario 3: Modal de detalle
+
+1. Abrir una emoción desde la lista.
+2. Confirmar que se muestran secciones de sensación, disparador, mensaje y respuesta.
+3. Cerrar con botón `Entendido`.
+4. Abrir de nuevo y cerrar tocando fondo oscuro.
+5. Abrir de nuevo y cerrar con tecla `Escape`.
+
+### Escenario 4: Navegación por teclado
+
+1. Usar `Tab` para navegar entre elementos interactivos.
+2. Abrir una tarjeta con `Enter` o `Espacio`.
+3. Verificar foco visible en elementos navegables.
+4. Cerrar modal con `Escape` y validar retorno de foco.
+
+### Escenario 5: Recientes
+
+1. Abrir varias emociones distintas.
+2. Verificar que aparecen en `Vistas recientemente`.
+3. Recargar la página y confirmar persistencia en localStorage.
+4. Verificar que no se duplican y que respeta el límite.
+
+### Escenario 6: Multi-idioma
+
+1. Cambiar idioma a `EN`.
+2. Verificar traducción de textos de interfaz y contenido de emociones.
+3. Probar búsqueda en inglés.
+4. Recargar y confirmar persistencia del idioma.
+
+### Escenario 7: PWA e instalación en Chrome
+
+1. Ejecutar en `http://localhost`.
+2. Confirmar que Chrome ofrece instalación.
+3. Instalar la app y abrirla como ventana independiente.
+4. Verificar funcionamiento básico tras instalación.
+
+### Escenario 8: Fallback file://
+
+1. Abrir `index.html` directamente (doble clic).
+2. Confirmar aparición de la banda de aviso para `file://`.
+3. Verificar que las emociones cargan correctamente usando fallback.
+
 ## Próximas mejoras sugeridas
 
-- Añadir pruebas manuales documentadas por escenario
 - Incluir traducciones adicionales (por ejemplo PT/FR)
 - Agregar botón "Instalar app" en la interfaz usando `beforeinstallprompt`

@@ -15,7 +15,12 @@ export const TRANSLATIONS = {
         emptyHint: "Prueba con otra palabra como \"incertidumbre\", \"calma\" o \"dolor\".",
         openChip: "Ver",
         openEmotionAria: "Abrir emoción",
-        openDetailAria: "Abrir detalle de"
+        openDetailAria: "Abrir detalle de",
+        installButton: "Instalar app",
+        iosInstallTitle: "Instalar en iPhone/iPad",
+        iosInstallStep1: "1. Toca el botón Compartir de Safari (cuadro con flecha hacia arriba).",
+        iosInstallStep2: "2. Selecciona \"Añadir a pantalla de inicio\".",
+        iosInstallClose: "Entendido"
     },
     en: {
         langLabel: "Language",
@@ -33,7 +38,12 @@ export const TRANSLATIONS = {
         emptyHint: "Try another word like \"uncertainty\", \"calm\" or \"pain\".",
         openChip: "View",
         openEmotionAria: "Open emotion",
-        openDetailAria: "Open details for"
+        openDetailAria: "Open details for",
+        installButton: "Install app",
+        iosInstallTitle: "Install on iPhone/iPad",
+        iosInstallStep1: "1. Tap Safari's Share button (square with upward arrow).",
+        iosInstallStep2: "2. Select \"Add to Home Screen\".",
+        iosInstallClose: "Got it"
     }
 };
 

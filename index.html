@@ -29,6 +29,9 @@
                 </select>
                 <i class="fa-solid fa-chevron-down absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 text-[10px] pointer-events-none"></i>
             </div>
+            <button id="install-app-button" class="hidden mt-2 w-full bg-slate-800 text-white text-xs font-bold py-2 rounded-xl hover:bg-slate-700 transition-colors" type="button">
+                Instalar app
+            </button>
         </div>
     </header>
 
@@ -52,6 +55,17 @@
         <div id="modal-panel" class="bg-white rounded-t-[2.5rem] sm:rounded-3xl max-w-lg w-full max-h-[85vh] overflow-y-auto p-8 shadow-2xl hide-scroll transition-all duration-200 translate-y-8 sm:translate-y-0 sm:scale-95 opacity-0">
             <div id="modal-content"></div>
             <button id="close-button" class="mt-8 w-full bg-slate-200 border border-slate-300 text-slate-900 py-4 rounded-2xl font-bold active:bg-slate-300 transition-colors">Entendido</button>
+        </div>
+    </div>
+
+    <div id="ios-install-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm hidden z-[55] p-4 sm:p-6 flex items-end sm:items-center justify-center">
+        <div id="ios-install-panel" class="bg-white rounded-3xl max-w-md w-full p-6 shadow-2xl">
+            <h3 id="ios-install-title" class="text-xl font-black text-slate-800 mb-4">Instalar en iPhone/iPad</h3>
+            <ol class="space-y-3 text-slate-700 text-sm leading-relaxed">
+                <li id="ios-install-step-1">1. Toca el botón Compartir de Safari (cuadro con flecha hacia arriba).</li>
+                <li id="ios-install-step-2">2. Selecciona "Añadir a pantalla de inicio".</li>
+            </ol>
+            <button id="ios-install-close" type="button" class="mt-6 w-full bg-slate-100 text-slate-900 py-3 rounded-2xl font-bold hover:bg-slate-200 transition-colors">Entendido</button>
         </div>
     </div>
 

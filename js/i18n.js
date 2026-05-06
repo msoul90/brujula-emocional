@@ -5,6 +5,14 @@ import {
     LANGUAGE_KEY
 } from "./constants.js";
 
+function detectInitialLanguage() {
+    const saved = localStorage.getItem(LANGUAGE_KEY);
+    if (saved === "es" || saved === "en") return saved;
+
+    const browserLang = globalThis.navigator?.language?.toLowerCase() ?? "es";
+    return browserLang.startsWith("en") ? "en" : "es";
+}
+
 export function createI18n({ getLang, setLang, onLanguageChanged }) {
     function t(key) {
         const lang = getLang();
@@ -21,14 +29,6 @@ export function createI18n({ getLang, setLang, onLanguageChanged }) {
         return EMOTION_CONTENT_TRANSLATIONS[emotion.nombre]?.[field] ?? emotion[field];
     }
 
-    function detectInitialLanguage() {
-        const saved = localStorage.getItem(LANGUAGE_KEY);
-        if (saved === "es" || saved === "en") return saved;
-
-        const browserLang = globalThis.navigator?.language?.toLowerCase() ?? "es";
-        return browserLang.startsWith("en") ? "en" : "es";
-    }
-
     function applyStaticTranslations() {
         document.documentElement.lang = getLang();
 
@@ -38,12 +38,22 @@ export function createI18n({ getLang, setLang, onLanguageChanged }) {
         const recentTitle = document.getElementById("recent-title");
         const closeButton = document.getElementById("close-button");
         const languageSelect = document.getElementById("language-select");
+        const installButton = document.getElementById("install-app-button");
+        const iosInstallTitle = document.getElementById("ios-install-title");
+        const iosInstallStep1 = document.getElementById("ios-install-step-1");
+        const iosInstallStep2 = document.getElementById("ios-install-step-2");
+        const iosInstallClose = document.getElementById("ios-install-close");
 
         if (appTitle) appTitle.textContent = t("title");
         if (appSubtitle) appSubtitle.textContent = t("subtitle");
         if (search) search.placeholder = t("searchPlaceholder");
         if (recentTitle) recentTitle.textContent = t("recentTitle");
         if (closeButton) closeButton.textContent = t("closeButton");
+        if (installButton) installButton.textContent = t("installButton");
+        if (iosInstallTitle) iosInstallTitle.textContent = t("iosInstallTitle");
+        if (iosInstallStep1) iosInstallStep1.textContent = t("iosInstallStep1");
+        if (iosInstallStep2) iosInstallStep2.textContent = t("iosInstallStep2");
+        if (iosInstallClose) iosInstallClose.textContent = t("iosInstallClose");
         if (languageSelect) {
             languageSelect.value = getLang();
             languageSelect.setAttribute("aria-label", t("langLabel"));
