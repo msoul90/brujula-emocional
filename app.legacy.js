@@ -152,7 +152,7 @@ const EMOTION_CONTENT_TRANSLATIONS = {
         dispara: "Achievement, connection, enjoyment",
         funcion: "Reinforce valuable behaviors",
         mensaje: "This nourishes me",
-        impulso: "Share, continue",
+        impulso: "Act impulsively, overindulge",
         respuesta: "Savor it, give thanks, repeat healthy behaviors"
     },
     Calma: {
@@ -184,7 +184,7 @@ const EMOTION_CONTENT_TRANSLATIONS = {
         dispara: "Connection, achievement, safety, pleasant moments",
         funcion: "Reinforce valuable experiences and connection",
         mensaje: "This feels good and I want to keep it",
-        impulso: "Share, move closer, enjoy",
+        impulso: "Cling to it, avoid what disturbs it",
         respuesta: "Allow yourself to enjoy and register the positive"
     },
     Entusiasmo: {
@@ -239,11 +239,11 @@ const emociones = [
     { nombre: "Frustración", color: "#fca5a5", text: "#7f1d1d", siente: "Tensión, irritación, impaciencia", dispara: "Obstáculos, demora, bloqueo", funcion: "Señalar meta bloqueada", mensaje: "Quiero algo y no está saliendo", impulso: "Forzar, explotar, abandonar", respuesta: "Flexibilidad, dividir pasos, pedir ayuda" },
     { nombre: "Celos", color: "#d9f99d", text: "#365314", siente: "Activación, vigilancia, inseguridad", dispara: "Amenaza de pérdida, comparación", funcion: "Proteger vínculo, detectar necesidad", mensaje: "Temo perder conexión o valor", impulso: "Controlar, reclamar, revisar", respuesta: "Expresar necesidad, revisar evidencia, fortalecer autoestima" },
     { nombre: "Soledad", color: "#93c5fd", text: "#1e3a8a", siente: "Vacío, nostalgia, desánimo", dispara: "Desconexión, falta de apoyo", funcion: "Motivar conexión", mensaje: "Necesito vínculo significativo", impulso: "Aislarse más", respuesta: "Buscar contacto gradual y genuino" },
-    { nombre: "Alegría", color: "#fef08a", text: "#713f12", siente: "Ligereza, energía, expansión", dispara: "Logro, conexión, disfrute", funcion: "Reforzar conductas valiosas", mensaje: "Esto me nutre", impulso: "Compartir, seguir", respuesta: "Saborear, agradecer, repetir conductas sanas" },
+    { nombre: "Alegría", color: "#fef08a", text: "#713f12", siente: "Ligereza, energía, expansión", dispara: "Logro, conexión, disfrute", funcion: "Reforzar conductas valiosas", mensaje: "Esto me nutre", impulso: "Actuar impulsivamente, excederse", respuesta: "Saborear, agradecer, repetir conductas sanas" },
     { nombre: "Calma", color: "#a5f3fc", text: "#164e63", siente: "Suavidad corporal, respiración estable", dispara: "Seguridad, descanso, claridad", funcion: "Recuperación y equilibrio", mensaje: "Por ahora estoy a salvo", impulso: "Bajar guardia total", respuesta: "Aprovechar para planear y recargar" },
-    { nombre: "Confusión", color: "#ffedd5", text: "#7c2d12", siente: "Niebla mental, duda, bloqueo", dispara: "Información contradictoria, ambivalencia", funcion: "Señalar necesidad de claridad", mensaje: "Me falta información o tiempo", impulso: "Decidir impulsivo, congelarse", respuesta: "Hacer preguntas, esperar, ordenar ideas" },
+    { nombre: "Confusión", color: "#ffedd5", text: "#7c2d12", siente: "Niebla mental, duda, bloqueo", dispara: "Información contradictoria, ambivalencia", funcion: "Señalar necesidad de claridad", mensaje: "Me falta información o tiempo", impulso: "Decidir impulsivamente, congelarse", respuesta: "Hacer preguntas, esperar, ordenar ideas" },
     { nombre: "Preocupación", color: "#6b21a8", text: "#ffffff", siente: "Mente ocupada, tensión, anticipación, dificultad para soltar pensamientos", dispara: "Incertidumbre, responsabilidad, miedo a errores o consecuencias", funcion: "Anticipar posibles problemas y prepararse", mensaje: "Hay algo importante que quiero cuidar o controlar", impulso: "Sobrepensar, revisar excesivamente, buscar certeza", respuesta: "Priorizar, distinguir lo real de lo imaginado, regresar al presente" },
-    { nombre: "Felicidad", color: "#fde047", text: "#713f12", siente: "Ligereza, bienestar, relajación, sensación de plenitud", dispara: "Conexión, logro, seguridad, momentos agradables", funcion: "Reforzar experiencias valiosas y conexión", mensaje: "Esto me hace bien y quiero conservarlo", impulso: "Compartir, acercarse, disfrutar", respuesta: "Permitirse disfrutar y registrar lo positivo" },
+    { nombre: "Felicidad", color: "#fde047", text: "#713f12", siente: "Ligereza, bienestar, relajación, sensación de plenitud", dispara: "Conexión, logro, seguridad, momentos agradables", funcion: "Reforzar experiencias valiosas y conexión", mensaje: "Esto me hace bien y quiero conservarlo", impulso: "Aferrarse, evitar lo que la perturba", respuesta: "Permitirse disfrutar y registrar lo positivo" },
     { nombre: "Entusiasmo", color: "#67e8f9", text: "#164e63", siente: "Energía alta, motivación, emoción positiva, impulso de actuar", dispara: "Nuevos proyectos, interés, ilusión, conexión", funcion: "Movilizar acción y exploración", mensaje: "Hay algo que me inspira o importa mucho", impulso: "Hacer demasiado rápido, comprometerse impulsivamente", respuesta: "Mantener motivación con ritmo sostenible" },
     { nombre: "Placer", color: "#f9a8d4", text: "#831843", siente: "Sensación agradable, comodidad, satisfacción corporal o emocional", dispara: "Descanso, disfrute, contacto, experiencias gratificantes", funcion: "Favorecer bienestar y recuperación", mensaje: "Esto se siente nutritivo o satisfactorio", impulso: "Buscar repetir inmediatamente", respuesta: "Disfrutar conscientemente y mantener equilibrio" },
     { nombre: "Angustia", color: "#60a5fa", text: "#1e3a8a", siente: "Opresión, desesperación, sensación de no poder sostener algo", dispara: "Pérdida de control, miedo intenso, incertidumbre alta", funcion: "Señalar saturación emocional o amenaza percibida", mensaje: "Algo me está sobrepasando", impulso: "Escapar, aislarse, buscar alivio inmediato", respuesta: "Regular el cuerpo, pedir apoyo, reducir estímulos" },
