@@ -4,8 +4,6 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Development
 
-This is a build-free project. No npm install or compilation needed.
-
 **Run locally:**
 
 ```bash
@@ -16,9 +14,19 @@ Or open `index.html` directly in a browser. Note: the service worker and PWA ins
 
 There is no automated test suite. Manual test scenarios are documented in `README.md`.
 
+## Tailwind CSS build
+
+Tailwind is **not** loaded via CDN. `dist/tailwind.css` is a pre-generated static file committed to the repo. Regenerate it whenever new Tailwind utility classes are added to any HTML or JS file:
+
+```bash
+npx tailwindcss@3 -i input.css -o dist/tailwind.css --minify
+```
+
+Content sources are declared in `tailwind.config.js`. The `input.css` file contains only the three `@tailwind` directives.
+
 ## Architecture
 
-The app is a vanilla JS PWA with no framework or bundler. Tailwind CSS is loaded via CDN (`cdn.tailwindcss.com`) in `index.html`. Icons are inline SVGs — no icon library dependency.
+The app is a vanilla JS PWA with no framework or bundler. Tailwind CSS is served from `dist/tailwind.css` (pre-generated static file). Icons are inline SVGs — no icon library dependency.
 
 **Module roles:**
 
@@ -58,11 +66,11 @@ English translations for all fields live in `EMOTION_NAME_TRANSLATIONS` and `EMO
 
 ## Service Worker versioning
 
-`sw.js` uses two named caches: `brujula-emocional-vN` (app shell) and `brujula-cdn-vN` (Tailwind CDN). **Bump `CACHE_NAME` in `sw.js` whenever you deploy changes to cached assets** — otherwise users will receive stale files. The CDN cache rarely needs bumping unless the Tailwind CDN URL changes.
+`sw.js` uses a single cache `brujula-emocional-vN`. **Bump `CACHE_NAME` in `sw.js` whenever you deploy changes to cached assets** (including after regenerating `dist/tailwind.css`) — otherwise users will receive stale files.
 
 ## Styling
 
-Custom styles are in `styles.css` (card transitions, focus rings, scrollbar hiding, `<dialog>` positioning, reduced-motion). All layout and spacing uses Tailwind utility classes directly in the HTML — no CSS build step.
+Custom styles are in `styles.css` (card transitions, focus rings, scrollbar hiding, `<dialog>` positioning, reduced-motion). All layout and spacing uses Tailwind utility classes directly in the HTML, compiled into `dist/tailwind.css`.
 
 ## Persistence
 
