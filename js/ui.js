@@ -1,5 +1,40 @@
 import { RECENT_KEY, RECENT_LIMIT } from "./constants.js";
 
+function normalizeText(value) {
+    return value
+        .toLowerCase()
+        .normalize("NFD")
+        .replaceAll(/[\u0300-\u036f]/g, "");
+}
+
+function loadRecentEmotions() {
+    try {
+        const parsed = JSON.parse(localStorage.getItem(RECENT_KEY) || "[]");
+        return Array.isArray(parsed) ? parsed : [];
+    } catch {
+        return [];
+    }
+}
+
+function shortRecentLabel(nombre) {
+    return nombre.length > 9 ? `${nombre.slice(0, 9)}...` : nombre;
+}
+
+function getReadableTextColor(hexColor) {
+    const safeHex = (hexColor || "").replace("#", "");
+    if (safeHex.length !== 6) return "#0f172a";
+
+    const r = Number.parseInt(safeHex.slice(0, 2), 16);
+    const g = Number.parseInt(safeHex.slice(2, 4), 16);
+    const b = Number.parseInt(safeHex.slice(4, 6), 16);
+
+    if ([r, g, b].some(Number.isNaN)) return "#0f172a";
+
+    // Relative luminance approximation to decide dark vs light text.
+    const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
+    return luminance < 0.52 ? "#f8fafc" : "#0f172a";
+}
+
 export function createUI({
     emociones,
     getDisplayName,
@@ -11,31 +46,11 @@ export function createUI({
     setIsClosingModal,
     modalAnimationMs
 }) {
-    function normalizeText(value) {
-        return value
-            .toLowerCase()
-            .normalize("NFD")
-            .replaceAll(/[\u0300-\u036f]/g, "");
-    }
-
-    function loadRecentEmotions() {
-        try {
-            const parsed = JSON.parse(localStorage.getItem(RECENT_KEY) || "[]");
-            return Array.isArray(parsed) ? parsed : [];
-        } catch {
-            return [];
-        }
-    }
-
     function saveRecentEmotion(nombre) {
         const existing = loadRecentEmotions().filter((item) => item !== nombre);
         const next = [nombre, ...existing].slice(0, RECENT_LIMIT);
         localStorage.setItem(RECENT_KEY, JSON.stringify(next));
         renderRecentEmotions();
-    }
-
-    function shortRecentLabel(nombre) {
-        return nombre.length > 9 ? `${nombre.slice(0, 9)}...` : nombre;
     }
 
     function renderRecentEmotions() {
@@ -136,9 +151,12 @@ export function createUI({
     }
 
     function showDetail(e) {
+        const quoteTextColor = getReadableTextColor(e.color);
+        const quoteLabelColor = quoteTextColor === "#f8fafc" ? "rgba(248,250,252,0.9)" : "rgba(15,23,42,0.85)";
+
         const content = document.getElementById("modal-content");
         content.innerHTML = `
-            <div class="inline-block px-4 py-1 rounded-full mb-2" style="background-color:${e.color}; color:${e.text}">
+            <div class="inline-block px-4 py-1 rounded-full mb-2" style="background-color:${e.color}; color:${quoteTextColor}">
                 <span class="text-xs font-black uppercase tracking-widest">${t("emotionTag")}</span>
             </div>
             <h2 class="text-4xl font-black mb-6 text-slate-800">${getDisplayName(e.nombre)}</h2>
@@ -155,10 +173,10 @@ export function createUI({
                     </div>
                 </div>
 
-                <div class="relative p-6 rounded-3xl text-white overflow-hidden shadow-lg" style="background-color:${e.color}; color:${e.text}">
+                <div class="relative p-6 rounded-3xl overflow-hidden shadow-lg" style="background-color:${e.color}; color:${quoteTextColor}">
                      <i class="fa-solid fa-quote-left absolute -top-2 -left-2 text-black/10 text-6xl"></i>
-                     <p class="text-[11px] font-black opacity-80 uppercase tracking-widest mb-2">${t("messageLabel")}</p>
-                    <p class="text-[1.45rem] sm:text-[1.65rem] font-serif italic leading-[1.35] sm:leading-snug" style="color: rgba(0,0,0,0.78)">"${getEmotionField(e, "mensaje")}"</p>
+                     <p class="text-[11px] font-black uppercase tracking-widest mb-2" style="color:${quoteLabelColor}">${t("messageLabel")}</p>
+                    <p class="text-[1.45rem] sm:text-[1.65rem] font-serif italic leading-[1.35] sm:leading-snug" style="color:${quoteTextColor}">"${getEmotionField(e, "mensaje")}"</p>
                 </div>
 
                 <div>
