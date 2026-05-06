@@ -46,6 +46,27 @@ No requiere build ni servidor.
 
 Opcionalmente, puedes usar la extensión Live Server de VS Code si quieres recarga automática.
 
+## Instalar en Chrome (PWA)
+
+La app ya incluye base PWA (`manifest.webmanifest` + `sw.js`).
+
+Para que Chrome permita instalarla:
+
+1. Ejecuta la app en `http://localhost` o `https://`.
+   `file://` no habilita instalación PWA.
+2. Abre la URL en Chrome.
+3. Haz clic en el ícono de instalar en la barra de direcciones, o en el menú de Chrome `Instalar Brújula Emocional`.
+
+### Opción rápida en local
+
+- Usa Live Server desde VS Code, o cualquier servidor estático local.
+
+Ejemplo con Node (si lo tienes instalado):
+
+```bash
+npx serve .
+```
+
 ## Accesibilidad y UX
 
 - Foco visible para navegación por teclado
@@ -58,3 +79,4 @@ Opcionalmente, puedes usar la extensión Live Server de VS Code si quieres recar
 - Añadir pruebas manuales documentadas por escenario
 - Separar [app.js](app.js) en módulos pequeños
 - Incluir traducciones adicionales (por ejemplo PT/FR)
+- Agregar botón "Instalar app" en la interfaz usando `beforeinstallprompt`
