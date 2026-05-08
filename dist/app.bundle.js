@@ -977,7 +977,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mox2j4it";
+  var BUILD_VERSION = "mox2nw77";
 
   // app.js
   var state = {
