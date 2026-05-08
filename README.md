@@ -19,8 +19,11 @@ La app está pensada para ser rápida, simple y usable desde móvil.
 
 - Listado de 19 emociones en tarjetas
 - Búsqueda en tiempo real (nombre, sensación, disparador y mensaje, en ambos idiomas)
-- Modal con detalle completo de cada emoción
+- Modal con detalle completo de cada emoción (sensación, disparador, función, mensaje, impulso a evitar, respuesta sugerida)
+- Compartir emoción: genera una imagen PNG de la tarjeta usando `<canvas>` y la comparte con Web Share API o la descarga directamente
+- Quiz emocional para identificar qué se siente a partir de síntomas
 - Sección de emociones vistas recientemente (persistente con localStorage)
+- Panel de ajustes compacto: modo claro / automático / oscuro + selector de idioma
 - Navegación por teclado (Tab, Enter, Espacio, Escape)
 - Cierre de modal por botón, tecla Escape o toque en fondo
 - Soporte multi-idioma ES/EN con persistencia
@@ -31,7 +34,7 @@ La app está pensada para ser rápida, simple y usable desde móvil.
 ## Tecnologías
 
 - HTML5
-- CSS personalizado (`styles.css`) + Tailwind CSS vía CDN
+- CSS personalizado (`styles.css`) + Tailwind CSS pre-generado (`dist/tailwind.css`)
 - JavaScript vanilla modular (sin bundler)
 - Íconos SVG inline (sin dependencia externa)
 - Service Worker para soporte offline
@@ -149,12 +152,29 @@ Para que la instalación esté disponible, la app debe ejecutarse en `http://` o
 2. En DevTools → Network, activar modo offline.
 3. Recargar la página y confirmar que la app carga con estilos completos.
 
-### Escenario 9: Fallback file://
+### Escenario 9: Modo oscuro
+
+1. Abrir el panel de ajustes (icono engranaje).
+2. Seleccionar modo oscuro y verificar que el fondo, tarjetas y modal cambian de color.
+3. Recargar la página y confirmar que el modo persiste.
+4. Cambiar a modo automático y verificar que sigue la preferencia del sistema.
+
+### Escenario 10: Compartir emoción
+
+1. Abrir el modal de cualquier emoción.
+2. Pulsar el botón **Compartir**.
+3. En móvil: confirmar que aparece el diálogo nativo de compartir con una imagen PNG adjunta.
+4. En escritorio: confirmar que se descarga un archivo `.png` con el nombre de la emoción.
+5. Verificar que la imagen incluye: nombre de la emoción, mensaje principal y respuesta sugerida.
+
+### Escenario 11: Fallback file://
 
 1. Abrir `index.html` directamente (doble clic).
-2. Confirmar aparición de la banda de aviso para `file://`.
-3. Verificar que las emociones cargan correctamente.
+2. Verificar que las emociones cargan correctamente sin servidor HTTP.
+3. Confirmar que la búsqueda, el modal y el cambio de idioma funcionan.
 
 ## Próximas mejoras sugeridas
 
-- Incluir traducciones adicionales (por ejemplo PT/FR)
+- Diario emocional: registrar entradas con fecha, emoción seleccionada y nota libre
+- Estadísticas simples de emociones más frecuentes (derivadas del diario)
+- Traducciones adicionales (PT/FR)
