@@ -74,17 +74,12 @@ export function createUI({
 
             const card = document.createElement("button");
             card.type = "button";
-            card.className = "emotion-card relative overflow-visible shrink-0 w-20 h-20 rounded-full shadow-sm bg-white border-2 flex items-center justify-center text-center px-2 text-[11px] font-bold leading-tight text-slate-700";
+            card.className = "emotion-card shrink-0 w-20 h-20 rounded-full shadow-sm bg-white border-4 flex items-center justify-center text-center px-2 text-[11px] font-bold leading-tight text-slate-700";
             card.style.borderColor = emotion.color;
             const displayName = getDisplayName(emotion.nombre);
             card.setAttribute("aria-label", `${t("openEmotionAria")} ${displayName}`);
             card.title = displayName;
-            card.innerHTML = `
-                <span>${shortRecentLabel(displayName)}</span>
-                <span class="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-slate-800 text-white flex items-center justify-center sm:hidden shadow" aria-hidden="true">
-                    <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/></svg>
-                </span>
-            `;
+            card.innerHTML = `<span>${shortRecentLabel(displayName)}</span>`;
             card.addEventListener("click", () => {
                 setLastFocusedCard(card);
                 showDetail(emotion);
@@ -145,7 +140,7 @@ export function createUI({
             });
             card.innerHTML = `
                 <span class="font-bold text-lg text-slate-700">${getDisplayName(e.nombre)}</span>
-                <span class="text-xs font-bold px-3 py-1 rounded-full bg-slate-100 text-slate-400 uppercase tracking-wider">${t("openChip")}</span>
+                <svg class="w-4 h-4 text-slate-300 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
             `;
             grid.appendChild(card);
         });

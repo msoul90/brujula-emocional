@@ -22,7 +22,11 @@
             <h1 id="app-title" class="text-3xl font-black text-slate-800 tracking-tight">Brújula Emocional</h1>
             <p id="app-subtitle" class="text-slate-500 font-medium">Encuentra claridad en lo que sientes.</p>
         </div>
-        <div class="relative shrink-0">
+        <div class="flex items-center gap-2 shrink-0">
+            <button id="install-app-button" class="hidden bg-slate-800 text-white text-[11px] font-bold px-3 py-2 rounded-xl hover:bg-slate-700 transition-colors whitespace-nowrap" type="button">
+                Instalar app
+            </button>
+            <div class="relative">
             <button id="settings-btn" type="button"
                     class="bg-white/80 backdrop-blur-sm border border-slate-200 rounded-2xl p-2.5 shadow-sm hover:bg-white transition-colors"
                     aria-label="Configuración" aria-expanded="false" aria-controls="settings-panel">
@@ -59,9 +63,7 @@
                     </fieldset>
                 </div>
             </div>
-            <button id="install-app-button" class="hidden mt-2 w-full bg-slate-800 text-white text-xs font-bold py-2 rounded-xl hover:bg-slate-700 transition-colors" type="button">
-                Instalar app
-            </button>
+            </div>
         </div>
     </header>
 
@@ -82,7 +84,7 @@
     </button>
 
     <section id="recent-section" class="mb-6 hidden" aria-live="polite">
-        <h2 id="recent-title" class="text-sm font-black text-slate-500 uppercase tracking-wider mb-2">Vistas recientemente</h2>
+        <h2 id="recent-title" class="text-sm font-medium text-slate-400 mb-3">Vistas recientemente</h2>
         <div id="recent-grid" class="flex gap-3 overflow-x-auto hide-scroll pb-2 pr-1"></div>
     </section>
 
