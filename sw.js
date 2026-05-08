@@ -1,5 +1,5 @@
 // Actualizar CACHE_NAME al desplegar cambios en assets cacheados.
-const CACHE_NAME = "brujula-emocional-v11";
+const CACHE_NAME = "brujula-emocional-v12";
 
 const APP_SHELL = [
   "./",

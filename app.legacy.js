@@ -508,7 +508,41 @@ function buildEmotionCanvas(e, displayName, tagLabel, mensaje, responseLabel, re
         y += 58;
     }
 
-    ctx.fillStyle = "#cbd5e1";
+    // Decorative blobs — fill empty space below content
+    const contentFloor = y + 20;
+    if (contentFloor < H - 220) {
+        ctx.save();
+        ctx.beginPath();
+        ctx.rect(0, contentFloor, W, H - contentFloor);
+        ctx.clip();
+        ctx.fillStyle = e.color;
+        // Large blob — right side, extends well into the empty area
+        ctx.globalAlpha = 0.2;
+        ctx.beginPath();
+        ctx.arc(W * 0.85, H * 0.78, 380, 0, Math.PI * 2);
+        ctx.fill();
+        // Medium blob — bottom-left anchor
+        ctx.globalAlpha = 0.14;
+        ctx.beginPath();
+        ctx.arc(W * 0.12, H * 0.92, 260, 0, Math.PI * 2);
+        ctx.fill();
+        // Small blob — center bottom
+        ctx.globalAlpha = 0.1;
+        ctx.beginPath();
+        ctx.arc(W * 0.55, H * 0.96, 190, 0, Math.PI * 2);
+        ctx.fill();
+        // Fade top edge so blobs emerge gradually from the white area
+        ctx.globalAlpha = 1;
+        const fadeH = 80;
+        const fade = ctx.createLinearGradient(0, contentFloor, 0, contentFloor + fadeH);
+        fade.addColorStop(0, "#f8fafc");
+        fade.addColorStop(1, "rgba(248,250,252,0)");
+        ctx.fillStyle = fade;
+        ctx.fillRect(0, contentFloor, W, fadeH);
+        ctx.restore();
+    }
+
+    ctx.fillStyle = "#64748b";
     ctx.font = `400 26px ${SANS}`;
     const brand = "Brújula Emocional";
     ctx.fillText(brand, W - PAD - ctx.measureText(brand).width, H - 56);
