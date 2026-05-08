@@ -20,6 +20,11 @@ export const TRANSLATIONS = {
         openDetailAria: "Abrir detalle de",
         copyButton: "Copiar",
         copiedFeedback: "Copiado",
+        settingsLabel: "Configuración",
+        themeLabel: "Tema",
+        themeLight: "Claro",
+        themeAuto: "Auto",
+        themeDark: "Oscuro",
         installButton: "Instalar app",
         iosInstallTitle: "Instalar en iPhone/iPad",
         iosInstallStep1: "1. Toca el botón Compartir de Safari (cuadro con flecha hacia arriba).",
@@ -47,6 +52,11 @@ export const TRANSLATIONS = {
         openDetailAria: "Open details for",
         copyButton: "Copy",
         copiedFeedback: "Copied",
+        settingsLabel: "Settings",
+        themeLabel: "Theme",
+        themeLight: "Light",
+        themeAuto: "Auto",
+        themeDark: "Dark",
         installButton: "Install app",
         iosInstallTitle: "Install on iPhone/iPad",
         iosInstallStep1: "1. Tap Safari's Share button (square with upward arrow).",
@@ -256,4 +266,5 @@ export const emociones = [
 
 export const RECENT_KEY = "brujulaRecientes";
 export const LANGUAGE_KEY = "brujulaIdioma";
+export const THEME_KEY = "brujulaThema";
 export const RECENT_LIMIT = 5;

@@ -32,31 +32,28 @@ export function createI18n({ getLang, setLang, onLanguageChanged }) {
     function applyStaticTranslations() {
         document.documentElement.lang = getLang();
 
-        const appTitle = document.getElementById("app-title");
-        const appSubtitle = document.getElementById("app-subtitle");
-        const search = document.getElementById("search");
-        const recentTitle = document.getElementById("recent-title");
-        const closeButton = document.getElementById("close-button");
-        const languageSelect = document.getElementById("language-select");
-        const installButton = document.getElementById("install-app-button");
-        const iosInstallTitle = document.getElementById("ios-install-title");
-        const iosInstallStep1 = document.getElementById("ios-install-step-1");
-        const iosInstallStep2 = document.getElementById("ios-install-step-2");
-        const iosInstallClose = document.getElementById("ios-install-close");
+        const ids = {
+            "app-title":          (el) => { el.textContent = t("title"); },
+            "app-subtitle":       (el) => { el.textContent = t("subtitle"); },
+            "search":             (el) => { el.placeholder = t("searchPlaceholder"); },
+            "recent-title":       (el) => { el.textContent = t("recentTitle"); },
+            "close-button":       (el) => { el.textContent = t("closeButton"); },
+            "install-app-button": (el) => { el.textContent = t("installButton"); },
+            "ios-install-title":  (el) => { el.textContent = t("iosInstallTitle"); },
+            "ios-install-step-1": (el) => { el.textContent = t("iosInstallStep1"); },
+            "ios-install-step-2": (el) => { el.textContent = t("iosInstallStep2"); },
+            "ios-install-close":  (el) => { el.textContent = t("iosInstallClose"); },
+            "settings-btn":       (el) => { el.setAttribute("aria-label", t("settingsLabel")); },
+            "settings-theme-label": (el) => { el.textContent = t("themeLabel"); },
+            "settings-lang-label":  (el) => { el.textContent = t("langLabel"); },
+            "theme-btn-light":    (el) => { el.textContent = t("themeLight"); },
+            "theme-btn-auto":     (el) => { el.textContent = t("themeAuto"); },
+            "theme-btn-dark":     (el) => { el.textContent = t("themeDark"); },
+        };
 
-        if (appTitle) appTitle.textContent = t("title");
-        if (appSubtitle) appSubtitle.textContent = t("subtitle");
-        if (search) search.placeholder = t("searchPlaceholder");
-        if (recentTitle) recentTitle.textContent = t("recentTitle");
-        if (closeButton) closeButton.textContent = t("closeButton");
-        if (installButton) installButton.textContent = t("installButton");
-        if (iosInstallTitle) iosInstallTitle.textContent = t("iosInstallTitle");
-        if (iosInstallStep1) iosInstallStep1.textContent = t("iosInstallStep1");
-        if (iosInstallStep2) iosInstallStep2.textContent = t("iosInstallStep2");
-        if (iosInstallClose) iosInstallClose.textContent = t("iosInstallClose");
-        if (languageSelect) {
-            languageSelect.value = getLang();
-            languageSelect.setAttribute("aria-label", t("langLabel"));
+        for (const [id, apply] of Object.entries(ids)) {
+            const el = document.getElementById(id);
+            if (el) apply(el);
         }
     }
 

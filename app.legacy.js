@@ -21,6 +21,11 @@ const TRANSLATIONS = {
         openDetailAria: "Abrir detalle de",
         copyButton: "Copiar",
         copiedFeedback: "Copiado",
+        settingsLabel: "Configuración",
+        themeLabel: "Tema",
+        themeLight: "Claro",
+        themeAuto: "Auto",
+        themeDark: "Oscuro",
         installButton: "Instalar app",
         iosInstallTitle: "Instalar en iPhone/iPad",
         iosInstallStep1: "1. Toca el botón Compartir de Safari (cuadro con flecha hacia arriba).",
@@ -48,6 +53,11 @@ const TRANSLATIONS = {
         openDetailAria: "Open details for",
         copyButton: "Copy",
         copiedFeedback: "Copied",
+        settingsLabel: "Settings",
+        themeLabel: "Theme",
+        themeLight: "Light",
+        themeAuto: "Auto",
+        themeDark: "Dark",
         installButton: "Install app",
         iosInstallTitle: "Install on iPhone/iPad",
         iosInstallStep1: "1. Tap Safari's Share button (square with upward arrow).",
@@ -257,6 +267,7 @@ const emociones = [
 
 const RECENT_KEY = "brujulaRecientes";
 const LANGUAGE_KEY = "brujulaIdioma";
+const THEME_KEY = "brujulaThema";
 const RECENT_LIMIT = 5;
 
 
@@ -287,31 +298,28 @@ function createI18n({ getLang, setLang, onLanguageChanged }) {
     function applyStaticTranslations() {
         document.documentElement.lang = getLang();
 
-        const appTitle = document.getElementById("app-title");
-        const appSubtitle = document.getElementById("app-subtitle");
-        const search = document.getElementById("search");
-        const recentTitle = document.getElementById("recent-title");
-        const closeButton = document.getElementById("close-button");
-        const languageSelect = document.getElementById("language-select");
-        const installButton = document.getElementById("install-app-button");
-        const iosInstallTitle = document.getElementById("ios-install-title");
-        const iosInstallStep1 = document.getElementById("ios-install-step-1");
-        const iosInstallStep2 = document.getElementById("ios-install-step-2");
-        const iosInstallClose = document.getElementById("ios-install-close");
+        const ids = {
+            "app-title":          (el) => { el.textContent = t("title"); },
+            "app-subtitle":       (el) => { el.textContent = t("subtitle"); },
+            "search":             (el) => { el.placeholder = t("searchPlaceholder"); },
+            "recent-title":       (el) => { el.textContent = t("recentTitle"); },
+            "close-button":       (el) => { el.textContent = t("closeButton"); },
+            "install-app-button": (el) => { el.textContent = t("installButton"); },
+            "ios-install-title":  (el) => { el.textContent = t("iosInstallTitle"); },
+            "ios-install-step-1": (el) => { el.textContent = t("iosInstallStep1"); },
+            "ios-install-step-2": (el) => { el.textContent = t("iosInstallStep2"); },
+            "ios-install-close":  (el) => { el.textContent = t("iosInstallClose"); },
+            "settings-btn":       (el) => { el.setAttribute("aria-label", t("settingsLabel")); },
+            "settings-theme-label": (el) => { el.textContent = t("themeLabel"); },
+            "settings-lang-label":  (el) => { el.textContent = t("langLabel"); },
+            "theme-btn-light":    (el) => { el.textContent = t("themeLight"); },
+            "theme-btn-auto":     (el) => { el.textContent = t("themeAuto"); },
+            "theme-btn-dark":     (el) => { el.textContent = t("themeDark"); },
+        };
 
-        if (appTitle) appTitle.textContent = t("title");
-        if (appSubtitle) appSubtitle.textContent = t("subtitle");
-        if (search) search.placeholder = t("searchPlaceholder");
-        if (recentTitle) recentTitle.textContent = t("recentTitle");
-        if (closeButton) closeButton.textContent = t("closeButton");
-        if (installButton) installButton.textContent = t("installButton");
-        if (iosInstallTitle) iosInstallTitle.textContent = t("iosInstallTitle");
-        if (iosInstallStep1) iosInstallStep1.textContent = t("iosInstallStep1");
-        if (iosInstallStep2) iosInstallStep2.textContent = t("iosInstallStep2");
-        if (iosInstallClose) iosInstallClose.textContent = t("iosInstallClose");
-        if (languageSelect) {
-            languageSelect.value = getLang();
-            languageSelect.setAttribute("aria-label", t("langLabel"));
+        for (const [id, apply] of Object.entries(ids)) {
+            const el = document.getElementById(id);
+            if (el) apply(el);
         }
     }
 
@@ -648,11 +656,76 @@ ui = createUI({
     modalAnimationMs
 });
 
-function initLanguageSelector() {
-    const languageSelect = document.getElementById("language-select");
-    languageSelect.addEventListener("change", (event) => {
-        i18n.setLanguage(event.target.value);
+function getTheme() {
+    return localStorage.getItem(THEME_KEY) || "auto";
+}
+
+function applyTheme(theme) {
+    const prefersDark = globalThis.matchMedia("(prefers-color-scheme: dark)").matches;
+    if (theme === "dark" || (theme === "auto" && prefersDark)) {
+        document.documentElement.classList.add("dark");
+    } else {
+        document.documentElement.classList.remove("dark");
+    }
+    localStorage.setItem(THEME_KEY, theme);
+    updateSettingsActiveStates(theme, state.currentLang);
+}
+
+function updateSettingsActiveStates(theme, lang) {
+    for (const t of ["light", "auto", "dark"]) {
+        document.getElementById(`theme-btn-${t}`)?.classList.toggle("settings-option-active", t === theme);
+    }
+    for (const l of ["es", "en"]) {
+        document.getElementById(`lang-btn-${l}`)?.classList.toggle("settings-option-active", l === lang);
+    }
+}
+
+function initSettingsPanel() {
+    const settingsBtn = document.getElementById("settings-btn");
+    const settingsPanel = document.getElementById("settings-panel");
+    if (!settingsBtn || !settingsPanel) return;
+
+    const closePanel = () => {
+        settingsPanel.classList.add("hidden");
+        settingsBtn.setAttribute("aria-expanded", "false");
+    };
+
+    settingsBtn.addEventListener("click", (event) => {
+        event.stopPropagation();
+        const isOpen = !settingsPanel.classList.contains("hidden");
+        settingsPanel.classList.toggle("hidden", isOpen);
+        settingsBtn.setAttribute("aria-expanded", String(!isOpen));
     });
+
+    document.addEventListener("click", (event) => {
+        if (!settingsPanel.classList.contains("hidden") && !settingsPanel.contains(event.target)) {
+            closePanel();
+        }
+    });
+
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape" && !settingsPanel.classList.contains("hidden")) {
+            closePanel();
+            settingsBtn.focus();
+        }
+    });
+
+    for (const btn of settingsPanel.querySelectorAll("[data-theme-btn]")) {
+        btn.addEventListener("click", () => applyTheme(btn.dataset.themeBtn));
+    }
+
+    for (const btn of settingsPanel.querySelectorAll("[data-lang-btn]")) {
+        btn.addEventListener("click", () => {
+            i18n.setLanguage(btn.dataset.langBtn);
+            updateSettingsActiveStates(getTheme(), state.currentLang);
+        });
+    }
+
+    globalThis.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
+        if (getTheme() === "auto") applyTheme("auto");
+    });
+
+    updateSettingsActiveStates(getTheme(), state.currentLang);
 }
 
 function initServiceWorker() {
@@ -752,7 +825,7 @@ function bootstrap() {
     state.currentLang = i18n.detectInitialLanguage();
     i18n.applyStaticTranslations();
 
-    initLanguageSelector();
+    initSettingsPanel();
     ui.bindBaseEvents();
 
     ui.renderRecentEmotions();
