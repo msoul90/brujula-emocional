@@ -976,6 +976,9 @@
     return { init };
   }
 
+  // js/version.js
+  var BUILD_VERSION = "mox29ti1";
+
   // app.js
   var state = {
     currentLang: "es",
@@ -1148,6 +1151,8 @@
   function bootstrap() {
     state.currentLang = i18n.detectInitialLanguage();
     i18n.applyStaticTranslations();
+    const versionEl = document.getElementById("build-version");
+    if (versionEl) versionEl.textContent = BUILD_VERSION;
     initSettingsPanel();
     ui.bindBaseEvents();
     const quiz = createQuiz({

@@ -2,6 +2,7 @@
 import { createI18n } from "./js/i18n.js";
 import { createUI } from "./js/ui.js";
 import { createQuiz } from "./js/quiz.js";
+import { BUILD_VERSION } from "./js/version.js";
 
 const state = {
     currentLang: "es",
@@ -209,6 +210,9 @@ function initSmartInstallButton() {
 function bootstrap() {
     state.currentLang = i18n.detectInitialLanguage();
     i18n.applyStaticTranslations();
+
+    const versionEl = document.getElementById("build-version");
+    if (versionEl) versionEl.textContent = BUILD_VERSION;
 
     initSettingsPanel();
     ui.bindBaseEvents();

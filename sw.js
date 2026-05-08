@@ -13,7 +13,8 @@ const APP_SHELL = [
   "./pwa/manifest.webmanifest",
   "./pwa/icons/icon-192.svg",
   "./pwa/icons/icon-512.svg",
-  "./pwa/fonts/inter.woff2"
+  "./pwa/fonts/inter.woff2",
+  "./js/version.js"
 ];
 
 globalThis.addEventListener("install", (event) => {
