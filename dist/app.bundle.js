@@ -977,7 +977,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mox29ti1";
+  var BUILD_VERSION = "mox2j4it";
 
   // app.js
   var state = {
@@ -1078,6 +1078,9 @@
     window.addEventListener("load", () => {
       navigator.serviceWorker.register("./sw.js").catch(() => {
       });
+    });
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      globalThis.location.reload();
     });
   }
   function isIosDevice() {
