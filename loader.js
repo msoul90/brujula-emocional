@@ -1,7 +1,7 @@
 (function () {
     var script = document.createElement("script");
     if (location.protocol === "file:") {
-        script.src = "app.legacy.js";
+        script.src = "dist/app.bundle.js";
         script.defer = true;
 
         var warning = document.createElement("div");

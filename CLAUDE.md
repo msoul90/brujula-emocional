@@ -4,25 +4,44 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Development
 
+**Instalar dependencias (primera vez):**
+
+```bash
+npm install
+```
+
+**Build completo** (bundle JS + CSS + bump SW version):
+
+```bash
+npm run build
+```
+
+El pre-commit hook ejecuta `npm run build` automáticamente en cada `git commit`.
+
 **Run locally:**
 
 ```bash
-npx serve .
+npm run dev   # alias de npx serve .
 ```
 
 Or open `index.html` directly in a browser. Note: the service worker and PWA install prompt require `http://` or `https://` — they won't work on `file://`.
 
 There is no automated test suite. Manual test scenarios are documented in `README.md`.
 
-## Tailwind CSS build
+## Build system
 
-Tailwind is **not** loaded via CDN. `dist/tailwind.css` is a pre-generated static file committed to the repo. Regenerate it whenever new Tailwind utility classes are added to any HTML or JS file:
+The project uses **esbuild** (devDependency) to bundle `app.js` and all its ES6 module imports into `dist/app.bundle.js`. This bundle is used when the app is opened via `file://`.
 
-```bash
-npx tailwindcss@3 -i input.css -o dist/tailwind.css --minify
-```
+| Script | What it does |
+| --- | --- |
+| `npm run build:js` | Bundle `app.js` → `dist/app.bundle.js` (esbuild IIFE) |
+| `npm run build:css` | Compile Tailwind → `dist/tailwind.css` (minified) |
+| `npm run build:sw` | Auto-bump `CACHE_NAME` in `sw.js` (timestamp-based) |
+| `npm run build` | Runs all three in sequence |
 
-Content sources are declared in `tailwind.config.js`. The `input.css` file contains only the three `@tailwind` directives.
+`scripts/bump-sw-version.js` replaces `CACHE_NAME` with a timestamp tag — no need to bump it manually.
+
+Content sources for Tailwind are declared in `tailwind.config.js`.
 
 ## Architecture
 
@@ -35,16 +54,13 @@ The app is a vanilla JS PWA with no framework or bundler. Tailwind CSS is served
 | `js/constants.js` | Emotion data array, all translations, localStorage key names, config constants |
 | `js/i18n.js` | Language detection, `t()` helper, applies translations to the DOM |
 | `js/ui.js` | Renders emotion cards and modal, handles search and all keyboard/click events |
-| `loader.js` | Detects `file://` vs `http://` and loads `app.legacy.js` or `app.js` accordingly |
+| `loader.js` | Detects `file://` vs `http://` and loads `dist/app.bundle.js` or `app.js` accordingly |
 | `app.js` | Entry point — creates shared state, initializes i18n and UI, wires up language toggle and service worker |
-| `app.legacy.js` | Inline duplicate of `app.js` for `file://` protocol (no ES6 module support there) |
 | `sw.js` | Service worker — cache-first strategy for offline support |
 
 **Data flow:** `constants.js` → `i18n.js` → `ui.js` ← `app.js` (bootstraps everything, owns state).
 
-## Critical: Dual-Script Maintenance
-
-`app.legacy.js` is a self-contained copy of the app logic for browsers opening via `file://`. Whenever `app.js` is changed, **the equivalent change must be mirrored in `app.legacy.js`**. The `index.html` selects between them at runtime based on `window.location.protocol`.
+**`dist/app.bundle.js`** is the esbuild-generated bundle used for `file://` mode. It is committed to the repo and must be rebuilt (`npm run build:js`) whenever `app.js` or any of its imports change.
 
 ## Emotion Data Structure
 
@@ -66,7 +82,7 @@ English translations for all fields live in `EMOTION_NAME_TRANSLATIONS` and `EMO
 
 ## Service Worker versioning
 
-`sw.js` uses a single cache `brujula-emocional-vN`. **Bump `CACHE_NAME` in `sw.js` whenever you deploy changes to cached assets** (including after regenerating `dist/tailwind.css`) — otherwise users will receive stale files.
+`sw.js` uses a single cache. `CACHE_NAME` is auto-bumped by `npm run build:sw` (called from `npm run build` and the pre-commit hook) — no manual editing required.
 
 ## Styling
 

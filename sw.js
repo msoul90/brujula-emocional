@@ -1,5 +1,5 @@
 // Actualizar CACHE_NAME al desplegar cambios en assets cacheados.
-const CACHE_NAME = "brujula-emocional-v12";
+const CACHE_NAME = "brujula-emocional-mox08ux4";
 
 const APP_SHELL = [
   "./",
@@ -12,7 +12,8 @@ const APP_SHELL = [
   "./js/quiz.js",
   "./pwa/manifest.webmanifest",
   "./pwa/icons/icon-192.svg",
-  "./pwa/icons/icon-512.svg"
+  "./pwa/icons/icon-512.svg",
+  "./pwa/fonts/inter.woff2"
 ];
 
 globalThis.addEventListener("install", (event) => {

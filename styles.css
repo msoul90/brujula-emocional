@@ -1,4 +1,12 @@
-﻿.emotion-card { transition: all 0.2s ease; border: 1px solid rgba(0,0,0,0.05); }
+﻿@font-face {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 100 900;
+    font-display: swap;
+    src: url('./pwa/fonts/inter.woff2') format('woff2');
+}
+
+.emotion-card { transition: all 0.2s ease; border: 1px solid rgba(0,0,0,0.05); }
         .emotion-card:active { transform: scale(0.96); opacity: 0.8; }
         .emotion-card:focus-visible {
             outline: 3px solid #2563eb;

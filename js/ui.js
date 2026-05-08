@@ -66,9 +66,10 @@ function roundRectPath(ctx, x, y, w, h, radii) {
     ctx.closePath();
 }
 
-function buildEmotionCanvas(e, displayName, tagLabel, mensaje, responseLabel, respuesta) {
+async function buildEmotionCanvas(e, displayName, tagLabel, mensaje, responseLabel, respuesta) {
+    await document.fonts.load('900 1px Inter').catch(() => {});
     const W = 1080, H = 1350, PAD = 84;
-    const SANS = `system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`;
+    const SANS = `'Inter', system-ui, -apple-system, sans-serif`;
     const SERIF = `Georgia, "Times New Roman", serif`;
 
     const canvas = document.createElement("canvas");
@@ -399,8 +400,8 @@ export function createUI({
 
         const shareBtn = document.getElementById("share-btn");
         if (shareBtn) {
-            shareBtn.addEventListener("click", () => {
-                const canvas = buildEmotionCanvas(
+            shareBtn.addEventListener("click", async () => {
+                const canvas = await buildEmotionCanvas(
                     e,
                     getDisplayName(e.nombre),
                     t("emotionTag"),
