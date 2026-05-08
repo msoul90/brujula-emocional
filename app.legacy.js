@@ -19,6 +19,8 @@ const TRANSLATIONS = {
         openChip: "Ver",
         openEmotionAria: "Abrir emoción",
         openDetailAria: "Abrir detalle de",
+        copyButton: "Copiar",
+        copiedFeedback: "Copiado",
         installButton: "Instalar app",
         iosInstallTitle: "Instalar en iPhone/iPad",
         iosInstallStep1: "1. Toca el botón Compartir de Safari (cuadro con flecha hacia arriba).",
@@ -44,6 +46,8 @@ const TRANSLATIONS = {
         openChip: "View",
         openEmotionAria: "Open emotion",
         openDetailAria: "Open details for",
+        copyButton: "Copy",
+        copiedFeedback: "Copied",
         installButton: "Install app",
         iosInstallTitle: "Install on iPhone/iPad",
         iosInstallStep1: "1. Tap Safari's Share button (square with upward arrow).",
@@ -520,7 +524,13 @@ function createUI({
                 </div>
 
                 <div>
-                    <p class="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2 px-1">${t("responseLabel")}</p>
+                    <div class="flex items-center justify-between mb-2 px-1">
+                        <p class="text-[11px] font-black text-slate-500 uppercase tracking-widest">${t("responseLabel")}</p>
+                        <button id="copy-response-btn" type="button" class="flex items-center gap-1 text-slate-400 hover:text-slate-600 transition-colors text-[11px] font-bold" aria-label="${t("copyButton")}">
+                            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
+                            <span id="copy-response-label">${t("copyButton")}</span>
+                        </button>
+                    </div>
                     <div class="bg-emerald-50 border-2 border-emerald-100 p-4 rounded-2xl">
                         <p class="text-emerald-900 font-bold leading-relaxed">${getEmotionField(e, "respuesta")}</p>
                     </div>
@@ -535,6 +545,19 @@ function createUI({
             panel.classList.remove("translate-y-8", "sm:scale-95", "opacity-0");
         });
         saveRecentEmotion(e.nombre);
+
+        const copyBtn = document.getElementById("copy-response-btn");
+        const copyLabel = document.getElementById("copy-response-label");
+        if (copyBtn && navigator.clipboard) {
+            copyBtn.addEventListener("click", async () => {
+                await navigator.clipboard.writeText(getEmotionField(e, "respuesta"));
+                copyLabel.textContent = t("copiedFeedback");
+                setTimeout(() => { copyLabel.textContent = t("copyButton"); }, 2000);
+            });
+        } else if (copyBtn) {
+            copyBtn.remove();
+        }
+
         const closeButton = document.getElementById("close-button");
         if (closeButton) closeButton.focus();
     }
