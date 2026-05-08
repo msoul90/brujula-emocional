@@ -1,4 +1,4 @@
-const QUIZ_STEPS = {
+export const QUIZ_STEPS = {
     q1: {
         textKey: "quizQ1",
         options: [

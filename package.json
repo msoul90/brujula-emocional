@@ -2,13 +2,16 @@
   "name": "brujula-emocional",
   "private": true,
   "scripts": {
-    "build:js":  "esbuild app.js --bundle --format=iife --outfile=dist/app.bundle.js",
+    "build:js": "esbuild app.js --bundle --format=iife --outfile=dist/app.bundle.js",
     "build:css": "npx tailwindcss@3 -i input.css -o dist/tailwind.css --minify",
-    "build:sw":  "node scripts/bump-sw-version.js",
-    "build":     "npm run build:sw && npm run build:js && npm run build:css",
-    "dev":       "npx serve ."
+    "build:sw": "node scripts/bump-sw-version.js",
+    "build": "npm run build:sw && npm run build:js && npm run build:css",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "dev": "npx serve ."
   },
   "devDependencies": {
-    "esbuild": "^0.25.0"
+    "esbuild": "^0.25.0",
+    "vitest": "^4.1.5"
   }
 }

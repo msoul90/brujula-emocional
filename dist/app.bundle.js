@@ -406,20 +406,9 @@
     };
   }
 
-  // js/ui.js
+  // js/utils.js
   function normalizeText(value) {
-    return value.toLowerCase().normalize("NFD").replaceAll(/[\u0300-\u036f]/g, "");
-  }
-  function loadRecentEmotions() {
-    try {
-      const parsed = JSON.parse(localStorage.getItem(RECENT_KEY) || "[]");
-      return Array.isArray(parsed) ? parsed : [];
-    } catch {
-      return [];
-    }
-  }
-  function shortRecentLabel(nombre) {
-    return nombre.length > 9 ? `${nombre.slice(0, 9)}...` : nombre;
+    return value.toLowerCase().normalize("NFD").replaceAll(/[̀-ͯ]/g, "");
   }
   function getReadableTextColor(hexColor) {
     const safeHex = (hexColor || "").replace("#", "");
@@ -446,6 +435,19 @@
     }
     if (line) lines.push(line);
     return lines;
+  }
+
+  // js/ui.js
+  function loadRecentEmotions() {
+    try {
+      const parsed = JSON.parse(localStorage.getItem(RECENT_KEY) || "[]");
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  }
+  function shortRecentLabel(nombre) {
+    return nombre.length > 9 ? `${nombre.slice(0, 9)}...` : nombre;
   }
   function roundRectPath(ctx, x, y, w, h, radii) {
     const [tl, tr, br, bl] = Array.isArray(radii) ? radii : [radii, radii, radii, radii];
@@ -977,7 +979,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mox2nw77";
+  var BUILD_VERSION = "mox7mlzt";
 
   // app.js
   var state = {

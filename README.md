@@ -28,50 +28,78 @@ La app está pensada para ser rápida, simple y usable desde móvil.
 - Cierre de modal por botón, tecla Escape o toque en fondo
 - Soporte multi-idioma ES/EN con persistencia
 - Botón de instalación PWA inteligente (Android/Chrome y guía para iOS/Safari)
-- Funciona offline gracias al Service Worker
+- Funciona offline gracias al Service Worker con auto-actualización silenciosa
 - Respeto de `prefers-reduced-motion`
 
 ## Tecnologías
 
 - HTML5
 - CSS personalizado (`styles.css`) + Tailwind CSS pre-generado (`dist/tailwind.css`)
-- JavaScript vanilla modular (sin bundler)
+- JavaScript vanilla modular con esbuild como único bundler
+- Fuente Inter self-hosted (`pwa/fonts/inter.woff2`) para tipografía consistente entre dispositivos
 - Íconos SVG inline (sin dependencia externa)
 - Service Worker para soporte offline
+- Vitest para tests automatizados
+
+## Desarrollo
+
+**Primera vez:**
+
+```bash
+npm install
+```
+
+**Build completo** (SW version bump + bundle JS + CSS):
+
+```bash
+npm run build
+```
+
+**Desarrollo local:**
+
+```bash
+npm run dev   # alias de npx serve .
+```
+
+**Tests:**
+
+```bash
+npm test            # ejecuta todos los tests una vez
+npm run test:watch  # modo watch durante desarrollo
+```
+
+El pre-commit hook ejecuta `npm run build` automáticamente en cada `git commit`, así los artefactos generados (`dist/`, `sw.js`, `js/version.js`) siempre están actualizados.
 
 ## Estructura del proyecto
 
 ```text
 ├── index.html               Estructura principal de la interfaz
-├── loader.js                Detecta file:// vs http:// y carga app.js o app.legacy.js
 ├── app.js                   Punto de entrada (ES6 modules): estado, bootstrap
-├── app.legacy.js            Copia autónoma para uso con file://
-├── styles.css               Estilos personalizados (transiciones, foco, scrollbar)
+├── loader.js                Detecta file:// vs http:// y carga dist/app.bundle.js o app.js
+├── styles.css               Estilos personalizados (transiciones, foco, scrollbar, @font-face)
 ├── sw.js                    Service Worker (cache-first, soporte offline)
+├── vitest.config.js         Configuración de tests
 ├── js/
 │   ├── constants.js         Datos de emociones, traducciones, claves de localStorage
 │   ├── i18n.js              Detección de idioma, función t(), traducciones al DOM
-│   └── ui.js                Render de tarjetas y modal, búsqueda, eventos
+│   ├── ui.js                Render de tarjetas y modal, búsqueda, eventos, canvas share
+│   ├── utils.js             Funciones puras: normalizeText, getReadableTextColor, wrapTextLines
+│   ├── quiz.js              Lógica del quiz de identificación emocional
+│   └── version.js           Versión de build auto-generada (no editar manualmente)
+├── dist/
+│   ├── tailwind.css         CSS de Tailwind pre-generado (no editar manualmente)
+│   └── app.bundle.js        Bundle para uso con file:// (no editar manualmente)
+├── tests/
+│   ├── utils.test.js        Tests de normalizeText, getReadableTextColor, wrapTextLines
+│   ├── i18n.test.js         Tests de t(), getDisplayName(), getEmotionField()
+│   └── quiz.test.js         Tests de estructura y caminos del quiz
+├── scripts/
+│   └── bump-sw-version.js   Actualiza CACHE_NAME en sw.js y genera js/version.js
 └── pwa/
     ├── manifest.webmanifest
+    ├── fonts/inter.woff2    Fuente Inter variable (latin subset)
     └── icons/
 ```
-
-## Cómo ejecutar
-
-No requiere build ni instalación de dependencias.
-
-**Con servidor HTTP (recomendado — activa Service Worker y PWA):**
-
-```bash
-npx serve .
-```
-
-Abrir `http://localhost:3000` en el navegador.
-
-**Sin servidor:**
-
-Abrir `index.html` directamente con doble clic. Las emociones cargan normalmente, pero el Service Worker y la instalación PWA no funcionan en `file://`.
 
 ## Instalar como PWA
 
@@ -146,11 +174,12 @@ Para que la instalación esté disponible, la app debe ejecutarse en `http://` o
 3. Instalar la app y abrirla como ventana independiente.
 4. Verificar que el botón desaparece tras la instalación.
 
-### Escenario 8: Soporte offline
+### Escenario 8: Soporte offline y actualización automática
 
 1. Ejecutar en `http://localhost` y esperar a que el Service Worker se registre.
 2. En DevTools → Network, activar modo offline.
 3. Recargar la página y confirmar que la app carga con estilos completos.
+4. Para verificar la actualización automática: desplegar una nueva versión, visitar el sitio — la página se recarga sola al activarse el nuevo SW.
 
 ### Escenario 9: Modo oscuro
 
