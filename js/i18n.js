@@ -48,9 +48,9 @@ export function createI18n({ getLang, setLang, onLanguageChanged }) {
             "settings-btn":       (el) => { el.setAttribute("aria-label", t("settingsLabel")); },
             "settings-theme-label": (el) => { el.textContent = t("themeLabel"); },
             "settings-lang-label":  (el) => { el.textContent = t("langLabel"); },
-            "theme-btn-light":    (el) => { el.textContent = t("themeLight"); },
-            "theme-btn-auto":     (el) => { el.textContent = t("themeAuto"); },
-            "theme-btn-dark":     (el) => { el.textContent = t("themeDark"); },
+            "theme-btn-light":    (el) => { el.setAttribute("aria-label", t("themeLight")); el.setAttribute("title", t("themeLight")); },
+            "theme-btn-auto":     (el) => { el.setAttribute("aria-label", t("themeAuto")); el.setAttribute("title", t("themeAuto")); },
+            "theme-btn-dark":     (el) => { el.setAttribute("aria-label", t("themeDark")); el.setAttribute("title", t("themeDark")); },
         };
 
         for (const [id, apply] of Object.entries(ids)) {

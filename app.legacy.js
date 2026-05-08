@@ -346,9 +346,9 @@ function createI18n({ getLang, setLang, onLanguageChanged }) {
             "settings-btn":       (el) => { el.setAttribute("aria-label", t("settingsLabel")); },
             "settings-theme-label": (el) => { el.textContent = t("themeLabel"); },
             "settings-lang-label":  (el) => { el.textContent = t("langLabel"); },
-            "theme-btn-light":    (el) => { el.textContent = t("themeLight"); },
-            "theme-btn-auto":     (el) => { el.textContent = t("themeAuto"); },
-            "theme-btn-dark":     (el) => { el.textContent = t("themeDark"); },
+            "theme-btn-light":    (el) => { el.setAttribute("aria-label", t("themeLight")); el.setAttribute("title", t("themeLight")); },
+            "theme-btn-auto":     (el) => { el.setAttribute("aria-label", t("themeAuto")); el.setAttribute("title", t("themeAuto")); },
+            "theme-btn-dark":     (el) => { el.setAttribute("aria-label", t("themeDark")); el.setAttribute("title", t("themeDark")); },
         };
 
         for (const [id, apply] of Object.entries(ids)) {
@@ -421,6 +421,8 @@ function createUI({
     setIsClosingModal,
     modalAnimationMs
 }) {
+    let scrollCleanup = null;
+
     function saveRecentEmotion(nombre) {
         const existing = loadRecentEmotions().filter((item) => item !== nombre);
         const next = [nombre, ...existing].slice(0, RECENT_LIMIT);
@@ -582,6 +584,7 @@ function createUI({
         const modal = document.getElementById("modal");
         const panel = document.getElementById("modal-panel");
         modal.showModal();
+        panel.scrollTop = 0;
         document.body.style.overflow = "hidden";
         requestAnimationFrame(() => {
             panel.classList.remove("translate-y-8", "sm:scale-95", "opacity-0");
@@ -601,7 +604,16 @@ function createUI({
         }
 
         const closeButton = document.getElementById("close-button");
-        if (closeButton) closeButton.focus();
+        if (closeButton) closeButton.focus({ preventScroll: true });
+
+        if (scrollCleanup) scrollCleanup();
+        const onPanelScroll = () => {
+            const atBottom = panel.scrollHeight - panel.scrollTop <= panel.clientHeight + 8;
+            panel.classList.toggle("modal-at-bottom", atBottom);
+        };
+        panel.addEventListener("scroll", onPanelScroll, { passive: true });
+        scrollCleanup = () => panel.removeEventListener("scroll", onPanelScroll);
+        onPanelScroll();
     }
 
     function closeModal() {
@@ -612,6 +624,7 @@ function createUI({
 
         setIsClosingModal(true);
         panel.classList.add("translate-y-8", "sm:scale-95", "opacity-0");
+        if (scrollCleanup) { scrollCleanup(); scrollCleanup = null; }
 
         setTimeout(() => {
             modal.close();

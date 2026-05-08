@@ -66,9 +66,26 @@
             }
         }
 
+        #modal-panel::after {
+            content: "";
+            display: block;
+            position: sticky;
+            bottom: 0;
+            height: 3.5rem;
+            margin-top: -3.5rem;
+            background: linear-gradient(to bottom, transparent, #ffffff);
+            pointer-events: none;
+            transition: opacity 0.25s ease;
+        }
+
+        #modal-panel.modal-at-bottom::after {
+            opacity: 0;
+        }
+
         @media (prefers-reduced-motion: reduce) {
             .emotion-card,
-            #modal-panel {
+            #modal-panel,
+            #modal-panel::after {
                 transition: none !important;
                 animation: none !important;
             }
@@ -136,6 +153,7 @@
 
         /* Modal */
         html.dark #modal-panel { background-color: #1e293b; }
+        html.dark #modal-panel::after { background: linear-gradient(to bottom, transparent, #1e293b); }
         html.dark #close-button {
             background-color: #334155;
             border-color: #475569;

@@ -46,6 +46,7 @@ export function createUI({
     setIsClosingModal,
     modalAnimationMs
 }) {
+    let scrollCleanup = null;
     function saveRecentEmotion(nombre) {
         const existing = loadRecentEmotions().filter((item) => item !== nombre);
         const next = [nombre, ...existing].slice(0, RECENT_LIMIT);
@@ -207,6 +208,7 @@ export function createUI({
         const modal = document.getElementById("modal");
         const panel = document.getElementById("modal-panel");
         modal.showModal();
+        panel.scrollTop = 0;
         document.body.style.overflow = "hidden";
         requestAnimationFrame(() => {
             panel.classList.remove("translate-y-8", "sm:scale-95", "opacity-0");
@@ -226,7 +228,16 @@ export function createUI({
         }
 
         const closeButton = document.getElementById("close-button");
-        if (closeButton) closeButton.focus();
+        if (closeButton) closeButton.focus({ preventScroll: true });
+
+        if (scrollCleanup) scrollCleanup();
+        const onPanelScroll = () => {
+            const atBottom = panel.scrollHeight - panel.scrollTop <= panel.clientHeight + 8;
+            panel.classList.toggle("modal-at-bottom", atBottom);
+        };
+        panel.addEventListener("scroll", onPanelScroll, { passive: true });
+        scrollCleanup = () => panel.removeEventListener("scroll", onPanelScroll);
+        onPanelScroll();
     }
 
     function closeModal() {
@@ -237,6 +248,7 @@ export function createUI({
 
         setIsClosingModal(true);
         panel.classList.add("translate-y-8", "sm:scale-95", "opacity-0");
+        if (scrollCleanup) { scrollCleanup(); scrollCleanup = null; }
 
         setTimeout(() => {
             modal.close();
