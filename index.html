@@ -59,6 +59,14 @@
         </div>
     </div>
 
+    <button id="quiz-trigger" type="button" class="w-full mb-6 text-left py-4 px-5 bg-white rounded-2xl shadow-sm flex items-center justify-between gap-3 hover:shadow-md transition-all" style="border-left: 6px solid #818cf8">
+        <div>
+            <p id="quiz-trigger-title" class="font-bold text-slate-700 text-sm">¿No sabes lo que sientes?</p>
+            <p id="quiz-trigger-sub" class="text-slate-400 text-xs mt-1">Descúbrelo en 3 preguntas</p>
+        </div>
+        <svg class="w-5 h-5 text-indigo-300 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+    </button>
+
     <section id="recent-section" class="mb-6 hidden" aria-live="polite">
         <h2 id="recent-title" class="text-sm font-black text-slate-500 uppercase tracking-wider mb-2">Vistas recientemente</h2>
         <div id="recent-grid" class="flex gap-3 overflow-x-auto hide-scroll pb-2 pr-1"></div>
@@ -66,6 +74,12 @@
 
     <div id="emotion-grid" class="grid grid-cols-1 gap-3">
         </div>
+
+    <dialog id="quiz-panel" aria-label="¿Qué siento?">
+        <div class="max-w-lg mx-auto p-6 pb-16">
+            <div id="quiz-content"></div>
+        </div>
+    </dialog>
 
     <dialog id="modal" aria-labelledby="modal-emotion-title">
         <div id="modal-backdrop">

@@ -1,6 +1,7 @@
 ﻿import { emociones, THEME_KEY } from "./js/constants.js";
 import { createI18n } from "./js/i18n.js";
 import { createUI } from "./js/ui.js";
+import { createQuiz } from "./js/quiz.js";
 
 const state = {
     currentLang: "es",
@@ -211,6 +212,14 @@ function bootstrap() {
 
     initSettingsPanel();
     ui.bindBaseEvents();
+
+    const quiz = createQuiz({
+        emociones,
+        getDisplayName: i18n.getDisplayName,
+        t: i18n.t,
+        showDetail: ui.showDetail
+    });
+    quiz.init();
 
     ui.renderRecentEmotions();
     ui.renderEmociones();

@@ -271,6 +271,7 @@ export function createUI({
         renderRecentEmotions,
         renderEmociones,
         bindBaseEvents,
-        closeModal
+        closeModal,
+        showDetail
     };
 }

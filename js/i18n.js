@@ -43,6 +43,8 @@ export function createI18n({ getLang, setLang, onLanguageChanged }) {
             "ios-install-step-1": (el) => { el.textContent = t("iosInstallStep1"); },
             "ios-install-step-2": (el) => { el.textContent = t("iosInstallStep2"); },
             "ios-install-close":  (el) => { el.textContent = t("iosInstallClose"); },
+            "quiz-trigger-title": (el) => { el.textContent = t("quizTrigger"); },
+            "quiz-trigger-sub":   (el) => { el.textContent = t("quizTriggerSub"); },
             "settings-btn":       (el) => { el.setAttribute("aria-label", t("settingsLabel")); },
             "settings-theme-label": (el) => { el.textContent = t("themeLabel"); },
             "settings-lang-label":  (el) => { el.textContent = t("langLabel"); },
