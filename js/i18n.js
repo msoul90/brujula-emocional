@@ -38,6 +38,7 @@ export function createI18n({ getLang, setLang, onLanguageChanged }) {
             "search":             (el) => { el.placeholder = t("searchPlaceholder"); },
             "recent-title":       (el) => { el.textContent = t("recentTitle"); },
             "close-button":       (el) => { el.textContent = t("closeButton"); },
+            "share-btn-label":    (el) => { el.textContent = t("shareButton"); },
             "install-app-button": (el) => { el.textContent = t("installButton"); },
             "ios-install-title":  (el) => { el.textContent = t("iosInstallTitle"); },
             "ios-install-step-1": (el) => { el.textContent = t("iosInstallStep1"); },

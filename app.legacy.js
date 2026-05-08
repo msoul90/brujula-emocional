@@ -336,6 +336,7 @@ function createI18n({ getLang, setLang, onLanguageChanged }) {
             "search":             (el) => { el.placeholder = t("searchPlaceholder"); },
             "recent-title":       (el) => { el.textContent = t("recentTitle"); },
             "close-button":       (el) => { el.textContent = t("closeButton"); },
+            "share-btn-label":    (el) => { el.textContent = t("shareButton"); },
             "install-app-button": (el) => { el.textContent = t("installButton"); },
             "ios-install-title":  (el) => { el.textContent = t("iosInstallTitle"); },
             "ios-install-step-1": (el) => { el.textContent = t("iosInstallStep1"); },
@@ -408,6 +409,134 @@ function getReadableTextColor(hexColor) {
     // Relative luminance approximation to decide dark vs light text.
     const luminance = (0.299 * r + 0.587 * g + 0.114 * b) / 255;
     return luminance < 0.52 ? "#f8fafc" : "#0f172a";
+}
+
+function wrapTextLines(ctx, text, maxWidth) {
+    const words = text.split(" ");
+    const lines = [];
+    let line = "";
+    for (const word of words) {
+        const test = line ? `${line} ${word}` : word;
+        if (ctx.measureText(test).width > maxWidth && line) {
+            lines.push(line);
+            line = word;
+        } else {
+            line = test;
+        }
+    }
+    if (line) lines.push(line);
+    return lines;
+}
+
+function roundRectPath(ctx, x, y, w, h, radii) {
+    const [tl, tr, br, bl] = Array.isArray(radii) ? radii : [radii, radii, radii, radii];
+    ctx.moveTo(x + tl, y);
+    ctx.lineTo(x + w - tr, y);
+    ctx.arcTo(x + w, y, x + w, y + tr, tr);
+    ctx.lineTo(x + w, y + h - br);
+    ctx.arcTo(x + w, y + h, x + w - br, y + h, br);
+    ctx.lineTo(x + bl, y + h);
+    ctx.arcTo(x, y + h, x, y + h - bl, bl);
+    ctx.lineTo(x, y + tl);
+    ctx.arcTo(x, y, x + tl, y, tl);
+    ctx.closePath();
+}
+
+function buildEmotionCanvas(e, displayName, tagLabel, mensaje, responseLabel, respuesta) {
+    const W = 1080, H = 1350, PAD = 84;
+    const SANS = `system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif`;
+    const SERIF = `Georgia, "Times New Roman", serif`;
+
+    const canvas = document.createElement("canvas");
+    canvas.width = W;
+    canvas.height = H;
+    const ctx = canvas.getContext("2d");
+
+    const textOnColor = getReadableTextColor(e.color);
+    const tagAlpha = textOnColor === "#f8fafc" ? "rgba(255,255,255,0.6)" : "rgba(15,23,42,0.4)";
+
+    ctx.fillStyle = "#f8fafc";
+    ctx.beginPath();
+    roundRectPath(ctx, 0, 0, W, H, 0);
+    ctx.fill();
+
+    const ACCENT_H = 320;
+    ctx.fillStyle = e.color;
+    ctx.beginPath();
+    roundRectPath(ctx, 0, 0, W, ACCENT_H, [0, 0, 0, 0]);
+    ctx.fill();
+
+    ctx.fillStyle = tagAlpha;
+    ctx.font = `600 26px ${SANS}`;
+    ctx.fillText(tagLabel.toUpperCase(), PAD, 112);
+
+    ctx.fillStyle = textOnColor;
+    ctx.font = `900 92px ${SANS}`;
+    ctx.fillText(displayName, PAD, 248);
+
+    let y = ACCENT_H + 76;
+
+    ctx.fillStyle = "#475569";
+    ctx.font = `italic 42px ${SERIF}`;
+    const msgLines = wrapTextLines(ctx, `"${mensaje}"`, W - PAD * 2);
+    for (const line of msgLines) {
+        ctx.fillText(line, PAD, y);
+        y += 64;
+    }
+
+    y += 48;
+
+    ctx.strokeStyle = "#e2e8f0";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(PAD, y);
+    ctx.lineTo(W - PAD, y);
+    ctx.stroke();
+
+    y += 56;
+
+    ctx.fillStyle = "#94a3b8";
+    ctx.font = `700 22px ${SANS}`;
+    ctx.fillText(responseLabel.toUpperCase(), PAD, y);
+    y += 50;
+
+    ctx.fillStyle = "#1e293b";
+    ctx.font = `500 38px ${SANS}`;
+    const respLines = wrapTextLines(ctx, respuesta, W - PAD * 2);
+    for (const line of respLines) {
+        ctx.fillText(line, PAD, y);
+        y += 58;
+    }
+
+    ctx.fillStyle = "#cbd5e1";
+    ctx.font = `400 26px ${SANS}`;
+    const brand = "Brújula Emocional";
+    ctx.fillText(brand, W - PAD - ctx.measureText(brand).width, H - 56);
+
+    return canvas;
+}
+
+async function shareEmotionCard(canvas, filename) {
+    const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/png"));
+    const file = new File([blob], `${filename}.png`, { type: "image/png" });
+
+    if (navigator.canShare?.({ files: [file] })) {
+        try {
+            await navigator.share({ files: [file], title: filename });
+        } catch {
+            // user cancelled
+        }
+        return;
+    }
+
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = `${filename}.png`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
 }
 
 function createUI({
@@ -600,6 +729,21 @@ function createUI({
 
         const closeButton = document.getElementById("close-button");
         if (closeButton) closeButton.focus({ preventScroll: true });
+
+        const shareBtn = document.getElementById("share-btn");
+        if (shareBtn) {
+            shareBtn.addEventListener("click", () => {
+                const canvas = buildEmotionCanvas(
+                    e,
+                    getDisplayName(e.nombre),
+                    t("emotionTag"),
+                    getEmotionField(e, "mensaje"),
+                    t("responseLabel"),
+                    getEmotionField(e, "respuesta")
+                );
+                shareEmotionCard(canvas, getDisplayName(e.nombre));
+            });
+        }
 
         if (scrollCleanup) scrollCleanup();
         const onPanelScroll = () => {
