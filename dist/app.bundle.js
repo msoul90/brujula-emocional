@@ -748,7 +748,9 @@
       if (closeButton) closeButton.focus({ preventScroll: true });
       const shareBtn = document.getElementById("share-btn");
       if (shareBtn) {
-        shareBtn.addEventListener("click", async () => {
+        const freshShareBtn = shareBtn.cloneNode(true);
+        shareBtn.replaceWith(freshShareBtn);
+        freshShareBtn.addEventListener("click", async () => {
           const canvas = await buildEmotionCanvas(
             e,
             getDisplayName(e.nombre),
@@ -979,7 +981,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mox7mlzt";
+  var BUILD_VERSION = "moxwun00";
 
   // app.js
   var state = {

@@ -362,7 +362,9 @@ export function createUI({
 
         const shareBtn = document.getElementById("share-btn");
         if (shareBtn) {
-            shareBtn.addEventListener("click", async () => {
+            const freshShareBtn = shareBtn.cloneNode(true);
+            shareBtn.replaceWith(freshShareBtn);
+            freshShareBtn.addEventListener("click", async () => {
                 const canvas = await buildEmotionCanvas(
                     e,
                     getDisplayName(e.nombre),
