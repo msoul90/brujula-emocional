@@ -72,9 +72,22 @@ function clamp(v, lo, hi) { return Math.min(Math.max(v, lo), hi); }
 
 // ── Edge builder (shared by both views) ──────────────────────────────────────
 function buildEdges(nameToIdx) {
-    return EMOTION_RELATIONS
-        .map(r => ({ ai: nameToIdx[r.from], bi: nameToIdx[r.to], type: r.type }))
-        .filter(e => e.ai !== undefined && e.bi !== undefined);
+    return EMOTION_RELATIONS.flatMap((r) => {
+        const ai = nameToIdx[r.from];
+        const bi = nameToIdx[r.to];
+
+        if (ai === undefined || bi === undefined) {
+            const missing = [];
+            if (ai === undefined) missing.push(`from="${r.from}"`);
+            if (bi === undefined) missing.push(`to="${r.to}"`);
+            console.warn(
+                `[emotionMap] Dropping relation "${r.type}" with unknown endpoint(s): ${missing.join(", ")}`
+            );
+            return [];
+        }
+
+        return [{ ai, bi, type: r.type }];
+    });
 }
 
 // ── Force-graph node positions ────────────────────────────────────────────────
