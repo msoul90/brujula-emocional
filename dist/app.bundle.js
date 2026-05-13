@@ -981,7 +981,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "moxx101z";
+  var BUILD_VERSION = "mp4bqptc";
 
   // app.js
   var state = {
@@ -1080,7 +1080,7 @@
   function initServiceWorker() {
     if (!("serviceWorker" in navigator)) return;
     window.addEventListener("load", () => {
-      navigator.serviceWorker.register("./sw.js").catch(() => {
+      navigator.serviceWorker.register("./sw.js", { updateViaCache: "none" }).catch(() => {
       });
     });
     navigator.serviceWorker.addEventListener("controllerchange", () => {

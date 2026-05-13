@@ -19,9 +19,10 @@ const APP_SHELL = [
 
 globalThis.addEventListener("install", (event) => {
   event.waitUntil(
-    caches.open(CACHE_NAME).then((cache) => cache.addAll(APP_SHELL))
+    caches.open(CACHE_NAME)
+      .then((cache) => cache.addAll(APP_SHELL))
+      .then(() => globalThis.skipWaiting())
   );
-  globalThis.skipWaiting();
 });
 
 globalThis.addEventListener("activate", (event) => {

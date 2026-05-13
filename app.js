@@ -118,7 +118,7 @@ function initServiceWorker() {
     if (!("serviceWorker" in navigator)) return;
 
     window.addEventListener("load", () => {
-        navigator.serviceWorker.register("./sw.js").catch(() => {
+        navigator.serviceWorker.register("./sw.js", { updateViaCache: "none" }).catch(() => {
             // Keep app functional even if service worker registration fails.
         });
     });
