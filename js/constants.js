@@ -80,7 +80,8 @@ export const TRANSLATIONS = {
         mapRelEscalaA: "Puede escalar a",
         mapRelEnmascara: "Puede enmascarar",
         mapRelOpuesta: "Emoción opuesta",
-        mapInfoNone: "Sin relaciones registradas"
+        mapInfoNone: "Sin relaciones registradas",
+        mapLegendLabel: "Leyenda del mapa"
     },
     en: {
         langLabel: "Language",
@@ -163,7 +164,8 @@ export const TRANSLATIONS = {
         mapRelEscalaA: "Can escalate to",
         mapRelEnmascara: "Can mask",
         mapRelOpuesta: "Opposite emotion",
-        mapInfoNone: "No registered connections"
+        mapInfoNone: "No registered connections",
+        mapLegendLabel: "Map legend"
     }
 };
 

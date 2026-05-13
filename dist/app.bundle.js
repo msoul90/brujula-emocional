@@ -82,7 +82,8 @@
       mapRelEscalaA: "Puede escalar a",
       mapRelEnmascara: "Puede enmascarar",
       mapRelOpuesta: "Emoci\xF3n opuesta",
-      mapInfoNone: "Sin relaciones registradas"
+      mapInfoNone: "Sin relaciones registradas",
+      mapLegendLabel: "Leyenda del mapa"
     },
     en: {
       langLabel: "Language",
@@ -165,7 +166,8 @@
       mapRelEscalaA: "Can escalate to",
       mapRelEnmascara: "Can mask",
       mapRelOpuesta: "Opposite emotion",
-      mapInfoNone: "No registered connections"
+      mapInfoNone: "No registered connections",
+      mapLegendLabel: "Map legend"
     }
   };
   var EMOTION_NAME_TRANSLATIONS = {
@@ -1652,13 +1654,15 @@
     return Math.min(Math.max(v, lo), hi);
   }
   function escapeHtmlText(value) {
-    return String(value).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    return String(value).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
   }
   function escapeHtmlAttr(value) {
-    return escapeHtmlText(value).replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+    return escapeHtmlText(value).replaceAll('"', "&quot;").replaceAll("'", "&#39;");
   }
   function graphHeightFor(width, nodeCount, edgeCount) {
-    const base = width < GRAPH_BP_NARROW ? GRAPH_H_NARROW : width < GRAPH_BP_SMALL ? GRAPH_H_SMALL : GRAPH_H_DEFAULT;
+    let base = GRAPH_H_DEFAULT;
+    if (width < GRAPH_BP_NARROW) base = GRAPH_H_NARROW;
+    else if (width < GRAPH_BP_SMALL) base = GRAPH_H_SMALL;
     const densityBoost = Math.min(
       GRAPH_MAX_BOOST,
       Math.max(0, nodeCount - GRAPH_BASE_NODES) * GRAPH_NODE_BOOST + Math.max(0, edgeCount - GRAPH_BASE_EDGES) * GRAPH_EDGE_BOOST
@@ -1920,7 +1924,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mp4l314j";
+  var BUILD_VERSION = "mp4m9w3q";
 
   // app.js
   var state = {

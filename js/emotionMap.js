@@ -89,9 +89,9 @@ function clamp(v, lo, hi) { return Math.min(Math.max(v, lo), hi); }
  */
 function escapeHtmlText(value) {
     return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;");
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;");
 }
 
 /**
@@ -101,8 +101,8 @@ function escapeHtmlText(value) {
  */
 function escapeHtmlAttr(value) {
     return escapeHtmlText(value)
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#39;");
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#39;");
 }
 
 /**
@@ -114,11 +114,9 @@ function escapeHtmlAttr(value) {
  * @returns {number} Altura del grafo en píxeles.
  */
 function graphHeightFor(width, nodeCount, edgeCount) {
-    const base = width < GRAPH_BP_NARROW
-        ? GRAPH_H_NARROW
-        : width < GRAPH_BP_SMALL
-            ? GRAPH_H_SMALL
-            : GRAPH_H_DEFAULT;
+    let base = GRAPH_H_DEFAULT;
+    if (width < GRAPH_BP_NARROW)     base = GRAPH_H_NARROW;
+    else if (width < GRAPH_BP_SMALL) base = GRAPH_H_SMALL;
     const densityBoost = Math.min(
         GRAPH_MAX_BOOST,
         Math.max(0, nodeCount - GRAPH_BASE_NODES) * GRAPH_NODE_BOOST
