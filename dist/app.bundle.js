@@ -48,7 +48,33 @@
       iosInstallTitle: "Instalar en iPhone/iPad",
       iosInstallStep1: "1. Toca el bot\xF3n Compartir de Safari (cuadro con flecha hacia arriba).",
       iosInstallStep2: '2. Selecciona "A\xF1adir a pantalla de inicio".',
-      iosInstallClose: "Entendido"
+      iosInstallClose: "Entendido",
+      checkinTitle: "\xBFC\xF3mo me siento?",
+      moodAgitado: "Agitado",
+      moodTriste: "Triste",
+      moodConfundido: "Confundido",
+      moodBien: "Bien",
+      checkinReset: "Ver todas",
+      diaryTrigger: "Mi diario emocional",
+      diaryTriggerSub: "Solo se guarda en tu dispositivo",
+      diaryTitle: "Diario emocional",
+      diaryPrivacyNote: "Tus entradas se guardan solo en este dispositivo. Nunca salen de aqu\xED.",
+      diaryEmpty: "A\xFAn no hay entradas.",
+      diaryAddShort: "Diario",
+      diaryNoteLabel: "Nota (opcional)",
+      diaryNotePlaceholder: "\xBFQu\xE9 m\xE1s quieres recordar?",
+      diarySaveButton: "Guardar",
+      diaryCancelButton: "Cancelar",
+      diaryDeleteButton: "Eliminar entrada",
+      diaryClearAll: "Borrar todo el diario",
+      diaryClearConfirm: "\xBFBorrar todas las entradas del diario? Esta acci\xF3n no se puede deshacer.",
+      diaryTodayLabel: "Hoy",
+      diaryAddedFeedback: "Guardado en tu diario",
+      diaryNewEntry: "Nueva entrada",
+      diaryPickEmotion: "\xBFQu\xE9 sentiste?",
+      navEmociones: "Emociones",
+      navCheckin: "\xBFQu\xE9 siento?",
+      navDiary: "Diario"
     },
     en: {
       langLabel: "Language",
@@ -97,7 +123,33 @@
       iosInstallTitle: "Install on iPhone/iPad",
       iosInstallStep1: "1. Tap Safari's Share button (square with upward arrow).",
       iosInstallStep2: '2. Select "Add to Home Screen".',
-      iosInstallClose: "Got it"
+      iosInstallClose: "Got it",
+      checkinTitle: "How do I feel?",
+      moodAgitado: "Agitated",
+      moodTriste: "Sad",
+      moodConfundido: "Confused",
+      moodBien: "Good",
+      checkinReset: "See all",
+      diaryTrigger: "My emotional diary",
+      diaryTriggerSub: "Saved only on your device",
+      diaryTitle: "Emotional diary",
+      diaryPrivacyNote: "Your entries are saved only on this device. They never leave it.",
+      diaryEmpty: "No entries yet.",
+      diaryAddShort: "Diary",
+      diaryNoteLabel: "Note (optional)",
+      diaryNotePlaceholder: "What else do you want to remember?",
+      diarySaveButton: "Save",
+      diaryCancelButton: "Cancel",
+      diaryDeleteButton: "Delete entry",
+      diaryClearAll: "Clear all diary entries",
+      diaryClearConfirm: "Clear all diary entries? This cannot be undone.",
+      diaryTodayLabel: "Today",
+      diaryAddedFeedback: "Saved to your diary",
+      diaryNewEntry: "New entry",
+      diaryPickEmotion: "What did you feel?",
+      navEmociones: "Emotions",
+      navCheckin: "How do I feel?",
+      navDiary: "Diary"
     }
   };
   var EMOTION_NAME_TRANSLATIONS = {
@@ -119,7 +171,16 @@
     Placer: "Pleasure",
     Angustia: "Distress",
     Irritabilidad: "Irritability",
-    Rechazo: "Rejection"
+    Rechazo: "Rejection",
+    Envidia: "Envy",
+    Gratitud: "Gratitude",
+    Orgullo: "Pride",
+    Nostalgia: "Nostalgia",
+    Alivio: "Relief",
+    Aburrimiento: "Boredom",
+    Disgusto: "Disgust",
+    "Decepci\xF3n": "Disappointment",
+    Ternura: "Tenderness"
   };
   var EMOTION_CONTENT_TRANSLATIONS = {
     Enojo: {
@@ -273,6 +334,78 @@
       mensaje: "This does not feel safe or compatible for me",
       impulso: "Pull away, shut down, attack or avoid",
       respuesta: "Explore whether rejection comes from harm or insecurity and respond clearly"
+    },
+    Envidia: {
+      siente: "Bitterness, tension, constant comparison, sense of injustice",
+      dispara: "Seeing others' achievements or possessions you desire, social comparison",
+      funcion: "Signal what you value but don't have, motivate change",
+      mensaje: "There is something I want and feel I don't have access to",
+      impulso: "Put others down, sabotage, withdraw",
+      respuesta: "Use it as a compass toward your own goals, without comparing yourself"
+    },
+    Gratitud: {
+      siente: "Warmth, openness, lightness, expansion in the chest",
+      dispara: "Receiving help, genuine connection, recognizing what you have",
+      funcion: "Strengthen bonds, broaden perspective, reinforce well-being",
+      mensaje: "Something or someone gave me something valuable",
+      impulso: "Take it for granted, not express it",
+      respuesta: "Express it, write it down, allow yourself to receive it fully"
+    },
+    Orgullo: {
+      siente: "Expansion, high energy, deep satisfaction, confidence",
+      dispara: "Personal achievement, overcoming a challenge, living up to your values",
+      funcion: "Reinforce identity and effort-based behaviors",
+      mensaje: "I achieved it or I trust who I am",
+      impulso: "Brag excessively, become arrogant or dismissive",
+      respuesta: "Celebrate with humility, share it genuinely, let it fuel future effort"
+    },
+    Nostalgia: {
+      siente: "Warmth mixed with melancholy, longing, bittersweet sensation",
+      dispara: "Memories of the past, places, people, or times that are no longer",
+      funcion: "Reinforce identity, value what was lived, connect past and present",
+      mensaje: "Something of who I was or lived matters deeply to me",
+      impulso: "Live in the past, avoid or escape the present",
+      respuesta: "Honor what was lived, bring something from that past consciously into today"
+    },
+    Alivio: {
+      siente: "Release, relaxation, letting go of tension, freer breathing",
+      dispara: "End of a threat, resolution of a problem, receiving good news",
+      funcion: "Signal that the danger has passed, allow recovery",
+      mensaje: "What I feared did not happen or it is over now",
+      impulso: "Ignore what caused the stress, skip reflection",
+      respuesta: "Rest consciously, use the calm to process and prepare"
+    },
+    Aburrimiento: {
+      siente: "Emptiness, restlessness, lack of motivation, time that does not move",
+      dispara: "Lack of stimulation, excessive routine, unclear goals",
+      funcion: "Signal need for stimulation, meaning, or a new challenge",
+      mensaje: "I need something that activates me or has meaning",
+      impulso: "Seek empty distractions, complain, disengage",
+      respuesta: "Find a purposeful activity, create something, challenge your mind"
+    },
+    Disgusto: {
+      siente: "Nausea, urge to pull away, body contraction, physical or moral discomfort",
+      dispara: "Something perceived as repulsive, unjust, offensive, or incompatible with core values",
+      funcion: "Protect from harm (physical or moral), maintain value integrity",
+      mensaje: "Something violates my physical or moral limits",
+      impulso: "Expel, reject, pull away harshly",
+      respuesta: "Name what generates it, set a clear boundary, distance yourself if needed"
+    },
+    "Decepci\xF3n": {
+      siente: "Quiet heaviness, mild discouragement, emptiness where something was expected",
+      dispara: "Unmet expectation, broken promise, outcome below what was hoped for",
+      funcion: "Signal that something expected did not arrive, invite readjusting expectations",
+      mensaje: "I expected something that did not happen",
+      impulso: "Give up, disconnect, look for someone to blame",
+      respuesta: "Validate the expectation, assess if it was realistic, redirect your energy"
+    },
+    Ternura: {
+      siente: "Gentle warmth, urge to nurture, chest opening, sensation of wanting to protect",
+      dispara: "Something or someone fragile, vulnerable, or cherished \u2014 children, pets, intimate moments",
+      funcion: "Strengthen bonds, motivate care, deepen connection",
+      mensaje: "There is something I want to protect or draw closer",
+      impulso: "Hold back the expression, minimize it as silly or unnecessary",
+      respuesta: "Allow yourself to express it, draw closer, care without losing your own limits"
     }
   };
   var emociones = [
@@ -294,12 +427,28 @@
     { nombre: "Placer", color: "#f9a8d4", text: "#831843", siente: "Sensaci\xF3n agradable, comodidad, satisfacci\xF3n corporal o emocional", dispara: "Descanso, disfrute, contacto, experiencias gratificantes", funcion: "Favorecer bienestar y recuperaci\xF3n", mensaje: "Esto se siente nutritivo o satisfactorio", impulso: "Buscar repetir inmediatamente", respuesta: "Disfrutar conscientemente y mantener equilibrio" },
     { nombre: "Angustia", color: "#60a5fa", text: "#1e3a8a", siente: "Opresi\xF3n, desesperaci\xF3n, sensaci\xF3n de no poder sostener algo", dispara: "P\xE9rdida de control, miedo intenso, incertidumbre alta", funcion: "Se\xF1alar saturaci\xF3n emocional o amenaza percibida", mensaje: "Algo me est\xE1 sobrepasando", impulso: "Escapar, aislarse, buscar alivio inmediato", respuesta: "Regular el cuerpo, pedir apoyo, reducir est\xEDmulos" },
     { nombre: "Irritabilidad", color: "#bef264", text: "#365314", siente: "Tensi\xF3n, impaciencia, sensibilidad alta, facilidad para molestarse", dispara: "Cansancio, estr\xE9s, frustraci\xF3n acumulada, sobrecarga", funcion: "Se\xF1alar saturaci\xF3n o necesidad de pausa", mensaje: "Estoy agotado o algo me est\xE1 sobrepasando", impulso: "Responder cortante, discutir, alejarse", respuesta: "Descansar, bajar exigencia, expresar necesidad antes de explotar" },
-    { nombre: "Rechazo", color: "#d8b4fe", text: "#4c1d95", siente: "Distancia, incomodidad, desagrado o exclusi\xF3n", dispara: "Cr\xEDtica, desaprobaci\xF3n, falta de aceptaci\xF3n o incompatibilidad", funcion: "Proteger identidad, l\xEDmites o pertenencia", mensaje: "Esto no se siente seguro o compatible para m\xED", impulso: "Alejarse, cerrarse, atacar o evitar", respuesta: "Explorar si el rechazo viene de da\xF1o o inseguridad y responder con claridad" }
+    { nombre: "Rechazo", color: "#d8b4fe", text: "#4c1d95", siente: "Distancia, incomodidad, desagrado o exclusi\xF3n", dispara: "Cr\xEDtica, desaprobaci\xF3n, falta de aceptaci\xF3n o incompatibilidad", funcion: "Proteger identidad, l\xEDmites o pertenencia", mensaje: "Esto no se siente seguro o compatible para m\xED", impulso: "Alejarse, cerrarse, atacar o evitar", respuesta: "Explorar si el rechazo viene de da\xF1o o inseguridad y responder con claridad" },
+    { nombre: "Envidia", color: "#fef9c3", text: "#78350f", siente: "Amargura, tensi\xF3n, comparaci\xF3n constante, sensaci\xF3n de injusticia", dispara: "Ver logros o bienes ajenos que se desean, comparaci\xF3n social", funcion: "Se\xF1alar lo que valoras y no tienes, motivar cambio", mensaje: "Hay algo que deseo y siento que no tengo acceso", impulso: "Denigrar al otro, sabotear, paralizarse", respuesta: "\xDAsala como br\xFAjula hacia tus propias metas, sin compararte" },
+    { nombre: "Gratitud", color: "#2dd4bf", text: "#134e4a", siente: "Calidez, apertura, ligereza, expansi\xF3n en el pecho", dispara: "Recibir ayuda, conexi\xF3n genuina, reconocer lo que tienes", funcion: "Fortalecer v\xEDnculos, ampliar perspectiva, reforzar bienestar", mensaje: "Algo o alguien me aport\xF3 algo valioso", impulso: "Dar por sentado, no expresarla", respuesta: "Expr\xE9sala, an\xF3tala, perm\xEDtete recibirla plenamente" },
+    { nombre: "Orgullo", color: "#a5b4fc", text: "#312e81", siente: "Expansi\xF3n, energ\xEDa alta, satisfacci\xF3n profunda, confianza", dispara: "Logro propio, superar un reto, vivir conforme a tus valores", funcion: "Reforzar identidad y conductas de esfuerzo", mensaje: "Lo logr\xE9 o conf\xEDo en qui\xE9n soy", impulso: "Presumir en exceso, volverse arrogante o despectivo", respuesta: "Celebra con humildad, comp\xE1rtelo genuinamente, deja que impulse el siguiente esfuerzo" },
+    { nombre: "Nostalgia", color: "#f0abfc", text: "#701a75", siente: "Calidez mezclada con melancol\xEDa, a\xF1oranza, sensaci\xF3n agridulce", dispara: "Recuerdos del pasado, lugares, personas o \xE9pocas que ya no est\xE1n", funcion: "Reforzar identidad, valorar lo vivido, conectar pasado y presente", mensaje: "Algo de lo que fui o viv\xED me importa mucho", impulso: "Vivir en el pasado, evitar o escapar el presente", respuesta: "Honra lo vivido, trae algo de ese pasado conscientemente al hoy" },
+    { nombre: "Alivio", color: "#6ee7b7", text: "#064e3b", siente: "Descarga, relajaci\xF3n, soltar tensi\xF3n, respiraci\xF3n m\xE1s libre", dispara: "Fin de una amenaza, resoluci\xF3n de problema, buenas noticias", funcion: "Se\xF1alar que el peligro pas\xF3, permitir recuperaci\xF3n", mensaje: "Lo que tem\xEDa no ocurri\xF3 o ya pas\xF3", impulso: "Ignorar lo que caus\xF3 el estr\xE9s, saltarse la reflexi\xF3n", respuesta: "Descansa conscientemente, usa la calma para procesar y prepararte" },
+    { nombre: "Aburrimiento", color: "#cbd5e1", text: "#334155", siente: "Vac\xEDo, inquietud, falta de motivaci\xF3n, tiempo que no avanza", dispara: "Falta de est\xEDmulo, rutina excesiva, metas poco claras", funcion: "Se\xF1alar necesidad de estimulaci\xF3n, significado o un nuevo desaf\xEDo", mensaje: "Necesito algo que me active o tenga sentido", impulso: "Buscar distracciones vac\xEDas, quejarse, desconectarse", respuesta: "Busca una actividad con prop\xF3sito, crea algo, desaf\xEDa tu mente" },
+    { nombre: "Disgusto", color: "#d6d3d1", text: "#292524", siente: "N\xE1useas, ganas de alejarse, contracci\xF3n corporal, malestar f\xEDsico o moral", dispara: "Algo percibido como repugnante, injusto, ofensivo o incompatible con valores profundos", funcion: "Proteger de lo da\xF1ino (f\xEDsico o moral), mantener integridad de valores", mensaje: "Algo viola mis l\xEDmites f\xEDsicos o morales", impulso: "Expulsar, rechazar, alejarse bruscamente", respuesta: "Nombra lo que lo genera, pon un l\xEDmite claro, al\xE9jate si es necesario" },
+    { nombre: "Decepci\xF3n", color: "#bae6fd", text: "#0c4a6e", siente: "Pesadez tranquila, des\xE1nimo suave, vac\xEDo donde esperaba algo", dispara: "Expectativa no cumplida, promesa rota, resultado por debajo de lo esperado", funcion: "Se\xF1alar que algo esperado no lleg\xF3, invitar a reajustar expectativas", mensaje: "Esperaba algo que no se dio", impulso: "Resignarse, desconectarse, buscar culpables", respuesta: "Valida la expectativa, revisa si era realista, redirige tu energ\xEDa" },
+    { nombre: "Ternura", color: "#ffe4e6", text: "#9f1239", siente: "Calidez suave, ganas de cuidar, apertura en el pecho, sensaci\xF3n de querer proteger", dispara: "Algo o alguien fr\xE1gil, vulnerable o querido: hijos, mascotas, momentos \xEDntimos", funcion: "Fortalecer v\xEDnculos, motivar el cuidado, profundizar la conexi\xF3n", mensaje: "Hay algo que quiero proteger o acercar", impulso: "Contener la expresi\xF3n, minimizarla como tonter\xEDa o debilidad", respuesta: "Perm\xEDtete expresarla, ac\xE9rcate, cuida sin perder tus propios l\xEDmites" }
   ];
   var RECENT_KEY = "brujulaRecientes";
   var LANGUAGE_KEY = "brujulaIdioma";
   var THEME_KEY = "brujulaThema";
+  var DIARY_KEY = "brujulaDiario";
   var RECENT_LIMIT = 5;
+  var MOOD_CATEGORIES = [
+    { key: "agitado", labelKey: "moodAgitado", emoji: "\u{1F624}", color: "#F5A5A0", ink: "#7A2E2E", emotions: ["Enojo", "Frustraci\xF3n", "Irritabilidad", "Ansiedad", "Miedo", "Preocupaci\xF3n", "Angustia", "Envidia", "Disgusto"] },
+    { key: "triste", labelKey: "moodTriste", emoji: "\u{1F622}", color: "#A4C3E3", ink: "#1F3F66", emotions: ["Tristeza", "Soledad", "Nostalgia", "Culpa", "Verg\xFCenza", "Rechazo", "Decepci\xF3n"] },
+    { key: "confundido", labelKey: "moodConfundido", emoji: "\u{1F914}", color: "#F5D88A", ink: "#7A5A1A", emotions: ["Confusi\xF3n", "Aburrimiento", "Celos"] },
+    { key: "bien", labelKey: "moodBien", emoji: "\u{1F60C}", color: "#8FD4AE", ink: "#1E5237", emotions: ["Calma", "Alivio", "Gratitud", "Felicidad", "Alegr\xEDa", "Orgullo", "Entusiasmo", "Placer", "Ternura"] }
+  ];
 
   // js/i18n.js
   function detectInitialLanguage() {
@@ -339,8 +488,26 @@
         "close-button": (el) => {
           el.textContent = t("closeButton");
         },
+        "share-btn": (el) => {
+          el.setAttribute("aria-label", t("shareButton"));
+        },
         "share-btn-label": (el) => {
           el.textContent = t("shareButton");
+        },
+        "diary-add-btn": (el) => {
+          el.setAttribute("aria-label", t("diaryAddShort"));
+        },
+        "diary-add-label": (el) => {
+          el.textContent = t("diaryAddShort");
+        },
+        "nav-label-emociones": (el) => {
+          el.textContent = t("navEmociones");
+        },
+        "nav-label-checkin": (el) => {
+          el.textContent = t("navCheckin");
+        },
+        "nav-label-diario": (el) => {
+          el.textContent = t("navDiary");
         },
         "install-app-button": (el) => {
           el.textContent = t("installButton");
@@ -578,9 +745,12 @@
     setLastFocusedCard,
     getIsClosingModal,
     setIsClosingModal,
-    modalAnimationMs: modalAnimationMs2
+    modalAnimationMs: modalAnimationMs2,
+    moodCategories = [],
+    onAddToDiary = null
   }) {
     let scrollCleanup = null;
+    let activeCheckinCat = null;
     function saveRecentEmotion(nombre) {
       const existing = loadRecentEmotions().filter((item) => item !== nombre);
       const next = [nombre, ...existing].slice(0, RECENT_LIMIT);
@@ -616,11 +786,109 @@
         grid.appendChild(card);
       });
     }
+    function buildEmotionCardEl(e) {
+      const card = document.createElement("div");
+      card.className = "emotion-card p-5 rounded-2xl shadow-sm cursor-pointer flex justify-between items-center bg-white";
+      card.style.borderLeft = `8px solid ${e.color}`;
+      card.tabIndex = 0;
+      card.setAttribute("role", "button");
+      card.setAttribute("aria-label", `${t("openDetailAria")} ${getDisplayName(e.nombre)}`);
+      card.onclick = () => {
+        setLastFocusedCard(card);
+        showDetail(e);
+      };
+      card.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" || event.key === " ") {
+          event.preventDefault();
+          setLastFocusedCard(card);
+          showDetail(e);
+        }
+      });
+      card.innerHTML = `
+            <span class="font-bold text-lg text-slate-700">${getDisplayName(e.nombre)}</span>
+            <svg class="w-4 h-4 text-slate-300 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+        `;
+      return card;
+    }
+    const MOOD_SVGS = {
+      agitado: `<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 80 80" fill="none" aria-hidden="true">
+            <circle cx="40" cy="42" r="26" stroke="currentColor" stroke-width="3.5"/>
+            <line x1="26" y1="32" x2="34" y2="36" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <line x1="54" y1="32" x2="46" y2="36" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="32" cy="42" r="2" fill="currentColor"/>
+            <circle cx="48" cy="42" r="2" fill="currentColor"/>
+            <path d="M30 54 L34 50 L38 54 L42 50 L46 54 L50 50" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>`,
+      triste: `<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 80 80" fill="none" aria-hidden="true">
+            <circle cx="40" cy="42" r="26" stroke="currentColor" stroke-width="3.5"/>
+            <path d="M28 40 C 30 44, 34 44, 36 40" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <path d="M44 40 C 46 44, 50 44, 52 40" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <path d="M32 56 C 36 50, 44 50, 48 56" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <path d="M34 48 C 33 52, 31 54, 32 56 C 33 56, 34 54, 34 48 Z" fill="currentColor"/>
+        </svg>`,
+      confundido: `<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 80 80" fill="none" aria-hidden="true">
+            <circle cx="40" cy="42" r="26" stroke="currentColor" stroke-width="3.5"/>
+            <line x1="26" y1="34" x2="34" y2="32" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <line x1="46" y1="32" x2="54" y2="36" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="32" cy="42" r="2" fill="currentColor"/>
+            <circle cx="48" cy="42" r="2" fill="currentColor"/>
+            <path d="M30 54 C 34 52, 38 56, 42 54 C 46 52, 48 56, 52 54" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        </svg>`,
+      bien: `<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 80 80" fill="none" aria-hidden="true">
+            <circle cx="40" cy="42" r="26" stroke="currentColor" stroke-width="3.5"/>
+            <path d="M28 42 C 30 38, 34 38, 36 42" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <path d="M44 42 C 46 38, 50 38, 52 42" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <path d="M30 52 C 34 60, 46 60, 50 52" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        </svg>`
+    };
+    function renderCheckinTab() {
+      const grid = document.getElementById("checkin-cards-grid");
+      if (!grid || !moodCategories.length) return;
+      grid.innerHTML = moodCategories.map((cat) => `
+            <button type="button" data-mood="${cat.key}"
+                class="checkin-card w-full p-5 rounded-2xl shadow-sm text-left flex flex-col gap-3 hover:shadow-md transition-all active:scale-95"
+                style="background-color:${cat.color};color:${cat.ink}">
+                ${MOOD_SVGS[cat.key] ?? `<span class="text-3xl" aria-hidden="true">${cat.emoji}</span>`}
+                <span class="font-black text-base leading-tight">${t(cat.labelKey)}</span>
+            </button>
+        `).join("");
+      for (const btn of grid.querySelectorAll(".checkin-card")) {
+        btn.addEventListener("click", () => renderCheckinEmotions(btn.dataset.mood));
+      }
+      if (activeCheckinCat) renderCheckinEmotions(activeCheckinCat);
+    }
+    function renderCheckinEmotions(catKey) {
+      const cat = moodCategories.find((c) => c.key === catKey);
+      if (!cat) return;
+      activeCheckinCat = catKey;
+      const section = document.getElementById("checkin-emotion-section");
+      const label = document.getElementById("checkin-selected-label");
+      const filteredGrid = document.getElementById("checkin-filtered-grid");
+      const resetBtn = document.getElementById("checkin-reset-btn");
+      if (!section || !filteredGrid) return;
+      section.classList.remove("hidden");
+      if (label) label.textContent = `${cat.emoji} ${t(cat.labelKey)}`;
+      filteredGrid.innerHTML = "";
+      for (const e of emociones2.filter((em) => cat.emotions.includes(em.nombre))) {
+        filteredGrid.appendChild(buildEmotionCardEl(e));
+      }
+      if (resetBtn) {
+        const freshBtn = resetBtn.cloneNode(true);
+        resetBtn.replaceWith(freshBtn);
+        freshBtn.textContent = t("checkinReset");
+        freshBtn.addEventListener("click", () => {
+          activeCheckinCat = null;
+          section.classList.add("hidden");
+        });
+      }
+      section.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
     function renderEmociones(filter = "") {
       const grid = document.getElementById("emotion-grid");
       grid.innerHTML = "";
       const normalizedFilter = normalizeText(filter.trim());
       const filtered = emociones2.filter((e) => {
+        if (!normalizedFilter) return true;
         const haystack = [
           e.nombre,
           getDisplayName(e.nombre),
@@ -644,32 +912,48 @@
         grid.appendChild(emptyState);
         return;
       }
-      filtered.forEach((e) => {
-        const card = document.createElement("div");
-        card.className = "emotion-card p-5 rounded-2xl shadow-sm cursor-pointer flex justify-between items-center bg-white";
-        card.style.borderLeft = `8px solid ${e.color}`;
-        card.tabIndex = 0;
-        card.setAttribute("role", "button");
-        card.setAttribute("aria-label", `${t("openDetailAria")} ${getDisplayName(e.nombre)}`);
-        card.onclick = () => {
-          setLastFocusedCard(card);
-          showDetail(e);
-        };
-        card.addEventListener("keydown", (event) => {
-          if (event.key === "Enter" || event.key === " ") {
-            event.preventDefault();
-            setLastFocusedCard(card);
-            showDetail(e);
-          }
-        });
-        card.innerHTML = `
-                <span class="font-bold text-lg text-slate-700">${getDisplayName(e.nombre)}</span>
-                <svg class="w-4 h-4 text-slate-300 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
-            `;
-        grid.appendChild(card);
+      for (const e of filtered) {
+        grid.appendChild(buildEmotionCardEl(e));
+      }
+    }
+    function showDiaryForm(emotionNombre) {
+      const existingForm = document.getElementById("diary-inline-form");
+      if (existingForm) {
+        existingForm.remove();
+        return;
+      }
+      const form = document.createElement("div");
+      form.id = "diary-inline-form";
+      form.className = "mt-4 border-t border-slate-100 pt-4";
+      form.innerHTML = `
+            <label for="diary-note-input" class="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2 block">${t("diaryNoteLabel")}</label>
+            <textarea id="diary-note-input" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-700 resize-none focus:outline-none focus:ring-2 focus:ring-blue-200" rows="2" placeholder="${t("diaryNotePlaceholder")}"></textarea>
+            <div class="flex gap-2 mt-2">
+                <button id="diary-note-save" type="button" class="flex-1 bg-slate-800 text-white py-2.5 rounded-xl font-bold text-sm hover:bg-slate-700 transition-colors">${t("diarySaveButton")}</button>
+                <button id="diary-note-cancel" type="button" class="flex-1 bg-slate-100 text-slate-600 py-2.5 rounded-xl font-bold text-sm hover:bg-slate-200 transition-colors">${t("diaryCancelButton")}</button>
+            </div>
+        `;
+      const panel = document.getElementById("modal-panel");
+      panel.appendChild(form);
+      form.querySelector("#diary-note-input").focus();
+      panel.scrollTop = panel.scrollHeight;
+      form.querySelector("#diary-note-save").addEventListener("click", () => {
+        const note = form.querySelector("#diary-note-input").value;
+        if (onAddToDiary) onAddToDiary(emotionNombre, note);
+        form.innerHTML = `<p class="text-emerald-600 font-bold text-sm text-center py-2">\u2713 ${t("diaryAddedFeedback")}</p>`;
+        setTimeout(() => form.remove(), 1800);
       });
+      form.querySelector("#diary-note-cancel").addEventListener("click", () => form.remove());
+    }
+    function wireDiaryButton(emotionNombre) {
+      const diaryAddBtn = document.getElementById("diary-add-btn");
+      if (!diaryAddBtn || !onAddToDiary) return;
+      const freshBtn = diaryAddBtn.cloneNode(true);
+      diaryAddBtn.replaceWith(freshBtn);
+      freshBtn.addEventListener("click", () => showDiaryForm(emotionNombre));
     }
     function showDetail(e) {
+      document.getElementById("diary-inline-form")?.remove();
       const quoteTextColor = getReadableTextColor(e.color);
       const quoteLabelColor = quoteTextColor === "#f8fafc" ? "rgba(248,250,252,0.9)" : "rgba(15,23,42,0.85)";
       const content = document.getElementById("modal-content");
@@ -762,6 +1046,7 @@
           shareEmotionCard(canvas, getDisplayName(e.nombre));
         });
       }
+      wireDiaryButton(e.nombre);
       if (scrollCleanup) scrollCleanup();
       const onPanelScroll = () => {
         const atBottom = panel.scrollHeight - panel.scrollTop <= panel.clientHeight + 8;
@@ -807,6 +1092,8 @@
     return {
       renderRecentEmotions,
       renderEmociones,
+      renderCheckinTab,
+      renderCheckinEmotions,
       bindBaseEvents,
       closeModal,
       showDetail
@@ -825,33 +1112,33 @@
     q2_high: {
       textKey: "quizQ2",
       options: [
-        { labelKey: "quizQ2A", result: ["Entusiasmo", "Alegr\xEDa"] },
+        { labelKey: "quizQ2A", result: ["Entusiasmo", "Alegr\xEDa", "Orgullo"] },
         { labelKey: "quizQ2B", next: "q3_high_bad" }
       ]
     },
     q2_low: {
       textKey: "quizQ2",
       options: [
-        { labelKey: "quizQ2A", result: ["Calma", "Felicidad", "Placer"] },
+        { labelKey: "quizQ2A", result: ["Calma", "Felicidad", "Placer", "Gratitud", "Alivio", "Ternura"] },
         { labelKey: "quizQ2B", next: "q3_low_bad" }
       ]
     },
     q3_high_bad: {
       textKey: "quizQ3",
       options: [
-        { labelKey: "quizQ3A", result: ["Enojo", "Frustraci\xF3n", "Miedo", "Celos"] },
+        { labelKey: "quizQ3A", result: ["Enojo", "Frustraci\xF3n", "Miedo", "Celos", "Envidia", "Disgusto"] },
         { labelKey: "quizQ3B", result: ["Ansiedad", "Preocupaci\xF3n", "Irritabilidad"] }
       ]
     },
     q3_low_bad: {
       textKey: "quizQ3",
       options: [
-        { labelKey: "quizQ3A", result: ["Tristeza", "Verg\xFCenza", "Rechazo", "Culpa"] },
-        { labelKey: "quizQ3B", result: ["Soledad", "Angustia", "Confusi\xF3n"] }
+        { labelKey: "quizQ3A", result: ["Tristeza", "Verg\xFCenza", "Rechazo", "Culpa", "Decepci\xF3n"] },
+        { labelKey: "quizQ3B", result: ["Soledad", "Angustia", "Confusi\xF3n", "Nostalgia", "Aburrimiento"] }
       ]
     }
   };
-  function createQuiz({ emociones: emociones2, getDisplayName, t, showDetail }) {
+  function createQuiz({ emociones: emociones2, getDisplayName, t, showDetail, onShowAll }) {
     let history = [];
     let currentStepKey = "q1";
     const dismiss = () => {
@@ -916,7 +1203,10 @@
         currentStepKey = "q1";
         render();
       });
-      content.querySelector("#quiz-close-result-btn").addEventListener("click", dismiss);
+      content.querySelector("#quiz-close-result-btn").addEventListener("click", () => {
+        dismiss();
+        if (onShowAll) onShowAll();
+      });
       for (const btn of content.querySelectorAll(".quiz-result-card")) {
         btn.addEventListener("click", () => {
           const emotion = emociones2.find((e) => e.nombre === btn.dataset.emotion);
@@ -980,27 +1270,278 @@
     return { init };
   }
 
+  // js/diary.js
+  function parseDiaryEntries(raw) {
+    try {
+      const parsed = JSON.parse(raw);
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  }
+  function createDiaryEntry(emotionNombre, note = "") {
+    return {
+      id: Date.now(),
+      date: (/* @__PURE__ */ new Date()).toISOString(),
+      emotion: emotionNombre,
+      note: note.trim()
+    };
+  }
+  function deleteDiaryEntryById(entries, id) {
+    return entries.filter((e) => e.id !== id);
+  }
+  function loadEntries() {
+    return parseDiaryEntries(localStorage.getItem(DIARY_KEY));
+  }
+  function saveEntries(entries) {
+    localStorage.setItem(DIARY_KEY, JSON.stringify(entries));
+  }
+  function addEntry(emotionNombre, note = "") {
+    const entry = createDiaryEntry(emotionNombre, note);
+    saveEntries([entry, ...loadEntries()]);
+    return entry;
+  }
+  function deleteEntry(id) {
+    saveEntries(deleteDiaryEntryById(loadEntries(), id));
+  }
+  function createDiary({ t, getDisplayName, emociones: emociones2 }) {
+    function formatDate(isoString) {
+      const d = new Date(isoString);
+      const now = /* @__PURE__ */ new Date();
+      const time = d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+      if (d.toDateString() === now.toDateString()) return `${t("diaryTodayLabel")}, ${time}`;
+      return `${d.toLocaleDateString([], { day: "numeric", month: "short", year: "numeric" })} \xB7 ${time}`;
+    }
+    function buildAddFormHtml() {
+      return `
+            <div id="diary-add-form" class="bg-white rounded-2xl p-4 shadow-sm mb-4 border-2 border-blue-100">
+                <p class="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-3">${t("diaryNewEntry")}</p>
+                <div class="relative mb-3">
+                    <input type="text" id="diary-emotion-search" autocomplete="off"
+                        placeholder="${t("diaryPickEmotion")}"
+                        class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-200">
+                    <input type="hidden" id="diary-emotion-value">
+                    <div id="diary-emotion-dropdown"
+                        class="hidden absolute z-50 left-0 right-0 mt-1 bg-white rounded-xl shadow-lg border border-slate-200 hide-scroll"
+                        style="max-height:11rem;overflow-y:auto"></div>
+                </div>
+                <textarea id="diary-note-input" rows="2" placeholder="${t("diaryNotePlaceholder")}"
+                    class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-700 resize-none focus:outline-none focus:ring-2 focus:ring-blue-200 mb-3"></textarea>
+                <div class="flex gap-2">
+                    <button id="diary-form-save" type="button"
+                        class="flex-1 bg-slate-800 text-white py-2.5 rounded-xl font-bold text-sm hover:bg-slate-700 transition-colors">
+                        ${t("diarySaveButton")}
+                    </button>
+                    <button id="diary-form-cancel" type="button"
+                        class="flex-1 bg-slate-100 text-slate-600 py-2.5 rounded-xl font-bold text-sm hover:bg-slate-200 transition-colors">
+                        ${t("diaryCancelButton")}
+                    </button>
+                </div>
+            </div>
+        `;
+    }
+    function wireEmotionSearch(content) {
+      const searchInput = content.querySelector("#diary-emotion-search");
+      const dropdown = content.querySelector("#diary-emotion-dropdown");
+      const hiddenValue = content.querySelector("#diary-emotion-value");
+      if (!searchInput || !dropdown || !hiddenValue) return;
+      function renderDropdown(query) {
+        const q = query.trim().toLowerCase();
+        const filtered = emociones2.filter((e) => {
+          const name = getDisplayName(e.nombre).toLowerCase();
+          return !q || name.includes(q) || e.nombre.toLowerCase().includes(q);
+        });
+        if (!filtered.length) {
+          dropdown.classList.add("hidden");
+          return;
+        }
+        dropdown.innerHTML = filtered.map((e) => `
+                <button type="button" data-nombre="${e.nombre}"
+                    class="emotion-option w-full text-left px-3 py-2.5 text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2.5 transition-colors">
+                    <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color:${e.color}"></span>
+                    ${getDisplayName(e.nombre)}
+                </button>
+            `).join("");
+        dropdown.classList.remove("hidden");
+        for (const btn of dropdown.querySelectorAll(".emotion-option")) {
+          btn.addEventListener("mousedown", (ev) => {
+            ev.preventDefault();
+            hiddenValue.value = btn.dataset.nombre;
+            searchInput.value = getDisplayName(btn.dataset.nombre);
+            searchInput.classList.remove("ring-2", "ring-red-300");
+            dropdown.classList.add("hidden");
+          });
+        }
+      }
+      searchInput.addEventListener("focus", () => renderDropdown(searchInput.value));
+      searchInput.addEventListener("input", () => {
+        hiddenValue.value = "";
+        renderDropdown(searchInput.value);
+      });
+      searchInput.addEventListener("blur", () => {
+        dropdown.classList.add("hidden");
+      });
+      searchInput.addEventListener("keydown", (ev) => {
+        if (ev.key === "Escape") {
+          dropdown.classList.add("hidden");
+          searchInput.blur();
+        }
+        if (ev.key === "Enter") {
+          ev.preventDefault();
+          dropdown.querySelector(".emotion-option")?.dispatchEvent(new MouseEvent("mousedown"));
+        }
+        if (ev.key === "ArrowDown") {
+          ev.preventDefault();
+          dropdown.querySelector(".emotion-option")?.focus();
+        }
+      });
+      dropdown.addEventListener("keydown", (ev) => {
+        const focused = document.activeElement;
+        if (ev.key === "ArrowDown") {
+          ev.preventDefault();
+          focused.nextElementSibling?.focus();
+        }
+        if (ev.key === "ArrowUp") {
+          ev.preventDefault();
+          (focused.previousElementSibling ?? searchInput).focus();
+        }
+      });
+    }
+    function renderContent(showForm = false) {
+      const entries = loadEntries();
+      const content = document.getElementById("diary-content");
+      if (!content) return;
+      const headerHtml = `
+            <div class="flex items-center justify-between mb-4">
+                <h2 id="diary-title-heading" class="text-xl font-black text-slate-800">${t("diaryTitle")}</h2>
+                <button id="diary-new-btn" type="button"
+                    class="flex items-center gap-1.5 bg-slate-800 text-white text-xs font-bold px-3 py-2 rounded-xl hover:bg-slate-700 transition-colors">
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                    ${t("diaryNewEntry")}
+                </button>
+            </div>
+        `;
+      const privacyHtml = `
+            <p class="text-xs text-slate-400 mb-4 flex items-start gap-1.5">
+                <svg class="w-3.5 h-3.5 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
+                ${t("diaryPrivacyNote")}
+            </p>
+        `;
+      const formHtml = showForm ? buildAddFormHtml() : "";
+      let entriesHtml;
+      if (entries.length) {
+        entriesHtml = `
+                <div class="space-y-3">
+                    ${entries.map((entry) => {
+          const emotion = emociones2.find((e) => e.nombre === entry.emotion);
+          const displayName = emotion ? getDisplayName(entry.emotion) : entry.emotion;
+          const color = emotion?.color ?? "#e2e8f0";
+          return `
+                            <div class="bg-white rounded-2xl p-4 shadow-sm flex gap-3 items-start">
+                                <div class="w-3 h-3 rounded-full mt-1 shrink-0" style="background-color:${color}"></div>
+                                <div class="flex-1 min-w-0">
+                                    <div class="flex items-center justify-between gap-2 mb-0.5">
+                                        <span class="font-bold text-slate-700 text-sm">${displayName}</span>
+                                        <span class="text-xs text-slate-400 shrink-0">${formatDate(entry.date)}</span>
+                                    </div>
+                                    ${entry.note ? `<p class="text-slate-500 text-sm leading-relaxed">${entry.note}</p>` : ""}
+                                </div>
+                                <button type="button" class="diary-delete-btn text-slate-300 hover:text-red-400 transition-colors shrink-0" data-id="${entry.id}" aria-label="${t("diaryDeleteButton")}">
+                                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                                </button>
+                            </div>
+                        `;
+        }).join("")}
+                </div>
+                ${entries.length > 1 ? `
+                    <button id="diary-clear-btn" type="button"
+                        class="mt-5 w-full text-xs text-slate-400 hover:text-red-400 transition-colors py-2">
+                        ${t("diaryClearAll")}
+                    </button>
+                ` : ""}
+            `;
+      } else {
+        entriesHtml = `<p class="text-slate-400 text-sm text-center py-10">${t("diaryEmpty")}</p>`;
+      }
+      content.innerHTML = headerHtml + privacyHtml + formHtml + entriesHtml;
+      if (showForm) wireEmotionSearch(content);
+      content.querySelector("#diary-new-btn").addEventListener("click", () => {
+        const formEl = content.querySelector("#diary-add-form");
+        if (formEl) {
+          formEl.remove();
+        } else {
+          renderContent(true);
+          content.querySelector("#diary-emotion-search")?.focus();
+        }
+      });
+      const saveBtn = content.querySelector("#diary-form-save");
+      if (saveBtn) {
+        saveBtn.addEventListener("click", () => {
+          const emotionValue = content.querySelector("#diary-emotion-value");
+          const searchInput = content.querySelector("#diary-emotion-search");
+          const note = content.querySelector("#diary-note-input")?.value ?? "";
+          if (!emotionValue?.value) {
+            searchInput?.focus();
+            searchInput?.classList.add("ring-2", "ring-red-300");
+            return;
+          }
+          addEntry(emotionValue.value, note);
+          renderContent(false);
+        });
+        content.querySelector("#diary-form-cancel").addEventListener("click", () => renderContent(false));
+      }
+      for (const btn of content.querySelectorAll(".diary-delete-btn")) {
+        btn.addEventListener("click", () => {
+          deleteEntry(Number(btn.dataset.id));
+          renderContent(false);
+        });
+      }
+      const clearBtn = content.querySelector("#diary-clear-btn");
+      if (clearBtn) {
+        clearBtn.addEventListener("click", () => {
+          if (confirm(t("diaryClearConfirm"))) {
+            saveEntries([]);
+            renderContent(false);
+          }
+        });
+      }
+    }
+    function renderForTab() {
+      renderContent();
+    }
+    return { addEntry, renderForTab };
+  }
+
   // js/version.js
-  var BUILD_VERSION = "moxx101z";
+  var BUILD_VERSION = "mp4b6pkj";
 
   // app.js
   var state = {
     currentLang: "es",
+    currentTab: "emociones",
     lastFocusedCard: null,
     isClosingModal: false
   };
   var reducedMotion = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
   var modalAnimationMs = reducedMotion ? 0 : 200;
   var ui;
+  var diary;
   var i18n = createI18n({
     getLang: () => state.currentLang,
     setLang: (lang) => {
       state.currentLang = lang;
     },
     onLanguageChanged: () => {
+      ui.renderCheckinTab();
       ui.renderRecentEmotions();
-      ui.renderEmociones(document.getElementById("search").value);
+      ui.renderEmociones(document.getElementById("search")?.value ?? "");
+      if (state.currentTab === "diario") diary.renderForTab();
     }
+  });
+  diary = createDiary({
+    t: i18n.t,
+    getDisplayName: i18n.getDisplayName,
+    emociones
   });
   ui = createUI({
     emociones,
@@ -1015,7 +1556,12 @@
     setIsClosingModal: (value) => {
       state.isClosingModal = value;
     },
-    modalAnimationMs
+    modalAnimationMs,
+    moodCategories: MOOD_CATEGORIES,
+    onAddToDiary: (nombre, note) => {
+      diary.addEntry(nombre, note);
+      if (state.currentTab === "diario") diary.renderForTab();
+    }
   });
   function getTheme() {
     return localStorage.getItem(THEME_KEY) || "auto";
@@ -1155,20 +1701,47 @@
     });
     updateInstallVisibility();
   }
+  function switchTab(tabId) {
+    const tabs = ["emociones", "checkin", "diario"];
+    for (const id of tabs) {
+      document.getElementById(`tab-${id}`)?.classList.toggle("hidden", id !== tabId);
+      const btn = document.getElementById(`nav-${id}`);
+      if (btn) {
+        btn.classList.toggle("text-blue-600", id === tabId);
+        btn.classList.toggle("text-slate-400", id !== tabId);
+        btn.classList.toggle("nav-active", id === tabId);
+        if (id === tabId) {
+          btn.setAttribute("aria-current", "page");
+        } else {
+          btn.removeAttribute("aria-current");
+        }
+      }
+    }
+    state.currentTab = tabId;
+    if (tabId === "diario") diary.renderForTab();
+  }
+  function initTabNav() {
+    for (const btn of document.querySelectorAll(".nav-tab")) {
+      btn.addEventListener("click", () => switchTab(btn.dataset.tab));
+    }
+  }
   function bootstrap() {
     state.currentLang = i18n.detectInitialLanguage();
     i18n.applyStaticTranslations();
     const versionEl = document.getElementById("build-version");
     if (versionEl) versionEl.textContent = BUILD_VERSION;
     initSettingsPanel();
+    initTabNav();
     ui.bindBaseEvents();
     const quiz = createQuiz({
       emociones,
       getDisplayName: i18n.getDisplayName,
       t: i18n.t,
-      showDetail: ui.showDetail
+      showDetail: ui.showDetail,
+      onShowAll: () => switchTab("emociones")
     });
     quiz.init();
+    ui.renderCheckinTab();
     ui.renderRecentEmotions();
     ui.renderEmociones();
     initSmartInstallButton();

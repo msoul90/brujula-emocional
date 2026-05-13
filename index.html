@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self';">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brújula Emocional</title>
-    <meta name="theme-color" content="#0f172a">
+    <meta name="theme-color" content="#0D1B2A">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -15,14 +15,14 @@
     <link href="dist/tailwind.css" rel="stylesheet">
     <link href="styles.css" rel="stylesheet">
 </head>
-<body class="p-4 pb-24">
+<body class="pb-20">
 
-    <header class="mb-6 mt-2 flex items-start justify-between gap-3">
+    <header class="px-4 pt-4 pb-3 flex items-start justify-between gap-3">
         <div>
             <h1 id="app-title" class="text-3xl font-black text-slate-800 tracking-tight">Brújula Emocional</h1>
             <p id="app-subtitle" class="text-slate-500 font-medium">Encuentra claridad en lo que sientes.</p>
         </div>
-        <div class="flex items-center gap-2 shrink-0">
+        <div class="flex items-center gap-2 shrink-0 mt-1">
             <button id="install-app-button" class="hidden bg-slate-800 text-white text-[11px] font-bold px-3 py-2 rounded-xl hover:bg-slate-700 transition-colors whitespace-nowrap" type="button">
                 Instalar app
             </button>
@@ -67,29 +67,71 @@
         </div>
     </header>
 
-    <div class="sticky top-2 z-40 mb-6">
-        <div class="relative group">
-            <svg class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
-            <input type="text" id="search" placeholder="¿Qué sientes hoy? (ej. Ansiedad, Placer...)" 
-                   class="w-full pl-12 pr-4 py-4 rounded-2xl border-none shadow-lg focus:ring-4 focus:ring-blue-500/20 outline-none text-slate-700">
+    <!-- Tab: Emociones -->
+    <div id="tab-emociones" class="tab-panel">
+        <div class="sticky top-0 z-40 px-4 pt-2 pb-3 bg-body">
+            <div class="relative group">
+                <svg class="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400 w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M15.5 14h-.79l-.28-.27C15.41 12.59 16 11.11 16 9.5 16 5.91 13.09 3 9.5 3S3 5.91 3 9.5 5.91 16 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/></svg>
+                <input type="text" id="search" placeholder="¿Qué sientes hoy? (ej. Ansiedad, Placer...)"
+                       class="w-full pl-12 pr-4 py-4 rounded-2xl border-none shadow-lg focus:ring-4 focus:ring-blue-500/20 outline-none text-slate-700">
+            </div>
+        </div>
+
+        <div class="px-4">
+            <section id="recent-section" class="mb-6 hidden" aria-live="polite">
+                <h2 id="recent-title" class="text-sm font-medium text-slate-400 mb-3">Vistas recientemente</h2>
+                <div id="recent-grid" class="flex gap-3 overflow-x-auto hide-scroll pb-2 pr-1"></div>
+            </section>
+
+            <div id="emotion-grid" class="grid grid-cols-1 gap-3"></div>
         </div>
     </div>
 
-    <button id="quiz-trigger" type="button" class="w-full mb-6 text-left py-4 px-5 bg-white rounded-2xl shadow-sm flex items-center justify-between gap-3 hover:shadow-md transition-all" style="border-left: 6px solid #818cf8">
-        <div>
-            <p id="quiz-trigger-title" class="font-bold text-slate-700 text-sm">¿No sabes lo que sientes?</p>
-            <p id="quiz-trigger-sub" class="text-slate-400 text-xs mt-1">Descúbrelo en 3 preguntas</p>
-        </div>
-        <svg class="w-5 h-5 text-indigo-300 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
-    </button>
+    <!-- Tab: Check-in -->
+    <div id="tab-checkin" class="tab-panel hidden px-4 pt-2">
+        <button id="quiz-trigger" type="button" class="w-full mb-6 text-left py-4 px-5 bg-white rounded-2xl shadow-sm flex items-center justify-between gap-3 hover:shadow-md transition-all" style="border-left: 6px solid #818cf8">
+            <div>
+                <p id="quiz-trigger-title" class="font-bold text-slate-700 text-sm">¿No sabes lo que sientes?</p>
+                <p id="quiz-trigger-sub" class="text-slate-400 text-xs mt-1">Descúbrelo en 3 preguntas</p>
+            </div>
+            <svg class="w-5 h-5 text-indigo-300 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>
+        </button>
 
-    <section id="recent-section" class="mb-6 hidden" aria-live="polite">
-        <h2 id="recent-title" class="text-sm font-medium text-slate-400 mb-3">Vistas recientemente</h2>
-        <div id="recent-grid" class="flex gap-3 overflow-x-auto hide-scroll pb-2 pr-1"></div>
-    </section>
+        <div id="checkin-cards-grid" class="grid grid-cols-2 gap-3 mb-6" aria-live="polite"></div>
 
-    <div id="emotion-grid" class="grid grid-cols-1 gap-3">
+        <div id="checkin-emotion-section" class="hidden">
+            <div class="flex items-center justify-between mb-3">
+                <span id="checkin-selected-label" class="text-sm font-bold text-slate-600"></span>
+                <button id="checkin-reset-btn" type="button" class="text-xs font-medium text-slate-400 hover:text-slate-600 transition-colors">Ver todas</button>
+            </div>
+            <div id="checkin-filtered-grid" class="grid grid-cols-1 gap-3 pb-4"></div>
         </div>
+    </div>
+
+    <!-- Tab: Diario -->
+    <div id="tab-diario" class="tab-panel hidden px-4 pt-2">
+        <div id="diary-content"></div>
+    </div>
+
+    <!-- Bottom navigation -->
+    <nav id="bottom-nav" class="fixed bottom-0 left-0 right-0 bg-white border-t border-slate-200 flex z-40 safe-area-bottom" aria-label="Navegación principal">
+        <button id="nav-emociones" type="button" data-tab="emociones"
+                class="nav-tab flex-1 flex flex-col items-center justify-center py-2 gap-0.5 text-blue-600 transition-colors"
+                aria-current="page">
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"/></svg>
+            <span id="nav-label-emociones" class="text-[10px] font-bold">Emociones</span>
+        </button>
+        <button id="nav-checkin" type="button" data-tab="checkin"
+                class="nav-tab flex-1 flex flex-col items-center justify-center py-2 gap-0.5 text-slate-400 transition-colors">
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+            <span id="nav-label-checkin" class="text-[10px] font-bold">¿Qué siento?</span>
+        </button>
+        <button id="nav-diario" type="button" data-tab="diario"
+                class="nav-tab flex-1 flex flex-col items-center justify-center py-2 gap-0.5 text-slate-400 transition-colors">
+            <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+            <span id="nav-label-diario" class="text-[10px] font-bold">Diario</span>
+        </button>
+    </nav>
 
     <dialog id="quiz-panel" aria-label="¿Qué siento?">
         <div class="max-w-lg mx-auto p-6 pb-16">
@@ -102,9 +144,13 @@
             <div id="modal-panel" class="bg-white rounded-t-[2.5rem] sm:rounded-3xl max-w-lg w-full max-h-[85vh] overflow-y-auto p-8 shadow-2xl hide-scroll transition-all duration-200 translate-y-8 sm:translate-y-0 sm:scale-95 opacity-0">
                 <div id="modal-content"></div>
                 <div class="mt-8 flex gap-3">
-                    <button id="share-btn" type="button" class="flex-1 bg-slate-100 border border-slate-200 text-slate-600 py-4 rounded-2xl font-bold flex items-center justify-center gap-2 active:bg-slate-200 transition-colors">
+                    <button id="share-btn" type="button" aria-label="Compartir" class="flex-1 bg-slate-100 border border-slate-200 text-slate-600 py-4 rounded-2xl font-bold flex items-center justify-center gap-2 active:bg-slate-200 transition-colors">
                         <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
                         <span id="share-btn-label">Compartir</span>
+                    </button>
+                    <button id="diary-add-btn" type="button" aria-label="Diario" class="flex-1 bg-slate-100 border border-slate-200 text-slate-600 py-4 rounded-2xl font-bold flex items-center justify-center gap-2 active:bg-slate-200 transition-colors">
+                        <svg class="w-4 h-4 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17 3H7c-1.1 0-1.99.9-1.99 2L5 21l7-3 7 3V5c0-1.1-.9-2-2-2z"/></svg>
+                        <span id="diary-add-label">Diario</span>
                     </button>
                     <button id="close-button" class="flex-1 bg-slate-200 border border-slate-300 text-slate-900 py-4 rounded-2xl font-bold active:bg-slate-300 transition-colors">Entendido</button>
                 </div>

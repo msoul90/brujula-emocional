@@ -9,34 +9,34 @@ export const QUIZ_STEPS = {
     q2_high: {
         textKey: "quizQ2",
         options: [
-            { labelKey: "quizQ2A", result: ["Entusiasmo", "Alegría"] },
+            { labelKey: "quizQ2A", result: ["Entusiasmo", "Alegría", "Orgullo"] },
             { labelKey: "quizQ2B", next: "q3_high_bad" }
         ]
     },
     q2_low: {
         textKey: "quizQ2",
         options: [
-            { labelKey: "quizQ2A", result: ["Calma", "Felicidad", "Placer"] },
+            { labelKey: "quizQ2A", result: ["Calma", "Felicidad", "Placer", "Gratitud", "Alivio", "Ternura"] },
             { labelKey: "quizQ2B", next: "q3_low_bad" }
         ]
     },
     q3_high_bad: {
         textKey: "quizQ3",
         options: [
-            { labelKey: "quizQ3A", result: ["Enojo", "Frustración", "Miedo", "Celos"] },
+            { labelKey: "quizQ3A", result: ["Enojo", "Frustración", "Miedo", "Celos", "Envidia", "Disgusto"] },
             { labelKey: "quizQ3B", result: ["Ansiedad", "Preocupación", "Irritabilidad"] }
         ]
     },
     q3_low_bad: {
         textKey: "quizQ3",
         options: [
-            { labelKey: "quizQ3A", result: ["Tristeza", "Vergüenza", "Rechazo", "Culpa"] },
-            { labelKey: "quizQ3B", result: ["Soledad", "Angustia", "Confusión"] }
+            { labelKey: "quizQ3A", result: ["Tristeza", "Vergüenza", "Rechazo", "Culpa", "Decepción"] },
+            { labelKey: "quizQ3B", result: ["Soledad", "Angustia", "Confusión", "Nostalgia", "Aburrimiento"] }
         ]
     }
 };
 
-export function createQuiz({ emociones, getDisplayName, t, showDetail }) {
+export function createQuiz({ emociones, getDisplayName, t, showDetail, onShowAll }) {
     let history = [];
     let currentStepKey = "q1";
 
@@ -111,7 +111,10 @@ export function createQuiz({ emociones, getDisplayName, t, showDetail }) {
             currentStepKey = "q1";
             render();
         });
-        content.querySelector("#quiz-close-result-btn").addEventListener("click", dismiss);
+        content.querySelector("#quiz-close-result-btn").addEventListener("click", () => {
+            dismiss();
+            if (onShowAll) onShowAll();
+        });
 
         for (const btn of content.querySelectorAll(".quiz-result-card")) {
             btn.addEventListener("click", () => {
