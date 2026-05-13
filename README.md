@@ -204,6 +204,22 @@ Para que la instalación esté disponible, la app debe ejecutarse en `http://` o
 
 ## Próximas mejoras sugeridas
 
-- Diario emocional: registrar entradas con fecha, emoción seleccionada y nota libre
-- Estadísticas simples de emociones más frecuentes (derivadas del diario)
-- Traducciones adicionales (PT/FR)
+### Corto plazo
+
+- **Estadísticas del diario:** gráfico de emociones más frecuentes por semana / mes derivado de las entradas existentes en localStorage
+- **Contexto en entradas del diario:** etiquetas opcionales (trabajo, pareja, familia, cuerpo, dinero) para filtrar patrones por área de vida
+- **Técnicas de regulación por emoción:** expandir la "respuesta sugerida" con 1-2 técnicas prácticas guiadas (ej. respiración 4-7-8 para ansiedad, técnica STOP para enojo)
+- **Exportar el diario:** descarga en JSON o texto plano para que el usuario tenga respaldo de sus datos
+- **Traducciones adicionales:** PT / FR
+
+### Mediano plazo
+
+- **Recordatorio diario de check-in:** push notification configurable via PWA para convertir el check-in en hábito diario
+- **Flujo "estoy desbordado":** modo de crisis con 3 pasos — validación, anclaje (técnica 5-4-3-2-1) y una acción concreta; sin búsquedas ni exploración
+- **Rutina de cierre del día:** flujo guiado de 3 preguntas (¿qué sentiste?, ¿qué lo desencadenó?, ¿qué necesitas mañana?) más rápido y estructurado que el diario libre
+
+### Más adelante
+
+- **Más emociones:** ampliar el catálogo con esperanza, asombro, compasión, hartazgo, humillación, vergüenza ajena, entre otras
+- **Relaciones entre emociones:** visualizar emociones que suelen coexistir (ej. enojo y miedo) para entender la complejidad emocional
+- **Modo acompañamiento:** preguntas abiertas guiadas para promover la reflexión, sin diagnóstico
