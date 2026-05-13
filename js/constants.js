@@ -46,7 +46,33 @@ export const TRANSLATIONS = {
         iosInstallTitle: "Instalar en iPhone/iPad",
         iosInstallStep1: "1. Toca el botón Compartir de Safari (cuadro con flecha hacia arriba).",
         iosInstallStep2: "2. Selecciona \"Añadir a pantalla de inicio\".",
-        iosInstallClose: "Entendido"
+        iosInstallClose: "Entendido",
+        checkinTitle: "¿Cómo me siento?",
+        moodAgitado: "Agitado",
+        moodTriste: "Triste",
+        moodConfundido: "Confundido",
+        moodBien: "Bien",
+        checkinReset: "Ver todas",
+        diaryTrigger: "Mi diario emocional",
+        diaryTriggerSub: "Solo se guarda en tu dispositivo",
+        diaryTitle: "Diario emocional",
+        diaryPrivacyNote: "Tus entradas se guardan solo en este dispositivo. Nunca salen de aquí.",
+        diaryEmpty: "Aún no hay entradas.",
+        diaryAddShort: "Diario",
+        diaryNoteLabel: "Nota (opcional)",
+        diaryNotePlaceholder: "¿Qué más quieres recordar?",
+        diarySaveButton: "Guardar",
+        diaryCancelButton: "Cancelar",
+        diaryDeleteButton: "Eliminar entrada",
+        diaryClearAll: "Borrar todo el diario",
+        diaryClearConfirm: "¿Borrar todas las entradas del diario? Esta acción no se puede deshacer.",
+        diaryTodayLabel: "Hoy",
+        diaryAddedFeedback: "Guardado en tu diario",
+        diaryNewEntry: "Nueva entrada",
+        diaryPickEmotion: "¿Qué sentiste?",
+        navEmociones: "Emociones",
+        navCheckin: "¿Qué siento?",
+        navDiary: "Diario"
     },
     en: {
         langLabel: "Language",
@@ -95,7 +121,33 @@ export const TRANSLATIONS = {
         iosInstallTitle: "Install on iPhone/iPad",
         iosInstallStep1: "1. Tap Safari's Share button (square with upward arrow).",
         iosInstallStep2: "2. Select \"Add to Home Screen\".",
-        iosInstallClose: "Got it"
+        iosInstallClose: "Got it",
+        checkinTitle: "How do I feel?",
+        moodAgitado: "Agitated",
+        moodTriste: "Sad",
+        moodConfundido: "Confused",
+        moodBien: "Good",
+        checkinReset: "See all",
+        diaryTrigger: "My emotional diary",
+        diaryTriggerSub: "Saved only on your device",
+        diaryTitle: "Emotional diary",
+        diaryPrivacyNote: "Your entries are saved only on this device. They never leave it.",
+        diaryEmpty: "No entries yet.",
+        diaryAddShort: "Diary",
+        diaryNoteLabel: "Note (optional)",
+        diaryNotePlaceholder: "What else do you want to remember?",
+        diarySaveButton: "Save",
+        diaryCancelButton: "Cancel",
+        diaryDeleteButton: "Delete entry",
+        diaryClearAll: "Clear all diary entries",
+        diaryClearConfirm: "Clear all diary entries? This cannot be undone.",
+        diaryTodayLabel: "Today",
+        diaryAddedFeedback: "Saved to your diary",
+        diaryNewEntry: "New entry",
+        diaryPickEmotion: "What did you feel?",
+        navEmociones: "Emotions",
+        navCheckin: "How do I feel?",
+        navDiary: "Diary"
     }
 };
 
@@ -118,7 +170,16 @@ export const EMOTION_NAME_TRANSLATIONS = {
     Placer: "Pleasure",
     Angustia: "Distress",
     Irritabilidad: "Irritability",
-    Rechazo: "Rejection"
+    Rechazo: "Rejection",
+    Envidia: "Envy",
+    Gratitud: "Gratitude",
+    Orgullo: "Pride",
+    Nostalgia: "Nostalgia",
+    Alivio: "Relief",
+    Aburrimiento: "Boredom",
+    Disgusto: "Disgust",
+    "Decepción": "Disappointment",
+    Ternura: "Tenderness"
 };
 
 export const EMOTION_CONTENT_TRANSLATIONS = {
@@ -273,6 +334,78 @@ export const EMOTION_CONTENT_TRANSLATIONS = {
         mensaje: "This does not feel safe or compatible for me",
         impulso: "Pull away, shut down, attack or avoid",
         respuesta: "Explore whether rejection comes from harm or insecurity and respond clearly"
+    },
+    Envidia: {
+        siente: "Bitterness, tension, constant comparison, sense of injustice",
+        dispara: "Seeing others' achievements or possessions you desire, social comparison",
+        funcion: "Signal what you value but don't have, motivate change",
+        mensaje: "There is something I want and feel I don't have access to",
+        impulso: "Put others down, sabotage, withdraw",
+        respuesta: "Use it as a compass toward your own goals, without comparing yourself"
+    },
+    Gratitud: {
+        siente: "Warmth, openness, lightness, expansion in the chest",
+        dispara: "Receiving help, genuine connection, recognizing what you have",
+        funcion: "Strengthen bonds, broaden perspective, reinforce well-being",
+        mensaje: "Something or someone gave me something valuable",
+        impulso: "Take it for granted, not express it",
+        respuesta: "Express it, write it down, allow yourself to receive it fully"
+    },
+    Orgullo: {
+        siente: "Expansion, high energy, deep satisfaction, confidence",
+        dispara: "Personal achievement, overcoming a challenge, living up to your values",
+        funcion: "Reinforce identity and effort-based behaviors",
+        mensaje: "I achieved it or I trust who I am",
+        impulso: "Brag excessively, become arrogant or dismissive",
+        respuesta: "Celebrate with humility, share it genuinely, let it fuel future effort"
+    },
+    Nostalgia: {
+        siente: "Warmth mixed with melancholy, longing, bittersweet sensation",
+        dispara: "Memories of the past, places, people, or times that are no longer",
+        funcion: "Reinforce identity, value what was lived, connect past and present",
+        mensaje: "Something of who I was or lived matters deeply to me",
+        impulso: "Live in the past, avoid or escape the present",
+        respuesta: "Honor what was lived, bring something from that past consciously into today"
+    },
+    Alivio: {
+        siente: "Release, relaxation, letting go of tension, freer breathing",
+        dispara: "End of a threat, resolution of a problem, receiving good news",
+        funcion: "Signal that the danger has passed, allow recovery",
+        mensaje: "What I feared did not happen or it is over now",
+        impulso: "Ignore what caused the stress, skip reflection",
+        respuesta: "Rest consciously, use the calm to process and prepare"
+    },
+    Aburrimiento: {
+        siente: "Emptiness, restlessness, lack of motivation, time that does not move",
+        dispara: "Lack of stimulation, excessive routine, unclear goals",
+        funcion: "Signal need for stimulation, meaning, or a new challenge",
+        mensaje: "I need something that activates me or has meaning",
+        impulso: "Seek empty distractions, complain, disengage",
+        respuesta: "Find a purposeful activity, create something, challenge your mind"
+    },
+    Disgusto: {
+        siente: "Nausea, urge to pull away, body contraction, physical or moral discomfort",
+        dispara: "Something perceived as repulsive, unjust, offensive, or incompatible with core values",
+        funcion: "Protect from harm (physical or moral), maintain value integrity",
+        mensaje: "Something violates my physical or moral limits",
+        impulso: "Expel, reject, pull away harshly",
+        respuesta: "Name what generates it, set a clear boundary, distance yourself if needed"
+    },
+    "Decepción": {
+        siente: "Quiet heaviness, mild discouragement, emptiness where something was expected",
+        dispara: "Unmet expectation, broken promise, outcome below what was hoped for",
+        funcion: "Signal that something expected did not arrive, invite readjusting expectations",
+        mensaje: "I expected something that did not happen",
+        impulso: "Give up, disconnect, look for someone to blame",
+        respuesta: "Validate the expectation, assess if it was realistic, redirect your energy"
+    },
+    Ternura: {
+        siente: "Gentle warmth, urge to nurture, chest opening, sensation of wanting to protect",
+        dispara: "Something or someone fragile, vulnerable, or cherished — children, pets, intimate moments",
+        funcion: "Strengthen bonds, motivate care, deepen connection",
+        mensaje: "There is something I want to protect or draw closer",
+        impulso: "Hold back the expression, minimize it as silly or unnecessary",
+        respuesta: "Allow yourself to express it, draw closer, care without losing your own limits"
     }
 };
 
@@ -295,10 +428,27 @@ export const emociones = [
     { nombre: "Placer", color: "#f9a8d4", text: "#831843", siente: "Sensación agradable, comodidad, satisfacción corporal o emocional", dispara: "Descanso, disfrute, contacto, experiencias gratificantes", funcion: "Favorecer bienestar y recuperación", mensaje: "Esto se siente nutritivo o satisfactorio", impulso: "Buscar repetir inmediatamente", respuesta: "Disfrutar conscientemente y mantener equilibrio" },
     { nombre: "Angustia", color: "#60a5fa", text: "#1e3a8a", siente: "Opresión, desesperación, sensación de no poder sostener algo", dispara: "Pérdida de control, miedo intenso, incertidumbre alta", funcion: "Señalar saturación emocional o amenaza percibida", mensaje: "Algo me está sobrepasando", impulso: "Escapar, aislarse, buscar alivio inmediato", respuesta: "Regular el cuerpo, pedir apoyo, reducir estímulos" },
     { nombre: "Irritabilidad", color: "#bef264", text: "#365314", siente: "Tensión, impaciencia, sensibilidad alta, facilidad para molestarse", dispara: "Cansancio, estrés, frustración acumulada, sobrecarga", funcion: "Señalar saturación o necesidad de pausa", mensaje: "Estoy agotado o algo me está sobrepasando", impulso: "Responder cortante, discutir, alejarse", respuesta: "Descansar, bajar exigencia, expresar necesidad antes de explotar" },
-    { nombre: "Rechazo", color: "#d8b4fe", text: "#4c1d95", siente: "Distancia, incomodidad, desagrado o exclusión", dispara: "Crítica, desaprobación, falta de aceptación o incompatibilidad", funcion: "Proteger identidad, límites o pertenencia", mensaje: "Esto no se siente seguro o compatible para mí", impulso: "Alejarse, cerrarse, atacar o evitar", respuesta: "Explorar si el rechazo viene de daño o inseguridad y responder con claridad" }
+    { nombre: "Rechazo", color: "#d8b4fe", text: "#4c1d95", siente: "Distancia, incomodidad, desagrado o exclusión", dispara: "Crítica, desaprobación, falta de aceptación o incompatibilidad", funcion: "Proteger identidad, límites o pertenencia", mensaje: "Esto no se siente seguro o compatible para mí", impulso: "Alejarse, cerrarse, atacar o evitar", respuesta: "Explorar si el rechazo viene de daño o inseguridad y responder con claridad" },
+    { nombre: "Envidia", color: "#fef9c3", text: "#78350f", siente: "Amargura, tensión, comparación constante, sensación de injusticia", dispara: "Ver logros o bienes ajenos que se desean, comparación social", funcion: "Señalar lo que valoras y no tienes, motivar cambio", mensaje: "Hay algo que deseo y siento que no tengo acceso", impulso: "Denigrar al otro, sabotear, paralizarse", respuesta: "Úsala como brújula hacia tus propias metas, sin compararte" },
+    { nombre: "Gratitud", color: "#2dd4bf", text: "#134e4a", siente: "Calidez, apertura, ligereza, expansión en el pecho", dispara: "Recibir ayuda, conexión genuina, reconocer lo que tienes", funcion: "Fortalecer vínculos, ampliar perspectiva, reforzar bienestar", mensaje: "Algo o alguien me aportó algo valioso", impulso: "Dar por sentado, no expresarla", respuesta: "Exprésala, anótala, permítete recibirla plenamente" },
+    { nombre: "Orgullo", color: "#a5b4fc", text: "#312e81", siente: "Expansión, energía alta, satisfacción profunda, confianza", dispara: "Logro propio, superar un reto, vivir conforme a tus valores", funcion: "Reforzar identidad y conductas de esfuerzo", mensaje: "Lo logré o confío en quién soy", impulso: "Presumir en exceso, volverse arrogante o despectivo", respuesta: "Celebra con humildad, compártelo genuinamente, deja que impulse el siguiente esfuerzo" },
+    { nombre: "Nostalgia", color: "#f0abfc", text: "#701a75", siente: "Calidez mezclada con melancolía, añoranza, sensación agridulce", dispara: "Recuerdos del pasado, lugares, personas o épocas que ya no están", funcion: "Reforzar identidad, valorar lo vivido, conectar pasado y presente", mensaje: "Algo de lo que fui o viví me importa mucho", impulso: "Vivir en el pasado, evitar o escapar el presente", respuesta: "Honra lo vivido, trae algo de ese pasado conscientemente al hoy" },
+    { nombre: "Alivio", color: "#6ee7b7", text: "#064e3b", siente: "Descarga, relajación, soltar tensión, respiración más libre", dispara: "Fin de una amenaza, resolución de problema, buenas noticias", funcion: "Señalar que el peligro pasó, permitir recuperación", mensaje: "Lo que temía no ocurrió o ya pasó", impulso: "Ignorar lo que causó el estrés, saltarse la reflexión", respuesta: "Descansa conscientemente, usa la calma para procesar y prepararte" },
+    { nombre: "Aburrimiento", color: "#cbd5e1", text: "#334155", siente: "Vacío, inquietud, falta de motivación, tiempo que no avanza", dispara: "Falta de estímulo, rutina excesiva, metas poco claras", funcion: "Señalar necesidad de estimulación, significado o un nuevo desafío", mensaje: "Necesito algo que me active o tenga sentido", impulso: "Buscar distracciones vacías, quejarse, desconectarse", respuesta: "Busca una actividad con propósito, crea algo, desafía tu mente" },
+    { nombre: "Disgusto", color: "#d6d3d1", text: "#292524", siente: "Náuseas, ganas de alejarse, contracción corporal, malestar físico o moral", dispara: "Algo percibido como repugnante, injusto, ofensivo o incompatible con valores profundos", funcion: "Proteger de lo dañino (físico o moral), mantener integridad de valores", mensaje: "Algo viola mis límites físicos o morales", impulso: "Expulsar, rechazar, alejarse bruscamente", respuesta: "Nombra lo que lo genera, pon un límite claro, aléjate si es necesario" },
+    { nombre: "Decepción", color: "#bae6fd", text: "#0c4a6e", siente: "Pesadez tranquila, desánimo suave, vacío donde esperaba algo", dispara: "Expectativa no cumplida, promesa rota, resultado por debajo de lo esperado", funcion: "Señalar que algo esperado no llegó, invitar a reajustar expectativas", mensaje: "Esperaba algo que no se dio", impulso: "Resignarse, desconectarse, buscar culpables", respuesta: "Valida la expectativa, revisa si era realista, redirige tu energía" },
+    { nombre: "Ternura", color: "#ffe4e6", text: "#9f1239", siente: "Calidez suave, ganas de cuidar, apertura en el pecho, sensación de querer proteger", dispara: "Algo o alguien frágil, vulnerable o querido: hijos, mascotas, momentos íntimos", funcion: "Fortalecer vínculos, motivar el cuidado, profundizar la conexión", mensaje: "Hay algo que quiero proteger o acercar", impulso: "Contener la expresión, minimizarla como tontería o debilidad", respuesta: "Permítete expresarla, acércate, cuida sin perder tus propios límites" }
 ];
 
 export const RECENT_KEY = "brujulaRecientes";
 export const LANGUAGE_KEY = "brujulaIdioma";
 export const THEME_KEY = "brujulaThema";
+export const DIARY_KEY = "brujulaDiario";
 export const RECENT_LIMIT = 5;
+
+export const MOOD_CATEGORIES = [
+    { key: "agitado",   labelKey: "moodAgitado",   emoji: "😤", color: "#F5A5A0", ink: "#7A2E2E", emotions: ["Enojo", "Frustración", "Irritabilidad", "Ansiedad", "Miedo", "Preocupación", "Angustia", "Envidia", "Disgusto"] },
+    { key: "triste",    labelKey: "moodTriste",    emoji: "😢", color: "#A4C3E3", ink: "#1F3F66", emotions: ["Tristeza", "Soledad", "Nostalgia", "Culpa", "Vergüenza", "Rechazo", "Decepción"] },
+    { key: "confundido",labelKey: "moodConfundido",emoji: "🤔", color: "#F5D88A", ink: "#7A5A1A", emotions: ["Confusión", "Aburrimiento", "Celos"] },
+    { key: "bien",      labelKey: "moodBien",      emoji: "😌", color: "#8FD4AE", ink: "#1E5237", emotions: ["Calma", "Alivio", "Gratitud", "Felicidad", "Alegría", "Orgullo", "Entusiasmo", "Placer", "Ternura"] }
+];

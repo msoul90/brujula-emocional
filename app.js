@@ -1,11 +1,13 @@
-﻿import { emociones, THEME_KEY } from "./js/constants.js";
+﻿import { emociones, THEME_KEY, MOOD_CATEGORIES } from "./js/constants.js";
 import { createI18n } from "./js/i18n.js";
 import { createUI } from "./js/ui.js";
 import { createQuiz } from "./js/quiz.js";
+import { createDiary } from "./js/diary.js";
 import { BUILD_VERSION } from "./js/version.js";
 
 const state = {
     currentLang: "es",
+    currentTab: "emociones",
     lastFocusedCard: null,
     isClosingModal: false
 };
@@ -14,6 +16,7 @@ const reducedMotion = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)"
 const modalAnimationMs = reducedMotion ? 0 : 200;
 
 let ui;
+let diary;
 
 const i18n = createI18n({
     getLang: () => state.currentLang,
@@ -21,9 +24,17 @@ const i18n = createI18n({
         state.currentLang = lang;
     },
     onLanguageChanged: () => {
+        ui.renderCheckinTab();
         ui.renderRecentEmotions();
-        ui.renderEmociones(document.getElementById("search").value);
+        ui.renderEmociones(document.getElementById("search")?.value ?? "");
+        if (state.currentTab === "diario") diary.renderForTab();
     }
+});
+
+diary = createDiary({
+    t: i18n.t,
+    getDisplayName: i18n.getDisplayName,
+    emociones
 });
 
 ui = createUI({
@@ -39,7 +50,12 @@ ui = createUI({
     setIsClosingModal: (value) => {
         state.isClosingModal = value;
     },
-    modalAnimationMs
+    modalAnimationMs,
+    moodCategories: MOOD_CATEGORIES,
+    onAddToDiary: (nombre, note) => {
+        diary.addEntry(nombre, note);
+        if (state.currentTab === "diario") diary.renderForTab();
+    }
 });
 
 function getTheme() {
@@ -212,6 +228,32 @@ function initSmartInstallButton() {
     updateInstallVisibility();
 }
 
+function switchTab(tabId) {
+    const tabs = ["emociones", "checkin", "diario"];
+    for (const id of tabs) {
+        document.getElementById(`tab-${id}`)?.classList.toggle("hidden", id !== tabId);
+        const btn = document.getElementById(`nav-${id}`);
+        if (btn) {
+            btn.classList.toggle("text-blue-600", id === tabId);
+            btn.classList.toggle("text-slate-400", id !== tabId);
+            btn.classList.toggle("nav-active", id === tabId);
+            if (id === tabId) {
+                btn.setAttribute("aria-current", "page");
+            } else {
+                btn.removeAttribute("aria-current");
+            }
+        }
+    }
+    state.currentTab = tabId;
+    if (tabId === "diario") diary.renderForTab();
+}
+
+function initTabNav() {
+    for (const btn of document.querySelectorAll(".nav-tab")) {
+        btn.addEventListener("click", () => switchTab(btn.dataset.tab));
+    }
+}
+
 function bootstrap() {
     state.currentLang = i18n.detectInitialLanguage();
     i18n.applyStaticTranslations();
@@ -220,16 +262,19 @@ function bootstrap() {
     if (versionEl) versionEl.textContent = BUILD_VERSION;
 
     initSettingsPanel();
+    initTabNav();
     ui.bindBaseEvents();
 
     const quiz = createQuiz({
         emociones,
         getDisplayName: i18n.getDisplayName,
         t: i18n.t,
-        showDetail: ui.showDetail
+        showDetail: ui.showDetail,
+        onShowAll: () => switchTab("emociones")
     });
     quiz.init();
 
+    ui.renderCheckinTab();
     ui.renderRecentEmotions();
     ui.renderEmociones();
 
