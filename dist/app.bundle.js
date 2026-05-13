@@ -1593,9 +1593,9 @@
     };
   }
   function runForce(nodes, edges, W, H) {
-    const k = Math.sqrt(W * H / nodes.length) * 0.75;
+    const k = Math.sqrt(W * H / nodes.length) * 0.95;
     for (let it = 0; it < 500; it++) {
-      const temp = 28 * (1 - it / 500);
+      const temp = 35 * (1 - it / 500);
       for (const n of nodes) {
         n.fx = 0;
         n.fy = 0;
@@ -1627,8 +1627,8 @@
       }
       for (const n of nodes) {
         const d = Math.hypot(n.fx, n.fy) || 0.01;
-        n.x = clamp(n.x + n.fx / d * Math.min(d, temp), R + 3, W - R - 3);
-        n.y = clamp(n.y + n.fy / d * Math.min(d, temp), R + 20, H - R - 18);
+        n.x = clamp(n.x + n.fx / d * Math.min(d, temp), R + 28, W - R - 28);
+        n.y = clamp(n.y + n.fy / d * Math.min(d, temp), R + 24, H - R - 28);
       }
     }
   }
@@ -1789,24 +1789,26 @@
       const activeC = dark ? "bg-slate-100 text-slate-900 border-slate-100" : "bg-slate-800 text-white border-slate-800";
       const inactiveC = dark ? "bg-slate-800 text-slate-400 border-slate-600" : "bg-white text-slate-500 border-slate-200";
       const canvasBg = dark ? "#0f172a" : "#f8fafc";
+      const legendItems = Object.entries(RELS).map(
+        ([, rel]) => `<span class="flex items-center gap-1 text-[11px] ${dark ? "text-slate-400" : "text-slate-500"}">
+                <svg width="14" height="6" aria-hidden="true"><line x1="0" y1="3" x2="14" y2="3" stroke="${rel.color}" stroke-width="2" stroke-dasharray="${rel.dash}"/></svg>
+                ${t(rel.labelKey)}
+            </span>`
+      ).join("");
       wrap.innerHTML = `
-            <div class="flex gap-2 mb-3">
+            <div class="flex gap-2 mb-2">
                 <button id="map-graph-btn" class="flex-1 py-2 text-sm font-bold rounded-xl border transition-colors ${view === "graph" ? activeC : inactiveC}">${t("mapViewGraph")}</button>
                 <button id="map-quad-btn"  class="flex-1 py-2 text-sm font-bold rounded-xl border transition-colors ${view === "quad" ? activeC : inactiveC}">${t("mapViewQuad")}</button>
+            </div>
+            <div class="flex flex-wrap gap-x-3 gap-y-1 mb-2" role="list" aria-label="Leyenda">
+                ${legendItems}
             </div>
             <div class="rounded-2xl overflow-hidden" style="background:${canvasBg}">
                 <svg id="map-svg" viewBox="0 0 ${W} ${H}" style="width:100%;display:block;touch-action:none" role="img" aria-label="${t("navMapa")}">
                     ${svgBody(nodes, edges, W, H, selected, view, t)}
                 </svg>
             </div>
-            ${infoHtml}
-            <ul class="mt-4 flex flex-wrap gap-x-4 gap-y-1.5" aria-label="Leyenda">
-                ${Object.entries(RELS).map(([, rel]) => `
-                <li class="flex items-center gap-1.5 text-xs ${dark ? "text-slate-400" : "text-slate-500"}">
-                    <svg width="18" height="8" aria-hidden="true"><line x1="0" y1="4" x2="18" y2="4" stroke="${rel.color}" stroke-width="2.5" stroke-dasharray="${rel.dash}"/></svg>
-                    ${t(rel.labelKey)}
-                </li>`).join("")}
-            </ul>`;
+            ${infoHtml}`;
       bindEvents(wrap);
     }
     function bindEvents(wrap) {
@@ -1859,7 +1861,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mp4i2r2m";
+  var BUILD_VERSION = "mp4ikhf3";
 
   // app.js
   var state = {
