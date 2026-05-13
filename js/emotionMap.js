@@ -264,7 +264,7 @@ export function createEmotionMap({ emociones, getDisplayName, t, showDetail }) {
         const canvasBg  = dark ? "#0f172a" : "#f8fafc";
 
         const legendItems = Object.entries(RELS).map(([, rel]) =>
-            `<span class="flex items-center gap-1 text-[11px] ${dark ? "text-slate-400" : "text-slate-500"}">
+            `<span role="listitem" class="flex items-center gap-1 text-[11px] ${dark ? "text-slate-400" : "text-slate-500"}">
                 <svg width="14" height="6" aria-hidden="true"><line x1="0" y1="3" x2="14" y2="3" stroke="${rel.color}" stroke-width="2" stroke-dasharray="${rel.dash}"/></svg>
                 ${t(rel.labelKey)}
             </span>`
