@@ -74,7 +74,15 @@
       diaryPickEmotion: "\xBFQu\xE9 sentiste?",
       navEmociones: "Emociones",
       navCheckin: "\xBFQu\xE9 siento?",
-      navDiary: "Diario"
+      navDiary: "Diario",
+      navMapa: "Mapa",
+      mapViewGraph: "Grafo",
+      mapViewQuad: "Cuadrantes",
+      mapRelCoexiste: "A menudo coexisten",
+      mapRelEscalaA: "Puede escalar a",
+      mapRelEnmascara: "Puede enmascarar",
+      mapRelOpuesta: "Emoci\xF3n opuesta",
+      mapInfoNone: "Sin relaciones registradas"
     },
     en: {
       langLabel: "Language",
@@ -149,7 +157,15 @@
       diaryPickEmotion: "What did you feel?",
       navEmociones: "Emotions",
       navCheckin: "How do I feel?",
-      navDiary: "Diary"
+      navDiary: "Diary",
+      navMapa: "Map",
+      mapViewGraph: "Graph",
+      mapViewQuad: "Quadrants",
+      mapRelCoexiste: "Often coexist",
+      mapRelEscalaA: "Can escalate to",
+      mapRelEnmascara: "Can mask",
+      mapRelOpuesta: "Opposite emotion",
+      mapInfoNone: "No registered connections"
     }
   };
   var EMOTION_NAME_TRANSLATIONS = {
@@ -449,6 +465,47 @@
     { key: "confundido", labelKey: "moodConfundido", emoji: "\u{1F914}", color: "#F5D88A", ink: "#7A5A1A", emotions: ["Confusi\xF3n", "Aburrimiento", "Celos"] },
     { key: "bien", labelKey: "moodBien", emoji: "\u{1F60C}", color: "#8FD4AE", ink: "#1E5237", emotions: ["Calma", "Alivio", "Gratitud", "Felicidad", "Alegr\xEDa", "Orgullo", "Entusiasmo", "Placer", "Ternura"] }
   ];
+  var EMOTION_RELATIONS = [
+    // Coexisten frecuentemente
+    { from: "Ansiedad", to: "Miedo", type: "coexiste" },
+    { from: "Ansiedad", to: "Preocupaci\xF3n", type: "coexiste" },
+    { from: "Angustia", to: "Tristeza", type: "coexiste" },
+    { from: "Tristeza", to: "Soledad", type: "coexiste" },
+    { from: "Tristeza", to: "Culpa", type: "coexiste" },
+    { from: "Decepci\xF3n", to: "Tristeza", type: "coexiste" },
+    { from: "Nostalgia", to: "Tristeza", type: "coexiste" },
+    { from: "Verg\xFCenza", to: "Culpa", type: "coexiste" },
+    { from: "Verg\xFCenza", to: "Rechazo", type: "coexiste" },
+    { from: "Celos", to: "Envidia", type: "coexiste" },
+    { from: "Enojo", to: "Frustraci\xF3n", type: "coexiste" },
+    { from: "Enojo", to: "Irritabilidad", type: "coexiste" },
+    { from: "Alegr\xEDa", to: "Entusiasmo", type: "coexiste" },
+    { from: "Alegr\xEDa", to: "Gratitud", type: "coexiste" },
+    { from: "Felicidad", to: "Alegr\xEDa", type: "coexiste" },
+    { from: "Placer", to: "Alegr\xEDa", type: "coexiste" },
+    { from: "Calma", to: "Alivio", type: "coexiste" },
+    { from: "Orgullo", to: "Alegr\xEDa", type: "coexiste" },
+    // Puede escalar a
+    { from: "Irritabilidad", to: "Enojo", type: "escala_a" },
+    { from: "Frustraci\xF3n", to: "Enojo", type: "escala_a" },
+    { from: "Preocupaci\xF3n", to: "Ansiedad", type: "escala_a" },
+    { from: "Ansiedad", to: "Angustia", type: "escala_a" },
+    { from: "Tristeza", to: "Angustia", type: "escala_a" },
+    // Puede enmascarar
+    { from: "Enojo", to: "Miedo", type: "enmascara" },
+    { from: "Enojo", to: "Tristeza", type: "enmascara" },
+    { from: "Irritabilidad", to: "Tristeza", type: "enmascara" },
+    { from: "Confusi\xF3n", to: "Miedo", type: "enmascara" },
+    { from: "Aburrimiento", to: "Tristeza", type: "enmascara" },
+    // Emoción opuesta
+    { from: "Alegr\xEDa", to: "Tristeza", type: "opuesta" },
+    { from: "Calma", to: "Ansiedad", type: "opuesta" },
+    { from: "Gratitud", to: "Envidia", type: "opuesta" },
+    { from: "Orgullo", to: "Verg\xFCenza", type: "opuesta" },
+    { from: "Alivio", to: "Angustia", type: "opuesta" },
+    { from: "Entusiasmo", to: "Aburrimiento", type: "opuesta" },
+    { from: "Felicidad", to: "Tristeza", type: "opuesta" }
+  ];
 
   // js/i18n.js
   function detectInitialLanguage() {
@@ -508,6 +565,9 @@
         },
         "nav-label-diario": (el) => {
           el.textContent = t("navDiary");
+        },
+        "nav-label-mapa": (el) => {
+          el.textContent = t("navMapa");
         },
         "install-app-button": (el) => {
           el.textContent = t("installButton");
@@ -632,7 +692,7 @@
   async function buildEmotionCanvas(e, displayName, tagLabel, mensaje, responseLabel, respuesta) {
     await document.fonts.load("900 1px Inter").catch(() => {
     });
-    const W = 1080, H = 1350, PAD = 84;
+    const W = 1080, H = 1350, PAD2 = 84;
     const SANS = `'Inter', system-ui, -apple-system, sans-serif`;
     const SERIF = `Georgia, "Times New Roman", serif`;
     const canvas = document.createElement("canvas");
@@ -652,35 +712,35 @@
     ctx.fill();
     ctx.fillStyle = tagAlpha;
     ctx.font = `600 26px ${SANS}`;
-    ctx.fillText(tagLabel.toUpperCase(), PAD, 112);
+    ctx.fillText(tagLabel.toUpperCase(), PAD2, 112);
     ctx.fillStyle = textOnColor;
     ctx.font = `900 92px ${SANS}`;
-    ctx.fillText(displayName, PAD, 248);
+    ctx.fillText(displayName, PAD2, 248);
     let y = ACCENT_H + 76;
     ctx.fillStyle = "#475569";
     ctx.font = `italic 42px ${SERIF}`;
-    const msgLines = wrapTextLines(ctx, `\u201C${mensaje}\u201D`, W - PAD * 2);
+    const msgLines = wrapTextLines(ctx, `\u201C${mensaje}\u201D`, W - PAD2 * 2);
     for (const line of msgLines) {
-      ctx.fillText(line, PAD, y);
+      ctx.fillText(line, PAD2, y);
       y += 64;
     }
     y += 48;
     ctx.strokeStyle = "#e2e8f0";
     ctx.lineWidth = 2;
     ctx.beginPath();
-    ctx.moveTo(PAD, y);
-    ctx.lineTo(W - PAD, y);
+    ctx.moveTo(PAD2, y);
+    ctx.lineTo(W - PAD2, y);
     ctx.stroke();
     y += 56;
     ctx.fillStyle = "#94a3b8";
     ctx.font = `700 22px ${SANS}`;
-    ctx.fillText(responseLabel.toUpperCase(), PAD, y);
+    ctx.fillText(responseLabel.toUpperCase(), PAD2, y);
     y += 50;
     ctx.fillStyle = "#1e293b";
     ctx.font = `500 38px ${SANS}`;
-    const respLines = wrapTextLines(ctx, respuesta, W - PAD * 2);
+    const respLines = wrapTextLines(ctx, respuesta, W - PAD2 * 2);
     for (const line of respLines) {
-      ctx.fillText(line, PAD, y);
+      ctx.fillText(line, PAD2, y);
       y += 58;
     }
     const contentFloor = y + 20;
@@ -714,7 +774,7 @@
     ctx.fillStyle = "#64748b";
     ctx.font = `400 26px ${SANS}`;
     const brand = "Br\xFAjula Emocional";
-    ctx.fillText(brand, W - PAD - ctx.measureText(brand).width, H - 56);
+    ctx.fillText(brand, W - PAD2 - ctx.measureText(brand).width, H - 56);
     return canvas;
   }
   async function shareEmotionCard(canvas, filename) {
@@ -1512,8 +1572,355 @@
     return { addEntry, renderForTab };
   }
 
+  // js/emotionMap.js
+  var R = 18;
+  var STEP = R * 2 + 8;
+  var ROW_H = R * 2 + 22;
+  var QUAD_HDR = 22;
+  var PAD = 10;
+  var GRAPH_BP_NARROW = 360;
+  var GRAPH_BP_SMALL = 420;
+  var GRAPH_H_NARROW = 430;
+  var GRAPH_H_SMALL = 410;
+  var GRAPH_H_DEFAULT = 460;
+  var GRAPH_MIN_H = 420;
+  var GRAPH_MAX_H = 560;
+  var GRAPH_BASE_NODES = 20;
+  var GRAPH_BASE_EDGES = 28;
+  var GRAPH_NODE_BOOST = 3;
+  var GRAPH_EDGE_BOOST = 1;
+  var GRAPH_MAX_BOOST = 80;
+  var QUAD_MAP = [0, 2, 3, 1];
+  var RELS = {
+    coexiste: { color: "#6366f1", dash: "none", labelKey: "mapRelCoexiste" },
+    escala_a: { color: "#f97316", dash: "none", labelKey: "mapRelEscalaA" },
+    enmascara: { color: "#a855f7", dash: "3,3", labelKey: "mapRelEnmascara" },
+    opuesta: { color: "#14b8a6", dash: "6,3", labelKey: "mapRelOpuesta" }
+  };
+  function makeRng(seed) {
+    const buf = new Int32Array(1);
+    buf[0] = Math.trunc(seed);
+    return function() {
+      buf[0] = Math.imul(buf[0], 1664525) + 1013904223;
+      return (buf[0] >>> 0) / 4294967296;
+    };
+  }
+  function applyRepulsion(nodes, k) {
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        let dx = nodes[i].x - nodes[j].x;
+        let dy = nodes[i].y - nodes[j].y;
+        if (!dx && !dy) {
+          dx = 0.01;
+        }
+        const d = Math.hypot(dx, dy);
+        const f = k * k / d;
+        nodes[i].fx += dx / d * f;
+        nodes[i].fy += dy / d * f;
+        nodes[j].fx -= dx / d * f;
+        nodes[j].fy -= dy / d * f;
+      }
+    }
+  }
+  function runForce(nodes, edges, W, H) {
+    const k = Math.sqrt(W * H / nodes.length) * 0.95;
+    for (let it = 0; it < 500; it++) {
+      const temp = 35 * (1 - it / 500);
+      for (const n of nodes) {
+        n.fx = 0;
+        n.fy = 0;
+      }
+      applyRepulsion(nodes, k);
+      for (const e of edges) {
+        const a = nodes[e.ai], b = nodes[e.bi];
+        const dx = b.x - a.x, dy = b.y - a.y;
+        const d = Math.hypot(dx, dy) || 0.01;
+        const f = d * d / k * 0.3;
+        a.fx += dx / d * f;
+        a.fy += dy / d * f;
+        b.fx -= dx / d * f;
+        b.fy -= dy / d * f;
+      }
+      for (const n of nodes) {
+        const d = Math.hypot(n.fx, n.fy) || 0.01;
+        n.x = clamp(n.x + n.fx / d * Math.min(d, temp), R + 28, W - R - 28);
+        n.y = clamp(n.y + n.fy / d * Math.min(d, temp), R + 24, H - R - 28);
+      }
+    }
+  }
+  function clamp(v, lo, hi) {
+    return Math.min(Math.max(v, lo), hi);
+  }
+  function escapeHtmlText(value) {
+    return String(value).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+  function escapeHtmlAttr(value) {
+    return escapeHtmlText(value).replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+  }
+  function graphHeightFor(width, nodeCount, edgeCount) {
+    const base = width < GRAPH_BP_NARROW ? GRAPH_H_NARROW : width < GRAPH_BP_SMALL ? GRAPH_H_SMALL : GRAPH_H_DEFAULT;
+    const densityBoost = Math.min(
+      GRAPH_MAX_BOOST,
+      Math.max(0, nodeCount - GRAPH_BASE_NODES) * GRAPH_NODE_BOOST + Math.max(0, edgeCount - GRAPH_BASE_EDGES) * GRAPH_EDGE_BOOST
+    );
+    return clamp(base + densityBoost, GRAPH_MIN_H, GRAPH_MAX_H);
+  }
+  function buildEdges(nameToIdx) {
+    return EMOTION_RELATIONS.flatMap((r) => {
+      const ai = nameToIdx[r.from];
+      const bi = nameToIdx[r.to];
+      if (ai === void 0 || bi === void 0) {
+        const missing = [];
+        if (ai === void 0) missing.push(`from="${r.from}"`);
+        if (bi === void 0) missing.push(`to="${r.to}"`);
+        console.warn(
+          "[emotionMap] Dropping relation %s with unknown endpoint(s): %s",
+          String(r.type),
+          missing.join(", ")
+        );
+        return [];
+      }
+      return [{ ai, bi, type: r.type }];
+    });
+  }
+  function buildForceData(emociones2, getDisplayName, W, H) {
+    const rng = makeRng(48879);
+    const nameToIdx = {};
+    const nodes = emociones2.map((e, idx) => {
+      nameToIdx[e.nombre] = idx;
+      const ci = MOOD_CATEGORIES.findIndex((c) => c.emotions.includes(e.nombre));
+      const q = QUAD_MAP[Math.max(ci, 0)];
+      return {
+        nombre: e.nombre,
+        label: getDisplayName(e.nombre),
+        color: e.color,
+        x: (q % 2 + 0.2 + rng() * 0.6) * (W / 2),
+        y: (Math.floor(q / 2) + 0.2 + rng() * 0.6) * (H / 2),
+        fx: 0,
+        fy: 0
+      };
+    });
+    const edges = buildEdges(nameToIdx);
+    runForce(nodes, edges, W, H);
+    return { nodes, edges, nameToIdx };
+  }
+  function buildQuadData(emociones2, getDisplayName, W) {
+    const QW = Math.floor(W / 2);
+    const maxCols = Math.max(2, Math.floor((QW - PAD * 2 + 8) / STEP));
+    let maxRowsTop = 0, maxRowsBot = 0;
+    MOOD_CATEGORIES.forEach((cat, ci) => {
+      const count = cat.emotions.filter((n) => emociones2.find((e) => e.nombre === n)).length;
+      const rows = Math.ceil(count / maxCols);
+      if (QUAD_MAP[ci] < 2) maxRowsTop = Math.max(maxRowsTop, rows);
+      else maxRowsBot = Math.max(maxRowsBot, rows);
+    });
+    const QH = QUAD_HDR + PAD + Math.max(maxRowsTop, 1) * ROW_H + R + 16;
+    const H = QH * 2;
+    const nameToIdx = {};
+    const nodes = [];
+    MOOD_CATEGORIES.forEach((cat, ci) => {
+      const q = QUAD_MAP[ci];
+      const ox = q % 2 * QW;
+      const oy = Math.floor(q / 2) * QH;
+      cat.emotions.forEach((nombre, pos) => {
+        const e = emociones2.find((em) => em.nombre === nombre);
+        if (!e) return;
+        nameToIdx[nombre] = nodes.length;
+        nodes.push({
+          nombre,
+          label: getDisplayName(nombre),
+          color: e.color,
+          x: ox + PAD + R + pos % maxCols * STEP,
+          y: oy + QUAD_HDR + PAD + R + Math.floor(pos / maxCols) * ROW_H
+        });
+      });
+    });
+    return { nodes, edges: buildEdges(nameToIdx), nameToIdx, H };
+  }
+  function buildInfoPanel(selected, nodes, edges, dark, t, getDisplayName) {
+    if (!selected) return "";
+    const myEdges = edges.filter(
+      (e) => nodes[e.ai]?.nombre === selected || nodes[e.bi]?.nombre === selected
+    );
+    const grouped = {};
+    for (const e of myEdges) {
+      const other = nodes[e.ai].nombre === selected ? nodes[e.bi] : nodes[e.ai];
+      grouped[e.type] = grouped[e.type] || [];
+      grouped[e.type].push(other.label);
+    }
+    const rows = Object.entries(grouped).map(([type, names]) => {
+      const rel = RELS[type];
+      return `<li class="flex items-start gap-2 text-sm leading-snug">
+            <span class="mt-1 shrink-0 inline-block w-2.5 h-2.5 rounded-full" style="background:${rel.color}"></span>
+            <span><strong class="${dark ? "text-slate-300" : "text-slate-700"}">${t(rel.labelKey)}:</strong> <span class="${dark ? "text-slate-400" : "text-slate-500"}">${names.join(", ")}</span></span>
+        </li>`;
+    }).join("");
+    const borderC = dark ? "bg-slate-800 border-slate-700" : "bg-white border-slate-100";
+    const nameC = dark ? "text-slate-100" : "text-slate-800";
+    const body = rows ? `<ul class="space-y-1.5">${rows}</ul>` : `<p class="text-xs text-slate-400">${t("mapInfoNone")}</p>`;
+    return `<div id="map-info-panel" class="mt-3 rounded-2xl p-4 border ${borderC} shadow-sm">
+        <div class="flex items-center justify-between mb-2">
+            <span class="font-bold ${nameC}">${getDisplayName(selected)}</span>
+            <button id="map-open-btn" class="text-xs font-bold text-blue-500 hover:text-blue-600 px-2 py-1 rounded-lg transition-colors">${t("openChip")}</button>
+        </div>
+        ${body}
+    </div>`;
+  }
+  function svgBody(nodes, edges, W, H, sel, view, t) {
+    const dark = document.documentElement.classList.contains("dark");
+    const labelFill = dark ? "#cbd5e1" : "#1e293b";
+    let bg = "";
+    if (view === "quad") {
+      const QW = W / 2, QH = H / 2;
+      MOOD_CATEGORIES.forEach((cat, ci) => {
+        const q = QUAD_MAP[ci];
+        const ox = q % 2 * QW;
+        const oy = Math.floor(q / 2) * QH;
+        const bgC = dark ? cat.ink + "28" : cat.color + "55";
+        const hdC = dark ? cat.ink + "99" : cat.color + "cc";
+        const htC = dark ? "#f1f5f9" : cat.ink;
+        bg += `<rect x="${ox}" y="${oy}" width="${QW}" height="${QH}" fill="${bgC}"/>`;
+        bg += `<rect x="${ox}" y="${oy}" width="${QW}" height="${QUAD_HDR}" fill="${hdC}"/>`;
+        bg += `<text x="${ox + QW / 2}" y="${oy + 15}" text-anchor="middle" font-size="11" font-weight="700" fill="${htC}">${t(cat.labelKey).toUpperCase()}</text>`;
+      });
+      const divC = dark ? "#334155" : "#94a3b8";
+      bg += `<line x1="${W / 2}" y1="0" x2="${W / 2}" y2="${H}" stroke="${divC}" stroke-width="1"/>`;
+      bg += `<line x1="0" y1="${H / 2}" x2="${W}" y2="${H / 2}" stroke="${divC}" stroke-width="1"/>`;
+    }
+    const eStr = edges.map((e) => {
+      const a = nodes[e.ai], b = nodes[e.bi];
+      const act = !sel || sel === a.nombre || sel === b.nombre;
+      const active = act ? 0.9 : 0.04;
+      const op = sel ? active : 0.4;
+      const rel = RELS[e.type];
+      return `<line x1="${Math.trunc(a.x)}" y1="${Math.trunc(a.y)}" x2="${Math.trunc(b.x)}" y2="${Math.trunc(b.y)}" stroke="${rel.color}" stroke-width="2.5" opacity="${op}" stroke-dasharray="${rel.dash}"/>`;
+    }).join("");
+    const nStr = nodes.map((n) => {
+      const isSel = sel === n.nombre;
+      const dim = sel && !isSel;
+      const sc = isSel ? "#2563eb" : "none";
+      const sw = isSel ? "3" : "0";
+      const lbl = n.label.length > 10 ? n.label.slice(0, 9) + "\u2026" : n.label;
+      const cx = Math.trunc(n.x), cy = Math.trunc(n.y);
+      return `<g class="map-node" data-nombre="${escapeHtmlAttr(n.nombre)}" tabindex="0" role="button" aria-label="${escapeHtmlAttr(n.label)}" style="cursor:pointer" opacity="${dim ? 0.18 : 1}">
+            <title>${escapeHtmlText(n.label)}</title>
+            <circle cx="${cx}" cy="${cy}" r="${R + 6}" fill="transparent"/>
+            <circle cx="${cx}" cy="${cy}" r="${R}" fill="${n.color}" stroke="${sc}" stroke-width="${sw}" pointer-events="none"/>
+            <text x="${cx}" y="${Math.trunc(n.y + R + 12)}" text-anchor="middle" font-size="11" font-weight="600" fill="${labelFill}" pointer-events="none">${escapeHtmlText(lbl)}</text>
+        </g>`;
+    }).join("");
+    return `${bg}<g>${eStr}</g><g>${nStr}</g>`;
+  }
+  function containerW() {
+    return document.getElementById("map-content")?.clientWidth || 340;
+  }
+  function createEmotionMap({ emociones: emociones2, getDisplayName, t, showDetail }) {
+    let view = "graph";
+    let selected = null;
+    let forceData = null;
+    let quadData = null;
+    let lastW = 0;
+    function ensureData() {
+      const W = containerW();
+      if (!forceData || Math.abs(W - lastW) > 20) {
+        lastW = W;
+        const gH = graphHeightFor(W, emociones2.length, EMOTION_RELATIONS.length);
+        forceData = { ...buildForceData(emociones2, getDisplayName, W, gH), H: gH };
+        quadData = null;
+      }
+      if (!quadData) {
+        quadData = buildQuadData(emociones2, getDisplayName, W);
+      }
+    }
+    function render() {
+      const wrap = document.getElementById("map-content");
+      if (!wrap) return;
+      ensureData();
+      const { nodes, edges, H } = view === "graph" ? forceData : quadData;
+      const W = containerW();
+      const dark = document.documentElement.classList.contains("dark");
+      const infoHtml = buildInfoPanel(selected, nodes, edges, dark, t, getDisplayName);
+      const activeC = dark ? "bg-slate-100 text-slate-900 border-slate-100" : "bg-slate-800 text-white border-slate-800";
+      const inactiveC = dark ? "bg-slate-800 text-slate-400 border-slate-600" : "bg-white text-slate-500 border-slate-200";
+      const canvasBg = dark ? "#0f172a" : "#f8fafc";
+      const legendItems = Object.entries(RELS).map(
+        ([, rel]) => `<span role="listitem" class="flex items-center gap-1 text-[11px] ${dark ? "text-slate-400" : "text-slate-500"}">
+                <svg width="14" height="6" aria-hidden="true"><line x1="0" y1="3" x2="14" y2="3" stroke="${rel.color}" stroke-width="2" stroke-dasharray="${rel.dash}"/></svg>
+                ${t(rel.labelKey)}
+            </span>`
+      ).join("");
+      wrap.innerHTML = `
+            <div class="flex gap-2 mb-2">
+                <button id="map-graph-btn" class="flex-1 py-2 text-sm font-bold rounded-xl border transition-colors ${view === "graph" ? activeC : inactiveC}">${t("mapViewGraph")}</button>
+                <button id="map-quad-btn"  class="flex-1 py-2 text-sm font-bold rounded-xl border transition-colors ${view === "quad" ? activeC : inactiveC}">${t("mapViewQuad")}</button>
+            </div>
+            <div class="flex flex-wrap gap-x-3 gap-y-1 mb-2" role="list" aria-label="${t("mapLegendLabel")}">
+                ${legendItems}
+            </div>
+            <div class="rounded-2xl overflow-hidden" style="background:${canvasBg}">
+                <svg id="map-svg" viewBox="0 0 ${W} ${H}" style="width:100%;display:block;touch-action:pan-y" role="img" aria-label="${t("navMapa")}">
+                    ${svgBody(nodes, edges, W, H, selected, view, t)}
+                </svg>
+            </div>
+            ${infoHtml}`;
+      bindEvents(wrap);
+      if (selected) {
+        requestAnimationFrame(() => {
+          document.getElementById("map-info-panel")?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+        });
+      }
+    }
+    function bindEvents(wrap) {
+      wrap.querySelector("#map-graph-btn")?.addEventListener("click", () => {
+        view = "graph";
+        selected = null;
+        render();
+      });
+      wrap.querySelector("#map-quad-btn")?.addEventListener("click", () => {
+        view = "quad";
+        selected = null;
+        render();
+      });
+      wrap.querySelector("#map-open-btn")?.addEventListener("click", () => {
+        const e = emociones2.find((em) => em.nombre === selected);
+        if (e) showDetail(e);
+      });
+      const svg = wrap.querySelector("#map-svg");
+      if (!svg) return;
+      svg.addEventListener("click", (ev) => {
+        const node = ev.target.closest(".map-node");
+        if (!node) {
+          selected = null;
+          render();
+          return;
+        }
+        const nombre = node.dataset.nombre;
+        selected = selected === nombre ? null : nombre;
+        render();
+      });
+      svg.addEventListener("keydown", (ev) => {
+        if (ev.key !== "Enter" && ev.key !== " ") return;
+        const node = ev.target.closest(".map-node");
+        if (!node) return;
+        ev.preventDefault();
+        const nombre = node.dataset.nombre;
+        selected = selected === nombre ? null : nombre;
+        render();
+      });
+    }
+    function renderForTab() {
+      render();
+    }
+    function onLanguageChanged() {
+      if (forceData) for (const n of forceData.nodes) n.label = getDisplayName(n.nombre);
+      if (quadData) for (const n of quadData.nodes) n.label = getDisplayName(n.nombre);
+      if (document.getElementById("map-content")) render();
+    }
+    return { renderForTab, onLanguageChanged };
+  }
+
   // js/version.js
-  var BUILD_VERSION = "mp4c552f";
+  var BUILD_VERSION = "mp4l314j";
 
   // app.js
   var state = {
@@ -1526,6 +1933,7 @@
   var modalAnimationMs = reducedMotion ? 0 : 200;
   var ui;
   var diary;
+  var emotionMap;
   var i18n = createI18n({
     getLang: () => state.currentLang,
     setLang: (lang) => {
@@ -1536,6 +1944,7 @@
       ui.renderRecentEmotions();
       ui.renderEmociones(document.getElementById("search")?.value ?? "");
       if (state.currentTab === "diario") diary.renderForTab();
+      emotionMap?.onLanguageChanged();
     }
   });
   diary = createDiary({
@@ -1702,7 +2111,7 @@
     updateInstallVisibility();
   }
   function switchTab(tabId) {
-    const tabs = ["emociones", "checkin", "diario"];
+    const tabs = ["emociones", "checkin", "diario", "mapa"];
     for (const id of tabs) {
       document.getElementById(`tab-${id}`)?.classList.toggle("hidden", id !== tabId);
       const btn = document.getElementById(`nav-${id}`);
@@ -1719,6 +2128,7 @@
     }
     state.currentTab = tabId;
     if (tabId === "diario") diary.renderForTab();
+    if (tabId === "mapa") emotionMap?.renderForTab();
   }
   function initTabNav() {
     for (const btn of document.querySelectorAll(".nav-tab")) {
@@ -1733,6 +2143,12 @@
     initSettingsPanel();
     initTabNav();
     ui.bindBaseEvents();
+    emotionMap = createEmotionMap({
+      emociones,
+      getDisplayName: i18n.getDisplayName,
+      t: i18n.t,
+      showDetail: ui.showDetail
+    });
     const quiz = createQuiz({
       emociones,
       getDisplayName: i18n.getDisplayName,

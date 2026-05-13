@@ -72,7 +72,15 @@ export const TRANSLATIONS = {
         diaryPickEmotion: "¿Qué sentiste?",
         navEmociones: "Emociones",
         navCheckin: "¿Qué siento?",
-        navDiary: "Diario"
+        navDiary: "Diario",
+        navMapa: "Mapa",
+        mapViewGraph: "Grafo",
+        mapViewQuad: "Cuadrantes",
+        mapRelCoexiste: "A menudo coexisten",
+        mapRelEscalaA: "Puede escalar a",
+        mapRelEnmascara: "Puede enmascarar",
+        mapRelOpuesta: "Emoción opuesta",
+        mapInfoNone: "Sin relaciones registradas"
     },
     en: {
         langLabel: "Language",
@@ -147,7 +155,15 @@ export const TRANSLATIONS = {
         diaryPickEmotion: "What did you feel?",
         navEmociones: "Emotions",
         navCheckin: "How do I feel?",
-        navDiary: "Diary"
+        navDiary: "Diary",
+        navMapa: "Map",
+        mapViewGraph: "Graph",
+        mapViewQuad: "Quadrants",
+        mapRelCoexiste: "Often coexist",
+        mapRelEscalaA: "Can escalate to",
+        mapRelEnmascara: "Can mask",
+        mapRelOpuesta: "Opposite emotion",
+        mapInfoNone: "No registered connections"
     }
 };
 
@@ -451,4 +467,46 @@ export const MOOD_CATEGORIES = [
     { key: "triste",    labelKey: "moodTriste",    emoji: "😢", color: "#A4C3E3", ink: "#1F3F66", emotions: ["Tristeza", "Soledad", "Nostalgia", "Culpa", "Vergüenza", "Rechazo", "Decepción"] },
     { key: "confundido",labelKey: "moodConfundido",emoji: "🤔", color: "#F5D88A", ink: "#7A5A1A", emotions: ["Confusión", "Aburrimiento", "Celos"] },
     { key: "bien",      labelKey: "moodBien",      emoji: "😌", color: "#8FD4AE", ink: "#1E5237", emotions: ["Calma", "Alivio", "Gratitud", "Felicidad", "Alegría", "Orgullo", "Entusiasmo", "Placer", "Ternura"] }
+];
+
+export const EMOTION_RELATIONS = [
+    // Coexisten frecuentemente
+    { from: "Ansiedad",      to: "Miedo",         type: "coexiste"  },
+    { from: "Ansiedad",      to: "Preocupación",  type: "coexiste"  },
+    { from: "Angustia",      to: "Tristeza",      type: "coexiste"  },
+    { from: "Tristeza",      to: "Soledad",       type: "coexiste"  },
+    { from: "Tristeza",      to: "Culpa",         type: "coexiste"  },
+    { from: "Decepción",     to: "Tristeza",      type: "coexiste"  },
+    { from: "Nostalgia",     to: "Tristeza",      type: "coexiste"  },
+    { from: "Vergüenza",     to: "Culpa",         type: "coexiste"  },
+    { from: "Vergüenza",     to: "Rechazo",       type: "coexiste"  },
+    { from: "Celos",         to: "Envidia",       type: "coexiste"  },
+    { from: "Enojo",         to: "Frustración",   type: "coexiste"  },
+    { from: "Enojo",         to: "Irritabilidad", type: "coexiste"  },
+    { from: "Alegría",       to: "Entusiasmo",    type: "coexiste"  },
+    { from: "Alegría",       to: "Gratitud",      type: "coexiste"  },
+    { from: "Felicidad",     to: "Alegría",       type: "coexiste"  },
+    { from: "Placer",        to: "Alegría",       type: "coexiste"  },
+    { from: "Calma",         to: "Alivio",        type: "coexiste"  },
+    { from: "Orgullo",       to: "Alegría",       type: "coexiste"  },
+    // Puede escalar a
+    { from: "Irritabilidad", to: "Enojo",         type: "escala_a"  },
+    { from: "Frustración",   to: "Enojo",         type: "escala_a"  },
+    { from: "Preocupación",  to: "Ansiedad",      type: "escala_a"  },
+    { from: "Ansiedad",      to: "Angustia",      type: "escala_a"  },
+    { from: "Tristeza",      to: "Angustia",      type: "escala_a"  },
+    // Puede enmascarar
+    { from: "Enojo",         to: "Miedo",         type: "enmascara" },
+    { from: "Enojo",         to: "Tristeza",      type: "enmascara" },
+    { from: "Irritabilidad", to: "Tristeza",      type: "enmascara" },
+    { from: "Confusión",     to: "Miedo",         type: "enmascara" },
+    { from: "Aburrimiento",  to: "Tristeza",      type: "enmascara" },
+    // Emoción opuesta
+    { from: "Alegría",       to: "Tristeza",      type: "opuesta"   },
+    { from: "Calma",         to: "Ansiedad",      type: "opuesta"   },
+    { from: "Gratitud",      to: "Envidia",       type: "opuesta"   },
+    { from: "Orgullo",       to: "Vergüenza",     type: "opuesta"   },
+    { from: "Alivio",        to: "Angustia",      type: "opuesta"   },
+    { from: "Entusiasmo",    to: "Aburrimiento",  type: "opuesta"   },
+    { from: "Felicidad",     to: "Tristeza",      type: "opuesta"   },
 ];
