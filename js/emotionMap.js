@@ -20,31 +20,36 @@ const RELS = {
 
 // ── Seeded RNG — stable initial positions across renders ─────────────────────
 function makeRng(seed) {
-    let s = seed | 0;
+    const buf = new Int32Array(1);
+    buf[0] = Math.trunc(seed);
     return function () {
-        s = Math.imul(s, 1664525) + 1013904223 | 0;
-        return (s >>> 0) / 4294967296;
+        buf[0] = Math.imul(buf[0], 1664525) + 1013904223; // ToInt32 via typed-array write
+        return (buf[0] >>> 0) / 4294967296;
     };
 }
 
 // ── Fruchterman–Reingold force layout (runs once, ~10 ms for 28 nodes) ───────
+function applyRepulsion(nodes, k) {
+    for (let i = 0; i < nodes.length; i++) {
+        for (let j = i + 1; j < nodes.length; j++) {
+            let dx = nodes[i].x - nodes[j].x;
+            let dy = nodes[i].y - nodes[j].y;
+            if (!dx && !dy) { dx = 0.01; }
+            const d = Math.hypot(dx, dy);
+            const f = k * k / d;
+            nodes[i].fx += dx / d * f;  nodes[i].fy += dy / d * f;
+            nodes[j].fx -= dx / d * f;  nodes[j].fy -= dy / d * f;
+        }
+    }
+}
+
 function runForce(nodes, edges, W, H) {
     const k = Math.sqrt((W * H) / nodes.length) * 0.95;
     for (let it = 0; it < 500; it++) {
         const temp = 35 * (1 - it / 500);
         for (const n of nodes) { n.fx = 0; n.fy = 0; }
 
-        for (let i = 0; i < nodes.length; i++) {
-            for (let j = i + 1; j < nodes.length; j++) {
-                let dx = nodes[i].x - nodes[j].x;
-                let dy = nodes[i].y - nodes[j].y;
-                if (!dx && !dy) { dx = 0.01; }
-                const d = Math.hypot(dx, dy);
-                const f = k * k / d;
-                nodes[i].fx += dx / d * f;  nodes[i].fy += dy / d * f;
-                nodes[j].fx -= dx / d * f;  nodes[j].fy -= dy / d * f;
-            }
-        }
+        applyRepulsion(nodes, k);
 
         for (const e of edges) {
             const a = nodes[e.ai], b = nodes[e.bi];
@@ -63,7 +68,7 @@ function runForce(nodes, edges, W, H) {
     }
 }
 
-function clamp(v, lo, hi) { return v < lo ? lo : v > hi ? hi : v; }
+function clamp(v, lo, hi) { return Math.min(Math.max(v, lo), hi); }
 
 // ── Edge builder (shared by both views) ──────────────────────────────────────
 function buildEdges(nameToIdx) {
@@ -79,7 +84,7 @@ function buildForceData(emociones, getDisplayName, W, H) {
     const nodes = emociones.map((e, idx) => {
         nameToIdx[e.nombre] = idx;
         const ci = MOOD_CATEGORIES.findIndex(c => c.emotions.includes(e.nombre));
-        const q  = QUAD_MAP[ci >= 0 ? ci : 0];
+        const q  = QUAD_MAP[Math.max(ci, 0)];
         return {
             nombre: e.nombre,
             label:  getDisplayName(e.nombre),
@@ -132,6 +137,39 @@ function buildQuadData(emociones, getDisplayName, W) {
     return { nodes, edges: buildEdges(nameToIdx), nameToIdx, H };
 }
 
+// ── Info panel for a selected node ───────────────────────────────────────────
+function buildInfoPanel(selected, nodes, edges, dark, t, getDisplayName) {
+    if (!selected) return "";
+    const myEdges = edges.filter(
+        e => nodes[e.ai]?.nombre === selected || nodes[e.bi]?.nombre === selected
+    );
+    const grouped = {};
+    for (const e of myEdges) {
+        const other = nodes[e.ai].nombre === selected ? nodes[e.bi] : nodes[e.ai];
+        grouped[e.type] = grouped[e.type] || [];
+        grouped[e.type].push(other.label);
+    }
+    const rows = Object.entries(grouped).map(([type, names]) => {
+        const rel = RELS[type];
+        return `<li class="flex items-start gap-2 text-sm leading-snug">
+            <span class="mt-1 shrink-0 inline-block w-2.5 h-2.5 rounded-full" style="background:${rel.color}"></span>
+            <span><strong class="${dark ? "text-slate-300" : "text-slate-700"}">${t(rel.labelKey)}:</strong> <span class="${dark ? "text-slate-400" : "text-slate-500"}">${names.join(", ")}</span></span>
+        </li>`;
+    }).join("");
+    const borderC = dark ? "bg-slate-800 border-slate-700" : "bg-white border-slate-100";
+    const nameC   = dark ? "text-slate-100" : "text-slate-800";
+    const body    = rows
+        ? `<ul class="space-y-1.5">${rows}</ul>`
+        : `<p class="text-xs text-slate-400">${t("mapInfoNone")}</p>`;
+    return `<div id="map-info-panel" class="mt-3 rounded-2xl p-4 border ${borderC} shadow-sm">
+        <div class="flex items-center justify-between mb-2">
+            <span class="font-bold ${nameC}">${getDisplayName(selected)}</span>
+            <button id="map-open-btn" class="text-xs font-bold text-blue-500 hover:text-blue-600 px-2 py-1 rounded-lg transition-colors">${t("openChip")}</button>
+        </div>
+        ${body}
+    </div>`;
+}
+
 // ── SVG body (edges + quadrant background + nodes) ───────────────────────────
 function svgBody(nodes, edges, W, H, sel, view, t) {
     const dark      = document.documentElement.classList.contains("dark");
@@ -160,10 +198,11 @@ function svgBody(nodes, edges, W, H, sel, view, t) {
     // Edges
     const eStr = edges.map(e => {
         const a   = nodes[e.ai], b = nodes[e.bi];
-        const act = !sel || sel === a.nombre || sel === b.nombre;
-        const op  = sel ? (act ? 0.9 : 0.04) : 0.4;
+        const act    = !sel || sel === a.nombre || sel === b.nombre;
+        const active = act ? 0.9 : 0.04;
+        const op     = sel ? active : 0.4;
         const rel = RELS[e.type];
-        return `<line x1="${a.x | 0}" y1="${a.y | 0}" x2="${b.x | 0}" y2="${b.y | 0}" stroke="${rel.color}" stroke-width="2.5" opacity="${op}" stroke-dasharray="${rel.dash}"/>`;
+        return `<line x1="${Math.trunc(a.x)}" y1="${Math.trunc(a.y)}" x2="${Math.trunc(b.x)}" y2="${Math.trunc(b.y)}" stroke="${rel.color}" stroke-width="2.5" opacity="${op}" stroke-dasharray="${rel.dash}"/>`;
     }).join("");
 
     // Nodes
@@ -172,14 +211,20 @@ function svgBody(nodes, edges, W, H, sel, view, t) {
         const dim   = sel && !isSel;
         const sc    = isSel ? "#2563eb" : "none";
         const sw    = isSel ? "3" : "0";
-        const lbl   = n.label.length > 8 ? n.label.slice(0, 7) + "…" : n.label;
+        const lbl   = n.label.length > 10 ? n.label.slice(0, 9) + "…" : n.label;
+        const cx = Math.trunc(n.x), cy = Math.trunc(n.y);
         return `<g class="map-node" data-nombre="${n.nombre}" tabindex="0" role="button" aria-label="${n.label}" style="cursor:pointer" opacity="${dim ? 0.18 : 1}">
-            <circle cx="${n.x | 0}" cy="${n.y | 0}" r="${R}" fill="${n.color}" stroke="${sc}" stroke-width="${sw}"/>
-            <text x="${n.x | 0}" y="${(n.y + R + 11) | 0}" text-anchor="middle" font-size="10" font-weight="600" fill="${labelFill}" pointer-events="none">${lbl}</text>
+            <circle cx="${cx}" cy="${cy}" r="${R + 6}" fill="transparent"/>
+            <circle cx="${cx}" cy="${cy}" r="${R}" fill="${n.color}" stroke="${sc}" stroke-width="${sw}" pointer-events="none"/>
+            <text x="${cx}" y="${Math.trunc(n.y + R + 12)}" text-anchor="middle" font-size="11" font-weight="600" fill="${labelFill}" pointer-events="none">${lbl}</text>
         </g>`;
     }).join("");
 
     return `${bg}<g>${eStr}</g><g>${nStr}</g>`;
+}
+
+function containerW() {
+    return document.getElementById("map-content")?.clientWidth || 340;
 }
 
 // ── Factory ───────────────────────────────────────────────────────────────────
@@ -190,15 +235,12 @@ export function createEmotionMap({ emociones, getDisplayName, t, showDetail }) {
     let quadData  = null;
     let lastW     = 0;
 
-    function containerW() {
-        return document.getElementById("map-content")?.clientWidth || 340;
-    }
-
     function ensureData() {
         const W = containerW();
         if (!forceData || Math.abs(W - lastW) > 20) {
-            lastW     = W;
-            forceData = buildForceData(emociones, getDisplayName, W, 450);
+            lastW    = W;
+            const gH = W < 400 ? 390 : 460;
+            forceData = { ...buildForceData(emociones, getDisplayName, W, gH), H: gH };
             quadData  = null;
         }
         if (!quadData) {
@@ -211,39 +253,11 @@ export function createEmotionMap({ emociones, getDisplayName, t, showDetail }) {
         if (!wrap) return;
         ensureData();
 
-        const { nodes, edges, H } = view === "graph"
-            ? { ...forceData, H: 464 }
-            : quadData;
+        const { nodes, edges, H } = view === "graph" ? forceData : quadData;
         const W    = containerW();
         const dark = document.documentElement.classList.contains("dark");
 
-        // Info panel for selected node
-        let infoHtml = "";
-        if (selected) {
-            const myEdges = edges.filter(
-                e => nodes[e.ai]?.nombre === selected || nodes[e.bi]?.nombre === selected
-            );
-            const grouped = {};
-            for (const e of myEdges) {
-                const other = nodes[e.ai].nombre === selected ? nodes[e.bi] : nodes[e.ai];
-                (grouped[e.type] = grouped[e.type] || []).push(other.label);
-            }
-            const rows = Object.entries(grouped).map(([type, names]) => {
-                const rel = RELS[type];
-                return `<li class="flex items-start gap-2 text-sm leading-snug">
-                    <span class="mt-1 shrink-0 inline-block w-2.5 h-2.5 rounded-full" style="background:${rel.color}"></span>
-                    <span><strong class="${dark ? "text-slate-300" : "text-slate-700"}">${t(rel.labelKey)}:</strong> <span class="${dark ? "text-slate-400" : "text-slate-500"}">${names.join(", ")}</span></span>
-                </li>`;
-            }).join("");
-            const dispName = getDisplayName(selected);
-            infoHtml = `<div class="mt-3 rounded-2xl p-4 border ${dark ? "bg-slate-800 border-slate-700" : "bg-white border-slate-100"} shadow-sm">
-                <div class="flex items-center justify-between mb-2">
-                    <span class="font-bold ${dark ? "text-slate-100" : "text-slate-800"}">${dispName}</span>
-                    <button id="map-open-btn" class="text-xs font-bold text-blue-500 hover:text-blue-600 px-2 py-1 rounded-lg transition-colors">${t("openChip")}</button>
-                </div>
-                ${rows ? `<ul class="space-y-1.5">${rows}</ul>` : `<p class="text-xs text-slate-400">${t("mapInfoNone")}</p>`}
-            </div>`;
-        }
+        const infoHtml = buildInfoPanel(selected, nodes, edges, dark, t, getDisplayName);
 
         const activeC   = dark ? "bg-slate-100 text-slate-900 border-slate-100" : "bg-slate-800 text-white border-slate-800";
         const inactiveC = dark ? "bg-slate-800 text-slate-400 border-slate-600" : "bg-white text-slate-500 border-slate-200";
@@ -265,13 +279,18 @@ export function createEmotionMap({ emociones, getDisplayName, t, showDetail }) {
                 ${legendItems}
             </div>
             <div class="rounded-2xl overflow-hidden" style="background:${canvasBg}">
-                <svg id="map-svg" viewBox="0 0 ${W} ${H}" style="width:100%;display:block;touch-action:none" role="img" aria-label="${t("navMapa")}">
+                <svg id="map-svg" viewBox="0 0 ${W} ${H}" style="width:100%;display:block;touch-action:pan-y" role="img" aria-label="${t("navMapa")}">
                     ${svgBody(nodes, edges, W, H, selected, view, t)}
                 </svg>
             </div>
             ${infoHtml}`;
 
         bindEvents(wrap);
+        if (selected) {
+            requestAnimationFrame(() => {
+                document.getElementById("map-info-panel")?.scrollIntoView({ behavior: "smooth", block: "nearest" });
+            });
+        }
     }
 
     function bindEvents(wrap) {
