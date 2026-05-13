@@ -1578,6 +1578,18 @@
   var ROW_H = R * 2 + 22;
   var QUAD_HDR = 22;
   var PAD = 10;
+  var GRAPH_BP_NARROW = 360;
+  var GRAPH_BP_SMALL = 420;
+  var GRAPH_H_NARROW = 430;
+  var GRAPH_H_SMALL = 410;
+  var GRAPH_H_DEFAULT = 460;
+  var GRAPH_MIN_H = 420;
+  var GRAPH_MAX_H = 560;
+  var GRAPH_BASE_NODES = 20;
+  var GRAPH_BASE_EDGES = 28;
+  var GRAPH_NODE_BOOST = 3;
+  var GRAPH_EDGE_BOOST = 1;
+  var GRAPH_MAX_BOOST = 80;
   var QUAD_MAP = [0, 2, 3, 1];
   var RELS = {
     coexiste: { color: "#6366f1", dash: "none", labelKey: "mapRelCoexiste" },
@@ -1645,13 +1657,13 @@
   function escapeHtmlAttr(value) {
     return escapeHtmlText(value).replace(/"/g, "&quot;").replace(/'/g, "&#39;");
   }
-  function graphHeightFor(W, nodeCount, edgeCount) {
-    const base = W < 360 ? 430 : W < 420 ? 410 : 460;
+  function graphHeightFor(width, nodeCount, edgeCount) {
+    const base = width < GRAPH_BP_NARROW ? GRAPH_H_NARROW : width < GRAPH_BP_SMALL ? GRAPH_H_SMALL : GRAPH_H_DEFAULT;
     const densityBoost = Math.min(
-      80,
-      Math.max(0, nodeCount - 20) * 3 + Math.max(0, edgeCount - 28)
+      GRAPH_MAX_BOOST,
+      Math.max(0, nodeCount - GRAPH_BASE_NODES) * GRAPH_NODE_BOOST + Math.max(0, edgeCount - GRAPH_BASE_EDGES) * GRAPH_EDGE_BOOST
     );
-    return clamp(base + densityBoost, 420, 560);
+    return clamp(base + densityBoost, GRAPH_MIN_H, GRAPH_MAX_H);
   }
   function buildEdges(nameToIdx) {
     return EMOTION_RELATIONS.flatMap((r) => {
@@ -1662,7 +1674,9 @@
         if (ai === void 0) missing.push(`from="${r.from}"`);
         if (bi === void 0) missing.push(`to="${r.to}"`);
         console.warn(
-          `[emotionMap] Dropping relation "${r.type}" with unknown endpoint(s): ${missing.join(", ")}`
+          "[emotionMap] Dropping relation %s with unknown endpoint(s): %s",
+          String(r.type),
+          missing.join(", ")
         );
         return [];
       }
