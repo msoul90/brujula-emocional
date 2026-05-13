@@ -14,6 +14,8 @@
             box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.2);
         }
         body { background-color: #f1f5f9; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        .bg-body { background-color: #f1f5f9; }
+        .safe-area-bottom { padding-bottom: env(safe-area-inset-bottom, 0); }
         .hide-scroll::-webkit-scrollbar { display: none; }
         .language-select {
             min-width: 88px;
@@ -112,6 +114,10 @@
 
         /* Dark mode — driven by html.dark class (set by theme-init.js + settings panel) */
         html.dark body { background-color: #0f172a; }
+        html.dark .bg-body { background-color: #0f172a; }
+        html.dark #bottom-nav { background-color: #0f172a; border-color: #1e293b; }
+        html.dark .nav-tab { color: #475569; }
+        html.dark .nav-tab.nav-active { color: #60a5fa; }
 
         /* Header */
         html.dark #app-title { color: #f1f5f9; }
@@ -184,11 +190,35 @@
         html.dark .border-emerald-100 { border-color: #064e3b; }
         html.dark .text-emerald-900 { color: #34d399; }
 
+        /* Check-in mood cards — dark variants (deep bg + light ink, all pass 4.5:1) */
+        html.dark .checkin-card[data-mood="agitado"]   { background-color: #7A2020 !important; color: #FFE7E5 !important; }
+        html.dark .checkin-card[data-mood="triste"]    { background-color: #1C3F6E !important; color: #E2EDF8 !important; }
+        html.dark .checkin-card[data-mood="confundido"]{ background-color: #6B4800 !important; color: #FBE8CB !important; }
+        html.dark .checkin-card[data-mood="bien"]      { background-color: #1A5E3A !important; color: #DDF1E6 !important; }
+
         /* Quiz */
         html.dark #quiz-panel { background-color: #0f172a; }
         html.dark #quiz-trigger { background-color: #1e293b; }
         html.dark .quiz-option,
         html.dark .quiz-result-card { background-color: #1e293b; color: #cbd5e1; }
+
+        /* Diary */
+        html.dark #diary-content .bg-white { background-color: #1e293b; }
+        html.dark #diary-add-form { background-color: #1e293b; border-color: #334155 !important; }
+        html.dark #diary-emotion-search,
+        html.dark #diary-note-input {
+            background-color: #0f172a;
+            border-color: #334155;
+            color: #f1f5f9;
+        }
+        html.dark #diary-emotion-search::placeholder,
+        html.dark #diary-note-input::placeholder { color: #475569; }
+        html.dark #diary-emotion-dropdown {
+            background-color: #1e293b;
+            border-color: #334155;
+        }
+        html.dark .emotion-option { color: #cbd5e1; }
+        html.dark .emotion-option:hover { background-color: #0f172a; }
 
         /* iOS install modal */
         html.dark #ios-install-panel { background-color: #1e293b; }

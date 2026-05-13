@@ -179,9 +179,13 @@ export function createUI({
     setLastFocusedCard,
     getIsClosingModal,
     setIsClosingModal,
-    modalAnimationMs
+    modalAnimationMs,
+    moodCategories = [],
+    onAddToDiary = null
 }) {
     let scrollCleanup = null;
+    let activeCheckinCat = null;
+
     function saveRecentEmotion(nombre) {
         const existing = loadRecentEmotions().filter((item) => item !== nombre);
         const next = [nombre, ...existing].slice(0, RECENT_LIMIT);
@@ -223,11 +227,123 @@ export function createUI({
         });
     }
 
+    function buildEmotionCardEl(e) {
+        const card = document.createElement("div");
+        card.className = "emotion-card p-5 rounded-2xl shadow-sm cursor-pointer flex justify-between items-center bg-white";
+        card.style.borderLeft = `8px solid ${e.color}`;
+        card.tabIndex = 0;
+        card.setAttribute("role", "button");
+        card.setAttribute("aria-label", `${t("openDetailAria")} ${getDisplayName(e.nombre)}`);
+        card.onclick = () => {
+            setLastFocusedCard(card);
+            showDetail(e);
+        };
+        card.addEventListener("keydown", (event) => {
+            if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                setLastFocusedCard(card);
+                showDetail(e);
+            }
+        });
+        card.innerHTML = `
+            <span class="font-bold text-lg text-slate-700">${getDisplayName(e.nombre)}</span>
+            <svg class="w-4 h-4 text-slate-300 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+        `;
+        return card;
+    }
+
+    const MOOD_SVGS = {
+        agitado: `<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 80 80" fill="none" aria-hidden="true">
+            <circle cx="40" cy="42" r="26" stroke="currentColor" stroke-width="3.5"/>
+            <line x1="26" y1="32" x2="34" y2="36" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <line x1="54" y1="32" x2="46" y2="36" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="32" cy="42" r="2" fill="currentColor"/>
+            <circle cx="48" cy="42" r="2" fill="currentColor"/>
+            <path d="M30 54 L34 50 L38 54 L42 50 L46 54 L50 50" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>`,
+        triste: `<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 80 80" fill="none" aria-hidden="true">
+            <circle cx="40" cy="42" r="26" stroke="currentColor" stroke-width="3.5"/>
+            <path d="M28 40 C 30 44, 34 44, 36 40" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <path d="M44 40 C 46 44, 50 44, 52 40" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <path d="M32 56 C 36 50, 44 50, 48 56" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <path d="M34 48 C 33 52, 31 54, 32 56 C 33 56, 34 54, 34 48 Z" fill="currentColor"/>
+        </svg>`,
+        confundido: `<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 80 80" fill="none" aria-hidden="true">
+            <circle cx="40" cy="42" r="26" stroke="currentColor" stroke-width="3.5"/>
+            <line x1="26" y1="34" x2="34" y2="32" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <line x1="46" y1="32" x2="54" y2="36" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <circle cx="32" cy="42" r="2" fill="currentColor"/>
+            <circle cx="48" cy="42" r="2" fill="currentColor"/>
+            <path d="M30 54 C 34 52, 38 56, 42 54 C 46 52, 48 56, 52 54" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        </svg>`,
+        bien: `<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 80 80" fill="none" aria-hidden="true">
+            <circle cx="40" cy="42" r="26" stroke="currentColor" stroke-width="3.5"/>
+            <path d="M28 42 C 30 38, 34 38, 36 42" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <path d="M44 42 C 46 38, 50 38, 52 42" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+            <path d="M30 52 C 34 60, 46 60, 50 52" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
+        </svg>`,
+    };
+
+    function renderCheckinTab() {
+        const grid = document.getElementById("checkin-cards-grid");
+        if (!grid || !moodCategories.length) return;
+
+        grid.innerHTML = moodCategories.map((cat) => `
+            <button type="button" data-mood="${cat.key}"
+                class="checkin-card w-full p-5 rounded-2xl shadow-sm text-left flex flex-col gap-3 hover:shadow-md transition-all active:scale-95"
+                style="background-color:${cat.color};color:${cat.ink}">
+                ${MOOD_SVGS[cat.key] ?? `<span class="text-3xl" aria-hidden="true">${cat.emoji}</span>`}
+                <span class="font-black text-base leading-tight">${t(cat.labelKey)}</span>
+            </button>
+        `).join("");
+
+        for (const btn of grid.querySelectorAll(".checkin-card")) {
+            btn.addEventListener("click", () => renderCheckinEmotions(btn.dataset.mood));
+        }
+
+        if (activeCheckinCat) renderCheckinEmotions(activeCheckinCat);
+    }
+
+    function renderCheckinEmotions(catKey) {
+        const cat = moodCategories.find((c) => c.key === catKey);
+        if (!cat) return;
+
+        activeCheckinCat = catKey;
+
+        const section = document.getElementById("checkin-emotion-section");
+        const label = document.getElementById("checkin-selected-label");
+        const filteredGrid = document.getElementById("checkin-filtered-grid");
+        const resetBtn = document.getElementById("checkin-reset-btn");
+        if (!section || !filteredGrid) return;
+
+        section.classList.remove("hidden");
+        if (label) label.textContent = `${cat.emoji} ${t(cat.labelKey)}`;
+
+        filteredGrid.innerHTML = "";
+        for (const e of emociones.filter((em) => cat.emotions.includes(em.nombre))) {
+            filteredGrid.appendChild(buildEmotionCardEl(e));
+        }
+
+        if (resetBtn) {
+            const freshBtn = resetBtn.cloneNode(true);
+            resetBtn.replaceWith(freshBtn);
+            freshBtn.textContent = t("checkinReset");
+            freshBtn.addEventListener("click", () => {
+                activeCheckinCat = null;
+                section.classList.add("hidden");
+            });
+        }
+
+        section.scrollIntoView({ behavior: "smooth", block: "nearest" });
+    }
+
     function renderEmociones(filter = "") {
         const grid = document.getElementById("emotion-grid");
         grid.innerHTML = "";
         const normalizedFilter = normalizeText(filter.trim());
+
         const filtered = emociones.filter((e) => {
+            if (!normalizedFilter) return true;
             const haystack = [
                 e.nombre,
                 getDisplayName(e.nombre),
@@ -255,33 +371,53 @@ export function createUI({
             return;
         }
 
-        filtered.forEach((e) => {
-            const card = document.createElement("div");
-            card.className = "emotion-card p-5 rounded-2xl shadow-sm cursor-pointer flex justify-between items-center bg-white";
-            card.style.borderLeft = `8px solid ${e.color}`;
-            card.tabIndex = 0;
-            card.setAttribute("role", "button");
-            card.setAttribute("aria-label", `${t("openDetailAria")} ${getDisplayName(e.nombre)}`);
-            card.onclick = () => {
-                setLastFocusedCard(card);
-                showDetail(e);
-            };
-            card.addEventListener("keydown", (event) => {
-                if (event.key === "Enter" || event.key === " ") {
-                    event.preventDefault();
-                    setLastFocusedCard(card);
-                    showDetail(e);
-                }
-            });
-            card.innerHTML = `
-                <span class="font-bold text-lg text-slate-700">${getDisplayName(e.nombre)}</span>
-                <svg class="w-4 h-4 text-slate-300 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
-            `;
-            grid.appendChild(card);
+        for (const e of filtered) {
+            grid.appendChild(buildEmotionCardEl(e));
+        }
+    }
+
+    function showDiaryForm(emotionNombre) {
+        const existingForm = document.getElementById("diary-inline-form");
+        if (existingForm) { existingForm.remove(); return; }
+
+        const form = document.createElement("div");
+        form.id = "diary-inline-form";
+        form.className = "mt-4 border-t border-slate-100 pt-4";
+        form.innerHTML = `
+            <label for="diary-note-input" class="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2 block">${t("diaryNoteLabel")}</label>
+            <textarea id="diary-note-input" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-700 resize-none focus:outline-none focus:ring-2 focus:ring-blue-200" rows="2" placeholder="${t("diaryNotePlaceholder")}"></textarea>
+            <div class="flex gap-2 mt-2">
+                <button id="diary-note-save" type="button" class="flex-1 bg-slate-800 text-white py-2.5 rounded-xl font-bold text-sm hover:bg-slate-700 transition-colors">${t("diarySaveButton")}</button>
+                <button id="diary-note-cancel" type="button" class="flex-1 bg-slate-100 text-slate-600 py-2.5 rounded-xl font-bold text-sm hover:bg-slate-200 transition-colors">${t("diaryCancelButton")}</button>
+            </div>
+        `;
+
+        const panel = document.getElementById("modal-panel");
+        panel.appendChild(form);
+        form.querySelector("#diary-note-input").focus();
+        panel.scrollTop = panel.scrollHeight;
+
+        form.querySelector("#diary-note-save").addEventListener("click", () => {
+            const note = form.querySelector("#diary-note-input").value;
+            if (onAddToDiary) onAddToDiary(emotionNombre, note);
+            form.innerHTML = `<p class="text-emerald-600 font-bold text-sm text-center py-2">✓ ${t("diaryAddedFeedback")}</p>`;
+            setTimeout(() => form.remove(), 1800);
         });
+
+        form.querySelector("#diary-note-cancel").addEventListener("click", () => form.remove());
+    }
+
+    function wireDiaryButton(emotionNombre) {
+        const diaryAddBtn = document.getElementById("diary-add-btn");
+        if (!diaryAddBtn || !onAddToDiary) return;
+        const freshBtn = diaryAddBtn.cloneNode(true);
+        diaryAddBtn.replaceWith(freshBtn);
+        freshBtn.addEventListener("click", () => showDiaryForm(emotionNombre));
     }
 
     function showDetail(e) {
+        document.getElementById("diary-inline-form")?.remove();
+
         const quoteTextColor = getReadableTextColor(e.color);
         const quoteLabelColor = quoteTextColor === "#f8fafc" ? "rgba(248,250,252,0.9)" : "rgba(15,23,42,0.85)";
 
@@ -377,6 +513,9 @@ export function createUI({
             });
         }
 
+        wireDiaryButton(e.nombre);
+
+
         if (scrollCleanup) scrollCleanup();
         const onPanelScroll = () => {
             const atBottom = panel.scrollHeight - panel.scrollTop <= panel.clientHeight + 8;
@@ -429,6 +568,8 @@ export function createUI({
     return {
         renderRecentEmotions,
         renderEmociones,
+        renderCheckinTab,
+        renderCheckinEmotions,
         bindBaseEvents,
         closeModal,
         showDetail
