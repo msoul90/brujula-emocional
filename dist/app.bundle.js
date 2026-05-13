@@ -83,7 +83,8 @@
       mapRelEnmascara: "Puede enmascarar",
       mapRelOpuesta: "Emoci\xF3n opuesta",
       mapInfoNone: "Sin relaciones registradas",
-      mapLegendLabel: "Leyenda del mapa"
+      mapLegendLabel: "Leyenda del mapa",
+      masksHint: "A veces lo que sent\xEDs en la superficie cubre algo m\xE1s. Explor\xE1 tambi\xE9n esta emoci\xF3n."
     },
     en: {
       langLabel: "Language",
@@ -167,7 +168,8 @@
       mapRelEnmascara: "Can mask",
       mapRelOpuesta: "Opposite emotion",
       mapInfoNone: "No registered connections",
-      mapLegendLabel: "Map legend"
+      mapLegendLabel: "Map legend",
+      masksHint: "Sometimes what you feel on the surface covers something deeper. Explore this emotion too."
     }
   };
   var EMOTION_NAME_TRANSLATIONS = {
@@ -800,6 +802,7 @@
   }
   function createUI({
     emociones: emociones2,
+    relaciones = [],
     getDisplayName,
     getEmotionField,
     t,
@@ -1018,6 +1021,22 @@
       document.getElementById("diary-inline-form")?.remove();
       const quoteTextColor = getReadableTextColor(e.color);
       const quoteLabelColor = quoteTextColor === "#f8fafc" ? "rgba(248,250,252,0.9)" : "rgba(15,23,42,0.85)";
+      const maskedEmotions = relaciones.filter((r) => r.type === "enmascara" && r.from === e.nombre).map((r) => emociones2.find((em) => em.nombre === r.to)).filter(Boolean);
+      const masksSection = maskedEmotions.length > 0 ? `
+                <div class="border-t border-slate-100 pt-4">
+                    <p class="text-[11px] font-black text-violet-500 uppercase tracking-widest mb-2 px-1">${t("mapRelEnmascara")}</p>
+                    <div class="flex flex-wrap gap-2 mb-2">
+                        ${maskedEmotions.map((m) => `
+                            <button type="button" data-masked="${m.nombre}"
+                                class="masked-chip px-3 py-1.5 rounded-full text-sm font-bold transition-opacity hover:opacity-80"
+                                style="background-color:${m.color}; color:${getReadableTextColor(m.color)}">
+                                ${getDisplayName(m.nombre)}
+                            </button>
+                        `).join("")}
+                    </div>
+                    <p class="text-xs text-slate-400 px-1">${t("masksHint")}</p>
+                </div>
+        ` : "";
       const content = document.getElementById("modal-content");
       content.innerHTML = `
             <div class="inline-block px-4 py-1 rounded-full mb-2" style="background-color:${e.color}; color:${quoteTextColor}">
@@ -1066,11 +1085,13 @@
                         <p class="text-emerald-900 font-bold leading-relaxed">${getEmotionField(e, "respuesta")}</p>
                     </div>
                 </div>
+
+                ${masksSection}
             </div>
         `;
       const modal = document.getElementById("modal");
       const panel = document.getElementById("modal-panel");
-      modal.showModal();
+      if (!modal.open) modal.showModal();
       panel.scrollTop = 0;
       document.body.style.overflow = "hidden";
       requestAnimationFrame(() => {
@@ -1089,6 +1110,12 @@
         });
       } else if (copyBtn) {
         copyBtn.remove();
+      }
+      for (const chip of content.querySelectorAll(".masked-chip")) {
+        chip.addEventListener("click", () => {
+          const masked = emociones2.find((em) => em.nombre === chip.dataset.masked);
+          if (masked) showDetail(masked);
+        });
       }
       const closeButton = document.getElementById("close-button");
       if (closeButton) closeButton.focus({ preventScroll: true });
@@ -1924,7 +1951,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mp4m9w3q";
+  var BUILD_VERSION = "mp4nbn7d";
 
   // app.js
   var state = {
@@ -1958,6 +1985,7 @@
   });
   ui = createUI({
     emociones,
+    relaciones: EMOTION_RELATIONS,
     getDisplayName: i18n.getDisplayName,
     getEmotionField: i18n.getEmotionField,
     t: i18n.t,

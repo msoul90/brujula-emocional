@@ -27,6 +27,25 @@ Cada emoción del catálogo está documentada con seis campos derivados de model
 | `impulso` | Conducta impulsiva típica a reconocer y pausar | DBT — Emotion Regulation |
 | `respuesta` | Acción saludable alternativa | DBT — Opposite Action / ACT |
 
+### Criterios de selección del catálogo
+
+Las 28 emociones no son un listado arbitrario. Se construyó contrastando tres taxonomías de referencia y aplicando criterios de utilidad práctica:
+
+| Taxonomía | Cantidad | Limitación para este uso |
+|---|---|---|
+| Ekman (1992) | 6 emociones básicas | Demasiado genéricas — no distinguen, por ej., ansiedad de miedo, o culpa de vergüenza |
+| Plutchik (1980) | 8 primarias + derivadas | Organización radial útil teóricamente, pero poco intuitiva para autoidentificación |
+| Barrett — Teoría Constructiva (2017) | Continuo, sin categorías fijas | Conceptualmente sólida pero no operacionalizable en una UI de tarjetas |
+
+Las 28 emociones del catálogo se seleccionaron con cuatro criterios:
+
+1. **Cobertura del espacio circumplejo** — al menos tres emociones por cuadrante para que el check-in tenga densidad suficiente.
+2. **Perfil funcional diferenciable** — cada emoción tiene un `funcion`, `mensaje` e `impulso` claramente distintos de sus vecinas. Emociones con perfiles casi idénticos (ej. terror vs. miedo) se consolidaron en una sola entrada.
+3. **Relevancia clínica en DBT y EFT** — priorizadas emociones que aparecen con frecuencia en protocolos de regulación emocional y terapia centrada en emociones, donde existe vocabulario funcional establecido.
+4. **Presencia en el mapa de relaciones** — se incluyeron emociones que participan en relaciones de coexistencia, escalada, enmascaramiento u oposición, porque sin esas conexiones la emoción aportaría poco al mapa.
+
+Quedan fuera del catálogo emociones como esperanza, asombro o vergüenza ajena no porque sean irrelevantes, sino porque sus perfiles funcionales o sus relaciones con el resto del catálogo están menos documentados en las fuentes usadas.
+
 ### Modelo de estados de ánimo (check-in)
 
 El check-in usa una aproximación al **modelo circumplejo de Russell** (1980), que organiza los estados emocionales en dos ejes: **activación** (alta/baja) y **valencia** (positiva/negativa):
@@ -45,6 +64,8 @@ El check-in usa una aproximación al **modelo circumplejo de Russell** (1980), q
 
 Los cuatro estados agrupan emociones más específicas para facilitar la identificación cuando la persona aún no sabe exactamente qué siente.
 
+> **Nota sobre "Confundido":** El circumplejo canónico de Russell define cuatro cuadrantes por cruce de activación y valencia, siendo el cuadrante bajo-positivo el de estados como *calma* o *satisfacción*. En esta app ese cuadrante se reemplaza por **Confundido**, un cuarto estado de valencia incierta que agrupa emociones cuya carga afectiva depende fuertemente del contexto (confusión, aburrimiento, celos). Esta es una adaptación deliberada, no un cuadrante estándar del modelo de Russell. La calma y el alivio se incluyen en el cuadrante **Bien** junto con emociones de mayor activación positiva.
+
 ### Mapa de relaciones
 
 Las 35 relaciones modeladas en el mapa de emociones corresponden a cuatro tipos clínicamente documentados:
@@ -58,11 +79,34 @@ Las 35 relaciones modeladas en el mapa de emociones corresponden a cuatro tipos 
 
 ### Quiz de identificación
 
-El quiz de tres preguntas implementa un árbol de decisión binario basado en tres dimensiones del modelo circumplejo:
+El quiz de tres preguntas es un **árbol de decisión pragmático**, no una implementación rigurosa del modelo circumplejo. Las preguntas usan dimensiones de dos marcos distintos:
 
-1. **Activación corporal** — ¿el cuerpo está activado o quieto?
-2. **Valencia** — ¿la experiencia se siente agradable o incómoda?
-3. **Concreción** — ¿hay un disparador claro o es más difuso?
+| Pregunta | Dimensión | Marco teórico | Simplificación |
+| --- | --- | --- | --- |
+| ¿Cómo sientes tu cuerpo? | Activación | Circumplejo de Russell | Continuo colapsado en binario (activado / quieto) |
+| ¿Cómo describirías lo que sientes? | Valencia | Circumplejo de Russell | Continuo colapsado en binario (agradable / incómodo) |
+| ¿Parece relacionado con algo concreto? | Concreción del disparador | Appraisal Theory (Lazarus) | No es una dimensión del circumplejo |
+
+Las dos primeras preguntas reducen los ejes continuos de Russell a opciones binarias para que el flujo sea rápido y accesible. La tercera pregunta abandona el circumplejo y usa la evaluación cognitiva del disparador (de la Appraisal Theory) como criterio de desambiguación dentro de los grupos de valencia negativa, donde la presencia o ausencia de un objeto concreto distingue emociones de alta especificidad (enojo, miedo) de estados más difusos (ansiedad, preocupación).
+
+Esta simplificación es una decisión de diseño de UX consciente: sliders o escalas de 3 puntos representarían mejor la naturaleza continua del circumplejo, pero aumentarían la carga cognitiva y el tiempo de respuesta para alguien que ya está en un estado emocional intenso.
+
+### Sobre el uso combinado de DBT y EFT
+
+DBT y EFT comparten el interés por las emociones, pero tienen modelos distintos sobre las emociones secundarias — aquellas que surgen como reacción a otra emoción (sentir vergüenza por haber sentido enojo, o sentir miedo ante la propia tristeza).
+
+| Aspecto | DBT | EFT |
+| --- | --- | --- |
+| Qué son las emociones secundarias | Reacciones aprendidas o basadas en juicios sobre la emoción primaria | Emociones superficiales que enmascaran una emoción primaria más vulnerable |
+| Objetivo terapéutico | Regular la emoción presente con habilidades conductuales (check the facts, acción opuesta) | Acceder y procesar la emoción primaria subyacente, no solo la superficial |
+| Intervención sobre la emoción enmascarante | Reducirla mediante la conducta opuesta | Usarla como señal para profundizar hacia la emoción enmascarada |
+
+**Cómo conviven en esta app:**
+
+- La relación `enmascara` en el mapa (ej. *Enojo enmascara Miedo*) está fundamentada en la distinción EFT entre emociones primarias y secundarias. Sirve como señal de consciencia: "lo que ves puede no ser lo que hay debajo."
+- Los campos `impulso` y `respuesta` de cada emoción usan el marco DBT: nombran el impulso problemático y proponen una acción alternativa concreta sobre la emoción que el usuario *está sintiendo*, sin asumir que es primaria o secundaria.
+
+Esta combinación es coherente para una herramienta de **autoconocimiento no clínico**: aporta el mapa estructural de EFT (las relaciones entre emociones) y las herramientas prácticas de DBT (qué hacer con lo que sentís ahora). Divergiría si se usara como protocolo terapéutico, donde EFT requeriría trabajar activamente la emoción subyacente en lugar de regularizar la superficial.
 
 ---
 
