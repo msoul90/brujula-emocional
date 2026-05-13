@@ -1,45 +1,216 @@
 # Brújula Emocional
 
-Aplicación web ligera para identificar y comprender emociones de forma clara y práctica.
+Aplicación web progresiva para identificar, comprender y explorar las relaciones entre emociones de forma clara y práctica.
+
+---
 
 ## Descripción
 
-Brújula Emocional muestra un catálogo de emociones con información de apoyo:
+Brújula Emocional ayuda a las personas a poner nombre a lo que sienten y entender para qué sirve cada emoción. El enfoque es **funcional y no clínico**: cada emoción se presenta como una señal con una función biológica/psicológica, no como un problema a eliminar.
 
-- Cómo se siente en el cuerpo
-- Qué la dispara
-- Para qué sirve (función biológica/psicológica)
-- Qué mensaje puede estar trayendo
-- Impulso a evitar
-- Qué respuesta sugerida puede ayudar
+La app no sustituye atención profesional en salud mental. Es una herramienta de autoconocimiento para el día a día.
 
-La app está pensada para ser rápida, simple y usable desde móvil.
+---
+
+## Marco psicológico
+
+### Modelo de las emociones
+
+Cada emoción del catálogo está documentada con seis campos derivados de modelos contemporáneos de regulación emocional (principalmente la **Terapia Dialéctica Conductual — DBT** y el modelo de **Appraisal Theory**):
+
+| Campo | Qué documenta | Base teórica |
+|---|---|---|
+| `siente` | Sensaciones corporales asociadas | Interoception / Teoría somática |
+| `dispara` | Situaciones o pensamientos que la activan | Appraisal Theory (Lazarus) |
+| `funcion` | Para qué sirve evolutiva y psicológicamente | Teoría funcional de las emociones |
+| `mensaje` | Lo que la emoción está comunicando internamente | Terapia centrada en emociones (EFT) |
+| `impulso` | Conducta impulsiva típica a reconocer y pausar | DBT — Emotion Regulation |
+| `respuesta` | Acción saludable alternativa | DBT — Opposite Action / ACT |
+
+### Modelo de estados de ánimo (check-in)
+
+El check-in usa una aproximación al **modelo circumplejo de Russell** (1980), que organiza los estados emocionales en dos ejes: **activación** (alta/baja) y **valencia** (positiva/negativa):
+
+```
+          Alta activación
+              │
+   AGITADO   │   BIEN
+  (negativa) │ (positiva)
+─────────────┼─────────────
+   TRISTE    │ CONFUNDIDO
+  (negativa) │ (incierta)
+              │
+          Baja activación
+```
+
+Los cuatro estados agrupan emociones más específicas para facilitar la identificación cuando la persona aún no sabe exactamente qué siente.
+
+### Mapa de relaciones
+
+Las 35 relaciones modeladas en el mapa de emociones corresponden a cuatro tipos clínicamente documentados:
+
+| Tipo | Descripción | Origen conceptual |
+|---|---|---|
+| **Coexiste** | Se sienten con frecuencia al mismo tiempo | Co-ocurrencia en estudios de afecto |
+| **Escala a** | Una puede intensificarse y convertirse en otra | Cadenas de emociones (DBT) |
+| **Enmascara** | Una emoción superficial oculta otra más vulnerable | Emociones primarias/secundarias (EFT) |
+| **Opuesta** | Ancla regulatoria — sentir una reduce la otra | Acción opuesta (DBT) |
+
+### Quiz de identificación
+
+El quiz de tres preguntas implementa un árbol de decisión binario basado en tres dimensiones del modelo circumplejo:
+
+1. **Activación corporal** — ¿el cuerpo está activado o quieto?
+2. **Valencia** — ¿la experiencia se siente agradable o incómoda?
+3. **Concreción** — ¿hay un disparador claro o es más difuso?
+
+---
+
+## Catálogo de emociones
+
+La app incluye **28 emociones** organizadas en cuatro familias de estado de ánimo.
+
+### Agitado — alta activación, valencia negativa (9 emociones)
+
+| Emoción | Función principal |
+|---|---|
+| Enojo | Proteger límites, movilizar cambio |
+| Frustración | Señalar meta bloqueada |
+| Irritabilidad | Señalar saturación o necesidad de pausa |
+| Ansiedad | Preparar recursos, enfocar atención |
+| Miedo | Proteger y prepararse ante amenaza |
+| Preocupación | Anticipar posibles problemas |
+| Angustia | Señalar saturación emocional extrema |
+| Envidia | Señalar lo que se valora y no se tiene |
+| Disgusto | Proteger de lo percibido como dañino |
+
+### Triste — baja activación, valencia negativa (7 emociones)
+
+| Emoción | Función principal |
+|---|---|
+| Tristeza | Procesar pérdida, pedir apoyo, bajar ritmo |
+| Soledad | Motivar conexión significativa |
+| Nostalgia | Reforzar identidad, valorar lo vivido |
+| Culpa | Reparar conducta, realinearse con valores |
+| Vergüenza | Cuidar pertenencia social |
+| Rechazo | Proteger identidad, límites o pertenencia |
+| Decepción | Señalar expectativa no cumplida |
+
+### Confundido — activación mixta, valencia incierta (3 emociones)
+
+| Emoción | Función principal |
+|---|---|
+| Confusión | Señalar necesidad de claridad o información |
+| Aburrimiento | Señalar necesidad de estimulación o significado |
+| Celos | Proteger vínculo, detectar necesidad de seguridad |
+
+### Bien — activación variada, valencia positiva (9 emociones)
+
+| Emoción | Función principal |
+|---|---|
+| Calma | Recuperación y equilibrio |
+| Alivio | Señalar que el peligro pasó, permitir recuperación |
+| Gratitud | Fortalecer vínculos, ampliar perspectiva |
+| Felicidad | Reforzar experiencias valiosas y conexión |
+| Alegría | Reforzar conductas valiosas |
+| Orgullo | Reforzar identidad y conductas de esfuerzo |
+| Entusiasmo | Movilizar acción y exploración |
+| Placer | Favorecer bienestar y recuperación |
+| Ternura | Fortalecer vínculos, motivar el cuidado |
+
+---
+
+## Mapa de relaciones entre emociones
+
+35 relaciones entre las 28 emociones del catálogo, visualizadas en la pestaña **Mapa** mediante un grafo interactivo (vista libre y vista por cuadrantes).
+
+### Coexisten frecuentemente (18 relaciones)
+
+Pares que tienden a sentirse al mismo tiempo o en episodios cercanos:
+
+- Ansiedad ↔ Miedo
+- Ansiedad ↔ Preocupación
+- Angustia ↔ Tristeza
+- Tristeza ↔ Soledad
+- Tristeza ↔ Culpa
+- Decepción ↔ Tristeza
+- Nostalgia ↔ Tristeza
+- Vergüenza ↔ Culpa
+- Vergüenza ↔ Rechazo
+- Celos ↔ Envidia
+- Enojo ↔ Frustración
+- Enojo ↔ Irritabilidad
+- Alegría ↔ Entusiasmo
+- Alegría ↔ Gratitud
+- Felicidad ↔ Alegría
+- Placer ↔ Alegría
+- Calma ↔ Alivio
+- Orgullo ↔ Alegría
+
+### Puede escalar a (5 relaciones)
+
+Una emoción puede intensificarse y transformarse en otra:
+
+- Irritabilidad → Enojo
+- Frustración → Enojo
+- Preocupación → Ansiedad
+- Ansiedad → Angustia
+- Tristeza → Angustia
+
+### Puede enmascarar (5 relaciones)
+
+Una emoción superficial que puede ocultar una más vulnerable o primaria:
+
+- Enojo enmascara Miedo
+- Enojo enmascara Tristeza
+- Irritabilidad enmascara Tristeza
+- Confusión enmascara Miedo
+- Aburrimiento enmascara Tristeza
+
+### Emociones opuestas (7 relaciones)
+
+Anclas de regulación: activar una reduce la otra (base de la técnica de Acción Opuesta en DBT):
+
+- Alegría ↔ Tristeza
+- Calma ↔ Ansiedad
+- Gratitud ↔ Envidia
+- Orgullo ↔ Vergüenza
+- Alivio ↔ Angustia
+- Entusiasmo ↔ Aburrimiento
+- Felicidad ↔ Tristeza
+
+---
 
 ## Funcionalidades
 
-- Listado de 19 emociones en tarjetas
-- Búsqueda en tiempo real (nombre, sensación, disparador y mensaje, en ambos idiomas)
-- Modal con detalle completo de cada emoción (sensación, disparador, función, mensaje, impulso a evitar, respuesta sugerida)
-- Compartir emoción: genera una imagen PNG de la tarjeta usando `<canvas>` y la comparte con Web Share API o la descarga directamente
-- Quiz emocional para identificar qué se siente a partir de síntomas
-- Sección de emociones vistas recientemente (persistente con localStorage)
-- Panel de ajustes compacto: modo claro / automático / oscuro + selector de idioma
-- Navegación por teclado (Tab, Enter, Espacio, Escape)
-- Cierre de modal por botón, tecla Escape o toque en fondo
-- Soporte multi-idioma ES/EN con persistencia
-- Botón de instalación PWA inteligente (Android/Chrome y guía para iOS/Safari)
-- Funciona offline gracias al Service Worker con auto-actualización silenciosa
-- Respeto de `prefers-reduced-motion`
+- **28 emociones** en tarjetas con color, detalle completo y búsqueda en tiempo real
+- **Búsqueda** por nombre, sensación corporal, disparador y mensaje (ES y EN simultáneamente)
+- **Check-in de estado de ánimo** — 4 estados de ánimo que filtran emociones relacionadas
+- **Quiz de identificación** — árbol de 3 preguntas para quienes no saben qué sienten
+- **Mapa de relaciones** — grafo interactivo con layout de fuerza y vista por cuadrantes; 35 relaciones en 4 tipos
+- **Diario emocional** — registro de entradas con emoción, nota y fecha; persiste en `localStorage`
+- **Compartir emoción** — genera imagen PNG con la tarjeta y la comparte via Web Share API o descarga directa
+- **Emociones vistas recientemente** — historial de las últimas 5, persistente
+- **Modo claro / automático / oscuro** con detección de preferencia del sistema
+- **Soporte multi-idioma** ES / EN con persistencia
+- **PWA instalable** — botón inteligente para Android/Chrome y guía para iOS/Safari
+- **Funciona offline** — Service Worker con estrategia cache-first y auto-actualización
+- **Navegación por teclado** completa (Tab, Enter, Espacio, Escape, retorno de foco)
+- **Reducción de movimiento** — respeta `prefers-reduced-motion`
+
+---
 
 ## Tecnologías
 
-- HTML5
-- CSS personalizado (`styles.css`) + Tailwind CSS pre-generado (`dist/tailwind.css`)
-- JavaScript vanilla modular con esbuild como único bundler
-- Fuente Inter self-hosted (`pwa/fonts/inter.woff2`) para tipografía consistente entre dispositivos
-- Íconos SVG inline (sin dependencia externa)
+- HTML5 + CSS personalizado (`styles.css`) + Tailwind CSS pre-generado (`dist/tailwind.css`)
+- JavaScript vanilla modular (ES6) con esbuild como único bundler
+- Fuente Inter self-hosted (`pwa/fonts/inter.woff2`)
+- Íconos SVG inline — sin dependencia externa
 - Service Worker para soporte offline
 - Vitest para tests automatizados
+- Algoritmo de layout Fruchterman–Reingold (implementación propia, ~500 iteraciones, sin dependencias de grafos)
+
+---
 
 ## Desarrollo
 
@@ -70,21 +241,25 @@ npm run test:watch  # modo watch durante desarrollo
 
 El pre-commit hook ejecuta `npm run build` automáticamente en cada `git commit`, así los artefactos generados (`dist/`, `sw.js`, `js/version.js`) siempre están actualizados.
 
+---
+
 ## Estructura del proyecto
 
 ```text
 ├── index.html               Estructura principal de la interfaz
 ├── app.js                   Punto de entrada (ES6 modules): estado, bootstrap
 ├── loader.js                Detecta file:// vs http:// y carga dist/app.bundle.js o app.js
-├── styles.css               Estilos personalizados (transiciones, foco, scrollbar, @font-face)
+├── styles.css               Estilos personalizados (transiciones, foco, scrollbar, dark mode)
 ├── sw.js                    Service Worker (cache-first, soporte offline)
 ├── vitest.config.js         Configuración de tests
 ├── js/
-│   ├── constants.js         Datos de emociones, traducciones, claves de localStorage
+│   ├── constants.js         Emociones, relaciones, traducciones, claves de localStorage
 │   ├── i18n.js              Detección de idioma, función t(), traducciones al DOM
 │   ├── ui.js                Render de tarjetas y modal, búsqueda, eventos, canvas share
+│   ├── quiz.js              Árbol de decisión de identificación emocional
+│   ├── diary.js             Diario emocional (CRUD en localStorage, render)
+│   ├── emotionMap.js        Mapa de relaciones: layout de fuerza + cuadrantes, render SVG
 │   ├── utils.js             Funciones puras: normalizeText, getReadableTextColor, wrapTextLines
-│   ├── quiz.js              Lógica del quiz de identificación emocional
 │   └── version.js           Versión de build auto-generada (no editar manualmente)
 ├── dist/
 │   ├── tailwind.css         CSS de Tailwind pre-generado (no editar manualmente)
@@ -101,6 +276,8 @@ El pre-commit hook ejecuta `npm run build` automáticamente en cada `git commit`
     └── icons/
 ```
 
+---
+
 ## Instalar como PWA
 
 El botón **Instalar app** aparece automáticamente en el encabezado cuando el navegador lo permite:
@@ -110,6 +287,8 @@ El botón **Instalar app** aparece automáticamente en el encabezado cuando el n
 - El botón se oculta si la app ya está instalada en modo standalone.
 
 Para que la instalación esté disponible, la app debe ejecutarse en `http://` o `https://`.
+
+---
 
 ## Accesibilidad y UX
 
@@ -121,12 +300,14 @@ Para que la instalación esté disponible, la app debe ejecutarse en `http://` o
 - Animaciones suaves con reducción automática cuando el sistema lo solicita
 - Content Security Policy (CSP) en todas las páginas
 
+---
+
 ## Pruebas manuales por escenario
 
 ### Escenario 1: Carga inicial
 
 1. Abrir la app en `http://localhost`.
-2. Verificar que se muestran las 19 tarjetas de emociones.
+2. Verificar que se muestran las 28 tarjetas de emociones.
 3. Verificar que el selector de idioma aparece en cabecera.
 
 ### Escenario 2: Búsqueda
@@ -146,49 +327,68 @@ Para que la instalación esté disponible, la app debe ejecutarse en `http://` o
 5. Abrir de nuevo y cerrar con tecla `Escape`.
 6. Verificar que el foco regresa a la tarjeta de origen.
 
-### Escenario 4: Navegación por teclado
+### Escenario 4: Check-in y quiz
+
+1. Ir a la pestaña **¿Qué siento?**.
+2. Seleccionar un estado de ánimo y verificar que filtra las emociones correspondientes.
+3. Abrir el quiz y completar las 3 preguntas.
+4. Verificar que el resultado muestra emociones coherentes con las respuestas dadas.
+5. Pulsar "Ver todas las emociones" y confirmar que navega a la pestaña Emociones.
+
+### Escenario 5: Diario emocional
+
+1. Ir a la pestaña **Diario**.
+2. Crear una entrada seleccionando una emoción y agregando una nota.
+3. Verificar que la entrada aparece en la lista con fecha y emoción correctas.
+4. Recargar la página y confirmar persistencia.
+5. Eliminar la entrada y verificar que desaparece.
+
+### Escenario 6: Mapa de relaciones
+
+1. Ir a la pestaña **Mapa**.
+2. Verificar que el grafo carga con nodos y líneas de colores.
+3. Tocar un nodo y verificar que se resalta con sus conexiones y aparece el panel de relaciones.
+4. Confirmar que los 4 tipos de relación aparecen en la leyenda.
+5. Cambiar a vista **Cuadrantes** y verificar que las 4 zonas se muestran con colores y emociones.
+6. Seleccionar una emoción en cuadrantes y confirmar que la línea de relación cruza zonas correctamente.
+7. Pulsar **Ver** en el panel de información y verificar que abre el modal de detalle.
+
+### Escenario 7: Navegación por teclado
 
 1. Usar `Tab` para navegar entre elementos interactivos.
 2. Abrir una tarjeta con `Enter` o `Espacio`.
 3. Verificar foco visible en elementos navegables.
 4. Cerrar modal con `Escape` y validar retorno de foco.
 
-### Escenario 5: Recientes
-
-1. Abrir varias emociones distintas.
-2. Verificar que aparecen en `Vistas recientemente`.
-3. Recargar la página y confirmar persistencia en localStorage.
-4. Verificar que no se duplican y que respeta el límite de 5.
-
-### Escenario 6: Multi-idioma
+### Escenario 8: Multi-idioma
 
 1. Cambiar idioma a `EN`.
 2. Verificar traducción de textos de interfaz y contenido de emociones.
-3. Probar búsqueda en inglés.
+3. Verificar que los nombres en el mapa también se traducen.
 4. Recargar y confirmar persistencia del idioma.
 
-### Escenario 7: PWA e instalación
+### Escenario 9: PWA e instalación
 
 1. Ejecutar en `http://localhost`.
 2. Confirmar que aparece el botón `Instalar app` en el encabezado.
 3. Instalar la app y abrirla como ventana independiente.
 4. Verificar que el botón desaparece tras la instalación.
 
-### Escenario 8: Soporte offline y actualización automática
+### Escenario 10: Soporte offline y actualización automática
 
 1. Ejecutar en `http://localhost` y esperar a que el Service Worker se registre.
 2. En DevTools → Network, activar modo offline.
 3. Recargar la página y confirmar que la app carga con estilos completos.
 4. Para verificar la actualización automática: desplegar una nueva versión, visitar el sitio — la página se recarga sola al activarse el nuevo SW.
 
-### Escenario 9: Modo oscuro
+### Escenario 11: Modo oscuro
 
 1. Abrir el panel de ajustes (icono engranaje).
-2. Seleccionar modo oscuro y verificar que el fondo, tarjetas y modal cambian de color.
+2. Seleccionar modo oscuro y verificar que el fondo, tarjetas, mapa y modal cambian de color.
 3. Recargar la página y confirmar que el modo persiste.
 4. Cambiar a modo automático y verificar que sigue la preferencia del sistema.
 
-### Escenario 10: Compartir emoción
+### Escenario 12: Compartir emoción
 
 1. Abrir el modal de cualquier emoción.
 2. Pulsar el botón **Compartir**.
@@ -196,11 +396,13 @@ Para que la instalación esté disponible, la app debe ejecutarse en `http://` o
 4. En escritorio: confirmar que se descarga un archivo `.png` con el nombre de la emoción.
 5. Verificar que la imagen incluye: nombre de la emoción, mensaje principal y respuesta sugerida.
 
-### Escenario 11: Fallback file://
+### Escenario 13: Fallback file://
 
 1. Abrir `index.html` directamente (doble clic).
 2. Verificar que las emociones cargan correctamente sin servidor HTTP.
 3. Confirmar que la búsqueda, el modal y el cambio de idioma funcionan.
+
+---
 
 ## Próximas mejoras sugeridas
 
@@ -221,5 +423,4 @@ Para que la instalación esté disponible, la app debe ejecutarse en `http://` o
 ### Más adelante
 
 - **Más emociones:** ampliar el catálogo con esperanza, asombro, compasión, hartazgo, humillación, vergüenza ajena, entre otras
-- **Relaciones entre emociones:** visualizar emociones que suelen coexistir (ej. enojo y miedo) para entender la complejidad emocional
 - **Modo acompañamiento:** preguntas abiertas guiadas para promover la reflexión, sin diagnóstico
