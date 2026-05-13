@@ -275,7 +275,7 @@ export function createEmotionMap({ emociones, getDisplayName, t, showDetail }) {
                 <button id="map-graph-btn" class="flex-1 py-2 text-sm font-bold rounded-xl border transition-colors ${view === "graph" ? activeC : inactiveC}">${t("mapViewGraph")}</button>
                 <button id="map-quad-btn"  class="flex-1 py-2 text-sm font-bold rounded-xl border transition-colors ${view === "quad"  ? activeC : inactiveC}">${t("mapViewQuad")}</button>
             </div>
-            <div class="flex flex-wrap gap-x-3 gap-y-1 mb-2" role="list" aria-label="Leyenda">
+            <div class="flex flex-wrap gap-x-3 gap-y-1 mb-2" role="list" aria-label="${t("mapLegendLabel")}">
                 ${legendItems}
             </div>
             <div class="rounded-2xl overflow-hidden" style="background:${canvasBg}">
