@@ -70,6 +70,28 @@ function runForce(nodes, edges, W, H) {
 
 function clamp(v, lo, hi) { return Math.min(Math.max(v, lo), hi); }
 
+function escapeHtmlText(value) {
+    return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;");
+}
+
+function escapeHtmlAttr(value) {
+    return escapeHtmlText(value)
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+}
+
+function graphHeightFor(W, nodeCount, edgeCount) {
+    const base = W < 360 ? 430 : W < 420 ? 410 : 460;
+    const densityBoost = Math.min(
+        80,
+        Math.max(0, nodeCount - 20) * 3 + Math.max(0, edgeCount - 28)
+    );
+    return clamp(base + densityBoost, 420, 560);
+}
+
 // ── Edge builder (shared by both views) ──────────────────────────────────────
 function buildEdges(nameToIdx) {
     return EMOTION_RELATIONS.flatMap((r) => {
@@ -226,10 +248,11 @@ function svgBody(nodes, edges, W, H, sel, view, t) {
         const sw    = isSel ? "3" : "0";
         const lbl   = n.label.length > 10 ? n.label.slice(0, 9) + "…" : n.label;
         const cx = Math.trunc(n.x), cy = Math.trunc(n.y);
-        return `<g class="map-node" data-nombre="${n.nombre}" tabindex="0" role="button" aria-label="${n.label}" style="cursor:pointer" opacity="${dim ? 0.18 : 1}">
+        return `<g class="map-node" data-nombre="${escapeHtmlAttr(n.nombre)}" tabindex="0" role="button" aria-label="${escapeHtmlAttr(n.label)}" style="cursor:pointer" opacity="${dim ? 0.18 : 1}">
+            <title>${escapeHtmlText(n.label)}</title>
             <circle cx="${cx}" cy="${cy}" r="${R + 6}" fill="transparent"/>
             <circle cx="${cx}" cy="${cy}" r="${R}" fill="${n.color}" stroke="${sc}" stroke-width="${sw}" pointer-events="none"/>
-            <text x="${cx}" y="${Math.trunc(n.y + R + 12)}" text-anchor="middle" font-size="11" font-weight="600" fill="${labelFill}" pointer-events="none">${lbl}</text>
+            <text x="${cx}" y="${Math.trunc(n.y + R + 12)}" text-anchor="middle" font-size="11" font-weight="600" fill="${labelFill}" pointer-events="none">${escapeHtmlText(lbl)}</text>
         </g>`;
     }).join("");
 
@@ -252,7 +275,7 @@ export function createEmotionMap({ emociones, getDisplayName, t, showDetail }) {
         const W = containerW();
         if (!forceData || Math.abs(W - lastW) > 20) {
             lastW    = W;
-            const gH = W < 400 ? 390 : 460;
+            const gH = graphHeightFor(W, emociones.length, EMOTION_RELATIONS.length);
             forceData = { ...buildForceData(emociones, getDisplayName, W, gH), H: gH };
             quadData  = null;
         }

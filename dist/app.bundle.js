@@ -1639,8 +1639,35 @@
   function clamp(v, lo, hi) {
     return Math.min(Math.max(v, lo), hi);
   }
+  function escapeHtmlText(value) {
+    return String(value).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  }
+  function escapeHtmlAttr(value) {
+    return escapeHtmlText(value).replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+  }
+  function graphHeightFor(W, nodeCount, edgeCount) {
+    const base = W < 360 ? 430 : W < 420 ? 410 : 460;
+    const densityBoost = Math.min(
+      80,
+      Math.max(0, nodeCount - 20) * 3 + Math.max(0, edgeCount - 28)
+    );
+    return clamp(base + densityBoost, 420, 560);
+  }
   function buildEdges(nameToIdx) {
-    return EMOTION_RELATIONS.map((r) => ({ ai: nameToIdx[r.from], bi: nameToIdx[r.to], type: r.type })).filter((e) => e.ai !== void 0 && e.bi !== void 0);
+    return EMOTION_RELATIONS.flatMap((r) => {
+      const ai = nameToIdx[r.from];
+      const bi = nameToIdx[r.to];
+      if (ai === void 0 || bi === void 0) {
+        const missing = [];
+        if (ai === void 0) missing.push(`from="${r.from}"`);
+        if (bi === void 0) missing.push(`to="${r.to}"`);
+        console.warn(
+          `[emotionMap] Dropping relation "${r.type}" with unknown endpoint(s): ${missing.join(", ")}`
+        );
+        return [];
+      }
+      return [{ ai, bi, type: r.type }];
+    });
   }
   function buildForceData(emociones2, getDisplayName, W, H) {
     const rng = makeRng(48879);
@@ -1761,10 +1788,11 @@
       const sw = isSel ? "3" : "0";
       const lbl = n.label.length > 10 ? n.label.slice(0, 9) + "\u2026" : n.label;
       const cx = Math.trunc(n.x), cy = Math.trunc(n.y);
-      return `<g class="map-node" data-nombre="${n.nombre}" tabindex="0" role="button" aria-label="${n.label}" style="cursor:pointer" opacity="${dim ? 0.18 : 1}">
+      return `<g class="map-node" data-nombre="${escapeHtmlAttr(n.nombre)}" tabindex="0" role="button" aria-label="${escapeHtmlAttr(n.label)}" style="cursor:pointer" opacity="${dim ? 0.18 : 1}">
+            <title>${escapeHtmlText(n.label)}</title>
             <circle cx="${cx}" cy="${cy}" r="${R + 6}" fill="transparent"/>
             <circle cx="${cx}" cy="${cy}" r="${R}" fill="${n.color}" stroke="${sc}" stroke-width="${sw}" pointer-events="none"/>
-            <text x="${cx}" y="${Math.trunc(n.y + R + 12)}" text-anchor="middle" font-size="11" font-weight="600" fill="${labelFill}" pointer-events="none">${lbl}</text>
+            <text x="${cx}" y="${Math.trunc(n.y + R + 12)}" text-anchor="middle" font-size="11" font-weight="600" fill="${labelFill}" pointer-events="none">${escapeHtmlText(lbl)}</text>
         </g>`;
     }).join("");
     return `${bg}<g>${eStr}</g><g>${nStr}</g>`;
@@ -1782,7 +1810,7 @@
       const W = containerW();
       if (!forceData || Math.abs(W - lastW) > 20) {
         lastW = W;
-        const gH = W < 400 ? 390 : 460;
+        const gH = graphHeightFor(W, emociones2.length, EMOTION_RELATIONS.length);
         forceData = { ...buildForceData(emociones2, getDisplayName, W, gH), H: gH };
         quadData = null;
       }
