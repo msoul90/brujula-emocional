@@ -1,4 +1,4 @@
-﻿import { emociones, THEME_KEY, MOOD_CATEGORIES } from "./js/constants.js";
+﻿import { emociones, THEME_KEY, MOOD_CATEGORIES, EMOTION_RELATIONS } from "./js/constants.js";
 import { createI18n } from "./js/i18n.js";
 import { createUI } from "./js/ui.js";
 import { createQuiz } from "./js/quiz.js";
@@ -42,6 +42,7 @@ diary = createDiary({
 
 ui = createUI({
     emociones,
+    relaciones: EMOTION_RELATIONS,
     getDisplayName: i18n.getDisplayName,
     getEmotionField: i18n.getEmotionField,
     t: i18n.t,

@@ -81,7 +81,8 @@ export const TRANSLATIONS = {
         mapRelEnmascara: "Puede enmascarar",
         mapRelOpuesta: "Emoción opuesta",
         mapInfoNone: "Sin relaciones registradas",
-        mapLegendLabel: "Leyenda del mapa"
+        mapLegendLabel: "Leyenda del mapa",
+        masksHint: "A veces lo que sentís en la superficie cubre algo más. Explorá también esta emoción."
     },
     en: {
         langLabel: "Language",
@@ -165,7 +166,8 @@ export const TRANSLATIONS = {
         mapRelEnmascara: "Can mask",
         mapRelOpuesta: "Opposite emotion",
         mapInfoNone: "No registered connections",
-        mapLegendLabel: "Map legend"
+        mapLegendLabel: "Map legend",
+        masksHint: "Sometimes what you feel on the surface covers something deeper. Explore this emotion too."
     }
 };
 
