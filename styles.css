@@ -220,6 +220,9 @@
         html.dark .emotion-option { color: #cbd5e1; }
         html.dark .emotion-option:hover { background-color: #0f172a; }
 
+        /* Emotion map */
+        html.dark #map-content .bg-white { background-color: #1e293b; }
+
         /* iOS install modal */
         html.dark #ios-install-panel { background-color: #1e293b; }
         html.dark #ios-install-title { color: #f1f5f9; }

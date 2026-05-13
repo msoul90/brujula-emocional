@@ -3,6 +3,7 @@ import { createI18n } from "./js/i18n.js";
 import { createUI } from "./js/ui.js";
 import { createQuiz } from "./js/quiz.js";
 import { createDiary } from "./js/diary.js";
+import { createEmotionMap } from "./js/emotionMap.js";
 import { BUILD_VERSION } from "./js/version.js";
 
 const state = {
@@ -17,6 +18,7 @@ const modalAnimationMs = reducedMotion ? 0 : 200;
 
 let ui;
 let diary;
+let emotionMap;
 
 const i18n = createI18n({
     getLang: () => state.currentLang,
@@ -28,6 +30,7 @@ const i18n = createI18n({
         ui.renderRecentEmotions();
         ui.renderEmociones(document.getElementById("search")?.value ?? "");
         if (state.currentTab === "diario") diary.renderForTab();
+        emotionMap?.onLanguageChanged();
     }
 });
 
@@ -229,7 +232,7 @@ function initSmartInstallButton() {
 }
 
 function switchTab(tabId) {
-    const tabs = ["emociones", "checkin", "diario"];
+    const tabs = ["emociones", "checkin", "diario", "mapa"];
     for (const id of tabs) {
         document.getElementById(`tab-${id}`)?.classList.toggle("hidden", id !== tabId);
         const btn = document.getElementById(`nav-${id}`);
@@ -246,6 +249,7 @@ function switchTab(tabId) {
     }
     state.currentTab = tabId;
     if (tabId === "diario") diary.renderForTab();
+    if (tabId === "mapa") emotionMap?.renderForTab();
 }
 
 function initTabNav() {
@@ -264,6 +268,13 @@ function bootstrap() {
     initSettingsPanel();
     initTabNav();
     ui.bindBaseEvents();
+
+    emotionMap = createEmotionMap({
+        emociones,
+        getDisplayName: i18n.getDisplayName,
+        t: i18n.t,
+        showDetail: ui.showDetail,
+    });
 
     const quiz = createQuiz({
         emociones,

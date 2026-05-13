@@ -45,6 +45,7 @@ export function createI18n({ getLang, setLang, onLanguageChanged }) {
             "nav-label-emociones":(el) => { el.textContent = t("navEmociones"); },
             "nav-label-checkin":  (el) => { el.textContent = t("navCheckin"); },
             "nav-label-diario":   (el) => { el.textContent = t("navDiary"); },
+            "nav-label-mapa":     (el) => { el.textContent = t("navMapa"); },
             "install-app-button": (el) => { el.textContent = t("installButton"); },
             "ios-install-title":  (el) => { el.textContent = t("iosInstallTitle"); },
             "ios-install-step-1": (el) => { el.textContent = t("iosInstallStep1"); },
