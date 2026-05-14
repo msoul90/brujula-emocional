@@ -78,9 +78,32 @@ function runForce(nodes, edges, W, H) {
             n.y = clamp(n.y + n.fy / d * Math.min(d, temp), R + 24, H - R - 28);
         }
     }
+    resolveCollisions(nodes, W, H);
 }
 
 function clamp(v, lo, hi) { return Math.min(Math.max(v, lo), hi); }
+
+// Post-process: physically separate any remaining overlapping nodes
+function resolveCollisions(nodes, W, H) {
+    const minDist = R * 2 + 10;
+    for (let pass = 0; pass < 12; pass++) {
+        for (let i = 0; i < nodes.length; i++) {
+            for (let j = i + 1; j < nodes.length; j++) {
+                const dx = nodes[i].x - nodes[j].x;
+                const dy = nodes[i].y - nodes[j].y;
+                const d  = Math.hypot(dx, dy) || 0.01;
+                if (d < minDist) {
+                    const push = (minDist - d) / 2;
+                    const ux = dx / d, uy = dy / d;
+                    nodes[i].x = clamp(nodes[i].x + ux * push, R + 28, W - R - 28);
+                    nodes[i].y = clamp(nodes[i].y + uy * push, R + 24, H - R - 28);
+                    nodes[j].x = clamp(nodes[j].x - ux * push, R + 28, W - R - 28);
+                    nodes[j].y = clamp(nodes[j].y - uy * push, R + 24, H - R - 28);
+                }
+            }
+        }
+    }
+}
 
 /**
  * Escapa caracteres especiales para insertar texto dinámico en nodos HTML/SVG.
@@ -234,16 +257,48 @@ function buildInfoPanel(selected, nodes, edges, dark, t, getDisplayName) {
     return `<div id="map-info-panel" class="mt-3 rounded-2xl p-4 border ${borderC} shadow-sm">
         <div class="flex items-center justify-between mb-2">
             <span class="font-bold ${nameC}">${getDisplayName(selected)}</span>
-            <button id="map-open-btn" class="text-xs font-bold text-blue-500 hover:text-blue-600 px-2 py-1 rounded-lg transition-colors">${t("openChip")}</button>
+            <div class="flex items-center gap-1">
+                <button id="map-open-btn" class="text-xs font-bold text-blue-500 hover:text-blue-600 px-2 py-1 rounded-lg transition-colors">${t("openChip")}</button>
+                <button id="map-clear-btn" aria-label="${t("mapClearSelection")}"
+                    class="w-6 h-6 flex items-center justify-center rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors">
+                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                </button>
+            </div>
         </div>
         ${body}
     </div>`;
 }
 
+// ── Quadrant filter: in-quadrant nodes + cross-quadrant neighbors ─────────────
+function buildQuadrantFilter(catIdx, visibleEdges, nodes) {
+    if (catIdx === null) return null;
+    const cat = MOOD_CATEGORIES[catIdx];
+    const nodeNames  = new Set(nodes.map(n => n.nombre));
+    const inQuadrant = new Set(cat.emotions.filter(n => nodeNames.has(n)));
+    const neighbors  = new Set();
+    for (const e of visibleEdges) {
+        const aN = nodes[e.ai].nombre;
+        const bN = nodes[e.bi].nombre;
+        if (inQuadrant.has(aN) && !inQuadrant.has(bN)) neighbors.add(bN);
+        if (inQuadrant.has(bN) && !inQuadrant.has(aN)) neighbors.add(aN);
+    }
+    return { inQuadrant, neighbors };
+}
+
 // ── SVG body (edges + quadrant background + nodes) ───────────────────────────
-function svgBody(nodes, edges, W, H, sel, view, t) {
+function svgBody(nodes, edges, W, H, sel, view, { t, activeTypes, activeQuadrant }) {
     const dark      = document.documentElement.classList.contains("dark");
     const labelFill = dark ? "#cbd5e1" : "#1e293b";
+
+    const visibleEdges = edges.filter(e => activeTypes.has(e.type));
+    const quadrantFilter = buildQuadrantFilter(activeQuadrant, visibleEdges, nodes);
+
+    // Names connected to the selected node via visible edges (for focus mode)
+    const connectedNames = sel ? new Set(
+        visibleEdges
+            .filter(e => nodes[e.ai].nombre === sel || nodes[e.bi].nombre === sel)
+            .flatMap(e => [nodes[e.ai].nombre, nodes[e.bi].nombre])
+    ) : null;
 
     // Quadrant backgrounds + headers + dividers
     let bg = "";
@@ -265,25 +320,43 @@ function svgBody(nodes, edges, W, H, sel, view, t) {
         bg += `<line x1="0" y1="${H / 2}" x2="${W}" y2="${H / 2}" stroke="${divC}" stroke-width="1"/>`;
     }
 
-    // Edges
-    const eStr = edges.map(e => {
-        const a   = nodes[e.ai], b = nodes[e.bi];
-        const act    = !sel || sel === a.nombre || sel === b.nombre;
-        const active = act ? 0.9 : 0.04;
-        const op     = sel ? active : 0.4;
+    // Edges — only visible types; opacity varies by sel/quadrant filter
+    const eStr = visibleEdges.map(e => {
+        const a = nodes[e.ai], b = nodes[e.bi];
+        let op = 0.4;
+        if (sel) {
+            op = (sel === a.nombre || sel === b.nombre) ? 0.9 : 0;
+        } else if (quadrantFilter) {
+            const aIn = quadrantFilter.inQuadrant.has(a.nombre);
+            const bIn = quadrantFilter.inQuadrant.has(b.nombre);
+            if (!aIn && !bIn) op = 0;
+            else if (aIn && bIn) op = 0.75;
+            else op = 0.35;
+        }
         const rel = RELS[e.type];
         return `<line x1="${Math.trunc(a.x)}" y1="${Math.trunc(a.y)}" x2="${Math.trunc(b.x)}" y2="${Math.trunc(b.y)}" stroke="${rel.color}" stroke-width="2.5" opacity="${op}" stroke-dasharray="${rel.dash}"/>`;
     }).join("");
 
-    // Nodes
+    // Nodes — focus mode (sel) takes priority over quadrant filter
     const nStr = nodes.map(n => {
-        const isSel = sel === n.nombre;
-        const dim   = sel && !isSel;
-        const sc    = isSel ? "#2563eb" : "none";
-        const sw    = isSel ? "3" : "0";
-        const lbl   = n.label.length > 10 ? n.label.slice(0, 9) + "…" : n.label;
+        const isSel  = sel === n.nombre;
+        const isConn = connectedNames ? connectedNames.has(n.nombre) : true;
+        let nodeOp;
+        if (sel) {
+            nodeOp = (isSel || isConn) ? 1 : 0;
+        } else if (quadrantFilter) {
+            if (quadrantFilter.inQuadrant.has(n.nombre)) nodeOp = 1;
+            else if (quadrantFilter.neighbors.has(n.nombre)) nodeOp = 0.45;
+            else nodeOp = 0;
+        } else {
+            nodeOp = 1;
+        }
+        const hide = nodeOp === 0;
+        const sc   = isSel ? "#2563eb" : "none";
+        const sw   = isSel ? "3" : "0";
+        const lbl     = n.label.length > 10 ? n.label.slice(0, 9) + "…" : n.label;
         const cx = Math.trunc(n.x), cy = Math.trunc(n.y);
-        return `<g class="map-node" data-nombre="${escapeHtmlAttr(n.nombre)}" tabindex="0" role="button" aria-label="${escapeHtmlAttr(n.label)}" style="cursor:pointer" opacity="${dim ? 0.18 : 1}">
+        return `<g class="map-node" data-nombre="${escapeHtmlAttr(n.nombre)}" tabindex="0" role="button" aria-label="${escapeHtmlAttr(n.label)}" style="cursor:pointer" opacity="${hide ? 0 : 1}" ${hide ? 'pointer-events="none"' : ''}>
             <title>${escapeHtmlText(n.label)}</title>
             <circle cx="${cx}" cy="${cy}" r="${R + 6}" fill="transparent"/>
             <circle cx="${cx}" cy="${cy}" r="${R}" fill="${n.color}" stroke="${sc}" stroke-width="${sw}" pointer-events="none"/>
@@ -294,17 +367,59 @@ function svgBody(nodes, edges, W, H, sel, view, t) {
     return `${bg}<g>${eStr}</g><g>${nStr}</g>`;
 }
 
+// ── Neighborhood subgraph: selected node + direct neighbors, re-laid out ──────
+function buildNeighborhoodData(selName, nodes, visibleEdges, W, H) {
+    const neighborEdges = visibleEdges.filter(
+        e => nodes[e.ai].nombre === selName || nodes[e.bi].nombre === selName
+    );
+    const memberNames = new Set(
+        neighborEdges.flatMap(e => [nodes[e.ai].nombre, nodes[e.bi].nombre])
+    );
+    memberNames.add(selName);
+
+    const rng = makeRng(0xf00d);
+    const subNameToIdx = {};
+    const subNodes = nodes
+        .filter(n => memberNames.has(n.nombre))
+        .map((n, i) => {
+            subNameToIdx[n.nombre] = i;
+            return {
+                nombre: n.nombre,
+                label:  n.label,
+                color:  n.color,
+                x:  (0.15 + rng() * 0.7) * W,
+                y:  (0.15 + rng() * 0.7) * H,
+                fx: 0,
+                fy: 0,
+            };
+        });
+
+    const subEdges = neighborEdges
+        .map(e => ({
+            ai:   subNameToIdx[nodes[e.ai].nombre],
+            bi:   subNameToIdx[nodes[e.bi].nombre],
+            type: e.type,
+        }))
+        .filter(e => e.ai !== undefined && e.bi !== undefined);
+
+    runForce(subNodes, subEdges, W, H);
+    return { nodes: subNodes, edges: subEdges };
+}
+
 function containerW() {
     return document.getElementById("map-content")?.clientWidth || 340;
 }
 
 // ── Factory ───────────────────────────────────────────────────────────────────
 export function createEmotionMap({ emociones, getDisplayName, t, showDetail }) {
-    let view     = "graph";
-    let selected = null;
-    let forceData = null;
-    let quadData  = null;
-    let lastW     = 0;
+    let view            = "graph";
+    let selected        = null;
+    let nameFilter      = "";
+    let activeTypes     = new Set(Object.keys(RELS));
+    let activeQuadrant  = null;
+    let forceData       = null;
+    let quadData        = null;
+    let lastW           = 0;
 
     function ensureData() {
         const W = containerW();
@@ -328,18 +443,60 @@ export function createEmotionMap({ emociones, getDisplayName, t, showDetail }) {
         const W    = containerW();
         const dark = document.documentElement.classList.contains("dark");
 
+        // Neighborhood mode: graph view + selected node → re-layout subgraph
+        const isNeighborhood = view === "graph" && selected !== null;
+        let svgNodes;
+        let svgEdges;
+        let svgActiveQuadrant;
+        if (isNeighborhood) {
+            const hood = buildNeighborhoodData(
+                selected, nodes, edges.filter(e => activeTypes.has(e.type)), W, H
+            );
+            svgNodes = hood.nodes;
+            svgEdges = hood.edges;
+            svgActiveQuadrant = null;
+        } else {
+            svgNodes = nodes;
+            svgEdges = edges;
+            svgActiveQuadrant = activeQuadrant;
+        }
+
         const infoHtml = buildInfoPanel(selected, nodes, edges, dark, t, getDisplayName);
 
         const activeC   = dark ? "bg-slate-100 text-slate-900 border-slate-100" : "bg-slate-800 text-white border-slate-800";
         const inactiveC = dark ? "bg-slate-800 text-slate-400 border-slate-600" : "bg-white text-slate-500 border-slate-200";
         const canvasBg  = dark ? "#0f172a" : "#f8fafc";
 
-        const legendItems = Object.entries(RELS).map(([, rel]) =>
-            `<span role="listitem" class="flex items-center gap-1 text-[11px] ${dark ? "text-slate-400" : "text-slate-500"}">
-                <svg width="14" height="6" aria-hidden="true"><line x1="0" y1="3" x2="14" y2="3" stroke="${rel.color}" stroke-width="2" stroke-dasharray="${rel.dash}"/></svg>
+        const legendItems = Object.entries(RELS).map(([type, rel]) => {
+            const on         = activeTypes.has(type);
+            const dimLine    = dark ? "#475569" : "#cbd5e1";
+            const lineColor  = on ? rel.color : dimLine;
+            const onTextC    = dark ? "text-slate-300" : "text-slate-600";
+            const offTextC   = dark ? "text-slate-600" : "text-slate-400";
+            const textC      = on ? onTextC : offTextC;
+            const onBgC      = dark ? "bg-slate-700" : "bg-slate-100";
+            const bgC        = on ? onBgC : "";
+            return `<button data-rel-type="${type}" role="listitem" aria-pressed="${on}"
+                class="flex items-center gap-1 text-[11px] px-1.5 py-0.5 rounded-lg transition-colors ${textC} ${bgC}">
+                <svg width="14" height="6" aria-hidden="true"><line x1="0" y1="3" x2="14" y2="3" stroke="${lineColor}" stroke-width="2" stroke-dasharray="${rel.dash}"/></svg>
                 ${t(rel.labelKey)}
-            </span>`
-        ).join("");
+            </button>`;
+        }).join("");
+
+        const allBtnC = activeQuadrant === null ? activeC : inactiveC;
+        const quadrantBtns = [
+            `<button data-quad="all" aria-pressed="${activeQuadrant === null}"
+                class="text-[11px] font-bold px-2.5 py-0.5 rounded-full border transition-colors ${allBtnC}">
+                ${t("mapFilterAll")}
+            </button>`
+        ].concat(MOOD_CATEGORIES.map((cat, i) => {
+            const isActive   = activeQuadrant === i;
+            const inlineStyle = isActive ? `background-color:${cat.color};color:${cat.ink};border-color:${cat.color}` : "";
+            const btnC       = isActive ? "" : inactiveC;
+            return `<button data-quad="${i}" aria-pressed="${isActive}"
+                class="text-[11px] font-bold px-2.5 py-0.5 rounded-full border transition-colors ${btnC}"
+                style="${inlineStyle}">${t(cat.labelKey)}</button>`;
+        })).join("");
 
         wrap.innerHTML = `
             <div class="flex gap-2 mb-2">
@@ -349,9 +506,25 @@ export function createEmotionMap({ emociones, getDisplayName, t, showDetail }) {
             <div class="flex flex-wrap gap-x-3 gap-y-1 mb-2" role="list" aria-label="${t("mapLegendLabel")}">
                 ${legendItems}
             </div>
+            <div class="flex flex-wrap gap-1.5 mb-2">
+                ${quadrantBtns}
+            </div>
+            <div class="relative mb-2">
+                <input id="map-search" type="search" list="map-search-list"
+                    placeholder="${t("mapSearchPlaceholder")}"
+                    value="${escapeHtmlAttr(nameFilter)}"
+                    class="w-full text-[13px] px-3 py-1.5 rounded-xl border transition-colors
+                        ${dark ? "bg-slate-800 border-slate-600 text-slate-200 placeholder:text-slate-500" : "bg-white border-slate-200 text-slate-700 placeholder:text-slate-400"}">
+                <datalist id="map-search-list">
+                    ${emociones.map(e => `<option value="${escapeHtmlAttr(getDisplayName(e.nombre))}"></option>`).join("")}
+                </datalist>
+            </div>
+            <p class="text-[11px] text-slate-400 mb-1.5 px-0.5">
+                ${selected ? t("mapHintSelected") : t("mapHint")}
+            </p>
             <div class="rounded-2xl overflow-hidden" style="background:${canvasBg}">
                 <svg id="map-svg" viewBox="0 0 ${W} ${H}" style="width:100%;display:block;touch-action:pan-y" role="img" aria-label="${t("navMapa")}">
-                    ${svgBody(nodes, edges, W, H, selected, view, t)}
+                    ${svgBody(svgNodes, svgEdges, W, H, selected, view, { t, activeTypes, activeQuadrant: svgActiveQuadrant })}
                 </svg>
             </div>
             ${infoHtml}`;
@@ -371,10 +544,52 @@ export function createEmotionMap({ emociones, getDisplayName, t, showDetail }) {
         wrap.querySelector("#map-quad-btn")?.addEventListener("click", () => {
             view = "quad"; selected = null; render();
         });
+        for (const btn of wrap.querySelectorAll("[data-rel-type]")) {
+            btn.addEventListener("click", () => {
+                const { relType } = btn.dataset;
+                if (activeTypes.has(relType)) activeTypes.delete(relType);
+                else activeTypes.add(relType);
+                render();
+            });
+        }
+        for (const btn of wrap.querySelectorAll("[data-quad]")) {
+            btn.addEventListener("click", () => {
+                const q = btn.dataset.quad;
+                activeQuadrant = q === "all" ? null : Number(q);
+                selected = null;
+                render();
+            });
+        }
         wrap.querySelector("#map-open-btn")?.addEventListener("click", () => {
             const e = emociones.find(em => em.nombre === selected);
             if (e) showDetail(e);
         });
+        wrap.querySelector("#map-clear-btn")?.addEventListener("click", () => {
+            selected = null; nameFilter = ""; render();
+        });
+
+        const searchInput = wrap.querySelector("#map-search");
+        if (searchInput) {
+            searchInput.addEventListener("change", () => {
+                nameFilter = searchInput.value;
+                const found = emociones.find(
+                    e => getDisplayName(e.nombre).toLowerCase() === nameFilter.toLowerCase()
+                );
+                if (found) {
+                    selected = found.nombre;
+                    render();
+                    requestAnimationFrame(() => wrap.querySelector("#map-search")?.focus());
+                }
+            });
+            searchInput.addEventListener("input", () => {
+                if (!searchInput.value) {
+                    nameFilter = "";
+                    selected = null;
+                    render();
+                    requestAnimationFrame(() => wrap.querySelector("#map-search")?.focus());
+                }
+            });
+        }
 
         const svg = wrap.querySelector("#map-svg");
         if (!svg) return;
@@ -401,6 +616,7 @@ export function createEmotionMap({ emociones, getDisplayName, t, showDetail }) {
     function renderForTab() { render(); }
 
     function onLanguageChanged() {
+        nameFilter = "";
         if (forceData) for (const n of forceData.nodes) n.label = getDisplayName(n.nombre);
         if (quadData)  for (const n of quadData.nodes)  n.label = getDisplayName(n.nombre);
         if (document.getElementById("map-content")) render();
