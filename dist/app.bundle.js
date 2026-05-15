@@ -2071,14 +2071,15 @@
                 ${quadrantBtns}
             </div>
             <div class="relative mb-2">
-                <input id="map-search" type="search" list="map-search-list"
+                <input id="map-search" type="text" autocomplete="off"
                     placeholder="${t("mapSearchPlaceholder")}"
                     value="${escapeHtmlAttr(nameFilter)}"
                     class="w-full text-[13px] px-3 py-1.5 rounded-xl border transition-colors
                         ${dark ? "bg-slate-800 border-slate-600 text-slate-200 placeholder:text-slate-500" : "bg-white border-slate-200 text-slate-700 placeholder:text-slate-400"}">
-                <datalist id="map-search-list">
-                    ${emociones2.map((e) => `<option value="${escapeHtmlAttr(getDisplayName(e.nombre))}"></option>`).join("")}
-                </datalist>
+                <ul id="map-suggestions" role="listbox"
+                    class="absolute z-20 w-full mt-1 rounded-xl border shadow-lg max-h-48 overflow-y-auto hidden
+                        ${dark ? "bg-slate-800 border-slate-600" : "bg-white border-slate-200"}">
+                </ul>
             </div>
             <p id="map-hint" class="text-[11px] text-slate-400 mb-1.5 px-0.5">
                 ${selected ? t("mapHintSelected") : t("mapHint")}
@@ -2199,7 +2200,31 @@
         render();
       });
       const searchInput = wrap.querySelector("#map-search");
+      const suggestionsList = wrap.querySelector("#map-suggestions");
       if (searchInput) {
+        const hideSuggestions = () => suggestionsList?.classList.add("hidden");
+        const populateSuggestions = (value) => {
+          if (!suggestionsList) return;
+          const norm = normalizeText(value);
+          if (!norm) {
+            hideSuggestions();
+            return;
+          }
+          const dark = document.documentElement.classList.contains("dark");
+          const itemC = dark ? "text-slate-200 hover:bg-slate-700 active:bg-slate-600" : "text-slate-700 hover:bg-slate-50 active:bg-slate-100";
+          const matches = emociones2.filter((e) => normalizeText(getDisplayName(e.nombre)).includes(norm)).slice(0, 8);
+          if (!matches.length) {
+            hideSuggestions();
+            return;
+          }
+          suggestionsList.innerHTML = matches.map(
+            (e) => `<li role="option" tabindex="-1" data-nombre="${escapeHtmlAttr(e.nombre)}"
+                        class="px-3 py-2 text-[13px] cursor-pointer transition-colors ${itemC}">
+                        ${escapeHtmlText(getDisplayName(e.nombre))}
+                    </li>`
+          ).join("");
+          suggestionsList.classList.remove("hidden");
+        };
         const trySelectExact = () => {
           const norm = normalizeText(nameFilter);
           const found = norm && emociones2.find(
@@ -2207,21 +2232,47 @@
           );
           if (found) {
             selected = found.nombre;
+            hideSuggestions();
             render();
           }
         };
-        searchInput.addEventListener("change", () => {
-          nameFilter = searchInput.value;
-          trySelectExact();
-        });
-        searchInput.addEventListener("keydown", (ev) => {
-          if (ev.key === "Enter") trySelectExact();
-        });
         searchInput.addEventListener("input", () => {
           nameFilter = searchInput.value;
           selected = null;
           updateSvg();
+          populateSuggestions(nameFilter);
         });
+        searchInput.addEventListener("focus", () => {
+          if (nameFilter) populateSuggestions(nameFilter);
+        });
+        searchInput.addEventListener("blur", () => {
+          setTimeout(hideSuggestions, 150);
+        });
+        searchInput.addEventListener("keydown", (ev) => {
+          if (ev.key === "Enter") trySelectExact();
+          if (ev.key === "Escape") hideSuggestions();
+        });
+        searchInput.addEventListener("change", () => {
+          nameFilter = searchInput.value;
+          trySelectExact();
+        });
+        if (suggestionsList) {
+          suggestionsList.addEventListener("mousedown", (ev) => {
+            ev.preventDefault();
+          });
+          suggestionsList.addEventListener("click", (ev) => {
+            const li = ev.target.closest("li[data-nombre]");
+            if (!li) return;
+            const e = emociones2.find((em) => em.nombre === li.dataset.nombre);
+            if (e) {
+              nameFilter = getDisplayName(e.nombre);
+              selected = e.nombre;
+              searchInput.value = nameFilter;
+              hideSuggestions();
+              render();
+            }
+          });
+        }
       }
       const svg = wrap.querySelector("#map-svg");
       if (!svg) return;
@@ -2240,7 +2291,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mp769o9j";
+  var BUILD_VERSION = "mp76m4ix";
 
   // app.js
   var state = {
