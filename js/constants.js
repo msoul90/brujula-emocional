@@ -87,6 +87,7 @@ export const TRANSLATIONS = {
         mapHint: "Tocá una emoción para ver sus conexiones · Usá la leyenda para filtrar tipos",
         mapHintSelected: "Tocá fuera del nodo para volver al mapa completo",
         mapClearSelection: "Limpiar selección",
+        mapSearchEmpty: "No encontramos esa emoción en el mapa",
         masksHint: "A veces lo que sentís en la superficie cubre algo más. Explorá también esta emoción."
     },
     en: {
@@ -177,6 +178,7 @@ export const TRANSLATIONS = {
         mapHint: "Tap an emotion to see its connections · Use the legend to filter types",
         mapHintSelected: "Tap outside the node to return to the full map",
         mapClearSelection: "Clear selection",
+        mapSearchEmpty: "No emotion found in the map",
         masksHint: "Sometimes what you feel on the surface covers something deeper. Explore this emotion too."
     }
 };
