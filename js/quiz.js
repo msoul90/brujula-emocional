@@ -1,4 +1,5 @@
 import { createBodyMap } from "./bodyMap.js";
+import { isDarkMode } from "./utils.js";
 
 export const QUIZ_STEPS = {
     q1: {
@@ -70,45 +71,54 @@ export function createQuiz({ emociones, getDisplayName, t, showDetail, onShowAll
         }
     };
 
-    const headerHtml = () => `
-        <div class="flex items-center justify-between mb-8">
-            <h2 class="text-xl font-black text-slate-800">${t("quizTitle")}</h2>
-            <button id="quiz-close-btn" type="button" aria-label="Cerrar"
-                class="w-8 h-8 flex items-center justify-center rounded-full bg-slate-100 text-slate-500 hover:bg-slate-200 transition-colors">
-                <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-            </button>
-        </div>
-    `;
+    const headerHtml = (dark) => {
+        const titleC = dark ? "text-slate-100" : "text-slate-800";
+        const closeC = dark ? "bg-slate-700 text-slate-400 hover:bg-slate-600" : "bg-slate-100 text-slate-500 hover:bg-slate-200";
+        return `
+            <div class="flex items-center justify-between mb-8">
+                <h2 class="text-xl font-black ${titleC}">${t("quizTitle")}</h2>
+                <button id="quiz-close-btn" type="button" aria-label="Cerrar"
+                    class="w-8 h-8 flex items-center justify-center rounded-full ${closeC} transition-colors">
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                </button>
+            </div>
+        `;
+    };
 
     const bindCloseBtn = (content) => {
         content.querySelector("#quiz-close-btn").addEventListener("click", dismiss);
     };
 
     const renderResult = (emotionNames) => {
+        const dark = isDarkMode();
         const emotions = emotionNames
             .map((nombre) => emociones.find((e) => e.nombre === nombre))
             .filter(Boolean);
 
+        const titleC      = dark ? "text-slate-300" : "text-slate-500";
+        const restartC    = dark ? "bg-slate-800 text-slate-200 hover:bg-slate-700" : "bg-slate-100 text-slate-700 hover:bg-slate-200";
+        const closeResC   = dark ? "text-slate-400 hover:text-slate-200" : "text-slate-400 hover:text-slate-600";
+
         const content = document.getElementById("quiz-content");
         content.innerHTML = `
-            ${headerHtml()}
-            <p class="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-4">${t("quizResultTitle")}</p>
+            ${headerHtml(dark)}
+            <p class="text-[11px] font-black ${titleC} uppercase tracking-widest mb-4">${t("quizResultTitle")}</p>
             <div class="space-y-3">
                 ${emotions.map((e) => `
                     <button type="button" data-emotion="${e.nombre}"
-                        class="quiz-result-card w-full text-left p-4 rounded-2xl bg-white shadow-sm flex items-center gap-4 hover:shadow-md transition-all"
-                        style="border-left: 6px solid ${e.color}">
-                        <span class="font-bold text-slate-700">${getDisplayName(e.nombre)}</span>
-                        <span class="ml-auto text-xs font-bold text-slate-400 shrink-0">Ver →</span>
+                        class="quiz-result-card w-full text-left p-4 rounded-2xl flex items-center gap-4 hover:shadow-md transition-all"
+                        style="border-left:6px solid ${e.color}; background:${e.color}${dark ? "22" : "15"}">
+                        <span class="font-bold" style="color:${e.text}">${getDisplayName(e.nombre)}</span>
+                        <span class="ml-auto text-xs font-bold opacity-70 shrink-0" style="color:${e.text}">Ver →</span>
                     </button>
                 `).join("")}
             </div>
             <button id="quiz-restart-btn" type="button"
-                class="mt-6 w-full py-3 bg-slate-100 text-slate-700 font-bold rounded-2xl text-sm hover:bg-slate-200 transition-colors">
+                class="mt-6 w-full py-3 font-bold rounded-2xl text-sm transition-colors ${restartC}">
                 ${t("quizRestart")}
             </button>
             <button id="quiz-close-result-btn" type="button"
-                class="mt-2 w-full py-3 text-slate-400 text-sm font-medium">
+                class="mt-2 w-full py-3 text-sm font-medium transition-colors ${closeResC}">
                 ${t("quizClose")}
             </button>
         `;
@@ -134,34 +144,41 @@ export function createQuiz({ emociones, getDisplayName, t, showDetail, onShowAll
     };
 
     const renderQuiz = () => {
+        const dark = isDarkMode();
         const step = QUIZ_STEPS[currentStepKey];
+        const inactiveDot = dark ? "bg-slate-700" : "bg-slate-200";
         const dotsHtml = ["q1", "q2", "q3"].map((_, i) => {
             const active = i <= history.length;
-            return `<div class="w-2 h-2 rounded-full transition-colors ${active ? "bg-blue-500" : "bg-slate-200"}"></div>`;
+            return `<div class="w-2 h-2 rounded-full transition-colors ${active ? "bg-blue-500" : inactiveDot}"></div>`;
         }).join("");
+
+        const questionC = dark ? "text-slate-100" : "text-slate-800";
+        const optionC   = dark ? "bg-slate-800 text-slate-200 border-slate-700 hover:border-blue-400" : "bg-white text-slate-700 border-transparent hover:border-blue-300";
+        const backC     = dark ? "text-slate-400 hover:text-slate-200" : "text-slate-400 hover:text-slate-600";
+        const toBodyC   = dark ? "text-slate-300 border-slate-600 hover:border-slate-400 hover:bg-slate-800" : "text-slate-500 border-slate-300 hover:border-slate-400 hover:bg-slate-50";
 
         const content = document.getElementById("quiz-content");
         content.innerHTML = `
-            ${headerHtml()}
+            ${headerHtml(dark)}
             <div class="flex gap-2 mb-8" aria-hidden="true">${dotsHtml}</div>
-            <p class="text-2xl font-black text-slate-800 leading-snug mb-8">${t(step.textKey)}</p>
+            <p class="text-2xl font-black ${questionC} leading-snug mb-8">${t(step.textKey)}</p>
             <div class="space-y-3">
                 ${step.options.map((opt, i) => `
                     <button type="button" data-option-index="${i}"
-                        class="quiz-option w-full text-left p-5 bg-white rounded-2xl shadow-sm border-2 border-transparent hover:border-blue-300 hover:shadow-md transition-all font-medium text-slate-700">
+                        class="quiz-option w-full text-left p-5 rounded-2xl shadow-sm border-2 hover:shadow-md transition-all font-medium ${optionC}">
                         ${t(opt.labelKey)}
                     </button>
                 `).join("")}
             </div>
             ${history.length > 0 ? `
                 <button id="quiz-back-btn" type="button"
-                    class="mt-6 flex items-center gap-2 text-slate-400 text-sm font-medium hover:text-slate-600 transition-colors">
+                    class="mt-6 flex items-center gap-2 text-sm font-medium transition-colors ${backC}">
                     <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
                     ${t("quizBack")}
                 </button>
             ` : `
                 <button id="quiz-to-body-btn" type="button"
-                    class="mt-6 w-full py-3 text-slate-400 text-sm font-medium hover:text-slate-600 transition-colors border border-dashed border-slate-200 rounded-2xl hover:border-slate-300">
+                    class="mt-6 w-full py-3 text-sm font-semibold transition-colors border rounded-2xl ${toBodyC}">
                     ${t("quizTabBody")} →
                 </button>
             `}

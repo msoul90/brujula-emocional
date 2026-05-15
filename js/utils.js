@@ -1,3 +1,7 @@
+export function isDarkMode() {
+    return document.documentElement.classList.contains("dark");
+}
+
 export function normalizeText(value) {
     return value
         .toLowerCase()
