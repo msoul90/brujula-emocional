@@ -172,6 +172,7 @@ async function shareEmotionCard(canvas, filename) {
 
 export function createUI({
     emociones,
+    relaciones = [],
     getDisplayName,
     getEmotionField,
     t,
@@ -430,6 +431,27 @@ export function createUI({
         const quoteTextColor = getReadableTextColor(e.color);
         const quoteLabelColor = quoteTextColor === "#f8fafc" ? "rgba(248,250,252,0.9)" : "rgba(15,23,42,0.85)";
 
+        const maskedEmotions = relaciones
+            .filter((r) => r.type === "enmascara" && r.from === e.nombre)
+            .map((r) => emociones.find((em) => em.nombre === r.to))
+            .filter(Boolean);
+
+        const masksSection = maskedEmotions.length > 0 ? `
+                <div class="border-t border-slate-100 pt-4">
+                    <p class="text-[11px] font-black text-violet-500 uppercase tracking-widest mb-2 px-1">${t("mapRelEnmascara")}</p>
+                    <div class="flex flex-wrap gap-2 mb-2">
+                        ${maskedEmotions.map((m) => `
+                            <button type="button" data-masked="${m.nombre}"
+                                class="masked-chip px-3 py-1.5 rounded-full text-sm font-bold transition-opacity hover:opacity-80"
+                                style="background-color:${m.color}; color:${getReadableTextColor(m.color)}">
+                                ${getDisplayName(m.nombre)}
+                            </button>
+                        `).join("")}
+                    </div>
+                    <p class="text-xs text-slate-400 px-1">${t("masksHint")}</p>
+                </div>
+        ` : "";
+
         const content = document.getElementById("modal-content");
         content.innerHTML = `
             <div class="inline-block px-4 py-1 rounded-full mb-2" style="background-color:${e.color}; color:${quoteTextColor}">
@@ -478,11 +500,13 @@ export function createUI({
                         <p class="text-emerald-900 font-bold leading-relaxed">${getEmotionField(e, "respuesta")}</p>
                     </div>
                 </div>
+
+                ${masksSection}
             </div>
         `;
         const modal = document.getElementById("modal");
         const panel = document.getElementById("modal-panel");
-        modal.showModal();
+        if (!modal.open) modal.showModal();
         panel.scrollTop = 0;
         document.body.style.overflow = "hidden";
         requestAnimationFrame(() => {
@@ -500,6 +524,13 @@ export function createUI({
             });
         } else if (copyBtn) {
             copyBtn.remove();
+        }
+
+        for (const chip of content.querySelectorAll(".masked-chip")) {
+            chip.addEventListener("click", () => {
+                const masked = emociones.find((em) => em.nombre === chip.dataset.masked);
+                if (masked) showDetail(masked);
+            });
         }
 
         const closeButton = document.getElementById("close-button");
