@@ -1,4 +1,5 @@
 import { MOOD_CATEGORIES, EMOTION_RELATIONS } from "./constants.js";
+import { normalizeText } from "./utils.js";
 
 // ── Config ────────────────────────────────────────────────────────────────────
 const R        = 18;     // node radius
@@ -285,8 +286,20 @@ function buildQuadrantFilter(catIdx, visibleEdges, nodes) {
     return { inQuadrant, neighbors };
 }
 
+// ── Node opacity helpers ──────────────────────────────────────────────────────
+function calcNodeOpacity(n, sel, isSel, isConn, quadrantFilter, normalizedFilter) {
+    if (sel) return (isSel || isConn) ? 1 : 0;
+    if (quadrantFilter) {
+        if (quadrantFilter.inQuadrant.has(n.nombre)) return 1;
+        if (quadrantFilter.neighbors.has(n.nombre)) return 0.45;
+        return 0;
+    }
+    if (normalizedFilter) return normalizeText(n.label).includes(normalizedFilter) ? 1 : 0.15;
+    return 1;
+}
+
 // ── SVG body (edges + quadrant background + nodes) ───────────────────────────
-function svgBody(nodes, edges, W, H, sel, view, { t, activeTypes, activeQuadrant }) {
+function svgBody(nodes, edges, W, H, sel, view, { t, activeTypes, activeQuadrant, nameFilter }) {
     const dark      = document.documentElement.classList.contains("dark");
     const labelFill = dark ? "#cbd5e1" : "#1e293b";
 
@@ -337,26 +350,18 @@ function svgBody(nodes, edges, W, H, sel, view, { t, activeTypes, activeQuadrant
         return `<line x1="${Math.trunc(a.x)}" y1="${Math.trunc(a.y)}" x2="${Math.trunc(b.x)}" y2="${Math.trunc(b.y)}" stroke="${rel.color}" stroke-width="2.5" opacity="${op}" stroke-dasharray="${rel.dash}"/>`;
     }).join("");
 
-    // Nodes — focus mode (sel) takes priority over quadrant filter
+    // Nodes — focus mode (sel) takes priority over quadrant filter, then name filter
+    const normalizedFilter = nameFilter ? normalizeText(nameFilter) : "";
     const nStr = nodes.map(n => {
         const isSel  = sel === n.nombre;
         const isConn = connectedNames ? connectedNames.has(n.nombre) : true;
-        let nodeOp;
-        if (sel) {
-            nodeOp = (isSel || isConn) ? 1 : 0;
-        } else if (quadrantFilter) {
-            if (quadrantFilter.inQuadrant.has(n.nombre)) nodeOp = 1;
-            else if (quadrantFilter.neighbors.has(n.nombre)) nodeOp = 0.45;
-            else nodeOp = 0;
-        } else {
-            nodeOp = 1;
-        }
+        const nodeOp = calcNodeOpacity(n, sel, isSel, isConn, quadrantFilter, normalizedFilter);
         const hide = nodeOp === 0;
         const sc   = isSel ? "#2563eb" : "none";
         const sw   = isSel ? "3" : "0";
         const lbl     = n.label.length > 10 ? n.label.slice(0, 9) + "…" : n.label;
         const cx = Math.trunc(n.x), cy = Math.trunc(n.y);
-        return `<g class="map-node" data-nombre="${escapeHtmlAttr(n.nombre)}" tabindex="0" role="button" aria-label="${escapeHtmlAttr(n.label)}" style="cursor:pointer" opacity="${hide ? 0 : 1}" ${hide ? 'pointer-events="none"' : ''}>
+        return `<g class="map-node" data-nombre="${escapeHtmlAttr(n.nombre)}" tabindex="0" role="button" aria-label="${escapeHtmlAttr(n.label)}" style="cursor:pointer" opacity="${nodeOp}" ${hide ? 'pointer-events="none"' : ''}>
             <title>${escapeHtmlText(n.label)}</title>
             <circle cx="${cx}" cy="${cy}" r="${R + 6}" fill="transparent"/>
             <circle cx="${cx}" cy="${cy}" r="${R}" fill="${n.color}" stroke="${sc}" stroke-width="${sw}" pointer-events="none"/>
@@ -483,14 +488,17 @@ export function createEmotionMap({ emociones, getDisplayName, t, showDetail }) {
             </button>`;
         }).join("");
 
-        const allBtnC = activeQuadrant === null ? activeC : inactiveC;
+        // In neighborhood mode the quadrant filter is visually inactive (consistent with SVG),
+        // but activeQuadrant is preserved in state so it reactivates when the node is deselected.
+        const effectiveQuadrant = isNeighborhood ? null : activeQuadrant;
+        const allBtnC = effectiveQuadrant === null ? activeC : inactiveC;
         const quadrantBtns = [
-            `<button data-quad="all" aria-pressed="${activeQuadrant === null}"
+            `<button data-quad="all" aria-pressed="${effectiveQuadrant === null}"
                 class="text-[11px] font-bold px-2.5 py-0.5 rounded-full border transition-colors ${allBtnC}">
                 ${t("mapFilterAll")}
             </button>`
         ].concat(MOOD_CATEGORIES.map((cat, i) => {
-            const isActive   = activeQuadrant === i;
+            const isActive   = effectiveQuadrant === i;
             const inlineStyle = isActive ? `background-color:${cat.color};color:${cat.ink};border-color:${cat.color}` : "";
             const btnC       = isActive ? "" : inactiveC;
             return `<button data-quad="${i}" aria-pressed="${isActive}"
@@ -524,7 +532,7 @@ export function createEmotionMap({ emociones, getDisplayName, t, showDetail }) {
             </p>
             <div class="rounded-2xl overflow-hidden" style="background:${canvasBg}">
                 <svg id="map-svg" viewBox="0 0 ${W} ${H}" style="width:100%;display:block;touch-action:pan-y" role="img" aria-label="${t("navMapa")}">
-                    ${svgBody(svgNodes, svgEdges, W, H, selected, view, { t, activeTypes, activeQuadrant: svgActiveQuadrant })}
+                    ${svgBody(svgNodes, svgEdges, W, H, selected, view, { t, activeTypes, activeQuadrant: svgActiveQuadrant, nameFilter })}
                 </svg>
             </div>
             ${infoHtml}`;
@@ -570,24 +578,39 @@ export function createEmotionMap({ emociones, getDisplayName, t, showDetail }) {
 
         const searchInput = wrap.querySelector("#map-search");
         if (searchInput) {
-            searchInput.addEventListener("change", () => {
-                nameFilter = searchInput.value;
-                const found = emociones.find(
-                    e => getDisplayName(e.nombre).toLowerCase() === nameFilter.toLowerCase()
+            const trySelectExact = () => {
+                const norm = normalizeText(nameFilter);
+                const found = norm && emociones.find(
+                    e => normalizeText(getDisplayName(e.nombre)) === norm
                 );
                 if (found) {
                     selected = found.nombre;
                     render();
-                    requestAnimationFrame(() => wrap.querySelector("#map-search")?.focus());
+                    requestAnimationFrame(() => {
+                        const input = wrap.querySelector("#map-search");
+                        if (!input) return;
+                        input.focus();
+                        input.setSelectionRange(input.value.length, input.value.length);
+                    });
                 }
+            };
+            searchInput.addEventListener("change", () => {
+                nameFilter = searchInput.value;
+                trySelectExact();
+            });
+            searchInput.addEventListener("keydown", ev => {
+                if (ev.key === "Enter") trySelectExact();
             });
             searchInput.addEventListener("input", () => {
-                if (!searchInput.value) {
-                    nameFilter = "";
-                    selected = null;
-                    render();
-                    requestAnimationFrame(() => wrap.querySelector("#map-search")?.focus());
-                }
+                nameFilter = searchInput.value;
+                if (!nameFilter) selected = null;
+                render();
+                requestAnimationFrame(() => {
+                    const input = wrap.querySelector("#map-search");
+                    if (!input) return;
+                    input.focus();
+                    input.setSelectionRange(input.value.length, input.value.length);
+                });
             });
         }
 
