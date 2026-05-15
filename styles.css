@@ -222,6 +222,7 @@
 
         /* Emotion map */
         html.dark #map-content .bg-white { background-color: #1e293b; }
+        html.dark #map-clear-btn:hover { color: #e2e8f0; background-color: #475569; }
 
         /* iOS install modal */
         html.dark #ios-install-panel { background-color: #1e293b; }

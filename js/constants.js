@@ -82,6 +82,11 @@ export const TRANSLATIONS = {
         mapRelOpuesta: "Emoción opuesta",
         mapInfoNone: "Sin relaciones registradas",
         mapLegendLabel: "Leyenda del mapa",
+        mapSearchPlaceholder: "Buscar emoción en el mapa...",
+        mapFilterAll: "Todas",
+        mapHint: "Tocá una emoción para ver sus conexiones · Usá la leyenda para filtrar tipos",
+        mapHintSelected: "Tocá fuera del nodo para volver al mapa completo",
+        mapClearSelection: "Limpiar selección",
         masksHint: "A veces lo que sentís en la superficie cubre algo más. Explorá también esta emoción."
     },
     en: {
@@ -167,6 +172,11 @@ export const TRANSLATIONS = {
         mapRelOpuesta: "Opposite emotion",
         mapInfoNone: "No registered connections",
         mapLegendLabel: "Map legend",
+        mapSearchPlaceholder: "Search emotion in map...",
+        mapFilterAll: "All",
+        mapHint: "Tap an emotion to see its connections · Use the legend to filter types",
+        mapHintSelected: "Tap outside the node to return to the full map",
+        mapClearSelection: "Clear selection",
         masksHint: "Sometimes what you feel on the surface covers something deeper. Explore this emotion too."
     }
 };
