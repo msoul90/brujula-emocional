@@ -231,6 +231,42 @@ function buildQuadData(emociones, getDisplayName, W) {
     return { nodes, edges: buildEdges(nameToIdx), nameToIdx, H };
 }
 
+// ── Legend and quadrant button builders ──────────────────────────────────────
+function buildLegendItems(dark, activeTypes, t) {
+    return Object.entries(RELS).map(([type, rel]) => {
+        const on       = activeTypes.has(type);
+        const dimLine  = dark ? "#475569" : "#cbd5e1";
+        const lineColor = on ? rel.color : dimLine;
+        const onTextC  = dark ? "text-slate-300" : "text-slate-600";
+        const offTextC = dark ? "text-slate-600" : "text-slate-400";
+        const textC    = on ? onTextC : offTextC;
+        const onBgC    = dark ? "bg-slate-700" : "bg-slate-100";
+        const bgC      = on ? onBgC : "";
+        return `<button data-rel-type="${type}" role="listitem" aria-pressed="${on}"
+            class="flex items-center gap-1 text-[11px] px-1.5 py-0.5 rounded-lg transition-colors ${textC} ${bgC}">
+            <svg width="14" height="6" aria-hidden="true"><line x1="0" y1="3" x2="14" y2="3" stroke="${lineColor}" stroke-width="2" stroke-dasharray="${rel.dash}"/></svg>
+            ${t(rel.labelKey)}
+        </button>`;
+    }).join("");
+}
+
+function buildQuadrantBtns(effectiveQuadrant, activeC, inactiveC, t) {
+    const allBtnC = effectiveQuadrant === null ? activeC : inactiveC;
+    return [
+        `<button data-quad="all" aria-pressed="${effectiveQuadrant === null}"
+            class="text-[11px] font-bold px-2.5 py-0.5 rounded-full border transition-colors ${allBtnC}">
+            ${t("mapFilterAll")}
+        </button>`
+    ].concat(MOOD_CATEGORIES.map((cat, i) => {
+        const isActive    = effectiveQuadrant === i;
+        const inlineStyle = isActive ? `background-color:${cat.color};color:${cat.ink};border-color:${cat.color}` : "";
+        const btnC        = isActive ? "" : inactiveC;
+        return `<button data-quad="${i}" aria-pressed="${isActive}"
+            class="text-[11px] font-bold px-2.5 py-0.5 rounded-full border transition-colors ${btnC}"
+            style="${inlineStyle}">${t(cat.labelKey)}</button>`;
+    })).join("");
+}
+
 // ── Info panel for a selected node ───────────────────────────────────────────
 function buildInfoPanel(selected, nodes, edges, dark, t, getDisplayName) {
     if (!selected) return "";
@@ -286,6 +322,12 @@ function buildQuadrantFilter(catIdx, visibleEdges, nodes) {
     return { inQuadrant, neighbors };
 }
 
+function hasNameFilterMatch(nameFilter, selected, nodes) {
+    if (!nameFilter || selected !== null) return true;
+    const norm = normalizeText(nameFilter);
+    return nodes.some(n => normalizeText(n.label).includes(norm));
+}
+
 // ── Node opacity helpers ──────────────────────────────────────────────────────
 function calcNodeOpacity(n, sel, isSel, isConn, quadrantFilter, normalizedFilter) {
     if (sel) return (isSel || isConn) ? 1 : 0;
@@ -333,7 +375,10 @@ function svgBody(nodes, edges, W, H, sel, view, { t, activeTypes, activeQuadrant
         bg += `<line x1="0" y1="${H / 2}" x2="${W}" y2="${H / 2}" stroke="${divC}" stroke-width="1"/>`;
     }
 
-    // Edges — only visible types; opacity varies by sel/quadrant filter
+    // Pre-compute once — used by both edge and node rendering
+    const normalizedFilter = nameFilter ? normalizeText(nameFilter) : "";
+
+    // Edges — only visible types; opacity varies by sel/quadrant/name filter
     const eStr = visibleEdges.map(e => {
         const a = nodes[e.ai], b = nodes[e.bi];
         let op = 0.4;
@@ -345,13 +390,16 @@ function svgBody(nodes, edges, W, H, sel, view, { t, activeTypes, activeQuadrant
             if (!aIn && !bIn) op = 0;
             else if (aIn && bIn) op = 0.75;
             else op = 0.35;
+        } else if (normalizedFilter) {
+            const aMatch = normalizeText(a.label).includes(normalizedFilter);
+            const bMatch = normalizeText(b.label).includes(normalizedFilter);
+            op = (aMatch || bMatch) ? 0.3 : 0;
         }
         const rel = RELS[e.type];
         return `<line x1="${Math.trunc(a.x)}" y1="${Math.trunc(a.y)}" x2="${Math.trunc(b.x)}" y2="${Math.trunc(b.y)}" stroke="${rel.color}" stroke-width="2.5" opacity="${op}" stroke-dasharray="${rel.dash}"/>`;
     }).join("");
 
     // Nodes — focus mode (sel) takes priority over quadrant filter, then name filter
-    const normalizedFilter = nameFilter ? normalizeText(nameFilter) : "";
     const nStr = nodes.map(n => {
         const isSel  = sel === n.nombre;
         const isConn = connectedNames ? connectedNames.has(n.nombre) : true;
@@ -472,39 +520,14 @@ export function createEmotionMap({ emociones, getDisplayName, t, showDetail }) {
         const inactiveC = dark ? "bg-slate-800 text-slate-400 border-slate-600" : "bg-white text-slate-500 border-slate-200";
         const canvasBg  = dark ? "#0f172a" : "#f8fafc";
 
-        const legendItems = Object.entries(RELS).map(([type, rel]) => {
-            const on         = activeTypes.has(type);
-            const dimLine    = dark ? "#475569" : "#cbd5e1";
-            const lineColor  = on ? rel.color : dimLine;
-            const onTextC    = dark ? "text-slate-300" : "text-slate-600";
-            const offTextC   = dark ? "text-slate-600" : "text-slate-400";
-            const textC      = on ? onTextC : offTextC;
-            const onBgC      = dark ? "bg-slate-700" : "bg-slate-100";
-            const bgC        = on ? onBgC : "";
-            return `<button data-rel-type="${type}" role="listitem" aria-pressed="${on}"
-                class="flex items-center gap-1 text-[11px] px-1.5 py-0.5 rounded-lg transition-colors ${textC} ${bgC}">
-                <svg width="14" height="6" aria-hidden="true"><line x1="0" y1="3" x2="14" y2="3" stroke="${lineColor}" stroke-width="2" stroke-dasharray="${rel.dash}"/></svg>
-                ${t(rel.labelKey)}
-            </button>`;
-        }).join("");
+        const legendItems = buildLegendItems(dark, activeTypes, t);
 
         // In neighborhood mode the quadrant filter is visually inactive (consistent with SVG),
         // but activeQuadrant is preserved in state so it reactivates when the node is deselected.
         const effectiveQuadrant = isNeighborhood ? null : activeQuadrant;
-        const allBtnC = effectiveQuadrant === null ? activeC : inactiveC;
-        const quadrantBtns = [
-            `<button data-quad="all" aria-pressed="${effectiveQuadrant === null}"
-                class="text-[11px] font-bold px-2.5 py-0.5 rounded-full border transition-colors ${allBtnC}">
-                ${t("mapFilterAll")}
-            </button>`
-        ].concat(MOOD_CATEGORIES.map((cat, i) => {
-            const isActive   = effectiveQuadrant === i;
-            const inlineStyle = isActive ? `background-color:${cat.color};color:${cat.ink};border-color:${cat.color}` : "";
-            const btnC       = isActive ? "" : inactiveC;
-            return `<button data-quad="${i}" aria-pressed="${isActive}"
-                class="text-[11px] font-bold px-2.5 py-0.5 rounded-full border transition-colors ${btnC}"
-                style="${inlineStyle}">${t(cat.labelKey)}</button>`;
-        })).join("");
+        const quadrantBtns = buildQuadrantBtns(effectiveQuadrant, activeC, inactiveC, t);
+
+        const hasMatch = hasNameFilterMatch(nameFilter, selected, nodes);
 
         wrap.innerHTML = `
             <div class="flex gap-2 mb-2">
@@ -527,7 +550,7 @@ export function createEmotionMap({ emociones, getDisplayName, t, showDetail }) {
                     ${emociones.map(e => `<option value="${escapeHtmlAttr(getDisplayName(e.nombre))}"></option>`).join("")}
                 </datalist>
             </div>
-            <p class="text-[11px] text-slate-400 mb-1.5 px-0.5">
+            <p id="map-hint" class="text-[11px] text-slate-400 mb-1.5 px-0.5">
                 ${selected ? t("mapHintSelected") : t("mapHint")}
             </p>
             <div class="rounded-2xl overflow-hidden" style="background:${canvasBg}">
@@ -535,6 +558,7 @@ export function createEmotionMap({ emociones, getDisplayName, t, showDetail }) {
                     ${svgBody(svgNodes, svgEdges, W, H, selected, view, { t, activeTypes, activeQuadrant: svgActiveQuadrant, nameFilter })}
                 </svg>
             </div>
+            <p id="map-empty" class="${hasMatch ? "hidden" : ""} text-[13px] text-center text-slate-400 mt-4 py-2">${t("mapSearchEmpty")}</p>
             ${infoHtml}`;
 
         bindEvents(wrap);
@@ -603,7 +627,7 @@ export function createEmotionMap({ emociones, getDisplayName, t, showDetail }) {
             });
             searchInput.addEventListener("input", () => {
                 nameFilter = searchInput.value;
-                if (!nameFilter) selected = null;
+                selected = null;
                 render();
                 requestAnimationFrame(() => {
                     const input = wrap.querySelector("#map-search");
