@@ -1811,7 +1811,7 @@
       const textC = on ? onTextC : offTextC;
       const onBgC = dark ? "bg-slate-700" : "bg-slate-100";
       const bgC = on ? onBgC : "";
-      return `<button data-rel-type="${type}" role="listitem" aria-pressed="${on}"
+      return `<button type="button" data-rel-type="${type}" role="listitem" aria-pressed="${on}"
             class="flex items-center gap-1 text-[11px] px-1.5 py-0.5 rounded-lg transition-colors ${textC} ${bgC}">
             <svg width="14" height="6" aria-hidden="true"><line x1="0" y1="3" x2="14" y2="3" stroke="${lineColor}" stroke-width="2" stroke-dasharray="${rel.dash}"/></svg>
             ${t(rel.labelKey)}
@@ -1821,7 +1821,7 @@
   function buildQuadrantBtns(effectiveQuadrant, activeC, inactiveC, t) {
     const allBtnC = effectiveQuadrant === null ? activeC : inactiveC;
     return [
-      `<button data-quad="all" aria-pressed="${effectiveQuadrant === null}"
+      `<button type="button" data-quad="all" aria-pressed="${effectiveQuadrant === null}"
             class="text-[11px] font-bold px-2.5 py-0.5 rounded-full border transition-colors ${allBtnC}">
             ${t("mapFilterAll")}
         </button>`
@@ -1829,7 +1829,7 @@
       const isActive = effectiveQuadrant === i;
       const inlineStyle = isActive ? `background-color:${cat.color};color:${cat.ink};border-color:${cat.color}` : "";
       const btnC = isActive ? "" : inactiveC;
-      return `<button data-quad="${i}" aria-pressed="${isActive}"
+      return `<button type="button" data-quad="${i}" aria-pressed="${isActive}"
             class="text-[11px] font-bold px-2.5 py-0.5 rounded-full border transition-colors ${btnC}"
             style="${inlineStyle}">${t(cat.labelKey)}</button>`;
     })).join("");
@@ -2198,7 +2198,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mp6efgnc";
+  var BUILD_VERSION = "mp6yb3qz";
 
   // app.js
   var state = {
