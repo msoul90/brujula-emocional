@@ -1,3 +1,5 @@
+import { createBodyMap } from "./bodyMap.js";
+
 export const QUIZ_STEPS = {
     q1: {
         textKey: "quizQ1",
@@ -45,11 +47,17 @@ export function createQuiz({ emociones, getDisplayName, t, showDetail, onShowAll
         document.getElementById("quiz-trigger")?.focus();
     };
 
+    const bodyMap = createBodyMap({
+        emociones, getDisplayName, t, showDetail,
+        onDismiss: dismiss,
+        onSwitchToQuiz: () => { history = []; currentStepKey = "q1"; renderQuiz(); },
+    });
+
     const open = () => {
         history = [];
         currentStepKey = "q1";
         document.getElementById("quiz-panel").showModal();
-        render();
+        renderQuiz();
     };
 
     const pickOption = (option) => {
@@ -58,7 +66,7 @@ export function createQuiz({ emociones, getDisplayName, t, showDetail, onShowAll
         } else {
             history.push(currentStepKey);
             currentStepKey = option.next;
-            render();
+            renderQuiz();
         }
     };
 
@@ -109,7 +117,7 @@ export function createQuiz({ emociones, getDisplayName, t, showDetail, onShowAll
         content.querySelector("#quiz-restart-btn").addEventListener("click", () => {
             history = [];
             currentStepKey = "q1";
-            render();
+            renderQuiz();
         });
         content.querySelector("#quiz-close-result-btn").addEventListener("click", () => {
             dismiss();
@@ -125,7 +133,7 @@ export function createQuiz({ emociones, getDisplayName, t, showDetail, onShowAll
         content.querySelector(".quiz-result-card")?.focus();
     };
 
-    const render = () => {
+    const renderQuiz = () => {
         const step = QUIZ_STEPS[currentStepKey];
         const dotsHtml = ["q1", "q2", "q3"].map((_, i) => {
             const active = i <= history.length;
@@ -151,14 +159,23 @@ export function createQuiz({ emociones, getDisplayName, t, showDetail, onShowAll
                     <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
                     ${t("quizBack")}
                 </button>
-            ` : ""}
+            ` : `
+                <button id="quiz-to-body-btn" type="button"
+                    class="mt-6 w-full py-3 text-slate-400 text-sm font-medium hover:text-slate-600 transition-colors border border-dashed border-slate-200 rounded-2xl hover:border-slate-300">
+                    ${t("quizTabBody")} →
+                </button>
+            `}
         `;
 
         bindCloseBtn(content);
         if (history.length > 0) {
             content.querySelector("#quiz-back-btn").addEventListener("click", () => {
                 currentStepKey = history.pop();
-                render();
+                renderQuiz();
+            });
+        } else {
+            content.querySelector("#quiz-to-body-btn").addEventListener("click", () => {
+                bodyMap.render();
             });
         }
         for (const btn of content.querySelectorAll(".quiz-option")) {

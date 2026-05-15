@@ -88,7 +88,24 @@ export const TRANSLATIONS = {
         mapHintSelected: "Tocá fuera del nodo para volver al mapa completo",
         mapClearSelection: "Limpiar selección",
         mapSearchEmpty: "No encontramos esa emoción en el mapa",
-        masksHint: "A veces lo que sentís en la superficie cubre algo más. Explorá también esta emoción."
+        masksHint: "A veces lo que sentís en la superficie cubre algo más. Explorá también esta emoción.",
+        quizTabQuestions: "Preguntas",
+        quizTabBody: "Sensaciones",
+        bodyMapTitle: "¿Dónde lo sentís?",
+        bodyModeSimple: "Simple",
+        bodyModeDetailed: "Detallado",
+        bodyMapTapPrompt: "Tocá las zonas del cuerpo donde sentís algo",
+        bodyMapResultTitle: "Puede que estés sintiendo...",
+        bodyMapNoMatch: "Combinación poco frecuente — probá seleccionar más zonas",
+        bodyMapClear: "Limpiar selección",
+        zoneHead: "Cabeza",
+        zoneFace: "Cara",
+        zoneThroat: "Garganta",
+        zoneShoulders: "Hombros",
+        zoneChest: "Pecho",
+        zoneStomach: "Abdomen",
+        zoneArms: "Brazos",
+        zoneLegs: "Piernas",
     },
     en: {
         langLabel: "Language",
@@ -179,7 +196,24 @@ export const TRANSLATIONS = {
         mapHintSelected: "Tap outside the node to return to the full map",
         mapClearSelection: "Clear selection",
         mapSearchEmpty: "No emotion found in the map",
-        masksHint: "Sometimes what you feel on the surface covers something deeper. Explore this emotion too."
+        masksHint: "Sometimes what you feel on the surface covers something deeper. Explore this emotion too.",
+        quizTabQuestions: "Questions",
+        quizTabBody: "Sensations",
+        bodyMapTitle: "Where do you feel it?",
+        bodyModeSimple: "Simple",
+        bodyModeDetailed: "Detailed",
+        bodyMapTapPrompt: "Tap the body zones where you feel something",
+        bodyMapResultTitle: "You might be feeling...",
+        bodyMapNoMatch: "Uncommon combination — try selecting more zones",
+        bodyMapClear: "Clear selection",
+        zoneHead: "Head",
+        zoneFace: "Face",
+        zoneThroat: "Throat",
+        zoneShoulders: "Shoulders",
+        zoneChest: "Chest",
+        zoneStomach: "Stomach",
+        zoneArms: "Arms",
+        zoneLegs: "Legs",
     }
 };
 
@@ -526,3 +560,49 @@ export const EMOTION_RELATIONS = [
     { from: "Entusiasmo",    to: "Aburrimiento",  type: "opuesta"   },
     { from: "Felicidad",     to: "Tristeza",      type: "opuesta"   },
 ];
+
+// ── Body Map ──────────────────────────────────────────────────────────────────
+
+export const BODY_ZONES = {
+    simple: [
+        { id: "head",    labelKey: "zoneHead",    color: "#818cf8" },
+        { id: "chest",   labelKey: "zoneChest",   color: "#f472b6" },
+        { id: "stomach", labelKey: "zoneStomach", color: "#fb923c" },
+        { id: "arms",    labelKey: "zoneArms",    color: "#34d399" },
+        { id: "legs",    labelKey: "zoneLegs",    color: "#fbbf24" },
+    ],
+    detailed: [
+        { id: "head",      labelKey: "zoneHead",      color: "#818cf8" },
+        { id: "face",      labelKey: "zoneFace",       color: "#f87171" },
+        { id: "throat",    labelKey: "zoneThroat",    color: "#e879f9" },
+        { id: "shoulders", labelKey: "zoneShoulders", color: "#60a5fa" },
+        { id: "chest",     labelKey: "zoneChest",     color: "#f472b6" },
+        { id: "stomach",   labelKey: "zoneStomach",   color: "#fb923c" },
+        { id: "arms",      labelKey: "zoneArms",      color: "#34d399" },
+        { id: "legs",      labelKey: "zoneLegs",      color: "#fbbf24" },
+    ],
+};
+
+// In simple mode, each zone covers the union of these detailed zones
+export const SIMPLE_ZONE_GROUPS = {
+    head:    ["head", "face"],
+    chest:   ["chest", "throat", "shoulders"],
+    stomach: ["stomach"],
+    arms:    ["arms"],
+    legs:    ["legs"],
+};
+
+// Which emotions manifest in each detailed zone
+export const BODY_ZONE_EMOTIONS = {
+    head:      ["Confusión", "Preocupación", "Ansiedad", "Angustia"],
+    face:      ["Vergüenza", "Enojo", "Tristeza", "Alegría"],
+    throat:    ["Angustia", "Miedo", "Asco", "Vergüenza"],
+    shoulders: ["Ansiedad", "Frustración", "Irritabilidad", "Preocupación", "Enojo"],
+    chest:     ["Enojo", "Tristeza", "Miedo", "Culpa", "Soledad", "Alegría", "Calma",
+                "Angustia", "Gratitud", "Orgullo", "Nostalgia", "Alivio", "Ternura",
+                "Celos", "Rechazo", "Frustración", "Preocupación"],
+    stomach:   ["Miedo", "Ansiedad", "Asco", "Culpa", "Celos", "Angustia", "Decepción", "Envidia"],
+    arms:      ["Enojo", "Frustración", "Entusiasmo", "Irritabilidad"],
+    legs:      ["Tristeza", "Alegría", "Aburrimiento", "Ansiedad", "Calma", "Felicidad"],
+};
+
