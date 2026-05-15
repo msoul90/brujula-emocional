@@ -2097,6 +2097,71 @@
         });
       }
     }
+    function updateSvg() {
+      const wrap = document.getElementById("map-content");
+      if (!wrap) return;
+      ensureData();
+      const { nodes, edges, H } = view === "graph" ? forceData : quadData;
+      const W = containerW();
+      const isNeighborhood = view === "graph" && selected !== null;
+      let svgNodes, svgEdges, svgActiveQuadrant;
+      if (isNeighborhood) {
+        const hood = buildNeighborhoodData(
+          selected,
+          nodes,
+          edges.filter((e) => activeTypes.has(e.type)),
+          W,
+          H
+        );
+        svgNodes = hood.nodes;
+        svgEdges = hood.edges;
+        svgActiveQuadrant = null;
+      } else {
+        svgNodes = nodes;
+        svgEdges = edges;
+        svgActiveQuadrant = activeQuadrant;
+      }
+      const svg = wrap.querySelector("#map-svg");
+      if (svg) {
+        svg.innerHTML = svgBody(
+          svgNodes,
+          svgEdges,
+          W,
+          H,
+          selected,
+          view,
+          { t, activeTypes, activeQuadrant: svgActiveQuadrant, nameFilter }
+        );
+        bindSvgEvents(svg);
+      }
+      const hasMatch = hasNameFilterMatch(nameFilter, selected, nodes);
+      const emptyEl = wrap.querySelector("#map-empty");
+      if (emptyEl) emptyEl.classList.toggle("hidden", hasMatch);
+      const hintEl = wrap.querySelector("#map-hint");
+      if (hintEl) hintEl.textContent = selected ? t("mapHintSelected") : t("mapHint");
+    }
+    function bindSvgEvents(svg) {
+      svg.addEventListener("click", (ev) => {
+        const node = ev.target.closest(".map-node");
+        if (!node) {
+          selected = null;
+          render();
+          return;
+        }
+        const nombre = node.dataset.nombre;
+        selected = selected === nombre ? null : nombre;
+        render();
+      });
+      svg.addEventListener("keydown", (ev) => {
+        if (ev.key !== "Enter" && ev.key !== " ") return;
+        const node = ev.target.closest(".map-node");
+        if (!node) return;
+        ev.preventDefault();
+        const nombre = node.dataset.nombre;
+        selected = selected === nombre ? null : nombre;
+        render();
+      });
+    }
     function bindEvents(wrap) {
       wrap.querySelector("#map-graph-btn")?.addEventListener("click", () => {
         view = "graph";
@@ -2143,12 +2208,6 @@
           if (found) {
             selected = found.nombre;
             render();
-            requestAnimationFrame(() => {
-              const input = wrap.querySelector("#map-search");
-              if (!input) return;
-              input.focus();
-              input.setSelectionRange(input.value.length, input.value.length);
-            });
           }
         };
         searchInput.addEventListener("change", () => {
@@ -2161,37 +2220,12 @@
         searchInput.addEventListener("input", () => {
           nameFilter = searchInput.value;
           selected = null;
-          render();
-          requestAnimationFrame(() => {
-            const input = wrap.querySelector("#map-search");
-            if (!input) return;
-            input.focus();
-            input.setSelectionRange(input.value.length, input.value.length);
-          });
+          updateSvg();
         });
       }
       const svg = wrap.querySelector("#map-svg");
       if (!svg) return;
-      svg.addEventListener("click", (ev) => {
-        const node = ev.target.closest(".map-node");
-        if (!node) {
-          selected = null;
-          render();
-          return;
-        }
-        const nombre = node.dataset.nombre;
-        selected = selected === nombre ? null : nombre;
-        render();
-      });
-      svg.addEventListener("keydown", (ev) => {
-        if (ev.key !== "Enter" && ev.key !== " ") return;
-        const node = ev.target.closest(".map-node");
-        if (!node) return;
-        ev.preventDefault();
-        const nombre = node.dataset.nombre;
-        selected = selected === nombre ? null : nombre;
-        render();
-      });
+      bindSvgEvents(svg);
     }
     function renderForTab() {
       render();
@@ -2206,7 +2240,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mp6zydq5";
+  var BUILD_VERSION = "mp769o9j";
 
   // app.js
   var state = {
