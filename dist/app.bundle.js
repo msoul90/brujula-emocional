@@ -948,10 +948,9 @@
     function renderEmociones(filter = "") {
       const grid = document.getElementById("emotion-grid");
       grid.innerHTML = "";
-      const normalizedFilter = normalizeText(filter.trim());
-      const filtered = emociones2.filter((e) => {
-        if (!normalizedFilter) return true;
-        const haystack = [
+      for (const e of emociones2) {
+        const card = buildEmotionCardEl(e);
+        card.dataset.search = [
           e.nombre,
           getDisplayName(e.nombre),
           e.siente,
@@ -962,20 +961,29 @@
           getEmotionField(e, "mensaje"),
           getEmotionField(e, "respuesta")
         ].map(normalizeText).join(" ");
-        return haystack.includes(normalizedFilter);
-      });
-      if (!filtered.length) {
+        grid.appendChild(card);
+      }
+      filterEmociones(filter);
+    }
+    function filterEmociones(filter) {
+      const grid = document.getElementById("emotion-grid");
+      if (!grid) return;
+      const normalizedFilter = normalizeText(filter.trim());
+      grid.querySelector(".search-empty-state")?.remove();
+      let visibleCount = 0;
+      for (const card of grid.querySelectorAll("[data-search]")) {
+        const matches = !normalizedFilter || card.dataset.search.includes(normalizedFilter);
+        card.hidden = !matches;
+        if (matches) visibleCount++;
+      }
+      if (!visibleCount) {
         const emptyState = document.createElement("div");
-        emptyState.className = "bg-white rounded-2xl p-5 text-center shadow-sm border border-slate-200";
+        emptyState.className = "search-empty-state bg-white rounded-2xl p-5 text-center shadow-sm border border-slate-200";
         emptyState.innerHTML = `
                 <p class="text-slate-700 font-bold mb-1">${t("emptyTitle")}</p>
                 <p class="text-slate-500 text-sm">${t("emptyHint")}</p>
             `;
         grid.appendChild(emptyState);
-        return;
-      }
-      for (const e of filtered) {
-        grid.appendChild(buildEmotionCardEl(e));
       }
     }
     function showDiaryForm(emotionNombre) {
@@ -1149,7 +1157,7 @@
         closeModal();
       });
       closeButton.addEventListener("click", closeModal);
-      search.addEventListener("input", (event) => renderEmociones(event.target.value));
+      search.addEventListener("input", (event) => filterEmociones(event.target.value));
     }
     return {
       renderRecentEmotions,
@@ -1408,10 +1416,10 @@
       const hiddenValue = content.querySelector("#diary-emotion-value");
       if (!searchInput || !dropdown || !hiddenValue) return;
       function renderDropdown(query) {
-        const q = query.trim().toLowerCase();
+        const q = normalizeText(query.trim());
         const filtered = emociones2.filter((e) => {
-          const name = getDisplayName(e.nombre).toLowerCase();
-          return !q || name.includes(q) || e.nombre.toLowerCase().includes(q);
+          const name = normalizeText(getDisplayName(e.nombre));
+          return !q || name.includes(q) || normalizeText(e.nombre).includes(q);
         });
         if (!filtered.length) {
           dropdown.classList.add("hidden");
@@ -1924,7 +1932,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mp4m9w3q";
+  var BUILD_VERSION = "mp6zujlh";
 
   // app.js
   var state = {

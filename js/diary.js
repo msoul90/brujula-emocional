@@ -1,4 +1,5 @@
 import { DIARY_KEY } from "./constants.js";
+import { normalizeText } from "./utils.js";
 
 // --- Pure data functions (testable without DOM/localStorage) ---
 
@@ -89,10 +90,10 @@ export function createDiary({ t, getDisplayName, emociones }) {
         if (!searchInput || !dropdown || !hiddenValue) return;
 
         function renderDropdown(query) {
-            const q = query.trim().toLowerCase();
+            const q = normalizeText(query.trim());
             const filtered = emociones.filter((e) => {
-                const name = getDisplayName(e.nombre).toLowerCase();
-                return !q || name.includes(q) || e.nombre.toLowerCase().includes(q);
+                const name = normalizeText(getDisplayName(e.nombre));
+                return !q || name.includes(q) || normalizeText(e.nombre).includes(q);
             });
 
             if (!filtered.length) { dropdown.classList.add("hidden"); return; }

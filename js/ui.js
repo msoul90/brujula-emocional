@@ -340,11 +340,10 @@ export function createUI({
     function renderEmociones(filter = "") {
         const grid = document.getElementById("emotion-grid");
         grid.innerHTML = "";
-        const normalizedFilter = normalizeText(filter.trim());
 
-        const filtered = emociones.filter((e) => {
-            if (!normalizedFilter) return true;
-            const haystack = [
+        for (const e of emociones) {
+            const card = buildEmotionCardEl(e);
+            card.dataset.search = [
                 e.nombre,
                 getDisplayName(e.nombre),
                 e.siente,
@@ -354,25 +353,35 @@ export function createUI({
                 getEmotionField(e, "dispara"),
                 getEmotionField(e, "mensaje"),
                 getEmotionField(e, "respuesta")
-            ]
-                .map(normalizeText)
-                .join(" ");
-            return haystack.includes(normalizedFilter);
-        });
+            ].map(normalizeText).join(" ");
+            grid.appendChild(card);
+        }
 
-        if (!filtered.length) {
+        filterEmociones(filter);
+    }
+
+    function filterEmociones(filter) {
+        const grid = document.getElementById("emotion-grid");
+        if (!grid) return;
+        const normalizedFilter = normalizeText(filter.trim());
+
+        grid.querySelector(".search-empty-state")?.remove();
+
+        let visibleCount = 0;
+        for (const card of grid.querySelectorAll("[data-search]")) {
+            const matches = !normalizedFilter || card.dataset.search.includes(normalizedFilter);
+            card.hidden = !matches;
+            if (matches) visibleCount++;
+        }
+
+        if (!visibleCount) {
             const emptyState = document.createElement("div");
-            emptyState.className = "bg-white rounded-2xl p-5 text-center shadow-sm border border-slate-200";
+            emptyState.className = "search-empty-state bg-white rounded-2xl p-5 text-center shadow-sm border border-slate-200";
             emptyState.innerHTML = `
                 <p class="text-slate-700 font-bold mb-1">${t("emptyTitle")}</p>
                 <p class="text-slate-500 text-sm">${t("emptyHint")}</p>
             `;
             grid.appendChild(emptyState);
-            return;
-        }
-
-        for (const e of filtered) {
-            grid.appendChild(buildEmotionCardEl(e));
         }
     }
 
@@ -562,7 +571,7 @@ export function createUI({
         });
 
         closeButton.addEventListener("click", closeModal);
-        search.addEventListener("input", (event) => renderEmociones(event.target.value));
+        search.addEventListener("input", (event) => filterEmociones(event.target.value));
     }
 
     return {
