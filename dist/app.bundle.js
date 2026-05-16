@@ -86,19 +86,19 @@
       mapLegendLabel: "Leyenda del mapa",
       mapSearchPlaceholder: "Buscar emoci\xF3n en el mapa...",
       mapFilterAll: "Todas",
-      mapHint: "Toc\xE1 una emoci\xF3n para ver sus conexiones \xB7 Us\xE1 la leyenda para filtrar tipos",
-      mapHintSelected: "Toc\xE1 fuera del nodo para volver al mapa completo",
+      mapHint: "Toca una emoci\xF3n para ver sus conexiones \xB7 Usa la leyenda para filtrar tipos",
+      mapHintSelected: "Toca fuera del nodo para volver al mapa completo",
       mapClearSelection: "Limpiar selecci\xF3n",
       mapSearchEmpty: "No encontramos esa emoci\xF3n en el mapa",
-      masksHint: "A veces lo que sent\xEDs en la superficie cubre algo m\xE1s. Explor\xE1 tambi\xE9n esta emoci\xF3n.",
+      masksHint: "A veces lo que sientes en la superficie cubre algo m\xE1s. Explora tambi\xE9n esta emoci\xF3n.",
       quizTabQuestions: "Preguntas",
       quizTabBody: "Sensaciones",
-      bodyMapTitle: "\xBFD\xF3nde lo sent\xEDs?",
+      bodyMapTitle: "\xBFD\xF3nde lo sientes?",
       bodyModeSimple: "Simple",
       bodyModeDetailed: "Detallado",
-      bodyMapTapPrompt: "Toc\xE1 las zonas del cuerpo donde sent\xEDs algo",
+      bodyMapTapPrompt: "Toca las zonas del cuerpo donde sientes algo",
       bodyMapResultTitle: "Puede que est\xE9s sintiendo...",
-      bodyMapNoMatch: "Combinaci\xF3n poco frecuente \u2014 prob\xE1 seleccionar m\xE1s zonas",
+      bodyMapNoMatch: "Combinaci\xF3n poco frecuente \u2014 prueba seleccionando m\xE1s zonas",
       bodyMapClear: "Limpiar selecci\xF3n",
       zoneHead: "Cabeza",
       zoneFace: "Cara",
@@ -2982,7 +2982,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mp8laxlt";
+  var BUILD_VERSION = "mp8leh73";
 
   // app.js
   var state = {
