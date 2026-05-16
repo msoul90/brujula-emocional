@@ -1026,7 +1026,7 @@
     relaciones = [],
     getDisplayName,
     getEmotionField,
-    getLang,
+    getLang = () => "es",
     t,
     getLastFocusedCard,
     setLastFocusedCard,
@@ -2958,10 +2958,7 @@
         `;
       panel.innerHTML = progressHtml + getStepBody(step);
       panel.querySelector("#crisis-next-btn")?.addEventListener("click", () => renderStep(panel, step + 1));
-      panel.querySelector("#crisis-close-btn")?.addEventListener("click", () => {
-        document.getElementById("crisis-panel")?.close();
-        document.getElementById("crisis-trigger-btn")?.focus();
-      });
+      panel.querySelector("#crisis-close-btn")?.addEventListener("click", closeCrisis);
     }
     function open() {
       const dialog = document.getElementById("crisis-panel");
@@ -2976,6 +2973,10 @@
       const dialog = document.getElementById("crisis-panel");
       dialog?.addEventListener("click", (ev) => {
         if (ev.target === dialog) closeCrisis();
+      });
+      dialog?.addEventListener("cancel", (ev) => {
+        ev.preventDefault();
+        closeCrisis();
       });
     }
     return { init };
@@ -3008,7 +3009,8 @@
       ui.renderEmociones(document.getElementById("search")?.value ?? "");
       if (state.currentTab === "diario") diary.renderForTab();
       emotionMap?.onLanguageChanged();
-      document.getElementById("offline-banner-text").textContent = i18n.t("offlineBanner");
+      const bannerText = document.getElementById("offline-banner-text");
+      if (bannerText) bannerText.textContent = i18n.t("offlineBanner");
     }
   });
   diary = createDiary({

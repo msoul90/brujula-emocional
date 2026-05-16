@@ -33,7 +33,8 @@ const i18n = createI18n({
         ui.renderEmociones(document.getElementById("search")?.value ?? "");
         if (state.currentTab === "diario") diary.renderForTab();
         emotionMap?.onLanguageChanged();
-        document.getElementById("offline-banner-text").textContent = i18n.t("offlineBanner");
+        const bannerText = document.getElementById("offline-banner-text");
+        if (bannerText) bannerText.textContent = i18n.t("offlineBanner");
     }
 });
 

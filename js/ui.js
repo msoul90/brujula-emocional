@@ -175,7 +175,7 @@ export function createUI({
     relaciones = [],
     getDisplayName,
     getEmotionField,
-    getLang,
+    getLang = () => "es",
     t,
     getLastFocusedCard,
     setLastFocusedCard,

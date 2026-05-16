@@ -1,5 +1,33 @@
 import { describe, it, expect } from "vitest";
-import { normalizeText, getReadableTextColor, wrapTextLines } from "../js/utils.js";
+import { escapeHtml, normalizeText, getReadableTextColor, wrapTextLines } from "../js/utils.js";
+
+describe("escapeHtml", () => {
+    it("escapa el carácter &", () => {
+        expect(escapeHtml("a & b")).toBe("a &amp; b");
+    });
+
+    it("escapa los caracteres < y >", () => {
+        expect(escapeHtml("<script>")).toBe("&lt;script&gt;");
+    });
+
+    it("escapa las comillas dobles", () => {
+        expect(escapeHtml('"hola"')).toBe("&quot;hola&quot;");
+    });
+
+    it("escapa las comillas simples", () => {
+        expect(escapeHtml("it's")).toBe("it&#39;s");
+    });
+
+    it("combina múltiples caracteres especiales", () => {
+        expect(escapeHtml('<a href="x">O\'Reilly & Sons</a>')).toBe(
+            "&lt;a href=&quot;x&quot;&gt;O&#39;Reilly &amp; Sons&lt;/a&gt;"
+        );
+    });
+
+    it("devuelve la cadena sin cambios cuando no hay caracteres especiales", () => {
+        expect(escapeHtml("Alegría normal")).toBe("Alegría normal");
+    });
+});
 
 describe("normalizeText", () => {
     it("convierte a minúsculas", () => {

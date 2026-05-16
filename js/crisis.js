@@ -87,10 +87,7 @@ export function createCrisisFlow({ t }) {
         panel.innerHTML = progressHtml + getStepBody(step);
 
         panel.querySelector("#crisis-next-btn")?.addEventListener("click", () => renderStep(panel, step + 1));
-        panel.querySelector("#crisis-close-btn")?.addEventListener("click", () => {
-            document.getElementById("crisis-panel")?.close();
-            document.getElementById("crisis-trigger-btn")?.focus();
-        });
+        panel.querySelector("#crisis-close-btn")?.addEventListener("click", closeCrisis);
     }
 
     function open() {
@@ -108,6 +105,10 @@ export function createCrisisFlow({ t }) {
         const dialog = document.getElementById("crisis-panel");
         dialog?.addEventListener("click", (ev) => {
             if (ev.target === dialog) closeCrisis();
+        });
+        dialog?.addEventListener("cancel", (ev) => {
+            ev.preventDefault();
+            closeCrisis();
         });
     }
 
