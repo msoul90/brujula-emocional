@@ -107,7 +107,8 @@
       zoneChest: "Pecho",
       zoneStomach: "Abdomen",
       zoneArms: "Brazos",
-      zoneLegs: "Piernas"
+      zoneLegs: "Piernas",
+      offlineBanner: "Sin conexi\xF3n \xB7 Usando datos guardados"
     },
     en: {
       langLabel: "Language",
@@ -215,7 +216,8 @@
       zoneChest: "Chest",
       zoneStomach: "Stomach",
       zoneArms: "Arms",
-      zoneLegs: "Legs"
+      zoneLegs: "Legs",
+      offlineBanner: "Offline \xB7 Using saved data"
     }
   };
   var EMOTION_NAME_TRANSLATIONS = {
@@ -2650,7 +2652,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mp8jaoga";
+  var BUILD_VERSION = "mp8jcjye";
 
   // app.js
   var state = {
@@ -2675,6 +2677,7 @@
       ui.renderEmociones(document.getElementById("search")?.value ?? "");
       if (state.currentTab === "diario") diary.renderForTab();
       emotionMap?.onLanguageChanged();
+      document.getElementById("offline-banner-text").textContent = i18n.t("offlineBanner");
     }
   });
   diary = createDiary({
@@ -2861,6 +2864,19 @@
     if (tabId === "diario") diary.renderForTab();
     if (tabId === "mapa") emotionMap?.renderForTab();
   }
+  function initOfflineBanner() {
+    const banner = document.getElementById("offline-banner");
+    const text = document.getElementById("offline-banner-text");
+    if (!banner || !text) return;
+    const update = () => {
+      text.textContent = i18n.t("offlineBanner");
+      banner.classList.toggle("hidden", navigator.onLine);
+      banner.classList.toggle("flex", !navigator.onLine);
+    };
+    globalThis.addEventListener("online", update);
+    globalThis.addEventListener("offline", update);
+    update();
+  }
   function initTabNav() {
     for (const btn of document.querySelectorAll(".nav-tab")) {
       btn.addEventListener("click", () => switchTab(btn.dataset.tab));
@@ -2891,6 +2907,7 @@
     ui.renderCheckinTab();
     ui.renderRecentEmotions();
     ui.renderEmociones();
+    initOfflineBanner();
     initSmartInstallButton();
     initServiceWorker();
   }

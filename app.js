@@ -31,6 +31,7 @@ const i18n = createI18n({
         ui.renderEmociones(document.getElementById("search")?.value ?? "");
         if (state.currentTab === "diario") diary.renderForTab();
         emotionMap?.onLanguageChanged();
+        document.getElementById("offline-banner-text").textContent = i18n.t("offlineBanner");
     }
 });
 
@@ -253,6 +254,22 @@ function switchTab(tabId) {
     if (tabId === "mapa") emotionMap?.renderForTab();
 }
 
+function initOfflineBanner() {
+    const banner = document.getElementById("offline-banner");
+    const text = document.getElementById("offline-banner-text");
+    if (!banner || !text) return;
+
+    const update = () => {
+        text.textContent = i18n.t("offlineBanner");
+        banner.classList.toggle("hidden", navigator.onLine);
+        banner.classList.toggle("flex", !navigator.onLine);
+    };
+
+    globalThis.addEventListener("online", update);
+    globalThis.addEventListener("offline", update);
+    update();
+}
+
 function initTabNav() {
     for (const btn of document.querySelectorAll(".nav-tab")) {
         btn.addEventListener("click", () => switchTab(btn.dataset.tab));
@@ -290,6 +307,7 @@ function bootstrap() {
     ui.renderRecentEmotions();
     ui.renderEmociones();
 
+    initOfflineBanner();
     initSmartInstallButton();
     initServiceWorker();
 }

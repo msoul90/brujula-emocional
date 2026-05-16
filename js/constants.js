@@ -106,6 +106,7 @@ export const TRANSLATIONS = {
         zoneStomach: "Abdomen",
         zoneArms: "Brazos",
         zoneLegs: "Piernas",
+        offlineBanner: "Sin conexión · Usando datos guardados",
     },
     en: {
         langLabel: "Language",
@@ -214,6 +215,7 @@ export const TRANSLATIONS = {
         zoneStomach: "Stomach",
         zoneArms: "Arms",
         zoneLegs: "Legs",
+        offlineBanner: "Offline · Using saved data",
     }
 };
 
