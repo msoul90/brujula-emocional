@@ -4,6 +4,7 @@ import { createUI } from "./js/ui.js";
 import { createQuiz } from "./js/quiz.js";
 import { createDiary } from "./js/diary.js";
 import { createEmotionMap } from "./js/emotionMap.js";
+import { createCrisisFlow } from "./js/crisis.js";
 import { BUILD_VERSION } from "./js/version.js";
 
 const state = {
@@ -309,6 +310,9 @@ function bootstrap() {
     ui.renderCheckinTab();
     ui.renderRecentEmotions();
     ui.renderEmociones();
+
+    const crisis = createCrisisFlow({ t: i18n.t });
+    crisis.init();
 
     initOfflineBanner();
     initSmartInstallButton();

@@ -120,7 +120,24 @@
       diaryTagCuerpo: "Cuerpo",
       diaryTagDinero: "Dinero",
       techniquePractice: "Practicar ahora",
-      techniqueLabel: "T\xE9cnica guiada"
+      techniqueLabel: "T\xE9cnica guiada",
+      crisisTriggerTitle: "\xBFEst\xE1s desbordado/a?",
+      crisisTriggerSub: "Tres pasos para recuperar el piso",
+      crisisTriggerBtn: "Necesito ayuda ahora",
+      crisisStep: "Paso",
+      crisisOf: "de",
+      crisisClose: "Cerrar",
+      crisisNext: "Sigo aqu\xED \u2192",
+      crisisDone: "Lo hice \u2192",
+      crisisStep1Title: "Esto es v\xE1lido.",
+      crisisStep1Body: "Lo que est\xE1s sintiendo es real y no ten\xE9s que manejarlo solo/a. No hace falta hacer nada perfecto ahora mismo. Solo estar aqu\xED ya es suficiente.",
+      crisisStep2Title: "Anclate al presente.",
+      crisisStep2Intro: "Recorramos juntos lo que te rodea:",
+      crisisStep2Items: "5 cosas que ves|4 cosas que pod\xE9s tocar|3 cosas que escuch\xE1s|2 cosas que ol\xE9s|1 cosa que sabore\xE1s",
+      crisisStep3Title: "Una sola cosa.",
+      crisisStep3Intro: "Eleg\xED una acci\xF3n m\xEDnima:",
+      crisisStep3Actions: "Tomar un vaso de agua|Salir 5 minutos al aire libre|Escribir una palabra que describe c\xF3mo te sent\xEDs|Llamar a alguien de confianza",
+      crisisStep3End: "Listo. Eso es todo lo que necesit\xE1s hacer ahora."
     },
     en: {
       langLabel: "Language",
@@ -241,7 +258,24 @@
       diaryTagCuerpo: "Body",
       diaryTagDinero: "Money",
       techniquePractice: "Practice now",
-      techniqueLabel: "Guided technique"
+      techniqueLabel: "Guided technique",
+      crisisTriggerTitle: "Feeling overwhelmed?",
+      crisisTriggerSub: "Three steps to find your ground",
+      crisisTriggerBtn: "I need help now",
+      crisisStep: "Step",
+      crisisOf: "of",
+      crisisClose: "Close",
+      crisisNext: "I'm still here \u2192",
+      crisisDone: "I did it \u2192",
+      crisisStep1Title: "This is valid.",
+      crisisStep1Body: "What you're feeling is real and you don't have to handle it alone. You don't need to do anything perfectly right now. Just being here is enough.",
+      crisisStep2Title: "Ground yourself in the present.",
+      crisisStep2Intro: "Let's go through what's around you:",
+      crisisStep2Items: "5 things you can see|4 things you can touch|3 things you can hear|2 things you can smell|1 thing you can taste",
+      crisisStep3Title: "Just one thing.",
+      crisisStep3Intro: "Choose one small action:",
+      crisisStep3Actions: "Drink a glass of water|Go outside for 5 minutes|Write one word that describes how you feel|Call someone you trust",
+      crisisStep3End: "That's it. That's all you need to do right now."
     }
   };
   var DIARY_TAGS = ["trabajo", "pareja", "familia", "cuerpo", "dinero"];
@@ -762,6 +796,18 @@
         },
         "quiz-trigger-sub": (el) => {
           el.textContent = t("quizTriggerSub");
+        },
+        "crisis-trigger-title": (el) => {
+          el.textContent = t("crisisTriggerTitle");
+        },
+        "crisis-trigger-sub": (el) => {
+          el.textContent = t("crisisTriggerSub");
+        },
+        "crisis-trigger-btn-label": (el) => {
+          el.textContent = t("crisisTriggerBtn");
+        },
+        "crisis-panel-close": (el) => {
+          el.setAttribute("aria-label", t("crisisClose"));
         },
         "settings-btn": (el) => {
           el.setAttribute("aria-label", t("settingsLabel"));
@@ -2832,8 +2878,111 @@
     return { renderForTab, onLanguageChanged };
   }
 
+  // js/crisis.js
+  function closeCrisis() {
+    document.getElementById("crisis-panel")?.close();
+    document.getElementById("crisis-trigger-btn")?.focus();
+  }
+  function createCrisisFlow({ t }) {
+    const TOTAL_STEPS = 3;
+    function buildStep1() {
+      return `
+            <div class="text-center mb-8">
+                <div class="text-5xl mb-4" aria-hidden="true">\u{1F30A}</div>
+                <h3 class="text-2xl font-black text-slate-800 mb-3">${t("crisisStep1Title")}</h3>
+                <p class="text-slate-600 leading-relaxed">${t("crisisStep1Body")}</p>
+            </div>
+            <button id="crisis-next-btn" type="button"
+                class="w-full bg-slate-800 text-white py-4 rounded-2xl font-bold text-sm hover:bg-slate-700 transition-colors">
+                ${t("crisisNext")}
+            </button>
+        `;
+    }
+    function buildStep2() {
+      const items = t("crisisStep2Items").split("|");
+      const listItems = items.map((item, i) => `
+            <li class="flex items-center gap-3 py-2.5 border-b border-slate-100 last:border-0">
+                <span class="w-7 h-7 rounded-full bg-indigo-100 text-indigo-700 text-xs font-black flex items-center justify-center shrink-0">${items.length - i}</span>
+                <span class="text-slate-700 font-medium text-sm">${item}</span>
+            </li>
+        `).join("");
+      return `
+            <div class="mb-6">
+                <h3 class="text-2xl font-black text-slate-800 mb-1">${t("crisisStep2Title")}</h3>
+                <p class="text-slate-500 text-sm mb-4">${t("crisisStep2Intro")}</p>
+                <ul class="divide-y divide-slate-100">${listItems}</ul>
+            </div>
+            <button id="crisis-next-btn" type="button"
+                class="w-full bg-slate-800 text-white py-4 rounded-2xl font-bold text-sm hover:bg-slate-700 transition-colors">
+                ${t("crisisDone")}
+            </button>
+        `;
+    }
+    function buildStep3() {
+      const actions = t("crisisStep3Actions").split("|");
+      const actionItems = actions.map((action, i) => `
+            <label class="flex items-center gap-3 py-3 cursor-pointer group">
+                <input type="radio" name="crisis-action" value="${i}"
+                    class="w-4 h-4 accent-slate-800 shrink-0">
+                <span class="text-slate-700 font-medium text-sm group-hover:text-slate-900 transition-colors">${action}</span>
+            </label>
+        `).join("");
+      return `
+            <div class="mb-6">
+                <h3 class="text-2xl font-black text-slate-800 mb-1">${t("crisisStep3Title")}</h3>
+                <p class="text-slate-500 text-sm mb-4">${t("crisisStep3Intro")}</p>
+                <div class="divide-y divide-slate-100">${actionItems}</div>
+            </div>
+            <p class="text-slate-400 text-xs text-center mb-4">${t("crisisStep3End")}</p>
+            <button id="crisis-close-btn" type="button"
+                class="w-full bg-slate-800 text-white py-4 rounded-2xl font-bold text-sm hover:bg-slate-700 transition-colors">
+                ${t("crisisClose")}
+            </button>
+        `;
+    }
+    function getStepBody(step) {
+      if (step === 1) return buildStep1();
+      if (step === 2) return buildStep2();
+      return buildStep3();
+    }
+    function renderStep(panel, step) {
+      const progressHtml = `
+            <div class="flex items-center justify-between mb-6">
+                <span class="text-xs font-bold text-slate-400">${t("crisisStep")} ${step} ${t("crisisOf")} ${TOTAL_STEPS}</span>
+                <div class="flex gap-1.5">
+                    ${Array.from({ length: TOTAL_STEPS }, (_, i) => `
+                        <div class="h-1.5 w-8 rounded-full ${i < step ? "bg-slate-800" : "bg-slate-200"}"></div>
+                    `).join("")}
+                </div>
+            </div>
+        `;
+      panel.innerHTML = progressHtml + getStepBody(step);
+      panel.querySelector("#crisis-next-btn")?.addEventListener("click", () => renderStep(panel, step + 1));
+      panel.querySelector("#crisis-close-btn")?.addEventListener("click", () => {
+        document.getElementById("crisis-panel")?.close();
+        document.getElementById("crisis-trigger-btn")?.focus();
+      });
+    }
+    function open() {
+      const dialog = document.getElementById("crisis-panel");
+      const panel = document.getElementById("crisis-content");
+      if (!dialog || !panel) return;
+      renderStep(panel, 1);
+      dialog.showModal();
+    }
+    function init() {
+      document.getElementById("crisis-trigger-btn")?.addEventListener("click", open);
+      document.getElementById("crisis-panel-close")?.addEventListener("click", closeCrisis);
+      const dialog = document.getElementById("crisis-panel");
+      dialog?.addEventListener("click", (ev) => {
+        if (ev.target === dialog) closeCrisis();
+      });
+    }
+    return { init };
+  }
+
   // js/version.js
-  var BUILD_VERSION = "mp8jxh4r";
+  var BUILD_VERSION = "mp8k4pg9";
 
   // app.js
   var state = {
@@ -3091,6 +3240,8 @@
     ui.renderCheckinTab();
     ui.renderRecentEmotions();
     ui.renderEmociones();
+    const crisis = createCrisisFlow({ t: i18n.t });
+    crisis.init();
     initOfflineBanner();
     initSmartInstallButton();
     initServiceWorker();
