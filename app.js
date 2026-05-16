@@ -48,6 +48,7 @@ ui = createUI({
     relaciones: EMOTION_RELATIONS,
     getDisplayName: i18n.getDisplayName,
     getEmotionField: i18n.getEmotionField,
+    getLang: () => state.currentLang,
     t: i18n.t,
     getLastFocusedCard: () => state.lastFocusedCard,
     setLastFocusedCard: (card) => {

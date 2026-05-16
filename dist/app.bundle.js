@@ -118,7 +118,9 @@
       diaryTagPareja: "Pareja",
       diaryTagFamilia: "Familia",
       diaryTagCuerpo: "Cuerpo",
-      diaryTagDinero: "Dinero"
+      diaryTagDinero: "Dinero",
+      techniquePractice: "Practicar ahora",
+      techniqueLabel: "T\xE9cnica guiada"
     },
     en: {
       langLabel: "Language",
@@ -237,10 +239,54 @@
       diaryTagPareja: "Partner",
       diaryTagFamilia: "Family",
       diaryTagCuerpo: "Body",
-      diaryTagDinero: "Money"
+      diaryTagDinero: "Money",
+      techniquePractice: "Practice now",
+      techniqueLabel: "Guided technique"
     }
   };
   var DIARY_TAGS = ["trabajo", "pareja", "familia", "cuerpo", "dinero"];
+  var REGULATION_TECHNIQUES = {
+    Ansiedad: {
+      es: { name: "Respiraci\xF3n 4-7-8", steps: ["Inhala por la nariz durante 4 segundos.", "Ret\xE9n el aire durante 7 segundos.", "Exhala lentamente por la boca durante 8 segundos.", "Repite 3 o 4 veces hasta sentir el ritmo."] },
+      en: { name: "4-7-8 Breathing", steps: ["Inhale through your nose for 4 seconds.", "Hold your breath for 7 seconds.", "Exhale slowly through your mouth for 8 seconds.", "Repeat 3 to 4 times until you feel the rhythm."] }
+    },
+    Preocupaci\u00F3n: {
+      es: { name: "Tiempo de preocupaci\xF3n", steps: ["Design\xE1 un momento fijo del d\xEDa (ej. 18:00) para preocuparte.", "Cuando aparezca un pensamiento ansioso antes de esa hora, anotalo y posponelo.", "En tu tiempo designado, revis\xE1 la lista.", "Preguntate: \xBFpuedo hacer algo ahora? Si s\xED, actu\xE1. Si no, soltalo."] },
+      en: { name: "Worry time", steps: ["Set a fixed time each day (e.g. 6 pm) to worry.", "When an anxious thought appears before that time, write it down and postpone it.", "At your designated time, review the list.", "Ask yourself: can I do something now? If yes, act. If not, let it go."] }
+    },
+    Enojo: {
+      es: { name: "T\xE9cnica STOP", steps: ["Stop: detenete. No act\xFAes todav\xEDa.", "Take a breath: tom\xE1 una respiraci\xF3n profunda.", "Observe: observ\xE1 qu\xE9 est\xE1s sintiendo y pensando.", "Proceed: actu\xE1 de manera que te ayude, no que te lastime."] },
+      en: { name: "STOP Technique", steps: ["Stop: pause. Don't act yet.", "Take a breath: take one deep breath.", "Observe: notice what you're feeling and thinking.", "Proceed: act in a way that helps you, not hurts you."] }
+    },
+    Frustraci\u00F3n: {
+      es: { name: "Descarga f\xEDsica controlada", steps: ["Reconoc\xE9 la energ\xEDa que sent\xEDs en el cuerpo.", "Eleg\xED una descarga controlada: caminar r\xE1pido, estirar, cerrar el pu\xF1o fuerte y soltar.", "Repet\xED hasta que la intensidad baje un par de puntos.", "Volv\xE9 al problema con m\xE1s calma."] },
+      en: { name: "Controlled physical release", steps: ["Acknowledge the energy you feel in your body.", "Choose a controlled release: walk fast, stretch, clench your fist and release.", "Repeat until the intensity drops a notch.", "Return to the problem with more calm."] }
+    },
+    Irritabilidad: {
+      es: { name: "Pausa de 5 minutos", steps: ["Identific\xE1 la se\xF1al: est\xE1s respondiendo m\xE1s r\xE1pido o con m\xE1s fuerza de lo habitual.", "Ped\xED un descanso expl\xEDcito si est\xE1s con alguien.", "Sal\xED del espacio, tom\xE1 agua y respir\xE1.", "Preguntate: \xBFqu\xE9 necesito ahora mismo? (silencio, espacio, comida, descanso)."] },
+      en: { name: "5-minute pause", steps: ["Notice the signal: you're responding faster or harder than usual.", "Ask for an explicit break if you're with someone.", "Leave the space, drink water, and breathe.", "Ask yourself: what do I need right now? (silence, space, food, rest)."] }
+    },
+    Tristeza: {
+      es: { name: "Activaci\xF3n conductual suave", steps: ["Eleg\xED una actividad peque\xF1a y concreta (no ambiciosa): caminar 10 minutos, ducharte, preparar algo de comer.", "Hacela aunque no tengas ganas \u2014 la motivaci\xF3n suele llegar despu\xE9s de la acci\xF3n.", "No la eval\xFAes mientras la hac\xE9s.", "Al terminar, not\xE1 si algo cambi\xF3, aunque sea un poco."] },
+      en: { name: "Gentle behavioral activation", steps: ["Choose one small, concrete activity (not ambitious): a 10-minute walk, a shower, making food.", "Do it even if you don't feel like it \u2014 motivation often comes after action.", "Don't evaluate it while you're doing it.", "When done, notice if anything shifted, even slightly."] }
+    },
+    Miedo: {
+      es: { name: "Evaluar el riesgo real", steps: ["Nombr\xE1 el miedo con precisi\xF3n: \xBFa qu\xE9 exactamente?", "Preguntate: \xBFqu\xE9 probabilidad real tiene de ocurrir? \xBFTengo evidencia?", "Si el riesgo es real: \xBFqu\xE9 es lo m\xEDnimo que puedo hacer ahora para estar m\xE1s seguro/a?", "Si es imaginado: record\xE1 que tu mente exagera la amenaza para protegerte."] },
+      en: { name: "Assess the real risk", steps: ["Name the fear precisely: what exactly are you afraid of?", "Ask yourself: how likely is this really? Do I have evidence?", "If the risk is real: what's the smallest thing I can do now to be safer?", "If it's imagined: remember your mind exaggerates threats to protect you."] }
+    },
+    Verg\u00FCenza: {
+      es: { name: "Autocuidado compasivo", steps: ["Pon\xE9 una mano en el pecho y sent\xED el calor.", "Decite en voz baja o internamente: 'esto duele, y es humano sentir esto'.", "Preguntate: \xBFqu\xE9 le dir\xEDa a una persona que quiero si estuviera sintiendo esto?", "Decite eso a vos mismo/a."] },
+      en: { name: "Compassionate self-care", steps: ["Place one hand on your chest and feel the warmth.", "Say softly or internally: 'this hurts, and it is human to feel this'.", "Ask yourself: what would I say to someone I love if they felt this?", "Say that to yourself."] }
+    },
+    Culpa: {
+      es: { name: "Reparaci\xF3n concreta", steps: ["Identific\xE1 si la culpa es \xFAtil (se\xF1ala algo que pod\xE9s reparar) o excesiva (va m\xE1s all\xE1 del error real).", "Si es \xFAtil: pens\xE1 en una acci\xF3n concreta de reparaci\xF3n o disculpa.", "Hac\xE9 esa acci\xF3n, o planific\xE1 cu\xE1ndo la vas a hacer.", "Si es excesiva: reconoc\xE9 que ya hiciste lo que pod\xEDas y practic\xE1 soltar."] },
+      en: { name: "Concrete repair", steps: ["Identify if the guilt is useful (points to something you can fix) or excessive (beyond the actual mistake).", "If useful: think of one concrete action of repair or apology.", "Do that action, or plan when you will.", "If excessive: acknowledge you did what you could and practice letting go."] }
+    },
+    Angustia: {
+      es: { name: "T\xE9cnica 5-4-3-2-1", steps: ["Nombr\xE1 5 cosas que pod\xE9s ver ahora mismo.", "Nombr\xE1 4 cosas que pod\xE9s tocar (y toc\xE1las).", "Nombr\xE1 3 cosas que pod\xE9s escuchar.", "Nombr\xE1 2 cosas que pod\xE9s oler.", "Nombr\xE1 1 cosa que pod\xE9s saborear."] },
+      en: { name: "5-4-3-2-1 Grounding", steps: ["Name 5 things you can see right now.", "Name 4 things you can touch (and touch them).", "Name 3 things you can hear.", "Name 2 things you can smell.", "Name 1 thing you can taste."] }
+    }
+  };
   var EMOTION_NAME_TRANSLATIONS = {
     Enojo: "Anger",
     Tristeza: "Sadness",
@@ -934,6 +980,7 @@
     relaciones = [],
     getDisplayName,
     getEmotionField,
+    getLang,
     t,
     getLastFocusedCard,
     setLastFocusedCard,
@@ -1154,6 +1201,31 @@
       diaryAddBtn.replaceWith(freshBtn);
       freshBtn.addEventListener("click", () => showDiaryForm(emotionNombre));
     }
+    function buildTechniqueSection(emotionNombre) {
+      const tech = REGULATION_TECHNIQUES[emotionNombre];
+      if (!tech) return "";
+      const lang = getLang();
+      const data = tech[lang] ?? tech.es;
+      const steps = data.steps.map((s, i) => `
+            <li class="flex gap-2 text-sm text-indigo-900 leading-snug">
+                <span class="font-black text-indigo-400 shrink-0">${i + 1}.</span>
+                <span>${s}</span>
+            </li>`).join("");
+      return `
+            <div>
+                <button id="technique-toggle" type="button"
+                    class="flex items-center gap-2 text-[11px] font-black text-indigo-500 uppercase tracking-widest w-full text-left px-1 mb-2"
+                    aria-expanded="false">
+                    <svg id="technique-chevron" class="w-3.5 h-3.5 transition-transform shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+                    ${t("techniquePractice")}
+                </button>
+                <div id="technique-body" class="hidden bg-indigo-50 border-2 border-indigo-100 rounded-2xl p-4">
+                    <p class="text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-2">${t("techniqueLabel")} \xB7 ${data.name}</p>
+                    <ol class="space-y-2">${steps}</ol>
+                </div>
+            </div>
+        `;
+    }
     function showDetail(e) {
       document.getElementById("diary-inline-form")?.remove();
       const quoteTextColor = getReadableTextColor(e.color);
@@ -1223,6 +1295,7 @@
                     </div>
                 </div>
 
+                ${buildTechniqueSection(e.nombre)}
                 ${masksSection}
             </div>
         `;
@@ -1273,6 +1346,17 @@
         });
       }
       wireDiaryButton(e.nombre);
+      const techniqueToggle = content.querySelector("#technique-toggle");
+      if (techniqueToggle) {
+        techniqueToggle.addEventListener("click", () => {
+          const body = content.querySelector("#technique-body");
+          const chevron = content.querySelector("#technique-chevron");
+          const expanded = techniqueToggle.getAttribute("aria-expanded") === "true";
+          techniqueToggle.setAttribute("aria-expanded", String(!expanded));
+          body?.classList.toggle("hidden", expanded);
+          chevron?.classList.toggle("rotate-90", !expanded);
+        });
+      }
       if (scrollCleanup) scrollCleanup();
       const onPanelScroll = () => {
         const atBottom = panel.scrollHeight - panel.scrollTop <= panel.clientHeight + 8;
@@ -2749,7 +2833,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mp8jtyls";
+  var BUILD_VERSION = "mp8jxh4r";
 
   // app.js
   var state = {
@@ -2789,6 +2873,7 @@
     relaciones: EMOTION_RELATIONS,
     getDisplayName: i18n.getDisplayName,
     getEmotionField: i18n.getEmotionField,
+    getLang: () => state.currentLang,
     t: i18n.t,
     getLastFocusedCard: () => state.lastFocusedCard,
     setLastFocusedCard: (card) => {

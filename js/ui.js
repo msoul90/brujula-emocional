@@ -1,4 +1,4 @@
-import { RECENT_KEY, RECENT_LIMIT } from "./constants.js";
+import { RECENT_KEY, RECENT_LIMIT, REGULATION_TECHNIQUES } from "./constants.js";
 import { normalizeText, getReadableTextColor, wrapTextLines } from "./utils.js";
 
 function loadRecentEmotions() {
@@ -175,6 +175,7 @@ export function createUI({
     relaciones = [],
     getDisplayName,
     getEmotionField,
+    getLang,
     t,
     getLastFocusedCard,
     setLastFocusedCard,
@@ -425,6 +426,32 @@ export function createUI({
         freshBtn.addEventListener("click", () => showDiaryForm(emotionNombre));
     }
 
+    function buildTechniqueSection(emotionNombre) {
+        const tech = REGULATION_TECHNIQUES[emotionNombre];
+        if (!tech) return "";
+        const lang = getLang();
+        const data = tech[lang] ?? tech.es;
+        const steps = data.steps.map((s, i) => `
+            <li class="flex gap-2 text-sm text-indigo-900 leading-snug">
+                <span class="font-black text-indigo-400 shrink-0">${i + 1}.</span>
+                <span>${s}</span>
+            </li>`).join("");
+        return `
+            <div>
+                <button id="technique-toggle" type="button"
+                    class="flex items-center gap-2 text-[11px] font-black text-indigo-500 uppercase tracking-widest w-full text-left px-1 mb-2"
+                    aria-expanded="false">
+                    <svg id="technique-chevron" class="w-3.5 h-3.5 transition-transform shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+                    ${t("techniquePractice")}
+                </button>
+                <div id="technique-body" class="hidden bg-indigo-50 border-2 border-indigo-100 rounded-2xl p-4">
+                    <p class="text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-2">${t("techniqueLabel")} · ${data.name}</p>
+                    <ol class="space-y-2">${steps}</ol>
+                </div>
+            </div>
+        `;
+    }
+
     function showDetail(e) {
         document.getElementById("diary-inline-form")?.remove();
 
@@ -501,6 +528,7 @@ export function createUI({
                     </div>
                 </div>
 
+                ${buildTechniqueSection(e.nombre)}
                 ${masksSection}
             </div>
         `;
@@ -555,6 +583,17 @@ export function createUI({
 
         wireDiaryButton(e.nombre);
 
+        const techniqueToggle = content.querySelector("#technique-toggle");
+        if (techniqueToggle) {
+            techniqueToggle.addEventListener("click", () => {
+                const body = content.querySelector("#technique-body");
+                const chevron = content.querySelector("#technique-chevron");
+                const expanded = techniqueToggle.getAttribute("aria-expanded") === "true";
+                techniqueToggle.setAttribute("aria-expanded", String(!expanded));
+                body?.classList.toggle("hidden", expanded);
+                chevron?.classList.toggle("rotate-90", !expanded);
+            });
+        }
 
         if (scrollCleanup) scrollCleanup();
         const onPanelScroll = () => {
