@@ -210,5 +210,5 @@ export function createQuiz({ emociones, getDisplayName, t, showDetail, onShowAll
         panel.addEventListener("cancel", (e) => { e.preventDefault(); dismiss(); });
     };
 
-    return { init };
+    return { init, open };
 }

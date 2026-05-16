@@ -67,6 +67,11 @@
         </div>
     </header>
 
+    <div id="offline-banner" class="hidden items-center justify-center gap-1.5 py-1.5 px-4 bg-amber-50 border-b border-amber-200 text-amber-700 text-xs font-medium" aria-live="polite">
+        <svg class="w-3.5 h-3.5 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M24 8.98C21.34 6.36 17.66 4.75 13.6 4.75c-3.84 0-7.35 1.46-10.01 3.84L0 5.05C3.43 1.89 8.01 0 13 0c5.37 0 10.21 2.14 13.76 5.6L24 8.98zm-4.69 4.86L17 11.55c-1.07-1.05-2.54-1.69-4.19-1.69-1.66 0-3.13.64-4.19 1.7L6 8.96C7.66 7.33 9.79 6.3 12.81 6.3c2.54 0 4.84.98 6.5 2.54zM12 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm7.07-7.07L17 11c-.98-.97-2.31-1.57-3.77-1.57s-2.79.6-3.77 1.57L7 8.9C8.6 7.35 10.69 6.43 13 6.43c2.31 0 4.4.92 5.93 2.4l.14.1z"/></svg>
+        <span id="offline-banner-text"></span>
+    </div>
+
     <!-- Tab: Emociones -->
     <div id="tab-emociones" class="tab-panel">
         <div class="sticky top-0 z-40 px-4 pt-2 pb-3 bg-body">
@@ -89,6 +94,17 @@
 
     <!-- Tab: Check-in -->
     <div id="tab-checkin" class="tab-panel hidden px-4 pt-2">
+        <div class="w-full mb-4 py-4 px-5 rounded-2xl shadow-sm flex items-center justify-between gap-3" style="background-color:#FFF1F2; border-left: 6px solid #FB7185">
+            <div>
+                <p id="crisis-trigger-title" class="font-bold text-rose-700 text-sm">¿Estás desbordado/a?</p>
+                <p id="crisis-trigger-sub" class="text-rose-400 text-xs mt-1">Tres pasos para recuperar el piso</p>
+            </div>
+            <button id="crisis-trigger-btn" type="button"
+                class="shrink-0 bg-rose-600 text-white text-xs font-bold px-3 py-2 rounded-xl hover:bg-rose-700 transition-colors whitespace-nowrap">
+                <span id="crisis-trigger-btn-label">Necesito ayuda ahora</span>
+            </button>
+        </div>
+
         <button id="quiz-trigger" type="button" class="w-full mb-6 text-left py-4 px-5 bg-white rounded-2xl shadow-sm flex items-center justify-between gap-3 hover:shadow-md transition-all" style="border-left: 6px solid #818cf8">
             <div>
                 <p id="quiz-trigger-title" class="font-bold text-slate-700 text-sm">¿No sabes lo que sientes?</p>
@@ -151,6 +167,20 @@
             <span id="nav-label-mapa" class="text-[10px] font-bold">Mapa</span>
         </button>
     </nav>
+
+    <dialog id="crisis-panel" aria-labelledby="crisis-heading">
+        <div class="max-w-lg mx-auto p-6 pb-16">
+            <div class="flex items-center justify-between mb-2">
+                <h2 id="crisis-heading" class="sr-only">Flujo de apoyo emocional</h2>
+                <button id="crisis-panel-close" type="button"
+                    class="ml-auto text-slate-400 hover:text-slate-600 transition-colors p-1"
+                    aria-label="Cerrar">
+                    <svg class="w-5 h-5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+                </button>
+            </div>
+            <div id="crisis-content"></div>
+        </div>
+    </dialog>
 
     <dialog id="quiz-panel" aria-label="¿Qué siento?">
         <div class="max-w-lg mx-auto p-6 pb-16">

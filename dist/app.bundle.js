@@ -86,19 +86,19 @@
       mapLegendLabel: "Leyenda del mapa",
       mapSearchPlaceholder: "Buscar emoci\xF3n en el mapa...",
       mapFilterAll: "Todas",
-      mapHint: "Toc\xE1 una emoci\xF3n para ver sus conexiones \xB7 Us\xE1 la leyenda para filtrar tipos",
-      mapHintSelected: "Toc\xE1 fuera del nodo para volver al mapa completo",
+      mapHint: "Toca una emoci\xF3n para ver sus conexiones \xB7 Usa la leyenda para filtrar tipos",
+      mapHintSelected: "Toca fuera del nodo para volver al mapa completo",
       mapClearSelection: "Limpiar selecci\xF3n",
       mapSearchEmpty: "No encontramos esa emoci\xF3n en el mapa",
-      masksHint: "A veces lo que sent\xEDs en la superficie cubre algo m\xE1s. Explor\xE1 tambi\xE9n esta emoci\xF3n.",
+      masksHint: "A veces lo que sientes en la superficie cubre algo m\xE1s. Explora tambi\xE9n esta emoci\xF3n.",
       quizTabQuestions: "Preguntas",
       quizTabBody: "Sensaciones",
-      bodyMapTitle: "\xBFD\xF3nde lo sent\xEDs?",
+      bodyMapTitle: "\xBFD\xF3nde lo sientes?",
       bodyModeSimple: "Simple",
       bodyModeDetailed: "Detallado",
-      bodyMapTapPrompt: "Toc\xE1 las zonas del cuerpo donde sent\xEDs algo",
+      bodyMapTapPrompt: "Toca las zonas del cuerpo donde sientes algo",
       bodyMapResultTitle: "Puede que est\xE9s sintiendo...",
-      bodyMapNoMatch: "Combinaci\xF3n poco frecuente \u2014 prob\xE1 seleccionar m\xE1s zonas",
+      bodyMapNoMatch: "Combinaci\xF3n poco frecuente \u2014 prueba seleccionando m\xE1s zonas",
       bodyMapClear: "Limpiar selecci\xF3n",
       zoneHead: "Cabeza",
       zoneFace: "Cara",
@@ -107,7 +107,37 @@
       zoneChest: "Pecho",
       zoneStomach: "Abdomen",
       zoneArms: "Brazos",
-      zoneLegs: "Piernas"
+      zoneLegs: "Piernas",
+      offlineBanner: "Sin conexi\xF3n \xB7 Usando datos guardados",
+      diaryEmptyPrompt: "Todav\xEDa no registraste ninguna emoci\xF3n.",
+      diaryEmptyAction1: "Hacer check-in",
+      diaryEmptyAction2: "Descubrir qu\xE9 siento",
+      diaryExportButton: "Exportar",
+      diaryTagLabel: "Contexto (opcional)",
+      diaryTagTrabajo: "Trabajo",
+      diaryTagPareja: "Pareja",
+      diaryTagFamilia: "Familia",
+      diaryTagCuerpo: "Cuerpo",
+      diaryTagDinero: "Dinero",
+      techniquePractice: "Practicar ahora",
+      techniqueLabel: "T\xE9cnica guiada",
+      crisisTriggerTitle: "\xBFEst\xE1s desbordado/a?",
+      crisisTriggerSub: "Tres pasos para recuperar el piso",
+      crisisTriggerBtn: "Necesito ayuda ahora",
+      crisisStep: "Paso",
+      crisisOf: "de",
+      crisisClose: "Cerrar",
+      crisisNext: "Sigo aqu\xED \u2192",
+      crisisDone: "Lo hice \u2192",
+      crisisStep1Title: "Esto es v\xE1lido.",
+      crisisStep1Body: "Lo que est\xE1s sintiendo es real y no tienes que manejarlo solo/a. No hace falta hacer nada perfecto ahora mismo. Solo estar aqu\xED ya es suficiente.",
+      crisisStep2Title: "Ancla en el presente.",
+      crisisStep2Intro: "Recorramos juntos lo que te rodea:",
+      crisisStep2Items: "5 cosas que puedes ver|4 cosas que puedes tocar|3 cosas que puedes escuchar|2 cosas que puedes oler|1 cosa que puedes saborear",
+      crisisStep3Title: "Una sola cosa.",
+      crisisStep3Intro: "Elige una acci\xF3n m\xEDnima:",
+      crisisStep3Actions: "Tomar un vaso de agua|Salir 5 minutos al aire libre|Escribir una palabra que describe c\xF3mo te sientes|Llamar a alguien de confianza",
+      crisisStep3End: "Listo. Eso es todo lo que necesitas hacer ahora."
     },
     en: {
       langLabel: "Language",
@@ -215,7 +245,80 @@
       zoneChest: "Chest",
       zoneStomach: "Stomach",
       zoneArms: "Arms",
-      zoneLegs: "Legs"
+      zoneLegs: "Legs",
+      offlineBanner: "Offline \xB7 Using saved data",
+      diaryEmptyPrompt: "You haven't recorded any emotion yet.",
+      diaryEmptyAction1: "Do a check-in",
+      diaryEmptyAction2: "Discover what I feel",
+      diaryExportButton: "Export",
+      diaryTagLabel: "Context (optional)",
+      diaryTagTrabajo: "Work",
+      diaryTagPareja: "Partner",
+      diaryTagFamilia: "Family",
+      diaryTagCuerpo: "Body",
+      diaryTagDinero: "Money",
+      techniquePractice: "Practice now",
+      techniqueLabel: "Guided technique",
+      crisisTriggerTitle: "Feeling overwhelmed?",
+      crisisTriggerSub: "Three steps to find your ground",
+      crisisTriggerBtn: "I need help now",
+      crisisStep: "Step",
+      crisisOf: "of",
+      crisisClose: "Close",
+      crisisNext: "I'm still here \u2192",
+      crisisDone: "I did it \u2192",
+      crisisStep1Title: "This is valid.",
+      crisisStep1Body: "What you're feeling is real and you don't have to handle it alone. You don't need to do anything perfectly right now. Just being here is enough.",
+      crisisStep2Title: "Ground yourself in the present.",
+      crisisStep2Intro: "Let's go through what's around you:",
+      crisisStep2Items: "5 things you can see|4 things you can touch|3 things you can hear|2 things you can smell|1 thing you can taste",
+      crisisStep3Title: "Just one thing.",
+      crisisStep3Intro: "Choose one small action:",
+      crisisStep3Actions: "Drink a glass of water|Go outside for 5 minutes|Write one word that describes how you feel|Call someone you trust",
+      crisisStep3End: "That's it. That's all you need to do right now."
+    }
+  };
+  var DIARY_TAGS = ["trabajo", "pareja", "familia", "cuerpo", "dinero"];
+  var REGULATION_TECHNIQUES = {
+    Ansiedad: {
+      es: { name: "Respiraci\xF3n 4-7-8", steps: ["Inhala por la nariz durante 4 segundos.", "Ret\xE9n el aire durante 7 segundos.", "Exhala lentamente por la boca durante 8 segundos.", "Repite 3 o 4 veces hasta sentir el ritmo."] },
+      en: { name: "4-7-8 Breathing", steps: ["Inhale through your nose for 4 seconds.", "Hold your breath for 7 seconds.", "Exhale slowly through your mouth for 8 seconds.", "Repeat 3 to 4 times until you feel the rhythm."] }
+    },
+    Preocupaci\u00F3n: {
+      es: { name: "Tiempo de preocupaci\xF3n", steps: ["Elige un momento fijo del d\xEDa (ej. 18:00) para preocuparte.", "Cuando aparezca un pensamiento ansioso antes de esa hora, an\xF3talo y posp\xF3nlo.", "En tu momento designado, revisa la lista.", "Preg\xFAntate: \xBFpuedo hacer algo ahora? Si s\xED, act\xFAa. Si no, su\xE9ltalo."] },
+      en: { name: "Worry time", steps: ["Set a fixed time each day (e.g. 6 pm) to worry.", "When an anxious thought appears before that time, write it down and postpone it.", "At your designated time, review the list.", "Ask yourself: can I do something now? If yes, act. If not, let it go."] }
+    },
+    Enojo: {
+      es: { name: "T\xE9cnica STOP", steps: ["Stop: detente. No act\xFAes todav\xEDa.", "Take a breath: toma una respiraci\xF3n profunda.", "Observe: observa qu\xE9 est\xE1s sintiendo y pensando.", "Proceed: act\xFAa de manera que te ayude, no que te lastime."] },
+      en: { name: "STOP Technique", steps: ["Stop: pause. Don't act yet.", "Take a breath: take one deep breath.", "Observe: notice what you're feeling and thinking.", "Proceed: act in a way that helps you, not hurts you."] }
+    },
+    Frustraci\u00F3n: {
+      es: { name: "Descarga f\xEDsica controlada", steps: ["Reconoce la energ\xEDa que sientes en el cuerpo.", "Elige una descarga controlada: caminar r\xE1pido, estirar, cerrar el pu\xF1o fuerte y soltar.", "Repite hasta que la intensidad baje un par de puntos.", "Vuelve al problema con m\xE1s calma."] },
+      en: { name: "Controlled physical release", steps: ["Acknowledge the energy you feel in your body.", "Choose a controlled release: walk fast, stretch, clench your fist and release.", "Repeat until the intensity drops a notch.", "Return to the problem with more calm."] }
+    },
+    Irritabilidad: {
+      es: { name: "Pausa de 5 minutos", steps: ["Identifica la se\xF1al: est\xE1s respondiendo m\xE1s r\xE1pido o con m\xE1s fuerza de lo habitual.", "Pide un descanso si est\xE1s con alguien.", "Sal del espacio, toma agua y respira.", "Preg\xFAntate: \xBFqu\xE9 necesito ahora mismo? (silencio, espacio, comida, descanso)."] },
+      en: { name: "5-minute pause", steps: ["Notice the signal: you're responding faster or harder than usual.", "Ask for an explicit break if you're with someone.", "Leave the space, drink water, and breathe.", "Ask yourself: what do I need right now? (silence, space, food, rest)."] }
+    },
+    Tristeza: {
+      es: { name: "Activaci\xF3n conductual suave", steps: ["Elige una actividad peque\xF1a y concreta (no ambiciosa): caminar 10 minutos, ducharte, preparar algo de comer.", "Hazla aunque no tengas ganas \u2014 la motivaci\xF3n suele llegar despu\xE9s de la acci\xF3n.", "No la eval\xFAes mientras la haces.", "Al terminar, nota si algo cambi\xF3, aunque sea un poco."] },
+      en: { name: "Gentle behavioral activation", steps: ["Choose one small, concrete activity (not ambitious): a 10-minute walk, a shower, making food.", "Do it even if you don't feel like it \u2014 motivation often comes after action.", "Don't evaluate it while you're doing it.", "When done, notice if anything shifted, even slightly."] }
+    },
+    Miedo: {
+      es: { name: "Evaluar el riesgo real", steps: ["Nombra el miedo con precisi\xF3n: \xBFa qu\xE9 exactamente?", "Preg\xFAntate: \xBFqu\xE9 probabilidad real tiene de ocurrir? \xBFTengo evidencia?", "Si el riesgo es real: \xBFqu\xE9 es lo m\xEDnimo que puedo hacer ahora para sentirme m\xE1s seguro/a?", "Si es imaginado: recuerda que tu mente exagera la amenaza para protegerte."] },
+      en: { name: "Assess the real risk", steps: ["Name the fear precisely: what exactly are you afraid of?", "Ask yourself: how likely is this really? Do I have evidence?", "If the risk is real: what's the smallest thing I can do now to be safer?", "If it's imagined: remember your mind exaggerates threats to protect you."] }
+    },
+    Verg\u00FCenza: {
+      es: { name: "Autocuidado compasivo", steps: ["Pon una mano en el pecho y siente el calor.", "Repite en voz baja o internamente: 'esto duele, y es humano sentirlo'.", "Preg\xFAntate: \xBFqu\xE9 le dir\xEDa a alguien que quiero si estuviera sintiendo esto?", "Dite eso a ti mismo/a."] },
+      en: { name: "Compassionate self-care", steps: ["Place one hand on your chest and feel the warmth.", "Say softly or internally: 'this hurts, and it is human to feel this'.", "Ask yourself: what would I say to someone I love if they felt this?", "Say that to yourself."] }
+    },
+    Culpa: {
+      es: { name: "Reparaci\xF3n concreta", steps: ["Identifica si la culpa es \xFAtil (se\xF1ala algo que puedes reparar) o excesiva (va m\xE1s all\xE1 del error real).", "Si es \xFAtil: piensa en una acci\xF3n concreta de reparaci\xF3n o disculpa.", "Haz esa acci\xF3n, o planea cu\xE1ndo la vas a hacer.", "Si es excesiva: reconoce que ya hiciste lo que pod\xEDas y practica soltarlo."] },
+      en: { name: "Concrete repair", steps: ["Identify if the guilt is useful (points to something you can fix) or excessive (beyond the actual mistake).", "If useful: think of one concrete action of repair or apology.", "Do that action, or plan when you will.", "If excessive: acknowledge you did what you could and practice letting go."] }
+    },
+    Angustia: {
+      es: { name: "T\xE9cnica 5-4-3-2-1", steps: ["Nombra 5 cosas que puedes ver ahora mismo.", "Nombra 4 cosas que puedes tocar (y t\xF3calas).", "Nombra 3 cosas que puedes escuchar.", "Nombra 2 cosas que puedes oler.", "Nombra 1 cosa que puedes saborear."] },
+      en: { name: "5-4-3-2-1 Grounding", steps: ["Name 5 things you can see right now.", "Name 4 things you can touch (and touch them).", "Name 3 things you can hear.", "Name 2 things you can smell.", "Name 1 thing you can taste."] }
     }
   };
   var EMOTION_NAME_TRANSLATIONS = {
@@ -694,6 +797,18 @@
         "quiz-trigger-sub": (el) => {
           el.textContent = t("quizTriggerSub");
         },
+        "crisis-trigger-title": (el) => {
+          el.textContent = t("crisisTriggerTitle");
+        },
+        "crisis-trigger-sub": (el) => {
+          el.textContent = t("crisisTriggerSub");
+        },
+        "crisis-trigger-btn-label": (el) => {
+          el.textContent = t("crisisTriggerBtn");
+        },
+        "crisis-panel-close": (el) => {
+          el.setAttribute("aria-label", t("crisisClose"));
+        },
         "settings-btn": (el) => {
           el.setAttribute("aria-label", t("settingsLabel"));
         },
@@ -738,6 +853,9 @@
   }
 
   // js/utils.js
+  function escapeHtml(str) {
+    return String(str).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#39;");
+  }
   function isDarkMode() {
     return document.documentElement.classList.contains("dark");
   }
@@ -908,6 +1026,7 @@
     relaciones = [],
     getDisplayName,
     getEmotionField,
+    getLang = () => "es",
     t,
     getLastFocusedCard,
     setLastFocusedCard,
@@ -1128,6 +1247,31 @@
       diaryAddBtn.replaceWith(freshBtn);
       freshBtn.addEventListener("click", () => showDiaryForm(emotionNombre));
     }
+    function buildTechniqueSection(emotionNombre) {
+      const tech = REGULATION_TECHNIQUES[emotionNombre];
+      if (!tech) return "";
+      const lang = getLang();
+      const data = tech[lang] ?? tech.es;
+      const steps = data.steps.map((s, i) => `
+            <li class="flex gap-2 text-sm text-indigo-900 leading-snug">
+                <span class="font-black text-indigo-400 shrink-0">${i + 1}.</span>
+                <span>${s}</span>
+            </li>`).join("");
+      return `
+            <div>
+                <button id="technique-toggle" type="button"
+                    class="flex items-center gap-2 text-[11px] font-black text-indigo-500 uppercase tracking-widest w-full text-left px-1 mb-2"
+                    aria-expanded="false">
+                    <svg id="technique-chevron" class="w-3.5 h-3.5 transition-transform shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
+                    ${t("techniquePractice")}
+                </button>
+                <div id="technique-body" class="hidden bg-indigo-50 border-2 border-indigo-100 rounded-2xl p-4">
+                    <p class="text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-2">${t("techniqueLabel")} \xB7 ${data.name}</p>
+                    <ol class="space-y-2">${steps}</ol>
+                </div>
+            </div>
+        `;
+    }
     function showDetail(e) {
       document.getElementById("diary-inline-form")?.remove();
       const quoteTextColor = getReadableTextColor(e.color);
@@ -1197,6 +1341,7 @@
                     </div>
                 </div>
 
+                ${buildTechniqueSection(e.nombre)}
                 ${masksSection}
             </div>
         `;
@@ -1247,6 +1392,17 @@
         });
       }
       wireDiaryButton(e.nombre);
+      const techniqueToggle = content.querySelector("#technique-toggle");
+      if (techniqueToggle) {
+        techniqueToggle.addEventListener("click", () => {
+          const body = content.querySelector("#technique-body");
+          const chevron = content.querySelector("#technique-chevron");
+          const expanded = techniqueToggle.getAttribute("aria-expanded") === "true";
+          techniqueToggle.setAttribute("aria-expanded", String(!expanded));
+          body?.classList.toggle("hidden", expanded);
+          chevron?.classList.toggle("rotate-90", !expanded);
+        });
+      }
       if (scrollCleanup) scrollCleanup();
       const onPanelScroll = () => {
         const atBottom = panel.scrollHeight - panel.scrollTop <= panel.clientHeight + 8;
@@ -1732,7 +1888,7 @@
         dismiss();
       });
     };
-    return { init };
+    return { init, open };
   }
 
   // js/diary.js
@@ -1744,12 +1900,13 @@
       return [];
     }
   }
-  function createDiaryEntry(emotionNombre, note = "") {
+  function createDiaryEntry(emotionNombre, note = "", tags = []) {
     return {
       id: Date.now(),
       date: (/* @__PURE__ */ new Date()).toISOString(),
       emotion: emotionNombre,
-      note: note.trim()
+      note: note.trim(),
+      tags: tags.filter((tag) => DIARY_TAGS.includes(tag))
     };
   }
   function deleteDiaryEntryById(entries, id) {
@@ -1761,15 +1918,23 @@
   function saveEntries(entries) {
     localStorage.setItem(DIARY_KEY, JSON.stringify(entries));
   }
-  function addEntry(emotionNombre, note = "") {
-    const entry = createDiaryEntry(emotionNombre, note);
+  function addEntry(emotionNombre, note = "", tags = []) {
+    const entry = createDiaryEntry(emotionNombre, note, tags);
     saveEntries([entry, ...loadEntries()]);
     return entry;
   }
   function deleteEntry(id) {
     saveEntries(deleteDiaryEntryById(loadEntries(), id));
   }
-  function createDiary({ t, getDisplayName, emociones: emociones2 }) {
+  function createDiary({ t, getDisplayName, emociones: emociones2, onGoToCheckin = null, onOpenQuiz = null }) {
+    function renderTagPills(tags) {
+      if (!tags?.length) return "";
+      const pills = tags.map((tag) => {
+        const label = t(`diaryTag${tag.charAt(0).toUpperCase()}${tag.slice(1)}`);
+        return `<span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-500 text-[10px] font-bold">${label}</span>`;
+      }).join("");
+      return `<div class="flex flex-wrap gap-1 mt-1.5">${pills}</div>`;
+    }
     function formatDate(isoString) {
       const d = new Date(isoString);
       const now = /* @__PURE__ */ new Date();
@@ -1792,6 +1957,17 @@
                 </div>
                 <textarea id="diary-note-input" rows="2" placeholder="${t("diaryNotePlaceholder")}"
                     class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-700 resize-none focus:outline-none focus:ring-2 focus:ring-blue-200 mb-3"></textarea>
+                <div class="mb-3">
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">${t("diaryTagLabel")}</p>
+                    <div class="flex flex-wrap gap-1.5">
+                        ${DIARY_TAGS.map((tag) => `
+                            <button type="button" data-tag="${tag}"
+                                class="diary-tag-btn px-3 py-1 rounded-full text-[11px] font-bold bg-slate-100 text-slate-500 hover:bg-slate-200 transition-colors">
+                                ${t(`diaryTag${tag.charAt(0).toUpperCase()}${tag.slice(1)}`)}
+                            </button>
+                        `).join("")}
+                    </div>
+                </div>
                 <div class="flex gap-2">
                     <button id="diary-form-save" type="button"
                         class="flex-1 bg-slate-800 text-white py-2.5 rounded-xl font-bold text-sm hover:bg-slate-700 transition-colors">
@@ -1876,14 +2052,24 @@
       const entries = loadEntries();
       const content = document.getElementById("diary-content");
       if (!content) return;
+      const exportBtn = entries.length > 0 ? `
+            <button id="diary-export-btn" type="button"
+                class="flex items-center gap-1.5 bg-slate-100 text-slate-600 text-xs font-bold px-3 py-2 rounded-xl hover:bg-slate-200 transition-colors">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                ${t("diaryExportButton")}
+            </button>
+        ` : "";
       const headerHtml = `
             <div class="flex items-center justify-between mb-4">
                 <h2 id="diary-title-heading" class="text-xl font-black text-slate-800">${t("diaryTitle")}</h2>
-                <button id="diary-new-btn" type="button"
-                    class="flex items-center gap-1.5 bg-slate-800 text-white text-xs font-bold px-3 py-2 rounded-xl hover:bg-slate-700 transition-colors">
-                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-                    ${t("diaryNewEntry")}
-                </button>
+                <div class="flex items-center gap-2">
+                    ${exportBtn}
+                    <button id="diary-new-btn" type="button"
+                        class="flex items-center gap-1.5 bg-slate-800 text-white text-xs font-bold px-3 py-2 rounded-xl hover:bg-slate-700 transition-colors">
+                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                        ${t("diaryNewEntry")}
+                    </button>
+                </div>
             </div>
         `;
       const privacyHtml = `
@@ -1909,7 +2095,8 @@
                                         <span class="font-bold text-slate-700 text-sm">${displayName}</span>
                                         <span class="text-xs text-slate-400 shrink-0">${formatDate(entry.date)}</span>
                                     </div>
-                                    ${entry.note ? `<p class="text-slate-500 text-sm leading-relaxed">${entry.note}</p>` : ""}
+                                    ${entry.note ? `<p class="text-slate-500 text-sm leading-relaxed">${escapeHtml(entry.note)}</p>` : ""}
+                                    ${renderTagPills(entry.tags)}
                                 </div>
                                 <button type="button" class="diary-delete-btn text-slate-300 hover:text-red-400 transition-colors shrink-0" data-id="${entry.id}" aria-label="${t("diaryDeleteButton")}">
                                     <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
@@ -1926,10 +2113,55 @@
                 ` : ""}
             `;
       } else {
-        entriesHtml = `<p class="text-slate-400 text-sm text-center py-10">${t("diaryEmpty")}</p>`;
+        entriesHtml = `
+            <div class="text-center py-8 px-2">
+                <p class="text-slate-400 text-sm mb-5">${t("diaryEmptyPrompt")}</p>
+                <div class="flex flex-col gap-2 max-w-xs mx-auto">
+                    <button id="diary-empty-checkin" type="button"
+                        class="w-full bg-slate-800 text-white py-3 rounded-2xl font-bold text-sm hover:bg-slate-700 transition-colors">
+                        ${t("diaryEmptyAction1")}
+                    </button>
+                    <button id="diary-empty-quiz" type="button"
+                        class="w-full bg-slate-100 text-slate-700 py-3 rounded-2xl font-bold text-sm hover:bg-slate-200 transition-colors">
+                        ${t("diaryEmptyAction2")}
+                    </button>
+                </div>
+            </div>
+        `;
       }
       content.innerHTML = headerHtml + privacyHtml + formHtml + entriesHtml;
-      if (showForm) wireEmotionSearch(content);
+      content.querySelector("#diary-empty-checkin")?.addEventListener("click", () => onGoToCheckin?.());
+      content.querySelector("#diary-empty-quiz")?.addEventListener("click", () => onOpenQuiz?.());
+      content.querySelector("#diary-export-btn")?.addEventListener("click", () => {
+        const date = (/* @__PURE__ */ new Date()).toISOString().slice(0, 10);
+        const blob = new Blob([JSON.stringify(entries, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `diario-emocional-${date}.json`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1e3);
+      });
+      const selectedTags = /* @__PURE__ */ new Set();
+      if (showForm) {
+        wireEmotionSearch(content);
+        for (const btn of content.querySelectorAll(".diary-tag-btn")) {
+          btn.addEventListener("click", () => {
+            const tag = btn.dataset.tag;
+            if (selectedTags.has(tag)) {
+              selectedTags.delete(tag);
+              btn.classList.remove("bg-slate-800", "text-white");
+              btn.classList.add("bg-slate-100", "text-slate-500");
+            } else {
+              selectedTags.add(tag);
+              btn.classList.add("bg-slate-800", "text-white");
+              btn.classList.remove("bg-slate-100", "text-slate-500");
+            }
+          });
+        }
+      }
       content.querySelector("#diary-new-btn").addEventListener("click", () => {
         const formEl = content.querySelector("#diary-add-form");
         if (formEl) {
@@ -1950,7 +2182,7 @@
             searchInput?.classList.add("ring-2", "ring-red-300");
             return;
           }
-          addEntry(emotionValue.value, note);
+          addEntry(emotionValue.value, note, [...selectedTags]);
           renderContent(false);
         });
         content.querySelector("#diary-form-cancel").addEventListener("click", () => renderContent(false));
@@ -2646,8 +2878,112 @@
     return { renderForTab, onLanguageChanged };
   }
 
+  // js/crisis.js
+  function closeCrisis() {
+    document.getElementById("crisis-panel")?.close();
+    document.getElementById("crisis-trigger-btn")?.focus();
+  }
+  function createCrisisFlow({ t }) {
+    const TOTAL_STEPS = 3;
+    function buildStep1() {
+      return `
+            <div class="text-center mb-8">
+                <div class="text-5xl mb-4" aria-hidden="true">\u{1F30A}</div>
+                <h3 class="text-2xl font-black text-slate-800 mb-3">${t("crisisStep1Title")}</h3>
+                <p class="text-slate-600 leading-relaxed">${t("crisisStep1Body")}</p>
+            </div>
+            <button id="crisis-next-btn" type="button"
+                class="w-full bg-slate-800 text-white py-4 rounded-2xl font-bold text-sm hover:bg-slate-700 transition-colors">
+                ${t("crisisNext")}
+            </button>
+        `;
+    }
+    function buildStep2() {
+      const items = t("crisisStep2Items").split("|");
+      const listItems = items.map((item, i) => `
+            <li class="flex items-center gap-3 py-2.5 border-b border-slate-100 last:border-0">
+                <span class="w-7 h-7 rounded-full bg-indigo-100 text-indigo-700 text-xs font-black flex items-center justify-center shrink-0">${items.length - i}</span>
+                <span class="text-slate-700 font-medium text-sm">${item}</span>
+            </li>
+        `).join("");
+      return `
+            <div class="mb-6">
+                <h3 class="text-2xl font-black text-slate-800 mb-1">${t("crisisStep2Title")}</h3>
+                <p class="text-slate-500 text-sm mb-4">${t("crisisStep2Intro")}</p>
+                <ul class="divide-y divide-slate-100">${listItems}</ul>
+            </div>
+            <button id="crisis-next-btn" type="button"
+                class="w-full bg-slate-800 text-white py-4 rounded-2xl font-bold text-sm hover:bg-slate-700 transition-colors">
+                ${t("crisisDone")}
+            </button>
+        `;
+    }
+    function buildStep3() {
+      const actions = t("crisisStep3Actions").split("|");
+      const actionItems = actions.map((action, i) => `
+            <label class="flex items-center gap-3 py-3 cursor-pointer group">
+                <input type="radio" name="crisis-action" value="${i}"
+                    class="w-4 h-4 accent-slate-800 shrink-0">
+                <span class="text-slate-700 font-medium text-sm group-hover:text-slate-900 transition-colors">${action}</span>
+            </label>
+        `).join("");
+      return `
+            <div class="mb-6">
+                <h3 class="text-2xl font-black text-slate-800 mb-1">${t("crisisStep3Title")}</h3>
+                <p class="text-slate-500 text-sm mb-4">${t("crisisStep3Intro")}</p>
+                <div class="divide-y divide-slate-100">${actionItems}</div>
+            </div>
+            <p class="text-slate-400 text-xs text-center mb-4">${t("crisisStep3End")}</p>
+            <button id="crisis-close-btn" type="button"
+                class="w-full bg-slate-800 text-white py-4 rounded-2xl font-bold text-sm hover:bg-slate-700 transition-colors">
+                ${t("crisisClose")}
+            </button>
+        `;
+    }
+    function getStepBody(step) {
+      if (step === 1) return buildStep1();
+      if (step === 2) return buildStep2();
+      return buildStep3();
+    }
+    function renderStep(panel, step) {
+      const progressHtml = `
+            <div class="flex items-center justify-between mb-6">
+                <span class="text-xs font-bold text-slate-400">${t("crisisStep")} ${step} ${t("crisisOf")} ${TOTAL_STEPS}</span>
+                <div class="flex gap-1.5">
+                    ${Array.from({ length: TOTAL_STEPS }, (_, i) => `
+                        <div class="h-1.5 w-8 rounded-full ${i < step ? "bg-slate-800" : "bg-slate-200"}"></div>
+                    `).join("")}
+                </div>
+            </div>
+        `;
+      panel.innerHTML = progressHtml + getStepBody(step);
+      panel.querySelector("#crisis-next-btn")?.addEventListener("click", () => renderStep(panel, step + 1));
+      panel.querySelector("#crisis-close-btn")?.addEventListener("click", closeCrisis);
+    }
+    function open() {
+      const dialog = document.getElementById("crisis-panel");
+      const panel = document.getElementById("crisis-content");
+      if (!dialog || !panel) return;
+      renderStep(panel, 1);
+      dialog.showModal();
+    }
+    function init() {
+      document.getElementById("crisis-trigger-btn")?.addEventListener("click", open);
+      document.getElementById("crisis-panel-close")?.addEventListener("click", closeCrisis);
+      const dialog = document.getElementById("crisis-panel");
+      dialog?.addEventListener("click", (ev) => {
+        if (ev.target === dialog) closeCrisis();
+      });
+      dialog?.addEventListener("cancel", (ev) => {
+        ev.preventDefault();
+        closeCrisis();
+      });
+    }
+    return { init };
+  }
+
   // js/version.js
-  var BUILD_VERSION = "mp7bdj44";
+  var BUILD_VERSION = "mp8leh73";
 
   // app.js
   var state = {
@@ -2660,6 +2996,7 @@
   var modalAnimationMs = reducedMotion ? 0 : 200;
   var ui;
   var diary;
+  var quiz;
   var emotionMap;
   var i18n = createI18n({
     getLang: () => state.currentLang,
@@ -2672,18 +3009,23 @@
       ui.renderEmociones(document.getElementById("search")?.value ?? "");
       if (state.currentTab === "diario") diary.renderForTab();
       emotionMap?.onLanguageChanged();
+      const bannerText = document.getElementById("offline-banner-text");
+      if (bannerText) bannerText.textContent = i18n.t("offlineBanner");
     }
   });
   diary = createDiary({
     t: i18n.t,
     getDisplayName: i18n.getDisplayName,
-    emociones
+    emociones,
+    onGoToCheckin: () => switchTab("checkin"),
+    onOpenQuiz: () => quiz?.open()
   });
   ui = createUI({
     emociones,
     relaciones: EMOTION_RELATIONS,
     getDisplayName: i18n.getDisplayName,
     getEmotionField: i18n.getEmotionField,
+    getLang: () => state.currentLang,
     t: i18n.t,
     getLastFocusedCard: () => state.lastFocusedCard,
     setLastFocusedCard: (card) => {
@@ -2858,6 +3200,19 @@
     if (tabId === "diario") diary.renderForTab();
     if (tabId === "mapa") emotionMap?.renderForTab();
   }
+  function initOfflineBanner() {
+    const banner = document.getElementById("offline-banner");
+    const text = document.getElementById("offline-banner-text");
+    if (!banner || !text) return;
+    const update = () => {
+      text.textContent = i18n.t("offlineBanner");
+      banner.classList.toggle("hidden", navigator.onLine);
+      banner.classList.toggle("flex", !navigator.onLine);
+    };
+    globalThis.addEventListener("online", update);
+    globalThis.addEventListener("offline", update);
+    update();
+  }
   function initTabNav() {
     for (const btn of document.querySelectorAll(".nav-tab")) {
       btn.addEventListener("click", () => switchTab(btn.dataset.tab));
@@ -2877,7 +3232,7 @@
       t: i18n.t,
       showDetail: ui.showDetail
     });
-    const quiz = createQuiz({
+    quiz = createQuiz({
       emociones,
       getDisplayName: i18n.getDisplayName,
       t: i18n.t,
@@ -2888,6 +3243,9 @@
     ui.renderCheckinTab();
     ui.renderRecentEmotions();
     ui.renderEmociones();
+    const crisis = createCrisisFlow({ t: i18n.t });
+    crisis.init();
+    initOfflineBanner();
     initSmartInstallButton();
     initServiceWorker();
   }

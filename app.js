@@ -4,6 +4,7 @@ import { createUI } from "./js/ui.js";
 import { createQuiz } from "./js/quiz.js";
 import { createDiary } from "./js/diary.js";
 import { createEmotionMap } from "./js/emotionMap.js";
+import { createCrisisFlow } from "./js/crisis.js";
 import { BUILD_VERSION } from "./js/version.js";
 
 const state = {
@@ -18,6 +19,7 @@ const modalAnimationMs = reducedMotion ? 0 : 200;
 
 let ui;
 let diary;
+let quiz;
 let emotionMap;
 
 const i18n = createI18n({
@@ -31,13 +33,17 @@ const i18n = createI18n({
         ui.renderEmociones(document.getElementById("search")?.value ?? "");
         if (state.currentTab === "diario") diary.renderForTab();
         emotionMap?.onLanguageChanged();
+        const bannerText = document.getElementById("offline-banner-text");
+        if (bannerText) bannerText.textContent = i18n.t("offlineBanner");
     }
 });
 
 diary = createDiary({
     t: i18n.t,
     getDisplayName: i18n.getDisplayName,
-    emociones
+    emociones,
+    onGoToCheckin: () => switchTab("checkin"),
+    onOpenQuiz: () => quiz?.open()
 });
 
 ui = createUI({
@@ -45,6 +51,7 @@ ui = createUI({
     relaciones: EMOTION_RELATIONS,
     getDisplayName: i18n.getDisplayName,
     getEmotionField: i18n.getEmotionField,
+    getLang: () => state.currentLang,
     t: i18n.t,
     getLastFocusedCard: () => state.lastFocusedCard,
     setLastFocusedCard: (card) => {
@@ -253,6 +260,22 @@ function switchTab(tabId) {
     if (tabId === "mapa") emotionMap?.renderForTab();
 }
 
+function initOfflineBanner() {
+    const banner = document.getElementById("offline-banner");
+    const text = document.getElementById("offline-banner-text");
+    if (!banner || !text) return;
+
+    const update = () => {
+        text.textContent = i18n.t("offlineBanner");
+        banner.classList.toggle("hidden", navigator.onLine);
+        banner.classList.toggle("flex", !navigator.onLine);
+    };
+
+    globalThis.addEventListener("online", update);
+    globalThis.addEventListener("offline", update);
+    update();
+}
+
 function initTabNav() {
     for (const btn of document.querySelectorAll(".nav-tab")) {
         btn.addEventListener("click", () => switchTab(btn.dataset.tab));
@@ -277,7 +300,7 @@ function bootstrap() {
         showDetail: ui.showDetail,
     });
 
-    const quiz = createQuiz({
+    quiz = createQuiz({
         emociones,
         getDisplayName: i18n.getDisplayName,
         t: i18n.t,
@@ -290,6 +313,10 @@ function bootstrap() {
     ui.renderRecentEmotions();
     ui.renderEmociones();
 
+    const crisis = createCrisisFlow({ t: i18n.t });
+    crisis.init();
+
+    initOfflineBanner();
     initSmartInstallButton();
     initServiceWorker();
 }

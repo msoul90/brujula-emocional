@@ -63,6 +63,26 @@ describe("createDiaryEntry", () => {
         const b = createDiaryEntry("Tristeza");
         expect(a.id).not.toBe(b.id);
     });
+
+    it("conserva las etiquetas válidas", () => {
+        const entry = createDiaryEntry("Calma", "", ["trabajo", "familia"]);
+        expect(entry.tags).toEqual(["trabajo", "familia"]);
+    });
+
+    it("descarta las etiquetas desconocidas", () => {
+        const entry = createDiaryEntry("Alegría", "", ["trabajo", "invalida", "xyz"]);
+        expect(entry.tags).toEqual(["trabajo"]);
+    });
+
+    it("devuelve array de tags vacío cuando no se pasan etiquetas", () => {
+        const entry = createDiaryEntry("Tristeza");
+        expect(entry.tags).toEqual([]);
+    });
+
+    it("descarta todas las etiquetas si ninguna es válida", () => {
+        const entry = createDiaryEntry("Miedo", "", ["foo", "bar"]);
+        expect(entry.tags).toEqual([]);
+    });
 });
 
 describe("deleteDiaryEntryById", () => {
