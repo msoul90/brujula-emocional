@@ -1,4 +1,4 @@
-import { DIARY_KEY } from "./constants.js";
+import { DIARY_KEY, DIARY_TAGS } from "./constants.js";
 import { normalizeText, escapeHtml } from "./utils.js";
 
 // --- Pure data functions (testable without DOM/localStorage) ---
@@ -12,12 +12,13 @@ export function parseDiaryEntries(raw) {
     }
 }
 
-export function createDiaryEntry(emotionNombre, note = "") {
+export function createDiaryEntry(emotionNombre, note = "", tags = []) {
     return {
         id: Date.now(),
         date: new Date().toISOString(),
         emotion: emotionNombre,
-        note: note.trim()
+        note: note.trim(),
+        tags: tags.filter((tag) => DIARY_TAGS.includes(tag))
     };
 }
 
@@ -35,8 +36,8 @@ function saveEntries(entries) {
     localStorage.setItem(DIARY_KEY, JSON.stringify(entries));
 }
 
-function addEntry(emotionNombre, note = "") {
-    const entry = createDiaryEntry(emotionNombre, note);
+function addEntry(emotionNombre, note = "", tags = []) {
+    const entry = createDiaryEntry(emotionNombre, note, tags);
     saveEntries([entry, ...loadEntries()]);
     return entry;
 }
@@ -46,6 +47,17 @@ function deleteEntry(id) {
 }
 
 export function createDiary({ t, getDisplayName, emociones, onGoToCheckin = null, onOpenQuiz = null }) {
+    function renderTagPills(tags) {
+        if (!tags?.length) return "";
+        const pills = tags
+            .map((tag) => {
+                const label = t(`diaryTag${tag.charAt(0).toUpperCase()}${tag.slice(1)}`);
+                return `<span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-500 text-[10px] font-bold">${label}</span>`;
+            })
+            .join("");
+        return `<div class="flex flex-wrap gap-1 mt-1.5">${pills}</div>`;
+    }
+
     function formatDate(isoString) {
         const d = new Date(isoString);
         const now = new Date();
@@ -69,6 +81,17 @@ export function createDiary({ t, getDisplayName, emociones, onGoToCheckin = null
                 </div>
                 <textarea id="diary-note-input" rows="2" placeholder="${t("diaryNotePlaceholder")}"
                     class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-700 resize-none focus:outline-none focus:ring-2 focus:ring-blue-200 mb-3"></textarea>
+                <div class="mb-3">
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">${t("diaryTagLabel")}</p>
+                    <div class="flex flex-wrap gap-1.5">
+                        ${DIARY_TAGS.map((tag) => `
+                            <button type="button" data-tag="${tag}"
+                                class="diary-tag-btn px-3 py-1 rounded-full text-[11px] font-bold bg-slate-100 text-slate-500 hover:bg-slate-200 transition-colors">
+                                ${t(`diaryTag${tag.charAt(0).toUpperCase()}${tag.slice(1)}`)}
+                            </button>
+                        `).join("")}
+                    </div>
+                </div>
                 <div class="flex gap-2">
                     <button id="diary-form-save" type="button"
                         class="flex-1 bg-slate-800 text-white py-2.5 rounded-xl font-bold text-sm hover:bg-slate-700 transition-colors">
@@ -190,6 +213,7 @@ export function createDiary({ t, getDisplayName, emociones, onGoToCheckin = null
                                         <span class="text-xs text-slate-400 shrink-0">${formatDate(entry.date)}</span>
                                     </div>
                                     ${entry.note ? `<p class="text-slate-500 text-sm leading-relaxed">${escapeHtml(entry.note)}</p>` : ""}
+                                    ${renderTagPills(entry.tags)}
                                 </div>
                                 <button type="button" class="diary-delete-btn text-slate-300 hover:text-red-400 transition-colors shrink-0" data-id="${entry.id}" aria-label="${t("diaryDeleteButton")}">
                                     <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
@@ -241,7 +265,26 @@ export function createDiary({ t, getDisplayName, emociones, onGoToCheckin = null
             setTimeout(() => URL.revokeObjectURL(url), 1000);
         });
 
-        if (showForm) wireEmotionSearch(content);
+        const selectedTags = new Set();
+
+        if (showForm) {
+            wireEmotionSearch(content);
+
+            for (const btn of content.querySelectorAll(".diary-tag-btn")) {
+                btn.addEventListener("click", () => {
+                    const tag = btn.dataset.tag;
+                    if (selectedTags.has(tag)) {
+                        selectedTags.delete(tag);
+                        btn.classList.remove("bg-slate-800", "text-white");
+                        btn.classList.add("bg-slate-100", "text-slate-500");
+                    } else {
+                        selectedTags.add(tag);
+                        btn.classList.add("bg-slate-800", "text-white");
+                        btn.classList.remove("bg-slate-100", "text-slate-500");
+                    }
+                });
+            }
+        }
 
         content.querySelector("#diary-new-btn").addEventListener("click", () => {
             const formEl = content.querySelector("#diary-add-form");
@@ -264,7 +307,7 @@ export function createDiary({ t, getDisplayName, emociones, onGoToCheckin = null
                     searchInput?.classList.add("ring-2", "ring-red-300");
                     return;
                 }
-                addEntry(emotionValue.value, note);
+                addEntry(emotionValue.value, note, [...selectedTags]);
                 renderContent(false);
             });
             content.querySelector("#diary-form-cancel").addEventListener("click", () => renderContent(false));

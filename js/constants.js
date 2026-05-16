@@ -111,6 +111,12 @@ export const TRANSLATIONS = {
         diaryEmptyAction1: "Hacer check-in",
         diaryEmptyAction2: "Descubrir qué siento",
         diaryExportButton: "Exportar",
+        diaryTagLabel: "Contexto (opcional)",
+        diaryTagTrabajo: "Trabajo",
+        diaryTagPareja: "Pareja",
+        diaryTagFamilia: "Familia",
+        diaryTagCuerpo: "Cuerpo",
+        diaryTagDinero: "Dinero",
     },
     en: {
         langLabel: "Language",
@@ -224,8 +230,16 @@ export const TRANSLATIONS = {
         diaryEmptyAction1: "Do a check-in",
         diaryEmptyAction2: "Discover what I feel",
         diaryExportButton: "Export",
+        diaryTagLabel: "Context (optional)",
+        diaryTagTrabajo: "Work",
+        diaryTagPareja: "Partner",
+        diaryTagFamilia: "Family",
+        diaryTagCuerpo: "Body",
+        diaryTagDinero: "Money",
     }
 };
+
+export const DIARY_TAGS = ["trabajo", "pareja", "familia", "cuerpo", "dinero"];
 
 export const EMOTION_NAME_TRANSLATIONS = {
     Enojo: "Anger",
