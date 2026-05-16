@@ -38,7 +38,9 @@ const i18n = createI18n({
 diary = createDiary({
     t: i18n.t,
     getDisplayName: i18n.getDisplayName,
-    emociones
+    emociones,
+    onGoToCheckin: () => switchTab("checkin"),
+    onOpenQuiz: () => document.getElementById("quiz-panel")?.showModal()
 });
 
 ui = createUI({

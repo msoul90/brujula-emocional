@@ -107,6 +107,9 @@ export const TRANSLATIONS = {
         zoneArms: "Brazos",
         zoneLegs: "Piernas",
         offlineBanner: "Sin conexión · Usando datos guardados",
+        diaryEmptyPrompt: "Todavía no registraste ninguna emoción.",
+        diaryEmptyAction1: "Hacer check-in",
+        diaryEmptyAction2: "Descubrir qué siento",
     },
     en: {
         langLabel: "Language",
@@ -216,6 +219,9 @@ export const TRANSLATIONS = {
         zoneArms: "Arms",
         zoneLegs: "Legs",
         offlineBanner: "Offline · Using saved data",
+        diaryEmptyPrompt: "You haven't recorded any emotion yet.",
+        diaryEmptyAction1: "Do a check-in",
+        diaryEmptyAction2: "Discover what I feel",
     }
 };
 

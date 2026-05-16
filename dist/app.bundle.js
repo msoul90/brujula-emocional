@@ -108,7 +108,10 @@
       zoneStomach: "Abdomen",
       zoneArms: "Brazos",
       zoneLegs: "Piernas",
-      offlineBanner: "Sin conexi\xF3n \xB7 Usando datos guardados"
+      offlineBanner: "Sin conexi\xF3n \xB7 Usando datos guardados",
+      diaryEmptyPrompt: "Todav\xEDa no registraste ninguna emoci\xF3n.",
+      diaryEmptyAction1: "Hacer check-in",
+      diaryEmptyAction2: "Descubrir qu\xE9 siento"
     },
     en: {
       langLabel: "Language",
@@ -217,7 +220,10 @@
       zoneStomach: "Stomach",
       zoneArms: "Arms",
       zoneLegs: "Legs",
-      offlineBanner: "Offline \xB7 Using saved data"
+      offlineBanner: "Offline \xB7 Using saved data",
+      diaryEmptyPrompt: "You haven't recorded any emotion yet.",
+      diaryEmptyAction1: "Do a check-in",
+      diaryEmptyAction2: "Discover what I feel"
     }
   };
   var EMOTION_NAME_TRANSLATIONS = {
@@ -1774,7 +1780,7 @@
   function deleteEntry(id) {
     saveEntries(deleteDiaryEntryById(loadEntries(), id));
   }
-  function createDiary({ t, getDisplayName, emociones: emociones2 }) {
+  function createDiary({ t, getDisplayName, emociones: emociones2, onGoToCheckin = null, onOpenQuiz = null }) {
     function formatDate(isoString) {
       const d = new Date(isoString);
       const now = /* @__PURE__ */ new Date();
@@ -1931,9 +1937,25 @@
                 ` : ""}
             `;
       } else {
-        entriesHtml = `<p class="text-slate-400 text-sm text-center py-10">${t("diaryEmpty")}</p>`;
+        entriesHtml = `
+            <div class="text-center py-8 px-2">
+                <p class="text-slate-400 text-sm mb-5">${t("diaryEmptyPrompt")}</p>
+                <div class="flex flex-col gap-2 max-w-xs mx-auto">
+                    <button id="diary-empty-checkin" type="button"
+                        class="w-full bg-slate-800 text-white py-3 rounded-2xl font-bold text-sm hover:bg-slate-700 transition-colors">
+                        ${t("diaryEmptyAction1")}
+                    </button>
+                    <button id="diary-empty-quiz" type="button"
+                        class="w-full bg-slate-100 text-slate-700 py-3 rounded-2xl font-bold text-sm hover:bg-slate-200 transition-colors">
+                        ${t("diaryEmptyAction2")}
+                    </button>
+                </div>
+            </div>
+        `;
       }
       content.innerHTML = headerHtml + privacyHtml + formHtml + entriesHtml;
+      content.querySelector("#diary-empty-checkin")?.addEventListener("click", () => onGoToCheckin?.());
+      content.querySelector("#diary-empty-quiz")?.addEventListener("click", () => onOpenQuiz?.());
       if (showForm) wireEmotionSearch(content);
       content.querySelector("#diary-new-btn").addEventListener("click", () => {
         const formEl = content.querySelector("#diary-add-form");
@@ -2652,7 +2674,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mp8jcjye";
+  var BUILD_VERSION = "mp8jjcnn";
 
   // app.js
   var state = {
@@ -2683,7 +2705,9 @@
   diary = createDiary({
     t: i18n.t,
     getDisplayName: i18n.getDisplayName,
-    emociones
+    emociones,
+    onGoToCheckin: () => switchTab("checkin"),
+    onOpenQuiz: () => document.getElementById("quiz-panel")?.showModal()
   });
   ui = createUI({
     emociones,

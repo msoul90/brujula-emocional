@@ -45,7 +45,7 @@ function deleteEntry(id) {
     saveEntries(deleteDiaryEntryById(loadEntries(), id));
 }
 
-export function createDiary({ t, getDisplayName, emociones }) {
+export function createDiary({ t, getDisplayName, emociones, onGoToCheckin = null, onOpenQuiz = null }) {
     function formatDate(isoString) {
         const d = new Date(isoString);
         const now = new Date();
@@ -195,10 +195,27 @@ export function createDiary({ t, getDisplayName, emociones }) {
                 ` : ""}
             `;
         } else {
-            entriesHtml = `<p class="text-slate-400 text-sm text-center py-10">${t("diaryEmpty")}</p>`;
+            entriesHtml = `
+            <div class="text-center py-8 px-2">
+                <p class="text-slate-400 text-sm mb-5">${t("diaryEmptyPrompt")}</p>
+                <div class="flex flex-col gap-2 max-w-xs mx-auto">
+                    <button id="diary-empty-checkin" type="button"
+                        class="w-full bg-slate-800 text-white py-3 rounded-2xl font-bold text-sm hover:bg-slate-700 transition-colors">
+                        ${t("diaryEmptyAction1")}
+                    </button>
+                    <button id="diary-empty-quiz" type="button"
+                        class="w-full bg-slate-100 text-slate-700 py-3 rounded-2xl font-bold text-sm hover:bg-slate-200 transition-colors">
+                        ${t("diaryEmptyAction2")}
+                    </button>
+                </div>
+            </div>
+        `;
         }
 
         content.innerHTML = headerHtml + privacyHtml + formHtml + entriesHtml;
+
+        content.querySelector("#diary-empty-checkin")?.addEventListener("click", () => onGoToCheckin?.());
+        content.querySelector("#diary-empty-quiz")?.addEventListener("click", () => onOpenQuiz?.());
 
         if (showForm) wireEmotionSearch(content);
 
