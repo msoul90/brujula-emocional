@@ -1,5 +1,5 @@
 import { DIARY_KEY } from "./constants.js";
-import { normalizeText } from "./utils.js";
+import { normalizeText, escapeHtml } from "./utils.js";
 
 // --- Pure data functions (testable without DOM/localStorage) ---
 
@@ -178,7 +178,7 @@ export function createDiary({ t, getDisplayName, emociones }) {
                                         <span class="font-bold text-slate-700 text-sm">${displayName}</span>
                                         <span class="text-xs text-slate-400 shrink-0">${formatDate(entry.date)}</span>
                                     </div>
-                                    ${entry.note ? `<p class="text-slate-500 text-sm leading-relaxed">${entry.note}</p>` : ""}
+                                    ${entry.note ? `<p class="text-slate-500 text-sm leading-relaxed">${escapeHtml(entry.note)}</p>` : ""}
                                 </div>
                                 <button type="button" class="diary-delete-btn text-slate-300 hover:text-red-400 transition-colors shrink-0" data-id="${entry.id}" aria-label="${t("diaryDeleteButton")}">
                                     <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
