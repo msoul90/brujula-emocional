@@ -19,6 +19,7 @@ const modalAnimationMs = reducedMotion ? 0 : 200;
 
 let ui;
 let diary;
+let quiz;
 let emotionMap;
 
 const i18n = createI18n({
@@ -41,7 +42,7 @@ diary = createDiary({
     getDisplayName: i18n.getDisplayName,
     emociones,
     onGoToCheckin: () => switchTab("checkin"),
-    onOpenQuiz: () => document.getElementById("quiz-panel")?.showModal()
+    onOpenQuiz: () => quiz?.open()
 });
 
 ui = createUI({
@@ -298,7 +299,7 @@ function bootstrap() {
         showDetail: ui.showDetail,
     });
 
-    const quiz = createQuiz({
+    quiz = createQuiz({
         emociones,
         getDisplayName: i18n.getDisplayName,
         t: i18n.t,

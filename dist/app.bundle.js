@@ -1888,7 +1888,7 @@
         dismiss();
       });
     };
-    return { init };
+    return { init, open };
   }
 
   // js/diary.js
@@ -2982,7 +2982,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mp8ktok6";
+  var BUILD_VERSION = "mp8laxlt";
 
   // app.js
   var state = {
@@ -2995,6 +2995,7 @@
   var modalAnimationMs = reducedMotion ? 0 : 200;
   var ui;
   var diary;
+  var quiz;
   var emotionMap;
   var i18n = createI18n({
     getLang: () => state.currentLang,
@@ -3015,7 +3016,7 @@
     getDisplayName: i18n.getDisplayName,
     emociones,
     onGoToCheckin: () => switchTab("checkin"),
-    onOpenQuiz: () => document.getElementById("quiz-panel")?.showModal()
+    onOpenQuiz: () => quiz?.open()
   });
   ui = createUI({
     emociones,
@@ -3229,7 +3230,7 @@
       t: i18n.t,
       showDetail: ui.showDetail
     });
-    const quiz = createQuiz({
+    quiz = createQuiz({
       emociones,
       getDisplayName: i18n.getDisplayName,
       t: i18n.t,
