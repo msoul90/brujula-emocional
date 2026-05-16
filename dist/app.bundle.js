@@ -111,7 +111,8 @@
       offlineBanner: "Sin conexi\xF3n \xB7 Usando datos guardados",
       diaryEmptyPrompt: "Todav\xEDa no registraste ninguna emoci\xF3n.",
       diaryEmptyAction1: "Hacer check-in",
-      diaryEmptyAction2: "Descubrir qu\xE9 siento"
+      diaryEmptyAction2: "Descubrir qu\xE9 siento",
+      diaryExportButton: "Exportar"
     },
     en: {
       langLabel: "Language",
@@ -223,7 +224,8 @@
       offlineBanner: "Offline \xB7 Using saved data",
       diaryEmptyPrompt: "You haven't recorded any emotion yet.",
       diaryEmptyAction1: "Do a check-in",
-      diaryEmptyAction2: "Discover what I feel"
+      diaryEmptyAction2: "Discover what I feel",
+      diaryExportButton: "Export"
     }
   };
   var EMOTION_NAME_TRANSLATIONS = {
@@ -1887,14 +1889,24 @@
       const entries = loadEntries();
       const content = document.getElementById("diary-content");
       if (!content) return;
+      const exportBtn = entries.length > 0 ? `
+            <button id="diary-export-btn" type="button"
+                class="flex items-center gap-1.5 bg-slate-100 text-slate-600 text-xs font-bold px-3 py-2 rounded-xl hover:bg-slate-200 transition-colors">
+                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                ${t("diaryExportButton")}
+            </button>
+        ` : "";
       const headerHtml = `
             <div class="flex items-center justify-between mb-4">
                 <h2 id="diary-title-heading" class="text-xl font-black text-slate-800">${t("diaryTitle")}</h2>
-                <button id="diary-new-btn" type="button"
-                    class="flex items-center gap-1.5 bg-slate-800 text-white text-xs font-bold px-3 py-2 rounded-xl hover:bg-slate-700 transition-colors">
-                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-                    ${t("diaryNewEntry")}
-                </button>
+                <div class="flex items-center gap-2">
+                    ${exportBtn}
+                    <button id="diary-new-btn" type="button"
+                        class="flex items-center gap-1.5 bg-slate-800 text-white text-xs font-bold px-3 py-2 rounded-xl hover:bg-slate-700 transition-colors">
+                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
+                        ${t("diaryNewEntry")}
+                    </button>
+                </div>
             </div>
         `;
       const privacyHtml = `
@@ -1956,6 +1968,18 @@
       content.innerHTML = headerHtml + privacyHtml + formHtml + entriesHtml;
       content.querySelector("#diary-empty-checkin")?.addEventListener("click", () => onGoToCheckin?.());
       content.querySelector("#diary-empty-quiz")?.addEventListener("click", () => onOpenQuiz?.());
+      content.querySelector("#diary-export-btn")?.addEventListener("click", () => {
+        const date = (/* @__PURE__ */ new Date()).toISOString().slice(0, 10);
+        const blob = new Blob([JSON.stringify(entries, null, 2)], { type: "application/json" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `diario-emocional-${date}.json`;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        setTimeout(() => URL.revokeObjectURL(url), 1e3);
+      });
       if (showForm) wireEmotionSearch(content);
       content.querySelector("#diary-new-btn").addEventListener("click", () => {
         const formEl = content.querySelector("#diary-add-form");
@@ -2674,7 +2698,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mp8jjcnn";
+  var BUILD_VERSION = "mp8jl7aa";
 
   // app.js
   var state = {
