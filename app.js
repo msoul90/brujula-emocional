@@ -1,4 +1,4 @@
-import { emociones, MOOD_CATEGORIES, EMOTION_RELATIONS } from "./js/constants.js";
+import { emociones, MOOD_CATEGORIES, EMOTION_RELATIONS, APP_TABS, DEFAULT_TAB } from "./js/constants.js";
 import { createI18n } from "./js/i18n.js";
 import { createUI } from "./js/ui.jsx";
 import { createQuiz } from "./js/quiz.jsx";
@@ -9,6 +9,7 @@ import { initSettings } from "./js/settings.js";
 import { initInstall } from "./js/install.js";
 import { initOfflineBanner } from "./js/offlineBanner.js";
 import { initServiceWorker } from "./js/serviceWorker.js";
+import { migrateStorageSchema } from "./js/storageSchema.js";
 import { on } from "./js/bus.js";
 import { get, set } from "./js/store.js";
 import { BUILD_VERSION } from "./js/version.js";
@@ -59,24 +60,24 @@ ui = createUI({
 });
 
 function switchTab(tabId) {
-    const tabs = ["emociones", "checkin", "diario", "mapa"];
-    for (const id of tabs) {
-        document.getElementById(`tab-${id}`)?.classList.toggle("hidden", id !== tabId);
+    const nextTab = APP_TABS.includes(tabId) ? tabId : DEFAULT_TAB;
+    for (const id of APP_TABS) {
+        document.getElementById(`tab-${id}`)?.classList.toggle("hidden", id !== nextTab);
         const btn = document.getElementById(`nav-${id}`);
         if (btn) {
-            btn.classList.toggle("text-blue-600", id === tabId);
-            btn.classList.toggle("text-slate-400", id !== tabId);
-            btn.classList.toggle("nav-active", id === tabId);
-            if (id === tabId) {
+            btn.classList.toggle("text-blue-600", id === nextTab);
+            btn.classList.toggle("text-slate-400", id !== nextTab);
+            btn.classList.toggle("nav-active", id === nextTab);
+            if (id === nextTab) {
                 btn.setAttribute("aria-current", "page");
             } else {
                 btn.removeAttribute("aria-current");
             }
         }
     }
-    set("currentTab", tabId);
-    if (tabId === "diario") diary.renderForTab();
-    if (tabId === "mapa") emotionMap?.renderForTab();
+    set("currentTab", nextTab);
+    if (nextTab === "diario") diary.renderForTab();
+    if (nextTab === "mapa") emotionMap?.renderForTab();
 }
 
 function initTabNav() {
@@ -86,6 +87,8 @@ function initTabNav() {
 }
 
 function bootstrap() {
+    migrateStorageSchema();
+
     set("currentLang", i18n.detectInitialLanguage());
     i18n.applyStaticTranslations();
 
@@ -108,7 +111,7 @@ function bootstrap() {
         getDisplayName: i18n.getDisplayName,
         t: i18n.t,
         showDetail: ui.showDetail,
-        onShowAll: () => switchTab("emociones")
+        onShowAll: () => switchTab(DEFAULT_TAB)
     });
     quiz.init();
 

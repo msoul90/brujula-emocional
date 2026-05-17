@@ -787,8 +787,12 @@
   var LANGUAGE_KEY = "brujulaIdioma";
   var THEME_KEY = "brujulaThema";
   var DIARY_KEY = "brujulaDiario";
+  var STORAGE_SCHEMA_KEY = "brujulaSchemaVersion";
+  var STORAGE_SCHEMA_VERSION = 1;
   var RECENT_LIMIT = 5;
   var DIARY_TAGS = ["trabajo", "pareja", "familia", "cuerpo", "dinero"];
+  var APP_TABS = ["emociones", "checkin", "diario", "mapa"];
+  var DEFAULT_TAB = APP_TABS[0];
   var TRANSLATIONS = { es, en };
 
   // js/i18n.js
@@ -1388,54 +1392,7 @@
     return lines;
   }
 
-  // js/bus.js
-  var listeners = {};
-  function on(event, fn) {
-    (listeners[event] ??= []).push(fn);
-  }
-  function emit(event, data) {
-    listeners[event]?.forEach((fn) => fn(data));
-  }
-
-  // js/store.js
-  var _state = {
-    currentLang: "es",
-    currentTab: "emociones",
-    lastFocusedCard: null,
-    isClosingModal: false
-  };
-  var get = (key) => _state[key];
-  function set(key, value) {
-    const prev = _state[key];
-    if (prev === value) return;
-    /** @type {Record<string, unknown>} */
-    _state[key] = value;
-    emit(`store:${key}`, { value, prev });
-  }
-
-  // node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js
-  var f3 = 0;
-  function u3(e3, t3, n2, o3, i3, u4) {
-    t3 || (t3 = {});
-    var a3, c3, p3 = t3;
-    if ("ref" in p3) for (c3 in p3 = {}, t3) "ref" == c3 ? a3 = t3[c3] : p3[c3] = t3[c3];
-    var l3 = { type: e3, props: p3, key: n2, ref: a3, __k: null, __: null, __b: 0, __e: null, __c: null, constructor: void 0, __v: --f3, __i: -1, __u: 0, __source: i3, __self: u4 };
-    if ("function" == typeof e3 && (a3 = e3.defaultProps)) for (c3 in a3) void 0 === p3[c3] && (p3[c3] = a3[c3]);
-    return l.vnode && l.vnode(l3), l3;
-  }
-
-  // js/ui.jsx
-  function loadRecentEmotions() {
-    try {
-      const parsed = JSON.parse(localStorage.getItem(RECENT_KEY) || "[]");
-      return Array.isArray(parsed) ? parsed : [];
-    } catch {
-      return [];
-    }
-  }
-  function shortRecentLabel(nombre) {
-    return nombre.length > 9 ? `${nombre.slice(0, 9)}...` : nombre;
-  }
+  // js/emotionCanvas.js
   function roundRectPath(ctx, x2, y3, w3, h3, radii) {
     const [tl, tr, br, bl] = Array.isArray(radii) ? radii : [radii, radii, radii, radii];
     ctx.moveTo(x2 + tl, y3);
@@ -1452,13 +1409,16 @@
   async function buildEmotionCanvas(e3, displayName, tagLabel, mensaje, responseLabel, respuesta) {
     await document.fonts.load("900 1px Inter").catch(() => {
     });
-    const W = 1080, H2 = 1350, PAD2 = 84;
-    const SANS = `'Inter', system-ui, -apple-system, sans-serif`;
-    const SERIF = `Georgia, "Times New Roman", serif`;
+    const W = 1080;
+    const H2 = 1350;
+    const PAD2 = 84;
+    const SANS = "'Inter', system-ui, -apple-system, sans-serif";
+    const SERIF = 'Georgia, "Times New Roman", serif';
     const canvas = document.createElement("canvas");
     canvas.width = W;
     canvas.height = H2;
     const ctx = canvas.getContext("2d");
+    if (!ctx) return canvas;
     const textOnColor = getReadableTextColor(e3.color);
     const tagAlpha = textOnColor === "#f8fafc" ? "rgba(255,255,255,0.6)" : "rgba(15,23,42,0.4)";
     ctx.fillStyle = "#f8fafc";
@@ -1536,6 +1496,55 @@
     const brand = "Br\xFAjula Emocional";
     ctx.fillText(brand, W - PAD2 - ctx.measureText(brand).width, H2 - 56);
     return canvas;
+  }
+
+  // js/bus.js
+  var listeners = {};
+  function on(event, fn) {
+    (listeners[event] ??= []).push(fn);
+  }
+  function emit(event, data) {
+    listeners[event]?.forEach((fn) => fn(data));
+  }
+
+  // js/store.js
+  var _state = {
+    currentLang: "es",
+    currentTab: DEFAULT_TAB,
+    lastFocusedCard: null,
+    isClosingModal: false
+  };
+  var get = (key) => _state[key];
+  function set(key, value) {
+    const prev = _state[key];
+    if (prev === value) return;
+    /** @type {Record<string, unknown>} */
+    _state[key] = value;
+    emit(`store:${key}`, { value, prev });
+  }
+
+  // node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js
+  var f3 = 0;
+  function u3(e3, t3, n2, o3, i3, u4) {
+    t3 || (t3 = {});
+    var a3, c3, p3 = t3;
+    if ("ref" in p3) for (c3 in p3 = {}, t3) "ref" == c3 ? a3 = t3[c3] : p3[c3] = t3[c3];
+    var l3 = { type: e3, props: p3, key: n2, ref: a3, __k: null, __: null, __b: 0, __e: null, __c: null, constructor: void 0, __v: --f3, __i: -1, __u: 0, __source: i3, __self: u4 };
+    if ("function" == typeof e3 && (a3 = e3.defaultProps)) for (c3 in a3) void 0 === p3[c3] && (p3[c3] = a3[c3]);
+    return l.vnode && l.vnode(l3), l3;
+  }
+
+  // js/ui.jsx
+  function loadRecentEmotions() {
+    try {
+      const parsed = JSON.parse(localStorage.getItem(RECENT_KEY) || "[]");
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  }
+  function shortRecentLabel(nombre) {
+    return nombre.length > 9 ? `${nombre.slice(0, 9)}...` : nombre;
   }
   async function shareEmotionCard(canvas, filename) {
     const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/png"));
@@ -1745,6 +1754,7 @@
   }) {
     let scrollCleanup = null;
     let activeCheckinCat = null;
+    let searchDebounceId = null;
     function saveRecentEmotion(nombre) {
       const existing = loadRecentEmotions().filter((item) => item !== nombre);
       const next = [nombre, ...existing].slice(0, RECENT_LIMIT);
@@ -2001,7 +2011,14 @@
         closeModal();
       });
       closeButton?.addEventListener("click", closeModal);
-      search?.addEventListener("input", (event) => renderEmociones(event.target.value));
+      search?.addEventListener("input", (event) => {
+        const target = (
+          /** @type {HTMLInputElement} */
+          event.target
+        );
+        if (searchDebounceId) clearTimeout(searchDebounceId);
+        searchDebounceId = setTimeout(() => renderEmociones(target.value), 120);
+      });
     }
     return {
       renderRecentEmotions,
@@ -3029,7 +3046,7 @@
     return { addEntry, renderForTab };
   }
 
-  // js/emotionMap.jsx
+  // js/emotionMap.logic.js
   var R2 = 18;
   var STEP = R2 * 2 + 8;
   var ROW_H = R2 * 2 + 22;
@@ -3067,9 +3084,7 @@
       for (let j3 = i3 + 1; j3 < nodes.length; j3++) {
         let dx = nodes[i3].x - nodes[j3].x;
         let dy = nodes[i3].y - nodes[j3].y;
-        if (!dx && !dy) {
-          dx = 0.01;
-        }
+        if (!dx && !dy) dx = 0.01;
         const d3 = Math.hypot(dx, dy);
         const f4 = k3 * k3 / d3;
         nodes[i3].fx += dx / d3 * f4;
@@ -3089,8 +3104,10 @@
       }
       applyRepulsion(nodes, k3);
       for (const e3 of edges) {
-        const a3 = nodes[e3.ai], b2 = nodes[e3.bi];
-        const dx = b2.x - a3.x, dy = b2.y - a3.y;
+        const a3 = nodes[e3.ai];
+        const b2 = nodes[e3.bi];
+        const dx = b2.x - a3.x;
+        const dy = b2.y - a3.y;
         const d3 = Math.hypot(dx, dy) || 0.01;
         const f4 = d3 * d3 / k3 * 0.3;
         a3.fx += dx / d3 * f4;
@@ -3119,7 +3136,8 @@
           const d3 = Math.hypot(dx, dy) || 0.01;
           if (d3 < minDist) {
             const push = (minDist - d3) / 2;
-            const ux = dx / d3, uy = dy / d3;
+            const ux = dx / d3;
+            const uy = dy / d3;
             nodes[i3].x = clamp(nodes[i3].x + ux * push, R2 + 28, W - R2 - 28);
             nodes[i3].y = clamp(nodes[i3].y + uy * push, R2 + 24, H2 - R2 - 28);
             nodes[j3].x = clamp(nodes[j3].x - ux * push, R2 + 28, W - R2 - 28);
@@ -3162,10 +3180,6 @@
       const ai = nameToIdx[r3.from];
       const bi = nameToIdx[r3.to];
       if (ai === void 0 || bi === void 0) {
-        const missing = [];
-        if (ai === void 0) missing.push(`from="${r3.from}"`);
-        if (bi === void 0) missing.push(`to="${r3.to}"`);
-        console.warn("[emotionMap] Dropping relation %s with unknown endpoint(s): %s", String(r3.type), missing.join(", "));
         return [];
       }
       return [{ ai, bi, type: r3.type }];
@@ -3173,10 +3187,7 @@
   }
   function buildForceData(emociones2, getDisplayName, W, H2) {
     const rng = makeRng(48879);
-    const nameToIdx = (
-      /** @type {Record<string, number>} */
-      {}
-    );
+    const nameToIdx = {};
     const nodes = emociones2.map((e3, idx) => {
       nameToIdx[e3.nombre] = idx;
       const ci = MOOD_CATEGORIES.findIndex((c3) => c3.emotions.includes(e3.nombre));
@@ -3198,7 +3209,8 @@
   function buildQuadData(emociones2, getDisplayName, W) {
     const QW = Math.floor(W / 2);
     const maxCols = Math.max(2, Math.floor((QW - PAD * 2 + 8) / STEP));
-    let maxRowsTop = 0, maxRowsBot = 0;
+    let maxRowsTop = 0;
+    let maxRowsBot = 0;
     MOOD_CATEGORIES.forEach((cat, ci) => {
       const count = cat.emotions.filter((n2) => emociones2.find((e3) => e3.nombre === n2)).length;
       const rows = Math.ceil(count / maxCols);
@@ -3207,14 +3219,8 @@
     });
     const QH = QUAD_HDR + PAD + Math.max(maxRowsTop, 1) * ROW_H + R2 + 16;
     const H2 = QH * 2;
-    const nameToIdx = (
-      /** @type {Record<string, number>} */
-      {}
-    );
-    const nodes = (
-      /** @type {ForceNode[]} */
-      []
-    );
+    const nameToIdx = {};
+    const nodes = [];
     MOOD_CATEGORIES.forEach((cat, ci) => {
       const q2 = QUAD_MAP[ci];
       const ox = q2 % 2 * QW;
@@ -3241,7 +3247,8 @@
     const inQuadrant = new Set(cat.emotions.filter((n2) => nodeNames.has(n2)));
     const neighbors = /* @__PURE__ */ new Set();
     for (const e3 of visibleEdges) {
-      const aN = nodes[e3.ai].nombre, bN = nodes[e3.bi].nombre;
+      const aN = nodes[e3.ai].nombre;
+      const bN = nodes[e3.bi].nombre;
       if (inQuadrant.has(aN) && !inQuadrant.has(bN)) neighbors.add(bN);
       if (inQuadrant.has(bN) && !inQuadrant.has(aN)) neighbors.add(aN);
     }
@@ -3295,7 +3302,8 @@
     ) : null;
     let bg = "";
     if (view === "quad") {
-      const QW = W / 2, QH = H2 / 2;
+      const QW = W / 2;
+      const QH = H2 / 2;
       MOOD_CATEGORIES.forEach((cat, ci) => {
         const q2 = QUAD_MAP[ci];
         const ox = q2 % 2 * QW;
@@ -3313,7 +3321,8 @@
     }
     const normalizedFilter = nameFilter ? normalizeText(nameFilter) : "";
     const eStr = visibleEdges.map((e3) => {
-      const a3 = nodes[e3.ai], b2 = nodes[e3.bi];
+      const a3 = nodes[e3.ai];
+      const b2 = nodes[e3.bi];
       let op = 0.4;
       if (sel) {
         op = sel === a3.nombre || sel === b2.nombre ? 0.9 : 0;
@@ -3339,7 +3348,8 @@
       const sc = isSel ? "#2563eb" : "none";
       const sw = isSel ? "3" : "0";
       const lbl = n2.label.length > 10 ? n2.label.slice(0, 9) + "\u2026" : n2.label;
-      const cx = Math.trunc(n2.x), cy = Math.trunc(n2.y);
+      const cx = Math.trunc(n2.x);
+      const cy = Math.trunc(n2.y);
       return `<g class="map-node" data-nombre="${escAttr(n2.nombre)}" tabindex="0" role="button" aria-label="${escAttr(n2.label)}" style="cursor:pointer" opacity="${nodeOp}" ${hide ? 'pointer-events="none"' : ""}>
             <title>${escHtml(n2.label)}</title>
             <circle cx="${cx}" cy="${cy}" r="${R2 + 6}" fill="transparent"/>
@@ -3348,9 +3358,6 @@
         </g>`;
     }).join("");
     return `${bg}<g>${eStr}</g><g>${nStr}</g>`;
-  }
-  function containerW() {
-    return document.getElementById("map-content")?.clientWidth || 340;
   }
   function hasNodeMatch(nodes, nameFilter, selected) {
     if (!nameFilter || selected !== null) return true;
@@ -3368,6 +3375,8 @@
     }
     return grouped;
   }
+
+  // js/emotionMap.view.jsx
   function SelectedInfoPanel({ selected, grouped, nodes, t: t3, dark, onOpenDetail, onClearSelection }) {
     if (!selected || !grouped) return null;
     const borderC = dark ? "bg-slate-800 border-slate-700" : "bg-white border-slate-100";
@@ -3505,7 +3514,13 @@
       let svgEdges;
       let svgActiveQuadrant;
       if (isNeighborhood) {
-        const hood = buildNeighborhoodData(selected, nodes, edges.filter((e3) => activeTypes.has(e3.type)), W, H2);
+        const hood = buildNeighborhoodData(
+          selected,
+          nodes,
+          edges.filter((e3) => activeTypes.has(e3.type)),
+          W,
+          H2
+        );
         svgNodes = hood.nodes;
         svgEdges = hood.edges;
         svgActiveQuadrant = null;
@@ -3514,15 +3529,12 @@
         svgEdges = edges;
         svgActiveQuadrant = activeQuadrant;
       }
-      svg.innerHTML = buildSvgBody(
-        svgNodes,
-        svgEdges,
-        W,
-        H2,
-        selected,
-        view,
-        { t: t3, activeTypes, activeQuadrant: svgActiveQuadrant, nameFilter }
-      );
+      svg.innerHTML = buildSvgBody(svgNodes, svgEdges, W, H2, selected, view, {
+        t: t3,
+        activeTypes,
+        activeQuadrant: svgActiveQuadrant,
+        nameFilter
+      });
       svg.onclick = svgEventHandler.click;
       svg.onkeydown = svgEventHandler.keydown;
     });
@@ -3585,17 +3597,7 @@
         )
       ] }),
       /* @__PURE__ */ u3("p", { id: "map-hint", class: "text-[11px] text-slate-400 mb-1.5 px-0.5", children: selected ? t3("map.hintSelected") : t3("map.hint") }),
-      /* @__PURE__ */ u3("div", { class: "rounded-2xl overflow-hidden", style: `background:${canvasBg}`, children: /* @__PURE__ */ u3(
-        "svg",
-        {
-          id: "map-svg",
-          ref: svgRef,
-          viewBox: `0 0 ${W} ${H2}`,
-          style: "width:100%;display:block;touch-action:pan-y",
-          role: "img",
-          "aria-label": t3("nav.mapa")
-        }
-      ) }),
+      /* @__PURE__ */ u3("div", { class: "rounded-2xl overflow-hidden", style: `background:${canvasBg}`, children: /* @__PURE__ */ u3("svg", { id: "map-svg", ref: svgRef, viewBox: `0 0 ${W} ${H2}`, style: "width:100%;display:block;touch-action:pan-y", role: "img", "aria-label": t3("nav.mapa") }) }),
       /* @__PURE__ */ u3("p", { id: "map-empty", class: `${hasMatch ? "hidden" : ""} text-[13px] text-center text-slate-400 mt-4 py-2`, children: t3("map.searchEmpty") }),
       /* @__PURE__ */ u3(
         SelectedInfoPanel,
@@ -3611,6 +3613,11 @@
       )
     ] });
   }
+
+  // js/emotionMap.jsx
+  function containerW() {
+    return document.getElementById("map-content")?.clientWidth || 340;
+  }
   function createEmotionMap({ emociones: emociones2, getDisplayName, t: t3, showDetail }) {
     let view = "graph";
     let selected = null;
@@ -3623,11 +3630,12 @@
     let forceData = null;
     let quadData = null;
     let lastW = 0;
+    let searchDebounce = null;
     function ensureData() {
       const W = containerW();
       if (!forceData || Math.abs(W - lastW) > 20) {
         lastW = W;
-        const gH = graphHeightFor(W, emociones2.length, EMOTION_RELATIONS.length);
+        const gH = graphHeightFor(W, emociones2.length, forceData?.edges.length ?? 35);
         forceData = { ...buildForceData(emociones2, getDisplayName, W, gH), H: gH };
         quadData = null;
       }
@@ -3728,8 +3736,11 @@
               );
               nameFilter = target.value;
               selected = null;
-              render_();
-              requestAnimationFrame(() => populateSuggestions(nameFilter));
+              if (searchDebounce) globalThis.clearTimeout(searchDebounce);
+              searchDebounce = globalThis.setTimeout(() => {
+                render_();
+                requestAnimationFrame(() => populateSuggestions(nameFilter));
+              }, 120);
             },
             svgEventHandler
           }
@@ -4135,8 +4146,93 @@
     });
   }
 
+  // js/storageSchema.js
+  var LEGACY_THEME_KEY = "brujulaTheme";
+  var VALID_THEMES = /* @__PURE__ */ new Set(["light", "dark", "auto"]);
+  function isRecord(value) {
+    return typeof value === "object" && value !== null;
+  }
+  function parseJson(raw) {
+    if (!raw) return null;
+    try {
+      return JSON.parse(raw);
+    } catch {
+      return null;
+    }
+  }
+  function sanitizeRecent(value) {
+    if (!Array.isArray(value)) return [];
+    const out = [];
+    const seen = /* @__PURE__ */ new Set();
+    for (const item of value) {
+      if (typeof item !== "string") continue;
+      const trimmed = item.trim();
+      if (!trimmed || seen.has(trimmed)) continue;
+      out.push(trimmed);
+      seen.add(trimmed);
+      if (out.length >= RECENT_LIMIT) break;
+    }
+    return out;
+  }
+  function sanitizeDiary(value) {
+    if (!Array.isArray(value)) return [];
+    const now = Date.now();
+    const out = [];
+    for (let i3 = 0; i3 < value.length; i3++) {
+      const entry = value[i3];
+      if (!isRecord(entry)) continue;
+      const emotion = typeof entry.emotion === "string" ? entry.emotion.trim() : "";
+      if (!emotion) continue;
+      const idNum = Number(entry.id);
+      const id = Number.isFinite(idNum) ? idNum : now + i3;
+      const dateRaw = typeof entry.date === "string" ? entry.date : "";
+      const date = Number.isNaN(Date.parse(dateRaw)) ? new Date(id).toISOString() : dateRaw;
+      const note = typeof entry.note === "string" ? entry.note.trim() : "";
+      const tags = Array.isArray(entry.tags) ? entry.tags.filter((tag) => typeof tag === "string" && DIARY_TAGS.includes(tag)) : [];
+      out.push({ id, date, emotion, note, tags });
+    }
+    return out;
+  }
+  function migrateToV1() {
+    const lang = localStorage.getItem(LANGUAGE_KEY);
+    if (lang && lang !== "es" && lang !== "en") {
+      localStorage.setItem(LANGUAGE_KEY, "es");
+    }
+    let theme = localStorage.getItem(THEME_KEY);
+    if (!theme) {
+      const legacyTheme = localStorage.getItem(LEGACY_THEME_KEY);
+      if (legacyTheme) {
+        theme = legacyTheme;
+        localStorage.setItem(THEME_KEY, legacyTheme);
+        localStorage.removeItem(LEGACY_THEME_KEY);
+      }
+    }
+    if (theme && !VALID_THEMES.has(theme)) {
+      localStorage.removeItem(THEME_KEY);
+    }
+    const recent = sanitizeRecent(parseJson(localStorage.getItem(RECENT_KEY)));
+    localStorage.setItem(RECENT_KEY, JSON.stringify(recent));
+    const diary2 = sanitizeDiary(parseJson(localStorage.getItem(DIARY_KEY)));
+    localStorage.setItem(DIARY_KEY, JSON.stringify(diary2));
+  }
+  function migrateStorageSchema() {
+    try {
+      const rawVersion = localStorage.getItem(STORAGE_SCHEMA_KEY);
+      const parsedVersion = Number.parseInt(rawVersion ?? "0", 10);
+      let currentVersion = Number.isFinite(parsedVersion) ? parsedVersion : 0;
+      if (currentVersion < 1) {
+        migrateToV1();
+        currentVersion = 1;
+      }
+      if (currentVersion !== STORAGE_SCHEMA_VERSION) {
+        localStorage.setItem(STORAGE_SCHEMA_KEY, String(STORAGE_SCHEMA_VERSION));
+      }
+    } catch {
+    }
+  }
+
   // js/version.js
-  var BUILD_VERSION = "mpa19klk";
+  var BUILD_VERSION = "mpa4lyyx";
 
   // app.js
   var reducedMotion = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
@@ -4179,24 +4275,24 @@
     }
   });
   function switchTab(tabId) {
-    const tabs = ["emociones", "checkin", "diario", "mapa"];
-    for (const id of tabs) {
-      document.getElementById(`tab-${id}`)?.classList.toggle("hidden", id !== tabId);
+    const nextTab = APP_TABS.includes(tabId) ? tabId : DEFAULT_TAB;
+    for (const id of APP_TABS) {
+      document.getElementById(`tab-${id}`)?.classList.toggle("hidden", id !== nextTab);
       const btn = document.getElementById(`nav-${id}`);
       if (btn) {
-        btn.classList.toggle("text-blue-600", id === tabId);
-        btn.classList.toggle("text-slate-400", id !== tabId);
-        btn.classList.toggle("nav-active", id === tabId);
-        if (id === tabId) {
+        btn.classList.toggle("text-blue-600", id === nextTab);
+        btn.classList.toggle("text-slate-400", id !== nextTab);
+        btn.classList.toggle("nav-active", id === nextTab);
+        if (id === nextTab) {
           btn.setAttribute("aria-current", "page");
         } else {
           btn.removeAttribute("aria-current");
         }
       }
     }
-    set("currentTab", tabId);
-    if (tabId === "diario") diary.renderForTab();
-    if (tabId === "mapa") emotionMap?.renderForTab();
+    set("currentTab", nextTab);
+    if (nextTab === "diario") diary.renderForTab();
+    if (nextTab === "mapa") emotionMap?.renderForTab();
   }
   function initTabNav() {
     for (const btn of document.querySelectorAll(".nav-tab")) {
@@ -4204,6 +4300,7 @@
     }
   }
   function bootstrap() {
+    migrateStorageSchema();
     set("currentLang", i18n.detectInitialLanguage());
     i18n.applyStaticTranslations();
     const versionEl = document.getElementById("build-version");
@@ -4222,7 +4319,7 @@
       getDisplayName: i18n.getDisplayName,
       t: i18n.t,
       showDetail: ui.showDetail,
-      onShowAll: () => switchTab("emociones")
+      onShowAll: () => switchTab(DEFAULT_TAB)
     });
     quiz.init();
     ui.renderCheckinTab();

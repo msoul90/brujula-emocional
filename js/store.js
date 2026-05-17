@@ -1,10 +1,11 @@
 // @ts-check
 import { emit } from "./bus.js";
+import { DEFAULT_TAB } from "./constants.js";
 
 /** @type {{ currentLang: string, currentTab: string, lastFocusedCard: HTMLElement|null, isClosingModal: boolean }} */
 const _state = {
     currentLang: "es",
-    currentTab: "emociones",
+    currentTab: DEFAULT_TAB,
     lastFocusedCard: null,
     isClosingModal: false,
 };
