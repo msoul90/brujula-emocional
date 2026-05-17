@@ -3873,25 +3873,13 @@
   }
 
   // js/settings.js
-  var THEMES = (
-    /** @type {const} */
-    ["light", "auto", "dark"]
-  );
-  var LANGUAGES = (
-    /** @type {const} */
-    ["es", "en"]
-  );
+  var THEMES = ["light", "auto", "dark"];
+  var LANGUAGES = ["es", "en"];
   function isTheme(theme) {
-    return THEMES.includes(
-      /** @type {Theme} */
-      theme
-    );
+    return typeof theme === "string" && THEMES.includes(theme);
   }
   function isLanguage(lang) {
-    return LANGUAGES.includes(
-      /** @type {Language} */
-      lang
-    );
+    return typeof lang === "string" && LANGUAGES.includes(lang);
   }
   function getTheme() {
     const theme = localStorage.getItem(THEME_KEY);

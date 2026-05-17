@@ -4,15 +4,15 @@ import { THEME_KEY } from "./constants.js";
 /** @typedef {"light" | "auto" | "dark"} Theme */
 /** @typedef {"es" | "en"} Language */
 
-const THEMES = /** @type {const} */ (["light", "auto", "dark"]);
-const LANGUAGES = /** @type {const} */ (["es", "en"]);
+const THEMES = ["light", "auto", "dark"];
+const LANGUAGES = ["es", "en"];
 
 /**
  * @param {string | null | undefined} theme
  * @returns {theme is Theme}
  */
 function isTheme(theme) {
-    return THEMES.includes(/** @type {Theme} */ (theme));
+    return typeof theme === "string" && THEMES.includes(theme);
 }
 
 /**
@@ -20,7 +20,7 @@ function isTheme(theme) {
  * @returns {lang is Language}
  */
 function isLanguage(lang) {
-    return LANGUAGES.includes(/** @type {Language} */ (lang));
+    return typeof lang === "string" && LANGUAGES.includes(lang);
 }
 
 /** @returns {Theme} */
