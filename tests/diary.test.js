@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { parseDiaryEntries, createDiaryEntry, deleteDiaryEntryById } from "../js/diary.js";
+import { parseDiaryEntries, createDiaryEntry, deleteDiaryEntryById } from "../js/diary.jsx";
 
 describe("parseDiaryEntries", () => {
     it("parsea un array JSON válido", () => {

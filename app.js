@@ -1,9 +1,9 @@
 import { emociones, MOOD_CATEGORIES, EMOTION_RELATIONS } from "./js/constants.js";
 import { createI18n } from "./js/i18n.js";
-import { createUI } from "./js/ui.js";
-import { createQuiz } from "./js/quiz.js";
-import { createDiary } from "./js/diary.js";
-import { createEmotionMap } from "./js/emotionMap.js";
+import { createUI } from "./js/ui.jsx";
+import { createQuiz } from "./js/quiz.jsx";
+import { createDiary } from "./js/diary.jsx";
+import { createEmotionMap } from "./js/emotionMap.jsx";
 import { createCrisisFlow } from "./js/crisis.jsx";
 import { initSettings } from "./js/settings.js";
 import { initInstall } from "./js/install.js";

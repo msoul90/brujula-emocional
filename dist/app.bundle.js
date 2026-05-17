@@ -799,7 +799,7 @@
     return browserLang.startsWith("en") ? "en" : "es";
   }
   function createI18n({ getLang, setLang, onLanguageChanged }) {
-    function t2(key) {
+    function t3(key) {
       const lang = getLang();
       const parts = key.split(".");
       if (parts.length === 1) {
@@ -825,97 +825,97 @@
       document.documentElement.lang = getLang();
       const ids = {
         "app-title": (el) => {
-          el.textContent = t2("title");
+          el.textContent = t3("title");
         },
         "app-subtitle": (el) => {
-          el.textContent = t2("subtitle");
+          el.textContent = t3("subtitle");
         },
         "search": (el) => {
-          el.placeholder = t2("searchPlaceholder");
+          el.placeholder = t3("searchPlaceholder");
         },
         "recent-title": (el) => {
-          el.textContent = t2("recentTitle");
+          el.textContent = t3("recentTitle");
         },
         "close-button": (el) => {
-          el.textContent = t2("closeButton");
+          el.textContent = t3("closeButton");
         },
         "share-btn": (el) => {
-          el.setAttribute("aria-label", t2("shareButton"));
+          el.setAttribute("aria-label", t3("shareButton"));
         },
         "share-btn-label": (el) => {
-          el.textContent = t2("shareButton");
+          el.textContent = t3("shareButton");
         },
         "diary-add-btn": (el) => {
-          el.setAttribute("aria-label", t2("diary.addShort"));
+          el.setAttribute("aria-label", t3("diary.addShort"));
         },
         "diary-add-label": (el) => {
-          el.textContent = t2("diary.addShort");
+          el.textContent = t3("diary.addShort");
         },
         "nav-label-emociones": (el) => {
-          el.textContent = t2("nav.emociones");
+          el.textContent = t3("nav.emociones");
         },
         "nav-label-checkin": (el) => {
-          el.textContent = t2("nav.checkin");
+          el.textContent = t3("nav.checkin");
         },
         "nav-label-diario": (el) => {
-          el.textContent = t2("nav.diary");
+          el.textContent = t3("nav.diary");
         },
         "nav-label-mapa": (el) => {
-          el.textContent = t2("nav.mapa");
+          el.textContent = t3("nav.mapa");
         },
         "install-app-button": (el) => {
-          el.textContent = t2("install.button");
+          el.textContent = t3("install.button");
         },
         "ios-install-title": (el) => {
-          el.textContent = t2("install.iosTitle");
+          el.textContent = t3("install.iosTitle");
         },
         "ios-install-step-1": (el) => {
-          el.textContent = t2("install.iosStep1");
+          el.textContent = t3("install.iosStep1");
         },
         "ios-install-step-2": (el) => {
-          el.textContent = t2("install.iosStep2");
+          el.textContent = t3("install.iosStep2");
         },
         "ios-install-close": (el) => {
-          el.textContent = t2("install.iosClose");
+          el.textContent = t3("install.iosClose");
         },
         "quiz-trigger-title": (el) => {
-          el.textContent = t2("quiz.trigger");
+          el.textContent = t3("quiz.trigger");
         },
         "quiz-trigger-sub": (el) => {
-          el.textContent = t2("quiz.triggerSub");
+          el.textContent = t3("quiz.triggerSub");
         },
         "crisis-trigger-title": (el) => {
-          el.textContent = t2("crisis.triggerTitle");
+          el.textContent = t3("crisis.triggerTitle");
         },
         "crisis-trigger-sub": (el) => {
-          el.textContent = t2("crisis.triggerSub");
+          el.textContent = t3("crisis.triggerSub");
         },
         "crisis-trigger-btn-label": (el) => {
-          el.textContent = t2("crisis.triggerBtn");
+          el.textContent = t3("crisis.triggerBtn");
         },
         "crisis-panel-close": (el) => {
-          el.setAttribute("aria-label", t2("crisis.close"));
+          el.setAttribute("aria-label", t3("crisis.close"));
         },
         "settings-btn": (el) => {
-          el.setAttribute("aria-label", t2("settings.label"));
+          el.setAttribute("aria-label", t3("settings.label"));
         },
         "settings-theme-label": (el) => {
-          el.textContent = t2("settings.themeLabel");
+          el.textContent = t3("settings.themeLabel");
         },
         "settings-lang-label": (el) => {
-          el.textContent = t2("langLabel");
+          el.textContent = t3("langLabel");
         },
         "theme-btn-light": (el) => {
-          el.setAttribute("aria-label", t2("settings.themeLight"));
-          el.setAttribute("title", t2("settings.themeLight"));
+          el.setAttribute("aria-label", t3("settings.themeLight"));
+          el.setAttribute("title", t3("settings.themeLight"));
         },
         "theme-btn-auto": (el) => {
-          el.setAttribute("aria-label", t2("settings.themeAuto"));
-          el.setAttribute("title", t2("settings.themeAuto"));
+          el.setAttribute("aria-label", t3("settings.themeAuto"));
+          el.setAttribute("title", t3("settings.themeAuto"));
         },
         "theme-btn-dark": (el) => {
-          el.setAttribute("aria-label", t2("settings.themeDark"));
-          el.setAttribute("title", t2("settings.themeDark"));
+          el.setAttribute("aria-label", t3("settings.themeDark"));
+          el.setAttribute("title", t3("settings.themeDark"));
         }
       };
       for (const [id, apply] of Object.entries(ids)) {
@@ -930,7 +930,7 @@
       onLanguageChanged();
     }
     return {
-      t: t2,
+      t: t3,
       getDisplayName,
       getEmotionField,
       detectInitialLanguage,
@@ -939,10 +939,406 @@
     };
   }
 
-  // js/utils.js
-  function escapeHtml(str) {
-    return String(str).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;").replaceAll('"', "&quot;").replaceAll("'", "&#39;");
+  // node_modules/preact/dist/preact.module.js
+  var n;
+  var l;
+  var u;
+  var t;
+  var i;
+  var r;
+  var o;
+  var e;
+  var f;
+  var c;
+  var s;
+  var a;
+  var h;
+  var p;
+  var v;
+  var y;
+  var d = {};
+  var w = [];
+  var _ = /acit|ex(?:s|g|n|p|$)|rph|grid|ows|mnc|ntw|ine[ch]|zoo|^ord|itera/i;
+  var g = Array.isArray;
+  function m(n2, l3) {
+    for (var u4 in l3) n2[u4] = l3[u4];
+    return n2;
   }
+  function b(n2) {
+    n2 && n2.parentNode && n2.parentNode.removeChild(n2);
+  }
+  function k(l3, u4, t3) {
+    var i3, r3, o3, e3 = {};
+    for (o3 in u4) "key" == o3 ? i3 = u4[o3] : "ref" == o3 ? r3 = u4[o3] : e3[o3] = u4[o3];
+    if (arguments.length > 2 && (e3.children = arguments.length > 3 ? n.call(arguments, 2) : t3), "function" == typeof l3 && null != l3.defaultProps) for (o3 in l3.defaultProps) void 0 === e3[o3] && (e3[o3] = l3.defaultProps[o3]);
+    return x(l3, e3, i3, r3, null);
+  }
+  function x(n2, t3, i3, r3, o3) {
+    var e3 = { type: n2, props: t3, key: i3, ref: r3, __k: null, __: null, __b: 0, __e: null, __c: null, constructor: void 0, __v: null == o3 ? ++u : o3, __i: -1, __u: 0 };
+    return null == o3 && null != l.vnode && l.vnode(e3), e3;
+  }
+  function S(n2) {
+    return n2.children;
+  }
+  function C(n2, l3) {
+    this.props = n2, this.context = l3;
+  }
+  function $(n2, l3) {
+    if (null == l3) return n2.__ ? $(n2.__, n2.__i + 1) : null;
+    for (var u4; l3 < n2.__k.length; l3++) if (null != (u4 = n2.__k[l3]) && null != u4.__e) return u4.__e;
+    return "function" == typeof n2.type ? $(n2) : null;
+  }
+  function I(n2) {
+    if (n2.__P && n2.__d) {
+      var u4 = n2.__v, t3 = u4.__e, i3 = [], r3 = [], o3 = m({}, u4);
+      o3.__v = u4.__v + 1, l.vnode && l.vnode(o3), q(n2.__P, o3, u4, n2.__n, n2.__P.namespaceURI, 32 & u4.__u ? [t3] : null, i3, null == t3 ? $(u4) : t3, !!(32 & u4.__u), r3), o3.__v = u4.__v, o3.__.__k[o3.__i] = o3, D(i3, o3, r3), u4.__e = u4.__ = null, o3.__e != t3 && P(o3);
+    }
+  }
+  function P(n2) {
+    if (null != (n2 = n2.__) && null != n2.__c) return n2.__e = n2.__c.base = null, n2.__k.some(function(l3) {
+      if (null != l3 && null != l3.__e) return n2.__e = n2.__c.base = l3.__e;
+    }), P(n2);
+  }
+  function A(n2) {
+    (!n2.__d && (n2.__d = true) && i.push(n2) && !H.__r++ || r != l.debounceRendering) && ((r = l.debounceRendering) || o)(H);
+  }
+  function H() {
+    try {
+      for (var n2, l3 = 1; i.length; ) i.length > l3 && i.sort(e), n2 = i.shift(), l3 = i.length, I(n2);
+    } finally {
+      i.length = H.__r = 0;
+    }
+  }
+  function L(n2, l3, u4, t3, i3, r3, o3, e3, f4, c3, s3) {
+    var a3, h3, p3, v3, y3, _2, g2, m3 = t3 && t3.__k || w, b2 = l3.length;
+    for (f4 = T(u4, l3, m3, f4, b2), a3 = 0; a3 < b2; a3++) null != (p3 = u4.__k[a3]) && (h3 = -1 != p3.__i && m3[p3.__i] || d, p3.__i = a3, _2 = q(n2, p3, h3, i3, r3, o3, e3, f4, c3, s3), v3 = p3.__e, p3.ref && h3.ref != p3.ref && (h3.ref && J(h3.ref, null, p3), s3.push(p3.ref, p3.__c || v3, p3)), null == y3 && null != v3 && (y3 = v3), (g2 = !!(4 & p3.__u)) || h3.__k === p3.__k ? (f4 = j(p3, f4, n2, g2), g2 && h3.__e && (h3.__e = null)) : "function" == typeof p3.type && void 0 !== _2 ? f4 = _2 : v3 && (f4 = v3.nextSibling), p3.__u &= -7);
+    return u4.__e = y3, f4;
+  }
+  function T(n2, l3, u4, t3, i3) {
+    var r3, o3, e3, f4, c3, s3 = u4.length, a3 = s3, h3 = 0;
+    for (n2.__k = new Array(i3), r3 = 0; r3 < i3; r3++) null != (o3 = l3[r3]) && "boolean" != typeof o3 && "function" != typeof o3 ? ("string" == typeof o3 || "number" == typeof o3 || "bigint" == typeof o3 || o3.constructor == String ? o3 = n2.__k[r3] = x(null, o3, null, null, null) : g(o3) ? o3 = n2.__k[r3] = x(S, { children: o3 }, null, null, null) : void 0 === o3.constructor && o3.__b > 0 ? o3 = n2.__k[r3] = x(o3.type, o3.props, o3.key, o3.ref ? o3.ref : null, o3.__v) : n2.__k[r3] = o3, f4 = r3 + h3, o3.__ = n2, o3.__b = n2.__b + 1, e3 = null, -1 != (c3 = o3.__i = O(o3, u4, f4, a3)) && (a3--, (e3 = u4[c3]) && (e3.__u |= 2)), null == e3 || null == e3.__v ? (-1 == c3 && (i3 > s3 ? h3-- : i3 < s3 && h3++), "function" != typeof o3.type && (o3.__u |= 4)) : c3 != f4 && (c3 == f4 - 1 ? h3-- : c3 == f4 + 1 ? h3++ : (c3 > f4 ? h3-- : h3++, o3.__u |= 4))) : n2.__k[r3] = null;
+    if (a3) for (r3 = 0; r3 < s3; r3++) null != (e3 = u4[r3]) && 0 == (2 & e3.__u) && (e3.__e == t3 && (t3 = $(e3)), K(e3, e3));
+    return t3;
+  }
+  function j(n2, l3, u4, t3) {
+    var i3, r3;
+    if ("function" == typeof n2.type) {
+      for (i3 = n2.__k, r3 = 0; i3 && r3 < i3.length; r3++) i3[r3] && (i3[r3].__ = n2, l3 = j(i3[r3], l3, u4, t3));
+      return l3;
+    }
+    n2.__e != l3 && (t3 && (l3 && n2.type && !l3.parentNode && (l3 = $(n2)), u4.insertBefore(n2.__e, l3 || null)), l3 = n2.__e);
+    do {
+      l3 = l3 && l3.nextSibling;
+    } while (null != l3 && 8 == l3.nodeType);
+    return l3;
+  }
+  function O(n2, l3, u4, t3) {
+    var i3, r3, o3, e3 = n2.key, f4 = n2.type, c3 = l3[u4], s3 = null != c3 && 0 == (2 & c3.__u);
+    if (null === c3 && null == e3 || s3 && e3 == c3.key && f4 == c3.type) return u4;
+    if (t3 > (s3 ? 1 : 0)) {
+      for (i3 = u4 - 1, r3 = u4 + 1; i3 >= 0 || r3 < l3.length; ) if (null != (c3 = l3[o3 = i3 >= 0 ? i3-- : r3++]) && 0 == (2 & c3.__u) && e3 == c3.key && f4 == c3.type) return o3;
+    }
+    return -1;
+  }
+  function z(n2, l3, u4) {
+    "-" == l3[0] ? n2.setProperty(l3, null == u4 ? "" : u4) : n2[l3] = null == u4 ? "" : "number" != typeof u4 || _.test(l3) ? u4 : u4 + "px";
+  }
+  function N(n2, l3, u4, t3, i3) {
+    var r3, o3;
+    n: if ("style" == l3) if ("string" == typeof u4) n2.style.cssText = u4;
+    else {
+      if ("string" == typeof t3 && (n2.style.cssText = t3 = ""), t3) for (l3 in t3) u4 && l3 in u4 || z(n2.style, l3, "");
+      if (u4) for (l3 in u4) t3 && u4[l3] == t3[l3] || z(n2.style, l3, u4[l3]);
+    }
+    else if ("o" == l3[0] && "n" == l3[1]) r3 = l3 != (l3 = l3.replace(a, "$1")), o3 = l3.toLowerCase(), l3 = o3 in n2 || "onFocusOut" == l3 || "onFocusIn" == l3 ? o3.slice(2) : l3.slice(2), n2.l || (n2.l = {}), n2.l[l3 + r3] = u4, u4 ? t3 ? u4[s] = t3[s] : (u4[s] = h, n2.addEventListener(l3, r3 ? v : p, r3)) : n2.removeEventListener(l3, r3 ? v : p, r3);
+    else {
+      if ("http://www.w3.org/2000/svg" == i3) l3 = l3.replace(/xlink(H|:h)/, "h").replace(/sName$/, "s");
+      else if ("width" != l3 && "height" != l3 && "href" != l3 && "list" != l3 && "form" != l3 && "tabIndex" != l3 && "download" != l3 && "rowSpan" != l3 && "colSpan" != l3 && "role" != l3 && "popover" != l3 && l3 in n2) try {
+        n2[l3] = null == u4 ? "" : u4;
+        break n;
+      } catch (n3) {
+      }
+      "function" == typeof u4 || (null == u4 || false === u4 && "-" != l3[4] ? n2.removeAttribute(l3) : n2.setAttribute(l3, "popover" == l3 && 1 == u4 ? "" : u4));
+    }
+  }
+  function V(n2) {
+    return function(u4) {
+      if (this.l) {
+        var t3 = this.l[u4.type + n2];
+        if (null == u4[c]) u4[c] = h++;
+        else if (u4[c] < t3[s]) return;
+        return t3(l.event ? l.event(u4) : u4);
+      }
+    };
+  }
+  function q(n2, u4, t3, i3, r3, o3, e3, f4, c3, s3) {
+    var a3, h3, p3, v3, y3, d3, _2, k3, x2, M, $2, I2, P2, A3, H2, T3 = u4.type;
+    if (void 0 !== u4.constructor) return null;
+    128 & t3.__u && (c3 = !!(32 & t3.__u), o3 = [f4 = u4.__e = t3.__e]), (a3 = l.__b) && a3(u4);
+    n: if ("function" == typeof T3) try {
+      if (k3 = u4.props, x2 = T3.prototype && T3.prototype.render, M = (a3 = T3.contextType) && i3[a3.__c], $2 = a3 ? M ? M.props.value : a3.__ : i3, t3.__c ? _2 = (h3 = u4.__c = t3.__c).__ = h3.__E : (x2 ? u4.__c = h3 = new T3(k3, $2) : (u4.__c = h3 = new C(k3, $2), h3.constructor = T3, h3.render = Q), M && M.sub(h3), h3.state || (h3.state = {}), h3.__n = i3, p3 = h3.__d = true, h3.__h = [], h3._sb = []), x2 && null == h3.__s && (h3.__s = h3.state), x2 && null != T3.getDerivedStateFromProps && (h3.__s == h3.state && (h3.__s = m({}, h3.__s)), m(h3.__s, T3.getDerivedStateFromProps(k3, h3.__s))), v3 = h3.props, y3 = h3.state, h3.__v = u4, p3) x2 && null == T3.getDerivedStateFromProps && null != h3.componentWillMount && h3.componentWillMount(), x2 && null != h3.componentDidMount && h3.__h.push(h3.componentDidMount);
+      else {
+        if (x2 && null == T3.getDerivedStateFromProps && k3 !== v3 && null != h3.componentWillReceiveProps && h3.componentWillReceiveProps(k3, $2), u4.__v == t3.__v || !h3.__e && null != h3.shouldComponentUpdate && false === h3.shouldComponentUpdate(k3, h3.__s, $2)) {
+          u4.__v != t3.__v && (h3.props = k3, h3.state = h3.__s, h3.__d = false), u4.__e = t3.__e, u4.__k = t3.__k, u4.__k.some(function(n3) {
+            n3 && (n3.__ = u4);
+          }), w.push.apply(h3.__h, h3._sb), h3._sb = [], h3.__h.length && e3.push(h3);
+          break n;
+        }
+        null != h3.componentWillUpdate && h3.componentWillUpdate(k3, h3.__s, $2), x2 && null != h3.componentDidUpdate && h3.__h.push(function() {
+          h3.componentDidUpdate(v3, y3, d3);
+        });
+      }
+      if (h3.context = $2, h3.props = k3, h3.__P = n2, h3.__e = false, I2 = l.__r, P2 = 0, x2) h3.state = h3.__s, h3.__d = false, I2 && I2(u4), a3 = h3.render(h3.props, h3.state, h3.context), w.push.apply(h3.__h, h3._sb), h3._sb = [];
+      else do {
+        h3.__d = false, I2 && I2(u4), a3 = h3.render(h3.props, h3.state, h3.context), h3.state = h3.__s;
+      } while (h3.__d && ++P2 < 25);
+      h3.state = h3.__s, null != h3.getChildContext && (i3 = m(m({}, i3), h3.getChildContext())), x2 && !p3 && null != h3.getSnapshotBeforeUpdate && (d3 = h3.getSnapshotBeforeUpdate(v3, y3)), A3 = null != a3 && a3.type === S && null == a3.key ? E(a3.props.children) : a3, f4 = L(n2, g(A3) ? A3 : [A3], u4, t3, i3, r3, o3, e3, f4, c3, s3), h3.base = u4.__e, u4.__u &= -161, h3.__h.length && e3.push(h3), _2 && (h3.__E = h3.__ = null);
+    } catch (n3) {
+      if (u4.__v = null, c3 || null != o3) if (n3.then) {
+        for (u4.__u |= c3 ? 160 : 128; f4 && 8 == f4.nodeType && f4.nextSibling; ) f4 = f4.nextSibling;
+        o3[o3.indexOf(f4)] = null, u4.__e = f4;
+      } else {
+        for (H2 = o3.length; H2--; ) b(o3[H2]);
+        B(u4);
+      }
+      else u4.__e = t3.__e, u4.__k = t3.__k, n3.then || B(u4);
+      l.__e(n3, u4, t3);
+    }
+    else null == o3 && u4.__v == t3.__v ? (u4.__k = t3.__k, u4.__e = t3.__e) : f4 = u4.__e = G(t3.__e, u4, t3, i3, r3, o3, e3, c3, s3);
+    return (a3 = l.diffed) && a3(u4), 128 & u4.__u ? void 0 : f4;
+  }
+  function B(n2) {
+    n2 && (n2.__c && (n2.__c.__e = true), n2.__k && n2.__k.some(B));
+  }
+  function D(n2, u4, t3) {
+    for (var i3 = 0; i3 < t3.length; i3++) J(t3[i3], t3[++i3], t3[++i3]);
+    l.__c && l.__c(u4, n2), n2.some(function(u5) {
+      try {
+        n2 = u5.__h, u5.__h = [], n2.some(function(n3) {
+          n3.call(u5);
+        });
+      } catch (n3) {
+        l.__e(n3, u5.__v);
+      }
+    });
+  }
+  function E(n2) {
+    return "object" != typeof n2 || null == n2 || n2.__b > 0 ? n2 : g(n2) ? n2.map(E) : m({}, n2);
+  }
+  function G(u4, t3, i3, r3, o3, e3, f4, c3, s3) {
+    var a3, h3, p3, v3, y3, w3, _2, m3 = i3.props || d, k3 = t3.props, x2 = t3.type;
+    if ("svg" == x2 ? o3 = "http://www.w3.org/2000/svg" : "math" == x2 ? o3 = "http://www.w3.org/1998/Math/MathML" : o3 || (o3 = "http://www.w3.org/1999/xhtml"), null != e3) {
+      for (a3 = 0; a3 < e3.length; a3++) if ((y3 = e3[a3]) && "setAttribute" in y3 == !!x2 && (x2 ? y3.localName == x2 : 3 == y3.nodeType)) {
+        u4 = y3, e3[a3] = null;
+        break;
+      }
+    }
+    if (null == u4) {
+      if (null == x2) return document.createTextNode(k3);
+      u4 = document.createElementNS(o3, x2, k3.is && k3), c3 && (l.__m && l.__m(t3, e3), c3 = false), e3 = null;
+    }
+    if (null == x2) m3 === k3 || c3 && u4.data == k3 || (u4.data = k3);
+    else {
+      if (e3 = e3 && n.call(u4.childNodes), !c3 && null != e3) for (m3 = {}, a3 = 0; a3 < u4.attributes.length; a3++) m3[(y3 = u4.attributes[a3]).name] = y3.value;
+      for (a3 in m3) y3 = m3[a3], "dangerouslySetInnerHTML" == a3 ? p3 = y3 : "children" == a3 || a3 in k3 || "value" == a3 && "defaultValue" in k3 || "checked" == a3 && "defaultChecked" in k3 || N(u4, a3, null, y3, o3);
+      for (a3 in k3) y3 = k3[a3], "children" == a3 ? v3 = y3 : "dangerouslySetInnerHTML" == a3 ? h3 = y3 : "value" == a3 ? w3 = y3 : "checked" == a3 ? _2 = y3 : c3 && "function" != typeof y3 || m3[a3] === y3 || N(u4, a3, y3, m3[a3], o3);
+      if (h3) c3 || p3 && (h3.__html == p3.__html || h3.__html == u4.innerHTML) || (u4.innerHTML = h3.__html), t3.__k = [];
+      else if (p3 && (u4.innerHTML = ""), L("template" == t3.type ? u4.content : u4, g(v3) ? v3 : [v3], t3, i3, r3, "foreignObject" == x2 ? "http://www.w3.org/1999/xhtml" : o3, e3, f4, e3 ? e3[0] : i3.__k && $(i3, 0), c3, s3), null != e3) for (a3 = e3.length; a3--; ) b(e3[a3]);
+      c3 || (a3 = "value", "progress" == x2 && null == w3 ? u4.removeAttribute("value") : null != w3 && (w3 !== u4[a3] || "progress" == x2 && !w3 || "option" == x2 && w3 != m3[a3]) && N(u4, a3, w3, m3[a3], o3), a3 = "checked", null != _2 && _2 != u4[a3] && N(u4, a3, _2, m3[a3], o3));
+    }
+    return u4;
+  }
+  function J(n2, u4, t3) {
+    try {
+      if ("function" == typeof n2) {
+        var i3 = "function" == typeof n2.__u;
+        i3 && n2.__u(), i3 && null == u4 || (n2.__u = n2(u4));
+      } else n2.current = u4;
+    } catch (n3) {
+      l.__e(n3, t3);
+    }
+  }
+  function K(n2, u4, t3) {
+    var i3, r3;
+    if (l.unmount && l.unmount(n2), (i3 = n2.ref) && (i3.current && i3.current != n2.__e || J(i3, null, u4)), null != (i3 = n2.__c)) {
+      if (i3.componentWillUnmount) try {
+        i3.componentWillUnmount();
+      } catch (n3) {
+        l.__e(n3, u4);
+      }
+      i3.base = i3.__P = null;
+    }
+    if (i3 = n2.__k) for (r3 = 0; r3 < i3.length; r3++) i3[r3] && K(i3[r3], u4, t3 || "function" != typeof n2.type);
+    t3 || b(n2.__e), n2.__c = n2.__ = n2.__e = void 0;
+  }
+  function Q(n2, l3, u4) {
+    return this.constructor(n2, u4);
+  }
+  function R(u4, t3, i3) {
+    var r3, o3, e3, f4;
+    t3 == document && (t3 = document.documentElement), l.__ && l.__(u4, t3), o3 = (r3 = "function" == typeof i3) ? null : i3 && i3.__k || t3.__k, e3 = [], f4 = [], q(t3, u4 = (!r3 && i3 || t3).__k = k(S, null, [u4]), o3 || d, d, t3.namespaceURI, !r3 && i3 ? [i3] : o3 ? null : t3.firstChild ? n.call(t3.childNodes) : null, e3, !r3 && i3 ? i3 : o3 ? o3.__e : t3.firstChild, r3, f4), D(e3, u4, f4);
+  }
+  n = w.slice, l = { __e: function(n2, l3, u4, t3) {
+    for (var i3, r3, o3; l3 = l3.__; ) if ((i3 = l3.__c) && !i3.__) try {
+      if ((r3 = i3.constructor) && null != r3.getDerivedStateFromError && (i3.setState(r3.getDerivedStateFromError(n2)), o3 = i3.__d), null != i3.componentDidCatch && (i3.componentDidCatch(n2, t3 || {}), o3 = i3.__d), o3) return i3.__E = i3;
+    } catch (l4) {
+      n2 = l4;
+    }
+    throw n2;
+  } }, u = 0, t = function(n2) {
+    return null != n2 && void 0 === n2.constructor;
+  }, C.prototype.setState = function(n2, l3) {
+    var u4;
+    u4 = null != this.__s && this.__s != this.state ? this.__s : this.__s = m({}, this.state), "function" == typeof n2 && (n2 = n2(m({}, u4), this.props)), n2 && m(u4, n2), null != n2 && this.__v && (l3 && this._sb.push(l3), A(this));
+  }, C.prototype.forceUpdate = function(n2) {
+    this.__v && (this.__e = true, n2 && this.__h.push(n2), A(this));
+  }, C.prototype.render = S, i = [], o = "function" == typeof Promise ? Promise.prototype.then.bind(Promise.resolve()) : setTimeout, e = function(n2, l3) {
+    return n2.__v.__b - l3.__v.__b;
+  }, H.__r = 0, f = Math.random().toString(8), c = "__d" + f, s = "__a" + f, a = /(PointerCapture)$|Capture$/i, h = 0, p = V(false), v = V(true), y = 0;
+
+  // node_modules/preact/hooks/dist/hooks.module.js
+  var t2;
+  var r2;
+  var u2;
+  var i2;
+  var o2 = 0;
+  var f2 = [];
+  var c2 = l;
+  var e2 = c2.__b;
+  var a2 = c2.__r;
+  var v2 = c2.diffed;
+  var l2 = c2.__c;
+  var m2 = c2.unmount;
+  var s2 = c2.__;
+  function p2(n2, t3) {
+    c2.__h && c2.__h(r2, n2, o2 || t3), o2 = 0;
+    var u4 = r2.__H || (r2.__H = { __: [], __h: [] });
+    return n2 >= u4.__.length && u4.__.push({}), u4.__[n2];
+  }
+  function d2(n2) {
+    return o2 = 1, h2(D2, n2);
+  }
+  function h2(n2, u4, i3) {
+    var o3 = p2(t2++, 2);
+    if (o3.t = n2, !o3.__c && (o3.__ = [i3 ? i3(u4) : D2(void 0, u4), function(n3) {
+      var t3 = o3.__N ? o3.__N[0] : o3.__[0], r3 = o3.t(t3, n3);
+      t3 !== r3 && (o3.__N = [r3, o3.__[1]], o3.__c.setState({}));
+    }], o3.__c = r2, !r2.__f)) {
+      var f4 = function(n3, t3, r3) {
+        if (!o3.__c.__H) return true;
+        var u5 = o3.__c.__H.__.filter(function(n4) {
+          return n4.__c;
+        });
+        if (u5.every(function(n4) {
+          return !n4.__N;
+        })) return !c3 || c3.call(this, n3, t3, r3);
+        var i4 = o3.__c.props !== n3;
+        return u5.some(function(n4) {
+          if (n4.__N) {
+            var t4 = n4.__[0];
+            n4.__ = n4.__N, n4.__N = void 0, t4 !== n4.__[0] && (i4 = true);
+          }
+        }), c3 && c3.call(this, n3, t3, r3) || i4;
+      };
+      r2.__f = true;
+      var c3 = r2.shouldComponentUpdate, e3 = r2.componentWillUpdate;
+      r2.componentWillUpdate = function(n3, t3, r3) {
+        if (this.__e) {
+          var u5 = c3;
+          c3 = void 0, f4(n3, t3, r3), c3 = u5;
+        }
+        e3 && e3.call(this, n3, t3, r3);
+      }, r2.shouldComponentUpdate = f4;
+    }
+    return o3.__N || o3.__;
+  }
+  function y2(n2, u4) {
+    var i3 = p2(t2++, 3);
+    !c2.__s && C2(i3.__H, u4) && (i3.__ = n2, i3.u = u4, r2.__H.__h.push(i3));
+  }
+  function A2(n2) {
+    return o2 = 5, T2(function() {
+      return { current: n2 };
+    }, []);
+  }
+  function T2(n2, r3) {
+    var u4 = p2(t2++, 7);
+    return C2(u4.__H, r3) && (u4.__ = n2(), u4.__H = r3, u4.__h = n2), u4.__;
+  }
+  function j2() {
+    for (var n2; n2 = f2.shift(); ) {
+      var t3 = n2.__H;
+      if (n2.__P && t3) try {
+        t3.__h.some(z2), t3.__h.some(B2), t3.__h = [];
+      } catch (r3) {
+        t3.__h = [], c2.__e(r3, n2.__v);
+      }
+    }
+  }
+  c2.__b = function(n2) {
+    r2 = null, e2 && e2(n2);
+  }, c2.__ = function(n2, t3) {
+    n2 && t3.__k && t3.__k.__m && (n2.__m = t3.__k.__m), s2 && s2(n2, t3);
+  }, c2.__r = function(n2) {
+    a2 && a2(n2), t2 = 0;
+    var i3 = (r2 = n2.__c).__H;
+    i3 && (u2 === r2 ? (i3.__h = [], r2.__h = [], i3.__.some(function(n3) {
+      n3.__N && (n3.__ = n3.__N), n3.u = n3.__N = void 0;
+    })) : (i3.__h.some(z2), i3.__h.some(B2), i3.__h = [], t2 = 0)), u2 = r2;
+  }, c2.diffed = function(n2) {
+    v2 && v2(n2);
+    var t3 = n2.__c;
+    t3 && t3.__H && (t3.__H.__h.length && (1 !== f2.push(t3) && i2 === c2.requestAnimationFrame || ((i2 = c2.requestAnimationFrame) || w2)(j2)), t3.__H.__.some(function(n3) {
+      n3.u && (n3.__H = n3.u), n3.u = void 0;
+    })), u2 = r2 = null;
+  }, c2.__c = function(n2, t3) {
+    t3.some(function(n3) {
+      try {
+        n3.__h.some(z2), n3.__h = n3.__h.filter(function(n4) {
+          return !n4.__ || B2(n4);
+        });
+      } catch (r3) {
+        t3.some(function(n4) {
+          n4.__h && (n4.__h = []);
+        }), t3 = [], c2.__e(r3, n3.__v);
+      }
+    }), l2 && l2(n2, t3);
+  }, c2.unmount = function(n2) {
+    m2 && m2(n2);
+    var t3, r3 = n2.__c;
+    r3 && r3.__H && (r3.__H.__.some(function(n3) {
+      try {
+        z2(n3);
+      } catch (n4) {
+        t3 = n4;
+      }
+    }), r3.__H = void 0, t3 && c2.__e(t3, r3.__v));
+  };
+  var k2 = "function" == typeof requestAnimationFrame;
+  function w2(n2) {
+    var t3, r3 = function() {
+      clearTimeout(u4), k2 && cancelAnimationFrame(t3), setTimeout(n2);
+    }, u4 = setTimeout(r3, 35);
+    k2 && (t3 = requestAnimationFrame(r3));
+  }
+  function z2(n2) {
+    var t3 = r2, u4 = n2.__c;
+    "function" == typeof u4 && (n2.__c = void 0, u4()), r2 = t3;
+  }
+  function B2(n2) {
+    var t3 = r2;
+    n2.__c = n2.__(), r2 = t3;
+  }
+  function C2(n2, t3) {
+    return !n2 || n2.length !== t3.length || t3.some(function(t4, r3) {
+      return t4 !== n2[r3];
+    });
+  }
+  function D2(n2, t3) {
+    return "function" == typeof t3 ? t3(n2) : t3;
+  }
+
+  // js/utils.js
   function isDarkMode() {
     return document.documentElement.classList.contains("dark");
   }
@@ -952,11 +1348,11 @@
   function getReadableTextColor(hexColor) {
     const safeHex = (hexColor || "").replace("#", "");
     if (safeHex.length !== 6) return "#0f172a";
-    const r2 = Number.parseInt(safeHex.slice(0, 2), 16);
+    const r3 = Number.parseInt(safeHex.slice(0, 2), 16);
     const g2 = Number.parseInt(safeHex.slice(2, 4), 16);
     const b2 = Number.parseInt(safeHex.slice(4, 6), 16);
-    if ([r2, g2, b2].some(Number.isNaN)) return "#0f172a";
-    const luminance = (0.299 * r2 + 0.587 * g2 + 0.114 * b2) / 255;
+    if ([r3, g2, b2].some(Number.isNaN)) return "#0f172a";
+    const luminance = (0.299 * r3 + 0.587 * g2 + 0.114 * b2) / 255;
     return luminance < 0.52 ? "#f8fafc" : "#0f172a";
   }
   function wrapTextLines(ctx, text, maxWidth) {
@@ -1001,7 +1397,18 @@
     emit(`store:${key}`, { value, prev });
   }
 
-  // js/ui.js
+  // node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js
+  var f3 = 0;
+  function u3(e3, t3, n2, o3, i3, u4) {
+    t3 || (t3 = {});
+    var a3, c3, p3 = t3;
+    if ("ref" in p3) for (c3 in p3 = {}, t3) "ref" == c3 ? a3 = t3[c3] : p3[c3] = t3[c3];
+    var l3 = { type: e3, props: p3, key: n2, ref: a3, __k: null, __: null, __b: 0, __e: null, __c: null, constructor: void 0, __v: --f3, __i: -1, __u: 0, __source: i3, __self: u4 };
+    if ("function" == typeof e3 && (a3 = e3.defaultProps)) for (c3 in a3) void 0 === p3[c3] && (p3[c3] = a3[c3]);
+    return l.vnode && l.vnode(l3), l3;
+  }
+
+  // js/ui.jsx
   function loadRecentEmotions() {
     try {
       const parsed = JSON.parse(localStorage.getItem(RECENT_KEY) || "[]");
@@ -1013,20 +1420,20 @@
   function shortRecentLabel(nombre) {
     return nombre.length > 9 ? `${nombre.slice(0, 9)}...` : nombre;
   }
-  function roundRectPath(ctx, x2, y2, w2, h2, radii) {
+  function roundRectPath(ctx, x2, y3, w3, h3, radii) {
     const [tl, tr, br, bl] = Array.isArray(radii) ? radii : [radii, radii, radii, radii];
-    ctx.moveTo(x2 + tl, y2);
-    ctx.lineTo(x2 + w2 - tr, y2);
-    ctx.arcTo(x2 + w2, y2, x2 + w2, y2 + tr, tr);
-    ctx.lineTo(x2 + w2, y2 + h2 - br);
-    ctx.arcTo(x2 + w2, y2 + h2, x2 + w2 - br, y2 + h2, br);
-    ctx.lineTo(x2 + bl, y2 + h2);
-    ctx.arcTo(x2, y2 + h2, x2, y2 + h2 - bl, bl);
-    ctx.lineTo(x2, y2 + tl);
-    ctx.arcTo(x2, y2, x2 + tl, y2, tl);
+    ctx.moveTo(x2 + tl, y3);
+    ctx.lineTo(x2 + w3 - tr, y3);
+    ctx.arcTo(x2 + w3, y3, x2 + w3, y3 + tr, tr);
+    ctx.lineTo(x2 + w3, y3 + h3 - br);
+    ctx.arcTo(x2 + w3, y3 + h3, x2 + w3 - br, y3 + h3, br);
+    ctx.lineTo(x2 + bl, y3 + h3);
+    ctx.arcTo(x2, y3 + h3, x2, y3 + h3 - bl, bl);
+    ctx.lineTo(x2, y3 + tl);
+    ctx.arcTo(x2, y3, x2 + tl, y3, tl);
     ctx.closePath();
   }
-  async function buildEmotionCanvas(e2, displayName, tagLabel, mensaje, responseLabel, respuesta) {
+  async function buildEmotionCanvas(e3, displayName, tagLabel, mensaje, responseLabel, respuesta) {
     await document.fonts.load("900 1px Inter").catch(() => {
     });
     const W = 1080, H2 = 1350, PAD2 = 84;
@@ -1036,14 +1443,14 @@
     canvas.width = W;
     canvas.height = H2;
     const ctx = canvas.getContext("2d");
-    const textOnColor = getReadableTextColor(e2.color);
+    const textOnColor = getReadableTextColor(e3.color);
     const tagAlpha = textOnColor === "#f8fafc" ? "rgba(255,255,255,0.6)" : "rgba(15,23,42,0.4)";
     ctx.fillStyle = "#f8fafc";
     ctx.beginPath();
     roundRectPath(ctx, 0, 0, W, H2, 0);
     ctx.fill();
     const ACCENT_H = 320;
-    ctx.fillStyle = e2.color;
+    ctx.fillStyle = e3.color;
     ctx.beginPath();
     roundRectPath(ctx, 0, 0, W, ACCENT_H, [0, 0, 0, 0]);
     ctx.fill();
@@ -1053,40 +1460,40 @@
     ctx.fillStyle = textOnColor;
     ctx.font = `900 92px ${SANS}`;
     ctx.fillText(displayName, PAD2, 248);
-    let y2 = ACCENT_H + 76;
+    let y3 = ACCENT_H + 76;
     ctx.fillStyle = "#475569";
     ctx.font = `italic 42px ${SERIF}`;
-    const msgLines = wrapTextLines(ctx, `\u201C${mensaje}\u201D`, W - PAD2 * 2);
+    const msgLines = wrapTextLines(ctx, `"${mensaje}"`, W - PAD2 * 2);
     for (const line of msgLines) {
-      ctx.fillText(line, PAD2, y2);
-      y2 += 64;
+      ctx.fillText(line, PAD2, y3);
+      y3 += 64;
     }
-    y2 += 48;
+    y3 += 48;
     ctx.strokeStyle = "#e2e8f0";
     ctx.lineWidth = 2;
     ctx.beginPath();
-    ctx.moveTo(PAD2, y2);
-    ctx.lineTo(W - PAD2, y2);
+    ctx.moveTo(PAD2, y3);
+    ctx.lineTo(W - PAD2, y3);
     ctx.stroke();
-    y2 += 56;
+    y3 += 56;
     ctx.fillStyle = "#94a3b8";
     ctx.font = `700 22px ${SANS}`;
-    ctx.fillText(responseLabel.toUpperCase(), PAD2, y2);
-    y2 += 50;
+    ctx.fillText(responseLabel.toUpperCase(), PAD2, y3);
+    y3 += 50;
     ctx.fillStyle = "#1e293b";
     ctx.font = `500 38px ${SANS}`;
     const respLines = wrapTextLines(ctx, respuesta, W - PAD2 * 2);
     for (const line of respLines) {
-      ctx.fillText(line, PAD2, y2);
-      y2 += 58;
+      ctx.fillText(line, PAD2, y3);
+      y3 += 58;
     }
-    const contentFloor = y2 + 20;
+    const contentFloor = y3 + 20;
     if (contentFloor < H2 - 220) {
       ctx.save();
       ctx.beginPath();
       ctx.rect(0, contentFloor, W, H2 - contentFloor);
       ctx.clip();
-      ctx.fillStyle = e2.color;
+      ctx.fillStyle = e3.color;
       ctx.globalAlpha = 0.2;
       ctx.beginPath();
       ctx.arc(W * 0.85, H2 * 0.78, 380, 0, Math.PI * 2);
@@ -1125,20 +1532,204 @@
       return;
     }
     const url = URL.createObjectURL(blob);
-    const a2 = document.createElement("a");
-    a2.href = url;
-    a2.download = `${filename}.png`;
-    document.body.appendChild(a2);
-    a2.click();
-    a2.remove();
+    const a3 = document.createElement("a");
+    a3.href = url;
+    a3.download = `${filename}.png`;
+    document.body.appendChild(a3);
+    a3.click();
+    a3.remove();
     setTimeout(() => URL.revokeObjectURL(url), 1e3);
+  }
+  var MOOD_SVGS = {
+    agitado: `<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 80 80" fill="none" aria-hidden="true"><circle cx="40" cy="42" r="26" stroke="currentColor" stroke-width="3.5"/><line x1="26" y1="32" x2="34" y2="36" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><line x1="54" y1="32" x2="46" y2="36" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><circle cx="32" cy="42" r="2" fill="currentColor"/><circle cx="48" cy="42" r="2" fill="currentColor"/><path d="M30 54 L34 50 L38 54 L42 50 L46 54 L50 50" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>`,
+    triste: `<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 80 80" fill="none" aria-hidden="true"><circle cx="40" cy="42" r="26" stroke="currentColor" stroke-width="3.5"/><path d="M28 40 C 30 44, 34 44, 36 40" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M44 40 C 46 44, 50 44, 52 40" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M32 56 C 36 50, 44 50, 48 56" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M34 48 C 33 52, 31 54, 32 56 C 33 56, 34 54, 34 48 Z" fill="currentColor"/></svg>`,
+    confundido: `<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 80 80" fill="none" aria-hidden="true"><circle cx="40" cy="42" r="26" stroke="currentColor" stroke-width="3.5"/><line x1="26" y1="34" x2="34" y2="32" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><line x1="46" y1="32" x2="54" y2="36" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><circle cx="32" cy="42" r="2" fill="currentColor"/><circle cx="48" cy="42" r="2" fill="currentColor"/><path d="M30 54 C 34 52, 38 56, 42 54 C 46 52, 48 56, 52 54" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>`,
+    bien: `<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 80 80" fill="none" aria-hidden="true"><circle cx="40" cy="42" r="26" stroke="currentColor" stroke-width="3.5"/><path d="M28 42 C 30 38, 34 38, 36 42" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M44 42 C 46 38, 50 38, 52 42" stroke="currentColor" stroke-width="3" stroke-linecap="round"/><path d="M30 52 C 34 60, 46 60, 50 52" stroke="currentColor" stroke-width="3" stroke-linecap="round"/></svg>`
+  };
+  function CheckinCard({ cat, t: t3, onClick }) {
+    const svgHtml = MOOD_SVGS[cat.key];
+    return /* @__PURE__ */ u3(
+      "button",
+      {
+        type: "button",
+        "data-mood": cat.key,
+        class: "checkin-card w-full p-5 rounded-2xl shadow-sm text-left flex flex-col gap-3 hover:shadow-md transition-all active:scale-95",
+        style: `background-color:${cat.color};color:${cat.ink}`,
+        onClick,
+        children: [
+          svgHtml ? /* @__PURE__ */ u3("span", { dangerouslySetInnerHTML: { __html: svgHtml } }) : /* @__PURE__ */ u3("span", { class: "text-3xl", "aria-hidden": "true", children: cat.emoji }),
+          /* @__PURE__ */ u3("span", { class: "font-black text-base leading-tight", children: t3(cat.labelKey) })
+        ]
+      }
+    );
+  }
+  function EmotionCard({ e: e3, getDisplayName, t: t3, onSelect }) {
+    return /* @__PURE__ */ u3(
+      "div",
+      {
+        class: "emotion-card p-5 rounded-2xl shadow-sm cursor-pointer flex justify-between items-center bg-white",
+        style: `border-left:8px solid ${e3.color}`,
+        tabIndex: 0,
+        role: "button",
+        "aria-label": `${t3("openDetailAria")} ${getDisplayName(e3.nombre)}`,
+        onClick: (ev) => onSelect(e3, ev.currentTarget),
+        onKeyDown: (ev) => {
+          if (ev.key === "Enter" || ev.key === " ") {
+            ev.preventDefault();
+            onSelect(e3, ev.currentTarget);
+          }
+        },
+        children: [
+          /* @__PURE__ */ u3("span", { class: "font-bold text-lg text-slate-700", children: getDisplayName(e3.nombre) }),
+          /* @__PURE__ */ u3("svg", { class: "w-4 h-4 text-slate-300 shrink-0", viewBox: "0 0 24 24", fill: "currentColor", "aria-hidden": "true", children: /* @__PURE__ */ u3("path", { d: "M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z" }) })
+        ]
+      }
+    );
+  }
+  function TechniqueSection({ emotionNombre, t: t3, lang }) {
+    const [open, setOpen] = d2(false);
+    const tech = REGULATION_TECHNIQUES[emotionNombre];
+    if (!tech) return null;
+    const data = tech[lang] ?? tech.es;
+    return /* @__PURE__ */ u3("div", { children: [
+      /* @__PURE__ */ u3(
+        "button",
+        {
+          id: "technique-toggle",
+          type: "button",
+          class: "flex items-center gap-2 text-[11px] font-black text-indigo-500 uppercase tracking-widest w-full text-left px-1 mb-2",
+          "aria-expanded": String(open),
+          onClick: () => setOpen(!open),
+          children: [
+            /* @__PURE__ */ u3(
+              "svg",
+              {
+                id: "technique-chevron",
+                class: `w-3.5 h-3.5 transition-transform shrink-0 ${open ? "rotate-90" : ""}`,
+                viewBox: "0 0 24 24",
+                fill: "currentColor",
+                "aria-hidden": "true",
+                children: /* @__PURE__ */ u3("path", { d: "M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z" })
+              }
+            ),
+            t3("technique.practice")
+          ]
+        }
+      ),
+      open && /* @__PURE__ */ u3("div", { id: "technique-body", class: "bg-indigo-50 border-2 border-indigo-100 rounded-2xl p-4", children: [
+        /* @__PURE__ */ u3("p", { class: "text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-2", children: [
+          t3("technique.label"),
+          " \xB7 ",
+          data.name
+        ] }),
+        /* @__PURE__ */ u3("ol", { class: "space-y-2", children: data.steps.map((s3, i3) => /* @__PURE__ */ u3("li", { class: "flex gap-2 text-sm text-indigo-900 leading-snug", children: [
+          /* @__PURE__ */ u3("span", { class: "font-black text-indigo-400 shrink-0", children: [
+            i3 + 1,
+            "."
+          ] }),
+          /* @__PURE__ */ u3("span", { children: s3 })
+        ] }, i3)) })
+      ] })
+    ] });
+  }
+  function CopyButton({ text, t: t3 }) {
+    const [copied, setCopied] = d2(false);
+    if (typeof navigator === "undefined" || !navigator.clipboard) return null;
+    return /* @__PURE__ */ u3(
+      "button",
+      {
+        id: "copy-response-btn",
+        type: "button",
+        class: "flex items-center gap-1 text-slate-400 hover:text-slate-600 transition-colors text-[11px] font-bold",
+        "aria-label": t3("copyButton"),
+        onClick: async () => {
+          await navigator.clipboard.writeText(text);
+          setCopied(true);
+          setTimeout(() => setCopied(false), 2e3);
+        },
+        children: [
+          /* @__PURE__ */ u3("svg", { class: "w-3.5 h-3.5", viewBox: "0 0 24 24", fill: "currentColor", "aria-hidden": "true", children: /* @__PURE__ */ u3("path", { d: "M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" }) }),
+          /* @__PURE__ */ u3("span", { id: "copy-response-label", children: copied ? t3("copiedFeedback") : t3("copyButton") })
+        ]
+      }
+    );
+  }
+  function ModalContent({ e: e3, t: t3, getDisplayName, getEmotionField, relaciones, emociones: emociones2, onShowDetail }) {
+    const quoteTextColor = getReadableTextColor(e3.color);
+    const quoteLabelColor = quoteTextColor === "#f8fafc" ? "rgba(248,250,252,0.9)" : "rgba(15,23,42,0.85)";
+    const lang = get("currentLang") || "es";
+    const maskedEmotions = relaciones.filter((r3) => r3.type === "enmascara" && r3.from === e3.nombre).map((r3) => emociones2.find((em) => em.nombre === r3.to)).filter(Boolean);
+    return /* @__PURE__ */ u3("div", { children: [
+      /* @__PURE__ */ u3("div", { class: "inline-block px-4 py-1 rounded-full mb-2", style: `background-color:${e3.color}; color:${quoteTextColor}`, children: /* @__PURE__ */ u3("span", { class: "text-xs font-black uppercase tracking-widest", children: t3("emotionTag") }) }),
+      /* @__PURE__ */ u3("h2", { id: "modal-emotion-title", class: "text-4xl font-black mb-6 text-slate-800", children: getDisplayName(e3.nombre) }),
+      /* @__PURE__ */ u3("div", { class: "space-y-6", children: [
+        /* @__PURE__ */ u3("div", { class: "grid grid-cols-1 gap-4", children: [
+          { labelKey: "feelLabel", field: "siente" },
+          { labelKey: "triggerLabel", field: "dispara" },
+          { labelKey: "functionLabel", field: "funcion" }
+        ].map(({ labelKey, field }) => /* @__PURE__ */ u3("div", { class: "bg-slate-50 p-4 rounded-2xl", children: [
+          /* @__PURE__ */ u3("p", { class: "text-[11px] font-black text-slate-500 uppercase tracking-widest mb-1", children: t3(labelKey) }),
+          /* @__PURE__ */ u3("p", { class: "text-slate-700 leading-relaxed font-medium", children: getEmotionField(e3, field) })
+        ] }, field)) }),
+        /* @__PURE__ */ u3(
+          "div",
+          {
+            class: "relative p-6 rounded-3xl overflow-hidden shadow-lg",
+            style: `background-color:${e3.color}; color:${quoteTextColor}`,
+            children: [
+              /* @__PURE__ */ u3("svg", { class: "absolute -top-2 -left-2 text-black/10 w-16 h-16", viewBox: "0 0 24 24", fill: "currentColor", "aria-hidden": "true", children: /* @__PURE__ */ u3("path", { d: "M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z" }) }),
+              /* @__PURE__ */ u3("p", { class: "text-[11px] font-black uppercase tracking-widest mb-2", style: `color:${quoteLabelColor}`, children: t3("messageLabel") }),
+              /* @__PURE__ */ u3(
+                "p",
+                {
+                  class: "text-[1.45rem] sm:text-[1.65rem] font-serif italic leading-[1.35] sm:leading-snug",
+                  style: `color:${quoteTextColor}`,
+                  children: [
+                    '"',
+                    getEmotionField(e3, "mensaje"),
+                    '"'
+                  ]
+                }
+              )
+            ]
+          }
+        ),
+        /* @__PURE__ */ u3("div", { children: [
+          /* @__PURE__ */ u3("p", { class: "text-[11px] font-black text-amber-600 uppercase tracking-widest mb-2 px-1", children: t3("impulseLabel") }),
+          /* @__PURE__ */ u3("div", { class: "bg-amber-50 border-2 border-amber-100 p-4 rounded-2xl", children: /* @__PURE__ */ u3("p", { class: "text-amber-900 font-bold leading-relaxed", children: getEmotionField(e3, "impulso") }) })
+        ] }),
+        /* @__PURE__ */ u3("div", { children: [
+          /* @__PURE__ */ u3("div", { class: "flex items-center justify-between mb-2 px-1", children: [
+            /* @__PURE__ */ u3("p", { class: "text-[11px] font-black text-slate-500 uppercase tracking-widest", children: t3("responseLabel") }),
+            /* @__PURE__ */ u3(CopyButton, { text: getEmotionField(e3, "respuesta"), t: t3 })
+          ] }),
+          /* @__PURE__ */ u3("div", { class: "bg-emerald-50 border-2 border-emerald-100 p-4 rounded-2xl", children: /* @__PURE__ */ u3("p", { class: "text-emerald-900 font-bold leading-relaxed", children: getEmotionField(e3, "respuesta") }) })
+        ] }),
+        /* @__PURE__ */ u3(TechniqueSection, { emotionNombre: e3.nombre, t: t3, lang }),
+        maskedEmotions.length > 0 && /* @__PURE__ */ u3("div", { class: "border-t border-slate-100 pt-4", children: [
+          /* @__PURE__ */ u3("p", { class: "text-[11px] font-black text-violet-500 uppercase tracking-widest mb-2 px-1", children: t3("map.relEnmascara") }),
+          /* @__PURE__ */ u3("div", { class: "flex flex-wrap gap-2 mb-2", children: maskedEmotions.map((m3) => /* @__PURE__ */ u3(
+            "button",
+            {
+              type: "button",
+              class: "masked-chip px-3 py-1.5 rounded-full text-sm font-bold transition-opacity hover:opacity-80",
+              style: `background-color:${m3.color}; color:${getReadableTextColor(m3.color)}`,
+              onClick: () => onShowDetail(m3),
+              children: getDisplayName(m3.nombre)
+            },
+            m3.nombre
+          )) }),
+          /* @__PURE__ */ u3("p", { class: "text-xs text-slate-400 px-1", children: t3("masksHint") })
+        ] })
+      ] })
+    ] });
   }
   function createUI({
     emociones: emociones2,
     relaciones = [],
     getDisplayName,
     getEmotionField,
-    t: t2,
+    t: t3,
     modalAnimationMs: modalAnimationMs2,
     moodCategories = [],
     onAddToDiary = null
@@ -1156,103 +1747,97 @@
       const grid = document.getElementById("recent-grid");
       const recents = loadRecentEmotions();
       if (!recents.length) {
-        section.classList.add("hidden");
-        grid.innerHTML = "";
+        if (section) section.classList.add("hidden");
+        if (grid) R(null, grid);
         return;
       }
-      section.classList.remove("hidden");
-      grid.innerHTML = "";
-      recents.forEach((nombre) => {
-        const emotion = emociones2.find((e2) => e2.nombre === nombre);
-        if (!emotion) return;
-        const card = document.createElement("button");
-        card.type = "button";
-        card.className = "emotion-card shrink-0 w-20 h-20 rounded-full shadow-sm bg-white border-4 flex items-center justify-center text-center px-2 text-[11px] font-bold leading-tight text-slate-700";
-        card.style.borderColor = emotion.color;
-        const displayName = getDisplayName(emotion.nombre);
-        card.setAttribute("aria-label", `${t2("openEmotionAria")} ${displayName}`);
-        card.title = displayName;
-        card.innerHTML = `<span>${shortRecentLabel(displayName)}</span>`;
-        card.addEventListener("click", () => {
-          set("lastFocusedCard", card);
-          showDetail(emotion);
-        });
-        grid.appendChild(card);
-      });
+      if (section) section.classList.remove("hidden");
+      if (!grid) return;
+      const items = recents.map((nombre) => emociones2.find((e3) => e3.nombre === nombre)).filter(Boolean);
+      R(
+        /* @__PURE__ */ u3(S, { children: items.map((emotion) => {
+          const displayName = getDisplayName(emotion.nombre);
+          return /* @__PURE__ */ u3(
+            "button",
+            {
+              type: "button",
+              class: "emotion-card shrink-0 w-20 h-20 rounded-full shadow-sm bg-white border-4 flex items-center justify-center text-center px-2 text-[11px] font-bold leading-tight text-slate-700",
+              style: `border-color:${emotion.color}`,
+              "aria-label": `${t3("openEmotionAria")} ${displayName}`,
+              title: displayName,
+              onClick: (ev) => {
+                set("lastFocusedCard", ev.currentTarget);
+                showDetail(emotion);
+              },
+              children: /* @__PURE__ */ u3("span", { children: shortRecentLabel(displayName) })
+            },
+            emotion.nombre
+          );
+        }) }),
+        grid
+      );
     }
-    function buildEmotionCardEl(e2) {
-      const card = document.createElement("div");
-      card.className = "emotion-card p-5 rounded-2xl shadow-sm cursor-pointer flex justify-between items-center bg-white";
-      card.style.borderLeft = `8px solid ${e2.color}`;
-      card.tabIndex = 0;
-      card.setAttribute("role", "button");
-      card.setAttribute("aria-label", `${t2("openDetailAria")} ${getDisplayName(e2.nombre)}`);
-      card.onclick = () => {
-        set("lastFocusedCard", card);
-        showDetail(e2);
-      };
-      card.addEventListener("keydown", (event) => {
-        if (event.key === "Enter" || event.key === " ") {
-          event.preventDefault();
-          set("lastFocusedCard", card);
-          showDetail(e2);
-        }
+    function renderEmociones(filter = "") {
+      const grid = document.getElementById("emotion-grid");
+      if (!grid) return;
+      const normalized = normalizeText(filter.trim());
+      const visible = emociones2.filter((e3) => {
+        if (!normalized) return true;
+        const searchText = [
+          e3.nombre,
+          getDisplayName(e3.nombre),
+          e3.siente,
+          e3.dispara,
+          e3.mensaje,
+          getEmotionField(e3, "siente"),
+          getEmotionField(e3, "dispara"),
+          getEmotionField(e3, "mensaje"),
+          getEmotionField(e3, "respuesta")
+        ].map(normalizeText).join(" ");
+        return searchText.includes(normalized);
       });
-      card.innerHTML = `
-            <span class="font-bold text-lg text-slate-700">${getDisplayName(e2.nombre)}</span>
-            <svg class="w-4 h-4 text-slate-300 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
-        `;
-      return card;
+      R(
+        /* @__PURE__ */ u3(S, { children: [
+          visible.map((e3) => /* @__PURE__ */ u3(
+            EmotionCard,
+            {
+              e: e3,
+              getDisplayName,
+              t: t3,
+              onSelect: (emotion, el) => {
+                set("lastFocusedCard", el);
+                showDetail(emotion);
+              }
+            },
+            e3.nombre
+          )),
+          !visible.length && /* @__PURE__ */ u3("div", { class: "search-empty-state bg-white rounded-2xl p-5 text-center shadow-sm border border-slate-200", children: [
+            /* @__PURE__ */ u3("p", { class: "text-slate-700 font-bold mb-1", children: t3("emptyTitle") }),
+            /* @__PURE__ */ u3("p", { class: "text-slate-500 text-sm", children: t3("emptyHint") })
+          ] })
+        ] }),
+        grid
+      );
     }
-    const MOOD_SVGS = {
-      agitado: `<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 80 80" fill="none" aria-hidden="true">
-            <circle cx="40" cy="42" r="26" stroke="currentColor" stroke-width="3.5"/>
-            <line x1="26" y1="32" x2="34" y2="36" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-            <line x1="54" y1="32" x2="46" y2="36" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-            <circle cx="32" cy="42" r="2" fill="currentColor"/>
-            <circle cx="48" cy="42" r="2" fill="currentColor"/>
-            <path d="M30 54 L34 50 L38 54 L42 50 L46 54 L50 50" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>`,
-      triste: `<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 80 80" fill="none" aria-hidden="true">
-            <circle cx="40" cy="42" r="26" stroke="currentColor" stroke-width="3.5"/>
-            <path d="M28 40 C 30 44, 34 44, 36 40" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-            <path d="M44 40 C 46 44, 50 44, 52 40" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-            <path d="M32 56 C 36 50, 44 50, 48 56" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-            <path d="M34 48 C 33 52, 31 54, 32 56 C 33 56, 34 54, 34 48 Z" fill="currentColor"/>
-        </svg>`,
-      confundido: `<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 80 80" fill="none" aria-hidden="true">
-            <circle cx="40" cy="42" r="26" stroke="currentColor" stroke-width="3.5"/>
-            <line x1="26" y1="34" x2="34" y2="32" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-            <line x1="46" y1="32" x2="54" y2="36" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-            <circle cx="32" cy="42" r="2" fill="currentColor"/>
-            <circle cx="48" cy="42" r="2" fill="currentColor"/>
-            <path d="M30 54 C 34 52, 38 56, 42 54 C 46 52, 48 56, 52 54" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-        </svg>`,
-      bien: `<svg xmlns="http://www.w3.org/2000/svg" width="56" height="56" viewBox="0 0 80 80" fill="none" aria-hidden="true">
-            <circle cx="40" cy="42" r="26" stroke="currentColor" stroke-width="3.5"/>
-            <path d="M28 42 C 30 38, 34 38, 36 42" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-            <path d="M44 42 C 46 38, 50 38, 52 42" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-            <path d="M30 52 C 34 60, 46 60, 50 52" stroke="currentColor" stroke-width="3" stroke-linecap="round"/>
-        </svg>`
-    };
     function renderCheckinTab() {
       const grid = document.getElementById("checkin-cards-grid");
       if (!grid || !moodCategories.length) return;
-      grid.innerHTML = moodCategories.map((cat) => `
-            <button type="button" data-mood="${cat.key}"
-                class="checkin-card w-full p-5 rounded-2xl shadow-sm text-left flex flex-col gap-3 hover:shadow-md transition-all active:scale-95"
-                style="background-color:${cat.color};color:${cat.ink}">
-                ${MOOD_SVGS[cat.key] ?? `<span class="text-3xl" aria-hidden="true">${cat.emoji}</span>`}
-                <span class="font-black text-base leading-tight">${t2(cat.labelKey)}</span>
-            </button>
-        `).join("");
-      for (const btn of grid.querySelectorAll(".checkin-card")) {
-        btn.addEventListener("click", () => renderCheckinEmotions(btn.dataset.mood));
-      }
+      R(
+        /* @__PURE__ */ u3(S, { children: moodCategories.map((cat) => /* @__PURE__ */ u3(
+          CheckinCard,
+          {
+            cat,
+            t: t3,
+            onClick: () => renderCheckinEmotions(cat.key)
+          },
+          cat.key
+        )) }),
+        grid
+      );
       if (activeCheckinCat) renderCheckinEmotions(activeCheckinCat);
     }
     function renderCheckinEmotions(catKey) {
-      const cat = moodCategories.find((c2) => c2.key === catKey);
+      const cat = moodCategories.find((c3) => c3.key === catKey);
       if (!cat) return;
       activeCheckinCat = catKey;
       const section = document.getElementById("checkin-emotion-section");
@@ -1261,62 +1846,32 @@
       const resetBtn = document.getElementById("checkin-reset-btn");
       if (!section || !filteredGrid) return;
       section.classList.remove("hidden");
-      if (label) label.textContent = `${cat.emoji} ${t2(cat.labelKey)}`;
-      filteredGrid.innerHTML = "";
-      for (const e2 of emociones2.filter((em) => cat.emotions.includes(em.nombre))) {
-        filteredGrid.appendChild(buildEmotionCardEl(e2));
-      }
+      if (label) label.textContent = `${cat.emoji} ${t3(cat.labelKey)}`;
+      const filtered = emociones2.filter((em) => cat.emotions.includes(em.nombre));
+      R(
+        /* @__PURE__ */ u3(S, { children: filtered.map((e3) => /* @__PURE__ */ u3(
+          EmotionCard,
+          {
+            e: e3,
+            getDisplayName,
+            t: t3,
+            onSelect: (emotion, el) => {
+              set("lastFocusedCard", el);
+              showDetail(emotion);
+            }
+          },
+          e3.nombre
+        )) }),
+        filteredGrid
+      );
       if (resetBtn) {
-        const freshBtn = resetBtn.cloneNode(true);
-        resetBtn.replaceWith(freshBtn);
-        freshBtn.textContent = t2("checkin.reset");
-        freshBtn.addEventListener("click", () => {
+        resetBtn.textContent = t3("checkin.reset");
+        resetBtn.onclick = () => {
           activeCheckinCat = null;
           section.classList.add("hidden");
-        });
+        };
       }
       section.scrollIntoView({ behavior: "smooth", block: "nearest" });
-    }
-    function renderEmociones(filter = "") {
-      const grid = document.getElementById("emotion-grid");
-      grid.innerHTML = "";
-      for (const e2 of emociones2) {
-        const card = buildEmotionCardEl(e2);
-        card.dataset.search = [
-          e2.nombre,
-          getDisplayName(e2.nombre),
-          e2.siente,
-          e2.dispara,
-          e2.mensaje,
-          getEmotionField(e2, "siente"),
-          getEmotionField(e2, "dispara"),
-          getEmotionField(e2, "mensaje"),
-          getEmotionField(e2, "respuesta")
-        ].map(normalizeText).join(" ");
-        grid.appendChild(card);
-      }
-      filterEmociones(filter);
-    }
-    function filterEmociones(filter) {
-      const grid = document.getElementById("emotion-grid");
-      if (!grid) return;
-      const normalizedFilter = normalizeText(filter.trim());
-      grid.querySelector(".search-empty-state")?.remove();
-      let visibleCount = 0;
-      for (const card of grid.querySelectorAll("[data-search]")) {
-        const matches = !normalizedFilter || card.dataset.search.includes(normalizedFilter);
-        card.hidden = !matches;
-        if (matches) visibleCount++;
-      }
-      if (!visibleCount) {
-        const emptyState = document.createElement("div");
-        emptyState.className = "search-empty-state bg-white rounded-2xl p-5 text-center shadow-sm border border-slate-200";
-        emptyState.innerHTML = `
-                <p class="text-slate-700 font-bold mb-1">${t2("emptyTitle")}</p>
-                <p class="text-slate-500 text-sm">${t2("emptyHint")}</p>
-            `;
-        grid.appendChild(emptyState);
-      }
     }
     function showDiaryForm(emotionNombre) {
       const existingForm = document.getElementById("diary-inline-form");
@@ -1328,188 +1883,75 @@
       form.id = "diary-inline-form";
       form.className = "mt-4 border-t border-slate-100 pt-4";
       form.innerHTML = `
-            <label for="diary-note-input" class="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2 block">${t2("diary.noteLabel")}</label>
-            <textarea id="diary-note-input" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-700 resize-none focus:outline-none focus:ring-2 focus:ring-blue-200" rows="2" placeholder="${t2("diary.notePlaceholder")}"></textarea>
+            <label for="diary-note-input" class="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2 block">${t3("diary.noteLabel")}</label>
+            <textarea id="diary-note-input" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-700 resize-none focus:outline-none focus:ring-2 focus:ring-blue-200" rows="2" placeholder="${t3("diary.notePlaceholder")}"></textarea>
             <div class="flex gap-2 mt-2">
-                <button id="diary-note-save" type="button" class="flex-1 bg-slate-800 text-white py-2.5 rounded-xl font-bold text-sm hover:bg-slate-700 transition-colors">${t2("diary.saveButton")}</button>
-                <button id="diary-note-cancel" type="button" class="flex-1 bg-slate-100 text-slate-600 py-2.5 rounded-xl font-bold text-sm hover:bg-slate-200 transition-colors">${t2("diary.cancelButton")}</button>
+                <button id="diary-note-save" type="button" class="flex-1 bg-slate-800 text-white py-2.5 rounded-xl font-bold text-sm hover:bg-slate-700 transition-colors">${t3("diary.saveButton")}</button>
+                <button id="diary-note-cancel" type="button" class="flex-1 bg-slate-100 text-slate-600 py-2.5 rounded-xl font-bold text-sm hover:bg-slate-200 transition-colors">${t3("diary.cancelButton")}</button>
             </div>
         `;
       const panel = document.getElementById("modal-panel");
+      if (!panel) return;
       panel.appendChild(form);
       form.querySelector("#diary-note-input").focus();
       panel.scrollTop = panel.scrollHeight;
       form.querySelector("#diary-note-save").addEventListener("click", () => {
         const note = form.querySelector("#diary-note-input").value;
         if (onAddToDiary) onAddToDiary(emotionNombre, note);
-        form.innerHTML = `<p class="text-emerald-600 font-bold text-sm text-center py-2">\u2713 ${t2("diary.addedFeedback")}</p>`;
+        form.innerHTML = `<p class="text-emerald-600 font-bold text-sm text-center py-2">\u2713 ${t3("diary.addedFeedback")}</p>`;
         setTimeout(() => form.remove(), 1800);
       });
       form.querySelector("#diary-note-cancel").addEventListener("click", () => form.remove());
     }
-    function wireDiaryButton(emotionNombre) {
-      const diaryAddBtn = document.getElementById("diary-add-btn");
-      if (!diaryAddBtn || !onAddToDiary) return;
-      const freshBtn = diaryAddBtn.cloneNode(true);
-      diaryAddBtn.replaceWith(freshBtn);
-      freshBtn.addEventListener("click", () => showDiaryForm(emotionNombre));
-    }
-    function buildTechniqueSection(emotionNombre) {
-      const tech = REGULATION_TECHNIQUES[emotionNombre];
-      if (!tech) return "";
-      const lang = get("currentLang");
-      const data = tech[lang] ?? tech.es;
-      const steps = data.steps.map((s2, i2) => `
-            <li class="flex gap-2 text-sm text-indigo-900 leading-snug">
-                <span class="font-black text-indigo-400 shrink-0">${i2 + 1}.</span>
-                <span>${s2}</span>
-            </li>`).join("");
-      return `
-            <div>
-                <button id="technique-toggle" type="button"
-                    class="flex items-center gap-2 text-[11px] font-black text-indigo-500 uppercase tracking-widest w-full text-left px-1 mb-2"
-                    aria-expanded="false">
-                    <svg id="technique-chevron" class="w-3.5 h-3.5 transition-transform shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
-                    ${t2("technique.practice")}
-                </button>
-                <div id="technique-body" class="hidden bg-indigo-50 border-2 border-indigo-100 rounded-2xl p-4">
-                    <p class="text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-2">${t2("technique.label")} \xB7 ${data.name}</p>
-                    <ol class="space-y-2">${steps}</ol>
-                </div>
-            </div>
-        `;
-    }
-    function showDetail(e2) {
+    function showDetail(e3) {
       document.getElementById("diary-inline-form")?.remove();
-      const quoteTextColor = getReadableTextColor(e2.color);
-      const quoteLabelColor = quoteTextColor === "#f8fafc" ? "rgba(248,250,252,0.9)" : "rgba(15,23,42,0.85)";
-      const maskedEmotions = relaciones.filter((r2) => r2.type === "enmascara" && r2.from === e2.nombre).map((r2) => emociones2.find((em) => em.nombre === r2.to)).filter(Boolean);
-      const masksSection = maskedEmotions.length > 0 ? `
-                <div class="border-t border-slate-100 pt-4">
-                    <p class="text-[11px] font-black text-violet-500 uppercase tracking-widest mb-2 px-1">${t2("map.relEnmascara")}</p>
-                    <div class="flex flex-wrap gap-2 mb-2">
-                        ${maskedEmotions.map((m2) => `
-                            <button type="button" data-masked="${m2.nombre}"
-                                class="masked-chip px-3 py-1.5 rounded-full text-sm font-bold transition-opacity hover:opacity-80"
-                                style="background-color:${m2.color}; color:${getReadableTextColor(m2.color)}">
-                                ${getDisplayName(m2.nombre)}
-                            </button>
-                        `).join("")}
-                    </div>
-                    <p class="text-xs text-slate-400 px-1">${t2("masksHint")}</p>
-                </div>
-        ` : "";
       const content = document.getElementById("modal-content");
-      content.innerHTML = `
-            <div class="inline-block px-4 py-1 rounded-full mb-2" style="background-color:${e2.color}; color:${quoteTextColor}">
-                <span class="text-xs font-black uppercase tracking-widest">${t2("emotionTag")}</span>
-            </div>
-            <h2 id="modal-emotion-title" class="text-4xl font-black mb-6 text-slate-800">${getDisplayName(e2.nombre)}</h2>
-
-            <div class="space-y-6">
-                <div class="grid grid-cols-1 gap-4">
-                    <div class="bg-slate-50 p-4 rounded-2xl">
-                        <p class="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-1">${t2("feelLabel")}</p>
-                        <p class="text-slate-700 leading-relaxed font-medium">${getEmotionField(e2, "siente")}</p>
-                    </div>
-                    <div class="bg-slate-50 p-4 rounded-2xl">
-                        <p class="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-1">${t2("triggerLabel")}</p>
-                        <p class="text-slate-700 leading-relaxed font-medium">${getEmotionField(e2, "dispara")}</p>
-                    </div>
-                    <div class="bg-slate-50 p-4 rounded-2xl">
-                        <p class="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-1">${t2("functionLabel")}</p>
-                        <p class="text-slate-700 leading-relaxed font-medium">${getEmotionField(e2, "funcion")}</p>
-                    </div>
-                </div>
-
-                <div class="relative p-6 rounded-3xl overflow-hidden shadow-lg" style="background-color:${e2.color}; color:${quoteTextColor}">
-                    <svg class="absolute -top-2 -left-2 text-black/10 w-16 h-16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M6 17h3l2-4V7H5v6h3zm8 0h3l2-4V7h-6v6h3z"/></svg>
-                    <p class="text-[11px] font-black uppercase tracking-widest mb-2" style="color:${quoteLabelColor}">${t2("messageLabel")}</p>
-                    <p class="text-[1.45rem] sm:text-[1.65rem] font-serif italic leading-[1.35] sm:leading-snug" style="color:${quoteTextColor}">"${getEmotionField(e2, "mensaje")}"</p>
-                </div>
-
-                <div>
-                    <p class="text-[11px] font-black text-amber-600 uppercase tracking-widest mb-2 px-1">${t2("impulseLabel")}</p>
-                    <div class="bg-amber-50 border-2 border-amber-100 p-4 rounded-2xl">
-                        <p class="text-amber-900 font-bold leading-relaxed">${getEmotionField(e2, "impulso")}</p>
-                    </div>
-                </div>
-
-                <div>
-                    <div class="flex items-center justify-between mb-2 px-1">
-                        <p class="text-[11px] font-black text-slate-500 uppercase tracking-widest">${t2("responseLabel")}</p>
-                        <button id="copy-response-btn" type="button" class="flex items-center gap-1 text-slate-400 hover:text-slate-600 transition-colors text-[11px] font-bold" aria-label="${t2("copyButton")}">
-                            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
-                            <span id="copy-response-label">${t2("copyButton")}</span>
-                        </button>
-                    </div>
-                    <div class="bg-emerald-50 border-2 border-emerald-100 p-4 rounded-2xl">
-                        <p class="text-emerald-900 font-bold leading-relaxed">${getEmotionField(e2, "respuesta")}</p>
-                    </div>
-                </div>
-
-                ${buildTechniqueSection(e2.nombre)}
-                ${masksSection}
-            </div>
-        `;
+      if (!content) return;
+      R(
+        /* @__PURE__ */ u3(
+          ModalContent,
+          {
+            e: e3,
+            t: t3,
+            getDisplayName,
+            getEmotionField,
+            relaciones,
+            emociones: emociones2,
+            onShowDetail: showDetail
+          }
+        ),
+        content
+      );
       const modal = document.getElementById("modal");
       const panel = document.getElementById("modal-panel");
+      if (!modal || !panel) return;
       if (!modal.open) modal.showModal();
       panel.scrollTop = 0;
       document.body.style.overflow = "hidden";
       requestAnimationFrame(() => {
         panel.classList.remove("translate-y-8", "sm:scale-95", "opacity-0");
       });
-      saveRecentEmotion(e2.nombre);
-      const copyBtn = document.getElementById("copy-response-btn");
-      const copyLabel = document.getElementById("copy-response-label");
-      if (copyBtn && navigator.clipboard) {
-        copyBtn.addEventListener("click", async () => {
-          await navigator.clipboard.writeText(getEmotionField(e2, "respuesta"));
-          copyLabel.textContent = t2("copiedFeedback");
-          setTimeout(() => {
-            copyLabel.textContent = t2("copyButton");
-          }, 2e3);
-        });
-      } else if (copyBtn) {
-        copyBtn.remove();
+      saveRecentEmotion(e3.nombre);
+      const shareBtn = document.getElementById("share-btn");
+      if (shareBtn) {
+        shareBtn.onclick = async () => {
+          const canvas = await buildEmotionCanvas(
+            e3,
+            getDisplayName(e3.nombre),
+            t3("emotionTag"),
+            getEmotionField(e3, "mensaje"),
+            t3("responseLabel"),
+            getEmotionField(e3, "respuesta")
+          );
+          shareEmotionCard(canvas, getDisplayName(e3.nombre));
+        };
       }
-      for (const chip of content.querySelectorAll(".masked-chip")) {
-        chip.addEventListener("click", () => {
-          const masked = emociones2.find((em) => em.nombre === chip.dataset.masked);
-          if (masked) showDetail(masked);
-        });
+      const diaryAddBtn = document.getElementById("diary-add-btn");
+      if (diaryAddBtn && onAddToDiary) {
+        diaryAddBtn.onclick = () => showDiaryForm(e3.nombre);
       }
       const closeButton = document.getElementById("close-button");
       if (closeButton) closeButton.focus({ preventScroll: true });
-      const shareBtn = document.getElementById("share-btn");
-      if (shareBtn) {
-        const freshShareBtn = shareBtn.cloneNode(true);
-        shareBtn.replaceWith(freshShareBtn);
-        freshShareBtn.addEventListener("click", async () => {
-          const canvas = await buildEmotionCanvas(
-            e2,
-            getDisplayName(e2.nombre),
-            t2("emotionTag"),
-            getEmotionField(e2, "mensaje"),
-            t2("responseLabel"),
-            getEmotionField(e2, "respuesta")
-          );
-          shareEmotionCard(canvas, getDisplayName(e2.nombre));
-        });
-      }
-      wireDiaryButton(e2.nombre);
-      const techniqueToggle = content.querySelector("#technique-toggle");
-      if (techniqueToggle) {
-        techniqueToggle.addEventListener("click", () => {
-          const body = content.querySelector("#technique-body");
-          const chevron = content.querySelector("#technique-chevron");
-          const expanded = techniqueToggle.getAttribute("aria-expanded") === "true";
-          techniqueToggle.setAttribute("aria-expanded", String(!expanded));
-          body?.classList.toggle("hidden", expanded);
-          chevron?.classList.toggle("rotate-90", !expanded);
-        });
-      }
       if (scrollCleanup) scrollCleanup();
       const onPanelScroll = () => {
         const atBottom = panel.scrollHeight - panel.scrollTop <= panel.clientHeight + 8;
@@ -1522,7 +1964,7 @@
     function closeModal() {
       const modal = document.getElementById("modal");
       const panel = document.getElementById("modal-panel");
-      if (!modal.open || get("isClosingModal")) return;
+      if (!modal || !modal.open || get("isClosingModal")) return;
       set("isClosingModal", true);
       panel.classList.add("translate-y-8", "sm:scale-95", "opacity-0");
       if (scrollCleanup) {
@@ -1542,15 +1984,15 @@
       const modalBackdrop = document.getElementById("modal-backdrop");
       const closeButton = document.getElementById("close-button");
       const search = document.getElementById("search");
-      modalBackdrop.addEventListener("click", (event) => {
+      modalBackdrop?.addEventListener("click", (event) => {
         if (event.target === modalBackdrop) closeModal();
       });
-      modal.addEventListener("cancel", (event) => {
+      modal?.addEventListener("cancel", (event) => {
         event.preventDefault();
         closeModal();
       });
-      closeButton.addEventListener("click", closeModal);
-      search.addEventListener("input", (event) => filterEmociones(event.target.value));
+      closeButton?.addEventListener("click", closeModal);
+      search?.addEventListener("input", (event) => renderEmociones(event.target.value));
     }
     return {
       renderRecentEmotions,
@@ -1563,7 +2005,7 @@
     };
   }
 
-  // js/bodyMap.js
+  // js/bodyMap.jsx
   var BODY_PARTS = [
     { tag: "ellipse", cx: 50, cy: 17, rx: 13, ry: 14 },
     { tag: "path", d: "M45 29 L45 42 L55 42 L55 29 Z" },
@@ -1592,76 +2034,219 @@
       legs: [{ x: 0, y: 138, w: 100, h: 62 }]
     }
   };
-  function bodyPartSvg(part, attrs) {
-    const a2 = Object.entries(attrs).map(([k2, v2]) => `${k2}="${v2}"`).join(" ");
-    if (part.tag === "ellipse") return `<ellipse cx="${part.cx}" cy="${part.cy}" rx="${part.rx}" ry="${part.ry}" ${a2}/>`;
-    if (part.tag === "path") return `<path d="${part.d}" ${a2}/>`;
+  function bodyPartStr(part, attrs) {
+    const a3 = Object.entries(attrs).map(([k3, v3]) => `${k3}="${v3}"`).join(" ");
+    if (part.tag === "ellipse") return `<ellipse cx="${part.cx}" cy="${part.cy}" rx="${part.rx}" ry="${part.ry}" ${a3}/>`;
+    if (part.tag === "path") return `<path d="${part.d}" ${a3}/>`;
     return "";
   }
   function getZoneEmotionNames(zoneId, mode) {
     const detailZones = mode === "simple" ? SIMPLE_ZONE_GROUPS[zoneId] || [zoneId] : [zoneId];
     const names = /* @__PURE__ */ new Set();
-    for (const dz of detailZones) {
-      for (const n2 of BODY_ZONE_EMOTIONS[dz] || []) names.add(n2);
-    }
+    for (const dz of detailZones) for (const n2 of BODY_ZONE_EMOTIONS[dz] || []) names.add(n2);
     return names;
   }
-  function buildSvgZoneRects(zones, rects, selectedZones) {
-    return zones.map((zone) => {
+  function buildSvgInner(zones, rects, selectedZones, lineColor, bodyFill, t3) {
+    const clipShapes = BODY_PARTS.map((p3) => bodyPartStr(p3, { fill: "white" })).join("");
+    const zoneRects = zones.map((zone) => {
       const on2 = selectedZones.has(zone.id);
       const fill = on2 ? zone.color + "66" : zone.color + "33";
       const strk = on2 ? zone.color : zone.color + "66";
       const sw = on2 ? "1.5" : "0.75";
       return (rects[zone.id] || []).map(
-        (r2) => `<rect x="${r2.x}" y="${r2.y}" width="${r2.w}" height="${r2.h}"
-                data-zone="${zone.id}" fill="${fill}" stroke="${strk}" stroke-width="${sw}"
-                cursor="pointer" class="zone-hit"/>`
+        (r3) => `<rect x="${r3.x}" y="${r3.y}" width="${r3.w}" height="${r3.h}" data-zone="${zone.id}" fill="${fill}" stroke="${strk}" stroke-width="${sw}" cursor="pointer" class="zone-hit"/>`
       ).join("");
     }).join("");
-  }
-  function buildSvgZoneLabels(zones, rects, selectedZones, t2) {
-    return zones.filter((z2) => selectedZones.has(z2.id) && z2.id !== "arms").map((z2) => {
-      const r2 = (rects[z2.id] || [])[0];
-      if (!r2) return "";
-      const lx = r2.x + r2.w / 2;
-      const ly = r2.y + r2.h / 2 + 4;
-      return `<text x="${lx}" y="${ly}" text-anchor="middle" font-size="7.5" font-weight="700"
-                fill="${z2.color}" pointer-events="none" opacity="0.9">${t2(z2.labelKey)}</text>`;
+    const zoneLabels = zones.filter((z3) => selectedZones.has(z3.id) && z3.id !== "arms").map((z3) => {
+      const r3 = (rects[z3.id] || [])[0];
+      if (!r3) return "";
+      const lx = r3.x + r3.w / 2;
+      const ly = r3.y + r3.h / 2 + 4;
+      return `<text x="${lx}" y="${ly}" text-anchor="middle" font-size="7.5" font-weight="700" fill="${z3.color}" pointer-events="none" opacity="0.9">${t3(z3.labelKey)}</text>`;
     }).join("");
+    const bodyOutline = BODY_PARTS.map((p3) => bodyPartStr(p3, {
+      fill: bodyFill,
+      "fill-opacity": "0.35",
+      stroke: lineColor,
+      "stroke-width": "1.5",
+      "stroke-linejoin": "round",
+      "pointer-events": "none"
+    })).join("");
+    const divider = `<line x1="29" y1="100" x2="71" y2="100" stroke="${lineColor}" stroke-dasharray="3,2" opacity="0.35" pointer-events="none"/>`;
+    return [
+      `<defs><clipPath id="body-clip">${clipShapes}</clipPath></defs>`,
+      `<g clip-path="url(#body-clip)">${zoneRects}${zoneLabels}${divider}</g>`,
+      `<g>${bodyOutline}</g>`
+    ].join("");
   }
-  function buildChipsHtml(zones, selectedZones, t2) {
-    return zones.filter((z2) => selectedZones.has(z2.id)).map((z2) => `
-            <span class="inline-flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-full text-white"
-                style="background:${z2.color}">
-                ${t2(z2.labelKey)}
-                <button type="button" data-remove-zone="${z2.id}" aria-label="Quitar ${t2(z2.labelKey)}"
-                    class="opacity-80 hover:opacity-100 leading-none">
-                    <svg class="w-3 h-3" viewBox="0 0 24 24" fill="currentColor"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-                </button>
-            </span>`).join("");
+  function ZoneChips({ zones, selectedZones, t: t3, onRemove }) {
+    const selected = zones.filter((z3) => selectedZones.has(z3.id));
+    return /* @__PURE__ */ u3("div", { class: "flex flex-wrap gap-1.5 mb-4 min-h-[28px]", children: selected.map((z3) => /* @__PURE__ */ u3(
+      "span",
+      {
+        class: "inline-flex items-center gap-1 text-xs font-bold px-2.5 py-1 rounded-full text-white",
+        style: `background:${z3.color}`,
+        children: [
+          t3(z3.labelKey),
+          /* @__PURE__ */ u3(
+            "button",
+            {
+              type: "button",
+              "aria-label": `Quitar ${t3(z3.labelKey)}`,
+              class: "opacity-80 hover:opacity-100 leading-none",
+              onClick: (ev) => {
+                ev.stopPropagation();
+                onRemove(z3.id);
+              },
+              children: /* @__PURE__ */ u3("svg", { class: "w-3 h-3", viewBox: "0 0 24 24", fill: "currentColor", children: /* @__PURE__ */ u3("path", { d: "M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" }) })
+            }
+          )
+        ]
+      },
+      z3.id
+    )) });
   }
-  function buildResultHtml(matching, selectedZones, dark, t2, getDisplayName) {
+  function ResultSection({ matching, selectedZones, dark, t: t3, getDisplayName, onSelect, onDismiss }) {
     const emptyC = dark ? "text-slate-500" : "text-slate-400";
     if (selectedZones.size === 0) {
-      return `<p class="text-sm text-center ${emptyC} py-3 px-2">${t2("body.tapPrompt")}</p>`;
+      return /* @__PURE__ */ u3("p", { class: `text-sm text-center ${emptyC} py-3 px-2`, children: t3("body.tapPrompt") });
     }
     if (matching.length === 0) {
-      return `<p class="text-sm text-center ${emptyC} py-3 px-2">${t2("body.noMatch")}</p>`;
+      return /* @__PURE__ */ u3("p", { class: `text-sm text-center ${emptyC} py-3 px-2`, children: t3("body.noMatch") });
     }
     const titleC = dark ? "text-slate-300" : "text-slate-500";
-    const cards = matching.map((e2) => `
-        <button type="button" data-body-emotion="${e2.nombre}"
-            class="body-result-card w-full text-left px-4 py-3 rounded-2xl flex items-center gap-3 transition-all hover:shadow-md"
-            style="background:${e2.color}25; border-left:5px solid ${e2.color}">
-            <span class="font-bold text-sm" style="color:${e2.text}">${getDisplayName(e2.nombre)}</span>
-            <span class="ml-auto text-xs font-bold opacity-60 shrink-0" style="color:${e2.text}">Ver \u2192</span>
-        </button>`).join("");
-    return `
-        <p class="text-[11px] font-black ${titleC} uppercase tracking-widest mb-3">${t2("body.resultTitle")}</p>
-        <div class="space-y-2">${cards}</div>`;
+    return /* @__PURE__ */ u3("div", { children: [
+      /* @__PURE__ */ u3("p", { class: `text-[11px] font-black ${titleC} uppercase tracking-widest mb-3`, children: t3("body.resultTitle") }),
+      /* @__PURE__ */ u3("div", { class: "space-y-2", children: matching.map((e3) => /* @__PURE__ */ u3(
+        "button",
+        {
+          type: "button",
+          class: "w-full text-left px-4 py-3 rounded-2xl flex items-center gap-3 transition-all hover:shadow-md",
+          style: `background:${e3.color}25; border-left:5px solid ${e3.color}`,
+          onClick: () => {
+            onDismiss();
+            onSelect(e3);
+          },
+          children: [
+            /* @__PURE__ */ u3("span", { class: "font-bold text-sm", style: `color:${e3.text}`, children: getDisplayName(e3.nombre) }),
+            /* @__PURE__ */ u3("span", { class: "ml-auto text-xs font-bold opacity-60 shrink-0", style: `color:${e3.text}`, children: "Ver \u2192" })
+          ]
+        },
+        e3.nombre
+      )) })
+    ] });
   }
-  var BODY_CLIP_SHAPES = BODY_PARTS.map((p2) => bodyPartSvg(p2, { fill: "white" })).join("");
-  function createBodyMap({ emociones: emociones2, getDisplayName, t: t2, showDetail, onDismiss, onSwitchToQuiz }) {
+  function BodyMapPanel({
+    t: t3,
+    dark,
+    zones,
+    rects,
+    selectedZones,
+    mode,
+    matching,
+    lineColor,
+    bodyFill,
+    getDisplayName,
+    onClose,
+    onModeChange,
+    onZoneClick,
+    onRemoveZone,
+    onClear,
+    onSwitchToQuiz,
+    onDismiss,
+    onSelectEmotion
+  }) {
+    const activeC = dark ? "bg-slate-600 text-slate-100" : "bg-slate-800 text-white";
+    const inactiveC = dark ? "text-slate-400 hover:text-slate-200" : "text-slate-400 hover:text-slate-600";
+    const clearBtnC = dark ? "bg-slate-800 text-slate-300 hover:bg-slate-700" : "bg-slate-100 text-slate-500 hover:bg-slate-200";
+    const toQuizC = dark ? "text-slate-400 hover:text-slate-200" : "text-slate-400 hover:text-slate-600";
+    const headerC = dark ? "text-slate-100" : "text-slate-800";
+    const closeRingC = dark ? "bg-slate-700 text-slate-400 hover:bg-slate-600" : "bg-slate-100 text-slate-500 hover:bg-slate-200";
+    const toggleBgC = dark ? "bg-slate-800" : "bg-slate-100";
+    const svgInner = buildSvgInner(zones, rects, selectedZones, lineColor, bodyFill, t3);
+    return /* @__PURE__ */ u3("div", { children: [
+      /* @__PURE__ */ u3("div", { class: "flex items-center justify-between mb-5", children: [
+        /* @__PURE__ */ u3("h2", { class: `text-xl font-black ${headerC}`, children: t3("body.mapTitle") }),
+        /* @__PURE__ */ u3(
+          "button",
+          {
+            type: "button",
+            "aria-label": "Cerrar",
+            onClick: onClose,
+            class: `w-8 h-8 flex items-center justify-center rounded-full ${closeRingC} transition-colors`,
+            children: /* @__PURE__ */ u3("svg", { class: "w-4 h-4", viewBox: "0 0 24 24", fill: "currentColor", "aria-hidden": "true", children: /* @__PURE__ */ u3("path", { d: "M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" }) })
+          }
+        )
+      ] }),
+      /* @__PURE__ */ u3("div", { class: `flex gap-1 mb-4 p-1 rounded-xl ${toggleBgC}`, children: [
+        /* @__PURE__ */ u3(
+          "button",
+          {
+            type: "button",
+            onClick: () => onModeChange("simple"),
+            class: `flex-1 py-1.5 text-xs font-bold rounded-lg transition-colors ${mode === "simple" ? activeC : inactiveC}`,
+            children: t3("body.modeSimple")
+          }
+        ),
+        /* @__PURE__ */ u3(
+          "button",
+          {
+            type: "button",
+            onClick: () => onModeChange("detailed"),
+            class: `flex-1 py-1.5 text-xs font-bold rounded-lg transition-colors ${mode === "detailed" ? activeC : inactiveC}`,
+            children: t3("body.modeDetailed")
+          }
+        )
+      ] }),
+      /* @__PURE__ */ u3("div", { class: "flex justify-center mb-4", children: /* @__PURE__ */ u3(
+        "svg",
+        {
+          id: "body-svg",
+          viewBox: "0 0 100 200",
+          style: "width:130px;height:auto;touch-action:manipulation",
+          role: "img",
+          "aria-label": t3("body.mapTitle"),
+          onClick: onZoneClick,
+          dangerouslySetInnerHTML: { __html: svgInner }
+        }
+      ) }),
+      /* @__PURE__ */ u3(ZoneChips, { zones, selectedZones, t: t3, onRemove: onRemoveZone }),
+      /* @__PURE__ */ u3(
+        ResultSection,
+        {
+          matching,
+          selectedZones,
+          dark,
+          t: t3,
+          getDisplayName,
+          onSelect: onSelectEmotion,
+          onDismiss
+        }
+      ),
+      selectedZones.size > 0 && /* @__PURE__ */ u3(
+        "button",
+        {
+          type: "button",
+          onClick: onClear,
+          class: `mt-4 w-full py-2.5 rounded-2xl text-sm font-bold transition-colors ${clearBtnC}`,
+          children: t3("body.clear")
+        }
+      ),
+      /* @__PURE__ */ u3(
+        "button",
+        {
+          type: "button",
+          onClick: onSwitchToQuiz,
+          class: `mt-2 w-full py-2.5 text-sm font-medium transition-colors ${toQuizC}`,
+          children: [
+            "\u2190 ",
+            t3("quiz.tabQuestions")
+          ]
+        }
+      )
+    ] });
+  }
+  function createBodyMap({ emociones: emociones2, getDisplayName, t: t3, showDetail, onDismiss, onSwitchToQuiz }) {
     let selectedZones = /* @__PURE__ */ new Set();
     let mode = "simple";
     function getMatchingEmotions() {
@@ -1672,9 +2257,9 @@
           counts.set(name, (counts.get(name) || 0) + 1);
         }
       }
-      return emociones2.filter((e2) => counts.has(e2.nombre)).sort((a2, b2) => counts.get(b2.nombre) - counts.get(a2.nombre) || a2.nombre.localeCompare(b2.nombre));
+      return emociones2.filter((e3) => counts.has(e3.nombre)).sort((a3, b2) => counts.get(b2.nombre) - counts.get(a3.nombre) || a3.nombre.localeCompare(b2.nombre));
     }
-    function render() {
+    function render_() {
       const content = document.getElementById("quiz-content");
       if (!content) return;
       const dark = isDarkMode();
@@ -1682,118 +2267,57 @@
       const rects = ZONE_RECTS[mode];
       const lineColor = dark ? "#64748b" : "#94a3b8";
       const bodyFill = dark ? "#0f172a" : "#f8fafc";
-      const activeC = dark ? "bg-slate-600 text-slate-100" : "bg-slate-800 text-white";
-      const inactiveC = dark ? "text-slate-400 hover:text-slate-200" : "text-slate-400 hover:text-slate-600";
-      const clearBtnC = dark ? "bg-slate-800 text-slate-300 hover:bg-slate-700" : "bg-slate-100 text-slate-500 hover:bg-slate-200";
-      const toQuizC = dark ? "text-slate-400 hover:text-slate-200" : "text-slate-400 hover:text-slate-600";
-      const clipShapes = BODY_CLIP_SHAPES;
-      const zoneRects = buildSvgZoneRects(zones, rects, selectedZones);
-      const zoneLabels = buildSvgZoneLabels(zones, rects, selectedZones, t2);
-      const bodyOutline = BODY_PARTS.map((p2) => bodyPartSvg(p2, {
-        fill: bodyFill,
-        "fill-opacity": "0.35",
-        stroke: lineColor,
-        "stroke-width": "1.5",
-        "stroke-linejoin": "round",
-        "pointer-events": "none"
-      })).join("");
-      const divider = `<line x1="29" y1="100" x2="71" y2="100"
-            stroke="${lineColor}" stroke-dasharray="3,2" opacity="0.35" pointer-events="none"/>`;
-      const chipsHtml = buildChipsHtml(zones, selectedZones, t2);
-      const resultHtml = buildResultHtml(getMatchingEmotions(), selectedZones, dark, t2, getDisplayName);
-      const clearBtn = selectedZones.size > 0 ? `<button id="body-clear-btn" type="button"
-                class="mt-4 w-full py-2.5 rounded-2xl text-sm font-bold transition-colors ${clearBtnC}">
-                ${t2("body.clear")}
-               </button>` : "";
-      const headerC = dark ? "text-slate-100" : "text-slate-800";
-      const closeRingC = dark ? "bg-slate-700 text-slate-400 hover:bg-slate-600" : "bg-slate-100 text-slate-500 hover:bg-slate-200";
-      const toggleBgC = dark ? "bg-slate-800" : "bg-slate-100";
-      content.innerHTML = `
-            <div class="flex items-center justify-between mb-5">
-                <h2 class="text-xl font-black ${headerC}">${t2("body.mapTitle")}</h2>
-                <button id="body-close-btn" type="button" aria-label="Cerrar"
-                    class="w-8 h-8 flex items-center justify-center rounded-full ${closeRingC} transition-colors">
-                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-                </button>
-            </div>
-            <div class="flex gap-1 mb-4 p-1 rounded-xl ${toggleBgC}">
-                <button type="button" id="body-mode-simple"
-                    class="flex-1 py-1.5 text-xs font-bold rounded-lg transition-colors ${mode === "simple" ? activeC : inactiveC}">
-                    ${t2("body.modeSimple")}
-                </button>
-                <button type="button" id="body-mode-detailed"
-                    class="flex-1 py-1.5 text-xs font-bold rounded-lg transition-colors ${mode === "detailed" ? activeC : inactiveC}">
-                    ${t2("body.modeDetailed")}
-                </button>
-            </div>
-            <div class="flex justify-center mb-4">
-                <svg id="body-svg" viewBox="0 0 100 200"
-                    style="width:130px;height:auto;touch-action:manipulation"
-                    role="img" aria-label="${t2("body.mapTitle")}">
-                    <defs><clipPath id="body-clip">${clipShapes}</clipPath></defs>
-                    <g clip-path="url(#body-clip)">
-                        ${zoneRects}${zoneLabels}${divider}
-                    </g>
-                    <g>${bodyOutline}</g>
-                </svg>
-            </div>
-            <div class="flex flex-wrap gap-1.5 mb-4 min-h-[28px]">${chipsHtml}</div>
-            ${resultHtml}
-            ${clearBtn}
-            <button id="body-to-quiz-btn" type="button"
-                class="mt-2 w-full py-2.5 text-sm font-medium transition-colors ${toQuizC}">
-                \u2190 ${t2("quiz.tabQuestions")}
-            </button>`;
-      bindEvents(content);
-    }
-    function bindEvents(content) {
-      content.querySelector("#body-close-btn").addEventListener("click", onDismiss);
-      for (const btn of content.querySelectorAll("#body-mode-simple, #body-mode-detailed")) {
-        btn.addEventListener("click", () => {
-          const newMode = btn.id === "body-mode-simple" ? "simple" : "detailed";
-          if (mode === newMode) return;
-          mode = newMode;
-          selectedZones.clear();
-          render();
-        });
-      }
-      content.querySelector("#body-clear-btn")?.addEventListener("click", () => {
-        selectedZones.clear();
-        render();
-      });
-      content.querySelector("#body-to-quiz-btn").addEventListener("click", () => {
-        if (onSwitchToQuiz) onSwitchToQuiz();
-      });
-      content.querySelector("#body-svg").addEventListener("click", (ev) => {
-        const hit = ev.target.closest(".zone-hit");
-        if (!hit) return;
-        const zoneId = hit.dataset.zone;
-        if (selectedZones.has(zoneId)) selectedZones.delete(zoneId);
-        else selectedZones.add(zoneId);
-        render();
-      });
-      for (const btn of content.querySelectorAll("[data-remove-zone]")) {
-        btn.addEventListener("click", (ev) => {
-          ev.stopPropagation();
-          selectedZones.delete(btn.dataset.removeZone);
-          render();
-        });
-      }
-      const matching = getMatchingEmotions();
-      for (const btn of content.querySelectorAll(".body-result-card")) {
-        btn.addEventListener("click", () => {
-          const emotion = matching.find((e2) => e2.nombre === btn.dataset.bodyEmotion);
-          if (emotion) {
-            onDismiss();
-            showDetail(emotion);
+      R(
+        /* @__PURE__ */ u3(
+          BodyMapPanel,
+          {
+            t: t3,
+            dark,
+            zones,
+            rects,
+            selectedZones,
+            mode,
+            matching: getMatchingEmotions(),
+            lineColor,
+            bodyFill,
+            getDisplayName,
+            onClose: onDismiss,
+            onModeChange: (newMode) => {
+              if (mode === newMode) return;
+              mode = newMode;
+              selectedZones = /* @__PURE__ */ new Set();
+              render_();
+            },
+            onZoneClick: (ev) => {
+              const hit = ev.target.closest(".zone-hit");
+              if (!hit) return;
+              const zoneId = hit.dataset.zone;
+              if (selectedZones.has(zoneId)) selectedZones.delete(zoneId);
+              else selectedZones.add(zoneId);
+              render_();
+            },
+            onRemoveZone: (zoneId) => {
+              selectedZones.delete(zoneId);
+              render_();
+            },
+            onClear: () => {
+              selectedZones = /* @__PURE__ */ new Set();
+              render_();
+            },
+            onSwitchToQuiz: () => {
+              if (onSwitchToQuiz) onSwitchToQuiz();
+            },
+            onDismiss,
+            onSelectEmotion: (e3) => showDetail(e3)
           }
-        });
-      }
+        ),
+        content
+      );
     }
-    return { render };
+    return { render: render_ };
   }
 
-  // js/quiz.js
+  // js/quiz.jsx
   var QUIZ_STEPS = {
     q1: {
       textKey: "quiz.q1",
@@ -1831,174 +2355,227 @@
       ]
     }
   };
-  function createQuiz({ emociones: emociones2, getDisplayName, t: t2, showDetail, onShowAll }) {
+  var CloseX = () => /* @__PURE__ */ u3("svg", { class: "w-4 h-4", viewBox: "0 0 24 24", fill: "currentColor", "aria-hidden": "true", children: /* @__PURE__ */ u3("path", { d: "M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" }) });
+  function QuizHeader({ t: t3, dark, onDismiss }) {
+    const titleC = dark ? "text-slate-100" : "text-slate-800";
+    const closeC = dark ? "bg-slate-700 text-slate-400 hover:bg-slate-600" : "bg-slate-100 text-slate-500 hover:bg-slate-200";
+    return /* @__PURE__ */ u3("div", { class: "flex items-center justify-between mb-8", children: [
+      /* @__PURE__ */ u3("h2", { class: `text-xl font-black ${titleC}`, children: t3("quiz.title") }),
+      /* @__PURE__ */ u3(
+        "button",
+        {
+          type: "button",
+          id: "quiz-close-btn",
+          "aria-label": "Cerrar",
+          onClick: onDismiss,
+          class: `w-8 h-8 flex items-center justify-center rounded-full ${closeC} transition-colors`,
+          children: /* @__PURE__ */ u3(CloseX, {})
+        }
+      )
+    ] });
+  }
+  function QuizStep({ t: t3, dark, step, historyLen, onPickOption, onBack, onSwitchToBody }) {
+    const questionC = dark ? "text-slate-100" : "text-slate-800";
+    const optionC = dark ? "bg-slate-800 text-slate-200 border-slate-700 hover:border-blue-400" : "bg-white text-slate-700 border-transparent hover:border-blue-300";
+    const backC = dark ? "text-slate-400 hover:text-slate-200" : "text-slate-400 hover:text-slate-600";
+    const toBodyC = dark ? "text-slate-300 border-slate-600 hover:border-slate-400 hover:bg-slate-800" : "text-slate-500 border-slate-300 hover:border-slate-400 hover:bg-slate-50";
+    const inactiveDot = dark ? "bg-slate-700" : "bg-slate-200";
+    return /* @__PURE__ */ u3("div", { children: [
+      /* @__PURE__ */ u3("div", { class: "flex gap-2 mb-8", "aria-hidden": "true", children: [0, 1, 2].map((i3) => /* @__PURE__ */ u3("div", { class: `w-2 h-2 rounded-full transition-colors ${i3 <= historyLen ? "bg-blue-500" : inactiveDot}` }, i3)) }),
+      /* @__PURE__ */ u3("p", { class: `text-2xl font-black ${questionC} leading-snug mb-8`, children: t3(step.textKey) }),
+      /* @__PURE__ */ u3("div", { class: "space-y-3", children: step.options.map((opt, i3) => /* @__PURE__ */ u3(
+        "button",
+        {
+          type: "button",
+          class: `quiz-option w-full text-left p-5 rounded-2xl shadow-sm border-2 hover:shadow-md transition-all font-medium ${optionC}`,
+          onClick: () => onPickOption(opt),
+          children: t3(opt.labelKey)
+        },
+        i3
+      )) }),
+      historyLen > 0 ? /* @__PURE__ */ u3(
+        "button",
+        {
+          type: "button",
+          onClick: onBack,
+          class: `mt-6 flex items-center gap-2 text-sm font-medium transition-colors ${backC}`,
+          children: [
+            /* @__PURE__ */ u3("svg", { class: "w-4 h-4", viewBox: "0 0 24 24", fill: "currentColor", "aria-hidden": "true", children: /* @__PURE__ */ u3("path", { d: "M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z" }) }),
+            t3("quiz.back")
+          ]
+        }
+      ) : /* @__PURE__ */ u3(
+        "button",
+        {
+          type: "button",
+          onClick: onSwitchToBody,
+          class: `mt-6 w-full py-3 text-sm font-semibold transition-colors border rounded-2xl ${toBodyC}`,
+          children: [
+            t3("quiz.tabBody"),
+            " \u2192"
+          ]
+        }
+      )
+    ] });
+  }
+  function QuizResult({ t: t3, dark, emotions, getDisplayName, onRestart, onDismiss, onShowAll, onShowDetail }) {
+    const titleC = dark ? "text-slate-300" : "text-slate-500";
+    const restartC = dark ? "bg-slate-800 text-slate-200 hover:bg-slate-700" : "bg-slate-100 text-slate-700 hover:bg-slate-200";
+    const closeC = dark ? "text-slate-400 hover:text-slate-200" : "text-slate-400 hover:text-slate-600";
+    return /* @__PURE__ */ u3("div", { children: [
+      /* @__PURE__ */ u3("p", { class: `text-[11px] font-black ${titleC} uppercase tracking-widest mb-4`, children: t3("quiz.resultTitle") }),
+      /* @__PURE__ */ u3("div", { class: "space-y-3", children: emotions.map((e3) => /* @__PURE__ */ u3(
+        "button",
+        {
+          type: "button",
+          class: "quiz-result-card w-full text-left p-4 rounded-2xl flex items-center gap-4 hover:shadow-md transition-all",
+          style: `border-left:6px solid ${e3.color}; background:${e3.color}${dark ? "22" : "15"}`,
+          onClick: () => {
+            onDismiss();
+            onShowDetail(e3);
+          },
+          children: [
+            /* @__PURE__ */ u3("span", { class: "font-bold", style: `color:${e3.text}`, children: getDisplayName(e3.nombre) }),
+            /* @__PURE__ */ u3("span", { class: "ml-auto text-xs font-bold opacity-70 shrink-0", style: `color:${e3.text}`, children: "Ver \u2192" })
+          ]
+        },
+        e3.nombre
+      )) }),
+      /* @__PURE__ */ u3(
+        "button",
+        {
+          type: "button",
+          id: "quiz-restart-btn",
+          onClick: onRestart,
+          class: `mt-6 w-full py-3 font-bold rounded-2xl text-sm transition-colors ${restartC}`,
+          children: t3("quiz.restart")
+        }
+      ),
+      /* @__PURE__ */ u3(
+        "button",
+        {
+          type: "button",
+          id: "quiz-close-result-btn",
+          onClick: () => {
+            onDismiss();
+            if (onShowAll) onShowAll();
+          },
+          class: `mt-2 w-full py-3 text-sm font-medium transition-colors ${closeC}`,
+          children: t3("quiz.close")
+        }
+      )
+    ] });
+  }
+  function createQuiz({ emociones: emociones2, getDisplayName, t: t3, showDetail, onShowAll }) {
     let history = [];
     let currentStepKey = "q1";
+    let showingResult = false;
+    let resultEmotions = [];
+    let contentEl = null;
     const dismiss = () => {
-      document.getElementById("quiz-panel").close();
+      document.getElementById("quiz-panel")?.close();
       document.getElementById("quiz-trigger")?.focus();
     };
     const bodyMap = createBodyMap({
       emociones: emociones2,
       getDisplayName,
-      t: t2,
+      t: t3,
       showDetail,
       onDismiss: dismiss,
       onSwitchToQuiz: () => {
         history = [];
         currentStepKey = "q1";
-        renderQuiz();
+        showingResult = false;
+        resultEmotions = [];
+        rerender();
       }
     });
-    const open = () => {
-      history = [];
-      currentStepKey = "q1";
-      document.getElementById("quiz-panel").showModal();
-      renderQuiz();
-    };
-    const pickOption = (option) => {
+    function rerender() {
+      if (!contentEl) return;
+      const dark = isDarkMode();
+      if (showingResult) {
+        R(
+          /* @__PURE__ */ u3("div", { children: [
+            /* @__PURE__ */ u3(QuizHeader, { t: t3, dark, onDismiss: dismiss }),
+            /* @__PURE__ */ u3(
+              QuizResult,
+              {
+                t: t3,
+                dark,
+                emotions: resultEmotions,
+                getDisplayName,
+                onRestart: () => {
+                  history = [];
+                  currentStepKey = "q1";
+                  showingResult = false;
+                  resultEmotions = [];
+                  rerender();
+                },
+                onDismiss: dismiss,
+                onShowAll,
+                onShowDetail: showDetail
+              }
+            )
+          ] }),
+          contentEl
+        );
+      } else {
+        R(
+          /* @__PURE__ */ u3("div", { children: [
+            /* @__PURE__ */ u3(QuizHeader, { t: t3, dark, onDismiss: dismiss }),
+            /* @__PURE__ */ u3(
+              QuizStep,
+              {
+                t: t3,
+                dark,
+                step: QUIZ_STEPS[currentStepKey],
+                historyLen: history.length,
+                onPickOption: pickOption,
+                onBack: () => {
+                  currentStepKey = history.pop();
+                  rerender();
+                },
+                onSwitchToBody: () => bodyMap.render()
+              }
+            )
+          ] }),
+          contentEl
+        );
+      }
+    }
+    function pickOption(option) {
       if (option.result) {
-        renderResult(option.result);
+        resultEmotions = option.result.map((nombre) => emociones2.find((e3) => e3.nombre === nombre)).filter(Boolean);
+        showingResult = true;
       } else {
         history.push(currentStepKey);
         currentStepKey = option.next;
-        renderQuiz();
       }
-    };
-    const headerHtml = (dark) => {
-      const titleC = dark ? "text-slate-100" : "text-slate-800";
-      const closeC = dark ? "bg-slate-700 text-slate-400 hover:bg-slate-600" : "bg-slate-100 text-slate-500 hover:bg-slate-200";
-      return `
-            <div class="flex items-center justify-between mb-8">
-                <h2 class="text-xl font-black ${titleC}">${t2("quiz.title")}</h2>
-                <button id="quiz-close-btn" type="button" aria-label="Cerrar"
-                    class="w-8 h-8 flex items-center justify-center rounded-full ${closeC} transition-colors">
-                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-                </button>
-            </div>
-        `;
-    };
-    const bindCloseBtn = (content) => {
-      content.querySelector("#quiz-close-btn").addEventListener("click", dismiss);
-    };
-    const renderResult = (emotionNames) => {
-      const dark = isDarkMode();
-      const emotions = emotionNames.map((nombre) => emociones2.find((e2) => e2.nombre === nombre)).filter(Boolean);
-      const titleC = dark ? "text-slate-300" : "text-slate-500";
-      const restartC = dark ? "bg-slate-800 text-slate-200 hover:bg-slate-700" : "bg-slate-100 text-slate-700 hover:bg-slate-200";
-      const closeResC = dark ? "text-slate-400 hover:text-slate-200" : "text-slate-400 hover:text-slate-600";
-      const content = document.getElementById("quiz-content");
-      content.innerHTML = `
-            ${headerHtml(dark)}
-            <p class="text-[11px] font-black ${titleC} uppercase tracking-widest mb-4">${t2("quiz.resultTitle")}</p>
-            <div class="space-y-3">
-                ${emotions.map((e2) => `
-                    <button type="button" data-emotion="${e2.nombre}"
-                        class="quiz-result-card w-full text-left p-4 rounded-2xl flex items-center gap-4 hover:shadow-md transition-all"
-                        style="border-left:6px solid ${e2.color}; background:${e2.color}${dark ? "22" : "15"}">
-                        <span class="font-bold" style="color:${e2.text}">${getDisplayName(e2.nombre)}</span>
-                        <span class="ml-auto text-xs font-bold opacity-70 shrink-0" style="color:${e2.text}">Ver \u2192</span>
-                    </button>
-                `).join("")}
-            </div>
-            <button id="quiz-restart-btn" type="button"
-                class="mt-6 w-full py-3 font-bold rounded-2xl text-sm transition-colors ${restartC}">
-                ${t2("quiz.restart")}
-            </button>
-            <button id="quiz-close-result-btn" type="button"
-                class="mt-2 w-full py-3 text-sm font-medium transition-colors ${closeResC}">
-                ${t2("quiz.close")}
-            </button>
-        `;
-      bindCloseBtn(content);
-      content.querySelector("#quiz-restart-btn").addEventListener("click", () => {
-        history = [];
-        currentStepKey = "q1";
-        renderQuiz();
-      });
-      content.querySelector("#quiz-close-result-btn").addEventListener("click", () => {
-        dismiss();
-        if (onShowAll) onShowAll();
-      });
-      for (const btn of content.querySelectorAll(".quiz-result-card")) {
-        btn.addEventListener("click", () => {
-          const emotion = emociones2.find((e2) => e2.nombre === btn.dataset.emotion);
-          if (emotion) {
-            dismiss();
-            showDetail(emotion);
-          }
-        });
-      }
-      content.querySelector(".quiz-result-card")?.focus();
-    };
-    const renderQuiz = () => {
-      const dark = isDarkMode();
-      const step = QUIZ_STEPS[currentStepKey];
-      const inactiveDot = dark ? "bg-slate-700" : "bg-slate-200";
-      const dotsHtml = ["q1", "q2", "q3"].map((_2, i2) => {
-        const active = i2 <= history.length;
-        return `<div class="w-2 h-2 rounded-full transition-colors ${active ? "bg-blue-500" : inactiveDot}"></div>`;
-      }).join("");
-      const questionC = dark ? "text-slate-100" : "text-slate-800";
-      const optionC = dark ? "bg-slate-800 text-slate-200 border-slate-700 hover:border-blue-400" : "bg-white text-slate-700 border-transparent hover:border-blue-300";
-      const backC = dark ? "text-slate-400 hover:text-slate-200" : "text-slate-400 hover:text-slate-600";
-      const toBodyC = dark ? "text-slate-300 border-slate-600 hover:border-slate-400 hover:bg-slate-800" : "text-slate-500 border-slate-300 hover:border-slate-400 hover:bg-slate-50";
-      const content = document.getElementById("quiz-content");
-      content.innerHTML = `
-            ${headerHtml(dark)}
-            <div class="flex gap-2 mb-8" aria-hidden="true">${dotsHtml}</div>
-            <p class="text-2xl font-black ${questionC} leading-snug mb-8">${t2(step.textKey)}</p>
-            <div class="space-y-3">
-                ${step.options.map((opt, i2) => `
-                    <button type="button" data-option-index="${i2}"
-                        class="quiz-option w-full text-left p-5 rounded-2xl shadow-sm border-2 hover:shadow-md transition-all font-medium ${optionC}">
-                        ${t2(opt.labelKey)}
-                    </button>
-                `).join("")}
-            </div>
-            ${history.length > 0 ? `
-                <button id="quiz-back-btn" type="button"
-                    class="mt-6 flex items-center gap-2 text-sm font-medium transition-colors ${backC}">
-                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
-                    ${t2("quiz.back")}
-                </button>
-            ` : `
-                <button id="quiz-to-body-btn" type="button"
-                    class="mt-6 w-full py-3 text-sm font-semibold transition-colors border rounded-2xl ${toBodyC}">
-                    ${t2("quiz.tabBody")} \u2192
-                </button>
-            `}
-        `;
-      bindCloseBtn(content);
-      if (history.length > 0) {
-        content.querySelector("#quiz-back-btn").addEventListener("click", () => {
-          currentStepKey = history.pop();
-          renderQuiz();
-        });
-      } else {
-        content.querySelector("#quiz-to-body-btn").addEventListener("click", () => {
-          bodyMap.render();
-        });
-      }
-      for (const btn of content.querySelectorAll(".quiz-option")) {
-        btn.addEventListener("click", () => pickOption(step.options[Number.parseInt(btn.dataset.optionIndex)]));
-      }
-      content.querySelector(".quiz-option")?.focus();
+      rerender();
+    }
+    const open = () => {
+      history = [];
+      currentStepKey = "q1";
+      showingResult = false;
+      resultEmotions = [];
+      contentEl = document.getElementById("quiz-content");
+      document.getElementById("quiz-panel")?.showModal();
+      rerender();
     };
     const init = () => {
       const trigger = document.getElementById("quiz-trigger");
       const panel = document.getElementById("quiz-panel");
       if (!trigger || !panel) return;
       trigger.addEventListener("click", open);
-      panel.addEventListener("cancel", (e2) => {
-        e2.preventDefault();
+      panel.addEventListener("cancel", (e3) => {
+        e3.preventDefault();
         dismiss();
       });
     };
     return { init, open };
   }
 
-  // js/diary.js
+  // js/diary.jsx
   function parseDiaryEntries(raw) {
     try {
       const parsed = JSON.parse(raw);
@@ -2017,7 +2594,7 @@
     };
   }
   function deleteDiaryEntryById(entries, id) {
-    return entries.filter((e2) => e2.id !== id);
+    return entries.filter((e3) => e3.id !== id);
   }
   function loadEntries() {
     return parseDiaryEntries(localStorage.getItem(DIARY_KEY));
@@ -2025,301 +2602,395 @@
   function saveEntries(entries) {
     localStorage.setItem(DIARY_KEY, JSON.stringify(entries));
   }
-  function addEntry(emotionNombre, note = "", tags = []) {
+  function addEntryToStorage(emotionNombre, note = "", tags = []) {
     const entry = createDiaryEntry(emotionNombre, note, tags);
     saveEntries([entry, ...loadEntries()]);
     return entry;
   }
-  function deleteEntry(id) {
+  function deleteEntryFromStorage(id) {
     saveEntries(deleteDiaryEntryById(loadEntries(), id));
   }
-  function createDiary({ t: t2, getDisplayName, emociones: emociones2 }) {
-    function renderTagPills(tags) {
-      if (!tags?.length) return "";
-      const pills = tags.map((tag) => {
-        const label = t2(`diary.tag${tag.charAt(0).toUpperCase()}${tag.slice(1)}`);
-        return `<span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-500 text-[10px] font-bold">${label}</span>`;
-      }).join("");
-      return `<div class="flex flex-wrap gap-1 mt-1.5">${pills}</div>`;
+  function EmotionSearch({ emociones: emociones2, getDisplayName, t: t3, onSelect }) {
+    const [query, setQuery] = d2("");
+    const [open, setOpen] = d2(false);
+    const [chosen, setChosen] = d2("");
+    const norm = normalizeText(query.trim());
+    const filtered = emociones2.filter((e3) => {
+      if (!norm) return true;
+      const name = normalizeText(getDisplayName(e3.nombre));
+      return name.includes(norm) || normalizeText(e3.nombre).includes(norm);
+    });
+    function selectEmotion(nombre) {
+      setChosen(nombre);
+      setQuery(getDisplayName(nombre));
+      setOpen(false);
+      onSelect(nombre);
     }
-    function formatDate(isoString) {
-      const d2 = new Date(isoString);
-      const now = /* @__PURE__ */ new Date();
-      const time = d2.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-      if (d2.toDateString() === now.toDateString()) return `${t2("diary.todayLabel")}, ${time}`;
-      return `${d2.toLocaleDateString([], { day: "numeric", month: "short", year: "numeric" })} \xB7 ${time}`;
-    }
-    function buildAddFormHtml() {
-      return `
-            <div id="diary-add-form" class="bg-white rounded-2xl p-4 shadow-sm mb-4 border-2 border-blue-100">
-                <p class="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-3">${t2("diary.newEntry")}</p>
-                <div class="relative mb-3">
-                    <input type="text" id="diary-emotion-search" autocomplete="off"
-                        placeholder="${t2("diary.pickEmotion")}"
-                        class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-200">
-                    <input type="hidden" id="diary-emotion-value">
-                    <div id="diary-emotion-dropdown"
-                        class="hidden absolute z-50 left-0 right-0 mt-1 bg-white rounded-xl shadow-lg border border-slate-200 hide-scroll"
-                        style="max-height:11rem;overflow-y:auto"></div>
-                </div>
-                <textarea id="diary-note-input" rows="2" placeholder="${t2("diary.notePlaceholder")}"
-                    class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-700 resize-none focus:outline-none focus:ring-2 focus:ring-blue-200 mb-3"></textarea>
-                <div class="mb-3">
-                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">${t2("diary.tagLabel")}</p>
-                    <div class="flex flex-wrap gap-1.5">
-                        ${DIARY_TAGS.map((tag) => `
-                            <button type="button" data-tag="${tag}"
-                                class="diary-tag-btn px-3 py-1 rounded-full text-[11px] font-bold bg-slate-100 text-slate-500 hover:bg-slate-200 transition-colors">
-                                ${t2(`diary.tag${tag.charAt(0).toUpperCase()}${tag.slice(1)}`)}
-                            </button>
-                        `).join("")}
-                    </div>
-                </div>
-                <div class="flex gap-2">
-                    <button id="diary-form-save" type="button"
-                        class="flex-1 bg-slate-800 text-white py-2.5 rounded-xl font-bold text-sm hover:bg-slate-700 transition-colors">
-                        ${t2("diary.saveButton")}
-                    </button>
-                    <button id="diary-form-cancel" type="button"
-                        class="flex-1 bg-slate-100 text-slate-600 py-2.5 rounded-xl font-bold text-sm hover:bg-slate-200 transition-colors">
-                        ${t2("diary.cancelButton")}
-                    </button>
-                </div>
-            </div>
-        `;
-    }
-    function wireEmotionSearch(content) {
-      const searchInput = content.querySelector("#diary-emotion-search");
-      const dropdown = content.querySelector("#diary-emotion-dropdown");
-      const hiddenValue = content.querySelector("#diary-emotion-value");
-      if (!searchInput || !dropdown || !hiddenValue) return;
-      function renderDropdown(query) {
-        const q2 = normalizeText(query.trim());
-        const filtered = emociones2.filter((e2) => {
-          const name = normalizeText(getDisplayName(e2.nombre));
-          return !q2 || name.includes(q2) || normalizeText(e2.nombre).includes(q2);
-        });
-        if (!filtered.length) {
-          dropdown.classList.add("hidden");
-          return;
+    return /* @__PURE__ */ u3("div", { class: "relative mb-3", children: [
+      /* @__PURE__ */ u3(
+        "input",
+        {
+          type: "text",
+          id: "diary-emotion-search",
+          autocomplete: "off",
+          placeholder: t3("diary.pickEmotion"),
+          value: query,
+          class: "w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-200",
+          onFocus: () => {
+            if (filtered.length) setOpen(true);
+          },
+          onInput: (ev) => {
+            const val = ev.target.value;
+            setQuery(val);
+            setChosen("");
+            onSelect("");
+            setOpen(true);
+            ev.target.classList.remove("ring-2", "ring-red-300");
+          },
+          onBlur: () => setTimeout(() => setOpen(false), 150),
+          onKeyDown: (ev) => {
+            if (ev.key === "Escape") {
+              setOpen(false);
+              ev.target.blur();
+            }
+            if (ev.key === "Enter") {
+              ev.preventDefault();
+              if (filtered.length) selectEmotion(filtered[0].nombre);
+            }
+          }
         }
-        dropdown.innerHTML = filtered.map((e2) => `
-                <button type="button" data-nombre="${e2.nombre}"
-                    class="emotion-option w-full text-left px-3 py-2.5 text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2.5 transition-colors">
-                    <span class="w-2.5 h-2.5 rounded-full shrink-0" style="background-color:${e2.color}"></span>
-                    ${getDisplayName(e2.nombre)}
-                </button>
-            `).join("");
-        dropdown.classList.remove("hidden");
-        for (const btn of dropdown.querySelectorAll(".emotion-option")) {
-          btn.addEventListener("mousedown", (ev) => {
-            ev.preventDefault();
-            hiddenValue.value = btn.dataset.nombre;
-            searchInput.value = getDisplayName(btn.dataset.nombre);
-            searchInput.classList.remove("ring-2", "ring-red-300");
-            dropdown.classList.add("hidden");
-          });
+      ),
+      /* @__PURE__ */ u3("input", { type: "hidden", id: "diary-emotion-value", value: chosen }),
+      open && filtered.length > 0 && /* @__PURE__ */ u3(
+        "div",
+        {
+          id: "diary-emotion-dropdown",
+          class: "absolute z-50 left-0 right-0 mt-1 bg-white rounded-xl shadow-lg border border-slate-200 hide-scroll",
+          style: "max-height:11rem;overflow-y:auto",
+          children: filtered.map((e3) => /* @__PURE__ */ u3(
+            "button",
+            {
+              type: "button",
+              class: "emotion-option w-full text-left px-3 py-2.5 text-sm text-slate-700 hover:bg-slate-50 flex items-center gap-2.5 transition-colors",
+              onMouseDown: (ev) => {
+                ev.preventDefault();
+                selectEmotion(e3.nombre);
+              },
+              children: [
+                /* @__PURE__ */ u3("span", { class: "w-2.5 h-2.5 rounded-full shrink-0", style: `background-color:${e3.color}` }),
+                getDisplayName(e3.nombre)
+              ]
+            },
+            e3.nombre
+          ))
         }
+      )
+    ] });
+  }
+  function DiaryForm({ emociones: emociones2, getDisplayName, t: t3, onSave, onCancel }) {
+    const [selectedEmotion, setSelectedEmotion] = d2("");
+    const [selectedTags, setSelectedTags] = d2(/* @__PURE__ */ new Set());
+    function toggleTag(tag) {
+      const next = new Set(selectedTags);
+      if (next.has(tag)) next.delete(tag);
+      else next.add(tag);
+      setSelectedTags(next);
+    }
+    function handleSave() {
+      if (!selectedEmotion) {
+        const input = document.getElementById("diary-emotion-search");
+        input?.focus();
+        input?.classList.add("ring-2", "ring-red-300");
+        return;
       }
-      searchInput.addEventListener("focus", () => renderDropdown(searchInput.value));
-      searchInput.addEventListener("input", () => {
-        hiddenValue.value = "";
-        renderDropdown(searchInput.value);
-      });
-      searchInput.addEventListener("blur", () => {
-        dropdown.classList.add("hidden");
-      });
-      searchInput.addEventListener("keydown", (ev) => {
-        if (ev.key === "Escape") {
-          dropdown.classList.add("hidden");
-          searchInput.blur();
-        }
-        if (ev.key === "Enter") {
-          ev.preventDefault();
-          dropdown.querySelector(".emotion-option")?.dispatchEvent(new MouseEvent("mousedown"));
-        }
-        if (ev.key === "ArrowDown") {
-          ev.preventDefault();
-          dropdown.querySelector(".emotion-option")?.focus();
-        }
-      });
-      dropdown.addEventListener("keydown", (ev) => {
-        const focused = document.activeElement;
-        if (ev.key === "ArrowDown") {
-          ev.preventDefault();
-          focused.nextElementSibling?.focus();
-        }
-        if (ev.key === "ArrowUp") {
-          ev.preventDefault();
-          (focused.previousElementSibling ?? searchInput).focus();
-        }
-      });
+      const note = document.getElementById("diary-note-input")?.value ?? "";
+      onSave(selectedEmotion, note, [...selectedTags]);
     }
-    function renderContent(showForm = false) {
-      const entries = loadEntries();
+    return /* @__PURE__ */ u3("div", { id: "diary-add-form", class: "bg-white rounded-2xl p-4 shadow-sm mb-4 border-2 border-blue-100", children: [
+      /* @__PURE__ */ u3("p", { class: "text-[11px] font-black text-slate-500 uppercase tracking-widest mb-3", children: t3("diary.newEntry") }),
+      /* @__PURE__ */ u3(
+        EmotionSearch,
+        {
+          emociones: emociones2,
+          getDisplayName,
+          t: t3,
+          onSelect: setSelectedEmotion
+        }
+      ),
+      /* @__PURE__ */ u3(
+        "textarea",
+        {
+          id: "diary-note-input",
+          rows: "2",
+          placeholder: t3("diary.notePlaceholder"),
+          class: "w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-700 resize-none focus:outline-none focus:ring-2 focus:ring-blue-200 mb-3"
+        }
+      ),
+      /* @__PURE__ */ u3("div", { class: "mb-3", children: [
+        /* @__PURE__ */ u3("p", { class: "text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2", children: t3("diary.tagLabel") }),
+        /* @__PURE__ */ u3("div", { class: "flex flex-wrap gap-1.5", children: DIARY_TAGS.map((tag) => {
+          const active = selectedTags.has(tag);
+          const label = t3(`diary.tag${tag.charAt(0).toUpperCase()}${tag.slice(1)}`);
+          return /* @__PURE__ */ u3(
+            "button",
+            {
+              type: "button",
+              "data-tag": tag,
+              class: `diary-tag-btn px-3 py-1 rounded-full text-[11px] font-bold transition-colors ${active ? "bg-slate-800 text-white" : "bg-slate-100 text-slate-500 hover:bg-slate-200"}`,
+              onClick: () => toggleTag(tag),
+              children: label
+            },
+            tag
+          );
+        }) })
+      ] }),
+      /* @__PURE__ */ u3("div", { class: "flex gap-2", children: [
+        /* @__PURE__ */ u3(
+          "button",
+          {
+            id: "diary-form-save",
+            type: "button",
+            onClick: handleSave,
+            class: "flex-1 bg-slate-800 text-white py-2.5 rounded-xl font-bold text-sm hover:bg-slate-700 transition-colors",
+            children: t3("diary.saveButton")
+          }
+        ),
+        /* @__PURE__ */ u3(
+          "button",
+          {
+            id: "diary-form-cancel",
+            type: "button",
+            onClick: onCancel,
+            class: "flex-1 bg-slate-100 text-slate-600 py-2.5 rounded-xl font-bold text-sm hover:bg-slate-200 transition-colors",
+            children: t3("diary.cancelButton")
+          }
+        )
+      ] })
+    ] });
+  }
+  function EntryList({ entries, emociones: emociones2, getDisplayName, t: t3, formatDate, onDelete, onClearAll }) {
+    return /* @__PURE__ */ u3("div", { children: [
+      /* @__PURE__ */ u3("div", { class: "space-y-3", children: entries.map((entry) => {
+        const emotion = emociones2.find((e3) => e3.nombre === entry.emotion);
+        const displayName = emotion ? getDisplayName(entry.emotion) : entry.emotion;
+        const color = emotion?.color ?? "#e2e8f0";
+        const tags = entry.tags?.length ? entry.tags.map((tag) => {
+          const label = t3(`diary.tag${tag.charAt(0).toUpperCase()}${tag.slice(1)}`);
+          return /* @__PURE__ */ u3("span", { class: "px-2 py-0.5 rounded-full bg-slate-100 text-slate-500 text-[10px] font-bold", children: label }, tag);
+        }) : null;
+        return /* @__PURE__ */ u3("div", { class: "bg-white rounded-2xl p-4 shadow-sm flex gap-3 items-start", children: [
+          /* @__PURE__ */ u3("div", { class: "w-3 h-3 rounded-full mt-1 shrink-0", style: `background-color:${color}` }),
+          /* @__PURE__ */ u3("div", { class: "flex-1 min-w-0", children: [
+            /* @__PURE__ */ u3("div", { class: "flex items-center justify-between gap-2 mb-0.5", children: [
+              /* @__PURE__ */ u3("span", { class: "font-bold text-slate-700 text-sm", children: displayName }),
+              /* @__PURE__ */ u3("span", { class: "text-xs text-slate-400 shrink-0", children: formatDate(entry.date) })
+            ] }),
+            entry.note ? /* @__PURE__ */ u3("p", { class: "text-slate-500 text-sm leading-relaxed", children: entry.note }) : null,
+            tags ? /* @__PURE__ */ u3("div", { class: "flex flex-wrap gap-1 mt-1.5", children: tags }) : null
+          ] }),
+          /* @__PURE__ */ u3(
+            "button",
+            {
+              type: "button",
+              "aria-label": t3("diary.deleteButton"),
+              class: "diary-delete-btn text-slate-300 hover:text-red-400 transition-colors shrink-0",
+              "data-id": String(entry.id),
+              onClick: () => onDelete(entry.id),
+              children: /* @__PURE__ */ u3("svg", { class: "w-4 h-4", viewBox: "0 0 24 24", fill: "currentColor", "aria-hidden": "true", children: /* @__PURE__ */ u3("path", { d: "M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" }) })
+            }
+          )
+        ] }, entry.id);
+      }) }),
+      entries.length > 1 && /* @__PURE__ */ u3(
+        "button",
+        {
+          id: "diary-clear-btn",
+          type: "button",
+          onClick: onClearAll,
+          class: "mt-5 w-full text-xs text-slate-400 hover:text-red-400 transition-colors py-2",
+          children: t3("diary.clearAll")
+        }
+      )
+    ] });
+  }
+  function EmptyState({ t: t3 }) {
+    return /* @__PURE__ */ u3("div", { class: "text-center py-8 px-2", children: [
+      /* @__PURE__ */ u3("p", { class: "text-slate-400 text-sm mb-5", children: t3("diary.emptyPrompt") }),
+      /* @__PURE__ */ u3("div", { class: "flex flex-col gap-2 max-w-xs mx-auto", children: [
+        /* @__PURE__ */ u3(
+          "button",
+          {
+            id: "diary-empty-checkin",
+            type: "button",
+            class: "w-full bg-slate-800 text-white py-3 rounded-2xl font-bold text-sm hover:bg-slate-700 transition-colors",
+            onClick: () => emit("tab:switch", { tabId: "checkin" }),
+            children: t3("diary.emptyAction1")
+          }
+        ),
+        /* @__PURE__ */ u3(
+          "button",
+          {
+            id: "diary-empty-quiz",
+            type: "button",
+            class: "w-full bg-slate-100 text-slate-700 py-3 rounded-2xl font-bold text-sm hover:bg-slate-200 transition-colors",
+            onClick: () => emit("quiz:open"),
+            children: t3("diary.emptyAction2")
+          }
+        )
+      ] })
+    ] });
+  }
+  function DiaryPanel({
+    t: t3,
+    getDisplayName,
+    emociones: emociones2,
+    showForm,
+    onNewEntry,
+    onSave,
+    onCancel,
+    onDelete,
+    onClearAll,
+    onExport
+  }) {
+    const entries = loadEntries();
+    function formatDate(isoString) {
+      const d3 = new Date(isoString);
+      const now = /* @__PURE__ */ new Date();
+      const time = d3.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+      if (d3.toDateString() === now.toDateString()) return `${t3("diary.todayLabel")}, ${time}`;
+      return `${d3.toLocaleDateString([], { day: "numeric", month: "short", year: "numeric" })} \xB7 ${time}`;
+    }
+    return /* @__PURE__ */ u3("div", { children: [
+      /* @__PURE__ */ u3("div", { class: "flex items-center justify-between mb-4", children: [
+        /* @__PURE__ */ u3("h2", { id: "diary-title-heading", class: "text-xl font-black text-slate-800", children: t3("diary.title") }),
+        /* @__PURE__ */ u3("div", { class: "flex items-center gap-2", children: [
+          entries.length > 0 && /* @__PURE__ */ u3(
+            "button",
+            {
+              id: "diary-export-btn",
+              type: "button",
+              onClick: onExport,
+              class: "flex items-center gap-1.5 bg-slate-100 text-slate-600 text-xs font-bold px-3 py-2 rounded-xl hover:bg-slate-200 transition-colors",
+              children: [
+                /* @__PURE__ */ u3("svg", { class: "w-3.5 h-3.5", viewBox: "0 0 24 24", fill: "currentColor", "aria-hidden": "true", children: /* @__PURE__ */ u3("path", { d: "M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" }) }),
+                t3("diary.exportButton")
+              ]
+            }
+          ),
+          /* @__PURE__ */ u3(
+            "button",
+            {
+              id: "diary-new-btn",
+              type: "button",
+              onClick: onNewEntry,
+              class: "flex items-center gap-1.5 bg-slate-800 text-white text-xs font-bold px-3 py-2 rounded-xl hover:bg-slate-700 transition-colors",
+              children: [
+                /* @__PURE__ */ u3("svg", { class: "w-3.5 h-3.5", viewBox: "0 0 24 24", fill: "currentColor", "aria-hidden": "true", children: /* @__PURE__ */ u3("path", { d: "M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z" }) }),
+                t3("diary.newEntry")
+              ]
+            }
+          )
+        ] })
+      ] }),
+      /* @__PURE__ */ u3("p", { class: "text-xs text-slate-400 mb-4 flex items-start gap-1.5", children: [
+        /* @__PURE__ */ u3("svg", { class: "w-3.5 h-3.5 shrink-0 mt-0.5", viewBox: "0 0 24 24", fill: "currentColor", "aria-hidden": "true", children: /* @__PURE__ */ u3("path", { d: "M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z" }) }),
+        t3("diary.privacyNote")
+      ] }),
+      showForm && /* @__PURE__ */ u3(
+        DiaryForm,
+        {
+          emociones: emociones2,
+          getDisplayName,
+          t: t3,
+          onSave,
+          onCancel
+        }
+      ),
+      entries.length > 0 ? /* @__PURE__ */ u3(
+        EntryList,
+        {
+          entries,
+          emociones: emociones2,
+          getDisplayName,
+          t: t3,
+          formatDate,
+          onDelete,
+          onClearAll
+        }
+      ) : /* @__PURE__ */ u3(EmptyState, { t: t3 })
+    ] });
+  }
+  function createDiary({ t: t3, getDisplayName, emociones: emociones2 }) {
+    let showForm = false;
+    function rerender() {
       const content = document.getElementById("diary-content");
       if (!content) return;
-      const exportBtn = entries.length > 0 ? `
-            <button id="diary-export-btn" type="button"
-                class="flex items-center gap-1.5 bg-slate-100 text-slate-600 text-xs font-bold px-3 py-2 rounded-xl hover:bg-slate-200 transition-colors">
-                <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-                ${t2("diary.exportButton")}
-            </button>
-        ` : "";
-      const headerHtml = `
-            <div class="flex items-center justify-between mb-4">
-                <h2 id="diary-title-heading" class="text-xl font-black text-slate-800">${t2("diary.title")}</h2>
-                <div class="flex items-center gap-2">
-                    ${exportBtn}
-                    <button id="diary-new-btn" type="button"
-                        class="flex items-center gap-1.5 bg-slate-800 text-white text-xs font-bold px-3 py-2 rounded-xl hover:bg-slate-700 transition-colors">
-                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-                        ${t2("diary.newEntry")}
-                    </button>
-                </div>
-            </div>
-        `;
-      const privacyHtml = `
-            <p class="text-xs text-slate-400 mb-4 flex items-start gap-1.5">
-                <svg class="w-3.5 h-3.5 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
-                ${t2("diary.privacyNote")}
-            </p>
-        `;
-      const formHtml = showForm ? buildAddFormHtml() : "";
-      let entriesHtml;
-      if (entries.length) {
-        entriesHtml = `
-                <div class="space-y-3">
-                    ${entries.map((entry) => {
-          const emotion = emociones2.find((e2) => e2.nombre === entry.emotion);
-          const displayName = emotion ? getDisplayName(entry.emotion) : entry.emotion;
-          const color = emotion?.color ?? "#e2e8f0";
-          return `
-                            <div class="bg-white rounded-2xl p-4 shadow-sm flex gap-3 items-start">
-                                <div class="w-3 h-3 rounded-full mt-1 shrink-0" style="background-color:${color}"></div>
-                                <div class="flex-1 min-w-0">
-                                    <div class="flex items-center justify-between gap-2 mb-0.5">
-                                        <span class="font-bold text-slate-700 text-sm">${displayName}</span>
-                                        <span class="text-xs text-slate-400 shrink-0">${formatDate(entry.date)}</span>
-                                    </div>
-                                    ${entry.note ? `<p class="text-slate-500 text-sm leading-relaxed">${escapeHtml(entry.note)}</p>` : ""}
-                                    ${renderTagPills(entry.tags)}
-                                </div>
-                                <button type="button" class="diary-delete-btn text-slate-300 hover:text-red-400 transition-colors shrink-0" data-id="${entry.id}" aria-label="${t2("diary.deleteButton")}">
-                                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-                                </button>
-                            </div>
-                        `;
-        }).join("")}
-                </div>
-                ${entries.length > 1 ? `
-                    <button id="diary-clear-btn" type="button"
-                        class="mt-5 w-full text-xs text-slate-400 hover:text-red-400 transition-colors py-2">
-                        ${t2("diary.clearAll")}
-                    </button>
-                ` : ""}
-            `;
-      } else {
-        entriesHtml = `
-            <div class="text-center py-8 px-2">
-                <p class="text-slate-400 text-sm mb-5">${t2("diary.emptyPrompt")}</p>
-                <div class="flex flex-col gap-2 max-w-xs mx-auto">
-                    <button id="diary-empty-checkin" type="button"
-                        class="w-full bg-slate-800 text-white py-3 rounded-2xl font-bold text-sm hover:bg-slate-700 transition-colors">
-                        ${t2("diary.emptyAction1")}
-                    </button>
-                    <button id="diary-empty-quiz" type="button"
-                        class="w-full bg-slate-100 text-slate-700 py-3 rounded-2xl font-bold text-sm hover:bg-slate-200 transition-colors">
-                        ${t2("diary.emptyAction2")}
-                    </button>
-                </div>
-            </div>
-        `;
-      }
-      content.innerHTML = headerHtml + privacyHtml + formHtml + entriesHtml;
-      content.querySelector("#diary-empty-checkin")?.addEventListener("click", () => emit("tab:switch", { tabId: "checkin" }));
-      content.querySelector("#diary-empty-quiz")?.addEventListener("click", () => emit("quiz:open"));
-      content.querySelector("#diary-export-btn")?.addEventListener("click", () => {
-        const date = (/* @__PURE__ */ new Date()).toISOString().slice(0, 10);
-        const blob = new Blob([JSON.stringify(entries, null, 2)], { type: "application/json" });
-        const url = URL.createObjectURL(blob);
-        const a2 = document.createElement("a");
-        a2.href = url;
-        a2.download = `diario-emocional-${date}.json`;
-        document.body.appendChild(a2);
-        a2.click();
-        a2.remove();
-        setTimeout(() => URL.revokeObjectURL(url), 1e3);
-      });
-      const selectedTags = /* @__PURE__ */ new Set();
-      if (showForm) {
-        wireEmotionSearch(content);
-        for (const btn of content.querySelectorAll(".diary-tag-btn")) {
-          btn.addEventListener("click", () => {
-            const tag = btn.dataset.tag;
-            if (selectedTags.has(tag)) {
-              selectedTags.delete(tag);
-              btn.classList.remove("bg-slate-800", "text-white");
-              btn.classList.add("bg-slate-100", "text-slate-500");
-            } else {
-              selectedTags.add(tag);
-              btn.classList.add("bg-slate-800", "text-white");
-              btn.classList.remove("bg-slate-100", "text-slate-500");
+      R(
+        /* @__PURE__ */ u3(
+          DiaryPanel,
+          {
+            t: t3,
+            getDisplayName,
+            emociones: emociones2,
+            showForm,
+            onNewEntry: () => {
+              showForm = !showForm;
+              rerender();
+              if (showForm) {
+                setTimeout(() => document.getElementById("diary-emotion-search")?.focus(), 0);
+              }
+            },
+            onSave: (emotionNombre, note, tags) => {
+              addEntryToStorage(emotionNombre, note, tags);
+              showForm = false;
+              rerender();
+            },
+            onCancel: () => {
+              showForm = false;
+              rerender();
+            },
+            onDelete: (id) => {
+              deleteEntryFromStorage(id);
+              rerender();
+            },
+            onClearAll: () => {
+              if (confirm(t3("diary.clearConfirm"))) {
+                saveEntries([]);
+                rerender();
+              }
+            },
+            onExport: () => {
+              const entries = loadEntries();
+              const date = (/* @__PURE__ */ new Date()).toISOString().slice(0, 10);
+              const blob = new Blob([JSON.stringify(entries, null, 2)], { type: "application/json" });
+              const url = URL.createObjectURL(blob);
+              const a3 = document.createElement("a");
+              a3.href = url;
+              a3.download = `diario-emocional-${date}.json`;
+              document.body.appendChild(a3);
+              a3.click();
+              a3.remove();
+              setTimeout(() => URL.revokeObjectURL(url), 1e3);
             }
-          });
-        }
-      }
-      content.querySelector("#diary-new-btn").addEventListener("click", () => {
-        const formEl = content.querySelector("#diary-add-form");
-        if (formEl) {
-          formEl.remove();
-        } else {
-          renderContent(true);
-          content.querySelector("#diary-emotion-search")?.focus();
-        }
-      });
-      const saveBtn = content.querySelector("#diary-form-save");
-      if (saveBtn) {
-        saveBtn.addEventListener("click", () => {
-          const emotionValue = content.querySelector("#diary-emotion-value");
-          const searchInput = content.querySelector("#diary-emotion-search");
-          const note = content.querySelector("#diary-note-input")?.value ?? "";
-          if (!emotionValue?.value) {
-            searchInput?.focus();
-            searchInput?.classList.add("ring-2", "ring-red-300");
-            return;
           }
-          addEntry(emotionValue.value, note, [...selectedTags]);
-          renderContent(false);
-        });
-        content.querySelector("#diary-form-cancel").addEventListener("click", () => renderContent(false));
-      }
-      for (const btn of content.querySelectorAll(".diary-delete-btn")) {
-        btn.addEventListener("click", () => {
-          deleteEntry(Number(btn.dataset.id));
-          renderContent(false);
-        });
-      }
-      const clearBtn = content.querySelector("#diary-clear-btn");
-      if (clearBtn) {
-        clearBtn.addEventListener("click", () => {
-          if (confirm(t2("diary.clearConfirm"))) {
-            saveEntries([]);
-            renderContent(false);
-          }
-        });
-      }
+        ),
+        content
+      );
+    }
+    function addEntry(emotionNombre, note = "", tags = []) {
+      return addEntryToStorage(emotionNombre, note, tags);
     }
     function renderForTab() {
-      renderContent();
+      showForm = false;
+      rerender();
     }
     return { addEntry, renderForTab };
   }
 
-  // js/emotionMap.js
-  var R = 18;
-  var STEP = R * 2 + 8;
-  var ROW_H = R * 2 + 22;
+  // js/emotionMap.jsx
+  var R2 = 18;
+  var STEP = R2 * 2 + 8;
+  var ROW_H = R2 * 2 + 22;
   var QUAD_HDR = 22;
   var PAD = 10;
   var GRAPH_BP_NARROW = 360;
@@ -2349,78 +3020,78 @@
       return (buf[0] >>> 0) / 4294967296;
     };
   }
-  function applyRepulsion(nodes, k2) {
-    for (let i2 = 0; i2 < nodes.length; i2++) {
-      for (let j2 = i2 + 1; j2 < nodes.length; j2++) {
-        let dx = nodes[i2].x - nodes[j2].x;
-        let dy = nodes[i2].y - nodes[j2].y;
+  function applyRepulsion(nodes, k3) {
+    for (let i3 = 0; i3 < nodes.length; i3++) {
+      for (let j3 = i3 + 1; j3 < nodes.length; j3++) {
+        let dx = nodes[i3].x - nodes[j3].x;
+        let dy = nodes[i3].y - nodes[j3].y;
         if (!dx && !dy) {
           dx = 0.01;
         }
-        const d2 = Math.hypot(dx, dy);
-        const f3 = k2 * k2 / d2;
-        nodes[i2].fx += dx / d2 * f3;
-        nodes[i2].fy += dy / d2 * f3;
-        nodes[j2].fx -= dx / d2 * f3;
-        nodes[j2].fy -= dy / d2 * f3;
+        const d3 = Math.hypot(dx, dy);
+        const f4 = k3 * k3 / d3;
+        nodes[i3].fx += dx / d3 * f4;
+        nodes[i3].fy += dy / d3 * f4;
+        nodes[j3].fx -= dx / d3 * f4;
+        nodes[j3].fy -= dy / d3 * f4;
       }
     }
   }
   function runForce(nodes, edges, W, H2) {
-    const k2 = Math.sqrt(W * H2 / nodes.length) * 0.95;
+    const k3 = Math.sqrt(W * H2 / nodes.length) * 0.95;
     for (let it = 0; it < 500; it++) {
       const temp = 35 * (1 - it / 500);
       for (const n2 of nodes) {
         n2.fx = 0;
         n2.fy = 0;
       }
-      applyRepulsion(nodes, k2);
-      for (const e2 of edges) {
-        const a2 = nodes[e2.ai], b2 = nodes[e2.bi];
-        const dx = b2.x - a2.x, dy = b2.y - a2.y;
-        const d2 = Math.hypot(dx, dy) || 0.01;
-        const f3 = d2 * d2 / k2 * 0.3;
-        a2.fx += dx / d2 * f3;
-        a2.fy += dy / d2 * f3;
-        b2.fx -= dx / d2 * f3;
-        b2.fy -= dy / d2 * f3;
+      applyRepulsion(nodes, k3);
+      for (const e3 of edges) {
+        const a3 = nodes[e3.ai], b2 = nodes[e3.bi];
+        const dx = b2.x - a3.x, dy = b2.y - a3.y;
+        const d3 = Math.hypot(dx, dy) || 0.01;
+        const f4 = d3 * d3 / k3 * 0.3;
+        a3.fx += dx / d3 * f4;
+        a3.fy += dy / d3 * f4;
+        b2.fx -= dx / d3 * f4;
+        b2.fy -= dy / d3 * f4;
       }
       for (const n2 of nodes) {
-        const d2 = Math.hypot(n2.fx, n2.fy) || 0.01;
-        n2.x = clamp(n2.x + n2.fx / d2 * Math.min(d2, temp), R + 28, W - R - 28);
-        n2.y = clamp(n2.y + n2.fy / d2 * Math.min(d2, temp), R + 24, H2 - R - 28);
+        const d3 = Math.hypot(n2.fx, n2.fy) || 0.01;
+        n2.x = clamp(n2.x + n2.fx / d3 * Math.min(d3, temp), R2 + 28, W - R2 - 28);
+        n2.y = clamp(n2.y + n2.fy / d3 * Math.min(d3, temp), R2 + 24, H2 - R2 - 28);
       }
     }
     resolveCollisions(nodes, W, H2);
   }
-  function clamp(v2, lo, hi) {
-    return Math.min(Math.max(v2, lo), hi);
+  function clamp(v3, lo, hi) {
+    return Math.min(Math.max(v3, lo), hi);
   }
   function resolveCollisions(nodes, W, H2) {
-    const minDist = R * 2 + 10;
+    const minDist = R2 * 2 + 10;
     for (let pass = 0; pass < 12; pass++) {
-      for (let i2 = 0; i2 < nodes.length; i2++) {
-        for (let j2 = i2 + 1; j2 < nodes.length; j2++) {
-          const dx = nodes[i2].x - nodes[j2].x;
-          const dy = nodes[i2].y - nodes[j2].y;
-          const d2 = Math.hypot(dx, dy) || 0.01;
-          if (d2 < minDist) {
-            const push = (minDist - d2) / 2;
-            const ux = dx / d2, uy = dy / d2;
-            nodes[i2].x = clamp(nodes[i2].x + ux * push, R + 28, W - R - 28);
-            nodes[i2].y = clamp(nodes[i2].y + uy * push, R + 24, H2 - R - 28);
-            nodes[j2].x = clamp(nodes[j2].x - ux * push, R + 28, W - R - 28);
-            nodes[j2].y = clamp(nodes[j2].y - uy * push, R + 24, H2 - R - 28);
+      for (let i3 = 0; i3 < nodes.length; i3++) {
+        for (let j3 = i3 + 1; j3 < nodes.length; j3++) {
+          const dx = nodes[i3].x - nodes[j3].x;
+          const dy = nodes[i3].y - nodes[j3].y;
+          const d3 = Math.hypot(dx, dy) || 0.01;
+          if (d3 < minDist) {
+            const push = (minDist - d3) / 2;
+            const ux = dx / d3, uy = dy / d3;
+            nodes[i3].x = clamp(nodes[i3].x + ux * push, R2 + 28, W - R2 - 28);
+            nodes[i3].y = clamp(nodes[i3].y + uy * push, R2 + 24, H2 - R2 - 28);
+            nodes[j3].x = clamp(nodes[j3].x - ux * push, R2 + 28, W - R2 - 28);
+            nodes[j3].y = clamp(nodes[j3].y - uy * push, R2 + 24, H2 - R2 - 28);
           }
         }
       }
     }
   }
-  function escapeHtmlText(value) {
+  function escHtml(value) {
     return String(value).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
   }
-  function escapeHtmlAttr(value) {
-    return escapeHtmlText(value).replaceAll('"', "&quot;").replaceAll("'", "&#39;");
+  function escAttr(value) {
+    return escHtml(value).replaceAll('"', "&quot;").replaceAll("'", "&#39;");
   }
   function graphHeightFor(width, nodeCount, edgeCount) {
     let base = GRAPH_H_DEFAULT;
@@ -2433,34 +3104,30 @@
     return clamp(base + densityBoost, GRAPH_MIN_H, GRAPH_MAX_H);
   }
   function buildEdges(nameToIdx) {
-    return EMOTION_RELATIONS.flatMap((r2) => {
-      const ai = nameToIdx[r2.from];
-      const bi = nameToIdx[r2.to];
+    return EMOTION_RELATIONS.flatMap((r3) => {
+      const ai = nameToIdx[r3.from];
+      const bi = nameToIdx[r3.to];
       if (ai === void 0 || bi === void 0) {
         const missing = [];
-        if (ai === void 0) missing.push(`from="${r2.from}"`);
-        if (bi === void 0) missing.push(`to="${r2.to}"`);
-        console.warn(
-          "[emotionMap] Dropping relation %s with unknown endpoint(s): %s",
-          String(r2.type),
-          missing.join(", ")
-        );
+        if (ai === void 0) missing.push(`from="${r3.from}"`);
+        if (bi === void 0) missing.push(`to="${r3.to}"`);
+        console.warn("[emotionMap] Dropping relation %s with unknown endpoint(s): %s", String(r3.type), missing.join(", "));
         return [];
       }
-      return [{ ai, bi, type: r2.type }];
+      return [{ ai, bi, type: r3.type }];
     });
   }
   function buildForceData(emociones2, getDisplayName, W, H2) {
     const rng = makeRng(48879);
     const nameToIdx = {};
-    const nodes = emociones2.map((e2, idx) => {
-      nameToIdx[e2.nombre] = idx;
-      const ci = MOOD_CATEGORIES.findIndex((c2) => c2.emotions.includes(e2.nombre));
+    const nodes = emociones2.map((e3, idx) => {
+      nameToIdx[e3.nombre] = idx;
+      const ci = MOOD_CATEGORIES.findIndex((c3) => c3.emotions.includes(e3.nombre));
       const q2 = QUAD_MAP[Math.max(ci, 0)];
       return {
-        nombre: e2.nombre,
-        label: getDisplayName(e2.nombre),
-        color: e2.color,
+        nombre: e3.nombre,
+        label: getDisplayName(e3.nombre),
+        color: e3.color,
         x: (q2 % 2 + 0.2 + rng() * 0.6) * (W / 2),
         y: (Math.floor(q2 / 2) + 0.2 + rng() * 0.6) * (H2 / 2),
         fx: 0,
@@ -2476,12 +3143,12 @@
     const maxCols = Math.max(2, Math.floor((QW - PAD * 2 + 8) / STEP));
     let maxRowsTop = 0, maxRowsBot = 0;
     MOOD_CATEGORIES.forEach((cat, ci) => {
-      const count = cat.emotions.filter((n2) => emociones2.find((e2) => e2.nombre === n2)).length;
+      const count = cat.emotions.filter((n2) => emociones2.find((e3) => e3.nombre === n2)).length;
       const rows = Math.ceil(count / maxCols);
       if (QUAD_MAP[ci] < 2) maxRowsTop = Math.max(maxRowsTop, rows);
       else maxRowsBot = Math.max(maxRowsBot, rows);
     });
-    const QH = QUAD_HDR + PAD + Math.max(maxRowsTop, 1) * ROW_H + R + 16;
+    const QH = QUAD_HDR + PAD + Math.max(maxRowsTop, 1) * ROW_H + R2 + 16;
     const H2 = QH * 2;
     const nameToIdx = {};
     const nodes = [];
@@ -2490,87 +3157,19 @@
       const ox = q2 % 2 * QW;
       const oy = Math.floor(q2 / 2) * QH;
       cat.emotions.forEach((nombre, pos) => {
-        const e2 = emociones2.find((em) => em.nombre === nombre);
-        if (!e2) return;
+        const e3 = emociones2.find((em) => em.nombre === nombre);
+        if (!e3) return;
         nameToIdx[nombre] = nodes.length;
         nodes.push({
           nombre,
           label: getDisplayName(nombre),
-          color: e2.color,
-          x: ox + PAD + R + pos % maxCols * STEP,
-          y: oy + QUAD_HDR + PAD + R + Math.floor(pos / maxCols) * ROW_H
+          color: e3.color,
+          x: ox + PAD + R2 + pos % maxCols * STEP,
+          y: oy + QUAD_HDR + PAD + R2 + Math.floor(pos / maxCols) * ROW_H
         });
       });
     });
     return { nodes, edges: buildEdges(nameToIdx), nameToIdx, H: H2 };
-  }
-  function buildLegendItems(dark, activeTypes, t2) {
-    return Object.entries(RELS).map(([type, rel]) => {
-      const on2 = activeTypes.has(type);
-      const dimLine = dark ? "#475569" : "#cbd5e1";
-      const lineColor = on2 ? rel.color : dimLine;
-      const onTextC = dark ? "text-slate-300" : "text-slate-600";
-      const offTextC = dark ? "text-slate-600" : "text-slate-400";
-      const textC = on2 ? onTextC : offTextC;
-      const onBgC = dark ? "bg-slate-700" : "bg-slate-100";
-      const bgC = on2 ? onBgC : "";
-      return `<button type="button" data-rel-type="${type}" role="listitem" aria-pressed="${on2}"
-            class="flex items-center gap-1 text-[11px] px-1.5 py-0.5 rounded-lg transition-colors ${textC} ${bgC}">
-            <svg width="14" height="6" aria-hidden="true"><line x1="0" y1="3" x2="14" y2="3" stroke="${lineColor}" stroke-width="2" stroke-dasharray="${rel.dash}"/></svg>
-            ${t2(rel.labelKey)}
-        </button>`;
-    }).join("");
-  }
-  function buildQuadrantBtns(effectiveQuadrant, activeC, inactiveC, t2) {
-    const allBtnC = effectiveQuadrant === null ? activeC : inactiveC;
-    return [
-      `<button type="button" data-quad="all" aria-pressed="${effectiveQuadrant === null}"
-            class="text-[11px] font-bold px-2.5 py-0.5 rounded-full border transition-colors ${allBtnC}">
-            ${t2("map.filterAll")}
-        </button>`
-    ].concat(MOOD_CATEGORIES.map((cat, i2) => {
-      const isActive = effectiveQuadrant === i2;
-      const inlineStyle = isActive ? `background-color:${cat.color};color:${cat.ink};border-color:${cat.color}` : "";
-      const btnC = isActive ? "" : inactiveC;
-      return `<button type="button" data-quad="${i2}" aria-pressed="${isActive}"
-            class="text-[11px] font-bold px-2.5 py-0.5 rounded-full border transition-colors ${btnC}"
-            style="${inlineStyle}">${t2(cat.labelKey)}</button>`;
-    })).join("");
-  }
-  function buildInfoPanel(selected, nodes, edges, dark, t2, getDisplayName) {
-    if (!selected) return "";
-    const myEdges = edges.filter(
-      (e2) => nodes[e2.ai]?.nombre === selected || nodes[e2.bi]?.nombre === selected
-    );
-    const grouped = {};
-    for (const e2 of myEdges) {
-      const other = nodes[e2.ai].nombre === selected ? nodes[e2.bi] : nodes[e2.ai];
-      grouped[e2.type] = grouped[e2.type] || [];
-      grouped[e2.type].push(other.label);
-    }
-    const rows = Object.entries(grouped).map(([type, names]) => {
-      const rel = RELS[type];
-      return `<li class="flex items-start gap-2 text-sm leading-snug">
-            <span class="mt-1 shrink-0 inline-block w-2.5 h-2.5 rounded-full" style="background:${rel.color}"></span>
-            <span><strong class="${dark ? "text-slate-300" : "text-slate-700"}">${t2(rel.labelKey)}:</strong> <span class="${dark ? "text-slate-400" : "text-slate-500"}">${names.join(", ")}</span></span>
-        </li>`;
-    }).join("");
-    const borderC = dark ? "bg-slate-800 border-slate-700" : "bg-white border-slate-100";
-    const nameC = dark ? "text-slate-100" : "text-slate-800";
-    const body = rows ? `<ul class="space-y-1.5">${rows}</ul>` : `<p class="text-xs text-slate-400">${t2("map.infoNone")}</p>`;
-    return `<div id="map-info-panel" class="mt-3 rounded-2xl p-4 border ${borderC} shadow-sm">
-        <div class="flex items-center justify-between mb-2">
-            <span class="font-bold ${nameC}">${getDisplayName(selected)}</span>
-            <div class="flex items-center gap-1">
-                <button id="map-open-btn" class="text-xs font-bold text-blue-500 hover:text-blue-600 px-2 py-1 rounded-lg transition-colors">${t2("openChip")}</button>
-                <button id="map-clear-btn" aria-label="${t2("map.clearSelection")}"
-                    class="w-6 h-6 flex items-center justify-center rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors">
-                    <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
-                </button>
-            </div>
-        </div>
-        ${body}
-    </div>`;
   }
   function buildQuadrantFilter(catIdx, visibleEdges, nodes) {
     if (catIdx === null) return null;
@@ -2578,18 +3177,12 @@
     const nodeNames = new Set(nodes.map((n2) => n2.nombre));
     const inQuadrant = new Set(cat.emotions.filter((n2) => nodeNames.has(n2)));
     const neighbors = /* @__PURE__ */ new Set();
-    for (const e2 of visibleEdges) {
-      const aN = nodes[e2.ai].nombre;
-      const bN = nodes[e2.bi].nombre;
+    for (const e3 of visibleEdges) {
+      const aN = nodes[e3.ai].nombre, bN = nodes[e3.bi].nombre;
       if (inQuadrant.has(aN) && !inQuadrant.has(bN)) neighbors.add(bN);
       if (inQuadrant.has(bN) && !inQuadrant.has(aN)) neighbors.add(aN);
     }
     return { inQuadrant, neighbors };
-  }
-  function hasNameFilterMatch(nameFilter, selected, nodes) {
-    if (!nameFilter || selected !== null) return true;
-    const norm = normalizeText(nameFilter);
-    return nodes.some((n2) => normalizeText(n2.label).includes(norm));
   }
   function calcNodeOpacity(n2, sel, isSel, isConn, quadrantFilter, normalizedFilter) {
     if (sel) return isSel || isConn ? 1 : 0;
@@ -2601,13 +3194,41 @@
     if (normalizedFilter) return normalizeText(n2.label).includes(normalizedFilter) ? 1 : 0.15;
     return 1;
   }
-  function svgBody(nodes, edges, W, H2, sel, view, { t: t2, activeTypes, activeQuadrant, nameFilter }) {
+  function buildNeighborhoodData(selName, nodes, visibleEdges, W, H2) {
+    const neighborEdges = visibleEdges.filter(
+      (e3) => nodes[e3.ai].nombre === selName || nodes[e3.bi].nombre === selName
+    );
+    const memberNames = new Set(neighborEdges.flatMap((e3) => [nodes[e3.ai].nombre, nodes[e3.bi].nombre]));
+    memberNames.add(selName);
+    const rng = makeRng(61453);
+    const subNameToIdx = {};
+    const subNodes = nodes.filter((n2) => memberNames.has(n2.nombre)).map((n2, i3) => {
+      subNameToIdx[n2.nombre] = i3;
+      return {
+        nombre: n2.nombre,
+        label: n2.label,
+        color: n2.color,
+        x: (0.15 + rng() * 0.7) * W,
+        y: (0.15 + rng() * 0.7) * H2,
+        fx: 0,
+        fy: 0
+      };
+    });
+    const subEdges = neighborEdges.map((e3) => ({
+      ai: subNameToIdx[nodes[e3.ai].nombre],
+      bi: subNameToIdx[nodes[e3.bi].nombre],
+      type: e3.type
+    })).filter((e3) => e3.ai !== void 0 && e3.bi !== void 0);
+    runForce(subNodes, subEdges, W, H2);
+    return { nodes: subNodes, edges: subEdges };
+  }
+  function buildSvgBody(nodes, edges, W, H2, sel, view, { t: t3, activeTypes, activeQuadrant, nameFilter }) {
     const dark = document.documentElement.classList.contains("dark");
     const labelFill = dark ? "#cbd5e1" : "#1e293b";
-    const visibleEdges = edges.filter((e2) => activeTypes.has(e2.type));
+    const visibleEdges = edges.filter((e3) => activeTypes.has(e3.type));
     const quadrantFilter = buildQuadrantFilter(activeQuadrant, visibleEdges, nodes);
     const connectedNames = sel ? new Set(
-      visibleEdges.filter((e2) => nodes[e2.ai].nombre === sel || nodes[e2.bi].nombre === sel).flatMap((e2) => [nodes[e2.ai].nombre, nodes[e2.bi].nombre])
+      visibleEdges.filter((e3) => nodes[e3.ai].nombre === sel || nodes[e3.bi].nombre === sel).flatMap((e3) => [nodes[e3.ai].nombre, nodes[e3.bi].nombre])
     ) : null;
     let bg = "";
     if (view === "quad") {
@@ -2621,31 +3242,31 @@
         const htC = dark ? "#f1f5f9" : cat.ink;
         bg += `<rect x="${ox}" y="${oy}" width="${QW}" height="${QH}" fill="${bgC}"/>`;
         bg += `<rect x="${ox}" y="${oy}" width="${QW}" height="${QUAD_HDR}" fill="${hdC}"/>`;
-        bg += `<text x="${ox + QW / 2}" y="${oy + 15}" text-anchor="middle" font-size="11" font-weight="700" fill="${htC}">${t2(cat.labelKey).toUpperCase()}</text>`;
+        bg += `<text x="${ox + QW / 2}" y="${oy + 15}" text-anchor="middle" font-size="11" font-weight="700" fill="${htC}">${t3(cat.labelKey).toUpperCase()}</text>`;
       });
       const divC = dark ? "#334155" : "#94a3b8";
       bg += `<line x1="${W / 2}" y1="0" x2="${W / 2}" y2="${H2}" stroke="${divC}" stroke-width="1"/>`;
       bg += `<line x1="0" y1="${H2 / 2}" x2="${W}" y2="${H2 / 2}" stroke="${divC}" stroke-width="1"/>`;
     }
     const normalizedFilter = nameFilter ? normalizeText(nameFilter) : "";
-    const eStr = visibleEdges.map((e2) => {
-      const a2 = nodes[e2.ai], b2 = nodes[e2.bi];
+    const eStr = visibleEdges.map((e3) => {
+      const a3 = nodes[e3.ai], b2 = nodes[e3.bi];
       let op = 0.4;
       if (sel) {
-        op = sel === a2.nombre || sel === b2.nombre ? 0.9 : 0;
+        op = sel === a3.nombre || sel === b2.nombre ? 0.9 : 0;
       } else if (quadrantFilter) {
-        const aIn = quadrantFilter.inQuadrant.has(a2.nombre);
+        const aIn = quadrantFilter.inQuadrant.has(a3.nombre);
         const bIn = quadrantFilter.inQuadrant.has(b2.nombre);
         if (!aIn && !bIn) op = 0;
         else if (aIn && bIn) op = 0.75;
         else op = 0.35;
       } else if (normalizedFilter) {
-        const aMatch = normalizeText(a2.label).includes(normalizedFilter);
+        const aMatch = normalizeText(a3.label).includes(normalizedFilter);
         const bMatch = normalizeText(b2.label).includes(normalizedFilter);
         op = aMatch || bMatch ? 0.3 : 0;
       }
-      const rel = RELS[e2.type];
-      return `<line x1="${Math.trunc(a2.x)}" y1="${Math.trunc(a2.y)}" x2="${Math.trunc(b2.x)}" y2="${Math.trunc(b2.y)}" stroke="${rel.color}" stroke-width="2.5" opacity="${op}" stroke-dasharray="${rel.dash}"/>`;
+      const rel = RELS[e3.type];
+      return `<line x1="${Math.trunc(a3.x)}" y1="${Math.trunc(a3.y)}" x2="${Math.trunc(b2.x)}" y2="${Math.trunc(b2.y)}" stroke="${rel.color}" stroke-width="2.5" opacity="${op}" stroke-dasharray="${rel.dash}"/>`;
     }).join("");
     const nStr = nodes.map((n2) => {
       const isSel = sel === n2.nombre;
@@ -2656,49 +3277,241 @@
       const sw = isSel ? "3" : "0";
       const lbl = n2.label.length > 10 ? n2.label.slice(0, 9) + "\u2026" : n2.label;
       const cx = Math.trunc(n2.x), cy = Math.trunc(n2.y);
-      return `<g class="map-node" data-nombre="${escapeHtmlAttr(n2.nombre)}" tabindex="0" role="button" aria-label="${escapeHtmlAttr(n2.label)}" style="cursor:pointer" opacity="${nodeOp}" ${hide ? 'pointer-events="none"' : ""}>
-            <title>${escapeHtmlText(n2.label)}</title>
-            <circle cx="${cx}" cy="${cy}" r="${R + 6}" fill="transparent"/>
-            <circle cx="${cx}" cy="${cy}" r="${R}" fill="${n2.color}" stroke="${sc}" stroke-width="${sw}" pointer-events="none"/>
-            <text x="${cx}" y="${Math.trunc(n2.y + R + 12)}" text-anchor="middle" font-size="11" font-weight="600" fill="${labelFill}" pointer-events="none">${escapeHtmlText(lbl)}</text>
+      return `<g class="map-node" data-nombre="${escAttr(n2.nombre)}" tabindex="0" role="button" aria-label="${escAttr(n2.label)}" style="cursor:pointer" opacity="${nodeOp}" ${hide ? 'pointer-events="none"' : ""}>
+            <title>${escHtml(n2.label)}</title>
+            <circle cx="${cx}" cy="${cy}" r="${R2 + 6}" fill="transparent"/>
+            <circle cx="${cx}" cy="${cy}" r="${R2}" fill="${n2.color}" stroke="${sc}" stroke-width="${sw}" pointer-events="none"/>
+            <text x="${cx}" y="${Math.trunc(n2.y + R2 + 12)}" text-anchor="middle" font-size="11" font-weight="600" fill="${labelFill}" pointer-events="none">${escHtml(lbl)}</text>
         </g>`;
     }).join("");
     return `${bg}<g>${eStr}</g><g>${nStr}</g>`;
   }
-  function buildNeighborhoodData(selName, nodes, visibleEdges, W, H2) {
-    const neighborEdges = visibleEdges.filter(
-      (e2) => nodes[e2.ai].nombre === selName || nodes[e2.bi].nombre === selName
-    );
-    const memberNames = new Set(
-      neighborEdges.flatMap((e2) => [nodes[e2.ai].nombre, nodes[e2.bi].nombre])
-    );
-    memberNames.add(selName);
-    const rng = makeRng(61453);
-    const subNameToIdx = {};
-    const subNodes = nodes.filter((n2) => memberNames.has(n2.nombre)).map((n2, i2) => {
-      subNameToIdx[n2.nombre] = i2;
-      return {
-        nombre: n2.nombre,
-        label: n2.label,
-        color: n2.color,
-        x: (0.15 + rng() * 0.7) * W,
-        y: (0.15 + rng() * 0.7) * H2,
-        fx: 0,
-        fy: 0
-      };
-    });
-    const subEdges = neighborEdges.map((e2) => ({
-      ai: subNameToIdx[nodes[e2.ai].nombre],
-      bi: subNameToIdx[nodes[e2.bi].nombre],
-      type: e2.type
-    })).filter((e2) => e2.ai !== void 0 && e2.bi !== void 0);
-    runForce(subNodes, subEdges, W, H2);
-    return { nodes: subNodes, edges: subEdges };
-  }
   function containerW() {
     return document.getElementById("map-content")?.clientWidth || 340;
   }
-  function createEmotionMap({ emociones: emociones2, getDisplayName, t: t2, showDetail }) {
+  function EmotionMapPanel({
+    view,
+    selected,
+    nameFilter,
+    activeTypes,
+    activeQuadrant,
+    nodes,
+    edges,
+    H: H2,
+    W,
+    t: t3,
+    dark,
+    canvasBg,
+    onGraphView,
+    onQuadView,
+    onRelTypeToggle,
+    onQuadrantChange,
+    onOpenDetail,
+    onClearSelection,
+    onSearch,
+    svgEventHandler
+  }) {
+    const svgRef = A2(null);
+    y2(() => {
+      const svg = svgRef.current;
+      if (!svg) return;
+      const isNeighborhood = view === "graph" && selected !== null;
+      let svgNodes, svgEdges, svgActiveQuadrant;
+      if (isNeighborhood) {
+        const hood = buildNeighborhoodData(selected, nodes, edges.filter((e3) => activeTypes.has(e3.type)), W, H2);
+        svgNodes = hood.nodes;
+        svgEdges = hood.edges;
+        svgActiveQuadrant = null;
+      } else {
+        svgNodes = nodes;
+        svgEdges = edges;
+        svgActiveQuadrant = activeQuadrant;
+      }
+      svg.innerHTML = buildSvgBody(
+        svgNodes,
+        svgEdges,
+        W,
+        H2,
+        selected,
+        view,
+        { t: t3, activeTypes, activeQuadrant: svgActiveQuadrant, nameFilter }
+      );
+      svg.onclick = svgEventHandler.click;
+      svg.onkeydown = svgEventHandler.keydown;
+    });
+    const activeC = dark ? "bg-slate-100 text-slate-900 border-slate-100" : "bg-slate-800 text-white border-slate-800";
+    const inactiveC = dark ? "bg-slate-800 text-slate-400 border-slate-600" : "bg-white text-slate-500 border-slate-200";
+    const effectiveQuadrant = view === "graph" && selected !== null ? null : activeQuadrant;
+    const hasMatch = (() => {
+      if (!nameFilter || selected !== null) return true;
+      const norm = normalizeText(nameFilter);
+      return nodes.some((n2) => normalizeText(n2.label).includes(norm));
+    })();
+    let infoPanel = null;
+    if (selected) {
+      const myEdges = edges.filter((e3) => nodes[e3.ai]?.nombre === selected || nodes[e3.bi]?.nombre === selected);
+      const grouped = {};
+      for (const e3 of myEdges) {
+        const other = nodes[e3.ai].nombre === selected ? nodes[e3.bi] : nodes[e3.ai];
+        grouped[e3.type] = grouped[e3.type] || [];
+        grouped[e3.type].push(other.label);
+      }
+      const borderC = dark ? "bg-slate-800 border-slate-700" : "bg-white border-slate-100";
+      const nameC = dark ? "text-slate-100" : "text-slate-800";
+      infoPanel = /* @__PURE__ */ u3("div", { id: "map-info-panel", class: `mt-3 rounded-2xl p-4 border ${borderC} shadow-sm`, children: [
+        /* @__PURE__ */ u3("div", { class: "flex items-center justify-between mb-2", children: [
+          /* @__PURE__ */ u3("span", { class: `font-bold ${nameC}`, children: nodes.find((n2) => n2.nombre === selected)?.label ?? selected }),
+          /* @__PURE__ */ u3("div", { class: "flex items-center gap-1", children: [
+            /* @__PURE__ */ u3(
+              "button",
+              {
+                id: "map-open-btn",
+                onClick: onOpenDetail,
+                class: "text-xs font-bold text-blue-500 hover:text-blue-600 px-2 py-1 rounded-lg transition-colors",
+                children: t3("openChip")
+              }
+            ),
+            /* @__PURE__ */ u3(
+              "button",
+              {
+                id: "map-clear-btn",
+                "aria-label": t3("map.clearSelection"),
+                onClick: onClearSelection,
+                class: "w-6 h-6 flex items-center justify-center rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors",
+                children: /* @__PURE__ */ u3("svg", { class: "w-3.5 h-3.5", viewBox: "0 0 24 24", fill: "currentColor", "aria-hidden": "true", children: /* @__PURE__ */ u3("path", { d: "M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" }) })
+              }
+            )
+          ] })
+        ] }),
+        Object.keys(grouped).length > 0 ? /* @__PURE__ */ u3("ul", { class: "space-y-1.5", children: Object.entries(grouped).map(([type, names]) => {
+          const rel = RELS[type];
+          return /* @__PURE__ */ u3("li", { class: "flex items-start gap-2 text-sm leading-snug", children: [
+            /* @__PURE__ */ u3("span", { class: "mt-1 shrink-0 inline-block w-2.5 h-2.5 rounded-full", style: `background:${rel.color}` }),
+            /* @__PURE__ */ u3("span", { children: [
+              /* @__PURE__ */ u3("strong", { class: dark ? "text-slate-300" : "text-slate-700", children: [
+                t3(rel.labelKey),
+                ":"
+              ] }),
+              " ",
+              /* @__PURE__ */ u3("span", { class: dark ? "text-slate-400" : "text-slate-500", children: names.join(", ") })
+            ] })
+          ] }, type);
+        }) }) : /* @__PURE__ */ u3("p", { class: "text-xs text-slate-400", children: t3("map.infoNone") })
+      ] });
+    }
+    return /* @__PURE__ */ u3("div", { children: [
+      /* @__PURE__ */ u3("div", { class: "flex gap-2 mb-2", children: [
+        /* @__PURE__ */ u3(
+          "button",
+          {
+            id: "map-graph-btn",
+            onClick: onGraphView,
+            class: `flex-1 py-2 text-sm font-bold rounded-xl border transition-colors ${view === "graph" ? activeC : inactiveC}`,
+            children: t3("map.viewGraph")
+          }
+        ),
+        /* @__PURE__ */ u3(
+          "button",
+          {
+            id: "map-quad-btn",
+            onClick: onQuadView,
+            class: `flex-1 py-2 text-sm font-bold rounded-xl border transition-colors ${view === "quad" ? activeC : inactiveC}`,
+            children: t3("map.viewQuad")
+          }
+        )
+      ] }),
+      /* @__PURE__ */ u3("div", { class: "flex flex-wrap gap-x-3 gap-y-1 mb-2", role: "list", "aria-label": t3("map.legendLabel"), children: Object.entries(RELS).map(([type, rel]) => {
+        const on2 = activeTypes.has(type);
+        const dimLine = dark ? "#475569" : "#cbd5e1";
+        const lineColor = on2 ? rel.color : dimLine;
+        const onTextC = dark ? "text-slate-300" : "text-slate-600";
+        const offTextC = dark ? "text-slate-600" : "text-slate-400";
+        const onBgC = dark ? "bg-slate-700" : "bg-slate-100";
+        return /* @__PURE__ */ u3(
+          "button",
+          {
+            type: "button",
+            "data-rel-type": type,
+            role: "listitem",
+            "aria-pressed": String(on2),
+            class: `flex items-center gap-1 text-[11px] px-1.5 py-0.5 rounded-lg transition-colors ${on2 ? onTextC : offTextC} ${on2 ? onBgC : ""}`,
+            onClick: () => onRelTypeToggle(type),
+            children: [
+              /* @__PURE__ */ u3("svg", { width: "14", height: "6", "aria-hidden": "true", children: /* @__PURE__ */ u3("line", { x1: "0", y1: "3", x2: "14", y2: "3", stroke: lineColor, "stroke-width": "2", "stroke-dasharray": rel.dash }) }),
+              t3(rel.labelKey)
+            ]
+          },
+          type
+        );
+      }) }),
+      /* @__PURE__ */ u3("div", { class: "flex flex-wrap gap-1.5 mb-2", children: [
+        /* @__PURE__ */ u3(
+          "button",
+          {
+            type: "button",
+            "data-quad": "all",
+            "aria-pressed": String(effectiveQuadrant === null),
+            class: `text-[11px] font-bold px-2.5 py-0.5 rounded-full border transition-colors ${effectiveQuadrant === null ? activeC : inactiveC}`,
+            onClick: () => onQuadrantChange(null),
+            children: t3("map.filterAll")
+          }
+        ),
+        MOOD_CATEGORIES.map((cat, i3) => {
+          const isActive = effectiveQuadrant === i3;
+          return /* @__PURE__ */ u3(
+            "button",
+            {
+              type: "button",
+              "data-quad": String(i3),
+              "aria-pressed": String(isActive),
+              class: `text-[11px] font-bold px-2.5 py-0.5 rounded-full border transition-colors ${isActive ? "" : inactiveC}`,
+              style: isActive ? `background-color:${cat.color};color:${cat.ink};border-color:${cat.color}` : "",
+              onClick: () => onQuadrantChange(i3),
+              children: t3(cat.labelKey)
+            },
+            cat.key
+          );
+        })
+      ] }),
+      /* @__PURE__ */ u3("div", { class: "relative mb-2", children: [
+        /* @__PURE__ */ u3(
+          "input",
+          {
+            id: "map-search",
+            type: "text",
+            autocomplete: "off",
+            placeholder: t3("map.searchPlaceholder"),
+            defaultValue: nameFilter,
+            class: `w-full text-[13px] px-3 py-1.5 rounded-xl border transition-colors ${dark ? "bg-slate-800 border-slate-600 text-slate-200 placeholder:text-slate-500" : "bg-white border-slate-200 text-slate-700 placeholder:text-slate-400"}`,
+            onInput: onSearch
+          }
+        ),
+        /* @__PURE__ */ u3(
+          "ul",
+          {
+            id: "map-suggestions",
+            role: "listbox",
+            class: `absolute z-20 w-full mt-1 rounded-xl border shadow-lg max-h-48 overflow-y-auto hidden ${dark ? "bg-slate-800 border-slate-600" : "bg-white border-slate-200"}`
+          }
+        )
+      ] }),
+      /* @__PURE__ */ u3("p", { id: "map-hint", class: "text-[11px] text-slate-400 mb-1.5 px-0.5", children: selected ? t3("map.hintSelected") : t3("map.hint") }),
+      /* @__PURE__ */ u3("div", { class: "rounded-2xl overflow-hidden", style: `background:${canvasBg}`, children: /* @__PURE__ */ u3(
+        "svg",
+        {
+          id: "map-svg",
+          ref: svgRef,
+          viewBox: `0 0 ${W} ${H2}`,
+          style: "width:100%;display:block;touch-action:pan-y",
+          role: "img",
+          "aria-label": t3("nav.mapa")
+        }
+      ) }),
+      /* @__PURE__ */ u3("p", { id: "map-empty", class: `${hasMatch ? "hidden" : ""} text-[13px] text-center text-slate-400 mt-4 py-2`, children: t3("map.searchEmpty") }),
+      infoPanel
+    ] });
+  }
+  function createEmotionMap({ emociones: emociones2, getDisplayName, t: t3, showDetail }) {
     let view = "graph";
     let selected = null;
     let nameFilter = "";
@@ -2716,651 +3529,258 @@
         quadData = null;
       }
       if (!quadData) {
-        quadData = buildQuadData(emociones2, getDisplayName, W);
+        quadData = buildQuadData(emociones2, getDisplayName, containerW());
       }
     }
-    function render() {
+    function render_() {
       const wrap = document.getElementById("map-content");
       if (!wrap) return;
       ensureData();
       const { nodes, edges, H: H2 } = view === "graph" ? forceData : quadData;
       const W = containerW();
       const dark = document.documentElement.classList.contains("dark");
-      const isNeighborhood = view === "graph" && selected !== null;
-      let svgNodes;
-      let svgEdges;
-      let svgActiveQuadrant;
-      if (isNeighborhood) {
-        const hood = buildNeighborhoodData(
-          selected,
-          nodes,
-          edges.filter((e2) => activeTypes.has(e2.type)),
-          W,
-          H2
-        );
-        svgNodes = hood.nodes;
-        svgEdges = hood.edges;
-        svgActiveQuadrant = null;
-      } else {
-        svgNodes = nodes;
-        svgEdges = edges;
-        svgActiveQuadrant = activeQuadrant;
-      }
-      const infoHtml = buildInfoPanel(selected, nodes, edges, dark, t2, getDisplayName);
-      const activeC = dark ? "bg-slate-100 text-slate-900 border-slate-100" : "bg-slate-800 text-white border-slate-800";
-      const inactiveC = dark ? "bg-slate-800 text-slate-400 border-slate-600" : "bg-white text-slate-500 border-slate-200";
-      const canvasBg = dark ? "#0f172a" : "#f8fafc";
-      const legendItems = buildLegendItems(dark, activeTypes, t2);
-      const effectiveQuadrant = isNeighborhood ? null : activeQuadrant;
-      const quadrantBtns = buildQuadrantBtns(effectiveQuadrant, activeC, inactiveC, t2);
-      const hasMatch = hasNameFilterMatch(nameFilter, selected, nodes);
-      wrap.innerHTML = `
-            <div class="flex gap-2 mb-2">
-                <button id="map-graph-btn" class="flex-1 py-2 text-sm font-bold rounded-xl border transition-colors ${view === "graph" ? activeC : inactiveC}">${t2("map.viewGraph")}</button>
-                <button id="map-quad-btn"  class="flex-1 py-2 text-sm font-bold rounded-xl border transition-colors ${view === "quad" ? activeC : inactiveC}">${t2("map.viewQuad")}</button>
-            </div>
-            <div class="flex flex-wrap gap-x-3 gap-y-1 mb-2" role="list" aria-label="${t2("map.legendLabel")}">
-                ${legendItems}
-            </div>
-            <div class="flex flex-wrap gap-1.5 mb-2">
-                ${quadrantBtns}
-            </div>
-            <div class="relative mb-2">
-                <input id="map-search" type="text" autocomplete="off"
-                    placeholder="${t2("map.searchPlaceholder")}"
-                    value="${escapeHtmlAttr(nameFilter)}"
-                    class="w-full text-[13px] px-3 py-1.5 rounded-xl border transition-colors
-                        ${dark ? "bg-slate-800 border-slate-600 text-slate-200 placeholder:text-slate-500" : "bg-white border-slate-200 text-slate-700 placeholder:text-slate-400"}">
-                <ul id="map-suggestions" role="listbox"
-                    class="absolute z-20 w-full mt-1 rounded-xl border shadow-lg max-h-48 overflow-y-auto hidden
-                        ${dark ? "bg-slate-800 border-slate-600" : "bg-white border-slate-200"}">
-                </ul>
-            </div>
-            <p id="map-hint" class="text-[11px] text-slate-400 mb-1.5 px-0.5">
-                ${selected ? t2("map.hintSelected") : t2("map.hint")}
-            </p>
-            <div class="rounded-2xl overflow-hidden" style="background:${canvasBg}">
-                <svg id="map-svg" viewBox="0 0 ${W} ${H2}" style="width:100%;display:block;touch-action:pan-y" role="img" aria-label="${t2("nav.mapa")}">
-                    ${svgBody(svgNodes, svgEdges, W, H2, selected, view, { t: t2, activeTypes, activeQuadrant: svgActiveQuadrant, nameFilter })}
-                </svg>
-            </div>
-            <p id="map-empty" class="${hasMatch ? "hidden" : ""} text-[13px] text-center text-slate-400 mt-4 py-2">${t2("map.searchEmpty")}</p>
-            ${infoHtml}`;
-      bindEvents(wrap);
+      const svgEventHandler = {
+        click: (ev) => {
+          const node = ev.target.closest(".map-node");
+          if (!node) {
+            selected = null;
+            render_();
+            return;
+          }
+          const nombre = node.dataset.nombre;
+          selected = selected === nombre ? null : nombre;
+          render_();
+        },
+        keydown: (ev) => {
+          if (ev.key !== "Enter" && ev.key !== " ") return;
+          const node = ev.target.closest(".map-node");
+          if (!node) return;
+          ev.preventDefault();
+          const nombre = node.dataset.nombre;
+          selected = selected === nombre ? null : nombre;
+          render_();
+        }
+      };
+      R(
+        /* @__PURE__ */ u3(
+          EmotionMapPanel,
+          {
+            view,
+            selected,
+            nameFilter,
+            activeTypes,
+            activeQuadrant,
+            nodes,
+            edges,
+            H: H2,
+            W,
+            t: t3,
+            dark,
+            canvasBg: dark ? "#0f172a" : "#f8fafc",
+            onGraphView: () => {
+              view = "graph";
+              selected = null;
+              render_();
+            },
+            onQuadView: () => {
+              view = "quad";
+              selected = null;
+              render_();
+            },
+            onRelTypeToggle: (type) => {
+              if (activeTypes.has(type)) activeTypes.delete(type);
+              else activeTypes.add(type);
+              render_();
+            },
+            onQuadrantChange: (q2) => {
+              activeQuadrant = q2;
+              selected = null;
+              render_();
+            },
+            onOpenDetail: () => {
+              const e3 = emociones2.find((em) => em.nombre === selected);
+              if (e3) showDetail(e3);
+            },
+            onClearSelection: () => {
+              selected = null;
+              nameFilter = "";
+              render_();
+            },
+            onSearch: (ev) => {
+              nameFilter = ev.target.value;
+              selected = null;
+              render_();
+              requestAnimationFrame(() => populateSuggestions(nameFilter));
+            },
+            svgEventHandler
+          }
+        ),
+        wrap
+      );
       if (selected) {
         requestAnimationFrame(() => {
           document.getElementById("map-info-panel")?.scrollIntoView({ behavior: "smooth", block: "nearest" });
         });
       }
     }
-    function updateSvg() {
+    function populateSuggestions(value) {
       const wrap = document.getElementById("map-content");
-      if (!wrap) return;
-      ensureData();
-      const { nodes, edges, H: H2 } = view === "graph" ? forceData : quadData;
-      const W = containerW();
-      const isNeighborhood = view === "graph" && selected !== null;
-      let svgNodes, svgEdges, svgActiveQuadrant;
-      if (isNeighborhood) {
-        const hood = buildNeighborhoodData(
-          selected,
-          nodes,
-          edges.filter((e2) => activeTypes.has(e2.type)),
-          W,
-          H2
-        );
-        svgNodes = hood.nodes;
-        svgEdges = hood.edges;
-        svgActiveQuadrant = null;
-      } else {
-        svgNodes = nodes;
-        svgEdges = edges;
-        svgActiveQuadrant = activeQuadrant;
+      const suggestionsList = wrap?.querySelector("#map-suggestions");
+      if (!suggestionsList) return;
+      const norm = normalizeText(value);
+      if (!norm) {
+        suggestionsList.classList.add("hidden");
+        return;
       }
-      const svg = wrap.querySelector("#map-svg");
-      if (svg) {
-        svg.innerHTML = svgBody(
-          svgNodes,
-          svgEdges,
-          W,
-          H2,
-          selected,
-          view,
-          { t: t2, activeTypes, activeQuadrant: svgActiveQuadrant, nameFilter }
-        );
-        bindSvgEvents(svg);
+      const dark = document.documentElement.classList.contains("dark");
+      const itemC = dark ? "text-slate-200 hover:bg-slate-700 active:bg-slate-600" : "text-slate-700 hover:bg-slate-50 active:bg-slate-100";
+      const matches = emociones2.filter((e3) => normalizeText(getDisplayName(e3.nombre)).includes(norm)).slice(0, 8);
+      if (!matches.length) {
+        suggestionsList.classList.add("hidden");
+        return;
       }
-      const hasMatch = hasNameFilterMatch(nameFilter, selected, nodes);
-      const emptyEl = wrap.querySelector("#map-empty");
-      if (emptyEl) emptyEl.classList.toggle("hidden", hasMatch);
-      const hintEl = wrap.querySelector("#map-hint");
-      if (hintEl) hintEl.textContent = selected ? t2("map.hintSelected") : t2("map.hint");
-    }
-    function bindSvgEvents(svg) {
-      svg.addEventListener("click", (ev) => {
-        const node = ev.target.closest(".map-node");
-        if (!node) {
-          selected = null;
-          render();
-          return;
+      suggestionsList.innerHTML = matches.map(
+        (e3) => `<li role="option" tabindex="-1" data-nombre="${escAttr(e3.nombre)}"
+                class="px-3 py-2 text-[13px] cursor-pointer transition-colors ${itemC}">
+                ${escHtml(getDisplayName(e3.nombre))}
+            </li>`
+      ).join("");
+      suggestionsList.classList.remove("hidden");
+      suggestionsList.onmousedown = (ev) => ev.preventDefault();
+      suggestionsList.onclick = (ev) => {
+        const li = ev.target.closest("li[data-nombre]");
+        if (!li) return;
+        const e3 = emociones2.find((em) => em.nombre === li.dataset.nombre);
+        if (e3) {
+          nameFilter = getDisplayName(e3.nombre);
+          selected = e3.nombre;
+          const searchInput = document.getElementById("map-search");
+          if (searchInput) searchInput.value = nameFilter;
+          suggestionsList.classList.add("hidden");
+          render_();
         }
-        const nombre = node.dataset.nombre;
-        selected = selected === nombre ? null : nombre;
-        render();
-      });
-      svg.addEventListener("keydown", (ev) => {
-        if (ev.key !== "Enter" && ev.key !== " ") return;
-        const node = ev.target.closest(".map-node");
-        if (!node) return;
-        ev.preventDefault();
-        const nombre = node.dataset.nombre;
-        selected = selected === nombre ? null : nombre;
-        render();
-      });
-    }
-    function bindEvents(wrap) {
-      wrap.querySelector("#map-graph-btn")?.addEventListener("click", () => {
-        view = "graph";
-        selected = null;
-        render();
-      });
-      wrap.querySelector("#map-quad-btn")?.addEventListener("click", () => {
-        view = "quad";
-        selected = null;
-        render();
-      });
-      for (const btn of wrap.querySelectorAll("[data-rel-type]")) {
-        btn.addEventListener("click", () => {
-          const { relType } = btn.dataset;
-          if (activeTypes.has(relType)) activeTypes.delete(relType);
-          else activeTypes.add(relType);
-          render();
-        });
-      }
-      for (const btn of wrap.querySelectorAll("[data-quad]")) {
-        btn.addEventListener("click", () => {
-          const q2 = btn.dataset.quad;
-          activeQuadrant = q2 === "all" ? null : Number(q2);
-          selected = null;
-          render();
-        });
-      }
-      wrap.querySelector("#map-open-btn")?.addEventListener("click", () => {
-        const e2 = emociones2.find((em) => em.nombre === selected);
-        if (e2) showDetail(e2);
-      });
-      wrap.querySelector("#map-clear-btn")?.addEventListener("click", () => {
-        selected = null;
-        nameFilter = "";
-        render();
-      });
-      const searchInput = wrap.querySelector("#map-search");
-      const suggestionsList = wrap.querySelector("#map-suggestions");
-      if (searchInput) {
-        const hideSuggestions = () => suggestionsList?.classList.add("hidden");
-        const populateSuggestions = (value) => {
-          if (!suggestionsList) return;
-          const norm = normalizeText(value);
-          if (!norm) {
-            hideSuggestions();
-            return;
-          }
-          const dark = document.documentElement.classList.contains("dark");
-          const itemC = dark ? "text-slate-200 hover:bg-slate-700 active:bg-slate-600" : "text-slate-700 hover:bg-slate-50 active:bg-slate-100";
-          const matches = emociones2.filter((e2) => normalizeText(getDisplayName(e2.nombre)).includes(norm)).slice(0, 8);
-          if (!matches.length) {
-            hideSuggestions();
-            return;
-          }
-          suggestionsList.innerHTML = matches.map(
-            (e2) => `<li role="option" tabindex="-1" data-nombre="${escapeHtmlAttr(e2.nombre)}"
-                        class="px-3 py-2 text-[13px] cursor-pointer transition-colors ${itemC}">
-                        ${escapeHtmlText(getDisplayName(e2.nombre))}
-                    </li>`
-          ).join("");
-          suggestionsList.classList.remove("hidden");
-        };
-        const trySelectExact = () => {
-          const norm = normalizeText(nameFilter);
-          const found = norm && emociones2.find(
-            (e2) => normalizeText(getDisplayName(e2.nombre)) === norm
-          );
-          if (found) {
-            selected = found.nombre;
-            hideSuggestions();
-            render();
-          }
-        };
-        searchInput.addEventListener("input", () => {
-          nameFilter = searchInput.value;
-          selected = null;
-          updateSvg();
-          populateSuggestions(nameFilter);
-        });
-        searchInput.addEventListener("focus", () => {
-          if (nameFilter) populateSuggestions(nameFilter);
-        });
-        searchInput.addEventListener("blur", () => {
-          setTimeout(hideSuggestions, 150);
-        });
-        searchInput.addEventListener("keydown", (ev) => {
-          if (ev.key === "Enter") trySelectExact();
-          if (ev.key === "Escape") hideSuggestions();
-        });
-        searchInput.addEventListener("change", () => {
-          nameFilter = searchInput.value;
-          trySelectExact();
-        });
-        if (suggestionsList) {
-          suggestionsList.addEventListener("mousedown", (ev) => {
-            ev.preventDefault();
-          });
-          suggestionsList.addEventListener("click", (ev) => {
-            const li = ev.target.closest("li[data-nombre]");
-            if (!li) return;
-            const e2 = emociones2.find((em) => em.nombre === li.dataset.nombre);
-            if (e2) {
-              nameFilter = getDisplayName(e2.nombre);
-              selected = e2.nombre;
-              searchInput.value = nameFilter;
-              hideSuggestions();
-              render();
-            }
-          });
-        }
-      }
-      const svg = wrap.querySelector("#map-svg");
-      if (!svg) return;
-      bindSvgEvents(svg);
+      };
     }
     function renderForTab() {
-      render();
+      render_();
     }
     function onLanguageChanged() {
       nameFilter = "";
       if (forceData) for (const n2 of forceData.nodes) n2.label = getDisplayName(n2.nombre);
       if (quadData) for (const n2 of quadData.nodes) n2.label = getDisplayName(n2.nombre);
-      if (document.getElementById("map-content")) render();
+      if (document.getElementById("map-content")) render_();
     }
     return { renderForTab, onLanguageChanged };
   }
 
-  // node_modules/preact/dist/preact.module.js
-  var n;
-  var l;
-  var u;
-  var t;
-  var i;
-  var r;
-  var o;
-  var e;
-  var f;
-  var c;
-  var s;
-  var a;
-  var h;
-  var p;
-  var v;
-  var y;
-  var d = {};
-  var w = [];
-  var _ = /acit|ex(?:s|g|n|p|$)|rph|grid|ows|mnc|ntw|ine[ch]|zoo|^ord|itera/i;
-  var g = Array.isArray;
-  function m(n2, l2) {
-    for (var u3 in l2) n2[u3] = l2[u3];
-    return n2;
-  }
-  function b(n2) {
-    n2 && n2.parentNode && n2.parentNode.removeChild(n2);
-  }
-  function k(l2, u3, t2) {
-    var i2, r2, o2, e2 = {};
-    for (o2 in u3) "key" == o2 ? i2 = u3[o2] : "ref" == o2 ? r2 = u3[o2] : e2[o2] = u3[o2];
-    if (arguments.length > 2 && (e2.children = arguments.length > 3 ? n.call(arguments, 2) : t2), "function" == typeof l2 && null != l2.defaultProps) for (o2 in l2.defaultProps) void 0 === e2[o2] && (e2[o2] = l2.defaultProps[o2]);
-    return x(l2, e2, i2, r2, null);
-  }
-  function x(n2, t2, i2, r2, o2) {
-    var e2 = { type: n2, props: t2, key: i2, ref: r2, __k: null, __: null, __b: 0, __e: null, __c: null, constructor: void 0, __v: null == o2 ? ++u : o2, __i: -1, __u: 0 };
-    return null == o2 && null != l.vnode && l.vnode(e2), e2;
-  }
-  function S(n2) {
-    return n2.children;
-  }
-  function C(n2, l2) {
-    this.props = n2, this.context = l2;
-  }
-  function $(n2, l2) {
-    if (null == l2) return n2.__ ? $(n2.__, n2.__i + 1) : null;
-    for (var u3; l2 < n2.__k.length; l2++) if (null != (u3 = n2.__k[l2]) && null != u3.__e) return u3.__e;
-    return "function" == typeof n2.type ? $(n2) : null;
-  }
-  function I(n2) {
-    if (n2.__P && n2.__d) {
-      var u3 = n2.__v, t2 = u3.__e, i2 = [], r2 = [], o2 = m({}, u3);
-      o2.__v = u3.__v + 1, l.vnode && l.vnode(o2), q(n2.__P, o2, u3, n2.__n, n2.__P.namespaceURI, 32 & u3.__u ? [t2] : null, i2, null == t2 ? $(u3) : t2, !!(32 & u3.__u), r2), o2.__v = u3.__v, o2.__.__k[o2.__i] = o2, D(i2, o2, r2), u3.__e = u3.__ = null, o2.__e != t2 && P(o2);
-    }
-  }
-  function P(n2) {
-    if (null != (n2 = n2.__) && null != n2.__c) return n2.__e = n2.__c.base = null, n2.__k.some(function(l2) {
-      if (null != l2 && null != l2.__e) return n2.__e = n2.__c.base = l2.__e;
-    }), P(n2);
-  }
-  function A(n2) {
-    (!n2.__d && (n2.__d = true) && i.push(n2) && !H.__r++ || r != l.debounceRendering) && ((r = l.debounceRendering) || o)(H);
-  }
-  function H() {
-    try {
-      for (var n2, l2 = 1; i.length; ) i.length > l2 && i.sort(e), n2 = i.shift(), l2 = i.length, I(n2);
-    } finally {
-      i.length = H.__r = 0;
-    }
-  }
-  function L(n2, l2, u3, t2, i2, r2, o2, e2, f3, c2, s2) {
-    var a2, h2, p2, v2, y2, _2, g2, m2 = t2 && t2.__k || w, b2 = l2.length;
-    for (f3 = T(u3, l2, m2, f3, b2), a2 = 0; a2 < b2; a2++) null != (p2 = u3.__k[a2]) && (h2 = -1 != p2.__i && m2[p2.__i] || d, p2.__i = a2, _2 = q(n2, p2, h2, i2, r2, o2, e2, f3, c2, s2), v2 = p2.__e, p2.ref && h2.ref != p2.ref && (h2.ref && J(h2.ref, null, p2), s2.push(p2.ref, p2.__c || v2, p2)), null == y2 && null != v2 && (y2 = v2), (g2 = !!(4 & p2.__u)) || h2.__k === p2.__k ? (f3 = j(p2, f3, n2, g2), g2 && h2.__e && (h2.__e = null)) : "function" == typeof p2.type && void 0 !== _2 ? f3 = _2 : v2 && (f3 = v2.nextSibling), p2.__u &= -7);
-    return u3.__e = y2, f3;
-  }
-  function T(n2, l2, u3, t2, i2) {
-    var r2, o2, e2, f3, c2, s2 = u3.length, a2 = s2, h2 = 0;
-    for (n2.__k = new Array(i2), r2 = 0; r2 < i2; r2++) null != (o2 = l2[r2]) && "boolean" != typeof o2 && "function" != typeof o2 ? ("string" == typeof o2 || "number" == typeof o2 || "bigint" == typeof o2 || o2.constructor == String ? o2 = n2.__k[r2] = x(null, o2, null, null, null) : g(o2) ? o2 = n2.__k[r2] = x(S, { children: o2 }, null, null, null) : void 0 === o2.constructor && o2.__b > 0 ? o2 = n2.__k[r2] = x(o2.type, o2.props, o2.key, o2.ref ? o2.ref : null, o2.__v) : n2.__k[r2] = o2, f3 = r2 + h2, o2.__ = n2, o2.__b = n2.__b + 1, e2 = null, -1 != (c2 = o2.__i = O(o2, u3, f3, a2)) && (a2--, (e2 = u3[c2]) && (e2.__u |= 2)), null == e2 || null == e2.__v ? (-1 == c2 && (i2 > s2 ? h2-- : i2 < s2 && h2++), "function" != typeof o2.type && (o2.__u |= 4)) : c2 != f3 && (c2 == f3 - 1 ? h2-- : c2 == f3 + 1 ? h2++ : (c2 > f3 ? h2-- : h2++, o2.__u |= 4))) : n2.__k[r2] = null;
-    if (a2) for (r2 = 0; r2 < s2; r2++) null != (e2 = u3[r2]) && 0 == (2 & e2.__u) && (e2.__e == t2 && (t2 = $(e2)), K(e2, e2));
-    return t2;
-  }
-  function j(n2, l2, u3, t2) {
-    var i2, r2;
-    if ("function" == typeof n2.type) {
-      for (i2 = n2.__k, r2 = 0; i2 && r2 < i2.length; r2++) i2[r2] && (i2[r2].__ = n2, l2 = j(i2[r2], l2, u3, t2));
-      return l2;
-    }
-    n2.__e != l2 && (t2 && (l2 && n2.type && !l2.parentNode && (l2 = $(n2)), u3.insertBefore(n2.__e, l2 || null)), l2 = n2.__e);
-    do {
-      l2 = l2 && l2.nextSibling;
-    } while (null != l2 && 8 == l2.nodeType);
-    return l2;
-  }
-  function O(n2, l2, u3, t2) {
-    var i2, r2, o2, e2 = n2.key, f3 = n2.type, c2 = l2[u3], s2 = null != c2 && 0 == (2 & c2.__u);
-    if (null === c2 && null == e2 || s2 && e2 == c2.key && f3 == c2.type) return u3;
-    if (t2 > (s2 ? 1 : 0)) {
-      for (i2 = u3 - 1, r2 = u3 + 1; i2 >= 0 || r2 < l2.length; ) if (null != (c2 = l2[o2 = i2 >= 0 ? i2-- : r2++]) && 0 == (2 & c2.__u) && e2 == c2.key && f3 == c2.type) return o2;
-    }
-    return -1;
-  }
-  function z(n2, l2, u3) {
-    "-" == l2[0] ? n2.setProperty(l2, null == u3 ? "" : u3) : n2[l2] = null == u3 ? "" : "number" != typeof u3 || _.test(l2) ? u3 : u3 + "px";
-  }
-  function N(n2, l2, u3, t2, i2) {
-    var r2, o2;
-    n: if ("style" == l2) if ("string" == typeof u3) n2.style.cssText = u3;
-    else {
-      if ("string" == typeof t2 && (n2.style.cssText = t2 = ""), t2) for (l2 in t2) u3 && l2 in u3 || z(n2.style, l2, "");
-      if (u3) for (l2 in u3) t2 && u3[l2] == t2[l2] || z(n2.style, l2, u3[l2]);
-    }
-    else if ("o" == l2[0] && "n" == l2[1]) r2 = l2 != (l2 = l2.replace(a, "$1")), o2 = l2.toLowerCase(), l2 = o2 in n2 || "onFocusOut" == l2 || "onFocusIn" == l2 ? o2.slice(2) : l2.slice(2), n2.l || (n2.l = {}), n2.l[l2 + r2] = u3, u3 ? t2 ? u3[s] = t2[s] : (u3[s] = h, n2.addEventListener(l2, r2 ? v : p, r2)) : n2.removeEventListener(l2, r2 ? v : p, r2);
-    else {
-      if ("http://www.w3.org/2000/svg" == i2) l2 = l2.replace(/xlink(H|:h)/, "h").replace(/sName$/, "s");
-      else if ("width" != l2 && "height" != l2 && "href" != l2 && "list" != l2 && "form" != l2 && "tabIndex" != l2 && "download" != l2 && "rowSpan" != l2 && "colSpan" != l2 && "role" != l2 && "popover" != l2 && l2 in n2) try {
-        n2[l2] = null == u3 ? "" : u3;
-        break n;
-      } catch (n3) {
-      }
-      "function" == typeof u3 || (null == u3 || false === u3 && "-" != l2[4] ? n2.removeAttribute(l2) : n2.setAttribute(l2, "popover" == l2 && 1 == u3 ? "" : u3));
-    }
-  }
-  function V(n2) {
-    return function(u3) {
-      if (this.l) {
-        var t2 = this.l[u3.type + n2];
-        if (null == u3[c]) u3[c] = h++;
-        else if (u3[c] < t2[s]) return;
-        return t2(l.event ? l.event(u3) : u3);
-      }
-    };
-  }
-  function q(n2, u3, t2, i2, r2, o2, e2, f3, c2, s2) {
-    var a2, h2, p2, v2, y2, d2, _2, k2, x2, M, $2, I2, P2, A2, H2, T2 = u3.type;
-    if (void 0 !== u3.constructor) return null;
-    128 & t2.__u && (c2 = !!(32 & t2.__u), o2 = [f3 = u3.__e = t2.__e]), (a2 = l.__b) && a2(u3);
-    n: if ("function" == typeof T2) try {
-      if (k2 = u3.props, x2 = T2.prototype && T2.prototype.render, M = (a2 = T2.contextType) && i2[a2.__c], $2 = a2 ? M ? M.props.value : a2.__ : i2, t2.__c ? _2 = (h2 = u3.__c = t2.__c).__ = h2.__E : (x2 ? u3.__c = h2 = new T2(k2, $2) : (u3.__c = h2 = new C(k2, $2), h2.constructor = T2, h2.render = Q), M && M.sub(h2), h2.state || (h2.state = {}), h2.__n = i2, p2 = h2.__d = true, h2.__h = [], h2._sb = []), x2 && null == h2.__s && (h2.__s = h2.state), x2 && null != T2.getDerivedStateFromProps && (h2.__s == h2.state && (h2.__s = m({}, h2.__s)), m(h2.__s, T2.getDerivedStateFromProps(k2, h2.__s))), v2 = h2.props, y2 = h2.state, h2.__v = u3, p2) x2 && null == T2.getDerivedStateFromProps && null != h2.componentWillMount && h2.componentWillMount(), x2 && null != h2.componentDidMount && h2.__h.push(h2.componentDidMount);
-      else {
-        if (x2 && null == T2.getDerivedStateFromProps && k2 !== v2 && null != h2.componentWillReceiveProps && h2.componentWillReceiveProps(k2, $2), u3.__v == t2.__v || !h2.__e && null != h2.shouldComponentUpdate && false === h2.shouldComponentUpdate(k2, h2.__s, $2)) {
-          u3.__v != t2.__v && (h2.props = k2, h2.state = h2.__s, h2.__d = false), u3.__e = t2.__e, u3.__k = t2.__k, u3.__k.some(function(n3) {
-            n3 && (n3.__ = u3);
-          }), w.push.apply(h2.__h, h2._sb), h2._sb = [], h2.__h.length && e2.push(h2);
-          break n;
-        }
-        null != h2.componentWillUpdate && h2.componentWillUpdate(k2, h2.__s, $2), x2 && null != h2.componentDidUpdate && h2.__h.push(function() {
-          h2.componentDidUpdate(v2, y2, d2);
-        });
-      }
-      if (h2.context = $2, h2.props = k2, h2.__P = n2, h2.__e = false, I2 = l.__r, P2 = 0, x2) h2.state = h2.__s, h2.__d = false, I2 && I2(u3), a2 = h2.render(h2.props, h2.state, h2.context), w.push.apply(h2.__h, h2._sb), h2._sb = [];
-      else do {
-        h2.__d = false, I2 && I2(u3), a2 = h2.render(h2.props, h2.state, h2.context), h2.state = h2.__s;
-      } while (h2.__d && ++P2 < 25);
-      h2.state = h2.__s, null != h2.getChildContext && (i2 = m(m({}, i2), h2.getChildContext())), x2 && !p2 && null != h2.getSnapshotBeforeUpdate && (d2 = h2.getSnapshotBeforeUpdate(v2, y2)), A2 = null != a2 && a2.type === S && null == a2.key ? E(a2.props.children) : a2, f3 = L(n2, g(A2) ? A2 : [A2], u3, t2, i2, r2, o2, e2, f3, c2, s2), h2.base = u3.__e, u3.__u &= -161, h2.__h.length && e2.push(h2), _2 && (h2.__E = h2.__ = null);
-    } catch (n3) {
-      if (u3.__v = null, c2 || null != o2) if (n3.then) {
-        for (u3.__u |= c2 ? 160 : 128; f3 && 8 == f3.nodeType && f3.nextSibling; ) f3 = f3.nextSibling;
-        o2[o2.indexOf(f3)] = null, u3.__e = f3;
-      } else {
-        for (H2 = o2.length; H2--; ) b(o2[H2]);
-        B(u3);
-      }
-      else u3.__e = t2.__e, u3.__k = t2.__k, n3.then || B(u3);
-      l.__e(n3, u3, t2);
-    }
-    else null == o2 && u3.__v == t2.__v ? (u3.__k = t2.__k, u3.__e = t2.__e) : f3 = u3.__e = G(t2.__e, u3, t2, i2, r2, o2, e2, c2, s2);
-    return (a2 = l.diffed) && a2(u3), 128 & u3.__u ? void 0 : f3;
-  }
-  function B(n2) {
-    n2 && (n2.__c && (n2.__c.__e = true), n2.__k && n2.__k.some(B));
-  }
-  function D(n2, u3, t2) {
-    for (var i2 = 0; i2 < t2.length; i2++) J(t2[i2], t2[++i2], t2[++i2]);
-    l.__c && l.__c(u3, n2), n2.some(function(u4) {
-      try {
-        n2 = u4.__h, u4.__h = [], n2.some(function(n3) {
-          n3.call(u4);
-        });
-      } catch (n3) {
-        l.__e(n3, u4.__v);
-      }
-    });
-  }
-  function E(n2) {
-    return "object" != typeof n2 || null == n2 || n2.__b > 0 ? n2 : g(n2) ? n2.map(E) : m({}, n2);
-  }
-  function G(u3, t2, i2, r2, o2, e2, f3, c2, s2) {
-    var a2, h2, p2, v2, y2, w2, _2, m2 = i2.props || d, k2 = t2.props, x2 = t2.type;
-    if ("svg" == x2 ? o2 = "http://www.w3.org/2000/svg" : "math" == x2 ? o2 = "http://www.w3.org/1998/Math/MathML" : o2 || (o2 = "http://www.w3.org/1999/xhtml"), null != e2) {
-      for (a2 = 0; a2 < e2.length; a2++) if ((y2 = e2[a2]) && "setAttribute" in y2 == !!x2 && (x2 ? y2.localName == x2 : 3 == y2.nodeType)) {
-        u3 = y2, e2[a2] = null;
-        break;
-      }
-    }
-    if (null == u3) {
-      if (null == x2) return document.createTextNode(k2);
-      u3 = document.createElementNS(o2, x2, k2.is && k2), c2 && (l.__m && l.__m(t2, e2), c2 = false), e2 = null;
-    }
-    if (null == x2) m2 === k2 || c2 && u3.data == k2 || (u3.data = k2);
-    else {
-      if (e2 = e2 && n.call(u3.childNodes), !c2 && null != e2) for (m2 = {}, a2 = 0; a2 < u3.attributes.length; a2++) m2[(y2 = u3.attributes[a2]).name] = y2.value;
-      for (a2 in m2) y2 = m2[a2], "dangerouslySetInnerHTML" == a2 ? p2 = y2 : "children" == a2 || a2 in k2 || "value" == a2 && "defaultValue" in k2 || "checked" == a2 && "defaultChecked" in k2 || N(u3, a2, null, y2, o2);
-      for (a2 in k2) y2 = k2[a2], "children" == a2 ? v2 = y2 : "dangerouslySetInnerHTML" == a2 ? h2 = y2 : "value" == a2 ? w2 = y2 : "checked" == a2 ? _2 = y2 : c2 && "function" != typeof y2 || m2[a2] === y2 || N(u3, a2, y2, m2[a2], o2);
-      if (h2) c2 || p2 && (h2.__html == p2.__html || h2.__html == u3.innerHTML) || (u3.innerHTML = h2.__html), t2.__k = [];
-      else if (p2 && (u3.innerHTML = ""), L("template" == t2.type ? u3.content : u3, g(v2) ? v2 : [v2], t2, i2, r2, "foreignObject" == x2 ? "http://www.w3.org/1999/xhtml" : o2, e2, f3, e2 ? e2[0] : i2.__k && $(i2, 0), c2, s2), null != e2) for (a2 = e2.length; a2--; ) b(e2[a2]);
-      c2 || (a2 = "value", "progress" == x2 && null == w2 ? u3.removeAttribute("value") : null != w2 && (w2 !== u3[a2] || "progress" == x2 && !w2 || "option" == x2 && w2 != m2[a2]) && N(u3, a2, w2, m2[a2], o2), a2 = "checked", null != _2 && _2 != u3[a2] && N(u3, a2, _2, m2[a2], o2));
-    }
-    return u3;
-  }
-  function J(n2, u3, t2) {
-    try {
-      if ("function" == typeof n2) {
-        var i2 = "function" == typeof n2.__u;
-        i2 && n2.__u(), i2 && null == u3 || (n2.__u = n2(u3));
-      } else n2.current = u3;
-    } catch (n3) {
-      l.__e(n3, t2);
-    }
-  }
-  function K(n2, u3, t2) {
-    var i2, r2;
-    if (l.unmount && l.unmount(n2), (i2 = n2.ref) && (i2.current && i2.current != n2.__e || J(i2, null, u3)), null != (i2 = n2.__c)) {
-      if (i2.componentWillUnmount) try {
-        i2.componentWillUnmount();
-      } catch (n3) {
-        l.__e(n3, u3);
-      }
-      i2.base = i2.__P = null;
-    }
-    if (i2 = n2.__k) for (r2 = 0; r2 < i2.length; r2++) i2[r2] && K(i2[r2], u3, t2 || "function" != typeof n2.type);
-    t2 || b(n2.__e), n2.__c = n2.__ = n2.__e = void 0;
-  }
-  function Q(n2, l2, u3) {
-    return this.constructor(n2, u3);
-  }
-  function R2(u3, t2, i2) {
-    var r2, o2, e2, f3;
-    t2 == document && (t2 = document.documentElement), l.__ && l.__(u3, t2), o2 = (r2 = "function" == typeof i2) ? null : i2 && i2.__k || t2.__k, e2 = [], f3 = [], q(t2, u3 = (!r2 && i2 || t2).__k = k(S, null, [u3]), o2 || d, d, t2.namespaceURI, !r2 && i2 ? [i2] : o2 ? null : t2.firstChild ? n.call(t2.childNodes) : null, e2, !r2 && i2 ? i2 : o2 ? o2.__e : t2.firstChild, r2, f3), D(e2, u3, f3);
-  }
-  n = w.slice, l = { __e: function(n2, l2, u3, t2) {
-    for (var i2, r2, o2; l2 = l2.__; ) if ((i2 = l2.__c) && !i2.__) try {
-      if ((r2 = i2.constructor) && null != r2.getDerivedStateFromError && (i2.setState(r2.getDerivedStateFromError(n2)), o2 = i2.__d), null != i2.componentDidCatch && (i2.componentDidCatch(n2, t2 || {}), o2 = i2.__d), o2) return i2.__E = i2;
-    } catch (l3) {
-      n2 = l3;
-    }
-    throw n2;
-  } }, u = 0, t = function(n2) {
-    return null != n2 && void 0 === n2.constructor;
-  }, C.prototype.setState = function(n2, l2) {
-    var u3;
-    u3 = null != this.__s && this.__s != this.state ? this.__s : this.__s = m({}, this.state), "function" == typeof n2 && (n2 = n2(m({}, u3), this.props)), n2 && m(u3, n2), null != n2 && this.__v && (l2 && this._sb.push(l2), A(this));
-  }, C.prototype.forceUpdate = function(n2) {
-    this.__v && (this.__e = true, n2 && this.__h.push(n2), A(this));
-  }, C.prototype.render = S, i = [], o = "function" == typeof Promise ? Promise.prototype.then.bind(Promise.resolve()) : setTimeout, e = function(n2, l2) {
-    return n2.__v.__b - l2.__v.__b;
-  }, H.__r = 0, f = Math.random().toString(8), c = "__d" + f, s = "__a" + f, a = /(PointerCapture)$|Capture$/i, h = 0, p = V(false), v = V(true), y = 0;
-
-  // node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js
-  var f2 = 0;
-  function u2(e2, t2, n2, o2, i2, u3) {
-    t2 || (t2 = {});
-    var a2, c2, p2 = t2;
-    if ("ref" in p2) for (c2 in p2 = {}, t2) "ref" == c2 ? a2 = t2[c2] : p2[c2] = t2[c2];
-    var l2 = { type: e2, props: p2, key: n2, ref: a2, __k: null, __: null, __b: 0, __e: null, __c: null, constructor: void 0, __v: --f2, __i: -1, __u: 0, __source: i2, __self: u3 };
-    if ("function" == typeof e2 && (a2 = e2.defaultProps)) for (c2 in a2) void 0 === p2[c2] && (p2[c2] = a2[c2]);
-    return l.vnode && l.vnode(l2), l2;
-  }
-
   // js/crisis.jsx
   var TOTAL_STEPS = 3;
-  function Progress({ t: t2, step }) {
-    return /* @__PURE__ */ u2("div", { class: "flex items-center justify-between mb-6", children: [
-      /* @__PURE__ */ u2("span", { class: "text-xs font-bold text-slate-400", children: [
-        t2("crisis.step"),
+  function Progress({ t: t3, step }) {
+    return /* @__PURE__ */ u3("div", { class: "flex items-center justify-between mb-6", children: [
+      /* @__PURE__ */ u3("span", { class: "text-xs font-bold text-slate-400", children: [
+        t3("crisis.step"),
         " ",
         step,
         " ",
-        t2("crisis.of"),
+        t3("crisis.of"),
         " ",
         TOTAL_STEPS
       ] }),
-      /* @__PURE__ */ u2("div", { class: "flex gap-1.5", children: Array.from({ length: TOTAL_STEPS }, (_2, i2) => /* @__PURE__ */ u2("div", { class: `h-1.5 w-8 rounded-full ${i2 < step ? "bg-slate-800" : "bg-slate-200"}` })) })
+      /* @__PURE__ */ u3("div", { class: "flex gap-1.5", children: Array.from({ length: TOTAL_STEPS }, (_2, i3) => /* @__PURE__ */ u3("div", { class: `h-1.5 w-8 rounded-full ${i3 < step ? "bg-slate-800" : "bg-slate-200"}` })) })
     ] });
   }
-  function Step1({ t: t2, onNext }) {
-    return /* @__PURE__ */ u2("div", { children: [
-      /* @__PURE__ */ u2("div", { class: "text-center mb-8", children: [
-        /* @__PURE__ */ u2("div", { class: "text-5xl mb-4", "aria-hidden": "true", children: "\u{1F30A}" }),
-        /* @__PURE__ */ u2("h3", { class: "text-2xl font-black text-slate-800 mb-3", children: t2("crisis.step1Title") }),
-        /* @__PURE__ */ u2("p", { class: "text-slate-600 leading-relaxed", children: t2("crisis.step1Body") })
+  function Step1({ t: t3, onNext }) {
+    return /* @__PURE__ */ u3("div", { children: [
+      /* @__PURE__ */ u3("div", { class: "text-center mb-8", children: [
+        /* @__PURE__ */ u3("div", { class: "text-5xl mb-4", "aria-hidden": "true", children: "\u{1F30A}" }),
+        /* @__PURE__ */ u3("h3", { class: "text-2xl font-black text-slate-800 mb-3", children: t3("crisis.step1Title") }),
+        /* @__PURE__ */ u3("p", { class: "text-slate-600 leading-relaxed", children: t3("crisis.step1Body") })
       ] }),
-      /* @__PURE__ */ u2(
+      /* @__PURE__ */ u3(
         "button",
         {
           id: "crisis-next-btn",
           type: "button",
           onClick: onNext,
           class: "w-full bg-slate-800 text-white py-4 rounded-2xl font-bold text-sm hover:bg-slate-700 transition-colors",
-          children: t2("crisis.next")
+          children: t3("crisis.next")
         }
       )
     ] });
   }
-  function Step2({ t: t2, onNext }) {
-    const items = t2("crisis.step2Items").split("|");
-    return /* @__PURE__ */ u2("div", { children: [
-      /* @__PURE__ */ u2("div", { class: "mb-6", children: [
-        /* @__PURE__ */ u2("h3", { class: "text-2xl font-black text-slate-800 mb-1", children: t2("crisis.step2Title") }),
-        /* @__PURE__ */ u2("p", { class: "text-slate-500 text-sm mb-4", children: t2("crisis.step2Intro") }),
-        /* @__PURE__ */ u2("ul", { class: "divide-y divide-slate-100", children: items.map((item, i2) => /* @__PURE__ */ u2("li", { class: "flex items-center gap-3 py-2.5 border-b border-slate-100 last:border-0", children: [
-          /* @__PURE__ */ u2("span", { class: "w-7 h-7 rounded-full bg-indigo-100 text-indigo-700 text-xs font-black flex items-center justify-center shrink-0", children: items.length - i2 }),
-          /* @__PURE__ */ u2("span", { class: "text-slate-700 font-medium text-sm", children: item })
-        ] }, i2)) })
+  function Step2({ t: t3, onNext }) {
+    const items = t3("crisis.step2Items").split("|");
+    return /* @__PURE__ */ u3("div", { children: [
+      /* @__PURE__ */ u3("div", { class: "mb-6", children: [
+        /* @__PURE__ */ u3("h3", { class: "text-2xl font-black text-slate-800 mb-1", children: t3("crisis.step2Title") }),
+        /* @__PURE__ */ u3("p", { class: "text-slate-500 text-sm mb-4", children: t3("crisis.step2Intro") }),
+        /* @__PURE__ */ u3("ul", { class: "divide-y divide-slate-100", children: items.map((item, i3) => /* @__PURE__ */ u3("li", { class: "flex items-center gap-3 py-2.5 border-b border-slate-100 last:border-0", children: [
+          /* @__PURE__ */ u3("span", { class: "w-7 h-7 rounded-full bg-indigo-100 text-indigo-700 text-xs font-black flex items-center justify-center shrink-0", children: items.length - i3 }),
+          /* @__PURE__ */ u3("span", { class: "text-slate-700 font-medium text-sm", children: item })
+        ] }, i3)) })
       ] }),
-      /* @__PURE__ */ u2(
+      /* @__PURE__ */ u3(
         "button",
         {
           id: "crisis-next-btn",
           type: "button",
           onClick: onNext,
           class: "w-full bg-slate-800 text-white py-4 rounded-2xl font-bold text-sm hover:bg-slate-700 transition-colors",
-          children: t2("crisis.done")
+          children: t3("crisis.done")
         }
       )
     ] });
   }
-  function Step3({ t: t2, onClose }) {
-    const actions = t2("crisis.step3Actions").split("|");
-    return /* @__PURE__ */ u2("div", { children: [
-      /* @__PURE__ */ u2("div", { class: "mb-6", children: [
-        /* @__PURE__ */ u2("h3", { class: "text-2xl font-black text-slate-800 mb-1", children: t2("crisis.step3Title") }),
-        /* @__PURE__ */ u2("p", { class: "text-slate-500 text-sm mb-4", children: t2("crisis.step3Intro") }),
-        /* @__PURE__ */ u2("div", { class: "divide-y divide-slate-100", children: actions.map((action, i2) => /* @__PURE__ */ u2("label", { class: "flex items-center gap-3 py-3 cursor-pointer group", children: [
-          /* @__PURE__ */ u2(
+  function Step3({ t: t3, onClose }) {
+    const actions = t3("crisis.step3Actions").split("|");
+    return /* @__PURE__ */ u3("div", { children: [
+      /* @__PURE__ */ u3("div", { class: "mb-6", children: [
+        /* @__PURE__ */ u3("h3", { class: "text-2xl font-black text-slate-800 mb-1", children: t3("crisis.step3Title") }),
+        /* @__PURE__ */ u3("p", { class: "text-slate-500 text-sm mb-4", children: t3("crisis.step3Intro") }),
+        /* @__PURE__ */ u3("div", { class: "divide-y divide-slate-100", children: actions.map((action, i3) => /* @__PURE__ */ u3("label", { class: "flex items-center gap-3 py-3 cursor-pointer group", children: [
+          /* @__PURE__ */ u3(
             "input",
             {
               type: "radio",
               name: "crisis-action",
-              value: String(i2),
+              value: String(i3),
               class: "w-4 h-4 accent-slate-800 shrink-0"
             }
           ),
-          /* @__PURE__ */ u2("span", { class: "text-slate-700 font-medium text-sm group-hover:text-slate-900 transition-colors", children: action })
-        ] }, i2)) })
+          /* @__PURE__ */ u3("span", { class: "text-slate-700 font-medium text-sm group-hover:text-slate-900 transition-colors", children: action })
+        ] }, i3)) })
       ] }),
-      /* @__PURE__ */ u2("p", { class: "text-slate-400 text-xs text-center mb-4", children: t2("crisis.step3End") }),
-      /* @__PURE__ */ u2(
+      /* @__PURE__ */ u3("p", { class: "text-slate-400 text-xs text-center mb-4", children: t3("crisis.step3End") }),
+      /* @__PURE__ */ u3(
         "button",
         {
           id: "crisis-close-btn",
           type: "button",
           onClick: onClose,
           class: "w-full bg-slate-800 text-white py-4 rounded-2xl font-bold text-sm hover:bg-slate-700 transition-colors",
-          children: t2("crisis.close")
+          children: t3("crisis.close")
         }
       )
     ] });
   }
-  function CrisisFlow({ t: t2, step, onNext, onClose }) {
-    return /* @__PURE__ */ u2("div", { children: [
-      /* @__PURE__ */ u2(Progress, { t: t2, step }),
-      step === 1 && /* @__PURE__ */ u2(Step1, { t: t2, onNext }),
-      step === 2 && /* @__PURE__ */ u2(Step2, { t: t2, onNext }),
-      step === 3 && /* @__PURE__ */ u2(Step3, { t: t2, onClose })
+  function CrisisFlow({ t: t3, step, onNext, onClose }) {
+    return /* @__PURE__ */ u3("div", { children: [
+      /* @__PURE__ */ u3(Progress, { t: t3, step }),
+      step === 1 && /* @__PURE__ */ u3(Step1, { t: t3, onNext }),
+      step === 2 && /* @__PURE__ */ u3(Step2, { t: t3, onNext }),
+      step === 3 && /* @__PURE__ */ u3(Step3, { t: t3, onClose })
     ] });
   }
   function closeCrisis() {
     document.getElementById("crisis-panel")?.close();
     document.getElementById("crisis-trigger-btn")?.focus();
   }
-  function createCrisisFlow({ t: t2 }) {
+  function createCrisisFlow({ t: t3 }) {
     let step = 1;
     let contentEl = null;
     function rerender() {
-      R2(
-        /* @__PURE__ */ u2(CrisisFlow, { t: t2, step, onNext: handleNext, onClose: closeCrisis }),
+      R(
+        /* @__PURE__ */ u3(CrisisFlow, { t: t3, step, onNext: handleNext, onClose: closeCrisis }),
         contentEl
       );
     }
@@ -3407,11 +3827,11 @@
     updateActiveStates(theme, getLang());
   }
   function updateActiveStates(theme, lang) {
-    for (const t2 of ["light", "auto", "dark"]) {
-      document.getElementById(`theme-btn-${t2}`)?.classList.toggle("settings-option-active", t2 === theme);
+    for (const t3 of ["light", "auto", "dark"]) {
+      document.getElementById(`theme-btn-${t3}`)?.classList.toggle("settings-option-active", t3 === theme);
     }
-    for (const l2 of ["es", "en"]) {
-      document.getElementById(`lang-btn-${l2}`)?.classList.toggle("settings-option-active", l2 === lang);
+    for (const l3 of ["es", "en"]) {
+      document.getElementById(`lang-btn-${l3}`)?.classList.toggle("settings-option-active", l3 === lang);
     }
   }
   function initSettings({ setLanguage, getLang }) {
@@ -3526,12 +3946,12 @@
   }
 
   // js/offlineBanner.js
-  function initOfflineBanner({ t: t2 }) {
+  function initOfflineBanner({ t: t3 }) {
     const banner = document.getElementById("offline-banner");
     const text = document.getElementById("offline-banner-text");
     if (!banner || !text) return;
     const update = () => {
-      text.textContent = t2("offlineBanner");
+      text.textContent = t3("offlineBanner");
       banner.classList.toggle("hidden", navigator.onLine);
       banner.classList.toggle("flex", !navigator.onLine);
     };
@@ -3553,7 +3973,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mp9ekju7";
+  var BUILD_VERSION = "mp9vooda";
 
   // app.js
   var reducedMotion = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;

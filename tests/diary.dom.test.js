@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { describe, it, expect, beforeEach } from "vitest";
-import { createDiary } from "../js/diary.js";
+import { createDiary } from "../js/diary.jsx";
 import { DIARY_KEY } from "../js/constants.js";
 
 const MOCK_EMOCIONES = [

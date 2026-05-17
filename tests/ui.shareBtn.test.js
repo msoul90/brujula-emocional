@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { createUI } from "../js/ui.js";
+import { createUI } from "../js/ui.jsx";
 import { emociones } from "../js/constants.js";
 
 const ctx2d = {

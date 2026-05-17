@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { QUIZ_STEPS } from "../js/quiz.js";
+import { QUIZ_STEPS } from "../js/quiz.jsx";
 import { emociones } from "../js/constants.js";
 
 const emotionNames = new Set(emociones.map((e) => e.nombre));
