@@ -1,3 +1,33 @@
+/**
+ * @typedef {Object} Emotion
+ * @property {string} nombre      - Emotion name in Spanish (used as ID)
+ * @property {string} color       - Background hex color for the card
+ * @property {string} text        - Text hex color (dark, for contrast)
+ * @property {string} siente      - Physical sensations description
+ * @property {string} dispara     - Triggers
+ * @property {string} funcion     - Biological/psychological function
+ * @property {string} mensaje     - Core message the emotion communicates
+ * @property {string} impulso     - Unhelpful impulse to avoid
+ * @property {string} respuesta   - Suggested healthy response
+ */
+
+/**
+ * @typedef {Object} EmotionRelation
+ * @property {string} from
+ * @property {string} to
+ * @property {"coexiste"|"escala_a"|"enmascara"|"opuesta"} type
+ */
+
+/**
+ * @typedef {Object} MoodCategory
+ * @property {string}   key
+ * @property {string}   labelKey
+ * @property {string}   emoji
+ * @property {string}   color
+ * @property {string}   ink
+ * @property {string[]} emotions
+ */
+
 export const EMOTION_NAME_TRANSLATIONS = {
     Enojo: "Anger",
     Tristeza: "Sadness",
@@ -256,6 +286,7 @@ export const EMOTION_CONTENT_TRANSLATIONS = {
     }
 };
 
+/** @type {Emotion[]} */
 export const emociones = [
     { nombre: "Enojo", color: "#fecaca", text: "#7f1d1d", siente: "Calor, tensión, energía alta, mandíbula apretada", dispara: "Injusticia, límite invadido, frustración", funcion: "Proteger límites, movilizar cambio", mensaje: "Algo no me está funcionando", impulso: "Atacar, reclamar, cortar", respuesta: "Pausar, nombrar límite, pedir cambio claro" },
     { nombre: "Tristeza", color: "#bfdbfe", text: "#1e3a8a", siente: "Pesadez, llanto, cansancio, vacío", dispara: "Pérdida, decepción, distancia", funcion: "Procesar pérdida, pedir apoyo, bajar ritmo", mensaje: "Algo importante me dolió", impulso: "Aislarse, rendirse", respuesta: "Validar dolor, buscar apoyo, autocuidado" },
@@ -287,6 +318,7 @@ export const emociones = [
     { nombre: "Ternura", color: "#ffe4e6", text: "#9f1239", siente: "Calidez suave, ganas de cuidar, apertura en el pecho, sensación de querer proteger", dispara: "Algo o alguien frágil, vulnerable o querido: hijos, mascotas, momentos íntimos", funcion: "Fortalecer vínculos, motivar el cuidado, profundizar la conexión", mensaje: "Hay algo que quiero proteger o acercar", impulso: "Contener la expresión, minimizarla como tontería o debilidad", respuesta: "Permítete expresarla, acércate, cuida sin perder tus propios límites" }
 ];
 
+/** @type {EmotionRelation[]} */
 export const EMOTION_RELATIONS = [
     // Coexisten frecuentemente
     { from: "Ansiedad",      to: "Miedo",         type: "coexiste"  },
@@ -329,6 +361,7 @@ export const EMOTION_RELATIONS = [
     { from: "Felicidad",     to: "Tristeza",      type: "opuesta"   },
 ];
 
+/** @type {MoodCategory[]} */
 export const MOOD_CATEGORIES = [
     { key: "agitado",    labelKey: "moodAgitado",    emoji: "😤", color: "#F5A5A0", ink: "#7A2E2E", emotions: ["Enojo", "Frustración", "Irritabilidad", "Ansiedad", "Miedo", "Preocupación", "Angustia", "Envidia", "Disgusto"] },
     { key: "triste",     labelKey: "moodTriste",     emoji: "😢", color: "#A4C3E3", ink: "#1F3F66", emotions: ["Tristeza", "Soledad", "Nostalgia", "Culpa", "Vergüenza", "Rechazo", "Decepción"] },

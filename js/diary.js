@@ -1,8 +1,21 @@
 import { DIARY_KEY, DIARY_TAGS } from "./constants.js";
 import { normalizeText, escapeHtml } from "./utils.js";
 
+/**
+ * @typedef {Object} DiaryEntry
+ * @property {number}   id      - Timestamp used as unique ID
+ * @property {string}   date    - ISO 8601 date string
+ * @property {string}   emotion - Emotion nombre (Spanish, matches emociones array)
+ * @property {string}   note    - Optional user note (may be empty string)
+ * @property {string[]} tags    - Context tags from DIARY_TAGS (may be empty)
+ */
+
 // --- Pure data functions (testable without DOM/localStorage) ---
 
+/**
+ * @param {string|null} raw
+ * @returns {DiaryEntry[]}
+ */
 export function parseDiaryEntries(raw) {
     try {
         const parsed = JSON.parse(raw);
@@ -12,6 +25,12 @@ export function parseDiaryEntries(raw) {
     }
 }
 
+/**
+ * @param {string}   emotionNombre
+ * @param {string}   [note]
+ * @param {string[]} [tags]
+ * @returns {DiaryEntry}
+ */
 export function createDiaryEntry(emotionNombre, note = "", tags = []) {
     return {
         id: Date.now(),
@@ -22,6 +41,11 @@ export function createDiaryEntry(emotionNombre, note = "", tags = []) {
     };
 }
 
+/**
+ * @param {DiaryEntry[]} entries
+ * @param {number}       id
+ * @returns {DiaryEntry[]}
+ */
 export function deleteDiaryEntryById(entries, id) {
     return entries.filter((e) => e.id !== id);
 }
