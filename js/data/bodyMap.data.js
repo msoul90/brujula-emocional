@@ -31,12 +31,12 @@ export const SIMPLE_ZONE_GROUPS = {
 export const BODY_ZONE_EMOTIONS = {
     head:      ["Confusión", "Preocupación", "Ansiedad", "Angustia"],
     face:      ["Vergüenza", "Enojo", "Tristeza", "Alegría"],
-    throat:    ["Angustia", "Miedo", "Asco", "Vergüenza"],
+    throat:    ["Angustia", "Miedo", "Disgusto", "Vergüenza"],
     shoulders: ["Ansiedad", "Frustración", "Irritabilidad", "Preocupación", "Enojo"],
     chest:     ["Enojo", "Tristeza", "Miedo", "Culpa", "Soledad", "Alegría", "Calma",
                 "Angustia", "Gratitud", "Orgullo", "Nostalgia", "Alivio", "Ternura",
                 "Celos", "Rechazo", "Frustración", "Preocupación"],
-    stomach:   ["Miedo", "Ansiedad", "Asco", "Culpa", "Celos", "Angustia", "Decepción", "Envidia"],
+    stomach:   ["Miedo", "Ansiedad", "Disgusto", "Culpa", "Celos", "Angustia", "Decepción", "Envidia"],
     arms:      ["Enojo", "Frustración", "Entusiasmo", "Irritabilidad"],
     legs:      ["Tristeza", "Alegría", "Aburrimiento", "Ansiedad", "Calma", "Felicidad"],
 };

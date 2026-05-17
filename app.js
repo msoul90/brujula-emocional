@@ -9,7 +9,7 @@ import { initSettings } from "./js/settings.js";
 import { initInstall } from "./js/install.js";
 import { initOfflineBanner } from "./js/offlineBanner.js";
 import { initServiceWorker } from "./js/serviceWorker.js";
-import { on, emit } from "./js/bus.js";
+import { on } from "./js/bus.js";
 import { BUILD_VERSION } from "./js/version.js";
 
 const state = {

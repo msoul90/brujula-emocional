@@ -408,7 +408,7 @@
   var BODY_ZONE_EMOTIONS = {
     head: ["Confusi\xF3n", "Preocupaci\xF3n", "Ansiedad", "Angustia"],
     face: ["Verg\xFCenza", "Enojo", "Tristeza", "Alegr\xEDa"],
-    throat: ["Angustia", "Miedo", "Asco", "Verg\xFCenza"],
+    throat: ["Angustia", "Miedo", "Disgusto", "Verg\xFCenza"],
     shoulders: ["Ansiedad", "Frustraci\xF3n", "Irritabilidad", "Preocupaci\xF3n", "Enojo"],
     chest: [
       "Enojo",
@@ -429,7 +429,7 @@
       "Frustraci\xF3n",
       "Preocupaci\xF3n"
     ],
-    stomach: ["Miedo", "Ansiedad", "Asco", "Culpa", "Celos", "Angustia", "Decepci\xF3n", "Envidia"],
+    stomach: ["Miedo", "Ansiedad", "Disgusto", "Culpa", "Celos", "Angustia", "Decepci\xF3n", "Envidia"],
     arms: ["Enojo", "Frustraci\xF3n", "Entusiasmo", "Irritabilidad"],
     legs: ["Tristeza", "Alegr\xEDa", "Aburrimiento", "Ansiedad", "Calma", "Felicidad"]
   };
@@ -3239,7 +3239,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mp9cf28q";
+  var BUILD_VERSION = "mp9cswko";
 
   // app.js
   var state = {
