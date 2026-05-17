@@ -4049,7 +4049,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mp9ymh47";
+  var BUILD_VERSION = "mp9ynvh3";
 
   // app.js
   var reducedMotion = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;

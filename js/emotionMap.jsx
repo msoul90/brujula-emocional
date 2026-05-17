@@ -210,6 +210,7 @@ function buildQuadData(emociones, getDisplayName, W) {
     return { nodes, edges: buildEdges(nameToIdx), nameToIdx, H };
 }
 
+/** @param {number | null} catIdx @param {ForceEdge[]} visibleEdges @param {ForceNode[]} nodes @returns {QuadrantFilter | null} */
 function buildQuadrantFilter(catIdx, visibleEdges, nodes) {
     if (catIdx === null) return null;
     const cat = MOOD_CATEGORIES[catIdx];
@@ -224,6 +225,7 @@ function buildQuadrantFilter(catIdx, visibleEdges, nodes) {
     return { inQuadrant, neighbors };
 }
 
+/** @param {ForceNode} n @param {string | null} sel @param {boolean} isSel @param {boolean} isConn @param {QuadrantFilter | null} quadrantFilter @param {string} normalizedFilter @returns {number} */
 function calcNodeOpacity(n, sel, isSel, isConn, quadrantFilter, normalizedFilter) {
     if (sel) return (isSel || isConn) ? 1 : 0;
     if (quadrantFilter) {
