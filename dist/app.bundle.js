@@ -2566,11 +2566,14 @@
               {
                 t: t3,
                 dark,
-                step: QUIZ_STEPS[currentStepKey],
+                step: (
+                  /** @type {Record<string, QuizStepData>} */
+                  QUIZ_STEPS[currentStepKey]
+                ),
                 historyLen: history.length,
                 onPickOption: pickOption,
                 onBack: () => {
-                  currentStepKey = history.pop();
+                  currentStepKey = history.pop() ?? "q1";
                   rerender();
                 },
                 onSwitchToBody: () => bodyMap.render()
@@ -2583,7 +2586,8 @@
     }
     function pickOption(option) {
       if (option.result) {
-        resultEmotions = option.result.map((nombre) => emociones2.find((e3) => e3.nombre === nombre)).filter(Boolean);
+        resultEmotions = /** @type {import('./data/emotions.js').Emotion[]} */
+        option.result.map((nombre) => emociones2.find((e3) => e3.nombre === nombre)).filter(Boolean);
         showingResult = true;
       } else {
         history.push(currentStepKey);
@@ -3163,7 +3167,10 @@
   }
   function buildForceData(emociones2, getDisplayName, W, H2) {
     const rng = makeRng(48879);
-    const nameToIdx = {};
+    const nameToIdx = (
+      /** @type {Record<string, number>} */
+      {}
+    );
     const nodes = emociones2.map((e3, idx) => {
       nameToIdx[e3.nombre] = idx;
       const ci = MOOD_CATEGORIES.findIndex((c3) => c3.emotions.includes(e3.nombre));
@@ -3194,8 +3201,14 @@
     });
     const QH = QUAD_HDR + PAD + Math.max(maxRowsTop, 1) * ROW_H + R2 + 16;
     const H2 = QH * 2;
-    const nameToIdx = {};
-    const nodes = [];
+    const nameToIdx = (
+      /** @type {Record<string, number>} */
+      {}
+    );
+    const nodes = (
+      /** @type {ForceNode[]} */
+      []
+    );
     MOOD_CATEGORIES.forEach((cat, ci) => {
       const q2 = QUAD_MAP[ci];
       const ox = q2 % 2 * QW;
@@ -4036,7 +4049,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mp9ydcqt";
+  var BUILD_VERSION = "mp9ymh47";
 
   // app.js
   var reducedMotion = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;

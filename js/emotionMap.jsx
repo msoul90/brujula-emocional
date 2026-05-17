@@ -1,7 +1,15 @@
+// @ts-check
 import { render } from "preact";
 import { useEffect, useRef } from "preact/hooks";
 import { MOOD_CATEGORIES, EMOTION_RELATIONS } from "./constants.js";
 import { normalizeText } from "./utils.js";
+
+/**
+ * @typedef {{ nombre: string, label: string, color: string, x: number, y: number, fx?: number, fy?: number }} ForceNode
+ * @typedef {{ ai: number, bi: number, type: string }} ForceEdge
+ * @typedef {{ inQuadrant: Set<string>, neighbors: Set<string> }} QuadrantFilter
+ * @typedef {{ nodes: ForceNode[], edges: ForceEdge[], nameToIdx: Record<string, number>, H?: number }} GraphData
+ */
 
 // ── Config ────────────────────────────────────────────────────────────────────
 const R        = 18;
@@ -31,6 +39,7 @@ const RELS = {
     opuesta:   { color: "#14b8a6", dash: "6,3",  labelKey: "map.relOpuesta"   },
 };
 
+/** @param {number} seed @returns {() => number} */
 function makeRng(seed) {
     const buf = new Int32Array(1);
     buf[0] = Math.trunc(seed);
@@ -40,6 +49,7 @@ function makeRng(seed) {
     };
 }
 
+/** @param {ForceNode[]} nodes @param {number} k */
 function applyRepulsion(nodes, k) {
     for (let i = 0; i < nodes.length; i++) {
         for (let j = i + 1; j < nodes.length; j++) {
@@ -54,6 +64,7 @@ function applyRepulsion(nodes, k) {
     }
 }
 
+/** @param {ForceNode[]} nodes @param {ForceEdge[]} edges @param {number} W @param {number} H */
 function runForce(nodes, edges, W, H) {
     const k = Math.sqrt((W * H) / nodes.length) * 0.95;
     for (let it = 0; it < 500; it++) {
@@ -77,8 +88,10 @@ function runForce(nodes, edges, W, H) {
     resolveCollisions(nodes, W, H);
 }
 
+/** @param {number} v @param {number} lo @param {number} hi @returns {number} */
 function clamp(v, lo, hi) { return Math.min(Math.max(v, lo), hi); }
 
+/** @param {ForceNode[]} nodes @param {number} W @param {number} H */
 function resolveCollisions(nodes, W, H) {
     const minDist = R * 2 + 10;
     for (let pass = 0; pass < 12; pass++) {
@@ -100,14 +113,17 @@ function resolveCollisions(nodes, W, H) {
     }
 }
 
+/** @param {unknown} value @returns {string} */
 function escHtml(value) {
     return String(value).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
 }
 
+/** @param {unknown} value @returns {string} */
 function escAttr(value) {
     return escHtml(value).replaceAll('"', "&quot;").replaceAll("'", "&#39;");
 }
 
+/** @param {number} width @param {number} nodeCount @param {number} edgeCount @returns {number} */
 function graphHeightFor(width, nodeCount, edgeCount) {
     let base = GRAPH_H_DEFAULT;
     if (width < GRAPH_BP_NARROW)     base = GRAPH_H_NARROW;
@@ -120,6 +136,7 @@ function graphHeightFor(width, nodeCount, edgeCount) {
     return clamp(base + densityBoost, GRAPH_MIN_H, GRAPH_MAX_H);
 }
 
+/** @param {Record<string, number>} nameToIdx @returns {ForceEdge[]} */
 function buildEdges(nameToIdx) {
     return EMOTION_RELATIONS.flatMap((r) => {
         const ai = nameToIdx[r.from];
@@ -135,9 +152,15 @@ function buildEdges(nameToIdx) {
     });
 }
 
+/**
+ * @param {import('./data/emotions.js').Emotion[]} emociones
+ * @param {import('./types.js').GetDisplayNameFn} getDisplayName
+ * @param {number} W @param {number} H
+ * @returns {GraphData}
+ */
 function buildForceData(emociones, getDisplayName, W, H) {
     const rng = makeRng(0xbeef);
-    const nameToIdx = {};
+    const nameToIdx = /** @type {Record<string, number>} */ ({});
     const nodes = emociones.map((e, idx) => {
         nameToIdx[e.nombre] = idx;
         const ci = MOOD_CATEGORIES.findIndex(c => c.emotions.includes(e.nombre));
@@ -151,6 +174,12 @@ function buildForceData(emociones, getDisplayName, W, H) {
     return { nodes, edges, nameToIdx };
 }
 
+/**
+ * @param {import('./data/emotions.js').Emotion[]} emociones
+ * @param {import('./types.js').GetDisplayNameFn} getDisplayName
+ * @param {number} W
+ * @returns {GraphData & { H: number }}
+ */
 function buildQuadData(emociones, getDisplayName, W) {
     const QW = Math.floor(W / 2);
     const maxCols = Math.max(2, Math.floor((QW - PAD * 2 + 8) / STEP));
@@ -163,8 +192,8 @@ function buildQuadData(emociones, getDisplayName, W) {
     });
     const QH = QUAD_HDR + PAD + Math.max(maxRowsTop, 1) * ROW_H + R + 16;
     const H  = QH * 2;
-    const nameToIdx = {};
-    const nodes     = [];
+    const nameToIdx = /** @type {Record<string, number>} */ ({});
+    const nodes     = /** @type {ForceNode[]} */ ([]);
     MOOD_CATEGORIES.forEach((cat, ci) => {
         const q  = QUAD_MAP[ci];
         const ox = (q % 2) * QW;

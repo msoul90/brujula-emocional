@@ -1,6 +1,12 @@
+// @ts-check
 import { render } from "preact";
 import { createBodyMap } from "./bodyMap.jsx";
 import { isDarkMode } from "./utils.js";
+
+/**
+ * @typedef {{ labelKey: string, next?: string, result?: string[] }} QuizOption
+ * @typedef {{ textKey: string, options: QuizOption[] }} QuizStepData
+ */
 
 export const QUIZ_STEPS = {
     q1: {
@@ -46,6 +52,7 @@ const CloseX = () => (
     </svg>
 );
 
+/** @param {{ t: import('./types.js').TFn, dark: boolean, onDismiss: () => void }} props */
 function QuizHeader({ t, dark, onDismiss }) {
     const titleC = dark ? "text-slate-100" : "text-slate-800";
     const closeC = dark ? "bg-slate-700 text-slate-400 hover:bg-slate-600" : "bg-slate-100 text-slate-500 hover:bg-slate-200";
@@ -60,6 +67,7 @@ function QuizHeader({ t, dark, onDismiss }) {
     );
 }
 
+/** @param {{ t: import('./types.js').TFn, dark: boolean, step: QuizStepData, historyLen: number, onPickOption: (opt: QuizOption) => void, onBack: () => void, onSwitchToBody: () => void }} props */
 function QuizStep({ t, dark, step, historyLen, onPickOption, onBack, onSwitchToBody }) {
     const questionC   = dark ? "text-slate-100" : "text-slate-800";
     const optionC     = dark ? "bg-slate-800 text-slate-200 border-slate-700 hover:border-blue-400" : "bg-white text-slate-700 border-transparent hover:border-blue-300";
@@ -101,6 +109,9 @@ function QuizStep({ t, dark, step, historyLen, onPickOption, onBack, onSwitchToB
     );
 }
 
+/**
+ * @param {{ t: import('./types.js').TFn, dark: boolean, emotions: import('./data/emotions.js').Emotion[], getDisplayName: import('./types.js').GetDisplayNameFn, onRestart: () => void, onDismiss: () => void, onShowAll: (() => void) | null, onShowDetail: import('./types.js').ShowDetailFn }} props
+ */
 function QuizResult({ t, dark, emotions, getDisplayName, onRestart, onDismiss, onShowAll, onShowDetail }) {
     const titleC   = dark ? "text-slate-300" : "text-slate-500";
     const restartC = dark ? "bg-slate-800 text-slate-200 hover:bg-slate-700" : "bg-slate-100 text-slate-700 hover:bg-slate-200";
@@ -131,15 +142,22 @@ function QuizResult({ t, dark, emotions, getDisplayName, onRestart, onDismiss, o
     );
 }
 
+/**
+ * @param {{ emociones: import('./data/emotions.js').Emotion[], getDisplayName: import('./types.js').GetDisplayNameFn, t: import('./types.js').TFn, showDetail: import('./types.js').ShowDetailFn, onShowAll: (() => void) | null }} opts
+ * @returns {{ init: () => void, open: () => void }}
+ */
 export function createQuiz({ emociones, getDisplayName, t, showDetail, onShowAll }) {
+    /** @type {string[]} */
     let history        = [];
     let currentStepKey = "q1";
     let showingResult  = false;
+    /** @type {import('./data/emotions.js').Emotion[]} */
     let resultEmotions = [];
+    /** @type {HTMLElement | null} */
     let contentEl      = null;
 
     const dismiss = () => {
-        document.getElementById("quiz-panel")?.close();
+        /** @type {HTMLDialogElement | null} */ (document.getElementById("quiz-panel"))?.close();
         document.getElementById("quiz-trigger")?.focus();
     };
 
@@ -170,10 +188,10 @@ export function createQuiz({ emociones, getDisplayName, t, showDetail, onShowAll
             render(
                 <div>
                     <QuizHeader t={t} dark={dark} onDismiss={dismiss} />
-                    <QuizStep t={t} dark={dark} step={QUIZ_STEPS[currentStepKey]}
+                    <QuizStep t={t} dark={dark} step={/** @type {Record<string, QuizStepData>} */ (QUIZ_STEPS)[currentStepKey]}
                         historyLen={history.length}
                         onPickOption={pickOption}
-                        onBack={() => { currentStepKey = history.pop(); rerender(); }}
+                        onBack={() => { currentStepKey = history.pop() ?? "q1"; rerender(); }}
                         onSwitchToBody={() => bodyMap.render()} />
                 </div>,
                 contentEl
@@ -181,11 +199,14 @@ export function createQuiz({ emociones, getDisplayName, t, showDetail, onShowAll
         }
     }
 
+    /** @param {QuizOption} option */
     function pickOption(option) {
         if (option.result) {
-            resultEmotions = option.result
-                .map((nombre) => emociones.find((e) => e.nombre === nombre))
-                .filter(Boolean);
+            resultEmotions = /** @type {import('./data/emotions.js').Emotion[]} */ (
+                option.result
+                    .map((nombre) => emociones.find((e) => e.nombre === nombre))
+                    .filter(Boolean)
+            );
             showingResult = true;
         } else {
             history.push(currentStepKey);
@@ -197,7 +218,7 @@ export function createQuiz({ emociones, getDisplayName, t, showDetail, onShowAll
     const open = () => {
         history = []; currentStepKey = "q1"; showingResult = false; resultEmotions = [];
         contentEl = document.getElementById("quiz-content");
-        document.getElementById("quiz-panel")?.showModal();
+        /** @type {HTMLDialogElement | null} */ (document.getElementById("quiz-panel"))?.showModal();
         rerender();
     };
 
