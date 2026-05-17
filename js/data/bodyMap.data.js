@@ -1,20 +1,20 @@
 export const BODY_ZONES = {
     simple: [
-        { id: "head",    labelKey: "zoneHead",    color: "#818cf8" },
-        { id: "chest",   labelKey: "zoneChest",   color: "#f472b6" },
-        { id: "stomach", labelKey: "zoneStomach", color: "#fb923c" },
-        { id: "arms",    labelKey: "zoneArms",    color: "#34d399" },
-        { id: "legs",    labelKey: "zoneLegs",    color: "#fbbf24" },
+        { id: "head",    labelKey: "zone.head",    color: "#818cf8" },
+        { id: "chest",   labelKey: "zone.chest",   color: "#f472b6" },
+        { id: "stomach", labelKey: "zone.stomach", color: "#fb923c" },
+        { id: "arms",    labelKey: "zone.arms",    color: "#34d399" },
+        { id: "legs",    labelKey: "zone.legs",    color: "#fbbf24" },
     ],
     detailed: [
-        { id: "head",      labelKey: "zoneHead",      color: "#818cf8" },
-        { id: "face",      labelKey: "zoneFace",       color: "#f87171" },
-        { id: "throat",    labelKey: "zoneThroat",    color: "#e879f9" },
-        { id: "shoulders", labelKey: "zoneShoulders", color: "#60a5fa" },
-        { id: "chest",     labelKey: "zoneChest",     color: "#f472b6" },
-        { id: "stomach",   labelKey: "zoneStomach",   color: "#fb923c" },
-        { id: "arms",      labelKey: "zoneArms",      color: "#34d399" },
-        { id: "legs",      labelKey: "zoneLegs",      color: "#fbbf24" },
+        { id: "head",      labelKey: "zone.head",      color: "#818cf8" },
+        { id: "face",      labelKey: "zone.face",      color: "#f87171" },
+        { id: "throat",    labelKey: "zone.throat",    color: "#e879f9" },
+        { id: "shoulders", labelKey: "zone.shoulders", color: "#60a5fa" },
+        { id: "chest",     labelKey: "zone.chest",     color: "#f472b6" },
+        { id: "stomach",   labelKey: "zone.stomach",   color: "#fb923c" },
+        { id: "arms",      labelKey: "zone.arms",      color: "#34d399" },
+        { id: "legs",      labelKey: "zone.legs",      color: "#fbbf24" },
     ],
 };
 

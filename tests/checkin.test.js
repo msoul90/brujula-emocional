@@ -36,11 +36,17 @@ describe("MOOD_CATEGORIES estructura", () => {
     });
 });
 
+function resolve(obj, key) {
+    let val = obj;
+    for (const part of key.split(".")) val = val?.[part];
+    return val;
+}
+
 describe("MOOD_CATEGORIES traducciones", () => {
     it("todos los labelKey tienen traducción en español", () => {
         for (const cat of MOOD_CATEGORIES) {
             expect(
-                TRANSLATIONS.es[cat.labelKey],
+                resolve(TRANSLATIONS.es, cat.labelKey),
                 `es: falta "${cat.labelKey}"`
             ).toBeTruthy();
         }
@@ -49,7 +55,7 @@ describe("MOOD_CATEGORIES traducciones", () => {
     it("todos los labelKey tienen traducción en inglés", () => {
         for (const cat of MOOD_CATEGORIES) {
             expect(
-                TRANSLATIONS.en[cat.labelKey],
+                resolve(TRANSLATIONS.en, cat.labelKey),
                 `en: falta "${cat.labelKey}"`
             ).toBeTruthy();
         }

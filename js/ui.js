@@ -329,7 +329,7 @@ export function createUI({
         if (resetBtn) {
             const freshBtn = resetBtn.cloneNode(true);
             resetBtn.replaceWith(freshBtn);
-            freshBtn.textContent = t("checkinReset");
+            freshBtn.textContent = t("checkin.reset");
             freshBtn.addEventListener("click", () => {
                 activeCheckinCat = null;
                 section.classList.add("hidden");
@@ -395,11 +395,11 @@ export function createUI({
         form.id = "diary-inline-form";
         form.className = "mt-4 border-t border-slate-100 pt-4";
         form.innerHTML = `
-            <label for="diary-note-input" class="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2 block">${t("diaryNoteLabel")}</label>
-            <textarea id="diary-note-input" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-700 resize-none focus:outline-none focus:ring-2 focus:ring-blue-200" rows="2" placeholder="${t("diaryNotePlaceholder")}"></textarea>
+            <label for="diary-note-input" class="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2 block">${t("diary.noteLabel")}</label>
+            <textarea id="diary-note-input" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-700 resize-none focus:outline-none focus:ring-2 focus:ring-blue-200" rows="2" placeholder="${t("diary.notePlaceholder")}"></textarea>
             <div class="flex gap-2 mt-2">
-                <button id="diary-note-save" type="button" class="flex-1 bg-slate-800 text-white py-2.5 rounded-xl font-bold text-sm hover:bg-slate-700 transition-colors">${t("diarySaveButton")}</button>
-                <button id="diary-note-cancel" type="button" class="flex-1 bg-slate-100 text-slate-600 py-2.5 rounded-xl font-bold text-sm hover:bg-slate-200 transition-colors">${t("diaryCancelButton")}</button>
+                <button id="diary-note-save" type="button" class="flex-1 bg-slate-800 text-white py-2.5 rounded-xl font-bold text-sm hover:bg-slate-700 transition-colors">${t("diary.saveButton")}</button>
+                <button id="diary-note-cancel" type="button" class="flex-1 bg-slate-100 text-slate-600 py-2.5 rounded-xl font-bold text-sm hover:bg-slate-200 transition-colors">${t("diary.cancelButton")}</button>
             </div>
         `;
 
@@ -411,7 +411,7 @@ export function createUI({
         form.querySelector("#diary-note-save").addEventListener("click", () => {
             const note = form.querySelector("#diary-note-input").value;
             if (onAddToDiary) onAddToDiary(emotionNombre, note);
-            form.innerHTML = `<p class="text-emerald-600 font-bold text-sm text-center py-2">✓ ${t("diaryAddedFeedback")}</p>`;
+            form.innerHTML = `<p class="text-emerald-600 font-bold text-sm text-center py-2">✓ ${t("diary.addedFeedback")}</p>`;
             setTimeout(() => form.remove(), 1800);
         });
 
@@ -442,10 +442,10 @@ export function createUI({
                     class="flex items-center gap-2 text-[11px] font-black text-indigo-500 uppercase tracking-widest w-full text-left px-1 mb-2"
                     aria-expanded="false">
                     <svg id="technique-chevron" class="w-3.5 h-3.5 transition-transform shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
-                    ${t("techniquePractice")}
+                    ${t("technique.practice")}
                 </button>
                 <div id="technique-body" class="hidden bg-indigo-50 border-2 border-indigo-100 rounded-2xl p-4">
-                    <p class="text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-2">${t("techniqueLabel")} · ${data.name}</p>
+                    <p class="text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-2">${t("technique.label")} · ${data.name}</p>
                     <ol class="space-y-2">${steps}</ol>
                 </div>
             </div>
@@ -465,7 +465,7 @@ export function createUI({
 
         const masksSection = maskedEmotions.length > 0 ? `
                 <div class="border-t border-slate-100 pt-4">
-                    <p class="text-[11px] font-black text-violet-500 uppercase tracking-widest mb-2 px-1">${t("mapRelEnmascara")}</p>
+                    <p class="text-[11px] font-black text-violet-500 uppercase tracking-widest mb-2 px-1">${t("map.relEnmascara")}</p>
                     <div class="flex flex-wrap gap-2 mb-2">
                         ${maskedEmotions.map((m) => `
                             <button type="button" data-masked="${m.nombre}"

@@ -97,10 +97,10 @@ function buildChipsHtml(zones, selectedZones, t) {
 function buildResultHtml(matching, selectedZones, dark, t, getDisplayName) {
     const emptyC = dark ? "text-slate-500" : "text-slate-400";
     if (selectedZones.size === 0) {
-        return `<p class="text-sm text-center ${emptyC} py-3 px-2">${t("bodyMapTapPrompt")}</p>`;
+        return `<p class="text-sm text-center ${emptyC} py-3 px-2">${t("body.tapPrompt")}</p>`;
     }
     if (matching.length === 0) {
-        return `<p class="text-sm text-center ${emptyC} py-3 px-2">${t("bodyMapNoMatch")}</p>`;
+        return `<p class="text-sm text-center ${emptyC} py-3 px-2">${t("body.noMatch")}</p>`;
     }
     const titleC = dark ? "text-slate-300" : "text-slate-500";
     const cards = matching.map(e => `
@@ -111,7 +111,7 @@ function buildResultHtml(matching, selectedZones, dark, t, getDisplayName) {
             <span class="ml-auto text-xs font-bold opacity-60 shrink-0" style="color:${e.text}">Ver →</span>
         </button>`).join("");
     return `
-        <p class="text-[11px] font-black ${titleC} uppercase tracking-widest mb-3">${t("bodyMapResultTitle")}</p>
+        <p class="text-[11px] font-black ${titleC} uppercase tracking-widest mb-3">${t("body.resultTitle")}</p>
         <div class="space-y-2">${cards}</div>`;
 }
 
@@ -164,7 +164,7 @@ export function createBodyMap({ emociones, getDisplayName, t, showDetail, onDism
         const clearBtn   = selectedZones.size > 0
             ? `<button id="body-clear-btn" type="button"
                 class="mt-4 w-full py-2.5 rounded-2xl text-sm font-bold transition-colors ${clearBtnC}">
-                ${t("bodyMapClear")}
+                ${t("body.clear")}
                </button>`
             : "";
 
@@ -174,7 +174,7 @@ export function createBodyMap({ emociones, getDisplayName, t, showDetail, onDism
 
         content.innerHTML = `
             <div class="flex items-center justify-between mb-5">
-                <h2 class="text-xl font-black ${headerC}">${t("bodyMapTitle")}</h2>
+                <h2 class="text-xl font-black ${headerC}">${t("body.mapTitle")}</h2>
                 <button id="body-close-btn" type="button" aria-label="Cerrar"
                     class="w-8 h-8 flex items-center justify-center rounded-full ${closeRingC} transition-colors">
                     <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
@@ -183,17 +183,17 @@ export function createBodyMap({ emociones, getDisplayName, t, showDetail, onDism
             <div class="flex gap-1 mb-4 p-1 rounded-xl ${toggleBgC}">
                 <button type="button" id="body-mode-simple"
                     class="flex-1 py-1.5 text-xs font-bold rounded-lg transition-colors ${mode === "simple" ? activeC : inactiveC}">
-                    ${t("bodyModeSimple")}
+                    ${t("body.modeSimple")}
                 </button>
                 <button type="button" id="body-mode-detailed"
                     class="flex-1 py-1.5 text-xs font-bold rounded-lg transition-colors ${mode === "detailed" ? activeC : inactiveC}">
-                    ${t("bodyModeDetailed")}
+                    ${t("body.modeDetailed")}
                 </button>
             </div>
             <div class="flex justify-center mb-4">
                 <svg id="body-svg" viewBox="0 0 100 200"
                     style="width:130px;height:auto;touch-action:manipulation"
-                    role="img" aria-label="${t("bodyMapTitle")}">
+                    role="img" aria-label="${t("body.mapTitle")}">
                     <defs><clipPath id="body-clip">${clipShapes}</clipPath></defs>
                     <g clip-path="url(#body-clip)">
                         ${zoneRects}${zoneLabels}${divider}
@@ -206,7 +206,7 @@ export function createBodyMap({ emociones, getDisplayName, t, showDetail, onDism
             ${clearBtn}
             <button id="body-to-quiz-btn" type="button"
                 class="mt-2 w-full py-2.5 text-sm font-medium transition-colors ${toQuizC}">
-                ← ${t("quizTabQuestions")}
+                ← ${t("quiz.tabQuestions")}
             </button>`;
 
         bindEvents(content);

@@ -363,8 +363,8 @@ export const EMOTION_RELATIONS = [
 
 /** @type {MoodCategory[]} */
 export const MOOD_CATEGORIES = [
-    { key: "agitado",    labelKey: "moodAgitado",    emoji: "😤", color: "#F5A5A0", ink: "#7A2E2E", emotions: ["Enojo", "Frustración", "Irritabilidad", "Ansiedad", "Miedo", "Preocupación", "Angustia", "Envidia", "Disgusto"] },
-    { key: "triste",     labelKey: "moodTriste",     emoji: "😢", color: "#A4C3E3", ink: "#1F3F66", emotions: ["Tristeza", "Soledad", "Nostalgia", "Culpa", "Vergüenza", "Rechazo", "Decepción"] },
-    { key: "confundido", labelKey: "moodConfundido", emoji: "🤔", color: "#F5D88A", ink: "#7A5A1A", emotions: ["Confusión", "Aburrimiento", "Celos"] },
-    { key: "bien",       labelKey: "moodBien",       emoji: "😌", color: "#8FD4AE", ink: "#1E5237", emotions: ["Calma", "Alivio", "Gratitud", "Felicidad", "Alegría", "Orgullo", "Entusiasmo", "Placer", "Ternura"] }
+    { key: "agitado",    labelKey: "checkin.moodAgitado",    emoji: "😤", color: "#F5A5A0", ink: "#7A2E2E", emotions: ["Enojo", "Frustración", "Irritabilidad", "Ansiedad", "Miedo", "Preocupación", "Angustia", "Envidia", "Disgusto"] },
+    { key: "triste",     labelKey: "checkin.moodTriste",     emoji: "😢", color: "#A4C3E3", ink: "#1F3F66", emotions: ["Tristeza", "Soledad", "Nostalgia", "Culpa", "Vergüenza", "Rechazo", "Decepción"] },
+    { key: "confundido", labelKey: "checkin.moodConfundido", emoji: "🤔", color: "#F5D88A", ink: "#7A5A1A", emotions: ["Confusión", "Aburrimiento", "Celos"] },
+    { key: "bien",       labelKey: "checkin.moodBien",       emoji: "😌", color: "#8FD4AE", ink: "#1E5237", emotions: ["Calma", "Alivio", "Gratitud", "Felicidad", "Alegría", "Orgullo", "Entusiasmo", "Placer", "Ternura"] }
 ];

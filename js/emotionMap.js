@@ -25,10 +25,10 @@ const GRAPH_MAX_BOOST  = 80;
 const QUAD_MAP = [0, 2, 3, 1];
 
 const RELS = {
-    coexiste:  { color: "#6366f1", dash: "none", labelKey: "mapRelCoexiste"  },
-    escala_a:  { color: "#f97316", dash: "none", labelKey: "mapRelEscalaA"   },
-    enmascara: { color: "#a855f7", dash: "3,3",  labelKey: "mapRelEnmascara" },
-    opuesta:   { color: "#14b8a6", dash: "6,3",  labelKey: "mapRelOpuesta"   },
+    coexiste:  { color: "#6366f1", dash: "none", labelKey: "map.relCoexiste"  },
+    escala_a:  { color: "#f97316", dash: "none", labelKey: "map.relEscalaA"   },
+    enmascara: { color: "#a855f7", dash: "3,3",  labelKey: "map.relEnmascara" },
+    opuesta:   { color: "#14b8a6", dash: "6,3",  labelKey: "map.relOpuesta"   },
 };
 
 // ── Seeded RNG — stable initial positions across renders ─────────────────────
@@ -255,7 +255,7 @@ function buildQuadrantBtns(effectiveQuadrant, activeC, inactiveC, t) {
     return [
         `<button type="button" data-quad="all" aria-pressed="${effectiveQuadrant === null}"
             class="text-[11px] font-bold px-2.5 py-0.5 rounded-full border transition-colors ${allBtnC}">
-            ${t("mapFilterAll")}
+            ${t("map.filterAll")}
         </button>`
     ].concat(MOOD_CATEGORIES.map((cat, i) => {
         const isActive    = effectiveQuadrant === i;
@@ -290,13 +290,13 @@ function buildInfoPanel(selected, nodes, edges, dark, t, getDisplayName) {
     const nameC   = dark ? "text-slate-100" : "text-slate-800";
     const body    = rows
         ? `<ul class="space-y-1.5">${rows}</ul>`
-        : `<p class="text-xs text-slate-400">${t("mapInfoNone")}</p>`;
+        : `<p class="text-xs text-slate-400">${t("map.infoNone")}</p>`;
     return `<div id="map-info-panel" class="mt-3 rounded-2xl p-4 border ${borderC} shadow-sm">
         <div class="flex items-center justify-between mb-2">
             <span class="font-bold ${nameC}">${getDisplayName(selected)}</span>
             <div class="flex items-center gap-1">
                 <button id="map-open-btn" class="text-xs font-bold text-blue-500 hover:text-blue-600 px-2 py-1 rounded-lg transition-colors">${t("openChip")}</button>
-                <button id="map-clear-btn" aria-label="${t("mapClearSelection")}"
+                <button id="map-clear-btn" aria-label="${t("map.clearSelection")}"
                     class="w-6 h-6 flex items-center justify-center rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors">
                     <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
                 </button>
@@ -531,10 +531,10 @@ export function createEmotionMap({ emociones, getDisplayName, t, showDetail }) {
 
         wrap.innerHTML = `
             <div class="flex gap-2 mb-2">
-                <button id="map-graph-btn" class="flex-1 py-2 text-sm font-bold rounded-xl border transition-colors ${view === "graph" ? activeC : inactiveC}">${t("mapViewGraph")}</button>
-                <button id="map-quad-btn"  class="flex-1 py-2 text-sm font-bold rounded-xl border transition-colors ${view === "quad"  ? activeC : inactiveC}">${t("mapViewQuad")}</button>
+                <button id="map-graph-btn" class="flex-1 py-2 text-sm font-bold rounded-xl border transition-colors ${view === "graph" ? activeC : inactiveC}">${t("map.viewGraph")}</button>
+                <button id="map-quad-btn"  class="flex-1 py-2 text-sm font-bold rounded-xl border transition-colors ${view === "quad"  ? activeC : inactiveC}">${t("map.viewQuad")}</button>
             </div>
-            <div class="flex flex-wrap gap-x-3 gap-y-1 mb-2" role="list" aria-label="${t("mapLegendLabel")}">
+            <div class="flex flex-wrap gap-x-3 gap-y-1 mb-2" role="list" aria-label="${t("map.legendLabel")}">
                 ${legendItems}
             </div>
             <div class="flex flex-wrap gap-1.5 mb-2">
@@ -542,7 +542,7 @@ export function createEmotionMap({ emociones, getDisplayName, t, showDetail }) {
             </div>
             <div class="relative mb-2">
                 <input id="map-search" type="text" autocomplete="off"
-                    placeholder="${t("mapSearchPlaceholder")}"
+                    placeholder="${t("map.searchPlaceholder")}"
                     value="${escapeHtmlAttr(nameFilter)}"
                     class="w-full text-[13px] px-3 py-1.5 rounded-xl border transition-colors
                         ${dark ? "bg-slate-800 border-slate-600 text-slate-200 placeholder:text-slate-500" : "bg-white border-slate-200 text-slate-700 placeholder:text-slate-400"}">
@@ -552,14 +552,14 @@ export function createEmotionMap({ emociones, getDisplayName, t, showDetail }) {
                 </ul>
             </div>
             <p id="map-hint" class="text-[11px] text-slate-400 mb-1.5 px-0.5">
-                ${selected ? t("mapHintSelected") : t("mapHint")}
+                ${selected ? t("map.hintSelected") : t("map.hint")}
             </p>
             <div class="rounded-2xl overflow-hidden" style="background:${canvasBg}">
-                <svg id="map-svg" viewBox="0 0 ${W} ${H}" style="width:100%;display:block;touch-action:pan-y" role="img" aria-label="${t("navMapa")}">
+                <svg id="map-svg" viewBox="0 0 ${W} ${H}" style="width:100%;display:block;touch-action:pan-y" role="img" aria-label="${t("nav.mapa")}">
                     ${svgBody(svgNodes, svgEdges, W, H, selected, view, { t, activeTypes, activeQuadrant: svgActiveQuadrant, nameFilter })}
                 </svg>
             </div>
-            <p id="map-empty" class="${hasMatch ? "hidden" : ""} text-[13px] text-center text-slate-400 mt-4 py-2">${t("mapSearchEmpty")}</p>
+            <p id="map-empty" class="${hasMatch ? "hidden" : ""} text-[13px] text-center text-slate-400 mt-4 py-2">${t("map.searchEmpty")}</p>
             ${infoHtml}`;
 
         bindEvents(wrap);
@@ -608,7 +608,7 @@ export function createEmotionMap({ emociones, getDisplayName, t, showDetail }) {
         if (emptyEl) emptyEl.classList.toggle("hidden", hasMatch);
 
         const hintEl = wrap.querySelector("#map-hint");
-        if (hintEl) hintEl.textContent = selected ? t("mapHintSelected") : t("mapHint");
+        if (hintEl) hintEl.textContent = selected ? t("map.hintSelected") : t("map.hint");
     }
 
     function bindSvgEvents(svg) {
