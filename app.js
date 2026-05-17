@@ -9,6 +9,7 @@ import { initSettings } from "./js/settings.js";
 import { initInstall } from "./js/install.js";
 import { initOfflineBanner } from "./js/offlineBanner.js";
 import { initServiceWorker } from "./js/serviceWorker.js";
+import { on, emit } from "./js/bus.js";
 import { BUILD_VERSION } from "./js/version.js";
 
 const state = {
@@ -46,9 +47,10 @@ diary = createDiary({
     t: i18n.t,
     getDisplayName: i18n.getDisplayName,
     emociones,
-    onGoToCheckin: () => switchTab("checkin"),
-    onOpenQuiz: () => quiz?.open()
 });
+
+on("tab:switch", ({ tabId }) => switchTab(tabId));
+on("quiz:open", () => quiz?.open());
 
 ui = createUI({
     emociones,

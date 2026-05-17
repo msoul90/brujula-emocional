@@ -1,5 +1,6 @@
 import { DIARY_KEY, DIARY_TAGS } from "./constants.js";
 import { normalizeText, escapeHtml } from "./utils.js";
+import { emit } from "./bus.js";
 
 /**
  * @typedef {Object} DiaryEntry
@@ -70,7 +71,7 @@ function deleteEntry(id) {
     saveEntries(deleteDiaryEntryById(loadEntries(), id));
 }
 
-export function createDiary({ t, getDisplayName, emociones, onGoToCheckin = null, onOpenQuiz = null }) {
+export function createDiary({ t, getDisplayName, emociones }) {
     function renderTagPills(tags) {
         if (!tags?.length) return "";
         const pills = tags
@@ -273,8 +274,8 @@ export function createDiary({ t, getDisplayName, emociones, onGoToCheckin = null
 
         content.innerHTML = headerHtml + privacyHtml + formHtml + entriesHtml;
 
-        content.querySelector("#diary-empty-checkin")?.addEventListener("click", () => onGoToCheckin?.());
-        content.querySelector("#diary-empty-quiz")?.addEventListener("click", () => onOpenQuiz?.());
+        content.querySelector("#diary-empty-checkin")?.addEventListener("click", () => emit("tab:switch", { tabId: "checkin" }));
+        content.querySelector("#diary-empty-quiz")?.addEventListener("click", () => emit("quiz:open"));
 
         content.querySelector("#diary-export-btn")?.addEventListener("click", () => {
             const date = new Date().toISOString().slice(0, 10);

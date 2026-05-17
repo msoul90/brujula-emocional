@@ -1510,10 +1510,10 @@
   }
   function buildSvgZoneRects(zones, rects, selectedZones) {
     return zones.map((zone) => {
-      const on = selectedZones.has(zone.id);
-      const fill = on ? zone.color + "66" : zone.color + "33";
-      const strk = on ? zone.color : zone.color + "66";
-      const sw = on ? "1.5" : "0.75";
+      const on2 = selectedZones.has(zone.id);
+      const fill = on2 ? zone.color + "66" : zone.color + "33";
+      const strk = on2 ? zone.color : zone.color + "66";
+      const sw = on2 ? "1.5" : "0.75";
       return (rects[zone.id] || []).map(
         (r) => `<rect x="${r.x}" y="${r.y}" width="${r.w}" height="${r.h}"
                 data-zone="${zone.id}" fill="${fill}" stroke="${strk}" stroke-width="${sw}"
@@ -1900,6 +1900,15 @@
     return { init, open };
   }
 
+  // js/bus.js
+  var listeners = {};
+  function on(event, fn) {
+    (listeners[event] ??= []).push(fn);
+  }
+  function emit(event, data) {
+    listeners[event]?.forEach((fn) => fn(data));
+  }
+
   // js/diary.js
   function parseDiaryEntries(raw) {
     try {
@@ -1935,7 +1944,7 @@
   function deleteEntry(id) {
     saveEntries(deleteDiaryEntryById(loadEntries(), id));
   }
-  function createDiary({ t, getDisplayName, emociones: emociones2, onGoToCheckin = null, onOpenQuiz = null }) {
+  function createDiary({ t, getDisplayName, emociones: emociones2 }) {
     function renderTagPills(tags) {
       if (!tags?.length) return "";
       const pills = tags.map((tag) => {
@@ -2139,8 +2148,8 @@
         `;
       }
       content.innerHTML = headerHtml + privacyHtml + formHtml + entriesHtml;
-      content.querySelector("#diary-empty-checkin")?.addEventListener("click", () => onGoToCheckin?.());
-      content.querySelector("#diary-empty-quiz")?.addEventListener("click", () => onOpenQuiz?.());
+      content.querySelector("#diary-empty-checkin")?.addEventListener("click", () => emit("tab:switch", { tabId: "checkin" }));
+      content.querySelector("#diary-empty-quiz")?.addEventListener("click", () => emit("quiz:open"));
       content.querySelector("#diary-export-btn")?.addEventListener("click", () => {
         const date = (/* @__PURE__ */ new Date()).toISOString().slice(0, 10);
         const blob = new Blob([JSON.stringify(entries, null, 2)], { type: "application/json" });
@@ -2408,15 +2417,15 @@
   }
   function buildLegendItems(dark, activeTypes, t) {
     return Object.entries(RELS).map(([type, rel]) => {
-      const on = activeTypes.has(type);
+      const on2 = activeTypes.has(type);
       const dimLine = dark ? "#475569" : "#cbd5e1";
-      const lineColor = on ? rel.color : dimLine;
+      const lineColor = on2 ? rel.color : dimLine;
       const onTextC = dark ? "text-slate-300" : "text-slate-600";
       const offTextC = dark ? "text-slate-600" : "text-slate-400";
-      const textC = on ? onTextC : offTextC;
+      const textC = on2 ? onTextC : offTextC;
       const onBgC = dark ? "bg-slate-700" : "bg-slate-100";
-      const bgC = on ? onBgC : "";
-      return `<button type="button" data-rel-type="${type}" role="listitem" aria-pressed="${on}"
+      const bgC = on2 ? onBgC : "";
+      return `<button type="button" data-rel-type="${type}" role="listitem" aria-pressed="${on2}"
             class="flex items-center gap-1 text-[11px] px-1.5 py-0.5 rounded-lg transition-colors ${textC} ${bgC}">
             <svg width="14" height="6" aria-hidden="true"><line x1="0" y1="3" x2="14" y2="3" stroke="${lineColor}" stroke-width="2" stroke-dasharray="${rel.dash}"/></svg>
             ${t(rel.labelKey)}
@@ -3152,7 +3161,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mp9bbw27";
+  var BUILD_VERSION = "mp9belf7";
 
   // app.js
   var state = {
@@ -3185,10 +3194,10 @@
   diary = createDiary({
     t: i18n.t,
     getDisplayName: i18n.getDisplayName,
-    emociones,
-    onGoToCheckin: () => switchTab("checkin"),
-    onOpenQuiz: () => quiz?.open()
+    emociones
   });
+  on("tab:switch", ({ tabId }) => switchTab(tabId));
+  on("quiz:open", () => quiz?.open());
   ui = createUI({
     emociones,
     relaciones: EMOTION_RELATIONS,
