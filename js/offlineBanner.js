@@ -1,3 +1,4 @@
+// @ts-check
 /**
  * @param {{ t: (key: string) => string }} opts
  */

@@ -1,3 +1,4 @@
+// @ts-check
 export function initServiceWorker() {
     if (!("serviceWorker" in navigator)) return;
 

@@ -1,9 +1,35 @@
+// @ts-check
 import { THEME_KEY } from "./constants.js";
 
-function getTheme() {
-    return localStorage.getItem(THEME_KEY) || "auto";
+/** @typedef {"light" | "auto" | "dark"} Theme */
+/** @typedef {"es" | "en"} Language */
+
+const THEMES = ["light", "auto", "dark"];
+const LANGUAGES = ["es", "en"];
+
+/**
+ * @param {string | null | undefined} theme
+ * @returns {theme is Theme}
+ */
+function isTheme(theme) {
+    return typeof theme === "string" && THEMES.includes(theme);
 }
 
+/**
+ * @param {string | null | undefined} lang
+ * @returns {lang is Language}
+ */
+function isLanguage(lang) {
+    return typeof lang === "string" && LANGUAGES.includes(lang);
+}
+
+/** @returns {Theme} */
+function getTheme() {
+    const theme = localStorage.getItem(THEME_KEY);
+    return isTheme(theme) ? theme : "auto";
+}
+
+/** @param {Theme} theme @param {() => Language} getLang */
 function applyTheme(theme, getLang) {
     const prefersDark = globalThis.matchMedia("(prefers-color-scheme: dark)").matches;
     if (theme === "dark" || (theme === "auto" && prefersDark)) {
@@ -15,17 +41,19 @@ function applyTheme(theme, getLang) {
     updateActiveStates(theme, getLang());
 }
 
+/** @param {Theme} theme @param {Language} lang */
 function updateActiveStates(theme, lang) {
-    for (const t of ["light", "auto", "dark"]) {
+    for (const t of THEMES) {
         document.getElementById(`theme-btn-${t}`)?.classList.toggle("settings-option-active", t === theme);
     }
-    for (const l of ["es", "en"]) {
+    for (const l of LANGUAGES) {
         document.getElementById(`lang-btn-${l}`)?.classList.toggle("settings-option-active", l === lang);
     }
 }
 
 /**
- * @param {{ setLanguage: (lang: string) => void, getLang: () => string }} opts
+ * @param {{ setLanguage: (lang: Language) => void, getLang: () => Language }} opts
+ * @returns {{ applyTheme: (theme: Theme) => void, getTheme: () => Theme, updateActiveStates: (theme: Theme, lang: Language) => void } | undefined}
  */
 export function initSettings({ setLanguage, getLang }) {
     const settingsBtn = document.getElementById("settings-btn");
@@ -45,7 +73,7 @@ export function initSettings({ setLanguage, getLang }) {
     });
 
     document.addEventListener("click", (event) => {
-        if (!settingsPanel.classList.contains("hidden") && !settingsPanel.contains(event.target)) {
+        if (!settingsPanel.classList.contains("hidden") && !settingsPanel.contains(/** @type {Node | null} */ (event.target))) {
             closePanel();
         }
     });
@@ -57,13 +85,19 @@ export function initSettings({ setLanguage, getLang }) {
         }
     });
 
-    for (const btn of settingsPanel.querySelectorAll("[data-theme-btn]")) {
-        btn.addEventListener("click", () => applyTheme(btn.dataset.themeBtn, getLang));
+    for (const btn of /** @type {NodeListOf<HTMLElement>} */ (settingsPanel.querySelectorAll("[data-theme-btn]"))) {
+        btn.addEventListener("click", () => {
+            const theme = btn.dataset.themeBtn;
+            if (!isTheme(theme)) return;
+            applyTheme(theme, getLang);
+        });
     }
 
-    for (const btn of settingsPanel.querySelectorAll("[data-lang-btn]")) {
+    for (const btn of /** @type {NodeListOf<HTMLElement>} */ (settingsPanel.querySelectorAll("[data-lang-btn]"))) {
         btn.addEventListener("click", () => {
-            setLanguage(btn.dataset.langBtn);
+            const lang = btn.dataset.langBtn;
+            if (!isLanguage(lang)) return;
+            setLanguage(lang);
             updateActiveStates(getTheme(), getLang());
         });
     }

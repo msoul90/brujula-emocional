@@ -801,25 +801,40 @@
   function createI18n({ getLang, setLang, onLanguageChanged }) {
     function t3(key) {
       const lang = getLang();
+      const tr = (
+        /** @type {Record<string, Record<string, any>>} */
+        TRANSLATIONS
+      );
       const parts = key.split(".");
       if (parts.length === 1) {
-        return TRANSLATIONS[lang]?.[key] ?? TRANSLATIONS.es[key] ?? key;
+        return tr[lang]?.[key] ?? tr.es[key] ?? key;
       }
-      let val = TRANSLATIONS[lang];
+      let val = (
+        /** @type {any} */
+        tr[lang]
+      );
       for (const part of parts) val = val?.[part];
       if (val === void 0) {
-        val = TRANSLATIONS.es;
+        val = tr.es;
         for (const part of parts) val = val?.[part];
       }
       return val !== void 0 ? String(val) : key;
     }
     function getDisplayName(nombre) {
-      if (getLang() === "en") return EMOTION_NAME_TRANSLATIONS[nombre] ?? nombre;
+      const nameMap = (
+        /** @type {Record<string, string>} */
+        EMOTION_NAME_TRANSLATIONS
+      );
+      if (getLang() === "en") return nameMap[nombre] ?? nombre;
       return nombre;
     }
     function getEmotionField(emotion, field) {
+      const contentMap = (
+        /** @type {Record<string, Record<string, string>>} */
+        EMOTION_CONTENT_TRANSLATIONS
+      );
       if (getLang() !== "en") return emotion[field];
-      return EMOTION_CONTENT_TRANSLATIONS[emotion.nombre]?.[field] ?? emotion[field];
+      return contentMap[emotion.nombre]?.[field] ?? emotion[field];
     }
     function applyStaticTranslations() {
       document.documentElement.lang = getLang();
@@ -2041,9 +2056,20 @@
     return "";
   }
   function getZoneEmotionNames(zoneId, mode) {
-    const detailZones = mode === "simple" ? SIMPLE_ZONE_GROUPS[zoneId] || [zoneId] : [zoneId];
-    const names = /* @__PURE__ */ new Set();
-    for (const dz of detailZones) for (const n2 of BODY_ZONE_EMOTIONS[dz] || []) names.add(n2);
+    const groups = (
+      /** @type {Record<string, string[]>} */
+      SIMPLE_ZONE_GROUPS
+    );
+    const emotions = (
+      /** @type {Record<string, string[]>} */
+      BODY_ZONE_EMOTIONS
+    );
+    const detailZones = mode === "simple" ? groups[zoneId] || [zoneId] : [zoneId];
+    const names = /* @__PURE__ */ new Set(
+      /** @type {string[]} */
+      []
+    );
+    for (const dz of detailZones) for (const n2 of emotions[dz] || []) names.add(n2);
     return names;
   }
   function buildSvgInner(zones, rects, selectedZones, lineColor, bodyFill, t3) {
@@ -2263,8 +2289,16 @@
       const content = document.getElementById("quiz-content");
       if (!content) return;
       const dark = isDarkMode();
-      const zones = BODY_ZONES[mode];
-      const rects = ZONE_RECTS[mode];
+      const zones = (
+        /** @type {BodyZone[]} */
+        /** @type {any} */
+        BODY_ZONES[mode]
+      );
+      const rects = (
+        /** @type {Record<string, ZoneRect[]>} */
+        /** @type {any} */
+        ZONE_RECTS[mode]
+      );
       const lineColor = dark ? "#64748b" : "#94a3b8";
       const bodyFill = dark ? "#0f172a" : "#f8fafc";
       R(
@@ -2289,7 +2323,11 @@
               render_();
             },
             onZoneClick: (ev) => {
-              const hit = ev.target.closest(".zone-hit");
+              const hit = (
+                /** @type {HTMLElement | null} */
+                /** @type {Element | null} */
+                ev.target?.closest(".zone-hit")
+              );
               if (!hit) return;
               const zoneId = hit.dataset.zone;
               if (selectedZones.has(zoneId)) selectedZones.delete(zoneId);
@@ -2528,11 +2566,14 @@
               {
                 t: t3,
                 dark,
-                step: QUIZ_STEPS[currentStepKey],
+                step: (
+                  /** @type {Record<string, QuizStepData>} */
+                  QUIZ_STEPS[currentStepKey]
+                ),
                 historyLen: history.length,
                 onPickOption: pickOption,
                 onBack: () => {
-                  currentStepKey = history.pop();
+                  currentStepKey = history.pop() ?? "q1";
                   rerender();
                 },
                 onSwitchToBody: () => bodyMap.render()
@@ -2545,7 +2586,8 @@
     }
     function pickOption(option) {
       if (option.result) {
-        resultEmotions = option.result.map((nombre) => emociones2.find((e3) => e3.nombre === nombre)).filter(Boolean);
+        resultEmotions = /** @type {import('./data/emotions.js').Emotion[]} */
+        option.result.map((nombre) => emociones2.find((e3) => e3.nombre === nombre)).filter(Boolean);
         showingResult = true;
       } else {
         history.push(currentStepKey);
@@ -2640,18 +2682,18 @@
             if (filtered.length) setOpen(true);
           },
           onInput: (ev) => {
-            const val = ev.target.value;
+            const val = ev.currentTarget.value;
             setQuery(val);
             setChosen("");
             onSelect("");
             setOpen(true);
-            ev.target.classList.remove("ring-2", "ring-red-300");
+            ev.currentTarget.classList.remove("ring-2", "ring-red-300");
           },
           onBlur: () => setTimeout(() => setOpen(false), 150),
           onKeyDown: (ev) => {
             if (ev.key === "Escape") {
               setOpen(false);
-              ev.target.blur();
+              ev.currentTarget.blur();
             }
             if (ev.key === "Enter") {
               ev.preventDefault();
@@ -2689,7 +2731,10 @@
   }
   function DiaryForm({ emociones: emociones2, getDisplayName, t: t3, onSave, onCancel }) {
     const [selectedEmotion, setSelectedEmotion] = d2("");
-    const [selectedTags, setSelectedTags] = d2(/* @__PURE__ */ new Set());
+    const [selectedTags, setSelectedTags] = d2(
+      /** @type {Set<string>} */
+      /* @__PURE__ */ new Set()
+    );
     function toggleTag(tag) {
       const next = new Set(selectedTags);
       if (next.has(tag)) next.delete(tag);
@@ -2703,7 +2748,10 @@
         input?.classList.add("ring-2", "ring-red-300");
         return;
       }
-      const note = document.getElementById("diary-note-input")?.value ?? "";
+      const note = (
+        /** @type {HTMLTextAreaElement | null} */
+        document.getElementById("diary-note-input")?.value ?? ""
+      );
       onSave(selectedEmotion, note, [...selectedTags]);
     }
     return /* @__PURE__ */ u3("div", { id: "diary-add-form", class: "bg-white rounded-2xl p-4 shadow-sm mb-4 border-2 border-blue-100", children: [
@@ -2721,7 +2769,7 @@
         "textarea",
         {
           id: "diary-note-input",
-          rows: "2",
+          rows: 2,
           placeholder: t3("diary.notePlaceholder"),
           class: "w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-700 resize-none focus:outline-none focus:ring-2 focus:ring-blue-200 mb-3"
         }
@@ -3119,7 +3167,10 @@
   }
   function buildForceData(emociones2, getDisplayName, W, H2) {
     const rng = makeRng(48879);
-    const nameToIdx = {};
+    const nameToIdx = (
+      /** @type {Record<string, number>} */
+      {}
+    );
     const nodes = emociones2.map((e3, idx) => {
       nameToIdx[e3.nombre] = idx;
       const ci = MOOD_CATEGORIES.findIndex((c3) => c3.emotions.includes(e3.nombre));
@@ -3150,8 +3201,14 @@
     });
     const QH = QUAD_HDR + PAD + Math.max(maxRowsTop, 1) * ROW_H + R2 + 16;
     const H2 = QH * 2;
-    const nameToIdx = {};
-    const nodes = [];
+    const nameToIdx = (
+      /** @type {Record<string, number>} */
+      {}
+    );
+    const nodes = (
+      /** @type {ForceNode[]} */
+      []
+    );
     MOOD_CATEGORIES.forEach((cat, ci) => {
       const q2 = QUAD_MAP[ci];
       const ox = q2 % 2 * QW;
@@ -3316,7 +3373,9 @@
       const svg = svgRef.current;
       if (!svg) return;
       const isNeighborhood = view === "graph" && selected !== null;
-      let svgNodes, svgEdges, svgActiveQuadrant;
+      let svgNodes;
+      let svgEdges;
+      let svgActiveQuadrant;
       if (isNeighborhood) {
         const hood = buildNeighborhoodData(selected, nodes, edges.filter((e3) => activeTypes.has(e3.type)), W, H2);
         svgNodes = hood.nodes;
@@ -3384,7 +3443,10 @@
           ] })
         ] }),
         Object.keys(grouped).length > 0 ? /* @__PURE__ */ u3("ul", { class: "space-y-1.5", children: Object.entries(grouped).map(([type, names]) => {
-          const rel = RELS[type];
+          const rel = RELS[
+            /** @type {RelationType} */
+            type
+          ];
           return /* @__PURE__ */ u3("li", { class: "flex items-start gap-2 text-sm leading-snug", children: [
             /* @__PURE__ */ u3("span", { class: "mt-1 shrink-0 inline-block w-2.5 h-2.5 rounded-full", style: `background:${rel.color}` }),
             /* @__PURE__ */ u3("span", { children: [
@@ -3393,7 +3455,7 @@
                 ":"
               ] }),
               " ",
-              /* @__PURE__ */ u3("span", { class: dark ? "text-slate-400" : "text-slate-500", children: names.join(", ") })
+              /* @__PURE__ */ u3("span", { class: dark ? "text-slate-400" : "text-slate-500", children: (names ?? []).join(", ") })
             ] })
           ] }, type);
         }) }) : /* @__PURE__ */ u3("p", { class: "text-xs text-slate-400", children: t3("map.infoNone") })
@@ -3421,7 +3483,11 @@
         )
       ] }),
       /* @__PURE__ */ u3("div", { class: "flex flex-wrap gap-x-3 gap-y-1 mb-2", role: "list", "aria-label": t3("map.legendLabel"), children: Object.entries(RELS).map(([type, rel]) => {
-        const on2 = activeTypes.has(type);
+        const relType = (
+          /** @type {RelationType} */
+          type
+        );
+        const on2 = activeTypes.has(relType);
         const dimLine = dark ? "#475569" : "#cbd5e1";
         const lineColor = on2 ? rel.color : dimLine;
         const onTextC = dark ? "text-slate-300" : "text-slate-600";
@@ -3433,9 +3499,9 @@
             type: "button",
             "data-rel-type": type,
             role: "listitem",
-            "aria-pressed": String(on2),
+            "aria-pressed": on2,
             class: `flex items-center gap-1 text-[11px] px-1.5 py-0.5 rounded-lg transition-colors ${on2 ? onTextC : offTextC} ${on2 ? onBgC : ""}`,
-            onClick: () => onRelTypeToggle(type),
+            onClick: () => onRelTypeToggle(relType),
             children: [
               /* @__PURE__ */ u3("svg", { width: "14", height: "6", "aria-hidden": "true", children: /* @__PURE__ */ u3("line", { x1: "0", y1: "3", x2: "14", y2: "3", stroke: lineColor, "stroke-width": "2", "stroke-dasharray": rel.dash }) }),
               t3(rel.labelKey)
@@ -3450,7 +3516,7 @@
           {
             type: "button",
             "data-quad": "all",
-            "aria-pressed": String(effectiveQuadrant === null),
+            "aria-pressed": effectiveQuadrant === null,
             class: `text-[11px] font-bold px-2.5 py-0.5 rounded-full border transition-colors ${effectiveQuadrant === null ? activeC : inactiveC}`,
             onClick: () => onQuadrantChange(null),
             children: t3("map.filterAll")
@@ -3463,7 +3529,7 @@
             {
               type: "button",
               "data-quad": String(i3),
-              "aria-pressed": String(isActive),
+              "aria-pressed": isActive,
               class: `text-[11px] font-bold px-2.5 py-0.5 rounded-full border transition-colors ${isActive ? "" : inactiveC}`,
               style: isActive ? `background-color:${cat.color};color:${cat.ink};border-color:${cat.color}` : "",
               onClick: () => onQuadrantChange(i3),
@@ -3515,7 +3581,10 @@
     let view = "graph";
     let selected = null;
     let nameFilter = "";
-    let activeTypes = new Set(Object.keys(RELS));
+    let activeTypes = new Set(
+      /** @type {RelationType[]} */
+      Object.keys(RELS)
+    );
     let activeQuadrant = null;
     let forceData = null;
     let quadData = null;
@@ -3536,27 +3605,39 @@
       const wrap = document.getElementById("map-content");
       if (!wrap) return;
       ensureData();
-      const { nodes, edges, H: H2 } = view === "graph" ? forceData : quadData;
+      const currentData = view === "graph" ? forceData : quadData;
+      if (!currentData) return;
+      const { nodes, edges, H: H2 } = currentData;
       const W = containerW();
       const dark = document.documentElement.classList.contains("dark");
       const svgEventHandler = {
         click: (ev) => {
-          const node = ev.target.closest(".map-node");
+          const target = ev.target;
+          if (!(target instanceof Element)) return;
+          const node = target.closest(".map-node");
           if (!node) {
             selected = null;
             render_();
             return;
           }
-          const nombre = node.dataset.nombre;
+          const nombre = (
+            /** @type {HTMLElement} */
+            node.dataset.nombre
+          );
           selected = selected === nombre ? null : nombre;
           render_();
         },
         keydown: (ev) => {
           if (ev.key !== "Enter" && ev.key !== " ") return;
-          const node = ev.target.closest(".map-node");
+          const target = ev.target;
+          if (!(target instanceof Element)) return;
+          const node = target.closest(".map-node");
           if (!node) return;
           ev.preventDefault();
-          const nombre = node.dataset.nombre;
+          const nombre = (
+            /** @type {HTMLElement} */
+            node.dataset.nombre
+          );
           selected = selected === nombre ? null : nombre;
           render_();
         }
@@ -3607,7 +3688,11 @@
               render_();
             },
             onSearch: (ev) => {
-              nameFilter = ev.target.value;
+              const target = (
+                /** @type {HTMLInputElement} */
+                ev.currentTarget ?? ev.target
+              );
+              nameFilter = target.value;
               selected = null;
               render_();
               requestAnimationFrame(() => populateSuggestions(nameFilter));
@@ -3646,16 +3731,26 @@
             </li>`
       ).join("");
       suggestionsList.classList.remove("hidden");
-      suggestionsList.onmousedown = (ev) => ev.preventDefault();
-      suggestionsList.onclick = (ev) => {
-        const li = ev.target.closest("li[data-nombre]");
+      const suggestionsEl = (
+        /** @type {HTMLElement} */
+        suggestionsList
+      );
+      suggestionsEl.onmousedown = (ev) => ev.preventDefault();
+      suggestionsEl.onclick = (ev) => {
+        const target = ev.target;
+        if (!(target instanceof Element)) return;
+        const li = target.closest("li[data-nombre]");
         if (!li) return;
-        const e3 = emociones2.find((em) => em.nombre === li.dataset.nombre);
+        const nombre = (
+          /** @type {HTMLElement} */
+          li.dataset.nombre
+        );
+        const e3 = emociones2.find((em) => em.nombre === nombre);
         if (e3) {
           nameFilter = getDisplayName(e3.nombre);
           selected = e3.nombre;
           const searchInput = document.getElementById("map-search");
-          if (searchInput) searchInput.value = nameFilter;
+          if (searchInput instanceof HTMLInputElement) searchInput.value = nameFilter;
           suggestionsList.classList.add("hidden");
           render_();
         }
@@ -3790,7 +3885,10 @@
       rerender();
     }
     function open() {
-      const dialog = document.getElementById("crisis-panel");
+      const dialog = (
+        /** @type {HTMLDialogElement | null} */
+        document.getElementById("crisis-panel")
+      );
       contentEl = document.getElementById("crisis-content");
       if (!dialog || !contentEl) return;
       step = 1;
@@ -3813,8 +3911,17 @@
   }
 
   // js/settings.js
+  var THEMES = ["light", "auto", "dark"];
+  var LANGUAGES = ["es", "en"];
+  function isTheme(theme) {
+    return typeof theme === "string" && THEMES.includes(theme);
+  }
+  function isLanguage(lang) {
+    return typeof lang === "string" && LANGUAGES.includes(lang);
+  }
   function getTheme() {
-    return localStorage.getItem(THEME_KEY) || "auto";
+    const theme = localStorage.getItem(THEME_KEY);
+    return isTheme(theme) ? theme : "auto";
   }
   function applyTheme(theme, getLang) {
     const prefersDark = globalThis.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -3827,10 +3934,10 @@
     updateActiveStates(theme, getLang());
   }
   function updateActiveStates(theme, lang) {
-    for (const t3 of ["light", "auto", "dark"]) {
+    for (const t3 of THEMES) {
       document.getElementById(`theme-btn-${t3}`)?.classList.toggle("settings-option-active", t3 === theme);
     }
-    for (const l3 of ["es", "en"]) {
+    for (const l3 of LANGUAGES) {
       document.getElementById(`lang-btn-${l3}`)?.classList.toggle("settings-option-active", l3 === lang);
     }
   }
@@ -3849,7 +3956,10 @@
       settingsBtn.setAttribute("aria-expanded", String(!isOpen));
     });
     document.addEventListener("click", (event) => {
-      if (!settingsPanel.classList.contains("hidden") && !settingsPanel.contains(event.target)) {
+      if (!settingsPanel.classList.contains("hidden") && !settingsPanel.contains(
+        /** @type {Node | null} */
+        event.target
+      )) {
         closePanel();
       }
     });
@@ -3859,12 +3969,26 @@
         settingsBtn.focus();
       }
     });
-    for (const btn of settingsPanel.querySelectorAll("[data-theme-btn]")) {
-      btn.addEventListener("click", () => applyTheme(btn.dataset.themeBtn, getLang));
-    }
-    for (const btn of settingsPanel.querySelectorAll("[data-lang-btn]")) {
+    for (
+      const btn of
+      /** @type {NodeListOf<HTMLElement>} */
+      settingsPanel.querySelectorAll("[data-theme-btn]")
+    ) {
       btn.addEventListener("click", () => {
-        setLanguage(btn.dataset.langBtn);
+        const theme = btn.dataset.themeBtn;
+        if (!isTheme(theme)) return;
+        applyTheme(theme, getLang);
+      });
+    }
+    for (
+      const btn of
+      /** @type {NodeListOf<HTMLElement>} */
+      settingsPanel.querySelectorAll("[data-lang-btn]")
+    ) {
+      btn.addEventListener("click", () => {
+        const lang = btn.dataset.langBtn;
+        if (!isLanguage(lang)) return;
+        setLanguage(lang);
         updateActiveStates(getTheme(), getLang());
       });
     }
@@ -3882,7 +4006,8 @@
     return /iphone|ipad|ipod/.test(ua) || touchMac;
   }
   function isStandalone() {
-    return globalThis.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+    return globalThis.matchMedia("(display-mode: standalone)").matches || /** @type {any} */
+    navigator.standalone === true;
   }
   function initInstall() {
     const installButton = document.getElementById("install-app-button");
@@ -3910,7 +4035,8 @@
     };
     globalThis.addEventListener("beforeinstallprompt", (event) => {
       event.preventDefault();
-      deferredPrompt = event;
+      deferredPrompt = /** @type {BeforeInstallPromptEvent} */
+      event;
       updateInstallVisibility();
     });
     globalThis.addEventListener("appinstalled", () => {
@@ -3935,7 +4061,10 @@
     });
     iosClose.addEventListener("click", closeIosModal);
     iosModal.addEventListener("click", (event) => {
-      if (event.target.id === "ios-install-modal") closeIosModal();
+      if (
+        /** @type {HTMLElement} */
+        event.target.id === "ios-install-modal"
+      ) closeIosModal();
     });
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape" && !iosModal.classList.contains("hidden")) {
@@ -3973,7 +4102,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mp9w1xgp";
+  var BUILD_VERSION = "mp9z82mn";
 
   // app.js
   var reducedMotion = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;

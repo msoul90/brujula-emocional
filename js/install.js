@@ -1,11 +1,20 @@
+// @ts-check
+
+/**
+ * @typedef {Event & { prompt: () => Promise<void>, userChoice: Promise<{outcome: string}> }} BeforeInstallPromptEvent
+ */
+
+/** @returns {boolean} */
 function isIosDevice() {
     const ua = navigator.userAgent.toLowerCase();
     const touchMac = ua.includes("macintosh") && navigator.maxTouchPoints > 1;
     return /iphone|ipad|ipod/.test(ua) || touchMac;
 }
 
+/** @returns {boolean} */
 function isStandalone() {
-    return globalThis.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+    return globalThis.matchMedia("(display-mode: standalone)").matches
+        || /** @type {any} */ (navigator).standalone === true;
 }
 
 export function initInstall() {
@@ -13,6 +22,7 @@ export function initInstall() {
     const iosModal = document.getElementById("ios-install-modal");
     const iosClose = document.getElementById("ios-install-close");
     const isiOS = isIosDevice();
+    /** @type {BeforeInstallPromptEvent | null} */
     let deferredPrompt = null;
 
     if (!installButton || !iosModal || !iosClose) return;
@@ -39,7 +49,7 @@ export function initInstall() {
 
     globalThis.addEventListener("beforeinstallprompt", (event) => {
         event.preventDefault();
-        deferredPrompt = event;
+        deferredPrompt = /** @type {BeforeInstallPromptEvent} */ (event);
         updateInstallVisibility();
     });
 
@@ -69,7 +79,7 @@ export function initInstall() {
 
     iosClose.addEventListener("click", closeIosModal);
     iosModal.addEventListener("click", (event) => {
-        if (event.target.id === "ios-install-modal") closeIosModal();
+        if (/** @type {HTMLElement} */ (event.target).id === "ios-install-modal") closeIosModal();
     });
 
     document.addEventListener("keydown", (event) => {

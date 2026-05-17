@@ -1,5 +1,10 @@
+// @ts-check
 import { render } from "preact";
 import { useState } from "preact/hooks";
+
+/** @typedef {import('./types.js').TFn} TFn */
+/** @typedef {import('./types.js').GetDisplayNameFn} GetDisplayNameFn */
+/** @typedef {import('./data/emotions.js').Emotion} Emotion */
 import { DIARY_KEY, DIARY_TAGS } from "./constants.js";
 import { normalizeText } from "./utils.js";
 import { emit } from "./bus.js";
@@ -47,22 +52,28 @@ function loadEntries() {
     return parseDiaryEntries(localStorage.getItem(DIARY_KEY));
 }
 
+/** @param {DiaryEntry[]} entries */
 function saveEntries(entries) {
     localStorage.setItem(DIARY_KEY, JSON.stringify(entries));
 }
 
+/** @param {string} emotionNombre @param {string} [note] @param {string[]} [tags] @returns {DiaryEntry} */
 function addEntryToStorage(emotionNombre, note = "", tags = []) {
     const entry = createDiaryEntry(emotionNombre, note, tags);
     saveEntries([entry, ...loadEntries()]);
     return entry;
 }
 
+/** @param {number} id */
 function deleteEntryFromStorage(id) {
     saveEntries(deleteDiaryEntryById(loadEntries(), id));
 }
 
 // ── Components ───────────────────────────────────────────────────────────────
 
+/**
+ * @param {{ emociones: Emotion[], getDisplayName: GetDisplayNameFn, t: TFn, onSelect: (nombre: string) => void }} props
+ */
 function EmotionSearch({ emociones, getDisplayName, t, onSelect }) {
     const [query, setQuery]   = useState("");
     const [open, setOpen]     = useState(false);
@@ -75,6 +86,7 @@ function EmotionSearch({ emociones, getDisplayName, t, onSelect }) {
         return name.includes(norm) || normalizeText(e.nombre).includes(norm);
     });
 
+    /** @param {string} nombre */
     function selectEmotion(nombre) {
         setChosen(nombre);
         setQuery(getDisplayName(nombre));
@@ -90,16 +102,16 @@ function EmotionSearch({ emociones, getDisplayName, t, onSelect }) {
                 class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-200"
                 onFocus={() => { if (filtered.length) setOpen(true); }}
                 onInput={(ev) => {
-                    const val = ev.target.value;
+                    const val = ev.currentTarget.value;
                     setQuery(val);
                     setChosen("");
                     onSelect("");
                     setOpen(true);
-                    ev.target.classList.remove("ring-2", "ring-red-300");
+                    ev.currentTarget.classList.remove("ring-2", "ring-red-300");
                 }}
                 onBlur={() => setTimeout(() => setOpen(false), 150)}
                 onKeyDown={(ev) => {
-                    if (ev.key === "Escape") { setOpen(false); ev.target.blur(); }
+                    if (ev.key === "Escape") { setOpen(false); ev.currentTarget.blur(); }
                     if (ev.key === "Enter") {
                         ev.preventDefault();
                         if (filtered.length) selectEmotion(filtered[0].nombre);
@@ -124,10 +136,14 @@ function EmotionSearch({ emociones, getDisplayName, t, onSelect }) {
     );
 }
 
+/**
+ * @param {{ emociones: Emotion[], getDisplayName: GetDisplayNameFn, t: TFn, onSave: (emotion: string, note: string, tags: string[]) => void, onCancel: () => void }} props
+ */
 function DiaryForm({ emociones, getDisplayName, t, onSave, onCancel }) {
     const [selectedEmotion, setSelectedEmotion] = useState("");
-    const [selectedTags, setSelectedTags]       = useState(new Set());
+    const [selectedTags, setSelectedTags]       = useState(/** @type {Set<string>} */ (new Set()));
 
+    /** @param {string} tag */
     function toggleTag(tag) {
         const next = new Set(selectedTags);
         if (next.has(tag)) next.delete(tag); else next.add(tag);
@@ -141,7 +157,7 @@ function DiaryForm({ emociones, getDisplayName, t, onSave, onCancel }) {
             input?.classList.add("ring-2", "ring-red-300");
             return;
         }
-        const note = document.getElementById("diary-note-input")?.value ?? "";
+        const note = /** @type {HTMLTextAreaElement | null} */ (document.getElementById("diary-note-input"))?.value ?? "";
         onSave(selectedEmotion, note, [...selectedTags]);
     }
 
@@ -150,7 +166,7 @@ function DiaryForm({ emociones, getDisplayName, t, onSave, onCancel }) {
             <p class="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-3">{t("diary.newEntry")}</p>
             <EmotionSearch emociones={emociones} getDisplayName={getDisplayName} t={t}
                 onSelect={setSelectedEmotion} />
-            <textarea id="diary-note-input" rows="2" placeholder={t("diary.notePlaceholder")}
+            <textarea id="diary-note-input" rows={2} placeholder={t("diary.notePlaceholder")}
                 class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-700 resize-none focus:outline-none focus:ring-2 focus:ring-blue-200 mb-3" />
             <div class="mb-3">
                 <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">{t("diary.tagLabel")}</p>
@@ -182,6 +198,9 @@ function DiaryForm({ emociones, getDisplayName, t, onSave, onCancel }) {
     );
 }
 
+/**
+ * @param {{ entries: DiaryEntry[], emociones: Emotion[], getDisplayName: GetDisplayNameFn, t: TFn, formatDate: (iso: string) => string, onDelete: (id: number) => void, onClearAll: () => void }} props
+ */
 function EntryList({ entries, emociones, getDisplayName, t, formatDate, onDelete, onClearAll }) {
     return (
         <div>
@@ -226,6 +245,7 @@ function EntryList({ entries, emociones, getDisplayName, t, formatDate, onDelete
     );
 }
 
+/** @param {{ t: TFn }} props */
 function EmptyState({ t }) {
     return (
         <div class="text-center py-8 px-2">
@@ -246,10 +266,14 @@ function EmptyState({ t }) {
     );
 }
 
+/**
+ * @param {{ t: TFn, getDisplayName: GetDisplayNameFn, emociones: Emotion[], showForm: boolean, onNewEntry: () => void, onSave: (emotion: string, note: string, tags: string[]) => void, onCancel: () => void, onDelete: (id: number) => void, onClearAll: () => void, onExport: () => void }} props
+ */
 function DiaryPanel({ t, getDisplayName, emociones, showForm, onNewEntry, onSave, onCancel,
     onDelete, onClearAll, onExport }) {
     const entries = loadEntries();
 
+    /** @param {string} isoString @returns {string} */
     function formatDate(isoString) {
         const d   = new Date(isoString);
         const now = new Date();
@@ -307,6 +331,10 @@ function DiaryPanel({ t, getDisplayName, emociones, showForm, onNewEntry, onSave
 
 // ── Factory ───────────────────────────────────────────────────────────────────
 
+/**
+ * @param {{ t: TFn, getDisplayName: GetDisplayNameFn, emociones: Emotion[] }} opts
+ * @returns {{ renderForTab: () => void, addEntry: (nombre: string, note?: string, tags?: string[]) => DiaryEntry }}
+ */
 export function createDiary({ t, getDisplayName, emociones }) {
     let showForm = false;
 
@@ -352,6 +380,7 @@ export function createDiary({ t, getDisplayName, emociones }) {
         );
     }
 
+    /** @param {string} emotionNombre @param {string} [note] @param {string[]} [tags] @returns {DiaryEntry} */
     function addEntry(emotionNombre, note = "", tags = []) {
         return addEntryToStorage(emotionNombre, note, tags);
     }
