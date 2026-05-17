@@ -83,8 +83,8 @@ function QuizStep({ t, dark, step, historyLen, onPickOption, onBack, onSwitchToB
             </div>
             <p class={`text-2xl font-black ${questionC} leading-snug mb-8`}>{t(step.textKey)}</p>
             <div class="space-y-3">
-                {step.options.map((opt, i) => (
-                    <button key={i} type="button"
+                {step.options.map((opt) => (
+                    <button key={opt.labelKey} type="button"
                         class={`quiz-option w-full text-left p-5 rounded-2xl shadow-sm border-2 hover:shadow-md transition-all font-medium ${optionC}`}
                         onClick={() => onPickOption(opt)}>
                         {t(opt.labelKey)}

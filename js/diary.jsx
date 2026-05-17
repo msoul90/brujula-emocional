@@ -69,6 +69,11 @@ function deleteEntryFromStorage(id) {
     saveEntries(deleteDiaryEntryById(loadEntries(), id));
 }
 
+/** @param {string} emotionNombre @param {string} [note] @param {string[]} [tags] @returns {DiaryEntry} */
+function addEntry(emotionNombre, note = "", tags = []) {
+    return addEntryToStorage(emotionNombre, note, tags);
+}
+
 // ── Components ───────────────────────────────────────────────────────────────
 
 /**
@@ -378,11 +383,6 @@ export function createDiary({ t, getDisplayName, emociones }) {
             />,
             content
         );
-    }
-
-    /** @param {string} emotionNombre @param {string} [note] @param {string[]} [tags] @returns {DiaryEntry} */
-    function addEntry(emotionNombre, note = "", tags = []) {
-        return addEntryToStorage(emotionNombre, note, tags);
     }
 
     function renderForTab() {

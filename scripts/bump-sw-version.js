@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fs = require('node:fs');
 const sw = fs.readFileSync('sw.js', 'utf8');
 const tag = Date.now().toString(36);
 const updated = sw.replace(/brujula-emocional-\w+/, `brujula-emocional-${tag}`);

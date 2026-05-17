@@ -818,7 +818,8 @@
         val = tr.es;
         for (const part of parts) val = val?.[part];
       }
-      return val !== void 0 ? String(val) : key;
+      if (val === void 0) return key;
+      return String(val);
     }
     function getDisplayName(nombre) {
       const nameMap = (
@@ -833,8 +834,8 @@
         /** @type {Record<string, Record<string, string>>} */
         EMOTION_CONTENT_TRANSLATIONS
       );
-      if (getLang() !== "en") return emotion[field];
-      return contentMap[emotion.nombre]?.[field] ?? emotion[field];
+      if (getLang() === "en") return contentMap[emotion.nombre]?.[field] ?? emotion[field];
+      return emotion[field];
     }
     function applyStaticTranslations() {
       document.documentElement.lang = getLang();
@@ -1580,20 +1581,13 @@
   }
   function EmotionCard({ e: e3, getDisplayName, t: t3, onSelect }) {
     return /* @__PURE__ */ u3(
-      "div",
+      "button",
       {
-        class: "emotion-card p-5 rounded-2xl shadow-sm cursor-pointer flex justify-between items-center bg-white",
+        type: "button",
+        class: "emotion-card p-5 rounded-2xl shadow-sm cursor-pointer flex justify-between items-center bg-white w-full text-left",
         style: `border-left:8px solid ${e3.color}`,
-        tabIndex: 0,
-        role: "button",
         "aria-label": `${t3("openDetailAria")} ${getDisplayName(e3.nombre)}`,
         onClick: (ev) => onSelect(e3, ev.currentTarget),
-        onKeyDown: (ev) => {
-          if (ev.key === "Enter" || ev.key === " ") {
-            ev.preventDefault();
-            onSelect(e3, ev.currentTarget);
-          }
-        },
         children: [
           /* @__PURE__ */ u3("span", { class: "font-bold text-lg text-slate-700", children: getDisplayName(e3.nombre) }),
           /* @__PURE__ */ u3("svg", { class: "w-4 h-4 text-slate-300 shrink-0", viewBox: "0 0 24 24", fill: "currentColor", "aria-hidden": "true", children: /* @__PURE__ */ u3("path", { d: "M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z" }) })
@@ -1643,7 +1637,7 @@
             "."
           ] }),
           /* @__PURE__ */ u3("span", { children: s3 })
-        ] }, i3)) })
+        ] }, `${data.name}-${s3}`)) })
       ] })
     ] });
   }
@@ -1979,7 +1973,7 @@
     function closeModal() {
       const modal = document.getElementById("modal");
       const panel = document.getElementById("modal-panel");
-      if (!modal || !modal.open || get("isClosingModal")) return;
+      if (!modal?.open || !panel || get("isClosingModal")) return;
       set("isClosingModal", true);
       panel.classList.add("translate-y-8", "sm:scale-95", "opacity-0");
       if (scrollCleanup) {
@@ -2421,7 +2415,7 @@
     return /* @__PURE__ */ u3("div", { children: [
       /* @__PURE__ */ u3("div", { class: "flex gap-2 mb-8", "aria-hidden": "true", children: [0, 1, 2].map((i3) => /* @__PURE__ */ u3("div", { class: `w-2 h-2 rounded-full transition-colors ${i3 <= historyLen ? "bg-blue-500" : inactiveDot}` }, i3)) }),
       /* @__PURE__ */ u3("p", { class: `text-2xl font-black ${questionC} leading-snug mb-8`, children: t3(step.textKey) }),
-      /* @__PURE__ */ u3("div", { class: "space-y-3", children: step.options.map((opt, i3) => /* @__PURE__ */ u3(
+      /* @__PURE__ */ u3("div", { class: "space-y-3", children: step.options.map((opt) => /* @__PURE__ */ u3(
         "button",
         {
           type: "button",
@@ -2429,7 +2423,7 @@
           onClick: () => onPickOption(opt),
           children: t3(opt.labelKey)
         },
-        i3
+        opt.labelKey
       )) }),
       historyLen > 0 ? /* @__PURE__ */ u3(
         "button",
@@ -2651,6 +2645,9 @@
   }
   function deleteEntryFromStorage(id) {
     saveEntries(deleteDiaryEntryById(loadEntries(), id));
+  }
+  function addEntry(emotionNombre, note = "", tags = []) {
+    return addEntryToStorage(emotionNombre, note, tags);
   }
   function EmotionSearch({ emociones: emociones2, getDisplayName, t: t3, onSelect }) {
     const [query, setQuery] = d2("");
@@ -3025,9 +3022,6 @@
         content
       );
     }
-    function addEntry(emotionNombre, note = "", tags = []) {
-      return addEntryToStorage(emotionNombre, note, tags);
-    }
     function renderForTab() {
       showForm = false;
       rerender();
@@ -3136,7 +3130,19 @@
     }
   }
   function escHtml(value) {
-    return String(value).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+    let safe;
+    if (value === null || value === void 0) {
+      safe = "";
+    } else if (typeof value === "string" || typeof value === "number" || typeof value === "boolean" || typeof value === "bigint") {
+      safe = String(value);
+    } else {
+      try {
+        safe = JSON.stringify(value);
+      } catch {
+        safe = Object.prototype.toString.call(value);
+      }
+    }
+    return safe.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
   }
   function escAttr(value) {
     return escHtml(value).replaceAll('"', "&quot;").replaceAll("'", "&#39;");
@@ -3346,6 +3352,128 @@
   function containerW() {
     return document.getElementById("map-content")?.clientWidth || 340;
   }
+  function hasNodeMatch(nodes, nameFilter, selected) {
+    if (!nameFilter || selected !== null) return true;
+    const norm = normalizeText(nameFilter);
+    return nodes.some((n2) => normalizeText(n2.label).includes(norm));
+  }
+  function buildGroupedRelations(selected, nodes, edges) {
+    if (!selected) return null;
+    const myEdges = edges.filter((e3) => nodes[e3.ai]?.nombre === selected || nodes[e3.bi]?.nombre === selected);
+    const grouped = {};
+    for (const e3 of myEdges) {
+      const other = nodes[e3.ai].nombre === selected ? nodes[e3.bi] : nodes[e3.ai];
+      grouped[e3.type] = grouped[e3.type] || [];
+      grouped[e3.type].push(other.label);
+    }
+    return grouped;
+  }
+  function SelectedInfoPanel({ selected, grouped, nodes, t: t3, dark, onOpenDetail, onClearSelection }) {
+    if (!selected || !grouped) return null;
+    const borderC = dark ? "bg-slate-800 border-slate-700" : "bg-white border-slate-100";
+    const nameC = dark ? "text-slate-100" : "text-slate-800";
+    return /* @__PURE__ */ u3("div", { id: "map-info-panel", class: `mt-3 rounded-2xl p-4 border ${borderC} shadow-sm`, children: [
+      /* @__PURE__ */ u3("div", { class: "flex items-center justify-between mb-2", children: [
+        /* @__PURE__ */ u3("span", { class: `font-bold ${nameC}`, children: nodes.find((n2) => n2.nombre === selected)?.label ?? selected }),
+        /* @__PURE__ */ u3("div", { class: "flex items-center gap-1", children: [
+          /* @__PURE__ */ u3(
+            "button",
+            {
+              id: "map-open-btn",
+              onClick: onOpenDetail,
+              class: "text-xs font-bold text-blue-500 hover:text-blue-600 px-2 py-1 rounded-lg transition-colors",
+              children: t3("openChip")
+            }
+          ),
+          /* @__PURE__ */ u3(
+            "button",
+            {
+              id: "map-clear-btn",
+              "aria-label": t3("map.clearSelection"),
+              onClick: onClearSelection,
+              class: "w-6 h-6 flex items-center justify-center rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors",
+              children: /* @__PURE__ */ u3("svg", { class: "w-3.5 h-3.5", viewBox: "0 0 24 24", fill: "currentColor", "aria-hidden": "true", children: /* @__PURE__ */ u3("path", { d: "M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" }) })
+            }
+          )
+        ] })
+      ] }),
+      Object.keys(grouped).length > 0 ? /* @__PURE__ */ u3("ul", { class: "space-y-1.5", children: Object.entries(grouped).map(([type, names]) => {
+        const rel = RELS[
+          /** @type {RelationType} */
+          type
+        ];
+        return /* @__PURE__ */ u3("li", { class: "flex items-start gap-2 text-sm leading-snug", children: [
+          /* @__PURE__ */ u3("span", { class: "mt-1 shrink-0 inline-block w-2.5 h-2.5 rounded-full", style: `background:${rel.color}` }),
+          /* @__PURE__ */ u3("span", { children: [
+            /* @__PURE__ */ u3("strong", { class: dark ? "text-slate-300" : "text-slate-700", children: [
+              t3(rel.labelKey),
+              ":"
+            ] }),
+            " ",
+            /* @__PURE__ */ u3("span", { class: dark ? "text-slate-400" : "text-slate-500", children: (names ?? []).join(", ") })
+          ] })
+        ] }, type);
+      }) }) : /* @__PURE__ */ u3("p", { class: "text-xs text-slate-400", children: t3("map.infoNone") })
+    ] });
+  }
+  function RelationLegend({ t: t3, dark, activeTypes, onRelTypeToggle }) {
+    return /* @__PURE__ */ u3("ul", { class: "flex flex-wrap gap-x-3 gap-y-1 mb-2", "aria-label": t3("map.legendLabel"), children: Object.entries(RELS).map(([type, rel]) => {
+      const relType = (
+        /** @type {RelationType} */
+        type
+      );
+      const on2 = activeTypes.has(relType);
+      const dimLine = dark ? "#475569" : "#cbd5e1";
+      const lineColor = on2 ? rel.color : dimLine;
+      const onTextC = dark ? "text-slate-300" : "text-slate-600";
+      const offTextC = dark ? "text-slate-600" : "text-slate-400";
+      const onBgC = dark ? "bg-slate-700" : "bg-slate-100";
+      return /* @__PURE__ */ u3("li", { children: /* @__PURE__ */ u3(
+        "button",
+        {
+          type: "button",
+          "data-rel-type": type,
+          "aria-pressed": on2,
+          class: `flex items-center gap-1 text-[11px] px-1.5 py-0.5 rounded-lg transition-colors ${on2 ? onTextC : offTextC} ${on2 ? onBgC : ""}`,
+          onClick: () => onRelTypeToggle(relType),
+          children: [
+            /* @__PURE__ */ u3("svg", { width: "14", height: "6", "aria-hidden": "true", children: /* @__PURE__ */ u3("line", { x1: "0", y1: "3", x2: "14", y2: "3", stroke: lineColor, "stroke-width": "2", "stroke-dasharray": rel.dash }) }),
+            t3(rel.labelKey)
+          ]
+        }
+      ) }, type);
+    }) });
+  }
+  function QuadrantFilters({ t: t3, activeC, inactiveC, effectiveQuadrant, onQuadrantChange }) {
+    return /* @__PURE__ */ u3("ul", { class: "flex flex-wrap gap-1.5 mb-2", children: [
+      /* @__PURE__ */ u3("li", { children: /* @__PURE__ */ u3(
+        "button",
+        {
+          type: "button",
+          "data-quad": "all",
+          "aria-pressed": effectiveQuadrant === null,
+          class: `text-[11px] font-bold px-2.5 py-0.5 rounded-full border transition-colors ${effectiveQuadrant === null ? activeC : inactiveC}`,
+          onClick: () => onQuadrantChange(null),
+          children: t3("map.filterAll")
+        }
+      ) }),
+      MOOD_CATEGORIES.map((cat, i3) => {
+        const isActive = effectiveQuadrant === i3;
+        return /* @__PURE__ */ u3("li", { children: /* @__PURE__ */ u3(
+          "button",
+          {
+            type: "button",
+            "data-quad": String(i3),
+            "aria-pressed": isActive,
+            class: `text-[11px] font-bold px-2.5 py-0.5 rounded-full border transition-colors ${isActive ? "" : inactiveC}`,
+            style: isActive ? `background-color:${cat.color};color:${cat.ink};border-color:${cat.color}` : "",
+            onClick: () => onQuadrantChange(i3),
+            children: t3(cat.labelKey)
+          }
+        ) }, cat.key);
+      })
+    ] });
+  }
   function EmotionMapPanel({
     view,
     selected,
@@ -3401,66 +3529,8 @@
     const activeC = dark ? "bg-slate-100 text-slate-900 border-slate-100" : "bg-slate-800 text-white border-slate-800";
     const inactiveC = dark ? "bg-slate-800 text-slate-400 border-slate-600" : "bg-white text-slate-500 border-slate-200";
     const effectiveQuadrant = view === "graph" && selected !== null ? null : activeQuadrant;
-    const hasMatch = (() => {
-      if (!nameFilter || selected !== null) return true;
-      const norm = normalizeText(nameFilter);
-      return nodes.some((n2) => normalizeText(n2.label).includes(norm));
-    })();
-    let infoPanel = null;
-    if (selected) {
-      const myEdges = edges.filter((e3) => nodes[e3.ai]?.nombre === selected || nodes[e3.bi]?.nombre === selected);
-      const grouped = {};
-      for (const e3 of myEdges) {
-        const other = nodes[e3.ai].nombre === selected ? nodes[e3.bi] : nodes[e3.ai];
-        grouped[e3.type] = grouped[e3.type] || [];
-        grouped[e3.type].push(other.label);
-      }
-      const borderC = dark ? "bg-slate-800 border-slate-700" : "bg-white border-slate-100";
-      const nameC = dark ? "text-slate-100" : "text-slate-800";
-      infoPanel = /* @__PURE__ */ u3("div", { id: "map-info-panel", class: `mt-3 rounded-2xl p-4 border ${borderC} shadow-sm`, children: [
-        /* @__PURE__ */ u3("div", { class: "flex items-center justify-between mb-2", children: [
-          /* @__PURE__ */ u3("span", { class: `font-bold ${nameC}`, children: nodes.find((n2) => n2.nombre === selected)?.label ?? selected }),
-          /* @__PURE__ */ u3("div", { class: "flex items-center gap-1", children: [
-            /* @__PURE__ */ u3(
-              "button",
-              {
-                id: "map-open-btn",
-                onClick: onOpenDetail,
-                class: "text-xs font-bold text-blue-500 hover:text-blue-600 px-2 py-1 rounded-lg transition-colors",
-                children: t3("openChip")
-              }
-            ),
-            /* @__PURE__ */ u3(
-              "button",
-              {
-                id: "map-clear-btn",
-                "aria-label": t3("map.clearSelection"),
-                onClick: onClearSelection,
-                class: "w-6 h-6 flex items-center justify-center rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors",
-                children: /* @__PURE__ */ u3("svg", { class: "w-3.5 h-3.5", viewBox: "0 0 24 24", fill: "currentColor", "aria-hidden": "true", children: /* @__PURE__ */ u3("path", { d: "M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" }) })
-              }
-            )
-          ] })
-        ] }),
-        Object.keys(grouped).length > 0 ? /* @__PURE__ */ u3("ul", { class: "space-y-1.5", children: Object.entries(grouped).map(([type, names]) => {
-          const rel = RELS[
-            /** @type {RelationType} */
-            type
-          ];
-          return /* @__PURE__ */ u3("li", { class: "flex items-start gap-2 text-sm leading-snug", children: [
-            /* @__PURE__ */ u3("span", { class: "mt-1 shrink-0 inline-block w-2.5 h-2.5 rounded-full", style: `background:${rel.color}` }),
-            /* @__PURE__ */ u3("span", { children: [
-              /* @__PURE__ */ u3("strong", { class: dark ? "text-slate-300" : "text-slate-700", children: [
-                t3(rel.labelKey),
-                ":"
-              ] }),
-              " ",
-              /* @__PURE__ */ u3("span", { class: dark ? "text-slate-400" : "text-slate-500", children: (names ?? []).join(", ") })
-            ] })
-          ] }, type);
-        }) }) : /* @__PURE__ */ u3("p", { class: "text-xs text-slate-400", children: t3("map.infoNone") })
-      ] });
-    }
+    const hasMatch = hasNodeMatch(nodes, nameFilter, selected);
+    const grouped = buildGroupedRelations(selected, nodes, edges);
     return /* @__PURE__ */ u3("div", { children: [
       /* @__PURE__ */ u3("div", { class: "flex gap-2 mb-2", children: [
         /* @__PURE__ */ u3(
@@ -3482,63 +3552,17 @@
           }
         )
       ] }),
-      /* @__PURE__ */ u3("div", { class: "flex flex-wrap gap-x-3 gap-y-1 mb-2", role: "list", "aria-label": t3("map.legendLabel"), children: Object.entries(RELS).map(([type, rel]) => {
-        const relType = (
-          /** @type {RelationType} */
-          type
-        );
-        const on2 = activeTypes.has(relType);
-        const dimLine = dark ? "#475569" : "#cbd5e1";
-        const lineColor = on2 ? rel.color : dimLine;
-        const onTextC = dark ? "text-slate-300" : "text-slate-600";
-        const offTextC = dark ? "text-slate-600" : "text-slate-400";
-        const onBgC = dark ? "bg-slate-700" : "bg-slate-100";
-        return /* @__PURE__ */ u3(
-          "button",
-          {
-            type: "button",
-            "data-rel-type": type,
-            role: "listitem",
-            "aria-pressed": on2,
-            class: `flex items-center gap-1 text-[11px] px-1.5 py-0.5 rounded-lg transition-colors ${on2 ? onTextC : offTextC} ${on2 ? onBgC : ""}`,
-            onClick: () => onRelTypeToggle(relType),
-            children: [
-              /* @__PURE__ */ u3("svg", { width: "14", height: "6", "aria-hidden": "true", children: /* @__PURE__ */ u3("line", { x1: "0", y1: "3", x2: "14", y2: "3", stroke: lineColor, "stroke-width": "2", "stroke-dasharray": rel.dash }) }),
-              t3(rel.labelKey)
-            ]
-          },
-          type
-        );
-      }) }),
-      /* @__PURE__ */ u3("div", { class: "flex flex-wrap gap-1.5 mb-2", children: [
-        /* @__PURE__ */ u3(
-          "button",
-          {
-            type: "button",
-            "data-quad": "all",
-            "aria-pressed": effectiveQuadrant === null,
-            class: `text-[11px] font-bold px-2.5 py-0.5 rounded-full border transition-colors ${effectiveQuadrant === null ? activeC : inactiveC}`,
-            onClick: () => onQuadrantChange(null),
-            children: t3("map.filterAll")
-          }
-        ),
-        MOOD_CATEGORIES.map((cat, i3) => {
-          const isActive = effectiveQuadrant === i3;
-          return /* @__PURE__ */ u3(
-            "button",
-            {
-              type: "button",
-              "data-quad": String(i3),
-              "aria-pressed": isActive,
-              class: `text-[11px] font-bold px-2.5 py-0.5 rounded-full border transition-colors ${isActive ? "" : inactiveC}`,
-              style: isActive ? `background-color:${cat.color};color:${cat.ink};border-color:${cat.color}` : "",
-              onClick: () => onQuadrantChange(i3),
-              children: t3(cat.labelKey)
-            },
-            cat.key
-          );
-        })
-      ] }),
+      /* @__PURE__ */ u3(RelationLegend, { t: t3, dark, activeTypes, onRelTypeToggle }),
+      /* @__PURE__ */ u3(
+        QuadrantFilters,
+        {
+          t: t3,
+          activeC,
+          inactiveC,
+          effectiveQuadrant,
+          onQuadrantChange
+        }
+      ),
       /* @__PURE__ */ u3("div", { class: "relative mb-2", children: [
         /* @__PURE__ */ u3(
           "input",
@@ -3556,7 +3580,6 @@
           "ul",
           {
             id: "map-suggestions",
-            role: "listbox",
             class: `absolute z-20 w-full mt-1 rounded-xl border shadow-lg max-h-48 overflow-y-auto hidden ${dark ? "bg-slate-800 border-slate-600" : "bg-white border-slate-200"}`
           }
         )
@@ -3574,7 +3597,18 @@
         }
       ) }),
       /* @__PURE__ */ u3("p", { id: "map-empty", class: `${hasMatch ? "hidden" : ""} text-[13px] text-center text-slate-400 mt-4 py-2`, children: t3("map.searchEmpty") }),
-      infoPanel
+      /* @__PURE__ */ u3(
+        SelectedInfoPanel,
+        {
+          selected,
+          grouped,
+          nodes,
+          t: t3,
+          dark,
+          onOpenDetail,
+          onClearSelection
+        }
+      )
     ] });
   }
   function createEmotionMap({ emociones: emociones2, getDisplayName, t: t3, showDetail }) {
@@ -3781,7 +3815,7 @@
         " ",
         TOTAL_STEPS
       ] }),
-      /* @__PURE__ */ u3("div", { class: "flex gap-1.5", children: Array.from({ length: TOTAL_STEPS }, (_2, i3) => /* @__PURE__ */ u3("div", { class: `h-1.5 w-8 rounded-full ${i3 < step ? "bg-slate-800" : "bg-slate-200"}` })) })
+      /* @__PURE__ */ u3("div", { class: "flex gap-1.5", children: Array.from({ length: TOTAL_STEPS }, (_2, i3) => i3 + 1).map((stepNo) => /* @__PURE__ */ u3("div", { class: `h-1.5 w-8 rounded-full ${stepNo <= step ? "bg-slate-800" : "bg-slate-200"}` }, `progress-${stepNo}`)) })
     ] });
   }
   function Step1({ t: t3, onNext }) {
@@ -3812,7 +3846,7 @@
         /* @__PURE__ */ u3("ul", { class: "divide-y divide-slate-100", children: items.map((item, i3) => /* @__PURE__ */ u3("li", { class: "flex items-center gap-3 py-2.5 border-b border-slate-100 last:border-0", children: [
           /* @__PURE__ */ u3("span", { class: "w-7 h-7 rounded-full bg-indigo-100 text-indigo-700 text-xs font-black flex items-center justify-center shrink-0", children: items.length - i3 }),
           /* @__PURE__ */ u3("span", { class: "text-slate-700 font-medium text-sm", children: item })
-        ] }, i3)) })
+        ] }, `step2-${item}`)) })
       ] }),
       /* @__PURE__ */ u3(
         "button",
@@ -3843,7 +3877,7 @@
             }
           ),
           /* @__PURE__ */ u3("span", { class: "text-slate-700 font-medium text-sm group-hover:text-slate-900 transition-colors", children: action })
-        ] }, i3)) })
+        ] }, `step3-${action}`)) })
       ] }),
       /* @__PURE__ */ u3("p", { class: "text-slate-400 text-xs text-center mb-4", children: t3("crisis.step3End") }),
       /* @__PURE__ */ u3(
@@ -4102,7 +4136,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mp9z82mn";
+  var BUILD_VERSION = "mpa19klk";
 
   // app.js
   var reducedMotion = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
