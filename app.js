@@ -10,14 +10,8 @@ import { initInstall } from "./js/install.js";
 import { initOfflineBanner } from "./js/offlineBanner.js";
 import { initServiceWorker } from "./js/serviceWorker.js";
 import { on } from "./js/bus.js";
+import { get, set } from "./js/store.js";
 import { BUILD_VERSION } from "./js/version.js";
-
-const state = {
-    currentLang: "es",
-    currentTab: "emociones",
-    lastFocusedCard: null,
-    isClosingModal: false
-};
 
 const reducedMotion = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
 const modalAnimationMs = reducedMotion ? 0 : 200;
@@ -28,15 +22,13 @@ let quiz;
 let emotionMap;
 
 const i18n = createI18n({
-    getLang: () => state.currentLang,
-    setLang: (lang) => {
-        state.currentLang = lang;
-    },
+    getLang: () => get("currentLang"),
+    setLang: (lang) => set("currentLang", lang),
     onLanguageChanged: () => {
         ui.renderCheckinTab();
         ui.renderRecentEmotions();
         ui.renderEmociones(document.getElementById("search")?.value ?? "");
-        if (state.currentTab === "diario") diary.renderForTab();
+        if (get("currentTab") === "diario") diary.renderForTab();
         emotionMap?.onLanguageChanged();
         const bannerText = document.getElementById("offline-banner-text");
         if (bannerText) bannerText.textContent = i18n.t("offlineBanner");
@@ -57,17 +49,12 @@ ui = createUI({
     relaciones: EMOTION_RELATIONS,
     getDisplayName: i18n.getDisplayName,
     getEmotionField: i18n.getEmotionField,
-    getLang: () => state.currentLang,
     t: i18n.t,
-    getLastFocusedCard: () => state.lastFocusedCard,
-    setLastFocusedCard: (card) => { state.lastFocusedCard = card; },
-    getIsClosingModal: () => state.isClosingModal,
-    setIsClosingModal: (value) => { state.isClosingModal = value; },
     modalAnimationMs,
     moodCategories: MOOD_CATEGORIES,
     onAddToDiary: (nombre, note) => {
         diary.addEntry(nombre, note);
-        if (state.currentTab === "diario") diary.renderForTab();
+        if (get("currentTab") === "diario") diary.renderForTab();
     }
 });
 
@@ -87,7 +74,7 @@ function switchTab(tabId) {
             }
         }
     }
-    state.currentTab = tabId;
+    set("currentTab", tabId);
     if (tabId === "diario") diary.renderForTab();
     if (tabId === "mapa") emotionMap?.renderForTab();
 }
@@ -99,13 +86,13 @@ function initTabNav() {
 }
 
 function bootstrap() {
-    state.currentLang = i18n.detectInitialLanguage();
+    set("currentLang", i18n.detectInitialLanguage());
     i18n.applyStaticTranslations();
 
     const versionEl = document.getElementById("build-version");
     if (versionEl) versionEl.textContent = BUILD_VERSION;
 
-    initSettings({ setLanguage: i18n.setLanguage, getLang: () => state.currentLang });
+    initSettings({ setLanguage: i18n.setLanguage, getLang: () => get("currentLang") });
     initTabNav();
     ui.bindBaseEvents();
 
