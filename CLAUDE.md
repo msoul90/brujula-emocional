@@ -30,7 +30,7 @@ There is no automated test suite. Manual test scenarios are documented in `READM
 
 ## Build system
 
-The project uses **esbuild** (devDependency) to bundle `app.js` and all its ES6 module imports into `dist/app.bundle.js`. This bundle is used when the app is opened via `file://`.
+The project uses **esbuild** (devDependency) to bundle `app.js` and all its ES6 module imports into `dist/app.bundle.js`. The bundle is used in **all modes** (`file://` and `http://`) because modules use JSX and Preact bare specifiers that the browser cannot process natively.
 
 | Script | What it does |
 | --- | --- |
@@ -54,13 +54,13 @@ The app is a vanilla JS PWA with no framework or bundler. Tailwind CSS is served
 | `js/constants.js` | Emotion data array, all translations, localStorage key names, config constants |
 | `js/i18n.js` | Language detection, `t()` helper, applies translations to the DOM |
 | `js/ui.js` | Renders emotion cards and modal, handles search and all keyboard/click events |
-| `loader.js` | Detects `file://` vs `http://` and loads `dist/app.bundle.js` or `app.js` accordingly |
+| `loader.js` | Always loads `dist/app.bundle.js`; also shows a warning banner on `file://` |
 | `app.js` | Entry point — creates shared state, initializes i18n and UI, wires up language toggle and service worker |
 | `sw.js` | Service worker — cache-first strategy for offline support |
 
 **Data flow:** `constants.js` → `i18n.js` → `ui.js` ← `app.js` (bootstraps everything, owns state).
 
-**`dist/app.bundle.js`** is the esbuild-generated bundle used for `file://` mode. It is committed to the repo and must be rebuilt (`npm run build:js`) whenever `app.js` or any of its imports change.
+**`dist/app.bundle.js`** is the esbuild-generated bundle committed to the repo. It must be rebuilt (`npm run build:js`) whenever `app.js` or any of its imports change. The pre-commit hook does this automatically.
 
 ## Emotion Data Structure
 
