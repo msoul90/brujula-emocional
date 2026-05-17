@@ -115,6 +115,7 @@ export function createCrisisFlow({ t }) {
     }
 
     function handleNext() {
+        if (step >= TOTAL_STEPS) return;
         step++;
         rerender();
     }
