@@ -996,6 +996,7 @@
   function set(key, value) {
     const prev = _state[key];
     if (prev === value) return;
+    /** @type {Record<string, unknown>} */
     _state[key] = value;
     emit(`store:${key}`, { value, prev });
   }
@@ -3249,7 +3250,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mp9dw7vr";
+  var BUILD_VERSION = "mp9eca7f";
 
   // app.js
   var reducedMotion = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;

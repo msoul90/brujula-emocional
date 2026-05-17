@@ -1,3 +1,4 @@
+// @ts-check
 import { emit } from "./bus.js";
 
 /** @type {{ currentLang: string, currentTab: string, lastFocusedCard: HTMLElement|null, isClosingModal: boolean }} */
@@ -19,6 +20,7 @@ export const get = (key) => _state[key];
 export function set(key, value) {
     const prev = _state[key];
     if (prev === value) return;
-    _state[key] = value;
+    // Heterogeneous record — caller guarantees type safety
+    (/** @type {Record<string, unknown>} */ (_state))[key] = value;
     emit(`store:${key}`, { value, prev });
 }

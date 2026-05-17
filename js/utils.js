@@ -1,3 +1,9 @@
+// @ts-check
+
+/**
+ * @param {string} str
+ * @returns {string}
+ */
 export function escapeHtml(str) {
     return String(str)
         .replaceAll("&", "&amp;")
@@ -7,10 +13,15 @@ export function escapeHtml(str) {
         .replaceAll("'", "&#39;");
 }
 
+/** @returns {boolean} */
 export function isDarkMode() {
     return document.documentElement.classList.contains("dark");
 }
 
+/**
+ * @param {string} value
+ * @returns {string}
+ */
 export function normalizeText(value) {
     return value
         .toLowerCase()
@@ -18,6 +29,10 @@ export function normalizeText(value) {
         .replaceAll(/[̀-ͯ]/g, "");
 }
 
+/**
+ * @param {string} hexColor
+ * @returns {string}
+ */
 export function getReadableTextColor(hexColor) {
     const safeHex = (hexColor || "").replace("#", "");
     if (safeHex.length !== 6) return "#0f172a";
@@ -32,6 +47,12 @@ export function getReadableTextColor(hexColor) {
     return luminance < 0.52 ? "#f8fafc" : "#0f172a";
 }
 
+/**
+ * @param {CanvasRenderingContext2D} ctx
+ * @param {string} text
+ * @param {number} maxWidth
+ * @returns {string[]}
+ */
 export function wrapTextLines(ctx, text, maxWidth) {
     const words = text.split(" ");
     const lines = [];
