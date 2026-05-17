@@ -11,8 +11,8 @@ function Progress({ t, step }) {
                 {t("crisis.step")} {step} {t("crisis.of")} {TOTAL_STEPS}
             </span>
             <div class="flex gap-1.5">
-                {Array.from({ length: TOTAL_STEPS }, (_, i) => (
-                    <div class={`h-1.5 w-8 rounded-full ${i < step ? "bg-slate-800" : "bg-slate-200"}`} />
+                {Array.from({ length: TOTAL_STEPS }, (_, i) => i + 1).map((stepNo) => (
+                    <div key={`progress-${stepNo}`} class={`h-1.5 w-8 rounded-full ${stepNo <= step ? "bg-slate-800" : "bg-slate-200"}`} />
                 ))}
             </div>
         </div>
@@ -46,7 +46,7 @@ function Step2({ t, onNext }) {
                 <p class="text-slate-500 text-sm mb-4">{t("crisis.step2Intro")}</p>
                 <ul class="divide-y divide-slate-100">
                     {items.map((item, i) => (
-                        <li key={i} class="flex items-center gap-3 py-2.5 border-b border-slate-100 last:border-0">
+                        <li key={`step2-${item}`} class="flex items-center gap-3 py-2.5 border-b border-slate-100 last:border-0">
                             <span class="w-7 h-7 rounded-full bg-indigo-100 text-indigo-700 text-xs font-black flex items-center justify-center shrink-0">
                                 {items.length - i}
                             </span>
@@ -73,7 +73,7 @@ function Step3({ t, onClose }) {
                 <p class="text-slate-500 text-sm mb-4">{t("crisis.step3Intro")}</p>
                 <div class="divide-y divide-slate-100">
                     {actions.map((action, i) => (
-                        <label key={i} class="flex items-center gap-3 py-3 cursor-pointer group">
+                        <label key={`step3-${action}`} class="flex items-center gap-3 py-3 cursor-pointer group">
                             <input type="radio" name="crisis-action" value={String(i)}
                                 class="w-4 h-4 accent-slate-800 shrink-0" />
                             <span class="text-slate-700 font-medium text-sm group-hover:text-slate-900 transition-colors">

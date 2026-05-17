@@ -118,22 +118,15 @@ function CheckinCard({ cat, t, onClick }) {
 
 function EmotionCard({ e, getDisplayName, t, onSelect }) {
     return (
-        <div class="emotion-card p-5 rounded-2xl shadow-sm cursor-pointer flex justify-between items-center bg-white"
+        <button type="button" class="emotion-card p-5 rounded-2xl shadow-sm cursor-pointer flex justify-between items-center bg-white w-full text-left"
             style={`border-left:8px solid ${e.color}`}
-            tabIndex={0} role="button"
             aria-label={`${t("openDetailAria")} ${getDisplayName(e.nombre)}`}
-            onClick={(ev) => onSelect(e, ev.currentTarget)}
-            onKeyDown={(ev) => {
-                if (ev.key === "Enter" || ev.key === " ") {
-                    ev.preventDefault();
-                    onSelect(e, ev.currentTarget);
-                }
-            }}>
+            onClick={(ev) => onSelect(e, ev.currentTarget)}>
             <span class="font-bold text-lg text-slate-700">{getDisplayName(e.nombre)}</span>
             <svg class="w-4 h-4 text-slate-300 shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                 <path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/>
             </svg>
-        </div>
+        </button>
     );
 }
 
@@ -164,7 +157,7 @@ function TechniqueSection({ emotionNombre, t, lang }) {
                     </p>
                     <ol class="space-y-2">
                         {data.steps.map((s, i) => (
-                            <li key={i} class="flex gap-2 text-sm text-indigo-900 leading-snug">
+                            <li key={`${data.name}-${s}`} class="flex gap-2 text-sm text-indigo-900 leading-snug">
                                 <span class="font-black text-indigo-400 shrink-0">{i + 1}.</span>
                                 <span>{s}</span>
                             </li>
@@ -509,7 +502,7 @@ export function createUI({
     function closeModal() {
         const modal = document.getElementById("modal");
         const panel = document.getElementById("modal-panel");
-        if (!modal || !modal.open || get("isClosingModal")) return;
+        if (!modal?.open || !panel || get("isClosingModal")) return;
 
         set("isClosingModal", true);
         panel.classList.add("translate-y-8", "sm:scale-95", "opacity-0");

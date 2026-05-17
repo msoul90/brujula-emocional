@@ -34,7 +34,8 @@ export function createI18n({ getLang, setLang, onLanguageChanged }) {
             val = tr.es;
             for (const part of parts) val = val?.[part];
         }
-        return val !== undefined ? String(val) : key;
+        if (val === undefined) return key;
+        return String(val);
     }
 
     /** @param {string} nombre @returns {string} */
@@ -47,8 +48,8 @@ export function createI18n({ getLang, setLang, onLanguageChanged }) {
     /** @param {Record<string, string>} emotion @param {string} field @returns {string} */
     function getEmotionField(emotion, field) {
         const contentMap = /** @type {Record<string, Record<string, string>>} */ (EMOTION_CONTENT_TRANSLATIONS);
-        if (getLang() !== "en") return emotion[field];
-        return contentMap[emotion.nombre]?.[field] ?? emotion[field];
+        if (getLang() === "en") return contentMap[emotion.nombre]?.[field] ?? emotion[field];
+        return emotion[field];
     }
 
     function applyStaticTranslations() {

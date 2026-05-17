@@ -41,9 +41,31 @@ import { normalizeText } from "./utils.js";
  *   onQuadrantChange: (q: number | null) => void,
  *   onOpenDetail: () => void,
  *   onClearSelection: () => void,
- *   onSearch: import('preact').JSX.InputEventHandler<HTMLInputElement>,
+ *   onSearch: (ev: Event) => void,
  *   svgEventHandler: SvgEventHandler,
  * }} EmotionMapPanelProps
+ * @typedef {{
+ *   selected: string | null,
+ *   grouped: Partial<Record<RelationType, string[]>> | null,
+ *   nodes: ForceNode[],
+ *   t: import('./types.js').TFn,
+ *   dark: boolean,
+ *   onOpenDetail: () => void,
+ *   onClearSelection: () => void,
+ * }} SelectedInfoPanelProps
+ * @typedef {{
+ *   t: import('./types.js').TFn,
+ *   dark: boolean,
+ *   activeTypes: Set<RelationType>,
+ *   onRelTypeToggle: (type: RelationType) => void,
+ * }} RelationLegendProps
+ * @typedef {{
+ *   t: import('./types.js').TFn,
+ *   activeC: string,
+ *   inactiveC: string,
+ *   effectiveQuadrant: number | null,
+ *   onQuadrantChange: (q: number | null) => void,
+ * }} QuadrantFiltersProps
  */
 
 // ── Config ────────────────────────────────────────────────────────────────────
@@ -151,7 +173,19 @@ function resolveCollisions(nodes, W, H) {
 
 /** @param {unknown} value @returns {string} */
 function escHtml(value) {
-    return String(value).replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+    let safe;
+    if (value === null || value === undefined) {
+        safe = "";
+    } else if (typeof value === "string" || typeof value === "number" || typeof value === "boolean" || typeof value === "bigint") {
+        safe = String(value);
+    } else {
+        try {
+            safe = JSON.stringify(value);
+        } catch {
+            safe = Object.prototype.toString.call(value);
+        }
+    }
+    return safe.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
 }
 
 /** @param {unknown} value @returns {string} */
@@ -388,6 +422,126 @@ function containerW() {
     return document.getElementById("map-content")?.clientWidth || 340;
 }
 
+/** @param {ForceNode[]} nodes @param {string} nameFilter @param {string | null} selected @returns {boolean} */
+function hasNodeMatch(nodes, nameFilter, selected) {
+    if (!nameFilter || selected !== null) return true;
+    const norm = normalizeText(nameFilter);
+    return nodes.some(n => normalizeText(n.label).includes(norm));
+}
+
+/** @param {string | null} selected @param {ForceNode[]} nodes @param {ForceEdge[]} edges @returns {Partial<Record<RelationType, string[]>> | null} */
+function buildGroupedRelations(selected, nodes, edges) {
+    if (!selected) return null;
+    const myEdges = edges.filter(e => nodes[e.ai]?.nombre === selected || nodes[e.bi]?.nombre === selected);
+    /** @type {Partial<Record<RelationType, string[]>>} */
+    const grouped = {};
+    for (const e of myEdges) {
+        const other = nodes[e.ai].nombre === selected ? nodes[e.bi] : nodes[e.ai];
+        grouped[e.type] = grouped[e.type] || [];
+        grouped[e.type].push(other.label);
+    }
+    return grouped;
+}
+
+/** @param {SelectedInfoPanelProps} props */
+function SelectedInfoPanel({ selected, grouped, nodes, t, dark, onOpenDetail, onClearSelection }) {
+    if (!selected || !grouped) return null;
+    const borderC = dark ? "bg-slate-800 border-slate-700" : "bg-white border-slate-100";
+    const nameC   = dark ? "text-slate-100" : "text-slate-800";
+    return (
+        <div id="map-info-panel" class={`mt-3 rounded-2xl p-4 border ${borderC} shadow-sm`}>
+            <div class="flex items-center justify-between mb-2">
+                <span class={`font-bold ${nameC}`}>{nodes.find(n => n.nombre === selected)?.label ?? selected}</span>
+                <div class="flex items-center gap-1">
+                    <button id="map-open-btn" onClick={onOpenDetail}
+                        class="text-xs font-bold text-blue-500 hover:text-blue-600 px-2 py-1 rounded-lg transition-colors">{t("openChip")}</button>
+                    <button id="map-clear-btn" aria-label={t("map.clearSelection")} onClick={onClearSelection}
+                        class="w-6 h-6 flex items-center justify-center rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors">
+                        <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            {Object.keys(grouped).length > 0 ? (
+                <ul class="space-y-1.5">
+                    {Object.entries(grouped).map(([type, names]) => {
+                        const rel = RELS[/** @type {RelationType} */ (type)];
+                        return (
+                            <li key={type} class="flex items-start gap-2 text-sm leading-snug">
+                                <span class="mt-1 shrink-0 inline-block w-2.5 h-2.5 rounded-full" style={`background:${rel.color}`} />
+                                <span>
+                                    <strong class={dark ? "text-slate-300" : "text-slate-700"}>{t(rel.labelKey)}:</strong>{" "}
+                                    <span class={dark ? "text-slate-400" : "text-slate-500"}>{(names ?? []).join(", ")}</span>
+                                </span>
+                            </li>
+                        );
+                    })}
+                </ul>
+            ) : (
+                <p class="text-xs text-slate-400">{t("map.infoNone")}</p>
+            )}
+        </div>
+    );
+}
+
+/** @param {RelationLegendProps} props */
+function RelationLegend({ t, dark, activeTypes, onRelTypeToggle }) {
+    return (
+        <ul class="flex flex-wrap gap-x-3 gap-y-1 mb-2" aria-label={t("map.legendLabel")}>
+            {Object.entries(RELS).map(([type, rel]) => {
+                const relType  = /** @type {RelationType} */ (type);
+                const on       = activeTypes.has(relType);
+                const dimLine  = dark ? "#475569" : "#cbd5e1";
+                const lineColor = on ? rel.color : dimLine;
+                const onTextC  = dark ? "text-slate-300" : "text-slate-600";
+                const offTextC = dark ? "text-slate-600" : "text-slate-400";
+                const onBgC    = dark ? "bg-slate-700" : "bg-slate-100";
+                return (
+                    <li key={type}>
+                        <button type="button" data-rel-type={type} aria-pressed={on}
+                            class={`flex items-center gap-1 text-[11px] px-1.5 py-0.5 rounded-lg transition-colors ${on ? onTextC : offTextC} ${on ? onBgC : ""}`}
+                            onClick={() => onRelTypeToggle(relType)}>
+                            <svg width="14" height="6" aria-hidden="true">
+                                <line x1="0" y1="3" x2="14" y2="3" stroke={lineColor} stroke-width="2" stroke-dasharray={rel.dash}/>
+                            </svg>
+                            {t(rel.labelKey)}
+                        </button>
+                    </li>
+                );
+            })}
+        </ul>
+    );
+}
+
+/** @param {QuadrantFiltersProps} props */
+function QuadrantFilters({ t, activeC, inactiveC, effectiveQuadrant, onQuadrantChange }) {
+    return (
+        <ul class="flex flex-wrap gap-1.5 mb-2">
+            <li>
+                <button type="button" data-quad="all" aria-pressed={effectiveQuadrant === null}
+                    class={`text-[11px] font-bold px-2.5 py-0.5 rounded-full border transition-colors ${effectiveQuadrant === null ? activeC : inactiveC}`}
+                    onClick={() => onQuadrantChange(null)}>
+                    {t("map.filterAll")}
+                </button>
+            </li>
+            {MOOD_CATEGORIES.map((cat, i) => {
+                const isActive = effectiveQuadrant === i;
+                return (
+                    <li key={cat.key}>
+                        <button type="button" data-quad={String(i)} aria-pressed={isActive}
+                            class={`text-[11px] font-bold px-2.5 py-0.5 rounded-full border transition-colors ${isActive ? "" : inactiveC}`}
+                            style={isActive ? `background-color:${cat.color};color:${cat.ink};border-color:${cat.color}` : ""}
+                            onClick={() => onQuadrantChange(i)}>
+                            {t(cat.labelKey)}
+                        </button>
+                    </li>
+                );
+            })}
+        </ul>
+    );
+}
+
 // ── Preact component ──────────────────────────────────────────────────────────
 
 /** @param {EmotionMapPanelProps} props */
@@ -424,62 +578,8 @@ function EmotionMapPanel({ view, selected, nameFilter, activeTypes, activeQuadra
     const inactiveC = dark ? "bg-slate-800 text-slate-400 border-slate-600" : "bg-white text-slate-500 border-slate-200";
 
     const effectiveQuadrant = (view === "graph" && selected !== null) ? null : activeQuadrant;
-
-    const hasMatch = (() => {
-        if (!nameFilter || selected !== null) return true;
-        const norm = normalizeText(nameFilter);
-        return nodes.some(n => normalizeText(n.label).includes(norm));
-    })();
-
-    // Info panel for selected node
-    let infoPanel = null;
-    if (selected) {
-        const myEdges = edges.filter(e => nodes[e.ai]?.nombre === selected || nodes[e.bi]?.nombre === selected);
-        /** @type {Partial<Record<RelationType, string[]>>} */
-        const grouped = {};
-        for (const e of myEdges) {
-            const other = nodes[e.ai].nombre === selected ? nodes[e.bi] : nodes[e.ai];
-            grouped[e.type] = grouped[e.type] || [];
-            grouped[e.type].push(other.label);
-        }
-        const borderC = dark ? "bg-slate-800 border-slate-700" : "bg-white border-slate-100";
-        const nameC   = dark ? "text-slate-100" : "text-slate-800";
-        infoPanel = (
-            <div id="map-info-panel" class={`mt-3 rounded-2xl p-4 border ${borderC} shadow-sm`}>
-                <div class="flex items-center justify-between mb-2">
-                    <span class={`font-bold ${nameC}`}>{nodes.find(n => n.nombre === selected)?.label ?? selected}</span>
-                    <div class="flex items-center gap-1">
-                        <button id="map-open-btn" onClick={onOpenDetail}
-                            class="text-xs font-bold text-blue-500 hover:text-blue-600 px-2 py-1 rounded-lg transition-colors">{t("openChip")}</button>
-                        <button id="map-clear-btn" aria-label={t("map.clearSelection")} onClick={onClearSelection}
-                            class="w-6 h-6 flex items-center justify-center rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors">
-                            <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                                <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-                            </svg>
-                        </button>
-                    </div>
-                </div>
-                {Object.keys(grouped).length > 0 ? (
-                    <ul class="space-y-1.5">
-                        {Object.entries(grouped).map(([type, names]) => {
-                            const rel = RELS[/** @type {RelationType} */ (type)];
-                            return (
-                                <li key={type} class="flex items-start gap-2 text-sm leading-snug">
-                                    <span class="mt-1 shrink-0 inline-block w-2.5 h-2.5 rounded-full" style={`background:${rel.color}`} />
-                                    <span>
-                                        <strong class={dark ? "text-slate-300" : "text-slate-700"}>{t(rel.labelKey)}:</strong>{" "}
-                                        <span class={dark ? "text-slate-400" : "text-slate-500"}>{(names ?? []).join(", ")}</span>
-                                    </span>
-                                </li>
-                            );
-                        })}
-                    </ul>
-                ) : (
-                    <p class="text-xs text-slate-400">{t("map.infoNone")}</p>
-                )}
-            </div>
-        );
-    }
+    const hasMatch = hasNodeMatch(nodes, nameFilter, selected);
+    const grouped = buildGroupedRelations(selected, nodes, edges);
 
     return (
         <div>
@@ -494,46 +594,15 @@ function EmotionMapPanel({ view, selected, nameFilter, activeTypes, activeQuadra
                 </button>
             </div>
 
-            <div class="flex flex-wrap gap-x-3 gap-y-1 mb-2" role="list" aria-label={t("map.legendLabel")}>
-                {Object.entries(RELS).map(([type, rel]) => {
-                    const relType  = /** @type {RelationType} */ (type);
-                    const on       = activeTypes.has(relType);
-                    const dimLine  = dark ? "#475569" : "#cbd5e1";
-                    const lineColor = on ? rel.color : dimLine;
-                    const onTextC  = dark ? "text-slate-300" : "text-slate-600";
-                    const offTextC = dark ? "text-slate-600" : "text-slate-400";
-                    const onBgC    = dark ? "bg-slate-700" : "bg-slate-100";
-                    return (
-                        <button key={type} type="button" data-rel-type={type} role="listitem" aria-pressed={on}
-                            class={`flex items-center gap-1 text-[11px] px-1.5 py-0.5 rounded-lg transition-colors ${on ? onTextC : offTextC} ${on ? onBgC : ""}`}
-                            onClick={() => onRelTypeToggle(relType)}>
-                            <svg width="14" height="6" aria-hidden="true">
-                                <line x1="0" y1="3" x2="14" y2="3" stroke={lineColor} stroke-width="2" stroke-dasharray={rel.dash}/>
-                            </svg>
-                            {t(rel.labelKey)}
-                        </button>
-                    );
-                })}
-            </div>
+            <RelationLegend t={t} dark={dark} activeTypes={activeTypes} onRelTypeToggle={onRelTypeToggle} />
 
-            <div class="flex flex-wrap gap-1.5 mb-2">
-                <button type="button" data-quad="all" aria-pressed={effectiveQuadrant === null}
-                    class={`text-[11px] font-bold px-2.5 py-0.5 rounded-full border transition-colors ${effectiveQuadrant === null ? activeC : inactiveC}`}
-                    onClick={() => onQuadrantChange(null)}>
-                    {t("map.filterAll")}
-                </button>
-                {MOOD_CATEGORIES.map((cat, i) => {
-                    const isActive = effectiveQuadrant === i;
-                    return (
-                        <button key={cat.key} type="button" data-quad={String(i)} aria-pressed={isActive}
-                            class={`text-[11px] font-bold px-2.5 py-0.5 rounded-full border transition-colors ${isActive ? "" : inactiveC}`}
-                            style={isActive ? `background-color:${cat.color};color:${cat.ink};border-color:${cat.color}` : ""}
-                            onClick={() => onQuadrantChange(i)}>
-                            {t(cat.labelKey)}
-                        </button>
-                    );
-                })}
-            </div>
+            <QuadrantFilters
+                t={t}
+                activeC={activeC}
+                inactiveC={inactiveC}
+                effectiveQuadrant={effectiveQuadrant}
+                onQuadrantChange={onQuadrantChange}
+            />
 
             <div class="relative mb-2">
                 <input id="map-search" type="text" autocomplete="off"
@@ -541,7 +610,7 @@ function EmotionMapPanel({ view, selected, nameFilter, activeTypes, activeQuadra
                     defaultValue={nameFilter}
                     class={`w-full text-[13px] px-3 py-1.5 rounded-xl border transition-colors ${dark ? "bg-slate-800 border-slate-600 text-slate-200 placeholder:text-slate-500" : "bg-white border-slate-200 text-slate-700 placeholder:text-slate-400"}`}
                     onInput={onSearch} />
-                <ul id="map-suggestions" role="listbox"
+                <ul id="map-suggestions"
                     class={`absolute z-20 w-full mt-1 rounded-xl border shadow-lg max-h-48 overflow-y-auto hidden ${dark ? "bg-slate-800 border-slate-600" : "bg-white border-slate-200"}`} />
             </div>
 
@@ -559,7 +628,15 @@ function EmotionMapPanel({ view, selected, nameFilter, activeTypes, activeQuadra
                 {t("map.searchEmpty")}
             </p>
 
-            {infoPanel}
+            <SelectedInfoPanel
+                selected={selected}
+                grouped={grouped}
+                nodes={nodes}
+                t={t}
+                dark={dark}
+                onOpenDetail={onOpenDetail}
+                onClearSelection={onClearSelection}
+            />
         </div>
     );
 }

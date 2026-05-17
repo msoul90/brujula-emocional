@@ -9,4 +9,5 @@
 
 /** @typedef {(e: import('./data/emotions.js').Emotion) => void} ShowDetailFn */
 
-export {};
+// Keep this file as an ES module for JSDoc import() type references.
+export const TYPES_MODULE = true;
