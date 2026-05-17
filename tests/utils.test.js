@@ -44,6 +44,14 @@ describe("normalizeText", () => {
         expect(normalizeText("Miedo")).toBe("miedo");
         expect(normalizeText("Soledad")).toBe("soledad");
     });
+
+    it("preserva caracteres no acentuados y espacios", () => {
+        expect(normalizeText("  Ternura suave  ")).toBe("  ternura suave  ");
+    });
+
+    it("normaliza caracteres combinados unicode", () => {
+        expect(normalizeText("Cafe\u0301")).toBe("cafe");
+    });
 });
 
 describe("getReadableTextColor", () => {
@@ -62,6 +70,7 @@ describe("getReadableTextColor", () => {
         expect(getReadableTextColor("")).toBe("#0f172a");
         expect(getReadableTextColor("#abc")).toBe("#0f172a");
         expect(getReadableTextColor(null)).toBe("#0f172a");
+        expect(getReadableTextColor("#zzzzzz")).toBe("#0f172a");
     });
 });
 
@@ -85,5 +94,10 @@ describe("wrapTextLines", () => {
     it("una sola palabra larga nunca se parte", () => {
         const lines = wrapTextLines(mockCtx, "Superlargapalabra", 50);
         expect(lines).toEqual(["Superlargapalabra"]);
+    });
+
+    it("devuelve arreglo vacío con texto vacío", () => {
+        const lines = wrapTextLines(mockCtx, "", 50);
+        expect(lines).toEqual([]);
     });
 });
