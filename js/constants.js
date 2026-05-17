@@ -1,10 +1,12 @@
+// @ts-check
 // Storage keys and app config
-export const RECENT_KEY = "brujulaRecientes";
-export const LANGUAGE_KEY = "brujulaIdioma";
-export const THEME_KEY = "brujulaThema";
-export const DIARY_KEY = "brujulaDiario";
-export const RECENT_LIMIT = 5;
+/** @type {string} */ export const RECENT_KEY = "brujulaRecientes";
+/** @type {string} */ export const LANGUAGE_KEY = "brujulaIdioma";
+/** @type {string} */ export const THEME_KEY = "brujulaThema";
+/** @type {string} */ export const DIARY_KEY = "brujulaDiario";
+/** @type {number} */ export const RECENT_LIMIT = 5;
 
+/** @type {string[]} */
 export const DIARY_TAGS = ["trabajo", "pareja", "familia", "cuerpo", "dinero"];
 
 export { emociones, EMOTION_NAME_TRANSLATIONS, EMOTION_CONTENT_TRANSLATIONS, EMOTION_RELATIONS, MOOD_CATEGORIES } from "./data/emotions.js";

@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { describe, it, expect, beforeEach } from "vitest";
-import { createCrisisFlow } from "../js/crisis.js";
+import { createCrisisFlow } from "../js/crisis.jsx";
 
 const T = {
     "crisis.step1Title": "Paso 1",
@@ -101,6 +101,18 @@ describe("crisis flow — DOM", () => {
         const content = document.getElementById("crisis-content");
         expect(content.textContent).toContain("Una acción");
         expect(content.textContent).toContain("Paso 3 de 3");
+    });
+
+    it("clicks repetidos en avanzar no pasan del paso 3", () => {
+        document.getElementById("crisis-trigger-btn").click();
+        advanceSteps(1);
+        const nextBtn = document.getElementById("crisis-content").querySelector("#crisis-next-btn");
+        nextBtn.click();
+        nextBtn.click();
+        const content = document.getElementById("crisis-content");
+        expect(content.textContent).toContain("Paso 3 de 3");
+        expect(content.querySelector("#crisis-next-btn")).toBeNull();
+        expect(content.querySelector("#crisis-close-btn")).not.toBeNull();
     });
 
     it("step 3 muestra acciones como radio buttons", () => {

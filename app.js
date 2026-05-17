@@ -4,7 +4,7 @@ import { createUI } from "./js/ui.js";
 import { createQuiz } from "./js/quiz.js";
 import { createDiary } from "./js/diary.js";
 import { createEmotionMap } from "./js/emotionMap.js";
-import { createCrisisFlow } from "./js/crisis.js";
+import { createCrisisFlow } from "./js/crisis.jsx";
 import { initSettings } from "./js/settings.js";
 import { initInstall } from "./js/install.js";
 import { initOfflineBanner } from "./js/offlineBanner.js";

@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": false,
+    "noEmit": true,
+    "strict": false,
+    "target": "ES2022",
+    "lib": ["ES2022", "DOM", "DOM.Iterable"],
+    "moduleResolution": "bundler",
+    "jsxImportSource": "preact",
+    "skipLibCheck": true
+  },
+  "include": ["js/**/*.js", "js/**/*.jsx", "app.js"],
+  "exclude": ["node_modules", "dist"]
+}

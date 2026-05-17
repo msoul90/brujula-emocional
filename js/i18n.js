@@ -1,3 +1,4 @@
+// @ts-check
 import {
     TRANSLATIONS,
     EMOTION_NAME_TRANSLATIONS,
@@ -5,6 +6,7 @@ import {
     LANGUAGE_KEY
 } from "./constants.js";
 
+/** @returns {"es"|"en"} */
 function detectInitialLanguage() {
     const saved = localStorage.getItem(LANGUAGE_KEY);
     if (saved === "es" || saved === "en") return saved;
@@ -13,7 +15,12 @@ function detectInitialLanguage() {
     return browserLang.startsWith("en") ? "en" : "es";
 }
 
+/**
+ * @param {{ getLang: () => string, setLang: (lang: string) => void, onLanguageChanged: () => void }} options
+ * @returns {{ t: (key: string) => string, getDisplayName: (nombre: string) => string, getEmotionField: (emotion: object, field: string) => string, detectInitialLanguage: () => string, applyStaticTranslations: () => void, setLanguage: (lang: string) => void }}
+ */
 export function createI18n({ getLang, setLang, onLanguageChanged }) {
+    /** @param {string} key @returns {string} */
     function t(key) {
         const lang = getLang();
         const parts = key.split(".");

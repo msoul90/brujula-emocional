@@ -1,13 +1,15 @@
+// @ts-check
 /**
  * Minimal typed event bus to decouple inter-module communication.
  *
- * Supported events:
+ * Named events (non-exhaustive — store.js also emits `store:<key>` dynamically):
  *   "tab:switch"        — { tabId: string }
  *   "quiz:open"         — {}
  *   "diary:entry-added" — { nombre: string, note: string }
  *   "lang:changed"      — {}
+ *   "store:<key>"       — { value: *, prev: * }
  *
- * @typedef {"tab:switch"|"quiz:open"|"diary:entry-added"|"lang:changed"} BusEvent
+ * @typedef {string} BusEvent
  */
 
 /** @type {Record<string, Function[]>} */
