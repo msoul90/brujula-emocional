@@ -6,9 +6,44 @@ import { normalizeText } from "./utils.js";
 
 /**
  * @typedef {{ nombre: string, label: string, color: string, x: number, y: number, fx?: number, fy?: number }} ForceNode
- * @typedef {{ ai: number, bi: number, type: string }} ForceEdge
+ * @typedef {import('./data/emotions.js').EmotionRelation['type']} RelationType
+ * @typedef {{ ai: number, bi: number, type: RelationType }} ForceEdge
+ * @typedef {{ color: string, dash: string, labelKey: string }} RelationStyle
  * @typedef {{ inQuadrant: Set<string>, neighbors: Set<string> }} QuadrantFilter
  * @typedef {{ nodes: ForceNode[], edges: ForceEdge[], nameToIdx: Record<string, number>, H?: number }} GraphData
+ * @typedef {'graph'|'quad'} MapView
+ * @typedef {{
+ *   click: (ev: MouseEvent) => void,
+ *   keydown: (ev: KeyboardEvent) => void,
+ * }} SvgEventHandler
+ * @typedef {{
+ *   t: import('./types.js').TFn,
+ *   activeTypes: Set<RelationType>,
+ *   activeQuadrant: number | null,
+ *   nameFilter: string,
+ * }} SvgBuildOptions
+ * @typedef {{
+ *   view: MapView,
+ *   selected: string | null,
+ *   nameFilter: string,
+ *   activeTypes: Set<RelationType>,
+ *   activeQuadrant: number | null,
+ *   nodes: ForceNode[],
+ *   edges: ForceEdge[],
+ *   H: number,
+ *   W: number,
+ *   t: import('./types.js').TFn,
+ *   dark: boolean,
+ *   canvasBg: string,
+ *   onGraphView: () => void,
+ *   onQuadView: () => void,
+ *   onRelTypeToggle: (type: RelationType) => void,
+ *   onQuadrantChange: (q: number | null) => void,
+ *   onOpenDetail: () => void,
+ *   onClearSelection: () => void,
+ *   onSearch: import('preact').JSX.InputEventHandler<HTMLInputElement>,
+ *   svgEventHandler: SvgEventHandler,
+ * }} EmotionMapPanelProps
  */
 
 // ── Config ────────────────────────────────────────────────────────────────────
@@ -32,6 +67,7 @@ const GRAPH_MAX_BOOST  = 80;
 
 const QUAD_MAP = [0, 2, 3, 1];
 
+/** @type {Record<RelationType, RelationStyle>} */
 const RELS = {
     coexiste:  { color: "#6366f1", dash: "none", labelKey: "map.relCoexiste"  },
     escala_a:  { color: "#f97316", dash: "none", labelKey: "map.relEscalaA"   },
@@ -237,6 +273,14 @@ function calcNodeOpacity(n, sel, isSel, isConn, quadrantFilter, normalizedFilter
     return 1;
 }
 
+/**
+ * @param {string} selName
+ * @param {ForceNode[]} nodes
+ * @param {ForceEdge[]} visibleEdges
+ * @param {number} W
+ * @param {number} H
+ * @returns {{ nodes: ForceNode[], edges: ForceEdge[] }}
+ */
 function buildNeighborhoodData(selName, nodes, visibleEdges, W, H) {
     const neighborEdges = visibleEdges.filter(
         e => nodes[e.ai].nombre === selName || nodes[e.bi].nombre === selName
@@ -244,6 +288,7 @@ function buildNeighborhoodData(selName, nodes, visibleEdges, W, H) {
     const memberNames = new Set(neighborEdges.flatMap(e => [nodes[e.ai].nombre, nodes[e.bi].nombre]));
     memberNames.add(selName);
     const rng = makeRng(0xf00d);
+    /** @type {Record<string, number>} */
     const subNameToIdx = {};
     const subNodes = nodes.filter(n => memberNames.has(n.nombre)).map((n, i) => {
         subNameToIdx[n.nombre] = i;
@@ -259,6 +304,16 @@ function buildNeighborhoodData(selName, nodes, visibleEdges, W, H) {
     return { nodes: subNodes, edges: subEdges };
 }
 
+/**
+ * @param {ForceNode[]} nodes
+ * @param {ForceEdge[]} edges
+ * @param {number} W
+ * @param {number} H
+ * @param {string | null} sel
+ * @param {MapView} view
+ * @param {SvgBuildOptions} options
+ * @returns {string}
+ */
 function buildSvgBody(nodes, edges, W, H, sel, view, { t, activeTypes, activeQuadrant, nameFilter }) {
     const dark      = document.documentElement.classList.contains("dark");
     const labelFill = dark ? "#cbd5e1" : "#1e293b";
@@ -335,6 +390,7 @@ function containerW() {
 
 // ── Preact component ──────────────────────────────────────────────────────────
 
+/** @param {EmotionMapPanelProps} props */
 function EmotionMapPanel({ view, selected, nameFilter, activeTypes, activeQuadrant,
     nodes, edges, H, W, t, dark, canvasBg,
     onGraphView, onQuadView, onRelTypeToggle, onQuadrantChange,
@@ -346,7 +402,12 @@ function EmotionMapPanel({ view, selected, nameFilter, activeTypes, activeQuadra
         const svg = svgRef.current;
         if (!svg) return;
         const isNeighborhood = view === "graph" && selected !== null;
-        let svgNodes, svgEdges, svgActiveQuadrant;
+        /** @type {ForceNode[]} */
+        let svgNodes;
+        /** @type {ForceEdge[]} */
+        let svgEdges;
+        /** @type {number | null} */
+        let svgActiveQuadrant;
         if (isNeighborhood) {
             const hood = buildNeighborhoodData(selected, nodes, edges.filter(e => activeTypes.has(e.type)), W, H);
             svgNodes = hood.nodes; svgEdges = hood.edges; svgActiveQuadrant = null;
@@ -374,6 +435,7 @@ function EmotionMapPanel({ view, selected, nameFilter, activeTypes, activeQuadra
     let infoPanel = null;
     if (selected) {
         const myEdges = edges.filter(e => nodes[e.ai]?.nombre === selected || nodes[e.bi]?.nombre === selected);
+        /** @type {Partial<Record<RelationType, string[]>>} */
         const grouped = {};
         for (const e of myEdges) {
             const other = nodes[e.ai].nombre === selected ? nodes[e.bi] : nodes[e.ai];
@@ -400,13 +462,13 @@ function EmotionMapPanel({ view, selected, nameFilter, activeTypes, activeQuadra
                 {Object.keys(grouped).length > 0 ? (
                     <ul class="space-y-1.5">
                         {Object.entries(grouped).map(([type, names]) => {
-                            const rel = RELS[type];
+                            const rel = RELS[/** @type {RelationType} */ (type)];
                             return (
                                 <li key={type} class="flex items-start gap-2 text-sm leading-snug">
                                     <span class="mt-1 shrink-0 inline-block w-2.5 h-2.5 rounded-full" style={`background:${rel.color}`} />
                                     <span>
                                         <strong class={dark ? "text-slate-300" : "text-slate-700"}>{t(rel.labelKey)}:</strong>{" "}
-                                        <span class={dark ? "text-slate-400" : "text-slate-500"}>{names.join(", ")}</span>
+                                        <span class={dark ? "text-slate-400" : "text-slate-500"}>{(names ?? []).join(", ")}</span>
                                     </span>
                                 </li>
                             );
@@ -434,16 +496,17 @@ function EmotionMapPanel({ view, selected, nameFilter, activeTypes, activeQuadra
 
             <div class="flex flex-wrap gap-x-3 gap-y-1 mb-2" role="list" aria-label={t("map.legendLabel")}>
                 {Object.entries(RELS).map(([type, rel]) => {
-                    const on       = activeTypes.has(type);
+                    const relType  = /** @type {RelationType} */ (type);
+                    const on       = activeTypes.has(relType);
                     const dimLine  = dark ? "#475569" : "#cbd5e1";
                     const lineColor = on ? rel.color : dimLine;
                     const onTextC  = dark ? "text-slate-300" : "text-slate-600";
                     const offTextC = dark ? "text-slate-600" : "text-slate-400";
                     const onBgC    = dark ? "bg-slate-700" : "bg-slate-100";
                     return (
-                        <button key={type} type="button" data-rel-type={type} role="listitem" aria-pressed={String(on)}
+                        <button key={type} type="button" data-rel-type={type} role="listitem" aria-pressed={on}
                             class={`flex items-center gap-1 text-[11px] px-1.5 py-0.5 rounded-lg transition-colors ${on ? onTextC : offTextC} ${on ? onBgC : ""}`}
-                            onClick={() => onRelTypeToggle(type)}>
+                            onClick={() => onRelTypeToggle(relType)}>
                             <svg width="14" height="6" aria-hidden="true">
                                 <line x1="0" y1="3" x2="14" y2="3" stroke={lineColor} stroke-width="2" stroke-dasharray={rel.dash}/>
                             </svg>
@@ -454,7 +517,7 @@ function EmotionMapPanel({ view, selected, nameFilter, activeTypes, activeQuadra
             </div>
 
             <div class="flex flex-wrap gap-1.5 mb-2">
-                <button type="button" data-quad="all" aria-pressed={String(effectiveQuadrant === null)}
+                <button type="button" data-quad="all" aria-pressed={effectiveQuadrant === null}
                     class={`text-[11px] font-bold px-2.5 py-0.5 rounded-full border transition-colors ${effectiveQuadrant === null ? activeC : inactiveC}`}
                     onClick={() => onQuadrantChange(null)}>
                     {t("map.filterAll")}
@@ -462,7 +525,7 @@ function EmotionMapPanel({ view, selected, nameFilter, activeTypes, activeQuadra
                 {MOOD_CATEGORIES.map((cat, i) => {
                     const isActive = effectiveQuadrant === i;
                     return (
-                        <button key={cat.key} type="button" data-quad={String(i)} aria-pressed={String(isActive)}
+                        <button key={cat.key} type="button" data-quad={String(i)} aria-pressed={isActive}
                             class={`text-[11px] font-bold px-2.5 py-0.5 rounded-full border transition-colors ${isActive ? "" : inactiveC}`}
                             style={isActive ? `background-color:${cat.color};color:${cat.ink};border-color:${cat.color}` : ""}
                             onClick={() => onQuadrantChange(i)}>
@@ -502,14 +565,28 @@ function EmotionMapPanel({ view, selected, nameFilter, activeTypes, activeQuadra
 }
 
 // ── Factory ───────────────────────────────────────────────────────────────────
+/**
+ * @param {{
+ *   emociones: import('./data/emotions.js').Emotion[],
+ *   getDisplayName: import('./types.js').GetDisplayNameFn,
+ *   t: import('./types.js').TFn,
+ *   showDetail: import('./types.js').ShowDetailFn,
+ * }} deps
+ */
 export function createEmotionMap({ emociones, getDisplayName, t, showDetail }) {
-    let view           = "graph";
-    let selected       = null;
+    /** @type {MapView} */
+    let view = "graph";
+    /** @type {string | null} */
+    let selected = null;
     let nameFilter     = "";
-    let activeTypes    = new Set(Object.keys(RELS));
+    /** @type {Set<RelationType>} */
+    let activeTypes = new Set(/** @type {RelationType[]} */ (Object.keys(RELS)));
+    /** @type {number | null} */
     let activeQuadrant = null;
-    let forceData      = null;
-    let quadData       = null;
+    /** @type {(GraphData & { H: number }) | null} */
+    let forceData = null;
+    /** @type {(GraphData & { H: number }) | null} */
+    let quadData = null;
     let lastW          = 0;
 
     function ensureData() {
@@ -530,24 +607,31 @@ export function createEmotionMap({ emociones, getDisplayName, t, showDetail }) {
         if (!wrap) return;
         ensureData();
 
-        const { nodes, edges, H } = view === "graph" ? forceData : quadData;
+        const currentData = view === "graph" ? forceData : quadData;
+        if (!currentData) return;
+        const { nodes, edges, H } = currentData;
         const W    = containerW();
         const dark = document.documentElement.classList.contains("dark");
 
+        /** @type {SvgEventHandler} */
         const svgEventHandler = {
             click: (ev) => {
-                const node = ev.target.closest(".map-node");
+                const target = ev.target;
+                if (!(target instanceof Element)) return;
+                const node = target.closest(".map-node");
                 if (!node) { selected = null; render_(); return; }
-                const nombre = node.dataset.nombre;
+                const nombre = /** @type {HTMLElement} */ (node).dataset.nombre;
                 selected = selected === nombre ? null : nombre;
                 render_();
             },
             keydown: (ev) => {
                 if (ev.key !== "Enter" && ev.key !== " ") return;
-                const node = ev.target.closest(".map-node");
+                const target = ev.target;
+                if (!(target instanceof Element)) return;
+                const node = target.closest(".map-node");
                 if (!node) return;
                 ev.preventDefault();
-                const nombre = node.dataset.nombre;
+                const nombre = /** @type {HTMLElement} */ (node).dataset.nombre;
                 selected = selected === nombre ? null : nombre;
                 render_();
             },
@@ -572,7 +656,8 @@ export function createEmotionMap({ emociones, getDisplayName, t, showDetail }) {
                 }}
                 onClearSelection={() => { selected = null; nameFilter = ""; render_(); }}
                 onSearch={(ev) => {
-                    nameFilter = ev.target.value;
+                    const target = /** @type {HTMLInputElement} */ (ev.currentTarget ?? ev.target);
+                    nameFilter = target.value;
                     selected = null;
                     render_();
                     // Populate suggestions after render
@@ -590,6 +675,7 @@ export function createEmotionMap({ emociones, getDisplayName, t, showDetail }) {
         }
     }
 
+    /** @param {string} value */
     function populateSuggestions(value) {
         const wrap = document.getElementById("map-content");
         const suggestionsList = wrap?.querySelector("#map-suggestions");
@@ -608,16 +694,20 @@ export function createEmotionMap({ emociones, getDisplayName, t, showDetail }) {
         ).join("");
         suggestionsList.classList.remove("hidden");
 
-        suggestionsList.onmousedown = (ev) => ev.preventDefault();
-        suggestionsList.onclick = (ev) => {
-            const li = ev.target.closest("li[data-nombre]");
+        const suggestionsEl = /** @type {HTMLElement} */ (suggestionsList);
+        suggestionsEl.onmousedown = (ev) => ev.preventDefault();
+        suggestionsEl.onclick = (ev) => {
+            const target = ev.target;
+            if (!(target instanceof Element)) return;
+            const li = target.closest("li[data-nombre]");
             if (!li) return;
-            const e = emociones.find(em => em.nombre === li.dataset.nombre);
+            const nombre = /** @type {HTMLElement} */ (li).dataset.nombre;
+            const e = emociones.find(em => em.nombre === nombre);
             if (e) {
                 nameFilter = getDisplayName(e.nombre);
                 selected   = e.nombre;
                 const searchInput = document.getElementById("map-search");
-                if (searchInput) searchInput.value = nameFilter;
+                if (searchInput instanceof HTMLInputElement) searchInput.value = nameFilter;
                 suggestionsList.classList.add("hidden");
                 render_();
             }
