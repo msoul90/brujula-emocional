@@ -1,9 +1,12 @@
+// @ts-check
 import { THEME_KEY } from "./constants.js";
 
+/** @returns {string} */
 function getTheme() {
     return localStorage.getItem(THEME_KEY) || "auto";
 }
 
+/** @param {string} theme @param {() => string} getLang */
 function applyTheme(theme, getLang) {
     const prefersDark = globalThis.matchMedia("(prefers-color-scheme: dark)").matches;
     if (theme === "dark" || (theme === "auto" && prefersDark)) {
@@ -15,6 +18,7 @@ function applyTheme(theme, getLang) {
     updateActiveStates(theme, getLang());
 }
 
+/** @param {string} theme @param {string} lang */
 function updateActiveStates(theme, lang) {
     for (const t of ["light", "auto", "dark"]) {
         document.getElementById(`theme-btn-${t}`)?.classList.toggle("settings-option-active", t === theme);
@@ -26,6 +30,7 @@ function updateActiveStates(theme, lang) {
 
 /**
  * @param {{ setLanguage: (lang: string) => void, getLang: () => string }} opts
+ * @returns {{ applyTheme: (theme: string) => void, getTheme: () => string, updateActiveStates: (theme: string, lang: string) => void } | undefined}
  */
 export function initSettings({ setLanguage, getLang }) {
     const settingsBtn = document.getElementById("settings-btn");
@@ -45,7 +50,7 @@ export function initSettings({ setLanguage, getLang }) {
     });
 
     document.addEventListener("click", (event) => {
-        if (!settingsPanel.classList.contains("hidden") && !settingsPanel.contains(event.target)) {
+        if (!settingsPanel.classList.contains("hidden") && !settingsPanel.contains(/** @type {Node | null} */ (event.target))) {
             closePanel();
         }
     });
@@ -57,13 +62,13 @@ export function initSettings({ setLanguage, getLang }) {
         }
     });
 
-    for (const btn of settingsPanel.querySelectorAll("[data-theme-btn]")) {
-        btn.addEventListener("click", () => applyTheme(btn.dataset.themeBtn, getLang));
+    for (const btn of /** @type {NodeListOf<HTMLElement>} */ (settingsPanel.querySelectorAll("[data-theme-btn]"))) {
+        btn.addEventListener("click", () => applyTheme(btn.dataset.themeBtn ?? "", getLang));
     }
 
-    for (const btn of settingsPanel.querySelectorAll("[data-lang-btn]")) {
+    for (const btn of /** @type {NodeListOf<HTMLElement>} */ (settingsPanel.querySelectorAll("[data-lang-btn]"))) {
         btn.addEventListener("click", () => {
-            setLanguage(btn.dataset.langBtn);
+            setLanguage(btn.dataset.langBtn ?? "");
             updateActiveStates(getTheme(), getLang());
         });
     }

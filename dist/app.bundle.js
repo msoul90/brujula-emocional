@@ -3864,7 +3864,10 @@
       settingsBtn.setAttribute("aria-expanded", String(!isOpen));
     });
     document.addEventListener("click", (event) => {
-      if (!settingsPanel.classList.contains("hidden") && !settingsPanel.contains(event.target)) {
+      if (!settingsPanel.classList.contains("hidden") && !settingsPanel.contains(
+        /** @type {Node | null} */
+        event.target
+      )) {
         closePanel();
       }
     });
@@ -3874,12 +3877,20 @@
         settingsBtn.focus();
       }
     });
-    for (const btn of settingsPanel.querySelectorAll("[data-theme-btn]")) {
-      btn.addEventListener("click", () => applyTheme(btn.dataset.themeBtn, getLang));
+    for (
+      const btn of
+      /** @type {NodeListOf<HTMLElement>} */
+      settingsPanel.querySelectorAll("[data-theme-btn]")
+    ) {
+      btn.addEventListener("click", () => applyTheme(btn.dataset.themeBtn ?? "", getLang));
     }
-    for (const btn of settingsPanel.querySelectorAll("[data-lang-btn]")) {
+    for (
+      const btn of
+      /** @type {NodeListOf<HTMLElement>} */
+      settingsPanel.querySelectorAll("[data-lang-btn]")
+    ) {
       btn.addEventListener("click", () => {
-        setLanguage(btn.dataset.langBtn);
+        setLanguage(btn.dataset.langBtn ?? "");
         updateActiveStates(getTheme(), getLang());
       });
     }
@@ -3897,7 +3908,8 @@
     return /iphone|ipad|ipod/.test(ua) || touchMac;
   }
   function isStandalone() {
-    return globalThis.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+    return globalThis.matchMedia("(display-mode: standalone)").matches || /** @type {any} */
+    navigator.standalone === true;
   }
   function initInstall() {
     const installButton = document.getElementById("install-app-button");
@@ -3925,7 +3937,8 @@
     };
     globalThis.addEventListener("beforeinstallprompt", (event) => {
       event.preventDefault();
-      deferredPrompt = event;
+      deferredPrompt = /** @type {BeforeInstallPromptEvent} */
+      event;
       updateInstallVisibility();
     });
     globalThis.addEventListener("appinstalled", () => {
@@ -3950,7 +3963,10 @@
     });
     iosClose.addEventListener("click", closeIosModal);
     iosModal.addEventListener("click", (event) => {
-      if (event.target.id === "ios-install-modal") closeIosModal();
+      if (
+        /** @type {HTMLElement} */
+        event.target.id === "ios-install-modal"
+      ) closeIosModal();
     });
     document.addEventListener("keydown", (event) => {
       if (event.key === "Escape" && !iosModal.classList.contains("hidden")) {
@@ -3988,7 +4004,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mp9xdplf";
+  var BUILD_VERSION = "mp9xhxvx";
 
   // app.js
   var reducedMotion = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
