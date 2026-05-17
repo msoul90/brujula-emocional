@@ -17,38 +17,44 @@ function detectInitialLanguage() {
 
 /**
  * @param {{ getLang: () => string, setLang: (lang: string) => void, onLanguageChanged: () => void }} options
- * @returns {{ t: (key: string) => string, getDisplayName: (nombre: string) => string, getEmotionField: (emotion: object, field: string) => string, detectInitialLanguage: () => string, applyStaticTranslations: () => void, setLanguage: (lang: string) => void }}
+ * @returns {{ t: (key: string) => string, getDisplayName: (nombre: string) => string, getEmotionField: (emotion: Record<string, string>, field: string) => string, detectInitialLanguage: () => string, applyStaticTranslations: () => void, setLanguage: (lang: string) => void }}
  */
 export function createI18n({ getLang, setLang, onLanguageChanged }) {
     /** @param {string} key @returns {string} */
     function t(key) {
         const lang = getLang();
+        const tr = /** @type {Record<string, Record<string, any>>} */ (TRANSLATIONS);
         const parts = key.split(".");
         if (parts.length === 1) {
-            return TRANSLATIONS[lang]?.[key] ?? TRANSLATIONS.es[key] ?? key;
+            return tr[lang]?.[key] ?? tr.es[key] ?? key;
         }
-        let val = TRANSLATIONS[lang];
+        let val = /** @type {any} */ (tr[lang]);
         for (const part of parts) val = val?.[part];
         if (val === undefined) {
-            val = TRANSLATIONS.es;
+            val = tr.es;
             for (const part of parts) val = val?.[part];
         }
         return val !== undefined ? String(val) : key;
     }
 
+    /** @param {string} nombre @returns {string} */
     function getDisplayName(nombre) {
-        if (getLang() === "en") return EMOTION_NAME_TRANSLATIONS[nombre] ?? nombre;
+        const nameMap = /** @type {Record<string, string>} */ (EMOTION_NAME_TRANSLATIONS);
+        if (getLang() === "en") return nameMap[nombre] ?? nombre;
         return nombre;
     }
 
+    /** @param {Record<string, string>} emotion @param {string} field @returns {string} */
     function getEmotionField(emotion, field) {
+        const contentMap = /** @type {Record<string, Record<string, string>>} */ (EMOTION_CONTENT_TRANSLATIONS);
         if (getLang() !== "en") return emotion[field];
-        return EMOTION_CONTENT_TRANSLATIONS[emotion.nombre]?.[field] ?? emotion[field];
+        return contentMap[emotion.nombre]?.[field] ?? emotion[field];
     }
 
     function applyStaticTranslations() {
         document.documentElement.lang = getLang();
 
+        /** @type {Record<string, (el: any) => void>} */
         const ids = {
             "app-title":             (el) => { el.textContent = t("title"); },
             "app-subtitle":          (el) => { el.textContent = t("subtitle"); },
@@ -88,6 +94,7 @@ export function createI18n({ getLang, setLang, onLanguageChanged }) {
         }
     }
 
+    /** @param {string} lang */
     function setLanguage(lang) {
         setLang(lang === "en" ? "en" : "es");
         localStorage.setItem(LANGUAGE_KEY, getLang());

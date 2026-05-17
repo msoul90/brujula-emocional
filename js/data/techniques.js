@@ -1,3 +1,4 @@
+// @ts-check
 export const REGULATION_TECHNIQUES = {
     Ansiedad: {
         es: { name: "Respiración 4-7-8", steps: ["Inhala por la nariz durante 4 segundos.", "Retén el aire durante 7 segundos.", "Exhala lentamente por la boca durante 8 segundos.", "Repite 3 o 4 veces hasta sentir el ritmo."] },

@@ -4,6 +4,8 @@
     "checkJs": false,
     "noEmit": true,
     "strict": false,
+    "noImplicitAny": true,
+    "jsx": "react-jsx",
     "target": "ES2022",
     "lib": ["ES2022", "DOM", "DOM.Iterable"],
     "moduleResolution": "bundler",

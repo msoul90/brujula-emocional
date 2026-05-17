@@ -801,25 +801,40 @@
   function createI18n({ getLang, setLang, onLanguageChanged }) {
     function t3(key) {
       const lang = getLang();
+      const tr = (
+        /** @type {Record<string, Record<string, any>>} */
+        TRANSLATIONS
+      );
       const parts = key.split(".");
       if (parts.length === 1) {
-        return TRANSLATIONS[lang]?.[key] ?? TRANSLATIONS.es[key] ?? key;
+        return tr[lang]?.[key] ?? tr.es[key] ?? key;
       }
-      let val = TRANSLATIONS[lang];
+      let val = (
+        /** @type {any} */
+        tr[lang]
+      );
       for (const part of parts) val = val?.[part];
       if (val === void 0) {
-        val = TRANSLATIONS.es;
+        val = tr.es;
         for (const part of parts) val = val?.[part];
       }
       return val !== void 0 ? String(val) : key;
     }
     function getDisplayName(nombre) {
-      if (getLang() === "en") return EMOTION_NAME_TRANSLATIONS[nombre] ?? nombre;
+      const nameMap = (
+        /** @type {Record<string, string>} */
+        EMOTION_NAME_TRANSLATIONS
+      );
+      if (getLang() === "en") return nameMap[nombre] ?? nombre;
       return nombre;
     }
     function getEmotionField(emotion, field) {
+      const contentMap = (
+        /** @type {Record<string, Record<string, string>>} */
+        EMOTION_CONTENT_TRANSLATIONS
+      );
       if (getLang() !== "en") return emotion[field];
-      return EMOTION_CONTENT_TRANSLATIONS[emotion.nombre]?.[field] ?? emotion[field];
+      return contentMap[emotion.nombre]?.[field] ?? emotion[field];
     }
     function applyStaticTranslations() {
       document.documentElement.lang = getLang();
@@ -3973,7 +3988,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mp9w1xgp";
+  var BUILD_VERSION = "mp9xdplf";
 
   // app.js
   var reducedMotion = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;

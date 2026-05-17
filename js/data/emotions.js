@@ -1,3 +1,4 @@
+// @ts-check
 /**
  * @typedef {Object} Emotion
  * @property {string} nombre      - Emotion name in Spanish (used as ID)

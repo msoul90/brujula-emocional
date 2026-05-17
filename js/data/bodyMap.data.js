@@ -1,3 +1,4 @@
+// @ts-check
 export const BODY_ZONES = {
     simple: [
         { id: "head",    labelKey: "zone.head",    color: "#818cf8" },
