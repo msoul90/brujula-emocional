@@ -1,0 +1,183 @@
+export const es = {
+    // ── Root (app-generic) ────────────────────────────────────────────────────
+    title: "Brújula Emocional",
+    subtitle: "Encuentra claridad en lo que sientes.",
+    langLabel: "Idioma",
+    offlineBanner: "Sin conexión · Usando datos guardados",
+    searchPlaceholder: "¿Qué sientes hoy? (ej. Ansiedad, Placer...)",
+    recentTitle: "Vistas recientemente",
+    closeButton: "Entendido",
+    emotionTag: "Emoción",
+    feelLabel: "¿Cómo se siente?",
+    triggerLabel: "¿Qué la dispara?",
+    functionLabel: "¿Para qué sirve?",
+    messageLabel: "Lo que te está diciendo:",
+    impulseLabel: "Impulso a evitar",
+    responseLabel: "Respuesta sugerida",
+    emptyTitle: "No encontramos esa emoción",
+    emptyHint: "Prueba con otra palabra como \"incertidumbre\", \"calma\" o \"dolor\".",
+    openChip: "Ver",
+    openEmotionAria: "Abrir emoción",
+    openDetailAria: "Abrir detalle de",
+    copyButton: "Copiar",
+    copiedFeedback: "Copiado",
+    shareButton: "Compartir",
+    masksHint: "A veces lo que sientes en la superficie cubre algo más. Explora también esta emoción.",
+
+    // ── Nav ───────────────────────────────────────────────────────────────────
+    nav: {
+        emociones: "Emociones",
+        checkin:   "¿Qué siento?",
+        diary:     "Diario",
+        mapa:      "Mapa",
+    },
+
+    // ── Settings ──────────────────────────────────────────────────────────────
+    settings: {
+        label:      "Configuración",
+        themeLabel: "Tema",
+        themeLight: "Claro",
+        themeAuto:  "Auto",
+        themeDark:  "Oscuro",
+    },
+
+    // ── Install ───────────────────────────────────────────────────────────────
+    install: {
+        button:   "Instalar app",
+        iosTitle: "Instalar en iPhone/iPad",
+        iosStep1: "1. Toca el botón Compartir de Safari (cuadro con flecha hacia arriba).",
+        iosStep2: "2. Selecciona \"Añadir a pantalla de inicio\".",
+        iosClose: "Entendido",
+    },
+
+    // ── Checkin ───────────────────────────────────────────────────────────────
+    checkin: {
+        title:       "¿Cómo me siento?",
+        reset:       "Ver todas",
+        moodAgitado:  "Agitado",
+        moodTriste:   "Triste",
+        moodConfundido: "Confundido",
+        moodBien:     "Bien",
+    },
+
+    // ── Diary ─────────────────────────────────────────────────────────────────
+    diary: {
+        trigger:         "Mi diario emocional",
+        triggerSub:      "Solo se guarda en tu dispositivo",
+        title:           "Diario emocional",
+        privacyNote:     "Tus entradas se guardan solo en este dispositivo. Nunca salen de aquí.",
+        empty:           "Aún no hay entradas.",
+        addShort:        "Diario",
+        noteLabel:       "Nota (opcional)",
+        notePlaceholder: "¿Qué más quieres recordar?",
+        saveButton:      "Guardar",
+        cancelButton:    "Cancelar",
+        deleteButton:    "Eliminar entrada",
+        clearAll:        "Borrar todo el diario",
+        clearConfirm:    "¿Borrar todas las entradas del diario? Esta acción no se puede deshacer.",
+        todayLabel:      "Hoy",
+        addedFeedback:   "Guardado en tu diario",
+        newEntry:        "Nueva entrada",
+        pickEmotion:     "¿Qué sentiste?",
+        emptyPrompt:     "Todavía no registraste ninguna emoción.",
+        emptyAction1:    "Hacer check-in",
+        emptyAction2:    "Descubrir qué siento",
+        exportButton:    "Exportar",
+        tagLabel:        "Contexto (opcional)",
+        tagTrabajo:      "Trabajo",
+        tagPareja:       "Pareja",
+        tagFamilia:      "Familia",
+        tagCuerpo:       "Cuerpo",
+        tagDinero:       "Dinero",
+    },
+
+    // ── Quiz ──────────────────────────────────────────────────────────────────
+    quiz: {
+        trigger:      "¿No sabes lo que sientes?",
+        triggerSub:   "Descúbrelo en 3 preguntas",
+        title:        "¿Qué siento?",
+        q1:           "¿Cómo sientes tu cuerpo ahora mismo?",
+        q1a:          "Activado, tenso o acelerado",
+        q1b:          "Quieto, pesado o tranquilo",
+        q2:           "¿Cómo describirías lo que sientes?",
+        q2a:          "Agradable, expansivo o positivo",
+        q2b:          "Incómodo, difícil o tenso",
+        q3:           "¿Parece relacionado con algo concreto?",
+        q3a:          "Sí, algo o alguien lo desencadenó",
+        q3b:          "No está claro, es más difuso",
+        resultTitle:  "Puede que estés sintiendo...",
+        back:         "Anterior",
+        restart:      "Empezar de nuevo",
+        close:        "Ver todas las emociones",
+        tabQuestions: "Preguntas",
+        tabBody:      "Sensaciones",
+    },
+
+    // ── Crisis ────────────────────────────────────────────────────────────────
+    crisis: {
+        triggerTitle:  "¿Estás desbordado/a?",
+        triggerSub:    "Tres pasos para recuperar el piso",
+        triggerBtn:    "Necesito ayuda ahora",
+        step:          "Paso",
+        of:            "de",
+        close:         "Cerrar",
+        next:          "Sigo aquí →",
+        done:          "Lo hice →",
+        step1Title:    "Esto es válido.",
+        step1Body:     "Lo que estás sintiendo es real y no tienes que manejarlo solo/a. No hace falta hacer nada perfecto ahora mismo. Solo estar aquí ya es suficiente.",
+        step2Title:    "Ancla en el presente.",
+        step2Intro:    "Recorramos juntos lo que te rodea:",
+        step2Items:    "5 cosas que puedes ver|4 cosas que puedes tocar|3 cosas que puedes escuchar|2 cosas que puedes oler|1 cosa que puedes saborear",
+        step3Title:    "Una sola cosa.",
+        step3Intro:    "Elige una acción mínima:",
+        step3Actions:  "Tomar un vaso de agua|Salir 5 minutos al aire libre|Escribir una palabra que describe cómo te sientes|Llamar a alguien de confianza",
+        step3End:      "Listo. Eso es todo lo que necesitas hacer ahora.",
+    },
+
+    // ── Map ───────────────────────────────────────────────────────────────────
+    map: {
+        viewGraph:       "Grafo",
+        viewQuad:        "Cuadrantes",
+        relCoexiste:     "A menudo coexisten",
+        relEscalaA:      "Puede escalar a",
+        relEnmascara:    "Puede enmascarar",
+        relOpuesta:      "Emoción opuesta",
+        infoNone:        "Sin relaciones registradas",
+        legendLabel:     "Leyenda del mapa",
+        searchPlaceholder: "Buscar emoción en el mapa...",
+        filterAll:       "Todas",
+        hint:            "Toca una emoción para ver sus conexiones · Usa la leyenda para filtrar tipos",
+        hintSelected:    "Toca fuera del nodo para volver al mapa completo",
+        clearSelection:  "Limpiar selección",
+        searchEmpty:     "No encontramos esa emoción en el mapa",
+    },
+
+    // ── Body map ──────────────────────────────────────────────────────────────
+    body: {
+        mapTitle:     "¿Dónde lo sientes?",
+        modeSimple:   "Simple",
+        modeDetailed: "Detallado",
+        tapPrompt:    "Toca las zonas del cuerpo donde sientes algo",
+        resultTitle:  "Puede que estés sintiendo...",
+        noMatch:      "Combinación poco frecuente — prueba seleccionando más zonas",
+        clear:        "Limpiar selección",
+    },
+
+    // ── Body zones ────────────────────────────────────────────────────────────
+    zone: {
+        head:      "Cabeza",
+        face:      "Cara",
+        throat:    "Garganta",
+        shoulders: "Hombros",
+        chest:     "Pecho",
+        stomach:   "Abdomen",
+        arms:      "Brazos",
+        legs:      "Piernas",
+    },
+
+    // ── Technique ─────────────────────────────────────────────────────────────
+    technique: {
+        practice: "Practicar ahora",
+        label:    "Técnica guiada",
+    },
+};

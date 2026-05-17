@@ -1,8 +1,22 @@
 import { DIARY_KEY, DIARY_TAGS } from "./constants.js";
 import { normalizeText, escapeHtml } from "./utils.js";
+import { emit } from "./bus.js";
+
+/**
+ * @typedef {Object} DiaryEntry
+ * @property {number}   id      - Timestamp used as unique ID
+ * @property {string}   date    - ISO 8601 date string
+ * @property {string}   emotion - Emotion nombre (Spanish, matches emociones array)
+ * @property {string}   note    - Optional user note (may be empty string)
+ * @property {string[]} tags    - Context tags from DIARY_TAGS (may be empty)
+ */
 
 // --- Pure data functions (testable without DOM/localStorage) ---
 
+/**
+ * @param {string|null} raw
+ * @returns {DiaryEntry[]}
+ */
 export function parseDiaryEntries(raw) {
     try {
         const parsed = JSON.parse(raw);
@@ -12,6 +26,12 @@ export function parseDiaryEntries(raw) {
     }
 }
 
+/**
+ * @param {string}   emotionNombre
+ * @param {string}   [note]
+ * @param {string[]} [tags]
+ * @returns {DiaryEntry}
+ */
 export function createDiaryEntry(emotionNombre, note = "", tags = []) {
     return {
         id: Date.now(),
@@ -22,6 +42,11 @@ export function createDiaryEntry(emotionNombre, note = "", tags = []) {
     };
 }
 
+/**
+ * @param {DiaryEntry[]} entries
+ * @param {number}       id
+ * @returns {DiaryEntry[]}
+ */
 export function deleteDiaryEntryById(entries, id) {
     return entries.filter((e) => e.id !== id);
 }
@@ -46,12 +71,12 @@ function deleteEntry(id) {
     saveEntries(deleteDiaryEntryById(loadEntries(), id));
 }
 
-export function createDiary({ t, getDisplayName, emociones, onGoToCheckin = null, onOpenQuiz = null }) {
+export function createDiary({ t, getDisplayName, emociones }) {
     function renderTagPills(tags) {
         if (!tags?.length) return "";
         const pills = tags
             .map((tag) => {
-                const label = t(`diaryTag${tag.charAt(0).toUpperCase()}${tag.slice(1)}`);
+                const label = t(`diary.tag${tag.charAt(0).toUpperCase()}${tag.slice(1)}`);
                 return `<span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-500 text-[10px] font-bold">${label}</span>`;
             })
             .join("");
@@ -62,32 +87,32 @@ export function createDiary({ t, getDisplayName, emociones, onGoToCheckin = null
         const d = new Date(isoString);
         const now = new Date();
         const time = d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-        if (d.toDateString() === now.toDateString()) return `${t("diaryTodayLabel")}, ${time}`;
+        if (d.toDateString() === now.toDateString()) return `${t("diary.todayLabel")}, ${time}`;
         return `${d.toLocaleDateString([], { day: "numeric", month: "short", year: "numeric" })} · ${time}`;
     }
 
     function buildAddFormHtml() {
         return `
             <div id="diary-add-form" class="bg-white rounded-2xl p-4 shadow-sm mb-4 border-2 border-blue-100">
-                <p class="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-3">${t("diaryNewEntry")}</p>
+                <p class="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-3">${t("diary.newEntry")}</p>
                 <div class="relative mb-3">
                     <input type="text" id="diary-emotion-search" autocomplete="off"
-                        placeholder="${t("diaryPickEmotion")}"
+                        placeholder="${t("diary.pickEmotion")}"
                         class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-200">
                     <input type="hidden" id="diary-emotion-value">
                     <div id="diary-emotion-dropdown"
                         class="hidden absolute z-50 left-0 right-0 mt-1 bg-white rounded-xl shadow-lg border border-slate-200 hide-scroll"
                         style="max-height:11rem;overflow-y:auto"></div>
                 </div>
-                <textarea id="diary-note-input" rows="2" placeholder="${t("diaryNotePlaceholder")}"
+                <textarea id="diary-note-input" rows="2" placeholder="${t("diary.notePlaceholder")}"
                     class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-700 resize-none focus:outline-none focus:ring-2 focus:ring-blue-200 mb-3"></textarea>
                 <div class="mb-3">
-                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">${t("diaryTagLabel")}</p>
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">${t("diary.tagLabel")}</p>
                     <div class="flex flex-wrap gap-1.5">
                         ${DIARY_TAGS.map((tag) => `
                             <button type="button" data-tag="${tag}"
                                 class="diary-tag-btn px-3 py-1 rounded-full text-[11px] font-bold bg-slate-100 text-slate-500 hover:bg-slate-200 transition-colors">
-                                ${t(`diaryTag${tag.charAt(0).toUpperCase()}${tag.slice(1)}`)}
+                                ${t(`diary.tag${tag.charAt(0).toUpperCase()}${tag.slice(1)}`)}
                             </button>
                         `).join("")}
                     </div>
@@ -95,11 +120,11 @@ export function createDiary({ t, getDisplayName, emociones, onGoToCheckin = null
                 <div class="flex gap-2">
                     <button id="diary-form-save" type="button"
                         class="flex-1 bg-slate-800 text-white py-2.5 rounded-xl font-bold text-sm hover:bg-slate-700 transition-colors">
-                        ${t("diarySaveButton")}
+                        ${t("diary.saveButton")}
                     </button>
                     <button id="diary-form-cancel" type="button"
                         class="flex-1 bg-slate-100 text-slate-600 py-2.5 rounded-xl font-bold text-sm hover:bg-slate-200 transition-colors">
-                        ${t("diaryCancelButton")}
+                        ${t("diary.cancelButton")}
                     </button>
                 </div>
             </div>
@@ -169,19 +194,19 @@ export function createDiary({ t, getDisplayName, emociones, onGoToCheckin = null
             <button id="diary-export-btn" type="button"
                 class="flex items-center gap-1.5 bg-slate-100 text-slate-600 text-xs font-bold px-3 py-2 rounded-xl hover:bg-slate-200 transition-colors">
                 <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-                ${t("diaryExportButton")}
+                ${t("diary.exportButton")}
             </button>
         ` : "";
 
         const headerHtml = `
             <div class="flex items-center justify-between mb-4">
-                <h2 id="diary-title-heading" class="text-xl font-black text-slate-800">${t("diaryTitle")}</h2>
+                <h2 id="diary-title-heading" class="text-xl font-black text-slate-800">${t("diary.title")}</h2>
                 <div class="flex items-center gap-2">
                     ${exportBtn}
                     <button id="diary-new-btn" type="button"
                         class="flex items-center gap-1.5 bg-slate-800 text-white text-xs font-bold px-3 py-2 rounded-xl hover:bg-slate-700 transition-colors">
                         <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-                        ${t("diaryNewEntry")}
+                        ${t("diary.newEntry")}
                     </button>
                 </div>
             </div>
@@ -190,7 +215,7 @@ export function createDiary({ t, getDisplayName, emociones, onGoToCheckin = null
         const privacyHtml = `
             <p class="text-xs text-slate-400 mb-4 flex items-start gap-1.5">
                 <svg class="w-3.5 h-3.5 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
-                ${t("diaryPrivacyNote")}
+                ${t("diary.privacyNote")}
             </p>
         `;
 
@@ -215,7 +240,7 @@ export function createDiary({ t, getDisplayName, emociones, onGoToCheckin = null
                                     ${entry.note ? `<p class="text-slate-500 text-sm leading-relaxed">${escapeHtml(entry.note)}</p>` : ""}
                                     ${renderTagPills(entry.tags)}
                                 </div>
-                                <button type="button" class="diary-delete-btn text-slate-300 hover:text-red-400 transition-colors shrink-0" data-id="${entry.id}" aria-label="${t("diaryDeleteButton")}">
+                                <button type="button" class="diary-delete-btn text-slate-300 hover:text-red-400 transition-colors shrink-0" data-id="${entry.id}" aria-label="${t("diary.deleteButton")}">
                                     <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
                                 </button>
                             </div>
@@ -225,22 +250,22 @@ export function createDiary({ t, getDisplayName, emociones, onGoToCheckin = null
                 ${entries.length > 1 ? `
                     <button id="diary-clear-btn" type="button"
                         class="mt-5 w-full text-xs text-slate-400 hover:text-red-400 transition-colors py-2">
-                        ${t("diaryClearAll")}
+                        ${t("diary.clearAll")}
                     </button>
                 ` : ""}
             `;
         } else {
             entriesHtml = `
             <div class="text-center py-8 px-2">
-                <p class="text-slate-400 text-sm mb-5">${t("diaryEmptyPrompt")}</p>
+                <p class="text-slate-400 text-sm mb-5">${t("diary.emptyPrompt")}</p>
                 <div class="flex flex-col gap-2 max-w-xs mx-auto">
                     <button id="diary-empty-checkin" type="button"
                         class="w-full bg-slate-800 text-white py-3 rounded-2xl font-bold text-sm hover:bg-slate-700 transition-colors">
-                        ${t("diaryEmptyAction1")}
+                        ${t("diary.emptyAction1")}
                     </button>
                     <button id="diary-empty-quiz" type="button"
                         class="w-full bg-slate-100 text-slate-700 py-3 rounded-2xl font-bold text-sm hover:bg-slate-200 transition-colors">
-                        ${t("diaryEmptyAction2")}
+                        ${t("diary.emptyAction2")}
                     </button>
                 </div>
             </div>
@@ -249,8 +274,8 @@ export function createDiary({ t, getDisplayName, emociones, onGoToCheckin = null
 
         content.innerHTML = headerHtml + privacyHtml + formHtml + entriesHtml;
 
-        content.querySelector("#diary-empty-checkin")?.addEventListener("click", () => onGoToCheckin?.());
-        content.querySelector("#diary-empty-quiz")?.addEventListener("click", () => onOpenQuiz?.());
+        content.querySelector("#diary-empty-checkin")?.addEventListener("click", () => emit("tab:switch", { tabId: "checkin" }));
+        content.querySelector("#diary-empty-quiz")?.addEventListener("click", () => emit("quiz:open"));
 
         content.querySelector("#diary-export-btn")?.addEventListener("click", () => {
             const date = new Date().toISOString().slice(0, 10);
@@ -323,7 +348,7 @@ export function createDiary({ t, getDisplayName, emociones, onGoToCheckin = null
         const clearBtn = content.querySelector("#diary-clear-btn");
         if (clearBtn) {
             clearBtn.addEventListener("click", () => {
-                if (confirm(t("diaryClearConfirm"))) {
+                if (confirm(t("diary.clearConfirm"))) {
                     saveEntries([]);
                     renderContent(false);
                 }

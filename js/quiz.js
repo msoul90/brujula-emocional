@@ -3,38 +3,38 @@ import { isDarkMode } from "./utils.js";
 
 export const QUIZ_STEPS = {
     q1: {
-        textKey: "quizQ1",
+        textKey: "quiz.q1",
         options: [
-            { labelKey: "quizQ1A", next: "q2_high" },
-            { labelKey: "quizQ1B", next: "q2_low" }
+            { labelKey: "quiz.q1a", next: "q2_high" },
+            { labelKey: "quiz.q1b", next: "q2_low" }
         ]
     },
     q2_high: {
-        textKey: "quizQ2",
+        textKey: "quiz.q2",
         options: [
-            { labelKey: "quizQ2A", result: ["Entusiasmo", "Alegría", "Orgullo"] },
-            { labelKey: "quizQ2B", next: "q3_high_bad" }
+            { labelKey: "quiz.q2a", result: ["Entusiasmo", "Alegría", "Orgullo"] },
+            { labelKey: "quiz.q2b", next: "q3_high_bad" }
         ]
     },
     q2_low: {
-        textKey: "quizQ2",
+        textKey: "quiz.q2",
         options: [
-            { labelKey: "quizQ2A", result: ["Calma", "Felicidad", "Placer", "Gratitud", "Alivio", "Ternura"] },
-            { labelKey: "quizQ2B", next: "q3_low_bad" }
+            { labelKey: "quiz.q2a", result: ["Calma", "Felicidad", "Placer", "Gratitud", "Alivio", "Ternura"] },
+            { labelKey: "quiz.q2b", next: "q3_low_bad" }
         ]
     },
     q3_high_bad: {
-        textKey: "quizQ3",
+        textKey: "quiz.q3",
         options: [
-            { labelKey: "quizQ3A", result: ["Enojo", "Frustración", "Miedo", "Celos", "Envidia", "Disgusto"] },
-            { labelKey: "quizQ3B", result: ["Ansiedad", "Preocupación", "Irritabilidad"] }
+            { labelKey: "quiz.q3a", result: ["Enojo", "Frustración", "Miedo", "Celos", "Envidia", "Disgusto"] },
+            { labelKey: "quiz.q3b", result: ["Ansiedad", "Preocupación", "Irritabilidad"] }
         ]
     },
     q3_low_bad: {
-        textKey: "quizQ3",
+        textKey: "quiz.q3",
         options: [
-            { labelKey: "quizQ3A", result: ["Tristeza", "Vergüenza", "Rechazo", "Culpa", "Decepción"] },
-            { labelKey: "quizQ3B", result: ["Soledad", "Angustia", "Confusión", "Nostalgia", "Aburrimiento"] }
+            { labelKey: "quiz.q3a", result: ["Tristeza", "Vergüenza", "Rechazo", "Culpa", "Decepción"] },
+            { labelKey: "quiz.q3b", result: ["Soledad", "Angustia", "Confusión", "Nostalgia", "Aburrimiento"] }
         ]
     }
 };
@@ -76,7 +76,7 @@ export function createQuiz({ emociones, getDisplayName, t, showDetail, onShowAll
         const closeC = dark ? "bg-slate-700 text-slate-400 hover:bg-slate-600" : "bg-slate-100 text-slate-500 hover:bg-slate-200";
         return `
             <div class="flex items-center justify-between mb-8">
-                <h2 class="text-xl font-black ${titleC}">${t("quizTitle")}</h2>
+                <h2 class="text-xl font-black ${titleC}">${t("quiz.title")}</h2>
                 <button id="quiz-close-btn" type="button" aria-label="Cerrar"
                     class="w-8 h-8 flex items-center justify-center rounded-full ${closeC} transition-colors">
                     <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
@@ -95,14 +95,14 @@ export function createQuiz({ emociones, getDisplayName, t, showDetail, onShowAll
             .map((nombre) => emociones.find((e) => e.nombre === nombre))
             .filter(Boolean);
 
-        const titleC      = dark ? "text-slate-300" : "text-slate-500";
-        const restartC    = dark ? "bg-slate-800 text-slate-200 hover:bg-slate-700" : "bg-slate-100 text-slate-700 hover:bg-slate-200";
-        const closeResC   = dark ? "text-slate-400 hover:text-slate-200" : "text-slate-400 hover:text-slate-600";
+        const titleC    = dark ? "text-slate-300" : "text-slate-500";
+        const restartC  = dark ? "bg-slate-800 text-slate-200 hover:bg-slate-700" : "bg-slate-100 text-slate-700 hover:bg-slate-200";
+        const closeResC = dark ? "text-slate-400 hover:text-slate-200" : "text-slate-400 hover:text-slate-600";
 
         const content = document.getElementById("quiz-content");
         content.innerHTML = `
             ${headerHtml(dark)}
-            <p class="text-[11px] font-black ${titleC} uppercase tracking-widest mb-4">${t("quizResultTitle")}</p>
+            <p class="text-[11px] font-black ${titleC} uppercase tracking-widest mb-4">${t("quiz.resultTitle")}</p>
             <div class="space-y-3">
                 ${emotions.map((e) => `
                     <button type="button" data-emotion="${e.nombre}"
@@ -115,11 +115,11 @@ export function createQuiz({ emociones, getDisplayName, t, showDetail, onShowAll
             </div>
             <button id="quiz-restart-btn" type="button"
                 class="mt-6 w-full py-3 font-bold rounded-2xl text-sm transition-colors ${restartC}">
-                ${t("quizRestart")}
+                ${t("quiz.restart")}
             </button>
             <button id="quiz-close-result-btn" type="button"
                 class="mt-2 w-full py-3 text-sm font-medium transition-colors ${closeResC}">
-                ${t("quizClose")}
+                ${t("quiz.close")}
             </button>
         `;
 
@@ -174,12 +174,12 @@ export function createQuiz({ emociones, getDisplayName, t, showDetail, onShowAll
                 <button id="quiz-back-btn" type="button"
                     class="mt-6 flex items-center gap-2 text-sm font-medium transition-colors ${backC}">
                     <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
-                    ${t("quizBack")}
+                    ${t("quiz.back")}
                 </button>
             ` : `
                 <button id="quiz-to-body-btn" type="button"
                     class="mt-6 w-full py-3 text-sm font-semibold transition-colors border rounded-2xl ${toBodyC}">
-                    ${t("quizTabBody")} →
+                    ${t("quiz.tabBody")} →
                 </button>
             `}
         `;

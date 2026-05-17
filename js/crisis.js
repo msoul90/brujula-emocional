@@ -10,18 +10,18 @@ export function createCrisisFlow({ t }) {
         return `
             <div class="text-center mb-8">
                 <div class="text-5xl mb-4" aria-hidden="true">🌊</div>
-                <h3 class="text-2xl font-black text-slate-800 mb-3">${t("crisisStep1Title")}</h3>
-                <p class="text-slate-600 leading-relaxed">${t("crisisStep1Body")}</p>
+                <h3 class="text-2xl font-black text-slate-800 mb-3">${t("crisis.step1Title")}</h3>
+                <p class="text-slate-600 leading-relaxed">${t("crisis.step1Body")}</p>
             </div>
             <button id="crisis-next-btn" type="button"
                 class="w-full bg-slate-800 text-white py-4 rounded-2xl font-bold text-sm hover:bg-slate-700 transition-colors">
-                ${t("crisisNext")}
+                ${t("crisis.next")}
             </button>
         `;
     }
 
     function buildStep2() {
-        const items = t("crisisStep2Items").split("|");
+        const items = t("crisis.step2Items").split("|");
         const listItems = items.map((item, i) => `
             <li class="flex items-center gap-3 py-2.5 border-b border-slate-100 last:border-0">
                 <span class="w-7 h-7 rounded-full bg-indigo-100 text-indigo-700 text-xs font-black flex items-center justify-center shrink-0">${items.length - i}</span>
@@ -31,19 +31,19 @@ export function createCrisisFlow({ t }) {
 
         return `
             <div class="mb-6">
-                <h3 class="text-2xl font-black text-slate-800 mb-1">${t("crisisStep2Title")}</h3>
-                <p class="text-slate-500 text-sm mb-4">${t("crisisStep2Intro")}</p>
+                <h3 class="text-2xl font-black text-slate-800 mb-1">${t("crisis.step2Title")}</h3>
+                <p class="text-slate-500 text-sm mb-4">${t("crisis.step2Intro")}</p>
                 <ul class="divide-y divide-slate-100">${listItems}</ul>
             </div>
             <button id="crisis-next-btn" type="button"
                 class="w-full bg-slate-800 text-white py-4 rounded-2xl font-bold text-sm hover:bg-slate-700 transition-colors">
-                ${t("crisisDone")}
+                ${t("crisis.done")}
             </button>
         `;
     }
 
     function buildStep3() {
-        const actions = t("crisisStep3Actions").split("|");
+        const actions = t("crisis.step3Actions").split("|");
         const actionItems = actions.map((action, i) => `
             <label class="flex items-center gap-3 py-3 cursor-pointer group">
                 <input type="radio" name="crisis-action" value="${i}"
@@ -54,14 +54,14 @@ export function createCrisisFlow({ t }) {
 
         return `
             <div class="mb-6">
-                <h3 class="text-2xl font-black text-slate-800 mb-1">${t("crisisStep3Title")}</h3>
-                <p class="text-slate-500 text-sm mb-4">${t("crisisStep3Intro")}</p>
+                <h3 class="text-2xl font-black text-slate-800 mb-1">${t("crisis.step3Title")}</h3>
+                <p class="text-slate-500 text-sm mb-4">${t("crisis.step3Intro")}</p>
                 <div class="divide-y divide-slate-100">${actionItems}</div>
             </div>
-            <p class="text-slate-400 text-xs text-center mb-4">${t("crisisStep3End")}</p>
+            <p class="text-slate-400 text-xs text-center mb-4">${t("crisis.step3End")}</p>
             <button id="crisis-close-btn" type="button"
                 class="w-full bg-slate-800 text-white py-4 rounded-2xl font-bold text-sm hover:bg-slate-700 transition-colors">
-                ${t("crisisClose")}
+                ${t("crisis.close")}
             </button>
         `;
     }
@@ -75,7 +75,7 @@ export function createCrisisFlow({ t }) {
     function renderStep(panel, step) {
         const progressHtml = `
             <div class="flex items-center justify-between mb-6">
-                <span class="text-xs font-bold text-slate-400">${t("crisisStep")} ${step} ${t("crisisOf")} ${TOTAL_STEPS}</span>
+                <span class="text-xs font-bold text-slate-400">${t("crisis.step")} ${step} ${t("crisis.of")} ${TOTAL_STEPS}</span>
                 <div class="flex gap-1.5">
                     ${Array.from({ length: TOTAL_STEPS }, (_, i) => `
                         <div class="h-1.5 w-8 rounded-full ${i < step ? "bg-slate-800" : "bg-slate-200"}"></div>

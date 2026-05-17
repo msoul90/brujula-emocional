@@ -1,326 +1,5 @@
 (() => {
-  // js/constants.js
-  var TRANSLATIONS = {
-    es: {
-      langLabel: "Idioma",
-      title: "Br\xFAjula Emocional",
-      subtitle: "Encuentra claridad en lo que sientes.",
-      searchPlaceholder: "\xBFQu\xE9 sientes hoy? (ej. Ansiedad, Placer...)",
-      recentTitle: "Vistas recientemente",
-      closeButton: "Entendido",
-      emotionTag: "Emoci\xF3n",
-      feelLabel: "\xBFC\xF3mo se siente?",
-      triggerLabel: "\xBFQu\xE9 la dispara?",
-      functionLabel: "\xBFPara qu\xE9 sirve?",
-      messageLabel: "Lo que te est\xE1 diciendo:",
-      impulseLabel: "Impulso a evitar",
-      responseLabel: "Respuesta sugerida",
-      emptyTitle: "No encontramos esa emoci\xF3n",
-      emptyHint: 'Prueba con otra palabra como "incertidumbre", "calma" o "dolor".',
-      openChip: "Ver",
-      openEmotionAria: "Abrir emoci\xF3n",
-      openDetailAria: "Abrir detalle de",
-      copyButton: "Copiar",
-      copiedFeedback: "Copiado",
-      shareButton: "Compartir",
-      quizTrigger: "\xBFNo sabes lo que sientes?",
-      quizTriggerSub: "Desc\xFAbrelo en 3 preguntas",
-      quizTitle: "\xBFQu\xE9 siento?",
-      quizQ1: "\xBFC\xF3mo sientes tu cuerpo ahora mismo?",
-      quizQ1A: "Activado, tenso o acelerado",
-      quizQ1B: "Quieto, pesado o tranquilo",
-      quizQ2: "\xBFC\xF3mo describir\xEDas lo que sientes?",
-      quizQ2A: "Agradable, expansivo o positivo",
-      quizQ2B: "Inc\xF3modo, dif\xEDcil o tenso",
-      quizQ3: "\xBFParece relacionado con algo concreto?",
-      quizQ3A: "S\xED, algo o alguien lo desencaden\xF3",
-      quizQ3B: "No est\xE1 claro, es m\xE1s difuso",
-      quizResultTitle: "Puede que est\xE9s sintiendo...",
-      quizBack: "Anterior",
-      quizRestart: "Empezar de nuevo",
-      quizClose: "Ver todas las emociones",
-      settingsLabel: "Configuraci\xF3n",
-      themeLabel: "Tema",
-      themeLight: "Claro",
-      themeAuto: "Auto",
-      themeDark: "Oscuro",
-      installButton: "Instalar app",
-      iosInstallTitle: "Instalar en iPhone/iPad",
-      iosInstallStep1: "1. Toca el bot\xF3n Compartir de Safari (cuadro con flecha hacia arriba).",
-      iosInstallStep2: '2. Selecciona "A\xF1adir a pantalla de inicio".',
-      iosInstallClose: "Entendido",
-      checkinTitle: "\xBFC\xF3mo me siento?",
-      moodAgitado: "Agitado",
-      moodTriste: "Triste",
-      moodConfundido: "Confundido",
-      moodBien: "Bien",
-      checkinReset: "Ver todas",
-      diaryTrigger: "Mi diario emocional",
-      diaryTriggerSub: "Solo se guarda en tu dispositivo",
-      diaryTitle: "Diario emocional",
-      diaryPrivacyNote: "Tus entradas se guardan solo en este dispositivo. Nunca salen de aqu\xED.",
-      diaryEmpty: "A\xFAn no hay entradas.",
-      diaryAddShort: "Diario",
-      diaryNoteLabel: "Nota (opcional)",
-      diaryNotePlaceholder: "\xBFQu\xE9 m\xE1s quieres recordar?",
-      diarySaveButton: "Guardar",
-      diaryCancelButton: "Cancelar",
-      diaryDeleteButton: "Eliminar entrada",
-      diaryClearAll: "Borrar todo el diario",
-      diaryClearConfirm: "\xBFBorrar todas las entradas del diario? Esta acci\xF3n no se puede deshacer.",
-      diaryTodayLabel: "Hoy",
-      diaryAddedFeedback: "Guardado en tu diario",
-      diaryNewEntry: "Nueva entrada",
-      diaryPickEmotion: "\xBFQu\xE9 sentiste?",
-      navEmociones: "Emociones",
-      navCheckin: "\xBFQu\xE9 siento?",
-      navDiary: "Diario",
-      navMapa: "Mapa",
-      mapViewGraph: "Grafo",
-      mapViewQuad: "Cuadrantes",
-      mapRelCoexiste: "A menudo coexisten",
-      mapRelEscalaA: "Puede escalar a",
-      mapRelEnmascara: "Puede enmascarar",
-      mapRelOpuesta: "Emoci\xF3n opuesta",
-      mapInfoNone: "Sin relaciones registradas",
-      mapLegendLabel: "Leyenda del mapa",
-      mapSearchPlaceholder: "Buscar emoci\xF3n en el mapa...",
-      mapFilterAll: "Todas",
-      mapHint: "Toca una emoci\xF3n para ver sus conexiones \xB7 Usa la leyenda para filtrar tipos",
-      mapHintSelected: "Toca fuera del nodo para volver al mapa completo",
-      mapClearSelection: "Limpiar selecci\xF3n",
-      mapSearchEmpty: "No encontramos esa emoci\xF3n en el mapa",
-      masksHint: "A veces lo que sientes en la superficie cubre algo m\xE1s. Explora tambi\xE9n esta emoci\xF3n.",
-      quizTabQuestions: "Preguntas",
-      quizTabBody: "Sensaciones",
-      bodyMapTitle: "\xBFD\xF3nde lo sientes?",
-      bodyModeSimple: "Simple",
-      bodyModeDetailed: "Detallado",
-      bodyMapTapPrompt: "Toca las zonas del cuerpo donde sientes algo",
-      bodyMapResultTitle: "Puede que est\xE9s sintiendo...",
-      bodyMapNoMatch: "Combinaci\xF3n poco frecuente \u2014 prueba seleccionando m\xE1s zonas",
-      bodyMapClear: "Limpiar selecci\xF3n",
-      zoneHead: "Cabeza",
-      zoneFace: "Cara",
-      zoneThroat: "Garganta",
-      zoneShoulders: "Hombros",
-      zoneChest: "Pecho",
-      zoneStomach: "Abdomen",
-      zoneArms: "Brazos",
-      zoneLegs: "Piernas",
-      offlineBanner: "Sin conexi\xF3n \xB7 Usando datos guardados",
-      diaryEmptyPrompt: "Todav\xEDa no registraste ninguna emoci\xF3n.",
-      diaryEmptyAction1: "Hacer check-in",
-      diaryEmptyAction2: "Descubrir qu\xE9 siento",
-      diaryExportButton: "Exportar",
-      diaryTagLabel: "Contexto (opcional)",
-      diaryTagTrabajo: "Trabajo",
-      diaryTagPareja: "Pareja",
-      diaryTagFamilia: "Familia",
-      diaryTagCuerpo: "Cuerpo",
-      diaryTagDinero: "Dinero",
-      techniquePractice: "Practicar ahora",
-      techniqueLabel: "T\xE9cnica guiada",
-      crisisTriggerTitle: "\xBFEst\xE1s desbordado/a?",
-      crisisTriggerSub: "Tres pasos para recuperar el piso",
-      crisisTriggerBtn: "Necesito ayuda ahora",
-      crisisStep: "Paso",
-      crisisOf: "de",
-      crisisClose: "Cerrar",
-      crisisNext: "Sigo aqu\xED \u2192",
-      crisisDone: "Lo hice \u2192",
-      crisisStep1Title: "Esto es v\xE1lido.",
-      crisisStep1Body: "Lo que est\xE1s sintiendo es real y no tienes que manejarlo solo/a. No hace falta hacer nada perfecto ahora mismo. Solo estar aqu\xED ya es suficiente.",
-      crisisStep2Title: "Ancla en el presente.",
-      crisisStep2Intro: "Recorramos juntos lo que te rodea:",
-      crisisStep2Items: "5 cosas que puedes ver|4 cosas que puedes tocar|3 cosas que puedes escuchar|2 cosas que puedes oler|1 cosa que puedes saborear",
-      crisisStep3Title: "Una sola cosa.",
-      crisisStep3Intro: "Elige una acci\xF3n m\xEDnima:",
-      crisisStep3Actions: "Tomar un vaso de agua|Salir 5 minutos al aire libre|Escribir una palabra que describe c\xF3mo te sientes|Llamar a alguien de confianza",
-      crisisStep3End: "Listo. Eso es todo lo que necesitas hacer ahora."
-    },
-    en: {
-      langLabel: "Language",
-      title: "Emotional Compass",
-      subtitle: "Find clarity in what you feel.",
-      searchPlaceholder: "How are you feeling today? (e.g. Anxiety, Joy...)",
-      recentTitle: "Recently viewed",
-      closeButton: "Got it",
-      emotionTag: "Emotion",
-      feelLabel: "How does it feel?",
-      triggerLabel: "What triggers it?",
-      functionLabel: "What is it for?",
-      messageLabel: "What this feeling is telling you:",
-      impulseLabel: "Impulse to avoid",
-      responseLabel: "Suggested response",
-      emptyTitle: "We could not find that emotion",
-      emptyHint: 'Try another word like "uncertainty", "calm" or "pain".',
-      openChip: "View",
-      openEmotionAria: "Open emotion",
-      openDetailAria: "Open details for",
-      copyButton: "Copy",
-      copiedFeedback: "Copied",
-      shareButton: "Share",
-      quizTrigger: "Not sure what you feel?",
-      quizTriggerSub: "Find out in 3 questions",
-      quizTitle: "What am I feeling?",
-      quizQ1: "How does your body feel right now?",
-      quizQ1A: "Activated, tense or rushing",
-      quizQ1B: "Quiet, heavy or calm",
-      quizQ2: "How would you describe what you feel?",
-      quizQ2A: "Pleasant, expansive or positive",
-      quizQ2B: "Uncomfortable, difficult or tense",
-      quizQ3: "Does it seem related to something specific?",
-      quizQ3A: "Yes, something or someone triggered it",
-      quizQ3B: "Not clear, it feels more diffuse",
-      quizResultTitle: "You might be feeling...",
-      quizBack: "Previous",
-      quizRestart: "Start over",
-      quizClose: "See all emotions",
-      settingsLabel: "Settings",
-      themeLabel: "Theme",
-      themeLight: "Light",
-      themeAuto: "Auto",
-      themeDark: "Dark",
-      installButton: "Install app",
-      iosInstallTitle: "Install on iPhone/iPad",
-      iosInstallStep1: "1. Tap Safari's Share button (square with upward arrow).",
-      iosInstallStep2: '2. Select "Add to Home Screen".',
-      iosInstallClose: "Got it",
-      checkinTitle: "How do I feel?",
-      moodAgitado: "Agitated",
-      moodTriste: "Sad",
-      moodConfundido: "Confused",
-      moodBien: "Good",
-      checkinReset: "See all",
-      diaryTrigger: "My emotional diary",
-      diaryTriggerSub: "Saved only on your device",
-      diaryTitle: "Emotional diary",
-      diaryPrivacyNote: "Your entries are saved only on this device. They never leave it.",
-      diaryEmpty: "No entries yet.",
-      diaryAddShort: "Diary",
-      diaryNoteLabel: "Note (optional)",
-      diaryNotePlaceholder: "What else do you want to remember?",
-      diarySaveButton: "Save",
-      diaryCancelButton: "Cancel",
-      diaryDeleteButton: "Delete entry",
-      diaryClearAll: "Clear all diary entries",
-      diaryClearConfirm: "Clear all diary entries? This cannot be undone.",
-      diaryTodayLabel: "Today",
-      diaryAddedFeedback: "Saved to your diary",
-      diaryNewEntry: "New entry",
-      diaryPickEmotion: "What did you feel?",
-      navEmociones: "Emotions",
-      navCheckin: "How do I feel?",
-      navDiary: "Diary",
-      navMapa: "Map",
-      mapViewGraph: "Graph",
-      mapViewQuad: "Quadrants",
-      mapRelCoexiste: "Often coexist",
-      mapRelEscalaA: "Can escalate to",
-      mapRelEnmascara: "Can mask",
-      mapRelOpuesta: "Opposite emotion",
-      mapInfoNone: "No registered connections",
-      mapLegendLabel: "Map legend",
-      mapSearchPlaceholder: "Search emotion in map...",
-      mapFilterAll: "All",
-      mapHint: "Tap an emotion to see its connections \xB7 Use the legend to filter types",
-      mapHintSelected: "Tap outside the node to return to the full map",
-      mapClearSelection: "Clear selection",
-      mapSearchEmpty: "No emotion found in the map",
-      masksHint: "Sometimes what you feel on the surface covers something deeper. Explore this emotion too.",
-      quizTabQuestions: "Questions",
-      quizTabBody: "Sensations",
-      bodyMapTitle: "Where do you feel it?",
-      bodyModeSimple: "Simple",
-      bodyModeDetailed: "Detailed",
-      bodyMapTapPrompt: "Tap the body zones where you feel something",
-      bodyMapResultTitle: "You might be feeling...",
-      bodyMapNoMatch: "Uncommon combination \u2014 try selecting more zones",
-      bodyMapClear: "Clear selection",
-      zoneHead: "Head",
-      zoneFace: "Face",
-      zoneThroat: "Throat",
-      zoneShoulders: "Shoulders",
-      zoneChest: "Chest",
-      zoneStomach: "Stomach",
-      zoneArms: "Arms",
-      zoneLegs: "Legs",
-      offlineBanner: "Offline \xB7 Using saved data",
-      diaryEmptyPrompt: "You haven't recorded any emotion yet.",
-      diaryEmptyAction1: "Do a check-in",
-      diaryEmptyAction2: "Discover what I feel",
-      diaryExportButton: "Export",
-      diaryTagLabel: "Context (optional)",
-      diaryTagTrabajo: "Work",
-      diaryTagPareja: "Partner",
-      diaryTagFamilia: "Family",
-      diaryTagCuerpo: "Body",
-      diaryTagDinero: "Money",
-      techniquePractice: "Practice now",
-      techniqueLabel: "Guided technique",
-      crisisTriggerTitle: "Feeling overwhelmed?",
-      crisisTriggerSub: "Three steps to find your ground",
-      crisisTriggerBtn: "I need help now",
-      crisisStep: "Step",
-      crisisOf: "of",
-      crisisClose: "Close",
-      crisisNext: "I'm still here \u2192",
-      crisisDone: "I did it \u2192",
-      crisisStep1Title: "This is valid.",
-      crisisStep1Body: "What you're feeling is real and you don't have to handle it alone. You don't need to do anything perfectly right now. Just being here is enough.",
-      crisisStep2Title: "Ground yourself in the present.",
-      crisisStep2Intro: "Let's go through what's around you:",
-      crisisStep2Items: "5 things you can see|4 things you can touch|3 things you can hear|2 things you can smell|1 thing you can taste",
-      crisisStep3Title: "Just one thing.",
-      crisisStep3Intro: "Choose one small action:",
-      crisisStep3Actions: "Drink a glass of water|Go outside for 5 minutes|Write one word that describes how you feel|Call someone you trust",
-      crisisStep3End: "That's it. That's all you need to do right now."
-    }
-  };
-  var DIARY_TAGS = ["trabajo", "pareja", "familia", "cuerpo", "dinero"];
-  var REGULATION_TECHNIQUES = {
-    Ansiedad: {
-      es: { name: "Respiraci\xF3n 4-7-8", steps: ["Inhala por la nariz durante 4 segundos.", "Ret\xE9n el aire durante 7 segundos.", "Exhala lentamente por la boca durante 8 segundos.", "Repite 3 o 4 veces hasta sentir el ritmo."] },
-      en: { name: "4-7-8 Breathing", steps: ["Inhale through your nose for 4 seconds.", "Hold your breath for 7 seconds.", "Exhale slowly through your mouth for 8 seconds.", "Repeat 3 to 4 times until you feel the rhythm."] }
-    },
-    Preocupaci\u00F3n: {
-      es: { name: "Tiempo de preocupaci\xF3n", steps: ["Elige un momento fijo del d\xEDa (ej. 18:00) para preocuparte.", "Cuando aparezca un pensamiento ansioso antes de esa hora, an\xF3talo y posp\xF3nlo.", "En tu momento designado, revisa la lista.", "Preg\xFAntate: \xBFpuedo hacer algo ahora? Si s\xED, act\xFAa. Si no, su\xE9ltalo."] },
-      en: { name: "Worry time", steps: ["Set a fixed time each day (e.g. 6 pm) to worry.", "When an anxious thought appears before that time, write it down and postpone it.", "At your designated time, review the list.", "Ask yourself: can I do something now? If yes, act. If not, let it go."] }
-    },
-    Enojo: {
-      es: { name: "T\xE9cnica STOP", steps: ["Stop: detente. No act\xFAes todav\xEDa.", "Take a breath: toma una respiraci\xF3n profunda.", "Observe: observa qu\xE9 est\xE1s sintiendo y pensando.", "Proceed: act\xFAa de manera que te ayude, no que te lastime."] },
-      en: { name: "STOP Technique", steps: ["Stop: pause. Don't act yet.", "Take a breath: take one deep breath.", "Observe: notice what you're feeling and thinking.", "Proceed: act in a way that helps you, not hurts you."] }
-    },
-    Frustraci\u00F3n: {
-      es: { name: "Descarga f\xEDsica controlada", steps: ["Reconoce la energ\xEDa que sientes en el cuerpo.", "Elige una descarga controlada: caminar r\xE1pido, estirar, cerrar el pu\xF1o fuerte y soltar.", "Repite hasta que la intensidad baje un par de puntos.", "Vuelve al problema con m\xE1s calma."] },
-      en: { name: "Controlled physical release", steps: ["Acknowledge the energy you feel in your body.", "Choose a controlled release: walk fast, stretch, clench your fist and release.", "Repeat until the intensity drops a notch.", "Return to the problem with more calm."] }
-    },
-    Irritabilidad: {
-      es: { name: "Pausa de 5 minutos", steps: ["Identifica la se\xF1al: est\xE1s respondiendo m\xE1s r\xE1pido o con m\xE1s fuerza de lo habitual.", "Pide un descanso si est\xE1s con alguien.", "Sal del espacio, toma agua y respira.", "Preg\xFAntate: \xBFqu\xE9 necesito ahora mismo? (silencio, espacio, comida, descanso)."] },
-      en: { name: "5-minute pause", steps: ["Notice the signal: you're responding faster or harder than usual.", "Ask for an explicit break if you're with someone.", "Leave the space, drink water, and breathe.", "Ask yourself: what do I need right now? (silence, space, food, rest)."] }
-    },
-    Tristeza: {
-      es: { name: "Activaci\xF3n conductual suave", steps: ["Elige una actividad peque\xF1a y concreta (no ambiciosa): caminar 10 minutos, ducharte, preparar algo de comer.", "Hazla aunque no tengas ganas \u2014 la motivaci\xF3n suele llegar despu\xE9s de la acci\xF3n.", "No la eval\xFAes mientras la haces.", "Al terminar, nota si algo cambi\xF3, aunque sea un poco."] },
-      en: { name: "Gentle behavioral activation", steps: ["Choose one small, concrete activity (not ambitious): a 10-minute walk, a shower, making food.", "Do it even if you don't feel like it \u2014 motivation often comes after action.", "Don't evaluate it while you're doing it.", "When done, notice if anything shifted, even slightly."] }
-    },
-    Miedo: {
-      es: { name: "Evaluar el riesgo real", steps: ["Nombra el miedo con precisi\xF3n: \xBFa qu\xE9 exactamente?", "Preg\xFAntate: \xBFqu\xE9 probabilidad real tiene de ocurrir? \xBFTengo evidencia?", "Si el riesgo es real: \xBFqu\xE9 es lo m\xEDnimo que puedo hacer ahora para sentirme m\xE1s seguro/a?", "Si es imaginado: recuerda que tu mente exagera la amenaza para protegerte."] },
-      en: { name: "Assess the real risk", steps: ["Name the fear precisely: what exactly are you afraid of?", "Ask yourself: how likely is this really? Do I have evidence?", "If the risk is real: what's the smallest thing I can do now to be safer?", "If it's imagined: remember your mind exaggerates threats to protect you."] }
-    },
-    Verg\u00FCenza: {
-      es: { name: "Autocuidado compasivo", steps: ["Pon una mano en el pecho y siente el calor.", "Repite en voz baja o internamente: 'esto duele, y es humano sentirlo'.", "Preg\xFAntate: \xBFqu\xE9 le dir\xEDa a alguien que quiero si estuviera sintiendo esto?", "Dite eso a ti mismo/a."] },
-      en: { name: "Compassionate self-care", steps: ["Place one hand on your chest and feel the warmth.", "Say softly or internally: 'this hurts, and it is human to feel this'.", "Ask yourself: what would I say to someone I love if they felt this?", "Say that to yourself."] }
-    },
-    Culpa: {
-      es: { name: "Reparaci\xF3n concreta", steps: ["Identifica si la culpa es \xFAtil (se\xF1ala algo que puedes reparar) o excesiva (va m\xE1s all\xE1 del error real).", "Si es \xFAtil: piensa en una acci\xF3n concreta de reparaci\xF3n o disculpa.", "Haz esa acci\xF3n, o planea cu\xE1ndo la vas a hacer.", "Si es excesiva: reconoce que ya hiciste lo que pod\xEDas y practica soltarlo."] },
-      en: { name: "Concrete repair", steps: ["Identify if the guilt is useful (points to something you can fix) or excessive (beyond the actual mistake).", "If useful: think of one concrete action of repair or apology.", "Do that action, or plan when you will.", "If excessive: acknowledge you did what you could and practice letting go."] }
-    },
-    Angustia: {
-      es: { name: "T\xE9cnica 5-4-3-2-1", steps: ["Nombra 5 cosas que puedes ver ahora mismo.", "Nombra 4 cosas que puedes tocar (y t\xF3calas).", "Nombra 3 cosas que puedes escuchar.", "Nombra 2 cosas que puedes oler.", "Nombra 1 cosa que puedes saborear."] },
-      en: { name: "5-4-3-2-1 Grounding", steps: ["Name 5 things you can see right now.", "Name 4 things you can touch (and touch them).", "Name 3 things you can hear.", "Name 2 things you can smell.", "Name 1 thing you can taste."] }
-    }
-  };
+  // js/data/emotions.js
   var EMOTION_NAME_TRANSLATIONS = {
     Enojo: "Anger",
     Tristeza: "Sadness",
@@ -607,17 +286,6 @@
     { nombre: "Decepci\xF3n", color: "#bae6fd", text: "#0c4a6e", siente: "Pesadez tranquila, des\xE1nimo suave, vac\xEDo donde esperaba algo", dispara: "Expectativa no cumplida, promesa rota, resultado por debajo de lo esperado", funcion: "Se\xF1alar que algo esperado no lleg\xF3, invitar a reajustar expectativas", mensaje: "Esperaba algo que no se dio", impulso: "Resignarse, desconectarse, buscar culpables", respuesta: "Valida la expectativa, revisa si era realista, redirige tu energ\xEDa" },
     { nombre: "Ternura", color: "#ffe4e6", text: "#9f1239", siente: "Calidez suave, ganas de cuidar, apertura en el pecho, sensaci\xF3n de querer proteger", dispara: "Algo o alguien fr\xE1gil, vulnerable o querido: hijos, mascotas, momentos \xEDntimos", funcion: "Fortalecer v\xEDnculos, motivar el cuidado, profundizar la conexi\xF3n", mensaje: "Hay algo que quiero proteger o acercar", impulso: "Contener la expresi\xF3n, minimizarla como tonter\xEDa o debilidad", respuesta: "Perm\xEDtete expresarla, ac\xE9rcate, cuida sin perder tus propios l\xEDmites" }
   ];
-  var RECENT_KEY = "brujulaRecientes";
-  var LANGUAGE_KEY = "brujulaIdioma";
-  var THEME_KEY = "brujulaThema";
-  var DIARY_KEY = "brujulaDiario";
-  var RECENT_LIMIT = 5;
-  var MOOD_CATEGORIES = [
-    { key: "agitado", labelKey: "moodAgitado", emoji: "\u{1F624}", color: "#F5A5A0", ink: "#7A2E2E", emotions: ["Enojo", "Frustraci\xF3n", "Irritabilidad", "Ansiedad", "Miedo", "Preocupaci\xF3n", "Angustia", "Envidia", "Disgusto"] },
-    { key: "triste", labelKey: "moodTriste", emoji: "\u{1F622}", color: "#A4C3E3", ink: "#1F3F66", emotions: ["Tristeza", "Soledad", "Nostalgia", "Culpa", "Verg\xFCenza", "Rechazo", "Decepci\xF3n"] },
-    { key: "confundido", labelKey: "moodConfundido", emoji: "\u{1F914}", color: "#F5D88A", ink: "#7A5A1A", emotions: ["Confusi\xF3n", "Aburrimiento", "Celos"] },
-    { key: "bien", labelKey: "moodBien", emoji: "\u{1F60C}", color: "#8FD4AE", ink: "#1E5237", emotions: ["Calma", "Alivio", "Gratitud", "Felicidad", "Alegr\xEDa", "Orgullo", "Entusiasmo", "Placer", "Ternura"] }
-  ];
   var EMOTION_RELATIONS = [
     // Coexisten frecuentemente
     { from: "Ansiedad", to: "Miedo", type: "coexiste" },
@@ -659,23 +327,75 @@
     { from: "Entusiasmo", to: "Aburrimiento", type: "opuesta" },
     { from: "Felicidad", to: "Tristeza", type: "opuesta" }
   ];
+  var MOOD_CATEGORIES = [
+    { key: "agitado", labelKey: "checkin.moodAgitado", emoji: "\u{1F624}", color: "#F5A5A0", ink: "#7A2E2E", emotions: ["Enojo", "Frustraci\xF3n", "Irritabilidad", "Ansiedad", "Miedo", "Preocupaci\xF3n", "Angustia", "Envidia", "Disgusto"] },
+    { key: "triste", labelKey: "checkin.moodTriste", emoji: "\u{1F622}", color: "#A4C3E3", ink: "#1F3F66", emotions: ["Tristeza", "Soledad", "Nostalgia", "Culpa", "Verg\xFCenza", "Rechazo", "Decepci\xF3n"] },
+    { key: "confundido", labelKey: "checkin.moodConfundido", emoji: "\u{1F914}", color: "#F5D88A", ink: "#7A5A1A", emotions: ["Confusi\xF3n", "Aburrimiento", "Celos"] },
+    { key: "bien", labelKey: "checkin.moodBien", emoji: "\u{1F60C}", color: "#8FD4AE", ink: "#1E5237", emotions: ["Calma", "Alivio", "Gratitud", "Felicidad", "Alegr\xEDa", "Orgullo", "Entusiasmo", "Placer", "Ternura"] }
+  ];
+
+  // js/data/techniques.js
+  var REGULATION_TECHNIQUES = {
+    Ansiedad: {
+      es: { name: "Respiraci\xF3n 4-7-8", steps: ["Inhala por la nariz durante 4 segundos.", "Ret\xE9n el aire durante 7 segundos.", "Exhala lentamente por la boca durante 8 segundos.", "Repite 3 o 4 veces hasta sentir el ritmo."] },
+      en: { name: "4-7-8 Breathing", steps: ["Inhale through your nose for 4 seconds.", "Hold your breath for 7 seconds.", "Exhale slowly through your mouth for 8 seconds.", "Repeat 3 to 4 times until you feel the rhythm."] }
+    },
+    Preocupaci\u00F3n: {
+      es: { name: "Tiempo de preocupaci\xF3n", steps: ["Elige un momento fijo del d\xEDa (ej. 18:00) para preocuparte.", "Cuando aparezca un pensamiento ansioso antes de esa hora, an\xF3talo y posp\xF3nlo.", "En tu momento designado, revisa la lista.", "Preg\xFAntate: \xBFpuedo hacer algo ahora? Si s\xED, act\xFAa. Si no, su\xE9ltalo."] },
+      en: { name: "Worry time", steps: ["Set a fixed time each day (e.g. 6 pm) to worry.", "When an anxious thought appears before that time, write it down and postpone it.", "At your designated time, review the list.", "Ask yourself: can I do something now? If yes, act. If not, let it go."] }
+    },
+    Enojo: {
+      es: { name: "T\xE9cnica STOP", steps: ["Stop: detente. No act\xFAes todav\xEDa.", "Take a breath: toma una respiraci\xF3n profunda.", "Observe: observa qu\xE9 est\xE1s sintiendo y pensando.", "Proceed: act\xFAa de manera que te ayude, no que te lastime."] },
+      en: { name: "STOP Technique", steps: ["Stop: pause. Don't act yet.", "Take a breath: take one deep breath.", "Observe: notice what you're feeling and thinking.", "Proceed: act in a way that helps you, not hurts you."] }
+    },
+    Frustraci\u00F3n: {
+      es: { name: "Descarga f\xEDsica controlada", steps: ["Reconoce la energ\xEDa que sientes en el cuerpo.", "Elige una descarga controlada: caminar r\xE1pido, estirar, cerrar el pu\xF1o fuerte y soltar.", "Repite hasta que la intensidad baje un par de puntos.", "Vuelve al problema con m\xE1s calma."] },
+      en: { name: "Controlled physical release", steps: ["Acknowledge the energy you feel in your body.", "Choose a controlled release: walk fast, stretch, clench your fist and release.", "Repeat until the intensity drops a notch.", "Return to the problem with more calm."] }
+    },
+    Irritabilidad: {
+      es: { name: "Pausa de 5 minutos", steps: ["Identifica la se\xF1al: est\xE1s respondiendo m\xE1s r\xE1pido o con m\xE1s fuerza de lo habitual.", "Pide un descanso si est\xE1s con alguien.", "Sal del espacio, toma agua y respira.", "Preg\xFAntate: \xBFqu\xE9 necesito ahora mismo? (silencio, espacio, comida, descanso)."] },
+      en: { name: "5-minute pause", steps: ["Notice the signal: you're responding faster or harder than usual.", "Ask for an explicit break if you're with someone.", "Leave the space, drink water, and breathe.", "Ask yourself: what do I need right now? (silence, space, food, rest)."] }
+    },
+    Tristeza: {
+      es: { name: "Activaci\xF3n conductual suave", steps: ["Elige una actividad peque\xF1a y concreta (no ambiciosa): caminar 10 minutos, ducharte, preparar algo de comer.", "Hazla aunque no tengas ganas \u2014 la motivaci\xF3n suele llegar despu\xE9s de la acci\xF3n.", "No la eval\xFAes mientras la haces.", "Al terminar, nota si algo cambi\xF3, aunque sea un poco."] },
+      en: { name: "Gentle behavioral activation", steps: ["Choose one small, concrete activity (not ambitious): a 10-minute walk, a shower, making food.", "Do it even if you don't feel like it \u2014 motivation often comes after action.", "Don't evaluate it while you're doing it.", "When done, notice if anything shifted, even slightly."] }
+    },
+    Miedo: {
+      es: { name: "Evaluar el riesgo real", steps: ["Nombra el miedo con precisi\xF3n: \xBFa qu\xE9 exactamente?", "Preg\xFAntate: \xBFqu\xE9 probabilidad real tiene de ocurrir? \xBFTengo evidencia?", "Si el riesgo es real: \xBFqu\xE9 es lo m\xEDnimo que puedo hacer ahora para sentirme m\xE1s seguro/a?", "Si es imaginado: recuerda que tu mente exagera la amenaza para protegerte."] },
+      en: { name: "Assess the real risk", steps: ["Name the fear precisely: what exactly are you afraid of?", "Ask yourself: how likely is this really? Do I have evidence?", "If the risk is real: what's the smallest thing I can do now to be safer?", "If it's imagined: remember your mind exaggerates threats to protect you."] }
+    },
+    Verg\u00FCenza: {
+      es: { name: "Autocuidado compasivo", steps: ["Pon una mano en el pecho y siente el calor.", "Repite en voz baja o internamente: 'esto duele, y es humano sentirlo'.", "Preg\xFAntate: \xBFqu\xE9 le dir\xEDa a alguien que quiero si estuviera sintiendo esto?", "Dite eso a ti mismo/a."] },
+      en: { name: "Compassionate self-care", steps: ["Place one hand on your chest and feel the warmth.", "Say softly or internally: 'this hurts, and it is human to feel this'.", "Ask yourself: what would I say to someone I love if they felt this?", "Say that to yourself."] }
+    },
+    Culpa: {
+      es: { name: "Reparaci\xF3n concreta", steps: ["Identifica si la culpa es \xFAtil (se\xF1ala algo que puedes reparar) o excesiva (va m\xE1s all\xE1 del error real).", "Si es \xFAtil: piensa en una acci\xF3n concreta de reparaci\xF3n o disculpa.", "Haz esa acci\xF3n, o planea cu\xE1ndo la vas a hacer.", "Si es excesiva: reconoce que ya hiciste lo que pod\xEDas y practica soltarlo."] },
+      en: { name: "Concrete repair", steps: ["Identify if the guilt is useful (points to something you can fix) or excessive (beyond the actual mistake).", "If useful: think of one concrete action of repair or apology.", "Do that action, or plan when you will.", "If excessive: acknowledge you did what you could and practice letting go."] }
+    },
+    Angustia: {
+      es: { name: "T\xE9cnica 5-4-3-2-1", steps: ["Nombra 5 cosas que puedes ver ahora mismo.", "Nombra 4 cosas que puedes tocar (y t\xF3calas).", "Nombra 3 cosas que puedes escuchar.", "Nombra 2 cosas que puedes oler.", "Nombra 1 cosa que puedes saborear."] },
+      en: { name: "5-4-3-2-1 Grounding", steps: ["Name 5 things you can see right now.", "Name 4 things you can touch (and touch them).", "Name 3 things you can hear.", "Name 2 things you can smell.", "Name 1 thing you can taste."] }
+    }
+  };
+
+  // js/data/bodyMap.data.js
   var BODY_ZONES = {
     simple: [
-      { id: "head", labelKey: "zoneHead", color: "#818cf8" },
-      { id: "chest", labelKey: "zoneChest", color: "#f472b6" },
-      { id: "stomach", labelKey: "zoneStomach", color: "#fb923c" },
-      { id: "arms", labelKey: "zoneArms", color: "#34d399" },
-      { id: "legs", labelKey: "zoneLegs", color: "#fbbf24" }
+      { id: "head", labelKey: "zone.head", color: "#818cf8" },
+      { id: "chest", labelKey: "zone.chest", color: "#f472b6" },
+      { id: "stomach", labelKey: "zone.stomach", color: "#fb923c" },
+      { id: "arms", labelKey: "zone.arms", color: "#34d399" },
+      { id: "legs", labelKey: "zone.legs", color: "#fbbf24" }
     ],
     detailed: [
-      { id: "head", labelKey: "zoneHead", color: "#818cf8" },
-      { id: "face", labelKey: "zoneFace", color: "#f87171" },
-      { id: "throat", labelKey: "zoneThroat", color: "#e879f9" },
-      { id: "shoulders", labelKey: "zoneShoulders", color: "#60a5fa" },
-      { id: "chest", labelKey: "zoneChest", color: "#f472b6" },
-      { id: "stomach", labelKey: "zoneStomach", color: "#fb923c" },
-      { id: "arms", labelKey: "zoneArms", color: "#34d399" },
-      { id: "legs", labelKey: "zoneLegs", color: "#fbbf24" }
+      { id: "head", labelKey: "zone.head", color: "#818cf8" },
+      { id: "face", labelKey: "zone.face", color: "#f87171" },
+      { id: "throat", labelKey: "zone.throat", color: "#e879f9" },
+      { id: "shoulders", labelKey: "zone.shoulders", color: "#60a5fa" },
+      { id: "chest", labelKey: "zone.chest", color: "#f472b6" },
+      { id: "stomach", labelKey: "zone.stomach", color: "#fb923c" },
+      { id: "arms", labelKey: "zone.arms", color: "#34d399" },
+      { id: "legs", labelKey: "zone.legs", color: "#fbbf24" }
     ]
   };
   var SIMPLE_ZONE_GROUPS = {
@@ -688,7 +408,7 @@
   var BODY_ZONE_EMOTIONS = {
     head: ["Confusi\xF3n", "Preocupaci\xF3n", "Ansiedad", "Angustia"],
     face: ["Verg\xFCenza", "Enojo", "Tristeza", "Alegr\xEDa"],
-    throat: ["Angustia", "Miedo", "Asco", "Verg\xFCenza"],
+    throat: ["Angustia", "Miedo", "Disgusto", "Verg\xFCenza"],
     shoulders: ["Ansiedad", "Frustraci\xF3n", "Irritabilidad", "Preocupaci\xF3n", "Enojo"],
     chest: [
       "Enojo",
@@ -709,10 +429,367 @@
       "Frustraci\xF3n",
       "Preocupaci\xF3n"
     ],
-    stomach: ["Miedo", "Ansiedad", "Asco", "Culpa", "Celos", "Angustia", "Decepci\xF3n", "Envidia"],
+    stomach: ["Miedo", "Ansiedad", "Disgusto", "Culpa", "Celos", "Angustia", "Decepci\xF3n", "Envidia"],
     arms: ["Enojo", "Frustraci\xF3n", "Entusiasmo", "Irritabilidad"],
     legs: ["Tristeza", "Alegr\xEDa", "Aburrimiento", "Ansiedad", "Calma", "Felicidad"]
   };
+
+  // js/i18n/es.js
+  var es = {
+    // ── Root (app-generic) ────────────────────────────────────────────────────
+    title: "Br\xFAjula Emocional",
+    subtitle: "Encuentra claridad en lo que sientes.",
+    langLabel: "Idioma",
+    offlineBanner: "Sin conexi\xF3n \xB7 Usando datos guardados",
+    searchPlaceholder: "\xBFQu\xE9 sientes hoy? (ej. Ansiedad, Placer...)",
+    recentTitle: "Vistas recientemente",
+    closeButton: "Entendido",
+    emotionTag: "Emoci\xF3n",
+    feelLabel: "\xBFC\xF3mo se siente?",
+    triggerLabel: "\xBFQu\xE9 la dispara?",
+    functionLabel: "\xBFPara qu\xE9 sirve?",
+    messageLabel: "Lo que te est\xE1 diciendo:",
+    impulseLabel: "Impulso a evitar",
+    responseLabel: "Respuesta sugerida",
+    emptyTitle: "No encontramos esa emoci\xF3n",
+    emptyHint: 'Prueba con otra palabra como "incertidumbre", "calma" o "dolor".',
+    openChip: "Ver",
+    openEmotionAria: "Abrir emoci\xF3n",
+    openDetailAria: "Abrir detalle de",
+    copyButton: "Copiar",
+    copiedFeedback: "Copiado",
+    shareButton: "Compartir",
+    masksHint: "A veces lo que sientes en la superficie cubre algo m\xE1s. Explora tambi\xE9n esta emoci\xF3n.",
+    // ── Nav ───────────────────────────────────────────────────────────────────
+    nav: {
+      emociones: "Emociones",
+      checkin: "\xBFQu\xE9 siento?",
+      diary: "Diario",
+      mapa: "Mapa"
+    },
+    // ── Settings ──────────────────────────────────────────────────────────────
+    settings: {
+      label: "Configuraci\xF3n",
+      themeLabel: "Tema",
+      themeLight: "Claro",
+      themeAuto: "Auto",
+      themeDark: "Oscuro"
+    },
+    // ── Install ───────────────────────────────────────────────────────────────
+    install: {
+      button: "Instalar app",
+      iosTitle: "Instalar en iPhone/iPad",
+      iosStep1: "1. Toca el bot\xF3n Compartir de Safari (cuadro con flecha hacia arriba).",
+      iosStep2: '2. Selecciona "A\xF1adir a pantalla de inicio".',
+      iosClose: "Entendido"
+    },
+    // ── Checkin ───────────────────────────────────────────────────────────────
+    checkin: {
+      title: "\xBFC\xF3mo me siento?",
+      reset: "Ver todas",
+      moodAgitado: "Agitado",
+      moodTriste: "Triste",
+      moodConfundido: "Confundido",
+      moodBien: "Bien"
+    },
+    // ── Diary ─────────────────────────────────────────────────────────────────
+    diary: {
+      trigger: "Mi diario emocional",
+      triggerSub: "Solo se guarda en tu dispositivo",
+      title: "Diario emocional",
+      privacyNote: "Tus entradas se guardan solo en este dispositivo. Nunca salen de aqu\xED.",
+      empty: "A\xFAn no hay entradas.",
+      addShort: "Diario",
+      noteLabel: "Nota (opcional)",
+      notePlaceholder: "\xBFQu\xE9 m\xE1s quieres recordar?",
+      saveButton: "Guardar",
+      cancelButton: "Cancelar",
+      deleteButton: "Eliminar entrada",
+      clearAll: "Borrar todo el diario",
+      clearConfirm: "\xBFBorrar todas las entradas del diario? Esta acci\xF3n no se puede deshacer.",
+      todayLabel: "Hoy",
+      addedFeedback: "Guardado en tu diario",
+      newEntry: "Nueva entrada",
+      pickEmotion: "\xBFQu\xE9 sentiste?",
+      emptyPrompt: "Todav\xEDa no registraste ninguna emoci\xF3n.",
+      emptyAction1: "Hacer check-in",
+      emptyAction2: "Descubrir qu\xE9 siento",
+      exportButton: "Exportar",
+      tagLabel: "Contexto (opcional)",
+      tagTrabajo: "Trabajo",
+      tagPareja: "Pareja",
+      tagFamilia: "Familia",
+      tagCuerpo: "Cuerpo",
+      tagDinero: "Dinero"
+    },
+    // ── Quiz ──────────────────────────────────────────────────────────────────
+    quiz: {
+      trigger: "\xBFNo sabes lo que sientes?",
+      triggerSub: "Desc\xFAbrelo en 3 preguntas",
+      title: "\xBFQu\xE9 siento?",
+      q1: "\xBFC\xF3mo sientes tu cuerpo ahora mismo?",
+      q1a: "Activado, tenso o acelerado",
+      q1b: "Quieto, pesado o tranquilo",
+      q2: "\xBFC\xF3mo describir\xEDas lo que sientes?",
+      q2a: "Agradable, expansivo o positivo",
+      q2b: "Inc\xF3modo, dif\xEDcil o tenso",
+      q3: "\xBFParece relacionado con algo concreto?",
+      q3a: "S\xED, algo o alguien lo desencaden\xF3",
+      q3b: "No est\xE1 claro, es m\xE1s difuso",
+      resultTitle: "Puede que est\xE9s sintiendo...",
+      back: "Anterior",
+      restart: "Empezar de nuevo",
+      close: "Ver todas las emociones",
+      tabQuestions: "Preguntas",
+      tabBody: "Sensaciones"
+    },
+    // ── Crisis ────────────────────────────────────────────────────────────────
+    crisis: {
+      triggerTitle: "\xBFEst\xE1s desbordado/a?",
+      triggerSub: "Tres pasos para recuperar el piso",
+      triggerBtn: "Necesito ayuda ahora",
+      step: "Paso",
+      of: "de",
+      close: "Cerrar",
+      next: "Sigo aqu\xED \u2192",
+      done: "Lo hice \u2192",
+      step1Title: "Esto es v\xE1lido.",
+      step1Body: "Lo que est\xE1s sintiendo es real y no tienes que manejarlo solo/a. No hace falta hacer nada perfecto ahora mismo. Solo estar aqu\xED ya es suficiente.",
+      step2Title: "Ancla en el presente.",
+      step2Intro: "Recorramos juntos lo que te rodea:",
+      step2Items: "5 cosas que puedes ver|4 cosas que puedes tocar|3 cosas que puedes escuchar|2 cosas que puedes oler|1 cosa que puedes saborear",
+      step3Title: "Una sola cosa.",
+      step3Intro: "Elige una acci\xF3n m\xEDnima:",
+      step3Actions: "Tomar un vaso de agua|Salir 5 minutos al aire libre|Escribir una palabra que describe c\xF3mo te sientes|Llamar a alguien de confianza",
+      step3End: "Listo. Eso es todo lo que necesitas hacer ahora."
+    },
+    // ── Map ───────────────────────────────────────────────────────────────────
+    map: {
+      viewGraph: "Grafo",
+      viewQuad: "Cuadrantes",
+      relCoexiste: "A menudo coexisten",
+      relEscalaA: "Puede escalar a",
+      relEnmascara: "Puede enmascarar",
+      relOpuesta: "Emoci\xF3n opuesta",
+      infoNone: "Sin relaciones registradas",
+      legendLabel: "Leyenda del mapa",
+      searchPlaceholder: "Buscar emoci\xF3n en el mapa...",
+      filterAll: "Todas",
+      hint: "Toca una emoci\xF3n para ver sus conexiones \xB7 Usa la leyenda para filtrar tipos",
+      hintSelected: "Toca fuera del nodo para volver al mapa completo",
+      clearSelection: "Limpiar selecci\xF3n",
+      searchEmpty: "No encontramos esa emoci\xF3n en el mapa"
+    },
+    // ── Body map ──────────────────────────────────────────────────────────────
+    body: {
+      mapTitle: "\xBFD\xF3nde lo sientes?",
+      modeSimple: "Simple",
+      modeDetailed: "Detallado",
+      tapPrompt: "Toca las zonas del cuerpo donde sientes algo",
+      resultTitle: "Puede que est\xE9s sintiendo...",
+      noMatch: "Combinaci\xF3n poco frecuente \u2014 prueba seleccionando m\xE1s zonas",
+      clear: "Limpiar selecci\xF3n"
+    },
+    // ── Body zones ────────────────────────────────────────────────────────────
+    zone: {
+      head: "Cabeza",
+      face: "Cara",
+      throat: "Garganta",
+      shoulders: "Hombros",
+      chest: "Pecho",
+      stomach: "Abdomen",
+      arms: "Brazos",
+      legs: "Piernas"
+    },
+    // ── Technique ─────────────────────────────────────────────────────────────
+    technique: {
+      practice: "Practicar ahora",
+      label: "T\xE9cnica guiada"
+    }
+  };
+
+  // js/i18n/en.js
+  var en = {
+    // ── Root (app-generic) ────────────────────────────────────────────────────
+    title: "Emotional Compass",
+    subtitle: "Find clarity in what you feel.",
+    langLabel: "Language",
+    offlineBanner: "Offline \xB7 Using saved data",
+    searchPlaceholder: "How are you feeling today? (e.g. Anxiety, Joy...)",
+    recentTitle: "Recently viewed",
+    closeButton: "Got it",
+    emotionTag: "Emotion",
+    feelLabel: "How does it feel?",
+    triggerLabel: "What triggers it?",
+    functionLabel: "What is it for?",
+    messageLabel: "What this feeling is telling you:",
+    impulseLabel: "Impulse to avoid",
+    responseLabel: "Suggested response",
+    emptyTitle: "We could not find that emotion",
+    emptyHint: 'Try another word like "uncertainty", "calm" or "pain".',
+    openChip: "View",
+    openEmotionAria: "Open emotion",
+    openDetailAria: "Open details for",
+    copyButton: "Copy",
+    copiedFeedback: "Copied",
+    shareButton: "Share",
+    masksHint: "Sometimes what you feel on the surface covers something deeper. Explore this emotion too.",
+    // ── Nav ───────────────────────────────────────────────────────────────────
+    nav: {
+      emociones: "Emotions",
+      checkin: "How do I feel?",
+      diary: "Diary",
+      mapa: "Map"
+    },
+    // ── Settings ──────────────────────────────────────────────────────────────
+    settings: {
+      label: "Settings",
+      themeLabel: "Theme",
+      themeLight: "Light",
+      themeAuto: "Auto",
+      themeDark: "Dark"
+    },
+    // ── Install ───────────────────────────────────────────────────────────────
+    install: {
+      button: "Install app",
+      iosTitle: "Install on iPhone/iPad",
+      iosStep1: "1. Tap Safari's Share button (square with upward arrow).",
+      iosStep2: '2. Select "Add to Home Screen".',
+      iosClose: "Got it"
+    },
+    // ── Checkin ───────────────────────────────────────────────────────────────
+    checkin: {
+      title: "How do I feel?",
+      reset: "See all",
+      moodAgitado: "Agitated",
+      moodTriste: "Sad",
+      moodConfundido: "Confused",
+      moodBien: "Good"
+    },
+    // ── Diary ─────────────────────────────────────────────────────────────────
+    diary: {
+      trigger: "My emotional diary",
+      triggerSub: "Saved only on your device",
+      title: "Emotional diary",
+      privacyNote: "Your entries are saved only on this device. They never leave it.",
+      empty: "No entries yet.",
+      addShort: "Diary",
+      noteLabel: "Note (optional)",
+      notePlaceholder: "What else do you want to remember?",
+      saveButton: "Save",
+      cancelButton: "Cancel",
+      deleteButton: "Delete entry",
+      clearAll: "Clear all diary entries",
+      clearConfirm: "Clear all diary entries? This cannot be undone.",
+      todayLabel: "Today",
+      addedFeedback: "Saved to your diary",
+      newEntry: "New entry",
+      pickEmotion: "What did you feel?",
+      emptyPrompt: "You haven't recorded any emotion yet.",
+      emptyAction1: "Do a check-in",
+      emptyAction2: "Discover what I feel",
+      exportButton: "Export",
+      tagLabel: "Context (optional)",
+      tagTrabajo: "Work",
+      tagPareja: "Partner",
+      tagFamilia: "Family",
+      tagCuerpo: "Body",
+      tagDinero: "Money"
+    },
+    // ── Quiz ──────────────────────────────────────────────────────────────────
+    quiz: {
+      trigger: "Not sure what you feel?",
+      triggerSub: "Find out in 3 questions",
+      title: "What am I feeling?",
+      q1: "How does your body feel right now?",
+      q1a: "Activated, tense or rushing",
+      q1b: "Quiet, heavy or calm",
+      q2: "How would you describe what you feel?",
+      q2a: "Pleasant, expansive or positive",
+      q2b: "Uncomfortable, difficult or tense",
+      q3: "Does it seem related to something specific?",
+      q3a: "Yes, something or someone triggered it",
+      q3b: "Not clear, it feels more diffuse",
+      resultTitle: "You might be feeling...",
+      back: "Previous",
+      restart: "Start over",
+      close: "See all emotions",
+      tabQuestions: "Questions",
+      tabBody: "Sensations"
+    },
+    // ── Crisis ────────────────────────────────────────────────────────────────
+    crisis: {
+      triggerTitle: "Feeling overwhelmed?",
+      triggerSub: "Three steps to find your ground",
+      triggerBtn: "I need help now",
+      step: "Step",
+      of: "of",
+      close: "Close",
+      next: "I'm still here \u2192",
+      done: "I did it \u2192",
+      step1Title: "This is valid.",
+      step1Body: "What you're feeling is real and you don't have to handle it alone. You don't need to do anything perfectly right now. Just being here is enough.",
+      step2Title: "Ground yourself in the present.",
+      step2Intro: "Let's go through what's around you:",
+      step2Items: "5 things you can see|4 things you can touch|3 things you can hear|2 things you can smell|1 thing you can taste",
+      step3Title: "Just one thing.",
+      step3Intro: "Choose one small action:",
+      step3Actions: "Drink a glass of water|Go outside for 5 minutes|Write one word that describes how you feel|Call someone you trust",
+      step3End: "That's it. That's all you need to do right now."
+    },
+    // ── Map ───────────────────────────────────────────────────────────────────
+    map: {
+      viewGraph: "Graph",
+      viewQuad: "Quadrants",
+      relCoexiste: "Often coexist",
+      relEscalaA: "Can escalate to",
+      relEnmascara: "Can mask",
+      relOpuesta: "Opposite emotion",
+      infoNone: "No registered connections",
+      legendLabel: "Map legend",
+      searchPlaceholder: "Search emotion in map...",
+      filterAll: "All",
+      hint: "Tap an emotion to see its connections \xB7 Use the legend to filter types",
+      hintSelected: "Tap outside the node to return to the full map",
+      clearSelection: "Clear selection",
+      searchEmpty: "No emotion found in the map"
+    },
+    // ── Body map ──────────────────────────────────────────────────────────────
+    body: {
+      mapTitle: "Where do you feel it?",
+      modeSimple: "Simple",
+      modeDetailed: "Detailed",
+      tapPrompt: "Tap the body zones where you feel something",
+      resultTitle: "You might be feeling...",
+      noMatch: "Uncommon combination \u2014 try selecting more zones",
+      clear: "Clear selection"
+    },
+    // ── Body zones ────────────────────────────────────────────────────────────
+    zone: {
+      head: "Head",
+      face: "Face",
+      throat: "Throat",
+      shoulders: "Shoulders",
+      chest: "Chest",
+      stomach: "Stomach",
+      arms: "Arms",
+      legs: "Legs"
+    },
+    // ── Technique ─────────────────────────────────────────────────────────────
+    technique: {
+      practice: "Practice now",
+      label: "Guided technique"
+    }
+  };
+
+  // js/constants.js
+  var RECENT_KEY = "brujulaRecientes";
+  var LANGUAGE_KEY = "brujulaIdioma";
+  var THEME_KEY = "brujulaThema";
+  var DIARY_KEY = "brujulaDiario";
+  var RECENT_LIMIT = 5;
+  var DIARY_TAGS = ["trabajo", "pareja", "familia", "cuerpo", "dinero"];
+  var TRANSLATIONS = { es, en };
 
   // js/i18n.js
   function detectInitialLanguage() {
@@ -724,7 +801,17 @@
   function createI18n({ getLang, setLang, onLanguageChanged }) {
     function t(key) {
       const lang = getLang();
-      return TRANSLATIONS[lang]?.[key] ?? TRANSLATIONS.es[key] ?? key;
+      const parts = key.split(".");
+      if (parts.length === 1) {
+        return TRANSLATIONS[lang]?.[key] ?? TRANSLATIONS.es[key] ?? key;
+      }
+      let val = TRANSLATIONS[lang];
+      for (const part of parts) val = val?.[part];
+      if (val === void 0) {
+        val = TRANSLATIONS.es;
+        for (const part of parts) val = val?.[part];
+      }
+      return val !== void 0 ? String(val) : key;
     }
     function getDisplayName(nombre) {
       if (getLang() === "en") return EMOTION_NAME_TRANSLATIONS[nombre] ?? nombre;
@@ -759,76 +846,76 @@
           el.textContent = t("shareButton");
         },
         "diary-add-btn": (el) => {
-          el.setAttribute("aria-label", t("diaryAddShort"));
+          el.setAttribute("aria-label", t("diary.addShort"));
         },
         "diary-add-label": (el) => {
-          el.textContent = t("diaryAddShort");
+          el.textContent = t("diary.addShort");
         },
         "nav-label-emociones": (el) => {
-          el.textContent = t("navEmociones");
+          el.textContent = t("nav.emociones");
         },
         "nav-label-checkin": (el) => {
-          el.textContent = t("navCheckin");
+          el.textContent = t("nav.checkin");
         },
         "nav-label-diario": (el) => {
-          el.textContent = t("navDiary");
+          el.textContent = t("nav.diary");
         },
         "nav-label-mapa": (el) => {
-          el.textContent = t("navMapa");
+          el.textContent = t("nav.mapa");
         },
         "install-app-button": (el) => {
-          el.textContent = t("installButton");
+          el.textContent = t("install.button");
         },
         "ios-install-title": (el) => {
-          el.textContent = t("iosInstallTitle");
+          el.textContent = t("install.iosTitle");
         },
         "ios-install-step-1": (el) => {
-          el.textContent = t("iosInstallStep1");
+          el.textContent = t("install.iosStep1");
         },
         "ios-install-step-2": (el) => {
-          el.textContent = t("iosInstallStep2");
+          el.textContent = t("install.iosStep2");
         },
         "ios-install-close": (el) => {
-          el.textContent = t("iosInstallClose");
+          el.textContent = t("install.iosClose");
         },
         "quiz-trigger-title": (el) => {
-          el.textContent = t("quizTrigger");
+          el.textContent = t("quiz.trigger");
         },
         "quiz-trigger-sub": (el) => {
-          el.textContent = t("quizTriggerSub");
+          el.textContent = t("quiz.triggerSub");
         },
         "crisis-trigger-title": (el) => {
-          el.textContent = t("crisisTriggerTitle");
+          el.textContent = t("crisis.triggerTitle");
         },
         "crisis-trigger-sub": (el) => {
-          el.textContent = t("crisisTriggerSub");
+          el.textContent = t("crisis.triggerSub");
         },
         "crisis-trigger-btn-label": (el) => {
-          el.textContent = t("crisisTriggerBtn");
+          el.textContent = t("crisis.triggerBtn");
         },
         "crisis-panel-close": (el) => {
-          el.setAttribute("aria-label", t("crisisClose"));
+          el.setAttribute("aria-label", t("crisis.close"));
         },
         "settings-btn": (el) => {
-          el.setAttribute("aria-label", t("settingsLabel"));
+          el.setAttribute("aria-label", t("settings.label"));
         },
         "settings-theme-label": (el) => {
-          el.textContent = t("themeLabel");
+          el.textContent = t("settings.themeLabel");
         },
         "settings-lang-label": (el) => {
           el.textContent = t("langLabel");
         },
         "theme-btn-light": (el) => {
-          el.setAttribute("aria-label", t("themeLight"));
-          el.setAttribute("title", t("themeLight"));
+          el.setAttribute("aria-label", t("settings.themeLight"));
+          el.setAttribute("title", t("settings.themeLight"));
         },
         "theme-btn-auto": (el) => {
-          el.setAttribute("aria-label", t("themeAuto"));
-          el.setAttribute("title", t("themeAuto"));
+          el.setAttribute("aria-label", t("settings.themeAuto"));
+          el.setAttribute("title", t("settings.themeAuto"));
         },
         "theme-btn-dark": (el) => {
-          el.setAttribute("aria-label", t("themeDark"));
-          el.setAttribute("title", t("themeDark"));
+          el.setAttribute("aria-label", t("settings.themeDark"));
+          el.setAttribute("title", t("settings.themeDark"));
         }
       };
       for (const [id, apply] of Object.entries(ids)) {
@@ -1162,7 +1249,7 @@
       if (resetBtn) {
         const freshBtn = resetBtn.cloneNode(true);
         resetBtn.replaceWith(freshBtn);
-        freshBtn.textContent = t("checkinReset");
+        freshBtn.textContent = t("checkin.reset");
         freshBtn.addEventListener("click", () => {
           activeCheckinCat = null;
           section.classList.add("hidden");
@@ -1221,11 +1308,11 @@
       form.id = "diary-inline-form";
       form.className = "mt-4 border-t border-slate-100 pt-4";
       form.innerHTML = `
-            <label for="diary-note-input" class="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2 block">${t("diaryNoteLabel")}</label>
-            <textarea id="diary-note-input" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-700 resize-none focus:outline-none focus:ring-2 focus:ring-blue-200" rows="2" placeholder="${t("diaryNotePlaceholder")}"></textarea>
+            <label for="diary-note-input" class="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2 block">${t("diary.noteLabel")}</label>
+            <textarea id="diary-note-input" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-700 resize-none focus:outline-none focus:ring-2 focus:ring-blue-200" rows="2" placeholder="${t("diary.notePlaceholder")}"></textarea>
             <div class="flex gap-2 mt-2">
-                <button id="diary-note-save" type="button" class="flex-1 bg-slate-800 text-white py-2.5 rounded-xl font-bold text-sm hover:bg-slate-700 transition-colors">${t("diarySaveButton")}</button>
-                <button id="diary-note-cancel" type="button" class="flex-1 bg-slate-100 text-slate-600 py-2.5 rounded-xl font-bold text-sm hover:bg-slate-200 transition-colors">${t("diaryCancelButton")}</button>
+                <button id="diary-note-save" type="button" class="flex-1 bg-slate-800 text-white py-2.5 rounded-xl font-bold text-sm hover:bg-slate-700 transition-colors">${t("diary.saveButton")}</button>
+                <button id="diary-note-cancel" type="button" class="flex-1 bg-slate-100 text-slate-600 py-2.5 rounded-xl font-bold text-sm hover:bg-slate-200 transition-colors">${t("diary.cancelButton")}</button>
             </div>
         `;
       const panel = document.getElementById("modal-panel");
@@ -1235,7 +1322,7 @@
       form.querySelector("#diary-note-save").addEventListener("click", () => {
         const note = form.querySelector("#diary-note-input").value;
         if (onAddToDiary) onAddToDiary(emotionNombre, note);
-        form.innerHTML = `<p class="text-emerald-600 font-bold text-sm text-center py-2">\u2713 ${t("diaryAddedFeedback")}</p>`;
+        form.innerHTML = `<p class="text-emerald-600 font-bold text-sm text-center py-2">\u2713 ${t("diary.addedFeedback")}</p>`;
         setTimeout(() => form.remove(), 1800);
       });
       form.querySelector("#diary-note-cancel").addEventListener("click", () => form.remove());
@@ -1263,10 +1350,10 @@
                     class="flex items-center gap-2 text-[11px] font-black text-indigo-500 uppercase tracking-widest w-full text-left px-1 mb-2"
                     aria-expanded="false">
                     <svg id="technique-chevron" class="w-3.5 h-3.5 transition-transform shrink-0" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8.59 16.59L13.17 12 8.59 7.41 10 6l6 6-6 6z"/></svg>
-                    ${t("techniquePractice")}
+                    ${t("technique.practice")}
                 </button>
                 <div id="technique-body" class="hidden bg-indigo-50 border-2 border-indigo-100 rounded-2xl p-4">
-                    <p class="text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-2">${t("techniqueLabel")} \xB7 ${data.name}</p>
+                    <p class="text-[10px] font-black text-indigo-400 uppercase tracking-widest mb-2">${t("technique.label")} \xB7 ${data.name}</p>
                     <ol class="space-y-2">${steps}</ol>
                 </div>
             </div>
@@ -1279,7 +1366,7 @@
       const maskedEmotions = relaciones.filter((r) => r.type === "enmascara" && r.from === e.nombre).map((r) => emociones2.find((em) => em.nombre === r.to)).filter(Boolean);
       const masksSection = maskedEmotions.length > 0 ? `
                 <div class="border-t border-slate-100 pt-4">
-                    <p class="text-[11px] font-black text-violet-500 uppercase tracking-widest mb-2 px-1">${t("mapRelEnmascara")}</p>
+                    <p class="text-[11px] font-black text-violet-500 uppercase tracking-widest mb-2 px-1">${t("map.relEnmascara")}</p>
                     <div class="flex flex-wrap gap-2 mb-2">
                         ${maskedEmotions.map((m) => `
                             <button type="button" data-masked="${m.nombre}"
@@ -1501,10 +1588,10 @@
   }
   function buildSvgZoneRects(zones, rects, selectedZones) {
     return zones.map((zone) => {
-      const on = selectedZones.has(zone.id);
-      const fill = on ? zone.color + "66" : zone.color + "33";
-      const strk = on ? zone.color : zone.color + "66";
-      const sw = on ? "1.5" : "0.75";
+      const on2 = selectedZones.has(zone.id);
+      const fill = on2 ? zone.color + "66" : zone.color + "33";
+      const strk = on2 ? zone.color : zone.color + "66";
+      const sw = on2 ? "1.5" : "0.75";
       return (rects[zone.id] || []).map(
         (r) => `<rect x="${r.x}" y="${r.y}" width="${r.w}" height="${r.h}"
                 data-zone="${zone.id}" fill="${fill}" stroke="${strk}" stroke-width="${sw}"
@@ -1536,10 +1623,10 @@
   function buildResultHtml(matching, selectedZones, dark, t, getDisplayName) {
     const emptyC = dark ? "text-slate-500" : "text-slate-400";
     if (selectedZones.size === 0) {
-      return `<p class="text-sm text-center ${emptyC} py-3 px-2">${t("bodyMapTapPrompt")}</p>`;
+      return `<p class="text-sm text-center ${emptyC} py-3 px-2">${t("body.tapPrompt")}</p>`;
     }
     if (matching.length === 0) {
-      return `<p class="text-sm text-center ${emptyC} py-3 px-2">${t("bodyMapNoMatch")}</p>`;
+      return `<p class="text-sm text-center ${emptyC} py-3 px-2">${t("body.noMatch")}</p>`;
     }
     const titleC = dark ? "text-slate-300" : "text-slate-500";
     const cards = matching.map((e) => `
@@ -1550,7 +1637,7 @@
             <span class="ml-auto text-xs font-bold opacity-60 shrink-0" style="color:${e.text}">Ver \u2192</span>
         </button>`).join("");
     return `
-        <p class="text-[11px] font-black ${titleC} uppercase tracking-widest mb-3">${t("bodyMapResultTitle")}</p>
+        <p class="text-[11px] font-black ${titleC} uppercase tracking-widest mb-3">${t("body.resultTitle")}</p>
         <div class="space-y-2">${cards}</div>`;
   }
   var BODY_CLIP_SHAPES = BODY_PARTS.map((p) => bodyPartSvg(p, { fill: "white" })).join("");
@@ -1596,14 +1683,14 @@
       const resultHtml = buildResultHtml(getMatchingEmotions(), selectedZones, dark, t, getDisplayName);
       const clearBtn = selectedZones.size > 0 ? `<button id="body-clear-btn" type="button"
                 class="mt-4 w-full py-2.5 rounded-2xl text-sm font-bold transition-colors ${clearBtnC}">
-                ${t("bodyMapClear")}
+                ${t("body.clear")}
                </button>` : "";
       const headerC = dark ? "text-slate-100" : "text-slate-800";
       const closeRingC = dark ? "bg-slate-700 text-slate-400 hover:bg-slate-600" : "bg-slate-100 text-slate-500 hover:bg-slate-200";
       const toggleBgC = dark ? "bg-slate-800" : "bg-slate-100";
       content.innerHTML = `
             <div class="flex items-center justify-between mb-5">
-                <h2 class="text-xl font-black ${headerC}">${t("bodyMapTitle")}</h2>
+                <h2 class="text-xl font-black ${headerC}">${t("body.mapTitle")}</h2>
                 <button id="body-close-btn" type="button" aria-label="Cerrar"
                     class="w-8 h-8 flex items-center justify-center rounded-full ${closeRingC} transition-colors">
                     <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
@@ -1612,17 +1699,17 @@
             <div class="flex gap-1 mb-4 p-1 rounded-xl ${toggleBgC}">
                 <button type="button" id="body-mode-simple"
                     class="flex-1 py-1.5 text-xs font-bold rounded-lg transition-colors ${mode === "simple" ? activeC : inactiveC}">
-                    ${t("bodyModeSimple")}
+                    ${t("body.modeSimple")}
                 </button>
                 <button type="button" id="body-mode-detailed"
                     class="flex-1 py-1.5 text-xs font-bold rounded-lg transition-colors ${mode === "detailed" ? activeC : inactiveC}">
-                    ${t("bodyModeDetailed")}
+                    ${t("body.modeDetailed")}
                 </button>
             </div>
             <div class="flex justify-center mb-4">
                 <svg id="body-svg" viewBox="0 0 100 200"
                     style="width:130px;height:auto;touch-action:manipulation"
-                    role="img" aria-label="${t("bodyMapTitle")}">
+                    role="img" aria-label="${t("body.mapTitle")}">
                     <defs><clipPath id="body-clip">${clipShapes}</clipPath></defs>
                     <g clip-path="url(#body-clip)">
                         ${zoneRects}${zoneLabels}${divider}
@@ -1635,7 +1722,7 @@
             ${clearBtn}
             <button id="body-to-quiz-btn" type="button"
                 class="mt-2 w-full py-2.5 text-sm font-medium transition-colors ${toQuizC}">
-                \u2190 ${t("quizTabQuestions")}
+                \u2190 ${t("quiz.tabQuestions")}
             </button>`;
       bindEvents(content);
     }
@@ -1689,38 +1776,38 @@
   // js/quiz.js
   var QUIZ_STEPS = {
     q1: {
-      textKey: "quizQ1",
+      textKey: "quiz.q1",
       options: [
-        { labelKey: "quizQ1A", next: "q2_high" },
-        { labelKey: "quizQ1B", next: "q2_low" }
+        { labelKey: "quiz.q1a", next: "q2_high" },
+        { labelKey: "quiz.q1b", next: "q2_low" }
       ]
     },
     q2_high: {
-      textKey: "quizQ2",
+      textKey: "quiz.q2",
       options: [
-        { labelKey: "quizQ2A", result: ["Entusiasmo", "Alegr\xEDa", "Orgullo"] },
-        { labelKey: "quizQ2B", next: "q3_high_bad" }
+        { labelKey: "quiz.q2a", result: ["Entusiasmo", "Alegr\xEDa", "Orgullo"] },
+        { labelKey: "quiz.q2b", next: "q3_high_bad" }
       ]
     },
     q2_low: {
-      textKey: "quizQ2",
+      textKey: "quiz.q2",
       options: [
-        { labelKey: "quizQ2A", result: ["Calma", "Felicidad", "Placer", "Gratitud", "Alivio", "Ternura"] },
-        { labelKey: "quizQ2B", next: "q3_low_bad" }
+        { labelKey: "quiz.q2a", result: ["Calma", "Felicidad", "Placer", "Gratitud", "Alivio", "Ternura"] },
+        { labelKey: "quiz.q2b", next: "q3_low_bad" }
       ]
     },
     q3_high_bad: {
-      textKey: "quizQ3",
+      textKey: "quiz.q3",
       options: [
-        { labelKey: "quizQ3A", result: ["Enojo", "Frustraci\xF3n", "Miedo", "Celos", "Envidia", "Disgusto"] },
-        { labelKey: "quizQ3B", result: ["Ansiedad", "Preocupaci\xF3n", "Irritabilidad"] }
+        { labelKey: "quiz.q3a", result: ["Enojo", "Frustraci\xF3n", "Miedo", "Celos", "Envidia", "Disgusto"] },
+        { labelKey: "quiz.q3b", result: ["Ansiedad", "Preocupaci\xF3n", "Irritabilidad"] }
       ]
     },
     q3_low_bad: {
-      textKey: "quizQ3",
+      textKey: "quiz.q3",
       options: [
-        { labelKey: "quizQ3A", result: ["Tristeza", "Verg\xFCenza", "Rechazo", "Culpa", "Decepci\xF3n"] },
-        { labelKey: "quizQ3B", result: ["Soledad", "Angustia", "Confusi\xF3n", "Nostalgia", "Aburrimiento"] }
+        { labelKey: "quiz.q3a", result: ["Tristeza", "Verg\xFCenza", "Rechazo", "Culpa", "Decepci\xF3n"] },
+        { labelKey: "quiz.q3b", result: ["Soledad", "Angustia", "Confusi\xF3n", "Nostalgia", "Aburrimiento"] }
       ]
     }
   };
@@ -1763,7 +1850,7 @@
       const closeC = dark ? "bg-slate-700 text-slate-400 hover:bg-slate-600" : "bg-slate-100 text-slate-500 hover:bg-slate-200";
       return `
             <div class="flex items-center justify-between mb-8">
-                <h2 class="text-xl font-black ${titleC}">${t("quizTitle")}</h2>
+                <h2 class="text-xl font-black ${titleC}">${t("quiz.title")}</h2>
                 <button id="quiz-close-btn" type="button" aria-label="Cerrar"
                     class="w-8 h-8 flex items-center justify-center rounded-full ${closeC} transition-colors">
                     <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
@@ -1783,7 +1870,7 @@
       const content = document.getElementById("quiz-content");
       content.innerHTML = `
             ${headerHtml(dark)}
-            <p class="text-[11px] font-black ${titleC} uppercase tracking-widest mb-4">${t("quizResultTitle")}</p>
+            <p class="text-[11px] font-black ${titleC} uppercase tracking-widest mb-4">${t("quiz.resultTitle")}</p>
             <div class="space-y-3">
                 ${emotions.map((e) => `
                     <button type="button" data-emotion="${e.nombre}"
@@ -1796,11 +1883,11 @@
             </div>
             <button id="quiz-restart-btn" type="button"
                 class="mt-6 w-full py-3 font-bold rounded-2xl text-sm transition-colors ${restartC}">
-                ${t("quizRestart")}
+                ${t("quiz.restart")}
             </button>
             <button id="quiz-close-result-btn" type="button"
                 class="mt-2 w-full py-3 text-sm font-medium transition-colors ${closeResC}">
-                ${t("quizClose")}
+                ${t("quiz.close")}
             </button>
         `;
       bindCloseBtn(content);
@@ -1853,12 +1940,12 @@
                 <button id="quiz-back-btn" type="button"
                     class="mt-6 flex items-center gap-2 text-sm font-medium transition-colors ${backC}">
                     <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
-                    ${t("quizBack")}
+                    ${t("quiz.back")}
                 </button>
             ` : `
                 <button id="quiz-to-body-btn" type="button"
                     class="mt-6 w-full py-3 text-sm font-semibold transition-colors border rounded-2xl ${toBodyC}">
-                    ${t("quizTabBody")} \u2192
+                    ${t("quiz.tabBody")} \u2192
                 </button>
             `}
         `;
@@ -1889,6 +1976,15 @@
       });
     };
     return { init, open };
+  }
+
+  // js/bus.js
+  var listeners = {};
+  function on(event, fn) {
+    (listeners[event] ??= []).push(fn);
+  }
+  function emit(event, data) {
+    listeners[event]?.forEach((fn) => fn(data));
   }
 
   // js/diary.js
@@ -1926,11 +2022,11 @@
   function deleteEntry(id) {
     saveEntries(deleteDiaryEntryById(loadEntries(), id));
   }
-  function createDiary({ t, getDisplayName, emociones: emociones2, onGoToCheckin = null, onOpenQuiz = null }) {
+  function createDiary({ t, getDisplayName, emociones: emociones2 }) {
     function renderTagPills(tags) {
       if (!tags?.length) return "";
       const pills = tags.map((tag) => {
-        const label = t(`diaryTag${tag.charAt(0).toUpperCase()}${tag.slice(1)}`);
+        const label = t(`diary.tag${tag.charAt(0).toUpperCase()}${tag.slice(1)}`);
         return `<span class="px-2 py-0.5 rounded-full bg-slate-100 text-slate-500 text-[10px] font-bold">${label}</span>`;
       }).join("");
       return `<div class="flex flex-wrap gap-1 mt-1.5">${pills}</div>`;
@@ -1939,31 +2035,31 @@
       const d = new Date(isoString);
       const now = /* @__PURE__ */ new Date();
       const time = d.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
-      if (d.toDateString() === now.toDateString()) return `${t("diaryTodayLabel")}, ${time}`;
+      if (d.toDateString() === now.toDateString()) return `${t("diary.todayLabel")}, ${time}`;
       return `${d.toLocaleDateString([], { day: "numeric", month: "short", year: "numeric" })} \xB7 ${time}`;
     }
     function buildAddFormHtml() {
       return `
             <div id="diary-add-form" class="bg-white rounded-2xl p-4 shadow-sm mb-4 border-2 border-blue-100">
-                <p class="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-3">${t("diaryNewEntry")}</p>
+                <p class="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-3">${t("diary.newEntry")}</p>
                 <div class="relative mb-3">
                     <input type="text" id="diary-emotion-search" autocomplete="off"
-                        placeholder="${t("diaryPickEmotion")}"
+                        placeholder="${t("diary.pickEmotion")}"
                         class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2.5 text-sm text-slate-700 focus:outline-none focus:ring-2 focus:ring-blue-200">
                     <input type="hidden" id="diary-emotion-value">
                     <div id="diary-emotion-dropdown"
                         class="hidden absolute z-50 left-0 right-0 mt-1 bg-white rounded-xl shadow-lg border border-slate-200 hide-scroll"
                         style="max-height:11rem;overflow-y:auto"></div>
                 </div>
-                <textarea id="diary-note-input" rows="2" placeholder="${t("diaryNotePlaceholder")}"
+                <textarea id="diary-note-input" rows="2" placeholder="${t("diary.notePlaceholder")}"
                     class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-700 resize-none focus:outline-none focus:ring-2 focus:ring-blue-200 mb-3"></textarea>
                 <div class="mb-3">
-                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">${t("diaryTagLabel")}</p>
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">${t("diary.tagLabel")}</p>
                     <div class="flex flex-wrap gap-1.5">
                         ${DIARY_TAGS.map((tag) => `
                             <button type="button" data-tag="${tag}"
                                 class="diary-tag-btn px-3 py-1 rounded-full text-[11px] font-bold bg-slate-100 text-slate-500 hover:bg-slate-200 transition-colors">
-                                ${t(`diaryTag${tag.charAt(0).toUpperCase()}${tag.slice(1)}`)}
+                                ${t(`diary.tag${tag.charAt(0).toUpperCase()}${tag.slice(1)}`)}
                             </button>
                         `).join("")}
                     </div>
@@ -1971,11 +2067,11 @@
                 <div class="flex gap-2">
                     <button id="diary-form-save" type="button"
                         class="flex-1 bg-slate-800 text-white py-2.5 rounded-xl font-bold text-sm hover:bg-slate-700 transition-colors">
-                        ${t("diarySaveButton")}
+                        ${t("diary.saveButton")}
                     </button>
                     <button id="diary-form-cancel" type="button"
                         class="flex-1 bg-slate-100 text-slate-600 py-2.5 rounded-xl font-bold text-sm hover:bg-slate-200 transition-colors">
-                        ${t("diaryCancelButton")}
+                        ${t("diary.cancelButton")}
                     </button>
                 </div>
             </div>
@@ -2056,18 +2152,18 @@
             <button id="diary-export-btn" type="button"
                 class="flex items-center gap-1.5 bg-slate-100 text-slate-600 text-xs font-bold px-3 py-2 rounded-xl hover:bg-slate-200 transition-colors">
                 <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
-                ${t("diaryExportButton")}
+                ${t("diary.exportButton")}
             </button>
         ` : "";
       const headerHtml = `
             <div class="flex items-center justify-between mb-4">
-                <h2 id="diary-title-heading" class="text-xl font-black text-slate-800">${t("diaryTitle")}</h2>
+                <h2 id="diary-title-heading" class="text-xl font-black text-slate-800">${t("diary.title")}</h2>
                 <div class="flex items-center gap-2">
                     ${exportBtn}
                     <button id="diary-new-btn" type="button"
                         class="flex items-center gap-1.5 bg-slate-800 text-white text-xs font-bold px-3 py-2 rounded-xl hover:bg-slate-700 transition-colors">
                         <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>
-                        ${t("diaryNewEntry")}
+                        ${t("diary.newEntry")}
                     </button>
                 </div>
             </div>
@@ -2075,7 +2171,7 @@
       const privacyHtml = `
             <p class="text-xs text-slate-400 mb-4 flex items-start gap-1.5">
                 <svg class="w-3.5 h-3.5 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/></svg>
-                ${t("diaryPrivacyNote")}
+                ${t("diary.privacyNote")}
             </p>
         `;
       const formHtml = showForm ? buildAddFormHtml() : "";
@@ -2098,7 +2194,7 @@
                                     ${entry.note ? `<p class="text-slate-500 text-sm leading-relaxed">${escapeHtml(entry.note)}</p>` : ""}
                                     ${renderTagPills(entry.tags)}
                                 </div>
-                                <button type="button" class="diary-delete-btn text-slate-300 hover:text-red-400 transition-colors shrink-0" data-id="${entry.id}" aria-label="${t("diaryDeleteButton")}">
+                                <button type="button" class="diary-delete-btn text-slate-300 hover:text-red-400 transition-colors shrink-0" data-id="${entry.id}" aria-label="${t("diary.deleteButton")}">
                                     <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
                                 </button>
                             </div>
@@ -2108,30 +2204,30 @@
                 ${entries.length > 1 ? `
                     <button id="diary-clear-btn" type="button"
                         class="mt-5 w-full text-xs text-slate-400 hover:text-red-400 transition-colors py-2">
-                        ${t("diaryClearAll")}
+                        ${t("diary.clearAll")}
                     </button>
                 ` : ""}
             `;
       } else {
         entriesHtml = `
             <div class="text-center py-8 px-2">
-                <p class="text-slate-400 text-sm mb-5">${t("diaryEmptyPrompt")}</p>
+                <p class="text-slate-400 text-sm mb-5">${t("diary.emptyPrompt")}</p>
                 <div class="flex flex-col gap-2 max-w-xs mx-auto">
                     <button id="diary-empty-checkin" type="button"
                         class="w-full bg-slate-800 text-white py-3 rounded-2xl font-bold text-sm hover:bg-slate-700 transition-colors">
-                        ${t("diaryEmptyAction1")}
+                        ${t("diary.emptyAction1")}
                     </button>
                     <button id="diary-empty-quiz" type="button"
                         class="w-full bg-slate-100 text-slate-700 py-3 rounded-2xl font-bold text-sm hover:bg-slate-200 transition-colors">
-                        ${t("diaryEmptyAction2")}
+                        ${t("diary.emptyAction2")}
                     </button>
                 </div>
             </div>
         `;
       }
       content.innerHTML = headerHtml + privacyHtml + formHtml + entriesHtml;
-      content.querySelector("#diary-empty-checkin")?.addEventListener("click", () => onGoToCheckin?.());
-      content.querySelector("#diary-empty-quiz")?.addEventListener("click", () => onOpenQuiz?.());
+      content.querySelector("#diary-empty-checkin")?.addEventListener("click", () => emit("tab:switch", { tabId: "checkin" }));
+      content.querySelector("#diary-empty-quiz")?.addEventListener("click", () => emit("quiz:open"));
       content.querySelector("#diary-export-btn")?.addEventListener("click", () => {
         const date = (/* @__PURE__ */ new Date()).toISOString().slice(0, 10);
         const blob = new Blob([JSON.stringify(entries, null, 2)], { type: "application/json" });
@@ -2196,7 +2292,7 @@
       const clearBtn = content.querySelector("#diary-clear-btn");
       if (clearBtn) {
         clearBtn.addEventListener("click", () => {
-          if (confirm(t("diaryClearConfirm"))) {
+          if (confirm(t("diary.clearConfirm"))) {
             saveEntries([]);
             renderContent(false);
           }
@@ -2229,10 +2325,10 @@
   var GRAPH_MAX_BOOST = 80;
   var QUAD_MAP = [0, 2, 3, 1];
   var RELS = {
-    coexiste: { color: "#6366f1", dash: "none", labelKey: "mapRelCoexiste" },
-    escala_a: { color: "#f97316", dash: "none", labelKey: "mapRelEscalaA" },
-    enmascara: { color: "#a855f7", dash: "3,3", labelKey: "mapRelEnmascara" },
-    opuesta: { color: "#14b8a6", dash: "6,3", labelKey: "mapRelOpuesta" }
+    coexiste: { color: "#6366f1", dash: "none", labelKey: "map.relCoexiste" },
+    escala_a: { color: "#f97316", dash: "none", labelKey: "map.relEscalaA" },
+    enmascara: { color: "#a855f7", dash: "3,3", labelKey: "map.relEnmascara" },
+    opuesta: { color: "#14b8a6", dash: "6,3", labelKey: "map.relOpuesta" }
   };
   function makeRng(seed) {
     const buf = new Int32Array(1);
@@ -2399,15 +2495,15 @@
   }
   function buildLegendItems(dark, activeTypes, t) {
     return Object.entries(RELS).map(([type, rel]) => {
-      const on = activeTypes.has(type);
+      const on2 = activeTypes.has(type);
       const dimLine = dark ? "#475569" : "#cbd5e1";
-      const lineColor = on ? rel.color : dimLine;
+      const lineColor = on2 ? rel.color : dimLine;
       const onTextC = dark ? "text-slate-300" : "text-slate-600";
       const offTextC = dark ? "text-slate-600" : "text-slate-400";
-      const textC = on ? onTextC : offTextC;
+      const textC = on2 ? onTextC : offTextC;
       const onBgC = dark ? "bg-slate-700" : "bg-slate-100";
-      const bgC = on ? onBgC : "";
-      return `<button type="button" data-rel-type="${type}" role="listitem" aria-pressed="${on}"
+      const bgC = on2 ? onBgC : "";
+      return `<button type="button" data-rel-type="${type}" role="listitem" aria-pressed="${on2}"
             class="flex items-center gap-1 text-[11px] px-1.5 py-0.5 rounded-lg transition-colors ${textC} ${bgC}">
             <svg width="14" height="6" aria-hidden="true"><line x1="0" y1="3" x2="14" y2="3" stroke="${lineColor}" stroke-width="2" stroke-dasharray="${rel.dash}"/></svg>
             ${t(rel.labelKey)}
@@ -2419,7 +2515,7 @@
     return [
       `<button type="button" data-quad="all" aria-pressed="${effectiveQuadrant === null}"
             class="text-[11px] font-bold px-2.5 py-0.5 rounded-full border transition-colors ${allBtnC}">
-            ${t("mapFilterAll")}
+            ${t("map.filterAll")}
         </button>`
     ].concat(MOOD_CATEGORIES.map((cat, i) => {
       const isActive = effectiveQuadrant === i;
@@ -2450,13 +2546,13 @@
     }).join("");
     const borderC = dark ? "bg-slate-800 border-slate-700" : "bg-white border-slate-100";
     const nameC = dark ? "text-slate-100" : "text-slate-800";
-    const body = rows ? `<ul class="space-y-1.5">${rows}</ul>` : `<p class="text-xs text-slate-400">${t("mapInfoNone")}</p>`;
+    const body = rows ? `<ul class="space-y-1.5">${rows}</ul>` : `<p class="text-xs text-slate-400">${t("map.infoNone")}</p>`;
     return `<div id="map-info-panel" class="mt-3 rounded-2xl p-4 border ${borderC} shadow-sm">
         <div class="flex items-center justify-between mb-2">
             <span class="font-bold ${nameC}">${getDisplayName(selected)}</span>
             <div class="flex items-center gap-1">
                 <button id="map-open-btn" class="text-xs font-bold text-blue-500 hover:text-blue-600 px-2 py-1 rounded-lg transition-colors">${t("openChip")}</button>
-                <button id="map-clear-btn" aria-label="${t("mapClearSelection")}"
+                <button id="map-clear-btn" aria-label="${t("map.clearSelection")}"
                     class="w-6 h-6 flex items-center justify-center rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-100 transition-colors">
                     <svg class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
                 </button>
@@ -2649,10 +2745,10 @@
       const hasMatch = hasNameFilterMatch(nameFilter, selected, nodes);
       wrap.innerHTML = `
             <div class="flex gap-2 mb-2">
-                <button id="map-graph-btn" class="flex-1 py-2 text-sm font-bold rounded-xl border transition-colors ${view === "graph" ? activeC : inactiveC}">${t("mapViewGraph")}</button>
-                <button id="map-quad-btn"  class="flex-1 py-2 text-sm font-bold rounded-xl border transition-colors ${view === "quad" ? activeC : inactiveC}">${t("mapViewQuad")}</button>
+                <button id="map-graph-btn" class="flex-1 py-2 text-sm font-bold rounded-xl border transition-colors ${view === "graph" ? activeC : inactiveC}">${t("map.viewGraph")}</button>
+                <button id="map-quad-btn"  class="flex-1 py-2 text-sm font-bold rounded-xl border transition-colors ${view === "quad" ? activeC : inactiveC}">${t("map.viewQuad")}</button>
             </div>
-            <div class="flex flex-wrap gap-x-3 gap-y-1 mb-2" role="list" aria-label="${t("mapLegendLabel")}">
+            <div class="flex flex-wrap gap-x-3 gap-y-1 mb-2" role="list" aria-label="${t("map.legendLabel")}">
                 ${legendItems}
             </div>
             <div class="flex flex-wrap gap-1.5 mb-2">
@@ -2660,7 +2756,7 @@
             </div>
             <div class="relative mb-2">
                 <input id="map-search" type="text" autocomplete="off"
-                    placeholder="${t("mapSearchPlaceholder")}"
+                    placeholder="${t("map.searchPlaceholder")}"
                     value="${escapeHtmlAttr(nameFilter)}"
                     class="w-full text-[13px] px-3 py-1.5 rounded-xl border transition-colors
                         ${dark ? "bg-slate-800 border-slate-600 text-slate-200 placeholder:text-slate-500" : "bg-white border-slate-200 text-slate-700 placeholder:text-slate-400"}">
@@ -2670,14 +2766,14 @@
                 </ul>
             </div>
             <p id="map-hint" class="text-[11px] text-slate-400 mb-1.5 px-0.5">
-                ${selected ? t("mapHintSelected") : t("mapHint")}
+                ${selected ? t("map.hintSelected") : t("map.hint")}
             </p>
             <div class="rounded-2xl overflow-hidden" style="background:${canvasBg}">
-                <svg id="map-svg" viewBox="0 0 ${W} ${H}" style="width:100%;display:block;touch-action:pan-y" role="img" aria-label="${t("navMapa")}">
+                <svg id="map-svg" viewBox="0 0 ${W} ${H}" style="width:100%;display:block;touch-action:pan-y" role="img" aria-label="${t("nav.mapa")}">
                     ${svgBody(svgNodes, svgEdges, W, H, selected, view, { t, activeTypes, activeQuadrant: svgActiveQuadrant, nameFilter })}
                 </svg>
             </div>
-            <p id="map-empty" class="${hasMatch ? "hidden" : ""} text-[13px] text-center text-slate-400 mt-4 py-2">${t("mapSearchEmpty")}</p>
+            <p id="map-empty" class="${hasMatch ? "hidden" : ""} text-[13px] text-center text-slate-400 mt-4 py-2">${t("map.searchEmpty")}</p>
             ${infoHtml}`;
       bindEvents(wrap);
       if (selected) {
@@ -2727,7 +2823,7 @@
       const emptyEl = wrap.querySelector("#map-empty");
       if (emptyEl) emptyEl.classList.toggle("hidden", hasMatch);
       const hintEl = wrap.querySelector("#map-hint");
-      if (hintEl) hintEl.textContent = selected ? t("mapHintSelected") : t("mapHint");
+      if (hintEl) hintEl.textContent = selected ? t("map.hintSelected") : t("map.hint");
     }
     function bindSvgEvents(svg) {
       svg.addEventListener("click", (ev) => {
@@ -2889,17 +2985,17 @@
       return `
             <div class="text-center mb-8">
                 <div class="text-5xl mb-4" aria-hidden="true">\u{1F30A}</div>
-                <h3 class="text-2xl font-black text-slate-800 mb-3">${t("crisisStep1Title")}</h3>
-                <p class="text-slate-600 leading-relaxed">${t("crisisStep1Body")}</p>
+                <h3 class="text-2xl font-black text-slate-800 mb-3">${t("crisis.step1Title")}</h3>
+                <p class="text-slate-600 leading-relaxed">${t("crisis.step1Body")}</p>
             </div>
             <button id="crisis-next-btn" type="button"
                 class="w-full bg-slate-800 text-white py-4 rounded-2xl font-bold text-sm hover:bg-slate-700 transition-colors">
-                ${t("crisisNext")}
+                ${t("crisis.next")}
             </button>
         `;
     }
     function buildStep2() {
-      const items = t("crisisStep2Items").split("|");
+      const items = t("crisis.step2Items").split("|");
       const listItems = items.map((item, i) => `
             <li class="flex items-center gap-3 py-2.5 border-b border-slate-100 last:border-0">
                 <span class="w-7 h-7 rounded-full bg-indigo-100 text-indigo-700 text-xs font-black flex items-center justify-center shrink-0">${items.length - i}</span>
@@ -2908,18 +3004,18 @@
         `).join("");
       return `
             <div class="mb-6">
-                <h3 class="text-2xl font-black text-slate-800 mb-1">${t("crisisStep2Title")}</h3>
-                <p class="text-slate-500 text-sm mb-4">${t("crisisStep2Intro")}</p>
+                <h3 class="text-2xl font-black text-slate-800 mb-1">${t("crisis.step2Title")}</h3>
+                <p class="text-slate-500 text-sm mb-4">${t("crisis.step2Intro")}</p>
                 <ul class="divide-y divide-slate-100">${listItems}</ul>
             </div>
             <button id="crisis-next-btn" type="button"
                 class="w-full bg-slate-800 text-white py-4 rounded-2xl font-bold text-sm hover:bg-slate-700 transition-colors">
-                ${t("crisisDone")}
+                ${t("crisis.done")}
             </button>
         `;
     }
     function buildStep3() {
-      const actions = t("crisisStep3Actions").split("|");
+      const actions = t("crisis.step3Actions").split("|");
       const actionItems = actions.map((action, i) => `
             <label class="flex items-center gap-3 py-3 cursor-pointer group">
                 <input type="radio" name="crisis-action" value="${i}"
@@ -2929,14 +3025,14 @@
         `).join("");
       return `
             <div class="mb-6">
-                <h3 class="text-2xl font-black text-slate-800 mb-1">${t("crisisStep3Title")}</h3>
-                <p class="text-slate-500 text-sm mb-4">${t("crisisStep3Intro")}</p>
+                <h3 class="text-2xl font-black text-slate-800 mb-1">${t("crisis.step3Title")}</h3>
+                <p class="text-slate-500 text-sm mb-4">${t("crisis.step3Intro")}</p>
                 <div class="divide-y divide-slate-100">${actionItems}</div>
             </div>
-            <p class="text-slate-400 text-xs text-center mb-4">${t("crisisStep3End")}</p>
+            <p class="text-slate-400 text-xs text-center mb-4">${t("crisis.step3End")}</p>
             <button id="crisis-close-btn" type="button"
                 class="w-full bg-slate-800 text-white py-4 rounded-2xl font-bold text-sm hover:bg-slate-700 transition-colors">
-                ${t("crisisClose")}
+                ${t("crisis.close")}
             </button>
         `;
     }
@@ -2948,7 +3044,7 @@
     function renderStep(panel, step) {
       const progressHtml = `
             <div class="flex items-center justify-between mb-6">
-                <span class="text-xs font-bold text-slate-400">${t("crisisStep")} ${step} ${t("crisisOf")} ${TOTAL_STEPS}</span>
+                <span class="text-xs font-bold text-slate-400">${t("crisis.step")} ${step} ${t("crisis.of")} ${TOTAL_STEPS}</span>
                 <div class="flex gap-1.5">
                     ${Array.from({ length: TOTAL_STEPS }, (_, i) => `
                         <div class="h-1.5 w-8 rounded-full ${i < step ? "bg-slate-800" : "bg-slate-200"}"></div>
@@ -2982,70 +3078,11 @@
     return { init };
   }
 
-  // js/version.js
-  var BUILD_VERSION = "mp8leh73";
-
-  // app.js
-  var state = {
-    currentLang: "es",
-    currentTab: "emociones",
-    lastFocusedCard: null,
-    isClosingModal: false
-  };
-  var reducedMotion = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
-  var modalAnimationMs = reducedMotion ? 0 : 200;
-  var ui;
-  var diary;
-  var quiz;
-  var emotionMap;
-  var i18n = createI18n({
-    getLang: () => state.currentLang,
-    setLang: (lang) => {
-      state.currentLang = lang;
-    },
-    onLanguageChanged: () => {
-      ui.renderCheckinTab();
-      ui.renderRecentEmotions();
-      ui.renderEmociones(document.getElementById("search")?.value ?? "");
-      if (state.currentTab === "diario") diary.renderForTab();
-      emotionMap?.onLanguageChanged();
-      const bannerText = document.getElementById("offline-banner-text");
-      if (bannerText) bannerText.textContent = i18n.t("offlineBanner");
-    }
-  });
-  diary = createDiary({
-    t: i18n.t,
-    getDisplayName: i18n.getDisplayName,
-    emociones,
-    onGoToCheckin: () => switchTab("checkin"),
-    onOpenQuiz: () => quiz?.open()
-  });
-  ui = createUI({
-    emociones,
-    relaciones: EMOTION_RELATIONS,
-    getDisplayName: i18n.getDisplayName,
-    getEmotionField: i18n.getEmotionField,
-    getLang: () => state.currentLang,
-    t: i18n.t,
-    getLastFocusedCard: () => state.lastFocusedCard,
-    setLastFocusedCard: (card) => {
-      state.lastFocusedCard = card;
-    },
-    getIsClosingModal: () => state.isClosingModal,
-    setIsClosingModal: (value) => {
-      state.isClosingModal = value;
-    },
-    modalAnimationMs,
-    moodCategories: MOOD_CATEGORIES,
-    onAddToDiary: (nombre, note) => {
-      diary.addEntry(nombre, note);
-      if (state.currentTab === "diario") diary.renderForTab();
-    }
-  });
+  // js/settings.js
   function getTheme() {
     return localStorage.getItem(THEME_KEY) || "auto";
   }
-  function applyTheme(theme) {
+  function applyTheme(theme, getLang) {
     const prefersDark = globalThis.matchMedia("(prefers-color-scheme: dark)").matches;
     if (theme === "dark" || theme === "auto" && prefersDark) {
       document.documentElement.classList.add("dark");
@@ -3053,9 +3090,9 @@
       document.documentElement.classList.remove("dark");
     }
     localStorage.setItem(THEME_KEY, theme);
-    updateSettingsActiveStates(theme, state.currentLang);
+    updateActiveStates(theme, getLang());
   }
-  function updateSettingsActiveStates(theme, lang) {
+  function updateActiveStates(theme, lang) {
     for (const t of ["light", "auto", "dark"]) {
       document.getElementById(`theme-btn-${t}`)?.classList.toggle("settings-option-active", t === theme);
     }
@@ -3063,7 +3100,7 @@
       document.getElementById(`lang-btn-${l}`)?.classList.toggle("settings-option-active", l === lang);
     }
   }
-  function initSettingsPanel() {
+  function initSettings({ setLanguage, getLang }) {
     const settingsBtn = document.getElementById("settings-btn");
     const settingsPanel = document.getElementById("settings-panel");
     if (!settingsBtn || !settingsPanel) return;
@@ -3089,29 +3126,22 @@
       }
     });
     for (const btn of settingsPanel.querySelectorAll("[data-theme-btn]")) {
-      btn.addEventListener("click", () => applyTheme(btn.dataset.themeBtn));
+      btn.addEventListener("click", () => applyTheme(btn.dataset.themeBtn, getLang));
     }
     for (const btn of settingsPanel.querySelectorAll("[data-lang-btn]")) {
       btn.addEventListener("click", () => {
-        i18n.setLanguage(btn.dataset.langBtn);
-        updateSettingsActiveStates(getTheme(), state.currentLang);
+        setLanguage(btn.dataset.langBtn);
+        updateActiveStates(getTheme(), getLang());
       });
     }
     globalThis.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
-      if (getTheme() === "auto") applyTheme("auto");
+      if (getTheme() === "auto") applyTheme("auto", getLang);
     });
-    updateSettingsActiveStates(getTheme(), state.currentLang);
+    updateActiveStates(getTheme(), getLang());
+    return { applyTheme: (theme) => applyTheme(theme, getLang), getTheme, updateActiveStates };
   }
-  function initServiceWorker() {
-    if (!("serviceWorker" in navigator)) return;
-    window.addEventListener("load", () => {
-      navigator.serviceWorker.register("./sw.js", { updateViaCache: "none" }).catch(() => {
-      });
-    });
-    navigator.serviceWorker.addEventListener("controllerchange", () => {
-      globalThis.location.reload();
-    });
-  }
+
+  // js/install.js
   function isIosDevice() {
     const ua = navigator.userAgent.toLowerCase();
     const touchMac = ua.includes("macintosh") && navigator.maxTouchPoints > 1;
@@ -3120,7 +3150,7 @@
   function isStandalone() {
     return globalThis.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
   }
-  function initSmartInstallButton() {
+  function initInstall() {
     const installButton = document.getElementById("install-app-button");
     const iosModal = document.getElementById("ios-install-modal");
     const iosClose = document.getElementById("ios-install-close");
@@ -3180,6 +3210,94 @@
     });
     updateInstallVisibility();
   }
+
+  // js/offlineBanner.js
+  function initOfflineBanner({ t }) {
+    const banner = document.getElementById("offline-banner");
+    const text = document.getElementById("offline-banner-text");
+    if (!banner || !text) return;
+    const update = () => {
+      text.textContent = t("offlineBanner");
+      banner.classList.toggle("hidden", navigator.onLine);
+      banner.classList.toggle("flex", !navigator.onLine);
+    };
+    globalThis.addEventListener("online", update);
+    globalThis.addEventListener("offline", update);
+    update();
+  }
+
+  // js/serviceWorker.js
+  function initServiceWorker() {
+    if (!("serviceWorker" in navigator)) return;
+    globalThis.addEventListener("load", () => {
+      navigator.serviceWorker.register("./sw.js", { updateViaCache: "none" }).catch(() => {
+      });
+    });
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      globalThis.location.reload();
+    });
+  }
+
+  // js/version.js
+  var BUILD_VERSION = "mp9cswko";
+
+  // app.js
+  var state = {
+    currentLang: "es",
+    currentTab: "emociones",
+    lastFocusedCard: null,
+    isClosingModal: false
+  };
+  var reducedMotion = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
+  var modalAnimationMs = reducedMotion ? 0 : 200;
+  var ui;
+  var diary;
+  var quiz;
+  var emotionMap;
+  var i18n = createI18n({
+    getLang: () => state.currentLang,
+    setLang: (lang) => {
+      state.currentLang = lang;
+    },
+    onLanguageChanged: () => {
+      ui.renderCheckinTab();
+      ui.renderRecentEmotions();
+      ui.renderEmociones(document.getElementById("search")?.value ?? "");
+      if (state.currentTab === "diario") diary.renderForTab();
+      emotionMap?.onLanguageChanged();
+      const bannerText = document.getElementById("offline-banner-text");
+      if (bannerText) bannerText.textContent = i18n.t("offlineBanner");
+    }
+  });
+  diary = createDiary({
+    t: i18n.t,
+    getDisplayName: i18n.getDisplayName,
+    emociones
+  });
+  on("tab:switch", ({ tabId }) => switchTab(tabId));
+  on("quiz:open", () => quiz?.open());
+  ui = createUI({
+    emociones,
+    relaciones: EMOTION_RELATIONS,
+    getDisplayName: i18n.getDisplayName,
+    getEmotionField: i18n.getEmotionField,
+    getLang: () => state.currentLang,
+    t: i18n.t,
+    getLastFocusedCard: () => state.lastFocusedCard,
+    setLastFocusedCard: (card) => {
+      state.lastFocusedCard = card;
+    },
+    getIsClosingModal: () => state.isClosingModal,
+    setIsClosingModal: (value) => {
+      state.isClosingModal = value;
+    },
+    modalAnimationMs,
+    moodCategories: MOOD_CATEGORIES,
+    onAddToDiary: (nombre, note) => {
+      diary.addEntry(nombre, note);
+      if (state.currentTab === "diario") diary.renderForTab();
+    }
+  });
   function switchTab(tabId) {
     const tabs = ["emociones", "checkin", "diario", "mapa"];
     for (const id of tabs) {
@@ -3200,19 +3318,6 @@
     if (tabId === "diario") diary.renderForTab();
     if (tabId === "mapa") emotionMap?.renderForTab();
   }
-  function initOfflineBanner() {
-    const banner = document.getElementById("offline-banner");
-    const text = document.getElementById("offline-banner-text");
-    if (!banner || !text) return;
-    const update = () => {
-      text.textContent = i18n.t("offlineBanner");
-      banner.classList.toggle("hidden", navigator.onLine);
-      banner.classList.toggle("flex", !navigator.onLine);
-    };
-    globalThis.addEventListener("online", update);
-    globalThis.addEventListener("offline", update);
-    update();
-  }
   function initTabNav() {
     for (const btn of document.querySelectorAll(".nav-tab")) {
       btn.addEventListener("click", () => switchTab(btn.dataset.tab));
@@ -3223,7 +3328,7 @@
     i18n.applyStaticTranslations();
     const versionEl = document.getElementById("build-version");
     if (versionEl) versionEl.textContent = BUILD_VERSION;
-    initSettingsPanel();
+    initSettings({ setLanguage: i18n.setLanguage, getLang: () => state.currentLang });
     initTabNav();
     ui.bindBaseEvents();
     emotionMap = createEmotionMap({
@@ -3245,8 +3350,8 @@
     ui.renderEmociones();
     const crisis = createCrisisFlow({ t: i18n.t });
     crisis.init();
-    initOfflineBanner();
-    initSmartInstallButton();
+    initOfflineBanner({ t: i18n.t });
+    initInstall();
     initServiceWorker();
   }
   bootstrap();
