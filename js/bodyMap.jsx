@@ -1,5 +1,16 @@
+// @ts-check
 import { render } from "preact";
 import { BODY_ZONES, BODY_ZONE_EMOTIONS, SIMPLE_ZONE_GROUPS } from "./constants.js";
+
+/** @typedef {import('./types.js').TFn} TFn */
+/** @typedef {import('./types.js').GetDisplayNameFn} GetDisplayNameFn */
+/** @typedef {import('./types.js').ShowDetailFn} ShowDetailFn */
+/** @typedef {import('./data/emotions.js').Emotion} Emotion */
+
+/**
+ * @typedef {{ id: string, color: string, labelKey: string }} BodyZone
+ * @typedef {{ x: number, y: number, w: number, h: number }} ZoneRect
+ */
 import { isDarkMode } from "./utils.js";
 
 // viewBox "0 0 100 200" — displayed at 130px wide (~260px tall)
@@ -34,6 +45,11 @@ const ZONE_RECTS = {
     },
 };
 
+/**
+ * @param {{ tag: string, d?: string, cx?: number, cy?: number, rx?: number, ry?: number }} part
+ * @param {Record<string, string|number>} attrs
+ * @returns {string}
+ */
 function bodyPartStr(part, attrs) {
     const a = Object.entries(attrs).map(([k, v]) => `${k}="${v}"`).join(" ");
     if (part.tag === "ellipse") return `<ellipse cx="${part.cx}" cy="${part.cy}" rx="${part.rx}" ry="${part.ry}" ${a}/>`;
@@ -41,13 +57,29 @@ function bodyPartStr(part, attrs) {
     return "";
 }
 
+/**
+ * @param {string} zoneId
+ * @param {string} mode
+ * @returns {Set<string>}
+ */
 function getZoneEmotionNames(zoneId, mode) {
-    const detailZones = mode === "simple" ? (SIMPLE_ZONE_GROUPS[zoneId] || [zoneId]) : [zoneId];
-    const names = new Set();
-    for (const dz of detailZones) for (const n of (BODY_ZONE_EMOTIONS[dz] || [])) names.add(n);
+    const groups = /** @type {Record<string, string[]>} */ (SIMPLE_ZONE_GROUPS);
+    const emotions = /** @type {Record<string, string[]>} */ (BODY_ZONE_EMOTIONS);
+    const detailZones = mode === "simple" ? (groups[zoneId] || [zoneId]) : [zoneId];
+    const names = new Set(/** @type {string[]} */ ([]));
+    for (const dz of detailZones) for (const n of (emotions[dz] || [])) names.add(n);
     return names;
 }
 
+/**
+ * @param {BodyZone[]} zones
+ * @param {Record<string, ZoneRect[]>} rects
+ * @param {Set<string>} selectedZones
+ * @param {string} lineColor
+ * @param {string} bodyFill
+ * @param {TFn} t
+ * @returns {string}
+ */
 function buildSvgInner(zones, rects, selectedZones, lineColor, bodyFill, t) {
     const clipShapes = BODY_PARTS.map(p => bodyPartStr(p, { fill: "white" })).join("");
 
@@ -85,6 +117,7 @@ function buildSvgInner(zones, rects, selectedZones, lineColor, bodyFill, t) {
     ].join("");
 }
 
+/** @param {{ zones: BodyZone[], selectedZones: Set<string>, t: TFn, onRemove: (id: string) => void }} props */
 function ZoneChips({ zones, selectedZones, t, onRemove }) {
     const selected = zones.filter(z => selectedZones.has(z.id));
     return (
@@ -106,6 +139,7 @@ function ZoneChips({ zones, selectedZones, t, onRemove }) {
     );
 }
 
+/** @param {{ matching: Emotion[], selectedZones: Set<string>, dark: boolean, t: TFn, getDisplayName: GetDisplayNameFn, onSelect: ShowDetailFn, onDismiss: () => void }} props */
 function ResultSection({ matching, selectedZones, dark, t, getDisplayName, onSelect, onDismiss }) {
     const emptyC = dark ? "text-slate-500" : "text-slate-400";
     if (selectedZones.size === 0) {
@@ -133,6 +167,9 @@ function ResultSection({ matching, selectedZones, dark, t, getDisplayName, onSel
     );
 }
 
+/**
+ * @param {{ t: TFn, dark: boolean, zones: BodyZone[], rects: Record<string, ZoneRect[]>, selectedZones: Set<string>, mode: string, matching: Emotion[], lineColor: string, bodyFill: string, getDisplayName: GetDisplayNameFn, onClose: () => void, onModeChange: (mode: string) => void, onZoneClick: (ev: MouseEvent) => void, onRemoveZone: (id: string) => void, onClear: () => void, onSwitchToQuiz: () => void, onDismiss: () => void, onSelectEmotion: ShowDetailFn }} props
+ */
 function BodyMapPanel({ t, dark, zones, rects, selectedZones, mode, matching, lineColor, bodyFill,
     getDisplayName, onClose, onModeChange, onZoneClick, onRemoveZone, onClear, onSwitchToQuiz, onDismiss, onSelectEmotion }) {
     const activeC   = dark ? "bg-slate-600 text-slate-100" : "bg-slate-800 text-white";
@@ -195,6 +232,10 @@ function BodyMapPanel({ t, dark, zones, rects, selectedZones, mode, matching, li
     );
 }
 
+/**
+ * @param {{ emociones: Emotion[], getDisplayName: GetDisplayNameFn, t: TFn, showDetail: ShowDetailFn, onDismiss: () => void, onSwitchToQuiz?: () => void }} opts
+ * @returns {{ render: () => void }}
+ */
 export function createBodyMap({ emociones, getDisplayName, t, showDetail, onDismiss, onSwitchToQuiz }) {
     let selectedZones = new Set();
     let mode = "simple";
@@ -217,8 +258,8 @@ export function createBodyMap({ emociones, getDisplayName, t, showDetail, onDism
         if (!content) return;
 
         const dark      = isDarkMode();
-        const zones     = BODY_ZONES[mode];
-        const rects     = ZONE_RECTS[mode];
+        const zones     = /** @type {BodyZone[]} */ (/** @type {any} */ (BODY_ZONES)[mode]);
+        const rects     = /** @type {Record<string, ZoneRect[]>} */ (/** @type {any} */ (ZONE_RECTS)[mode]);
         const lineColor = dark ? "#64748b" : "#94a3b8";
         const bodyFill  = dark ? "#0f172a" : "#f8fafc";
 
@@ -235,7 +276,7 @@ export function createBodyMap({ emociones, getDisplayName, t, showDetail, onDism
                     mode = newMode; selectedZones = new Set(); render_();
                 }}
                 onZoneClick={(ev) => {
-                    const hit = ev.target.closest(".zone-hit");
+                    const hit = /** @type {HTMLElement | null} */ (/** @type {Element | null} */ (ev.target)?.closest(".zone-hit"));
                     if (!hit) return;
                     const zoneId = hit.dataset.zone;
                     if (selectedZones.has(zoneId)) selectedZones.delete(zoneId);

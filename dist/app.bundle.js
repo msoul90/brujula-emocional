@@ -2056,9 +2056,20 @@
     return "";
   }
   function getZoneEmotionNames(zoneId, mode) {
-    const detailZones = mode === "simple" ? SIMPLE_ZONE_GROUPS[zoneId] || [zoneId] : [zoneId];
-    const names = /* @__PURE__ */ new Set();
-    for (const dz of detailZones) for (const n2 of BODY_ZONE_EMOTIONS[dz] || []) names.add(n2);
+    const groups = (
+      /** @type {Record<string, string[]>} */
+      SIMPLE_ZONE_GROUPS
+    );
+    const emotions = (
+      /** @type {Record<string, string[]>} */
+      BODY_ZONE_EMOTIONS
+    );
+    const detailZones = mode === "simple" ? groups[zoneId] || [zoneId] : [zoneId];
+    const names = /* @__PURE__ */ new Set(
+      /** @type {string[]} */
+      []
+    );
+    for (const dz of detailZones) for (const n2 of emotions[dz] || []) names.add(n2);
     return names;
   }
   function buildSvgInner(zones, rects, selectedZones, lineColor, bodyFill, t3) {
@@ -2278,8 +2289,16 @@
       const content = document.getElementById("quiz-content");
       if (!content) return;
       const dark = isDarkMode();
-      const zones = BODY_ZONES[mode];
-      const rects = ZONE_RECTS[mode];
+      const zones = (
+        /** @type {BodyZone[]} */
+        /** @type {any} */
+        BODY_ZONES[mode]
+      );
+      const rects = (
+        /** @type {Record<string, ZoneRect[]>} */
+        /** @type {any} */
+        ZONE_RECTS[mode]
+      );
       const lineColor = dark ? "#64748b" : "#94a3b8";
       const bodyFill = dark ? "#0f172a" : "#f8fafc";
       R(
@@ -2304,7 +2323,11 @@
               render_();
             },
             onZoneClick: (ev) => {
-              const hit = ev.target.closest(".zone-hit");
+              const hit = (
+                /** @type {HTMLElement | null} */
+                /** @type {Element | null} */
+                ev.target?.closest(".zone-hit")
+              );
               if (!hit) return;
               const zoneId = hit.dataset.zone;
               if (selectedZones.has(zoneId)) selectedZones.delete(zoneId);
@@ -2655,18 +2678,18 @@
             if (filtered.length) setOpen(true);
           },
           onInput: (ev) => {
-            const val = ev.target.value;
+            const val = ev.currentTarget.value;
             setQuery(val);
             setChosen("");
             onSelect("");
             setOpen(true);
-            ev.target.classList.remove("ring-2", "ring-red-300");
+            ev.currentTarget.classList.remove("ring-2", "ring-red-300");
           },
           onBlur: () => setTimeout(() => setOpen(false), 150),
           onKeyDown: (ev) => {
             if (ev.key === "Escape") {
               setOpen(false);
-              ev.target.blur();
+              ev.currentTarget.blur();
             }
             if (ev.key === "Enter") {
               ev.preventDefault();
@@ -2704,7 +2727,10 @@
   }
   function DiaryForm({ emociones: emociones2, getDisplayName, t: t3, onSave, onCancel }) {
     const [selectedEmotion, setSelectedEmotion] = d2("");
-    const [selectedTags, setSelectedTags] = d2(/* @__PURE__ */ new Set());
+    const [selectedTags, setSelectedTags] = d2(
+      /** @type {Set<string>} */
+      /* @__PURE__ */ new Set()
+    );
     function toggleTag(tag) {
       const next = new Set(selectedTags);
       if (next.has(tag)) next.delete(tag);
@@ -2718,7 +2744,10 @@
         input?.classList.add("ring-2", "ring-red-300");
         return;
       }
-      const note = document.getElementById("diary-note-input")?.value ?? "";
+      const note = (
+        /** @type {HTMLTextAreaElement | null} */
+        document.getElementById("diary-note-input")?.value ?? ""
+      );
       onSave(selectedEmotion, note, [...selectedTags]);
     }
     return /* @__PURE__ */ u3("div", { id: "diary-add-form", class: "bg-white rounded-2xl p-4 shadow-sm mb-4 border-2 border-blue-100", children: [
@@ -2736,7 +2765,7 @@
         "textarea",
         {
           id: "diary-note-input",
-          rows: "2",
+          rows: 2,
           placeholder: t3("diary.notePlaceholder"),
           class: "w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-700 resize-none focus:outline-none focus:ring-2 focus:ring-blue-200 mb-3"
         }
@@ -3805,7 +3834,10 @@
       rerender();
     }
     function open() {
-      const dialog = document.getElementById("crisis-panel");
+      const dialog = (
+        /** @type {HTMLDialogElement | null} */
+        document.getElementById("crisis-panel")
+      );
       contentEl = document.getElementById("crisis-content");
       if (!dialog || !contentEl) return;
       step = 1;
@@ -4004,7 +4036,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mp9xhxvx";
+  var BUILD_VERSION = "mp9ydcqt";
 
   // app.js
   var reducedMotion = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;

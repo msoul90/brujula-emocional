@@ -1,7 +1,9 @@
+// @ts-check
 import { render } from "preact";
 
 const TOTAL_STEPS = 3;
 
+/** @param {{ t: import('./types.js').TFn, step: number }} props */
 function Progress({ t, step }) {
     return (
         <div class="flex items-center justify-between mb-6">
@@ -17,6 +19,7 @@ function Progress({ t, step }) {
     );
 }
 
+/** @param {{ t: import('./types.js').TFn, onNext: () => void }} props */
 function Step1({ t, onNext }) {
     return (
         <div>
@@ -33,6 +36,7 @@ function Step1({ t, onNext }) {
     );
 }
 
+/** @param {{ t: import('./types.js').TFn, onNext: () => void }} props */
 function Step2({ t, onNext }) {
     const items = t("crisis.step2Items").split("|");
     return (
@@ -59,6 +63,7 @@ function Step2({ t, onNext }) {
     );
 }
 
+/** @param {{ t: import('./types.js').TFn, onClose: () => void }} props */
 function Step3({ t, onClose }) {
     const actions = t("crisis.step3Actions").split("|");
     return (
@@ -87,6 +92,7 @@ function Step3({ t, onClose }) {
     );
 }
 
+/** @param {{ t: import('./types.js').TFn, step: number, onNext: () => void, onClose: () => void }} props */
 function CrisisFlow({ t, step, onNext, onClose }) {
     return (
         <div>
@@ -99,12 +105,17 @@ function CrisisFlow({ t, step, onNext, onClose }) {
 }
 
 function closeCrisis() {
-    document.getElementById("crisis-panel")?.close();
+    /** @type {HTMLDialogElement | null} */ (document.getElementById("crisis-panel"))?.close();
     document.getElementById("crisis-trigger-btn")?.focus();
 }
 
+/**
+ * @param {{ t: import('./types.js').TFn }} opts
+ * @returns {{ init: () => void }}
+ */
 export function createCrisisFlow({ t }) {
     let step = 1;
+    /** @type {HTMLElement | null} */
     let contentEl = null;
 
     function rerender() {
@@ -121,7 +132,7 @@ export function createCrisisFlow({ t }) {
     }
 
     function open() {
-        const dialog = document.getElementById("crisis-panel");
+        const dialog = /** @type {HTMLDialogElement | null} */ (document.getElementById("crisis-panel"));
         contentEl = document.getElementById("crisis-content");
         if (!dialog || !contentEl) return;
         step = 1;
