@@ -2991,70 +2991,11 @@
     return { init };
   }
 
-  // js/version.js
-  var BUILD_VERSION = "mp9b49ym";
-
-  // app.js
-  var state = {
-    currentLang: "es",
-    currentTab: "emociones",
-    lastFocusedCard: null,
-    isClosingModal: false
-  };
-  var reducedMotion = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
-  var modalAnimationMs = reducedMotion ? 0 : 200;
-  var ui;
-  var diary;
-  var quiz;
-  var emotionMap;
-  var i18n = createI18n({
-    getLang: () => state.currentLang,
-    setLang: (lang) => {
-      state.currentLang = lang;
-    },
-    onLanguageChanged: () => {
-      ui.renderCheckinTab();
-      ui.renderRecentEmotions();
-      ui.renderEmociones(document.getElementById("search")?.value ?? "");
-      if (state.currentTab === "diario") diary.renderForTab();
-      emotionMap?.onLanguageChanged();
-      const bannerText = document.getElementById("offline-banner-text");
-      if (bannerText) bannerText.textContent = i18n.t("offlineBanner");
-    }
-  });
-  diary = createDiary({
-    t: i18n.t,
-    getDisplayName: i18n.getDisplayName,
-    emociones,
-    onGoToCheckin: () => switchTab("checkin"),
-    onOpenQuiz: () => quiz?.open()
-  });
-  ui = createUI({
-    emociones,
-    relaciones: EMOTION_RELATIONS,
-    getDisplayName: i18n.getDisplayName,
-    getEmotionField: i18n.getEmotionField,
-    getLang: () => state.currentLang,
-    t: i18n.t,
-    getLastFocusedCard: () => state.lastFocusedCard,
-    setLastFocusedCard: (card) => {
-      state.lastFocusedCard = card;
-    },
-    getIsClosingModal: () => state.isClosingModal,
-    setIsClosingModal: (value) => {
-      state.isClosingModal = value;
-    },
-    modalAnimationMs,
-    moodCategories: MOOD_CATEGORIES,
-    onAddToDiary: (nombre, note) => {
-      diary.addEntry(nombre, note);
-      if (state.currentTab === "diario") diary.renderForTab();
-    }
-  });
+  // js/settings.js
   function getTheme() {
     return localStorage.getItem(THEME_KEY) || "auto";
   }
-  function applyTheme(theme) {
+  function applyTheme(theme, getLang) {
     const prefersDark = globalThis.matchMedia("(prefers-color-scheme: dark)").matches;
     if (theme === "dark" || theme === "auto" && prefersDark) {
       document.documentElement.classList.add("dark");
@@ -3062,9 +3003,9 @@
       document.documentElement.classList.remove("dark");
     }
     localStorage.setItem(THEME_KEY, theme);
-    updateSettingsActiveStates(theme, state.currentLang);
+    updateActiveStates(theme, getLang());
   }
-  function updateSettingsActiveStates(theme, lang) {
+  function updateActiveStates(theme, lang) {
     for (const t of ["light", "auto", "dark"]) {
       document.getElementById(`theme-btn-${t}`)?.classList.toggle("settings-option-active", t === theme);
     }
@@ -3072,7 +3013,7 @@
       document.getElementById(`lang-btn-${l}`)?.classList.toggle("settings-option-active", l === lang);
     }
   }
-  function initSettingsPanel() {
+  function initSettings({ setLanguage, getLang }) {
     const settingsBtn = document.getElementById("settings-btn");
     const settingsPanel = document.getElementById("settings-panel");
     if (!settingsBtn || !settingsPanel) return;
@@ -3098,29 +3039,22 @@
       }
     });
     for (const btn of settingsPanel.querySelectorAll("[data-theme-btn]")) {
-      btn.addEventListener("click", () => applyTheme(btn.dataset.themeBtn));
+      btn.addEventListener("click", () => applyTheme(btn.dataset.themeBtn, getLang));
     }
     for (const btn of settingsPanel.querySelectorAll("[data-lang-btn]")) {
       btn.addEventListener("click", () => {
-        i18n.setLanguage(btn.dataset.langBtn);
-        updateSettingsActiveStates(getTheme(), state.currentLang);
+        setLanguage(btn.dataset.langBtn);
+        updateActiveStates(getTheme(), getLang());
       });
     }
     globalThis.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
-      if (getTheme() === "auto") applyTheme("auto");
+      if (getTheme() === "auto") applyTheme("auto", getLang);
     });
-    updateSettingsActiveStates(getTheme(), state.currentLang);
+    updateActiveStates(getTheme(), getLang());
+    return { applyTheme: (theme) => applyTheme(theme, getLang), getTheme, updateActiveStates };
   }
-  function initServiceWorker() {
-    if (!("serviceWorker" in navigator)) return;
-    window.addEventListener("load", () => {
-      navigator.serviceWorker.register("./sw.js", { updateViaCache: "none" }).catch(() => {
-      });
-    });
-    navigator.serviceWorker.addEventListener("controllerchange", () => {
-      globalThis.location.reload();
-    });
-  }
+
+  // js/install.js
   function isIosDevice() {
     const ua = navigator.userAgent.toLowerCase();
     const touchMac = ua.includes("macintosh") && navigator.maxTouchPoints > 1;
@@ -3129,7 +3063,7 @@
   function isStandalone() {
     return globalThis.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
   }
-  function initSmartInstallButton() {
+  function initInstall() {
     const installButton = document.getElementById("install-app-button");
     const iosModal = document.getElementById("ios-install-modal");
     const iosClose = document.getElementById("ios-install-close");
@@ -3189,6 +3123,94 @@
     });
     updateInstallVisibility();
   }
+
+  // js/offlineBanner.js
+  function initOfflineBanner({ t }) {
+    const banner = document.getElementById("offline-banner");
+    const text = document.getElementById("offline-banner-text");
+    if (!banner || !text) return;
+    const update = () => {
+      text.textContent = t("offlineBanner");
+      banner.classList.toggle("hidden", navigator.onLine);
+      banner.classList.toggle("flex", !navigator.onLine);
+    };
+    globalThis.addEventListener("online", update);
+    globalThis.addEventListener("offline", update);
+    update();
+  }
+
+  // js/serviceWorker.js
+  function initServiceWorker() {
+    if (!("serviceWorker" in navigator)) return;
+    globalThis.addEventListener("load", () => {
+      navigator.serviceWorker.register("./sw.js", { updateViaCache: "none" }).catch(() => {
+      });
+    });
+    navigator.serviceWorker.addEventListener("controllerchange", () => {
+      globalThis.location.reload();
+    });
+  }
+
+  // js/version.js
+  var BUILD_VERSION = "mp9bbw27";
+
+  // app.js
+  var state = {
+    currentLang: "es",
+    currentTab: "emociones",
+    lastFocusedCard: null,
+    isClosingModal: false
+  };
+  var reducedMotion = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
+  var modalAnimationMs = reducedMotion ? 0 : 200;
+  var ui;
+  var diary;
+  var quiz;
+  var emotionMap;
+  var i18n = createI18n({
+    getLang: () => state.currentLang,
+    setLang: (lang) => {
+      state.currentLang = lang;
+    },
+    onLanguageChanged: () => {
+      ui.renderCheckinTab();
+      ui.renderRecentEmotions();
+      ui.renderEmociones(document.getElementById("search")?.value ?? "");
+      if (state.currentTab === "diario") diary.renderForTab();
+      emotionMap?.onLanguageChanged();
+      const bannerText = document.getElementById("offline-banner-text");
+      if (bannerText) bannerText.textContent = i18n.t("offlineBanner");
+    }
+  });
+  diary = createDiary({
+    t: i18n.t,
+    getDisplayName: i18n.getDisplayName,
+    emociones,
+    onGoToCheckin: () => switchTab("checkin"),
+    onOpenQuiz: () => quiz?.open()
+  });
+  ui = createUI({
+    emociones,
+    relaciones: EMOTION_RELATIONS,
+    getDisplayName: i18n.getDisplayName,
+    getEmotionField: i18n.getEmotionField,
+    getLang: () => state.currentLang,
+    t: i18n.t,
+    getLastFocusedCard: () => state.lastFocusedCard,
+    setLastFocusedCard: (card) => {
+      state.lastFocusedCard = card;
+    },
+    getIsClosingModal: () => state.isClosingModal,
+    setIsClosingModal: (value) => {
+      state.isClosingModal = value;
+    },
+    modalAnimationMs,
+    moodCategories: MOOD_CATEGORIES,
+    onAddToDiary: (nombre, note) => {
+      diary.addEntry(nombre, note);
+      if (state.currentTab === "diario") diary.renderForTab();
+    }
+  });
   function switchTab(tabId) {
     const tabs = ["emociones", "checkin", "diario", "mapa"];
     for (const id of tabs) {
@@ -3209,19 +3231,6 @@
     if (tabId === "diario") diary.renderForTab();
     if (tabId === "mapa") emotionMap?.renderForTab();
   }
-  function initOfflineBanner() {
-    const banner = document.getElementById("offline-banner");
-    const text = document.getElementById("offline-banner-text");
-    if (!banner || !text) return;
-    const update = () => {
-      text.textContent = i18n.t("offlineBanner");
-      banner.classList.toggle("hidden", navigator.onLine);
-      banner.classList.toggle("flex", !navigator.onLine);
-    };
-    globalThis.addEventListener("online", update);
-    globalThis.addEventListener("offline", update);
-    update();
-  }
   function initTabNav() {
     for (const btn of document.querySelectorAll(".nav-tab")) {
       btn.addEventListener("click", () => switchTab(btn.dataset.tab));
@@ -3232,7 +3241,7 @@
     i18n.applyStaticTranslations();
     const versionEl = document.getElementById("build-version");
     if (versionEl) versionEl.textContent = BUILD_VERSION;
-    initSettingsPanel();
+    initSettings({ setLanguage: i18n.setLanguage, getLang: () => state.currentLang });
     initTabNav();
     ui.bindBaseEvents();
     emotionMap = createEmotionMap({
@@ -3254,8 +3263,8 @@
     ui.renderEmociones();
     const crisis = createCrisisFlow({ t: i18n.t });
     crisis.init();
-    initOfflineBanner();
-    initSmartInstallButton();
+    initOfflineBanner({ t: i18n.t });
+    initInstall();
     initServiceWorker();
   }
   bootstrap();
