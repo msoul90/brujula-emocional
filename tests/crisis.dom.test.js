@@ -1,6 +1,6 @@
 // @vitest-environment jsdom
 import { describe, it, expect, beforeEach } from "vitest";
-import { createCrisisFlow } from "../js/crisis.js";
+import { createCrisisFlow } from "../js/crisis.jsx";
 
 const T = {
     "crisis.step1Title": "Paso 1",
