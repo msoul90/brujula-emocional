@@ -976,6 +976,30 @@
     return lines;
   }
 
+  // js/bus.js
+  var listeners = {};
+  function on(event, fn) {
+    (listeners[event] ??= []).push(fn);
+  }
+  function emit(event, data) {
+    listeners[event]?.forEach((fn) => fn(data));
+  }
+
+  // js/store.js
+  var _state = {
+    currentLang: "es",
+    currentTab: "emociones",
+    lastFocusedCard: null,
+    isClosingModal: false
+  };
+  var get = (key) => _state[key];
+  function set(key, value) {
+    const prev = _state[key];
+    if (prev === value) return;
+    _state[key] = value;
+    emit(`store:${key}`, { value, prev });
+  }
+
   // js/ui.js
   function loadRecentEmotions() {
     try {
@@ -1113,12 +1137,7 @@
     relaciones = [],
     getDisplayName,
     getEmotionField,
-    getLang = () => "es",
     t,
-    getLastFocusedCard,
-    setLastFocusedCard,
-    getIsClosingModal,
-    setIsClosingModal,
     modalAnimationMs: modalAnimationMs2,
     moodCategories = [],
     onAddToDiary = null
@@ -1154,7 +1173,7 @@
         card.title = displayName;
         card.innerHTML = `<span>${shortRecentLabel(displayName)}</span>`;
         card.addEventListener("click", () => {
-          setLastFocusedCard(card);
+          set("lastFocusedCard", card);
           showDetail(emotion);
         });
         grid.appendChild(card);
@@ -1168,13 +1187,13 @@
       card.setAttribute("role", "button");
       card.setAttribute("aria-label", `${t("openDetailAria")} ${getDisplayName(e.nombre)}`);
       card.onclick = () => {
-        setLastFocusedCard(card);
+        set("lastFocusedCard", card);
         showDetail(e);
       };
       card.addEventListener("keydown", (event) => {
         if (event.key === "Enter" || event.key === " ") {
           event.preventDefault();
-          setLastFocusedCard(card);
+          set("lastFocusedCard", card);
           showDetail(e);
         }
       });
@@ -1337,7 +1356,7 @@
     function buildTechniqueSection(emotionNombre) {
       const tech = REGULATION_TECHNIQUES[emotionNombre];
       if (!tech) return "";
-      const lang = getLang();
+      const lang = get("currentLang");
       const data = tech[lang] ?? tech.es;
       const steps = data.steps.map((s, i) => `
             <li class="flex gap-2 text-sm text-indigo-900 leading-snug">
@@ -1502,8 +1521,8 @@
     function closeModal() {
       const modal = document.getElementById("modal");
       const panel = document.getElementById("modal-panel");
-      if (!modal.open || getIsClosingModal()) return;
-      setIsClosingModal(true);
+      if (!modal.open || get("isClosingModal")) return;
+      set("isClosingModal", true);
       panel.classList.add("translate-y-8", "sm:scale-95", "opacity-0");
       if (scrollCleanup) {
         scrollCleanup();
@@ -1511,10 +1530,10 @@
       }
       setTimeout(() => {
         modal.close();
-        setIsClosingModal(false);
+        set("isClosingModal", false);
       }, modalAnimationMs2);
       document.body.style.overflow = "auto";
-      const lastFocusedCard = getLastFocusedCard();
+      const lastFocusedCard = get("lastFocusedCard");
       if (lastFocusedCard) lastFocusedCard.focus();
     }
     function bindBaseEvents() {
@@ -1976,15 +1995,6 @@
       });
     };
     return { init, open };
-  }
-
-  // js/bus.js
-  var listeners = {};
-  function on(event, fn) {
-    (listeners[event] ??= []).push(fn);
-  }
-  function emit(event, data) {
-    listeners[event]?.forEach((fn) => fn(data));
   }
 
   // js/diary.js
@@ -3239,15 +3249,9 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mp9dpqln";
+  var BUILD_VERSION = "mp9dw7vr";
 
   // app.js
-  var state = {
-    currentLang: "es",
-    currentTab: "emociones",
-    lastFocusedCard: null,
-    isClosingModal: false
-  };
   var reducedMotion = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
   var modalAnimationMs = reducedMotion ? 0 : 200;
   var ui;
@@ -3255,15 +3259,13 @@
   var quiz;
   var emotionMap;
   var i18n = createI18n({
-    getLang: () => state.currentLang,
-    setLang: (lang) => {
-      state.currentLang = lang;
-    },
+    getLang: () => get("currentLang"),
+    setLang: (lang) => set("currentLang", lang),
     onLanguageChanged: () => {
       ui.renderCheckinTab();
       ui.renderRecentEmotions();
       ui.renderEmociones(document.getElementById("search")?.value ?? "");
-      if (state.currentTab === "diario") diary.renderForTab();
+      if (get("currentTab") === "diario") diary.renderForTab();
       emotionMap?.onLanguageChanged();
       const bannerText = document.getElementById("offline-banner-text");
       if (bannerText) bannerText.textContent = i18n.t("offlineBanner");
@@ -3281,21 +3283,12 @@
     relaciones: EMOTION_RELATIONS,
     getDisplayName: i18n.getDisplayName,
     getEmotionField: i18n.getEmotionField,
-    getLang: () => state.currentLang,
     t: i18n.t,
-    getLastFocusedCard: () => state.lastFocusedCard,
-    setLastFocusedCard: (card) => {
-      state.lastFocusedCard = card;
-    },
-    getIsClosingModal: () => state.isClosingModal,
-    setIsClosingModal: (value) => {
-      state.isClosingModal = value;
-    },
     modalAnimationMs,
     moodCategories: MOOD_CATEGORIES,
     onAddToDiary: (nombre, note) => {
       diary.addEntry(nombre, note);
-      if (state.currentTab === "diario") diary.renderForTab();
+      if (get("currentTab") === "diario") diary.renderForTab();
     }
   });
   function switchTab(tabId) {
@@ -3314,7 +3307,7 @@
         }
       }
     }
-    state.currentTab = tabId;
+    set("currentTab", tabId);
     if (tabId === "diario") diary.renderForTab();
     if (tabId === "mapa") emotionMap?.renderForTab();
   }
@@ -3324,11 +3317,11 @@
     }
   }
   function bootstrap() {
-    state.currentLang = i18n.detectInitialLanguage();
+    set("currentLang", i18n.detectInitialLanguage());
     i18n.applyStaticTranslations();
     const versionEl = document.getElementById("build-version");
     if (versionEl) versionEl.textContent = BUILD_VERSION;
-    initSettings({ setLanguage: i18n.setLanguage, getLang: () => state.currentLang });
+    initSettings({ setLanguage: i18n.setLanguage, getLang: () => get("currentLang") });
     initTabNav();
     ui.bindBaseEvents();
     emotionMap = createEmotionMap({

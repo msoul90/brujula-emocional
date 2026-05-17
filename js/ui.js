@@ -1,5 +1,6 @@
 import { RECENT_KEY, RECENT_LIMIT, REGULATION_TECHNIQUES } from "./constants.js";
 import { normalizeText, getReadableTextColor, wrapTextLines } from "./utils.js";
+import { get, set } from "./store.js";
 
 function loadRecentEmotions() {
     try {
@@ -175,12 +176,7 @@ export function createUI({
     relaciones = [],
     getDisplayName,
     getEmotionField,
-    getLang = () => "es",
     t,
-    getLastFocusedCard,
-    setLastFocusedCard,
-    getIsClosingModal,
-    setIsClosingModal,
     modalAnimationMs,
     moodCategories = [],
     onAddToDiary = null
@@ -222,7 +218,7 @@ export function createUI({
             card.title = displayName;
             card.innerHTML = `<span>${shortRecentLabel(displayName)}</span>`;
             card.addEventListener("click", () => {
-                setLastFocusedCard(card);
+                set("lastFocusedCard", card);
                 showDetail(emotion);
             });
             grid.appendChild(card);
@@ -237,13 +233,13 @@ export function createUI({
         card.setAttribute("role", "button");
         card.setAttribute("aria-label", `${t("openDetailAria")} ${getDisplayName(e.nombre)}`);
         card.onclick = () => {
-            setLastFocusedCard(card);
+            set("lastFocusedCard", card);
             showDetail(e);
         };
         card.addEventListener("keydown", (event) => {
             if (event.key === "Enter" || event.key === " ") {
                 event.preventDefault();
-                setLastFocusedCard(card);
+                set("lastFocusedCard", card);
                 showDetail(e);
             }
         });
@@ -429,7 +425,7 @@ export function createUI({
     function buildTechniqueSection(emotionNombre) {
         const tech = REGULATION_TECHNIQUES[emotionNombre];
         if (!tech) return "";
-        const lang = getLang();
+        const lang = get("currentLang");
         const data = tech[lang] ?? tech.es;
         const steps = data.steps.map((s, i) => `
             <li class="flex gap-2 text-sm text-indigo-900 leading-snug">
@@ -609,19 +605,19 @@ export function createUI({
         const modal = document.getElementById("modal");
         const panel = document.getElementById("modal-panel");
 
-        if (!modal.open || getIsClosingModal()) return;
+        if (!modal.open || get("isClosingModal")) return;
 
-        setIsClosingModal(true);
+        set("isClosingModal", true);
         panel.classList.add("translate-y-8", "sm:scale-95", "opacity-0");
         if (scrollCleanup) { scrollCleanup(); scrollCleanup = null; }
 
         setTimeout(() => {
             modal.close();
-            setIsClosingModal(false);
+            set("isClosingModal", false);
         }, modalAnimationMs);
 
         document.body.style.overflow = "auto";
-        const lastFocusedCard = getLastFocusedCard();
+        const lastFocusedCard = get("lastFocusedCard");
         if (lastFocusedCard) lastFocusedCard.focus();
     }
 
