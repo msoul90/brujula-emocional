@@ -1,12 +1,35 @@
 // @ts-check
 import { THEME_KEY } from "./constants.js";
 
-/** @returns {string} */
-function getTheme() {
-    return localStorage.getItem(THEME_KEY) || "auto";
+/** @typedef {"light" | "auto" | "dark"} Theme */
+/** @typedef {"es" | "en"} Language */
+
+const THEMES = /** @type {const} */ (["light", "auto", "dark"]);
+const LANGUAGES = /** @type {const} */ (["es", "en"]);
+
+/**
+ * @param {string | null | undefined} theme
+ * @returns {theme is Theme}
+ */
+function isTheme(theme) {
+    return THEMES.includes(/** @type {Theme} */ (theme));
 }
 
-/** @param {string} theme @param {() => string} getLang */
+/**
+ * @param {string | null | undefined} lang
+ * @returns {lang is Language}
+ */
+function isLanguage(lang) {
+    return LANGUAGES.includes(/** @type {Language} */ (lang));
+}
+
+/** @returns {Theme} */
+function getTheme() {
+    const theme = localStorage.getItem(THEME_KEY);
+    return isTheme(theme) ? theme : "auto";
+}
+
+/** @param {Theme} theme @param {() => Language} getLang */
 function applyTheme(theme, getLang) {
     const prefersDark = globalThis.matchMedia("(prefers-color-scheme: dark)").matches;
     if (theme === "dark" || (theme === "auto" && prefersDark)) {
@@ -18,19 +41,19 @@ function applyTheme(theme, getLang) {
     updateActiveStates(theme, getLang());
 }
 
-/** @param {string} theme @param {string} lang */
+/** @param {Theme} theme @param {Language} lang */
 function updateActiveStates(theme, lang) {
-    for (const t of ["light", "auto", "dark"]) {
+    for (const t of THEMES) {
         document.getElementById(`theme-btn-${t}`)?.classList.toggle("settings-option-active", t === theme);
     }
-    for (const l of ["es", "en"]) {
+    for (const l of LANGUAGES) {
         document.getElementById(`lang-btn-${l}`)?.classList.toggle("settings-option-active", l === lang);
     }
 }
 
 /**
- * @param {{ setLanguage: (lang: string) => void, getLang: () => string }} opts
- * @returns {{ applyTheme: (theme: string) => void, getTheme: () => string, updateActiveStates: (theme: string, lang: string) => void } | undefined}
+ * @param {{ setLanguage: (lang: Language) => void, getLang: () => Language }} opts
+ * @returns {{ applyTheme: (theme: Theme) => void, getTheme: () => Theme, updateActiveStates: (theme: Theme, lang: Language) => void } | undefined}
  */
 export function initSettings({ setLanguage, getLang }) {
     const settingsBtn = document.getElementById("settings-btn");
@@ -63,12 +86,18 @@ export function initSettings({ setLanguage, getLang }) {
     });
 
     for (const btn of /** @type {NodeListOf<HTMLElement>} */ (settingsPanel.querySelectorAll("[data-theme-btn]"))) {
-        btn.addEventListener("click", () => applyTheme(btn.dataset.themeBtn ?? "", getLang));
+        btn.addEventListener("click", () => {
+            const theme = btn.dataset.themeBtn;
+            if (!isTheme(theme)) return;
+            applyTheme(theme, getLang);
+        });
     }
 
     for (const btn of /** @type {NodeListOf<HTMLElement>} */ (settingsPanel.querySelectorAll("[data-lang-btn]"))) {
         btn.addEventListener("click", () => {
-            setLanguage(btn.dataset.langBtn ?? "");
+            const lang = btn.dataset.langBtn;
+            if (!isLanguage(lang)) return;
+            setLanguage(lang);
             updateActiveStates(getTheme(), getLang());
         });
     }

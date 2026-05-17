@@ -3873,8 +3873,29 @@
   }
 
   // js/settings.js
+  var THEMES = (
+    /** @type {const} */
+    ["light", "auto", "dark"]
+  );
+  var LANGUAGES = (
+    /** @type {const} */
+    ["es", "en"]
+  );
+  function isTheme(theme) {
+    return THEMES.includes(
+      /** @type {Theme} */
+      theme
+    );
+  }
+  function isLanguage(lang) {
+    return LANGUAGES.includes(
+      /** @type {Language} */
+      lang
+    );
+  }
   function getTheme() {
-    return localStorage.getItem(THEME_KEY) || "auto";
+    const theme = localStorage.getItem(THEME_KEY);
+    return isTheme(theme) ? theme : "auto";
   }
   function applyTheme(theme, getLang) {
     const prefersDark = globalThis.matchMedia("(prefers-color-scheme: dark)").matches;
@@ -3887,10 +3908,10 @@
     updateActiveStates(theme, getLang());
   }
   function updateActiveStates(theme, lang) {
-    for (const t3 of ["light", "auto", "dark"]) {
+    for (const t3 of THEMES) {
       document.getElementById(`theme-btn-${t3}`)?.classList.toggle("settings-option-active", t3 === theme);
     }
-    for (const l3 of ["es", "en"]) {
+    for (const l3 of LANGUAGES) {
       document.getElementById(`lang-btn-${l3}`)?.classList.toggle("settings-option-active", l3 === lang);
     }
   }
@@ -3927,7 +3948,11 @@
       /** @type {NodeListOf<HTMLElement>} */
       settingsPanel.querySelectorAll("[data-theme-btn]")
     ) {
-      btn.addEventListener("click", () => applyTheme(btn.dataset.themeBtn ?? "", getLang));
+      btn.addEventListener("click", () => {
+        const theme = btn.dataset.themeBtn;
+        if (!isTheme(theme)) return;
+        applyTheme(theme, getLang);
+      });
     }
     for (
       const btn of
@@ -3935,7 +3960,9 @@
       settingsPanel.querySelectorAll("[data-lang-btn]")
     ) {
       btn.addEventListener("click", () => {
-        setLanguage(btn.dataset.langBtn ?? "");
+        const lang = btn.dataset.langBtn;
+        if (!isLanguage(lang)) return;
+        setLanguage(lang);
         updateActiveStates(getTheme(), getLang());
       });
     }
@@ -4049,7 +4076,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mp9ynvh3";
+  var BUILD_VERSION = "mp9yx4z9";
 
   // app.js
   var reducedMotion = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
