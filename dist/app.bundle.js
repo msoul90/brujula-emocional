@@ -1491,10 +1491,19 @@
       ctx.fillRect(0, contentFloor, W, fadeH);
       ctx.restore();
     }
-    ctx.fillStyle = "#64748b";
-    ctx.font = `400 26px ${SANS}`;
     const brand = "Br\xFAjula Emocional";
-    ctx.fillText(brand, W - PAD2 - ctx.measureText(brand).width, H2 - 56);
+    ctx.font = `500 26px ${SANS}`;
+    const brandW = ctx.measureText(brand).width;
+    const brandX = W - PAD2 - brandW;
+    const brandY = H2 - 64;
+    ctx.strokeStyle = "#e2e8f0";
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(brandX, brandY - 24);
+    ctx.lineTo(W - PAD2, brandY - 24);
+    ctx.stroke();
+    ctx.fillStyle = "#475569";
+    ctx.fillText(brand, brandX, brandY);
     return canvas;
   }
 
@@ -1593,8 +1602,8 @@
       "button",
       {
         type: "button",
-        class: "emotion-card p-5 rounded-2xl shadow-sm cursor-pointer flex justify-between items-center bg-white w-full text-left",
-        style: `border-left:8px solid ${e3.color}`,
+        class: "emotion-card p-5 rounded-2xl shadow-sm cursor-pointer flex justify-between items-center w-full text-left",
+        style: `--ec:${e3.color}; border-left:8px solid ${e3.color}`,
         "aria-label": `${t3("openDetailAria")} ${getDisplayName(e3.nombre)}`,
         onClick: (ev) => onSelect(e3, ev.currentTarget),
         children: [
@@ -1780,8 +1789,8 @@
             "button",
             {
               type: "button",
-              class: "emotion-card shrink-0 w-20 h-20 rounded-full shadow-sm bg-white border-4 flex items-center justify-center text-center px-2 text-[11px] font-bold leading-tight text-slate-700",
-              style: `border-color:${emotion.color}`,
+              class: "emotion-card recent-emotion-card shrink-0 w-20 h-20 rounded-full shadow-sm flex items-center justify-center text-center px-2 text-[11px] font-bold leading-tight text-slate-700",
+              style: `--ec:${emotion.color}`,
               "aria-label": `${t3("openEmotionAria")} ${displayName}`,
               title: displayName,
               onClick: (ev) => {
@@ -4232,7 +4241,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mpa4lyyx";
+  var BUILD_VERSION = "mparhgki";
 
   // app.js
   var reducedMotion = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
@@ -4280,7 +4289,6 @@
       document.getElementById(`tab-${id}`)?.classList.toggle("hidden", id !== nextTab);
       const btn = document.getElementById(`nav-${id}`);
       if (btn) {
-        btn.classList.toggle("text-blue-600", id === nextTab);
         btn.classList.toggle("text-slate-400", id !== nextTab);
         btn.classList.toggle("nav-active", id === nextTab);
         if (id === nextTab) {
