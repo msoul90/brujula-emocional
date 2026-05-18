@@ -8,10 +8,19 @@
 
 :root {
     --brand-primary: #7C5CFC;
-    --brand-coral:   #FF7D6B;
+    --brand-primary-strong: #5A37D6;
 }
 
-.emotion-card { transition: all 0.2s ease; border: 1px solid rgba(0,0,0,0.05); }
+.emotion-card {
+    transition: all 0.2s ease;
+    border: 1px solid rgba(0, 0, 0, 0.05);
+    background-color: color-mix(in srgb, var(--ec, transparent) 8%, #ffffff);
+}
+.recent-emotion-card {
+    border-width: 2px;
+    border-color: var(--ec, transparent);
+    background-color: color-mix(in srgb, var(--ec, transparent) 12%, #ffffff);
+}
         .emotion-card:active { transform: scale(0.96); opacity: 0.8; }
         .emotion-card:focus-visible {
             outline: 3px solid var(--brand-primary);
@@ -111,17 +120,17 @@
         }
 
         /* Settings panel active button state */
-        .settings-option-active {
-            background-color: var(--brand-primary);
+.settings-option-active {
+            background-color: var(--brand-primary-strong);
             color: #f8fafc;
-            border-color: var(--brand-primary);
+            border-color: var(--brand-primary-strong);
         }
 
         /* Dark mode — driven by html.dark class (set by theme-init.js + settings panel) */
         html.dark body { background-color: #0f172a; }
         html.dark .bg-body { background-color: #0f172a; }
         html.dark #bottom-nav { background-color: #0f172a; border-color: #1e293b; }
-        .nav-tab.nav-active { color: var(--brand-primary); }
+        .nav-tab.nav-active { color: var(--brand-primary-strong); }
         html.dark .nav-tab { color: #475569; }
         html.dark .nav-tab.nav-active { color: #a78bfa; }
 
@@ -142,9 +151,9 @@
             border-color: #334155;
         }
         html.dark .settings-option-active {
-            background-color: var(--brand-primary);
+            background-color: var(--brand-primary-strong);
             color: #f8fafc;
-            border-color: var(--brand-primary);
+            border-color: var(--brand-primary-strong);
         }
 
         /* Search */

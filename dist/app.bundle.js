@@ -1603,7 +1603,7 @@
       {
         type: "button",
         class: "emotion-card p-5 rounded-2xl shadow-sm cursor-pointer flex justify-between items-center w-full text-left",
-        style: `--ec:${e3.color}; border-left:8px solid ${e3.color}; background-color:${e3.color}0D`,
+        style: `--ec:${e3.color}; border-left:8px solid ${e3.color}`,
         "aria-label": `${t3("openDetailAria")} ${getDisplayName(e3.nombre)}`,
         onClick: (ev) => onSelect(e3, ev.currentTarget),
         children: [
@@ -1789,8 +1789,8 @@
             "button",
             {
               type: "button",
-              class: "emotion-card shrink-0 w-20 h-20 rounded-full shadow-sm border-2 flex items-center justify-center text-center px-2 text-[11px] font-bold leading-tight text-slate-700",
-              style: `--ec:${emotion.color}; border-color:${emotion.color}; background-color:${emotion.color}1F`,
+              class: "emotion-card recent-emotion-card shrink-0 w-20 h-20 rounded-full shadow-sm flex items-center justify-center text-center px-2 text-[11px] font-bold leading-tight text-slate-700",
+              style: `--ec:${emotion.color}`,
               "aria-label": `${t3("openEmotionAria")} ${displayName}`,
               title: displayName,
               onClick: (ev) => {
@@ -4241,7 +4241,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mpar4qnc";
+  var BUILD_VERSION = "mparhgki";
 
   // app.js
   var reducedMotion = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
