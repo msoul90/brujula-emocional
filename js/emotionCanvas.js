@@ -134,10 +134,21 @@ export async function buildEmotionCanvas(e, displayName, tagLabel, mensaje, resp
         ctx.restore();
     }
 
-    ctx.fillStyle = "#64748b";
-    ctx.font = `400 26px ${SANS}`;
     const brand = "Brújula Emocional";
-    ctx.fillText(brand, W - PAD - ctx.measureText(brand).width, H - 56);
+    ctx.font = `500 26px ${SANS}`;
+    const brandW = ctx.measureText(brand).width;
+    const brandX = W - PAD - brandW;
+    const brandY = H - 64;
+
+    ctx.strokeStyle = "#e2e8f0";
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(brandX, brandY - 24);
+    ctx.lineTo(W - PAD, brandY - 24);
+    ctx.stroke();
+
+    ctx.fillStyle = "#475569";
+    ctx.fillText(brand, brandX, brandY);
 
     return canvas;
 }

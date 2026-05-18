@@ -56,8 +56,8 @@ function CheckinCard({ cat, t, onClick }) {
 
 function EmotionCard({ e, getDisplayName, t, onSelect }) {
     return (
-        <button type="button" class="emotion-card p-5 rounded-2xl shadow-sm cursor-pointer flex justify-between items-center bg-white w-full text-left"
-            style={`border-left:8px solid ${e.color}`}
+        <button type="button" class="emotion-card p-5 rounded-2xl shadow-sm cursor-pointer flex justify-between items-center w-full text-left"
+            style={`--ec:${e.color}; border-left:8px solid ${e.color}; background-color:${e.color}0D`}
             aria-label={`${t("openDetailAria")} ${getDisplayName(e.nombre)}`}
             onClick={(ev) => onSelect(e, ev.currentTarget)}>
             <span class="font-bold text-lg text-slate-700">{getDisplayName(e.nombre)}</span>
@@ -254,8 +254,8 @@ export function createUI({
                     const displayName = getDisplayName(emotion.nombre);
                     return (
                         <button key={emotion.nombre} type="button"
-                            class="emotion-card shrink-0 w-20 h-20 rounded-full shadow-sm bg-white border-4 flex items-center justify-center text-center px-2 text-[11px] font-bold leading-tight text-slate-700"
-                            style={`border-color:${emotion.color}`}
+                            class="emotion-card shrink-0 w-20 h-20 rounded-full shadow-sm border-2 flex items-center justify-center text-center px-2 text-[11px] font-bold leading-tight text-slate-700"
+                            style={`--ec:${emotion.color}; border-color:${emotion.color}; background-color:${emotion.color}1F`}
                             aria-label={`${t("openEmotionAria")} ${displayName}`}
                             title={displayName}
                             onClick={(ev) => { set("lastFocusedCard", ev.currentTarget); showDetail(emotion); }}>

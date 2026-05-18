@@ -65,7 +65,6 @@ function switchTab(tabId) {
         document.getElementById(`tab-${id}`)?.classList.toggle("hidden", id !== nextTab);
         const btn = document.getElementById(`nav-${id}`);
         if (btn) {
-            btn.classList.toggle("text-blue-600", id === nextTab);
             btn.classList.toggle("text-slate-400", id !== nextTab);
             btn.classList.toggle("nav-active", id === nextTab);
             if (id === nextTab) {

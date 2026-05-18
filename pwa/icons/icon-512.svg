@@ -1,12 +1,18 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 220 220">
-  <rect x="0" y="0" width="220" height="220" rx="51.48" fill="#0D1B2A"/>
-  <circle cx="110" cy="110" r="74" fill="none" stroke="#F1F4F9" stroke-opacity="0.18" stroke-width="1.5"/>
-  <circle cx="110" cy="110" r="56" fill="none" stroke="#F1F4F9" stroke-opacity="0.12" stroke-width="1"/>
-  <polygon points="110,34 130,110 110,118 90,110" fill="#F4A4A4"/>
-  <polygon points="110,186 130,110 110,102 90,110" fill="#F1F4F9" fill-opacity="0.55"/>
+  <defs>
+    <radialGradient id="bg512" cx="42%" cy="35%" r="70%">
+      <stop offset="0%" stop-color="#1E0F4A"/>
+      <stop offset="100%" stop-color="#0D1B2A"/>
+    </radialGradient>
+  </defs>
+  <rect x="0" y="0" width="220" height="220" rx="51.48" fill="url(#bg512)"/>
+  <circle cx="110" cy="110" r="74" fill="none" stroke="#9B7EFF" stroke-opacity="0.25" stroke-width="1.5"/>
+  <circle cx="110" cy="110" r="56" fill="none" stroke="#9B7EFF" stroke-opacity="0.15" stroke-width="1"/>
+  <polygon points="110,34 130,110 110,118 90,110" fill="#FF7D6B"/>
+  <polygon points="110,186 130,110 110,102 90,110" fill="#F1F4F9" fill-opacity="0.65"/>
   <circle cx="110" cy="110" r="6" fill="#F1F4F9"/>
-  <rect x="109" y="22" width="2" height="10" fill="#F1F4F9" fill-opacity="0.4"/>
-  <rect x="109" y="22" width="2" height="10" fill="#F1F4F9" fill-opacity="0.4" transform="rotate(90 110 110)"/>
-  <rect x="109" y="22" width="2" height="10" fill="#F1F4F9" fill-opacity="0.4" transform="rotate(180 110 110)"/>
-  <rect x="109" y="22" width="2" height="10" fill="#F1F4F9" fill-opacity="0.4" transform="rotate(270 110 110)"/>
+  <rect x="109" y="22" width="2" height="10" fill="#F1F4F9" fill-opacity="0.6"/>
+  <rect x="109" y="22" width="2" height="10" fill="#F1F4F9" fill-opacity="0.6" transform="rotate(90 110 110)"/>
+  <rect x="109" y="22" width="2" height="10" fill="#F1F4F9" fill-opacity="0.6" transform="rotate(180 110 110)"/>
+  <rect x="109" y="22" width="2" height="10" fill="#F1F4F9" fill-opacity="0.6" transform="rotate(270 110 110)"/>
 </svg>
