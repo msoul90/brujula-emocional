@@ -13,6 +13,7 @@ import { migrateStorageSchema } from "./js/storageSchema.js";
 import { on } from "./js/bus.js";
 import { get, set } from "./js/store.js";
 import { BUILD_VERSION } from "./js/version.js";
+import { initAnalytics, trackTabView, trackLanguageChange } from "./js/analytics.js";
 
 const reducedMotion = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
 const modalAnimationMs = reducedMotion ? 0 : 200;
@@ -36,6 +37,7 @@ const i18n = createI18n({
         emotionMap?.onLanguageChanged();
         const bannerText = document.getElementById("offline-banner-text");
         if (bannerText) bannerText.textContent = i18n.t("offlineBanner");
+        trackLanguageChange(get("currentLang"));
     }
 });
 
@@ -74,6 +76,7 @@ function switchTab(tabId) {
         }
     }
     set("currentTab", nextTab);
+    trackTabView(nextTab);
     if (nextTab === "diario") diary.renderForTab();
     if (nextTab === "mapa") emotionMap?.renderForTab();
 }
@@ -89,6 +92,7 @@ function bootstrap() {
 
     set("currentLang", i18n.detectInitialLanguage());
     i18n.applyStaticTranslations();
+    initAnalytics({ lang: get("currentLang"), version: BUILD_VERSION });
 
     const versionEl = document.getElementById("build-version");
     if (versionEl) versionEl.textContent = BUILD_VERSION;
