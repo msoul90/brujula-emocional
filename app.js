@@ -21,6 +21,7 @@ let ui;
 let diary;
 let quiz;
 let emotionMap;
+let searchQuery = "";
 
 const i18n = createI18n({
     getLang: () => get("currentLang"),
@@ -28,7 +29,7 @@ const i18n = createI18n({
     onLanguageChanged: () => {
         ui.renderCheckinTab();
         ui.renderRecentEmotions();
-        ui.renderEmociones(document.getElementById("search")?.value ?? "");
+        ui.renderEmociones(searchQuery);
         if (get("currentTab") === "diario") diary.renderForTab();
         emotionMap?.onLanguageChanged();
         const bannerText = document.getElementById("offline-banner-text");
@@ -53,10 +54,6 @@ ui = createUI({
     t: i18n.t,
     modalAnimationMs,
     moodCategories: MOOD_CATEGORIES,
-    onAddToDiary: (nombre, note) => {
-        diary.addEntry(nombre, note);
-        if (get("currentTab") === "diario") diary.renderForTab();
-    }
 });
 
 function switchTab(tabId) {
@@ -97,20 +94,20 @@ function bootstrap() {
     initSettings({ setLanguage: i18n.setLanguage, getLang: () => get("currentLang") });
     initTabNav();
     ui.bindBaseEvents();
+    document.getElementById("search")?.addEventListener("input", (e) => {
+        searchQuery = /** @type {HTMLInputElement} */ (e.target).value;
+    });
 
     emotionMap = createEmotionMap({
         emociones,
         getDisplayName: i18n.getDisplayName,
         t: i18n.t,
-        showDetail: ui.showDetail,
     });
 
     quiz = createQuiz({
         emociones,
         getDisplayName: i18n.getDisplayName,
         t: i18n.t,
-        showDetail: ui.showDetail,
-        onShowAll: () => switchTab(DEFAULT_TAB)
     });
     quiz.init();
 

@@ -26,7 +26,14 @@ npm run dev   # alias de npx serve .
 
 Or open `index.html` directly in a browser. Note: the service worker and PWA install prompt require `http://` or `https://` — they won't work on `file://`.
 
-There is no automated test suite. Manual test scenarios are documented in `README.md`.
+**Tests:**
+
+```bash
+npm test            # ejecuta todos los tests una vez
+npm run test:watch  # modo watch durante desarrollo
+```
+
+Tests automatizados con **Vitest** en `tests/`. Manual test scenarios are documented in `README.md`.
 
 ## Build system
 
@@ -45,20 +52,29 @@ Content sources for Tailwind are declared in `tailwind.config.js`.
 
 ## Architecture
 
-The app is a vanilla JS PWA with no framework or bundler. Tailwind CSS is served from `dist/tailwind.css` (pre-generated static file). Icons are inline SVGs — no icon library dependency.
+The app is a **Preact + JSX** PWA bundled with **esbuild**. Tailwind CSS is served from `dist/tailwind.css` (pre-generated static file). Icons are inline SVGs — no icon library dependency.
 
 **Module roles:**
 
 | File | Role |
 | --- | --- |
-| `js/constants.js` | Emotion data array, all translations, localStorage key names, config constants |
+| `js/constants.js` | Emotion data, translations, localStorage key names, config constants |
+| `js/persistence.js` | Thin wrapper over localStorage — all reads/writes go through typed helpers |
+| `js/store.js` | In-memory state for 4 transient values (currentLang, currentTab, lastFocusedCard, isClosingModal); emits `store:<key>` on the bus on change |
+| `js/bus.js` | Minimal pub/sub event bus for decoupled inter-module communication |
 | `js/i18n.js` | Language detection, `t()` helper, applies translations to the DOM |
-| `js/ui.js` | Renders emotion cards and modal, handles search and all keyboard/click events |
-| `loader.js` | Always loads `dist/app.bundle.js`; also shows a warning banner on `file://` |
-| `app.js` | Entry point — creates shared state, initializes i18n and UI, wires up language toggle and service worker |
+| `js/ui.jsx` | Renders emotion cards, modal, and check-in tab; handles search and all keyboard/click events |
+| `js/diary.jsx` | Emotional diary — CRUD in localStorage, Preact render |
+| `js/quiz.jsx` | 3-question identification quiz |
+| `js/crisis.jsx` | 3-step crisis support flow |
+| `js/emotionMap.jsx` | Emotion relationship map — force-layout graph + quadrant view |
+| `js/settings.js` | Theme and language settings panel |
+| `js/emotionCanvas.js` | Generates share PNG via Canvas 2D API |
+| `loader.js` | Always loads `dist/app.bundle.js`; shows a warning banner on `file://` |
+| `app.js` | Entry point — bootstraps all modules, owns `searchQuery`, wires events |
 | `sw.js` | Service worker — cache-first strategy for offline support |
 
-**Data flow:** `constants.js` → `i18n.js` → `ui.js` ← `app.js` (bootstraps everything, owns state).
+**Data flow:** `constants.js` → `persistence.js` ← modules; `bus.js` decouples module-to-module events; `store.js` holds transient UI state; `app.js` bootstraps everything.
 
 **`dist/app.bundle.js`** is the esbuild-generated bundle committed to the repo. It must be rebuilt (`npm run build:js`) whenever `app.js` or any of its imports change. The pre-commit hook does this automatically.
 
@@ -90,7 +106,9 @@ Custom styles are in `styles.css` (card transitions, focus rings, scrollbar hidi
 
 ## Persistence
 
-Two localStorage keys, both defined as constants in `js/constants.js`:
+All localStorage access goes through `js/persistence.js`. Keys are defined as constants in `js/constants.js`:
 
 - `RECENT_KEY` — stores the 5 most recently viewed emotion names
 - `LANGUAGE_KEY` — stores the user's language preference (`"es"` or `"en"`)
+- `THEME_KEY` — stores the user's theme preference (`"light"`, `"dark"`, or `"auto"`)
+- `DIARY_KEY` — stores diary entries as a JSON array

@@ -12,6 +12,7 @@ import { BODY_ZONES, BODY_ZONE_EMOTIONS, SIMPLE_ZONE_GROUPS } from "./constants.
  * @typedef {{ x: number, y: number, w: number, h: number }} ZoneRect
  */
 import { isDarkMode } from "./utils.js";
+import { emit } from "./bus.js";
 
 // viewBox "0 0 100 200" — displayed at 130px wide (~260px tall)
 
@@ -233,10 +234,10 @@ function BodyMapPanel({ t, dark, zones, rects, selectedZones, mode, matching, li
 }
 
 /**
- * @param {{ emociones: Emotion[], getDisplayName: GetDisplayNameFn, t: TFn, showDetail: ShowDetailFn, onDismiss: () => void, onSwitchToQuiz?: () => void }} opts
+ * @param {{ emociones: Emotion[], getDisplayName: GetDisplayNameFn, t: TFn, onDismiss: () => void, onSwitchToQuiz?: () => void }} opts
  * @returns {{ render: () => void }}
  */
-export function createBodyMap({ emociones, getDisplayName, t, showDetail, onDismiss, onSwitchToQuiz }) {
+export function createBodyMap({ emociones, getDisplayName, t, onDismiss, onSwitchToQuiz }) {
     let selectedZones = new Set();
     let mode = "simple";
 
@@ -287,7 +288,7 @@ export function createBodyMap({ emociones, getDisplayName, t, showDetail, onDism
                 onClear={() => { selectedZones = new Set(); render_(); }}
                 onSwitchToQuiz={() => { if (onSwitchToQuiz) onSwitchToQuiz(); }}
                 onDismiss={onDismiss}
-                onSelectEmotion={(e) => showDetail(e)}
+                onSelectEmotion={(e) => emit("emotion:select", { nombre: e.nombre })}
             />,
             content
         );

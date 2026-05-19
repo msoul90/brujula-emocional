@@ -2,6 +2,8 @@
 import { render } from "preact";
 import { createBodyMap } from "./bodyMap.jsx";
 import { isDarkMode } from "./utils.js";
+import { emit } from "./bus.js";
+import { DEFAULT_TAB } from "./constants.js";
 
 /**
  * @typedef {{ labelKey: string, next?: string, result?: string[] }} QuizOption
@@ -110,9 +112,9 @@ function QuizStep({ t, dark, step, historyLen, onPickOption, onBack, onSwitchToB
 }
 
 /**
- * @param {{ t: import('./types.js').TFn, dark: boolean, emotions: import('./data/emotions.js').Emotion[], getDisplayName: import('./types.js').GetDisplayNameFn, onRestart: () => void, onDismiss: () => void, onShowAll: (() => void) | null, onShowDetail: import('./types.js').ShowDetailFn }} props
+ * @param {{ t: import('./types.js').TFn, dark: boolean, emotions: import('./data/emotions.js').Emotion[], getDisplayName: import('./types.js').GetDisplayNameFn, onRestart: () => void, onDismiss: () => void }} props
  */
-function QuizResult({ t, dark, emotions, getDisplayName, onRestart, onDismiss, onShowAll, onShowDetail }) {
+function QuizResult({ t, dark, emotions, getDisplayName, onRestart, onDismiss }) {
     const titleC   = dark ? "text-slate-300" : "text-slate-500";
     const restartC = dark ? "bg-slate-800 text-slate-200 hover:bg-slate-700" : "bg-slate-100 text-slate-700 hover:bg-slate-200";
     const closeC   = dark ? "text-slate-400 hover:text-slate-200" : "text-slate-400 hover:text-slate-600";
@@ -124,7 +126,7 @@ function QuizResult({ t, dark, emotions, getDisplayName, onRestart, onDismiss, o
                     <button key={e.nombre} type="button"
                         class="quiz-result-card w-full text-left p-4 rounded-2xl flex items-center gap-4 hover:shadow-md transition-all"
                         style={`border-left:6px solid ${e.color}; background:${e.color}${dark ? "22" : "15"}`}
-                        onClick={() => { onDismiss(); onShowDetail(e); }}>
+                        onClick={() => { onDismiss(); emit("emotion:select", { nombre: e.nombre }); }}>
                         <span class="font-bold" style={`color:${e.text}`}>{getDisplayName(e.nombre)}</span>
                         <span class="ml-auto text-xs font-bold opacity-70 shrink-0" style={`color:${e.text}`}>Ver →</span>
                     </button>
@@ -134,7 +136,7 @@ function QuizResult({ t, dark, emotions, getDisplayName, onRestart, onDismiss, o
                 class={`mt-6 w-full py-3 font-bold rounded-2xl text-sm transition-colors ${restartC}`}>
                 {t("quiz.restart")}
             </button>
-            <button type="button" id="quiz-close-result-btn" onClick={() => { onDismiss(); if (onShowAll) onShowAll(); }}
+            <button type="button" id="quiz-close-result-btn" onClick={() => { onDismiss(); emit("tab:switch", { tabId: DEFAULT_TAB }); }}
                 class={`mt-2 w-full py-3 text-sm font-medium transition-colors ${closeC}`}>
                 {t("quiz.close")}
             </button>
@@ -143,10 +145,10 @@ function QuizResult({ t, dark, emotions, getDisplayName, onRestart, onDismiss, o
 }
 
 /**
- * @param {{ emociones: import('./data/emotions.js').Emotion[], getDisplayName: import('./types.js').GetDisplayNameFn, t: import('./types.js').TFn, showDetail: import('./types.js').ShowDetailFn, onShowAll: (() => void) | null }} opts
+ * @param {{ emociones: import('./data/emotions.js').Emotion[], getDisplayName: import('./types.js').GetDisplayNameFn, t: import('./types.js').TFn }} opts
  * @returns {{ init: () => void, open: () => void }}
  */
-export function createQuiz({ emociones, getDisplayName, t, showDetail, onShowAll }) {
+export function createQuiz({ emociones, getDisplayName, t }) {
     /** @type {string[]} */
     let history        = [];
     let currentStepKey = "q1";
@@ -162,7 +164,7 @@ export function createQuiz({ emociones, getDisplayName, t, showDetail, onShowAll
     };
 
     const bodyMap = createBodyMap({
-        emociones, getDisplayName, t, showDetail,
+        emociones, getDisplayName, t,
         onDismiss: dismiss,
         onSwitchToQuiz: () => {
             history = []; currentStepKey = "q1"; showingResult = false; resultEmotions = [];
@@ -180,7 +182,7 @@ export function createQuiz({ emociones, getDisplayName, t, showDetail, onShowAll
                     <QuizResult t={t} dark={dark} emotions={resultEmotions}
                         getDisplayName={getDisplayName}
                         onRestart={() => { history = []; currentStepKey = "q1"; showingResult = false; resultEmotions = []; rerender(); }}
-                        onDismiss={dismiss} onShowAll={onShowAll} onShowDetail={showDetail} />
+                        onDismiss={dismiss} />
                 </div>,
                 contentEl
             );

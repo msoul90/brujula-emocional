@@ -10,6 +10,7 @@ import {
     graphHeightFor,
 } from "./emotionMap.logic.js";
 import { EmotionMapPanel } from "./emotionMap.view.jsx";
+import { emit } from "./bus.js";
 
 /** @typedef {import('./emotionMap.logic.js').RelationType} RelationType */
 /** @typedef {import('./emotionMap.logic.js').GraphData} GraphData */
@@ -25,10 +26,9 @@ function containerW() {
  *   emociones: import('./data/emotions.js').Emotion[],
  *   getDisplayName: import('./types.js').GetDisplayNameFn,
  *   t: import('./types.js').TFn,
- *   showDetail: import('./types.js').ShowDetailFn,
  * }} deps
  */
-export function createEmotionMap({ emociones, getDisplayName, t, showDetail }) {
+export function createEmotionMap({ emociones, getDisplayName, t }) {
     /** @type {MapView} */
     let view = "graph";
     /** @type {string | null} */
@@ -57,6 +57,11 @@ export function createEmotionMap({ emociones, getDisplayName, t, showDetail }) {
         if (!quadData) {
             quadData = buildQuadData(emociones, getDisplayName, containerW());
         }
+    }
+
+    function flushSearch() {
+        render_();
+        requestAnimationFrame(() => populateSuggestions(nameFilter));
     }
 
     function render_() {
@@ -133,8 +138,7 @@ export function createEmotionMap({ emociones, getDisplayName, t, showDetail }) {
                     render_();
                 }}
                 onOpenDetail={() => {
-                    const e = emociones.find((em) => em.nombre === selected);
-                    if (e) showDetail(e);
+                    if (selected) emit("emotion:select", { nombre: selected });
                 }}
                 onClearSelection={() => {
                     selected = null;
@@ -146,10 +150,7 @@ export function createEmotionMap({ emociones, getDisplayName, t, showDetail }) {
                     nameFilter = target.value;
                     selected = null;
                     if (searchDebounce) globalThis.clearTimeout(searchDebounce);
-                    searchDebounce = globalThis.setTimeout(() => {
-                        render_();
-                        requestAnimationFrame(() => populateSuggestions(nameFilter));
-                    }, 120);
+                    searchDebounce = globalThis.setTimeout(flushSearch, 120);
                 }}
                 svgEventHandler={svgEventHandler}
             />,

@@ -3,12 +3,12 @@ import {
     TRANSLATIONS,
     EMOTION_NAME_TRANSLATIONS,
     EMOTION_CONTENT_TRANSLATIONS,
-    LANGUAGE_KEY
 } from "./constants.js";
+import { getLanguage, setLanguage as persistLanguage } from "./persistence.js";
 
 /** @returns {"es"|"en"} */
 function detectInitialLanguage() {
-    const saved = localStorage.getItem(LANGUAGE_KEY);
+    const saved = getLanguage();
     if (saved === "es" || saved === "en") return saved;
 
     const browserLang = globalThis.navigator?.language?.toLowerCase() ?? "es";
@@ -98,7 +98,7 @@ export function createI18n({ getLang, setLang, onLanguageChanged }) {
     /** @param {string} lang */
     function setLanguage(lang) {
         setLang(lang === "en" ? "en" : "es");
-        localStorage.setItem(LANGUAGE_KEY, getLang());
+        persistLanguage(getLang());
         applyStaticTranslations();
         onLanguageChanged();
     }
