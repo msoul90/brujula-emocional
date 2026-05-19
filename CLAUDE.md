@@ -106,7 +106,7 @@ Custom styles are in `styles.css` (card transitions, focus rings, scrollbar hidi
 
 ## Persistence
 
-All localStorage access goes through `js/persistence.js`. Keys are defined as constants in `js/constants.js`:
+Normal app reads/writes should go through `js/persistence.js`; `js/storageSchema.js` may access localStorage directly for one-time schema migrations. Keys are defined as constants in `js/constants.js`:
 
 - `RECENT_KEY` — stores the 5 most recently viewed emotion names
 - `LANGUAGE_KEY` — stores the user's language preference (`"es"` or `"en"`)

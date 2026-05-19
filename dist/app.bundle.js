@@ -4273,7 +4273,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mpc5t5r9";
+  var BUILD_VERSION = "mpc5y3ze";
 
   // app.js
   var reducedMotion = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
@@ -4287,6 +4287,8 @@
     getLang: () => get("currentLang"),
     setLang: (lang) => set("currentLang", lang),
     onLanguageChanged: () => {
+      searchQuery = /** @type {HTMLInputElement | null} */
+      document.getElementById("search")?.value ?? "";
       ui.renderCheckinTab();
       ui.renderRecentEmotions();
       ui.renderEmociones(searchQuery);
@@ -4345,7 +4347,12 @@
     initSettings({ setLanguage: i18n.setLanguage, getLang: () => get("currentLang") });
     initTabNav();
     ui.bindBaseEvents();
-    document.getElementById("search")?.addEventListener("input", (e3) => {
+    const searchInput = (
+      /** @type {HTMLInputElement | null} */
+      document.getElementById("search")
+    );
+    searchQuery = searchInput?.value ?? "";
+    searchInput?.addEventListener("input", (e3) => {
       searchQuery = /** @type {HTMLInputElement} */
       e3.target.value;
     });
@@ -4362,7 +4369,7 @@
     quiz.init();
     ui.renderCheckinTab();
     ui.renderRecentEmotions();
-    ui.renderEmociones();
+    ui.renderEmociones(searchQuery);
     const crisis = createCrisisFlow({ t: i18n.t });
     crisis.init();
     initOfflineBanner({ t: i18n.t });

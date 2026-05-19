@@ -27,6 +27,7 @@ const i18n = createI18n({
     getLang: () => get("currentLang"),
     setLang: (lang) => set("currentLang", lang),
     onLanguageChanged: () => {
+        searchQuery = /** @type {HTMLInputElement | null} */ (document.getElementById("search"))?.value ?? "";
         ui.renderCheckinTab();
         ui.renderRecentEmotions();
         ui.renderEmociones(searchQuery);
@@ -94,7 +95,9 @@ function bootstrap() {
     initSettings({ setLanguage: i18n.setLanguage, getLang: () => get("currentLang") });
     initTabNav();
     ui.bindBaseEvents();
-    document.getElementById("search")?.addEventListener("input", (e) => {
+    const searchInput = /** @type {HTMLInputElement | null} */ (document.getElementById("search"));
+    searchQuery = searchInput?.value ?? "";
+    searchInput?.addEventListener("input", (e) => {
         searchQuery = /** @type {HTMLInputElement} */ (e.target).value;
     });
 
@@ -113,7 +116,7 @@ function bootstrap() {
 
     ui.renderCheckinTab();
     ui.renderRecentEmotions();
-    ui.renderEmociones();
+    ui.renderEmociones(searchQuery);
 
     const crisis = createCrisisFlow({ t: i18n.t });
     crisis.init();
