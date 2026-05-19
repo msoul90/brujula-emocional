@@ -2,7 +2,7 @@
   "name": "brujula-emocional",
   "private": true,
   "scripts": {
-    "build:js": "esbuild app.js --bundle --format=iife --outfile=dist/app.bundle.js --jsx=automatic --jsx-import-source=preact",
+    "build:js": "node scripts/build-js.js",
     "build:css": "npx tailwindcss@3 -i input.css -o dist/tailwind.css --minify",
     "build:sw": "node scripts/bump-sw-version.js",
     "build": "npm run build:sw && npm run build:js && npm run build:css",
@@ -18,6 +18,7 @@
     "vitest": "^4.1.5"
   },
   "dependencies": {
+    "posthog-js": "^1.374.2",
     "preact": "^10.29.1"
   }
 }

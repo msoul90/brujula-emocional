@@ -13,6 +13,7 @@ import { migrateStorageSchema } from "./js/storageSchema.js";
 import { on } from "./js/bus.js";
 import { get, set } from "./js/store.js";
 import { BUILD_VERSION } from "./js/version.js";
+import { initAnalytics, capture } from "./js/analytics.js";
 
 const reducedMotion = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
 const modalAnimationMs = reducedMotion ? 0 : 200;
@@ -45,8 +46,16 @@ diary = createDiary({
     emociones,
 });
 
-on("tab:switch", ({ tabId }) => switchTab(tabId));
-on("quiz:open", () => quiz?.open());
+on("tab:switch", ({ tabId }) => {
+    switchTab(tabId);
+    capture("tab_switched", { tab: tabId });
+});
+on("quiz:open", () => {
+    quiz?.open();
+    capture("quiz_opened");
+});
+on("emotion:select", ({ nombre }) => capture("emotion_viewed", { emotion: nombre }));
+on("diary:add", ({ nombre }) => capture("diary_entry_created", { emotion: nombre }));
 
 ui = createUI({
     emociones,
@@ -125,6 +134,8 @@ function bootstrap() {
     initOfflineBanner({ t: i18n.t });
     initInstall();
     initServiceWorker();
+    initAnalytics();
+    capture("app_loaded", { lang: get("currentLang") });
 }
 
 bootstrap();
