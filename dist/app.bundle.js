@@ -4273,7 +4273,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mpd6hr6b";
+  var BUILD_VERSION = "mpd7cv8e";
 
   // node_modules/posthog-js/dist/module.js
   var t3 = "undefined" != typeof window ? window : void 0;
@@ -9747,6 +9747,7 @@
     initInstall();
     initServiceWorker();
     initAnalytics();
+    capture("$pageview");
     capture("app_loaded", { lang: get("currentLang") });
   }
   bootstrap();

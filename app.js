@@ -135,6 +135,7 @@ function bootstrap() {
     initInstall();
     initServiceWorker();
     initAnalytics();
+    capture("$pageview");
     capture("app_loaded", { lang: get("currentLang") });
 }
 
