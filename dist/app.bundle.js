@@ -3835,8 +3835,8 @@
         if (e3) {
           nameFilter = getDisplayName(e3.nombre);
           selected = e3.nombre;
-          const searchInput = document.getElementById("map-search");
-          if (searchInput instanceof HTMLInputElement) searchInput.value = nameFilter;
+          const searchInput2 = document.getElementById("map-search");
+          if (searchInput2 instanceof HTMLInputElement) searchInput2.value = nameFilter;
           suggestionsList.classList.add("hidden");
           render_();
         }
@@ -4273,7 +4273,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mpc5y3ze";
+  var BUILD_VERSION = "mpc60qsu";
 
   // app.js
   var reducedMotion = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
@@ -4282,13 +4282,13 @@
   var diary;
   var quiz;
   var emotionMap;
+  var searchInput;
   var searchQuery = "";
   var i18n = createI18n({
     getLang: () => get("currentLang"),
     setLang: (lang) => set("currentLang", lang),
     onLanguageChanged: () => {
-      searchQuery = /** @type {HTMLInputElement | null} */
-      document.getElementById("search")?.value ?? "";
+      searchQuery = searchInput?.value ?? "";
       ui.renderCheckinTab();
       ui.renderRecentEmotions();
       ui.renderEmociones(searchQuery);
@@ -4347,10 +4347,8 @@
     initSettings({ setLanguage: i18n.setLanguage, getLang: () => get("currentLang") });
     initTabNav();
     ui.bindBaseEvents();
-    const searchInput = (
-      /** @type {HTMLInputElement | null} */
-      document.getElementById("search")
-    );
+    searchInput = /** @type {HTMLInputElement | null} */
+    document.getElementById("search");
     searchQuery = searchInput?.value ?? "";
     searchInput?.addEventListener("input", (e3) => {
       searchQuery = /** @type {HTMLInputElement} */
