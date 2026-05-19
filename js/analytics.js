@@ -34,12 +34,11 @@ function isSameOrigin(target) {
     }
 }
 
-function isAllowedByCsp(target) {
+export function isAllowedByCsp(target) {
     const csp = getCspContent();
     if (!csp) return true;
 
-    const connectSources = getDirectiveSources(csp, "connect-src")
-        ?? getDirectiveSources(csp, "default-src");
+    const connectSources = getDirectiveSources(csp, "connect-src");
     if (!connectSources || connectSources.length === 0) return true;
 
     if (connectSources.includes("*")) return true;

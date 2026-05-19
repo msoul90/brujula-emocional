@@ -4273,7 +4273,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mpd1x9si";
+  var BUILD_VERSION = "mpd2ecwi";
 
   // node_modules/posthog-js/dist/module.js
   var t3 = "undefined" != typeof window ? window : void 0;
@@ -9589,8 +9589,8 @@
   })(), Ua);
 
   // js/analytics.js
-  var apiKey = "phc_D44Jy6qHZTek7u4xBeasusCsbzbpc7kVLxAEbnxUDVQQ";
-  var host = "https://us.i.posthog.com";
+  var apiKey = "";
+  var host = "";
   var isEnabled = false;
   var isInitialized = false;
   function getCspContent() {
@@ -9614,7 +9614,7 @@
   function isAllowedByCsp(target) {
     const csp = getCspContent();
     if (!csp) return true;
-    const connectSources = getDirectiveSources(csp, "connect-src") ?? getDirectiveSources(csp, "default-src");
+    const connectSources = getDirectiveSources(csp, "connect-src");
     if (!connectSources || connectSources.length === 0) return true;
     if (connectSources.includes("*")) return true;
     if (connectSources.includes("'self'") && isSameOrigin(target)) return true;
