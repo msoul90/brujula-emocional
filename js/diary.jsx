@@ -345,7 +345,7 @@ function DiaryPanel({ t, getDisplayName, emociones, showForm, onNewEntry, onSave
 export function createDiary({ t, getDisplayName, emociones }) {
     let showForm = false;
 
-    on("diary:add", ({ nombre, note }) => {
+    on("diary:add", (/** @type {{ nombre: string, note: string }} */ { nombre, note }) => {
         addEntry(nombre, note);
         if (get("currentTab") === "diario") renderForTab();
     });
