@@ -1,5 +1,5 @@
 // @ts-check
-import { THEME_KEY } from "./constants.js";
+import { getTheme as getPersistedTheme, setTheme as persistTheme } from "./persistence.js";
 
 /** @typedef {"light" | "auto" | "dark"} Theme */
 /** @typedef {"es" | "en"} Language */
@@ -25,7 +25,7 @@ function isLanguage(lang) {
 
 /** @returns {Theme} */
 function getTheme() {
-    const theme = localStorage.getItem(THEME_KEY);
+    const theme = getPersistedTheme();
     return isTheme(theme) ? theme : "auto";
 }
 
@@ -37,7 +37,7 @@ function applyTheme(theme, getLang) {
     } else {
         document.documentElement.classList.remove("dark");
     }
-    localStorage.setItem(THEME_KEY, theme);
+    persistTheme(theme);
     updateActiveStates(theme, getLang());
 }
 

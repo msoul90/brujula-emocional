@@ -1,20 +1,12 @@
 import { render } from "preact";
 import { useState } from "preact/hooks";
-import { RECENT_KEY, RECENT_LIMIT, REGULATION_TECHNIQUES } from "./constants.js";
-import { normalizeText, getReadableTextColor } from "./utils.js";
+import { RECENT_LIMIT, REGULATION_TECHNIQUES } from "./constants.js";
+import { getReadableTextColor } from "./utils.js";
 import { buildEmotionCanvas } from "./emotionCanvas.js";
 import { get, set } from "./store.js";
-
-function loadRecentEmotions() {
-    try {
-        const parsed = JSON.parse(localStorage.getItem(RECENT_KEY) || "[]");
-        return Array.isArray(parsed) ? parsed : [];
-    } catch { return []; }
-}
-
-function shortRecentLabel(nombre) {
-    return nombre.length > 9 ? `${nombre.slice(0, 9)}...` : nombre;
-}
+import { getRecentEmotions, setRecentEmotions } from "./persistence.js";
+import { shortRecentLabel, filterEmotions, filterMaskedEmotions } from "./uiHelpers.js";
+import { emit, on } from "./bus.js";
 
 async function shareEmotionCard(canvas, filename) {
     const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/png"));
@@ -132,10 +124,7 @@ function ModalContent({ e, t, getDisplayName, getEmotionField, relaciones, emoci
     const quoteLabelColor = quoteTextColor === "#f8fafc" ? "rgba(248,250,252,0.9)" : "rgba(15,23,42,0.85)";
     const lang = get("currentLang") || "es";
 
-    const maskedEmotions = relaciones
-        .filter((r) => r.type === "enmascara" && r.from === e.nombre)
-        .map((r) => emociones.find((em) => em.nombre === r.to))
-        .filter(Boolean);
+    const maskedEmotions = filterMaskedEmotions(relaciones, e.nombre, emociones);
 
     return (
         <div>
@@ -218,23 +207,27 @@ export function createUI({
     t,
     modalAnimationMs,
     moodCategories = [],
-    onAddToDiary = null
 }) {
     let scrollCleanup   = null;
     let activeCheckinCat = null;
     let searchDebounceId = null;
 
+    on("emotion:select", ({ nombre }) => {
+        const e = emociones.find((em) => em.nombre === nombre);
+        if (e) showDetail(e);
+    });
+
     function saveRecentEmotion(nombre) {
-        const existing = loadRecentEmotions().filter((item) => item !== nombre);
+        const existing = getRecentEmotions().filter((item) => item !== nombre);
         const next = [nombre, ...existing].slice(0, RECENT_LIMIT);
-        localStorage.setItem(RECENT_KEY, JSON.stringify(next));
+        setRecentEmotions(next);
         renderRecentEmotions();
     }
 
     function renderRecentEmotions() {
         const section = document.getElementById("recent-section");
         const grid    = document.getElementById("recent-grid");
-        const recents = loadRecentEmotions();
+        const recents = getRecentEmotions();
 
         if (!recents.length) {
             if (section) section.classList.add("hidden");
@@ -271,18 +264,7 @@ export function createUI({
     function renderEmociones(filter = "") {
         const grid = document.getElementById("emotion-grid");
         if (!grid) return;
-        const normalized = normalizeText(filter.trim());
-
-        const visible = emociones.filter((e) => {
-            if (!normalized) return true;
-            const searchText = [
-                e.nombre, getDisplayName(e.nombre),
-                e.siente, e.dispara, e.mensaje,
-                getEmotionField(e, "siente"), getEmotionField(e, "dispara"),
-                getEmotionField(e, "mensaje"), getEmotionField(e, "respuesta")
-            ].map(normalizeText).join(" ");
-            return searchText.includes(normalized);
-        });
+        const visible = filterEmotions(emociones, filter, getDisplayName, getEmotionField);
 
         render(
             <>
@@ -377,7 +359,7 @@ export function createUI({
 
         form.querySelector("#diary-note-save").addEventListener("click", () => {
             const note = form.querySelector("#diary-note-input").value;
-            if (onAddToDiary) onAddToDiary(emotionNombre, note);
+            emit("diary:add", { nombre: emotionNombre, note });
             form.innerHTML = `<p class="text-emerald-600 font-bold text-sm text-center py-2">✓ ${t("diary.addedFeedback")}</p>`;
             setTimeout(() => form.remove(), 1800);
         });
@@ -421,7 +403,7 @@ export function createUI({
         }
 
         const diaryAddBtn = document.getElementById("diary-add-btn");
-        if (diaryAddBtn && onAddToDiary) {
+        if (diaryAddBtn) {
             diaryAddBtn.onclick = () => showDiaryForm(e.nombre);
         }
 

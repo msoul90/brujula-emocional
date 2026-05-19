@@ -795,9 +795,45 @@
   var DEFAULT_TAB = APP_TABS[0];
   var TRANSLATIONS = { es, en };
 
+  // js/persistence.js
+  function getRecentEmotions() {
+    try {
+      const parsed = JSON.parse(localStorage.getItem(RECENT_KEY) || "[]");
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  }
+  function setRecentEmotions(names) {
+    localStorage.setItem(RECENT_KEY, JSON.stringify(names));
+  }
+  function getLanguage() {
+    return localStorage.getItem(LANGUAGE_KEY);
+  }
+  function setLanguage(lang) {
+    localStorage.setItem(LANGUAGE_KEY, lang);
+  }
+  function getTheme() {
+    return localStorage.getItem(THEME_KEY);
+  }
+  function setTheme(theme) {
+    localStorage.setItem(THEME_KEY, theme);
+  }
+  function getDiaryEntries() {
+    try {
+      const parsed = JSON.parse(localStorage.getItem(DIARY_KEY) || "[]");
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  }
+  function setDiaryEntries(entries) {
+    localStorage.setItem(DIARY_KEY, JSON.stringify(entries));
+  }
+
   // js/i18n.js
   function detectInitialLanguage() {
-    const saved = localStorage.getItem(LANGUAGE_KEY);
+    const saved = getLanguage();
     if (saved === "es" || saved === "en") return saved;
     const browserLang = globalThis.navigator?.language?.toLowerCase() ?? "es";
     return browserLang.startsWith("en") ? "en" : "es";
@@ -943,9 +979,9 @@
         if (el) apply(el);
       }
     }
-    function setLanguage(lang) {
+    function setLanguage2(lang) {
       setLang(lang === "en" ? "en" : "es");
-      localStorage.setItem(LANGUAGE_KEY, getLang());
+      setLanguage(getLang());
       applyStaticTranslations();
       onLanguageChanged();
     }
@@ -955,7 +991,7 @@
       getEmotionField,
       detectInitialLanguage,
       applyStaticTranslations,
-      setLanguage
+      setLanguage: setLanguage2
     };
   }
 
@@ -1532,6 +1568,32 @@
     emit(`store:${key}`, { value, prev });
   }
 
+  // js/uiHelpers.js
+  function shortRecentLabel(nombre) {
+    return nombre.length > 9 ? `${nombre.slice(0, 9)}...` : nombre;
+  }
+  function filterEmotions(emociones2, filter, getDisplayName, getEmotionField) {
+    const normalized = normalizeText(filter.trim());
+    if (!normalized) return emociones2;
+    return emociones2.filter((e3) => {
+      const searchText = [
+        e3.nombre,
+        getDisplayName(e3.nombre),
+        e3.siente,
+        e3.dispara,
+        e3.mensaje,
+        getEmotionField(e3, "siente"),
+        getEmotionField(e3, "dispara"),
+        getEmotionField(e3, "mensaje"),
+        getEmotionField(e3, "respuesta")
+      ].map(normalizeText).join(" ");
+      return searchText.includes(normalized);
+    });
+  }
+  function filterMaskedEmotions(relaciones, emocionNombre, emociones2) {
+    return relaciones.filter((r3) => r3.type === "enmascara" && r3.from === emocionNombre).map((r3) => emociones2.find((em) => em.nombre === r3.to)).filter(Boolean);
+  }
+
   // node_modules/preact/jsx-runtime/dist/jsxRuntime.module.js
   var f3 = 0;
   function u3(e3, t3, n2, o3, i3, u4) {
@@ -1544,17 +1606,6 @@
   }
 
   // js/ui.jsx
-  function loadRecentEmotions() {
-    try {
-      const parsed = JSON.parse(localStorage.getItem(RECENT_KEY) || "[]");
-      return Array.isArray(parsed) ? parsed : [];
-    } catch {
-      return [];
-    }
-  }
-  function shortRecentLabel(nombre) {
-    return nombre.length > 9 ? `${nombre.slice(0, 9)}...` : nombre;
-  }
   async function shareEmotionCard(canvas, filename) {
     const blob = await new Promise((resolve) => canvas.toBlob(resolve, "image/png"));
     const file = new File([blob], `${filename}.png`, { type: "image/png" });
@@ -1685,7 +1736,7 @@
     const quoteTextColor = getReadableTextColor(e3.color);
     const quoteLabelColor = quoteTextColor === "#f8fafc" ? "rgba(248,250,252,0.9)" : "rgba(15,23,42,0.85)";
     const lang = get("currentLang") || "es";
-    const maskedEmotions = relaciones.filter((r3) => r3.type === "enmascara" && r3.from === e3.nombre).map((r3) => emociones2.find((em) => em.nombre === r3.to)).filter(Boolean);
+    const maskedEmotions = filterMaskedEmotions(relaciones, e3.nombre, emociones2);
     return /* @__PURE__ */ u3("div", { children: [
       /* @__PURE__ */ u3("div", { class: "inline-block px-4 py-1 rounded-full mb-2", style: `background-color:${e3.color}; color:${quoteTextColor}`, children: /* @__PURE__ */ u3("span", { class: "text-xs font-black uppercase tracking-widest", children: t3("emotionTag") }) }),
       /* @__PURE__ */ u3("h2", { id: "modal-emotion-title", class: "text-4xl font-black mb-6 text-slate-800", children: getDisplayName(e3.nombre) }),
@@ -1758,22 +1809,25 @@
     getEmotionField,
     t: t3,
     modalAnimationMs: modalAnimationMs2,
-    moodCategories = [],
-    onAddToDiary = null
+    moodCategories = []
   }) {
     let scrollCleanup = null;
     let activeCheckinCat = null;
     let searchDebounceId = null;
+    on("emotion:select", ({ nombre }) => {
+      const e3 = emociones2.find((em) => em.nombre === nombre);
+      if (e3) showDetail(e3);
+    });
     function saveRecentEmotion(nombre) {
-      const existing = loadRecentEmotions().filter((item) => item !== nombre);
+      const existing = getRecentEmotions().filter((item) => item !== nombre);
       const next = [nombre, ...existing].slice(0, RECENT_LIMIT);
-      localStorage.setItem(RECENT_KEY, JSON.stringify(next));
+      setRecentEmotions(next);
       renderRecentEmotions();
     }
     function renderRecentEmotions() {
       const section = document.getElementById("recent-section");
       const grid = document.getElementById("recent-grid");
-      const recents = loadRecentEmotions();
+      const recents = getRecentEmotions();
       if (!recents.length) {
         if (section) section.classList.add("hidden");
         if (grid) R(null, grid);
@@ -1808,22 +1862,7 @@
     function renderEmociones(filter = "") {
       const grid = document.getElementById("emotion-grid");
       if (!grid) return;
-      const normalized = normalizeText(filter.trim());
-      const visible = emociones2.filter((e3) => {
-        if (!normalized) return true;
-        const searchText = [
-          e3.nombre,
-          getDisplayName(e3.nombre),
-          e3.siente,
-          e3.dispara,
-          e3.mensaje,
-          getEmotionField(e3, "siente"),
-          getEmotionField(e3, "dispara"),
-          getEmotionField(e3, "mensaje"),
-          getEmotionField(e3, "respuesta")
-        ].map(normalizeText).join(" ");
-        return searchText.includes(normalized);
-      });
+      const visible = filterEmotions(emociones2, filter, getDisplayName, getEmotionField);
       R(
         /* @__PURE__ */ u3(S, { children: [
           visible.map((e3) => /* @__PURE__ */ u3(
@@ -1925,7 +1964,7 @@
       panel.scrollTop = panel.scrollHeight;
       form.querySelector("#diary-note-save").addEventListener("click", () => {
         const note = form.querySelector("#diary-note-input").value;
-        if (onAddToDiary) onAddToDiary(emotionNombre, note);
+        emit("diary:add", { nombre: emotionNombre, note });
         form.innerHTML = `<p class="text-emerald-600 font-bold text-sm text-center py-2">\u2713 ${t3("diary.addedFeedback")}</p>`;
         setTimeout(() => form.remove(), 1800);
       });
@@ -1975,7 +2014,7 @@
         };
       }
       const diaryAddBtn = document.getElementById("diary-add-btn");
-      if (diaryAddBtn && onAddToDiary) {
+      if (diaryAddBtn) {
         diaryAddBtn.onclick = () => showDiaryForm(e3.nombre);
       }
       const closeButton = document.getElementById("close-button");
@@ -2292,7 +2331,7 @@
       )
     ] });
   }
-  function createBodyMap({ emociones: emociones2, getDisplayName, t: t3, showDetail, onDismiss, onSwitchToQuiz }) {
+  function createBodyMap({ emociones: emociones2, getDisplayName, t: t3, onDismiss, onSwitchToQuiz }) {
     let selectedZones = /* @__PURE__ */ new Set();
     let mode = "simple";
     function getMatchingEmotions() {
@@ -2366,7 +2405,7 @@
               if (onSwitchToQuiz) onSwitchToQuiz();
             },
             onDismiss,
-            onSelectEmotion: (e3) => showDetail(e3)
+            onSelectEmotion: (e3) => emit("emotion:select", { nombre: e3.nombre })
           }
         ),
         content
@@ -2476,7 +2515,7 @@
       )
     ] });
   }
-  function QuizResult({ t: t3, dark, emotions, getDisplayName, onRestart, onDismiss, onShowAll, onShowDetail }) {
+  function QuizResult({ t: t3, dark, emotions, getDisplayName, onRestart, onDismiss }) {
     const titleC = dark ? "text-slate-300" : "text-slate-500";
     const restartC = dark ? "bg-slate-800 text-slate-200 hover:bg-slate-700" : "bg-slate-100 text-slate-700 hover:bg-slate-200";
     const closeC = dark ? "text-slate-400 hover:text-slate-200" : "text-slate-400 hover:text-slate-600";
@@ -2490,7 +2529,7 @@
           style: `border-left:6px solid ${e3.color}; background:${e3.color}${dark ? "22" : "15"}`,
           onClick: () => {
             onDismiss();
-            onShowDetail(e3);
+            emit("emotion:select", { nombre: e3.nombre });
           },
           children: [
             /* @__PURE__ */ u3("span", { class: "font-bold", style: `color:${e3.text}`, children: getDisplayName(e3.nombre) }),
@@ -2516,7 +2555,7 @@
           id: "quiz-close-result-btn",
           onClick: () => {
             onDismiss();
-            if (onShowAll) onShowAll();
+            emit("tab:switch", { tabId: DEFAULT_TAB });
           },
           class: `mt-2 w-full py-3 text-sm font-medium transition-colors ${closeC}`,
           children: t3("quiz.close")
@@ -2524,7 +2563,7 @@
       )
     ] });
   }
-  function createQuiz({ emociones: emociones2, getDisplayName, t: t3, showDetail, onShowAll }) {
+  function createQuiz({ emociones: emociones2, getDisplayName, t: t3 }) {
     let history = [];
     let currentStepKey = "q1";
     let showingResult = false;
@@ -2538,7 +2577,6 @@
       emociones: emociones2,
       getDisplayName,
       t: t3,
-      showDetail,
       onDismiss: dismiss,
       onSwitchToQuiz: () => {
         history = [];
@@ -2569,9 +2607,7 @@
                   resultEmotions = [];
                   rerender();
                 },
-                onDismiss: dismiss,
-                onShowAll,
-                onShowDetail: showDetail
+                onDismiss: dismiss
               }
             )
           ] }),
@@ -2638,14 +2674,6 @@
   }
 
   // js/diary.jsx
-  function parseDiaryEntries(raw) {
-    try {
-      const parsed = JSON.parse(raw);
-      return Array.isArray(parsed) ? parsed : [];
-    } catch {
-      return [];
-    }
-  }
   function createDiaryEntry(emotionNombre, note = "", tags = []) {
     return {
       id: Date.now(),
@@ -2659,10 +2687,10 @@
     return entries.filter((e3) => e3.id !== id);
   }
   function loadEntries() {
-    return parseDiaryEntries(localStorage.getItem(DIARY_KEY));
+    return getDiaryEntries();
   }
   function saveEntries(entries) {
-    localStorage.setItem(DIARY_KEY, JSON.stringify(entries));
+    setDiaryEntries(entries);
   }
   function addEntryToStorage(emotionNombre, note = "", tags = []) {
     const entry = createDiaryEntry(emotionNombre, note, tags);
@@ -2993,6 +3021,10 @@
   }
   function createDiary({ t: t3, getDisplayName, emociones: emociones2 }) {
     let showForm = false;
+    on("diary:add", ({ nombre, note }) => {
+      addEntry(nombre, note);
+      if (get("currentTab") === "diario") renderForTab();
+    });
     function rerender() {
       const content = document.getElementById("diary-content");
       if (!content) return;
@@ -3627,7 +3659,7 @@
   function containerW() {
     return document.getElementById("map-content")?.clientWidth || 340;
   }
-  function createEmotionMap({ emociones: emociones2, getDisplayName, t: t3, showDetail }) {
+  function createEmotionMap({ emociones: emociones2, getDisplayName, t: t3 }) {
     let view = "graph";
     let selected = null;
     let nameFilter = "";
@@ -3651,6 +3683,10 @@
       if (!quadData) {
         quadData = buildQuadData(emociones2, getDisplayName, containerW());
       }
+    }
+    function flushSearch() {
+      render_();
+      requestAnimationFrame(() => populateSuggestions(nameFilter));
     }
     function render_() {
       const wrap = document.getElementById("map-content");
@@ -3730,8 +3766,7 @@
               render_();
             },
             onOpenDetail: () => {
-              const e3 = emociones2.find((em) => em.nombre === selected);
-              if (e3) showDetail(e3);
+              if (selected) emit("emotion:select", { nombre: selected });
             },
             onClearSelection: () => {
               selected = null;
@@ -3746,10 +3781,7 @@
               nameFilter = target.value;
               selected = null;
               if (searchDebounce) globalThis.clearTimeout(searchDebounce);
-              searchDebounce = globalThis.setTimeout(() => {
-                render_();
-                requestAnimationFrame(() => populateSuggestions(nameFilter));
-              }, 120);
+              searchDebounce = globalThis.setTimeout(flushSearch, 120);
             },
             svgEventHandler
           }
@@ -3803,8 +3835,8 @@
         if (e3) {
           nameFilter = getDisplayName(e3.nombre);
           selected = e3.nombre;
-          const searchInput = document.getElementById("map-search");
-          if (searchInput instanceof HTMLInputElement) searchInput.value = nameFilter;
+          const searchInput2 = document.getElementById("map-search");
+          if (searchInput2 instanceof HTMLInputElement) searchInput2.value = nameFilter;
           suggestionsList.classList.add("hidden");
           render_();
         }
@@ -3973,8 +4005,8 @@
   function isLanguage(lang) {
     return typeof lang === "string" && LANGUAGES.includes(lang);
   }
-  function getTheme() {
-    const theme = localStorage.getItem(THEME_KEY);
+  function getTheme2() {
+    const theme = getTheme();
     return isTheme(theme) ? theme : "auto";
   }
   function applyTheme(theme, getLang) {
@@ -3984,7 +4016,7 @@
     } else {
       document.documentElement.classList.remove("dark");
     }
-    localStorage.setItem(THEME_KEY, theme);
+    setTheme(theme);
     updateActiveStates(theme, getLang());
   }
   function updateActiveStates(theme, lang) {
@@ -3995,7 +4027,7 @@
       document.getElementById(`lang-btn-${l3}`)?.classList.toggle("settings-option-active", l3 === lang);
     }
   }
-  function initSettings({ setLanguage, getLang }) {
+  function initSettings({ setLanguage: setLanguage2, getLang }) {
     const settingsBtn = document.getElementById("settings-btn");
     const settingsPanel = document.getElementById("settings-panel");
     if (!settingsBtn || !settingsPanel) return;
@@ -4042,15 +4074,15 @@
       btn.addEventListener("click", () => {
         const lang = btn.dataset.langBtn;
         if (!isLanguage(lang)) return;
-        setLanguage(lang);
-        updateActiveStates(getTheme(), getLang());
+        setLanguage2(lang);
+        updateActiveStates(getTheme2(), getLang());
       });
     }
     globalThis.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () => {
-      if (getTheme() === "auto") applyTheme("auto", getLang);
+      if (getTheme2() === "auto") applyTheme("auto", getLang);
     });
-    updateActiveStates(getTheme(), getLang());
-    return { applyTheme: (theme) => applyTheme(theme, getLang), getTheme, updateActiveStates };
+    updateActiveStates(getTheme2(), getLang());
+    return { applyTheme: (theme) => applyTheme(theme, getLang), getTheme: getTheme2, updateActiveStates };
   }
 
   // js/install.js
@@ -4241,7 +4273,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mpasuy8j";
+  var BUILD_VERSION = "mpc60qsu";
 
   // app.js
   var reducedMotion = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
@@ -4250,13 +4282,16 @@
   var diary;
   var quiz;
   var emotionMap;
+  var searchInput;
+  var searchQuery = "";
   var i18n = createI18n({
     getLang: () => get("currentLang"),
     setLang: (lang) => set("currentLang", lang),
     onLanguageChanged: () => {
+      searchQuery = searchInput?.value ?? "";
       ui.renderCheckinTab();
       ui.renderRecentEmotions();
-      ui.renderEmociones(document.getElementById("search")?.value ?? "");
+      ui.renderEmociones(searchQuery);
       if (get("currentTab") === "diario") diary.renderForTab();
       emotionMap?.onLanguageChanged();
       const bannerText = document.getElementById("offline-banner-text");
@@ -4277,11 +4312,7 @@
     getEmotionField: i18n.getEmotionField,
     t: i18n.t,
     modalAnimationMs,
-    moodCategories: MOOD_CATEGORIES,
-    onAddToDiary: (nombre, note) => {
-      diary.addEntry(nombre, note);
-      if (get("currentTab") === "diario") diary.renderForTab();
-    }
+    moodCategories: MOOD_CATEGORIES
   });
   function switchTab(tabId) {
     const nextTab = APP_TABS.includes(tabId) ? tabId : DEFAULT_TAB;
@@ -4316,23 +4347,27 @@
     initSettings({ setLanguage: i18n.setLanguage, getLang: () => get("currentLang") });
     initTabNav();
     ui.bindBaseEvents();
+    searchInput = /** @type {HTMLInputElement | null} */
+    document.getElementById("search");
+    searchQuery = searchInput?.value ?? "";
+    searchInput?.addEventListener("input", (e3) => {
+      searchQuery = /** @type {HTMLInputElement} */
+      e3.target.value;
+    });
     emotionMap = createEmotionMap({
       emociones,
       getDisplayName: i18n.getDisplayName,
-      t: i18n.t,
-      showDetail: ui.showDetail
+      t: i18n.t
     });
     quiz = createQuiz({
       emociones,
       getDisplayName: i18n.getDisplayName,
-      t: i18n.t,
-      showDetail: ui.showDetail,
-      onShowAll: () => switchTab(DEFAULT_TAB)
+      t: i18n.t
     });
     quiz.init();
     ui.renderCheckinTab();
     ui.renderRecentEmotions();
-    ui.renderEmociones();
+    ui.renderEmociones(searchQuery);
     const crisis = createCrisisFlow({ t: i18n.t });
     crisis.init();
     initOfflineBanner({ t: i18n.t });

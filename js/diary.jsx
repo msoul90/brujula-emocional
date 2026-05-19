@@ -5,9 +5,11 @@ import { useState } from "preact/hooks";
 /** @typedef {import('./types.js').TFn} TFn */
 /** @typedef {import('./types.js').GetDisplayNameFn} GetDisplayNameFn */
 /** @typedef {import('./data/emotions.js').Emotion} Emotion */
-import { DIARY_KEY, DIARY_TAGS } from "./constants.js";
+import { DIARY_TAGS } from "./constants.js";
+import { getDiaryEntries, setDiaryEntries } from "./persistence.js";
 import { normalizeText } from "./utils.js";
-import { emit } from "./bus.js";
+import { on, emit } from "./bus.js";
+import { get } from "./store.js";
 
 // ── Pure data functions (testable without DOM/localStorage) ──────────────────
 
@@ -49,12 +51,12 @@ export function deleteDiaryEntryById(entries, id) {
 // ── localStorage helpers ─────────────────────────────────────────────────────
 
 function loadEntries() {
-    return parseDiaryEntries(localStorage.getItem(DIARY_KEY));
+    return getDiaryEntries();
 }
 
 /** @param {DiaryEntry[]} entries */
 function saveEntries(entries) {
-    localStorage.setItem(DIARY_KEY, JSON.stringify(entries));
+    setDiaryEntries(entries);
 }
 
 /** @param {string} emotionNombre @param {string} [note] @param {string[]} [tags] @returns {DiaryEntry} */
@@ -342,6 +344,11 @@ function DiaryPanel({ t, getDisplayName, emociones, showForm, onNewEntry, onSave
  */
 export function createDiary({ t, getDisplayName, emociones }) {
     let showForm = false;
+
+    on("diary:add", (/** @type {{ nombre: string, note: string }} */ { nombre, note }) => {
+        addEntry(nombre, note);
+        if (get("currentTab") === "diario") renderForTab();
+    });
 
     function rerender() {
         const content = document.getElementById("diary-content");
