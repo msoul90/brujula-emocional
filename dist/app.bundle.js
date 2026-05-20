@@ -4665,7 +4665,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mpenovm4";
+  var BUILD_VERSION = "mpep9xy1";
 
   // node_modules/posthog-js/dist/module.js
   var t3 = "undefined" != typeof window ? window : void 0;
@@ -30817,7 +30817,7 @@ ${suffix}`;
   async function signOut() {
     const supabase = getSupabaseClient();
     if (!supabase) return;
-    return supabase.auth.signOut();
+    return supabase.auth.signOut({ scope: "local" });
   }
   async function getSession() {
     const supabase = getSupabaseClient();
