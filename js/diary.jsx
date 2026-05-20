@@ -340,27 +340,39 @@ function DiaryPanel({ t, getDisplayName, emociones, showForm, isCloud, onNewEntr
 
 /**
  * @param {{ t: TFn, getDisplayName: GetDisplayNameFn, emociones: Emotion[], getSession?: () => Promise<any>, cloudSync?: { syncOnCreate: (entry: DiaryEntry) => Promise<void>, syncOnDelete: (id: number) => Promise<void> } }} opts
- * @returns {{ renderForTab: () => void, addEntry: (nombre: string, note?: string, tags?: string[]) => DiaryEntry }}
+ * @returns {{ renderForTab: () => void, addEntry: (nombre: string, note?: string, tags?: string[]) => DiaryEntry, setIsCloud: (value: boolean) => void }}
  */
 export function createDiary({ t, getDisplayName, emociones, getSession = null, cloudSync = null }) {
     let showForm = false;
     let isCloud = false;
 
+    /** @param {DiaryEntry} entry */
     async function syncCreate(entry) {
         if (!getSession || !cloudSync) return;
         const session = await getSession();
-        if (session) cloudSync.syncOnCreate(entry);
+        if (!session) return;
+        try {
+            await cloudSync.syncOnCreate(entry);
+        } catch (error) {
+            console.error("Cloud sync create failed", error);
+        }
     }
 
+    /** @param {number} id */
     async function syncDelete(id) {
         if (!getSession || !cloudSync) return;
         const session = await getSession();
-        if (session) cloudSync.syncOnDelete(id);
+        if (!session) return;
+        try {
+            await cloudSync.syncOnDelete(id);
+        } catch (error) {
+            console.error("Cloud sync delete failed", error);
+        }
     }
 
     on("diary:add", (/** @type {{ nombre: string, note: string }} */ { nombre, note }) => {
         const entry = addEntry(nombre, note);
-        syncCreate(entry);
+        void syncCreate(entry);
         if (get("currentTab") === "diario") renderForTab();
     });
 
@@ -381,12 +393,12 @@ export function createDiary({ t, getDisplayName, emociones, getSession = null, c
                 }}
                 onSave={(emotionNombre, note, tags) => {
                     const entry = addEntryToStorage(emotionNombre, note, tags);
-                    syncCreate(entry);
+                    void syncCreate(entry);
                     showForm = false;
                     rerender();
                 }}
                 onCancel={() => { showForm = false; rerender(); }}
-                onDelete={(id) => { deleteEntryFromStorage(id); syncDelete(id); rerender(); }}
+                onDelete={(id) => { deleteEntryFromStorage(id); void syncDelete(id); rerender(); }}
                 onClearAll={() => {
                     if (confirm(t("diary.clearConfirm"))) {
                         saveEntries([]);

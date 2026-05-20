@@ -13,7 +13,7 @@ import { initServiceWorker } from "./js/serviceWorker.js";
 import { migrateStorageSchema } from "./js/storageSchema.js";
 import { on } from "./js/bus.js";
 import { get, set } from "./js/store.js";
-import { getDiaryEntries, setDiaryEntries } from "./js/persistence.js";
+import { getDiaryEntries, setDiaryEntries, getDiaryCloudUserId, setDiaryCloudUserId } from "./js/persistence.js";
 import { BUILD_VERSION } from "./js/version.js";
 import { initAnalytics, capture } from "./js/analytics.js";
 import { getSession, onAuthStateChange, signInWithMagicLink, signOut } from "./js/auth.js";
@@ -140,16 +140,38 @@ function bootstrap() {
         emociones,
     });
 
-    onAuthStateChange(async (event, session) => {
-        if (event === "SIGNED_IN") {
+    async function syncDiaryForSession(session) {
+        if (!session?.user?.id) return;
+        try {
             diary.setIsCloud(true);
-            const local  = getDiaryEntries();
+            const previousUserId = getDiaryCloudUserId();
             const remote = await fetchEntriesFromCloud();
+            if (previousUserId && previousUserId !== session.user.id) {
+                setDiaryEntries(remote);
+                setDiaryCloudUserId(session.user.id);
+                if (get("currentTab") === "diario") diary.renderForTab();
+                if (get("currentTab") === "reportes") reports?.renderForTab();
+                return;
+            }
+            const local  = getDiaryEntries();
             const merged = mergeEntries(local, remote);
             setDiaryEntries(merged);
-            syncEntriesToCloud(merged);
+            setDiaryCloudUserId(session.user.id);
+            await syncEntriesToCloud(merged);
             if (get("currentTab") === "diario") diary.renderForTab();
             if (get("currentTab") === "reportes") reports?.renderForTab();
+        } catch (error) {
+            console.error("Cloud diary sync failed", error);
+        }
+    }
+
+    getSession().then((session) => {
+        if (session) void syncDiaryForSession(session);
+    });
+
+    onAuthStateChange(async (event, session) => {
+        if (event === "SIGNED_IN" && session) {
+            await syncDiaryForSession(session);
         } else if (event === "SIGNED_OUT") {
             diary.setIsCloud(false);
         }

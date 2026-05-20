@@ -139,7 +139,7 @@ function AuthSection({ email, t, onSignIn, onSignOut }) {
 }
 
 /**
- * @param {{ setLanguage: (lang: Language) => void, getLang: () => Language, getSession: () => Promise<import("@supabase/supabase-js").Session|null>, onAuthStateChange: (cb: (event: string, session: import("@supabase/supabase-js").Session|null) => void) => () => void, signIn: (email: string) => Promise<{error: Error|null}>, signOut: () => Promise<void>, t: (key: string) => string }} opts
+ * @param {{ setLanguage: (lang: Language) => void, getLang: () => Language, getSession: () => Promise<import("@supabase/supabase-js").Session|null>, onAuthStateChange: (cb: (event: string, session: import("@supabase/supabase-js").Session|null) => void) => () => void, signIn: (email: string, captchaToken?: string) => Promise<{error: Error|null}>, signOut: () => Promise<void>, t: (key: string) => string }} opts
  * @returns {{ applyTheme: (theme: Theme) => void, getTheme: () => Theme, updateActiveStates: (theme: Theme, lang: Language) => void } | undefined}
  */
 export function initSettings({ setLanguage, getLang, getSession, onAuthStateChange, signIn, signOut, t }) {

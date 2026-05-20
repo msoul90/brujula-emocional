@@ -15,14 +15,14 @@ const BAR_GAP      = 8;
 // ── Pure data helpers ─────────────────────────────────────────────────────────
 
 /** @param {DiaryEntry[]} entries @returns {Map<string, number>} */
-function countByEmotion(entries) {
+export function countByEmotion(entries) {
     const map = new Map();
     for (const e of entries) map.set(e.emotion, (map.get(e.emotion) ?? 0) + 1);
     return map;
 }
 
 /** @param {DiaryEntry[]} entries @returns {Map<string, number>} */
-function countByTag(entries) {
+export function countByTag(entries) {
     const map = new Map();
     for (const tag of DIARY_TAGS) map.set(tag, 0);
     for (const e of entries) {
@@ -34,17 +34,17 @@ function countByTag(entries) {
 }
 
 /** @param {string} isoDate @returns {string} ISO week key "YYYY-Www" */
-function isoWeekKey(isoDate) {
+export function isoWeekKey(isoDate) {
     const d   = new Date(isoDate);
     const day = d.getUTCDay() || 7;
     d.setUTCDate(d.getUTCDate() + 4 - day);
     const year = d.getUTCFullYear();
-    const week = Math.ceil(((d - new Date(Date.UTC(year, 0, 1))) / 86400000 + 1) / 7);
+    const week = Math.ceil(((d.getTime() - Date.UTC(year, 0, 1)) / 86400000 + 1) / 7);
     return `${year}-W${String(week).padStart(2, "0")}`;
 }
 
 /** @param {DiaryEntry[]} entries @returns {{ key: string, count: number }[]} last 8 weeks */
-function last8Weeks(entries) {
+export function last8Weeks(entries) {
     const today   = new Date();
     const weeks   = [];
     for (let i = 7; i >= 0; i--) {
@@ -165,7 +165,10 @@ function ReportsPanel({ entries, t, getDisplayName, emociones }) {
 
     // Tags distribution
     const tagCounts = countByTag(entries);
-    const tagItems  = DIARY_TAGS.map((tag) => ({ label: tag, count: tagCounts.get(tag) ?? 0 }));
+    const tagItems  = DIARY_TAGS.map((tag) => ({
+        label: t(`diary.tag${tag.charAt(0).toUpperCase()}${tag.slice(1)}`),
+        count: tagCounts.get(tag) ?? 0
+    }));
     const tagMax    = Math.max(...tagItems.map((i) => i.count), 1);
 
     // Weekly entries — last 8 weeks

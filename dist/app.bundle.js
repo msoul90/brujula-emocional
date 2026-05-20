@@ -837,6 +837,7 @@
   var LANGUAGE_KEY = "brujulaIdioma";
   var THEME_KEY = "brujulaThema";
   var DIARY_KEY = "brujulaDiario";
+  var DIARY_CLOUD_USER_KEY = "brujulaDiarioCloudUserId";
   var STORAGE_SCHEMA_KEY = "brujulaSchemaVersion";
   var STORAGE_SCHEMA_VERSION = 1;
   var RECENT_LIMIT = 5;
@@ -879,6 +880,16 @@
   }
   function setDiaryEntries(entries) {
     localStorage.setItem(DIARY_KEY, JSON.stringify(entries));
+  }
+  function getDiaryCloudUserId() {
+    return localStorage.getItem(DIARY_CLOUD_USER_KEY);
+  }
+  function setDiaryCloudUserId(userId) {
+    if (userId) {
+      localStorage.setItem(DIARY_CLOUD_USER_KEY, userId);
+      return;
+    }
+    localStorage.removeItem(DIARY_CLOUD_USER_KEY);
   }
 
   // js/i18n.js
@@ -3079,16 +3090,26 @@
     async function syncCreate(entry) {
       if (!getSession2 || !cloudSync) return;
       const session = await getSession2();
-      if (session) cloudSync.syncOnCreate(entry);
+      if (!session) return;
+      try {
+        await cloudSync.syncOnCreate(entry);
+      } catch (error) {
+        console.error("Cloud sync create failed", error);
+      }
     }
     async function syncDelete(id) {
       if (!getSession2 || !cloudSync) return;
       const session = await getSession2();
-      if (session) cloudSync.syncOnDelete(id);
+      if (!session) return;
+      try {
+        await cloudSync.syncOnDelete(id);
+      } catch (error) {
+        console.error("Cloud sync delete failed", error);
+      }
     }
     on("diary:add", ({ nombre, note }) => {
       const entry = addEntry(nombre, note);
-      syncCreate(entry);
+      void syncCreate(entry);
       if (get("currentTab") === "diario") renderForTab();
     });
     function rerender() {
@@ -3112,7 +3133,7 @@
             },
             onSave: (emotionNombre, note, tags) => {
               const entry = addEntryToStorage(emotionNombre, note, tags);
-              syncCreate(entry);
+              void syncCreate(entry);
               showForm = false;
               rerender();
             },
@@ -3122,7 +3143,7 @@
             },
             onDelete: (id) => {
               deleteEntryFromStorage(id);
-              syncDelete(id);
+              void syncDelete(id);
               rerender();
             },
             onClearAll: () => {
@@ -4195,7 +4216,10 @@
     });
     const [topNombre, topCount] = topEmotions[0] ?? ["", 0];
     const tagCounts = countByTag(entries);
-    const tagItems = DIARY_TAGS.map((tag) => ({ label: tag, count: tagCounts.get(tag) ?? 0 }));
+    const tagItems = DIARY_TAGS.map((tag) => ({
+      label: t4(`diary.tag${tag.charAt(0).toUpperCase()}${tag.slice(1)}`),
+      count: tagCounts.get(tag) ?? 0
+    }));
     const tagMax = Math.max(...tagItems.map((i4) => i4.count), 1);
     const weeks = last8Weeks(entries);
     const weekItems = weeks.map((w4) => ({ label: w4.key.slice(5), count: w4.count }));
@@ -4623,7 +4647,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mpelbjy5";
+  var BUILD_VERSION = "mpelupyy";
 
   // node_modules/posthog-js/dist/module.js
   var t3 = "undefined" != typeof window ? window : void 0;
@@ -9939,9 +9963,9 @@
   })(), Ua);
 
   // js/analytics.js
-  var apiKey = "phc_D44Jy6qHZTek7u4xBeasusCsbzbpc7kVLxAEbnxUDVQQ";
-  var host = "https://us.i.posthog.com";
-  var isEnabled = true;
+  var apiKey = "";
+  var host = "";
+  var isEnabled = false;
   var isInitialized = false;
   function getCspContent() {
     const cspMeta = document.querySelector('meta[http-equiv="Content-Security-Policy"]');
@@ -30958,16 +30982,36 @@ ${suffix}`;
       getDisplayName: i18n.getDisplayName,
       emociones
     });
-    onAuthStateChange(async (event, session) => {
-      if (event === "SIGNED_IN") {
+    async function syncDiaryForSession(session) {
+      if (!session?.user?.id) return;
+      try {
         diary.setIsCloud(true);
-        const local = getDiaryEntries();
+        const previousUserId = getDiaryCloudUserId();
         const remote = await fetchEntriesFromCloud();
+        if (previousUserId && previousUserId !== session.user.id) {
+          setDiaryEntries(remote);
+          setDiaryCloudUserId(session.user.id);
+          if (get("currentTab") === "diario") diary.renderForTab();
+          if (get("currentTab") === "reportes") reports?.renderForTab();
+          return;
+        }
+        const local = getDiaryEntries();
         const merged = mergeEntries(local, remote);
         setDiaryEntries(merged);
-        syncEntriesToCloud(merged);
+        setDiaryCloudUserId(session.user.id);
+        await syncEntriesToCloud(merged);
         if (get("currentTab") === "diario") diary.renderForTab();
         if (get("currentTab") === "reportes") reports?.renderForTab();
+      } catch (error) {
+        console.error("Cloud diary sync failed", error);
+      }
+    }
+    getSession().then((session) => {
+      if (session) void syncDiaryForSession(session);
+    });
+    onAuthStateChange(async (event, session) => {
+      if (event === "SIGNED_IN" && session) {
+        await syncDiaryForSession(session);
       } else if (event === "SIGNED_OUT") {
         diary.setIsCloud(false);
       }

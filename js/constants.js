@@ -4,6 +4,7 @@
 /** @type {string} */ export const LANGUAGE_KEY = "brujulaIdioma";
 /** @type {string} */ export const THEME_KEY = "brujulaThema";
 /** @type {string} */ export const DIARY_KEY = "brujulaDiario";
+/** @type {string} */ export const DIARY_CLOUD_USER_KEY = "brujulaDiarioCloudUserId";
 /** @type {string} */ export const STORAGE_SCHEMA_KEY = "brujulaSchemaVersion";
 /** @type {number} */ export const STORAGE_SCHEMA_VERSION = 1;
 /** @type {number} */ export const RECENT_LIMIT = 5;
