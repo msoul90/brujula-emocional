@@ -16,7 +16,7 @@ export async function signInWithMagicLink(email, captchaToken) {
 export async function signOut() {
   const supabase = getSupabaseClient();
   if (!supabase) return;
-  return supabase.auth.signOut();
+  return supabase.auth.signOut({ scope: "local" });
 }
 
 export async function getSession() {
