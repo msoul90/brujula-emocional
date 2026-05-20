@@ -4665,7 +4665,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mpepbcpp";
+  var BUILD_VERSION = "mpepk1cz";
 
   // node_modules/posthog-js/dist/module.js
   var t3 = "undefined" != typeof window ? window : void 0;
@@ -9981,9 +9981,9 @@
   })(), Ua);
 
   // js/analytics.js
-  var apiKey = "phc_D44Jy6qHZTek7u4xBeasusCsbzbpc7kVLxAEbnxUDVQQ";
-  var host = "https://us.i.posthog.com";
-  var isEnabled = true;
+  var apiKey = "";
+  var host = "";
+  var isEnabled = false;
   var isInitialized = false;
   function getCspContent() {
     const cspMeta = document.querySelector('meta[http-equiv="Content-Security-Policy"]');
