@@ -21,3 +21,10 @@ jobs:
 
       - name: Build
         run: npm run build
+        env:
+          POSTHOG_ENABLED:    ${{ secrets.POSTHOG_ENABLED }}
+          POSTHOG_API_KEY:    ${{ secrets.POSTHOG_API_KEY }}
+          POSTHOG_HOST:       ${{ secrets.POSTHOG_HOST }}
+          SUPABASE_URL:       ${{ secrets.SUPABASE_URL }}
+          SUPABASE_ANON_KEY:  ${{ secrets.SUPABASE_ANON_KEY }}
+          TURNSTILE_SITE_KEY: ${{ secrets.TURNSTILE_SITE_KEY }}

@@ -70,6 +70,7 @@ export function createI18n({ getLang, setLang, onLanguageChanged }) {
             "nav-label-checkin":     (el) => { el.textContent = t("nav.checkin"); },
             "nav-label-diario":      (el) => { el.textContent = t("nav.diary"); },
             "nav-label-mapa":        (el) => { el.textContent = t("nav.mapa"); },
+            "nav-label-reportes":    (el) => { el.textContent = t("nav.reportes"); },
             "install-app-button":    (el) => { el.textContent = t("install.button"); },
             "ios-install-title":     (el) => { el.textContent = t("install.iosTitle"); },
             "ios-install-step-1":    (el) => { el.textContent = t("install.iosStep1"); },

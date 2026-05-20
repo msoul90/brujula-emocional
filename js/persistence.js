@@ -1,5 +1,5 @@
 // @ts-check
-import { RECENT_KEY, LANGUAGE_KEY, THEME_KEY, DIARY_KEY } from "./constants.js";
+import { RECENT_KEY, LANGUAGE_KEY, THEME_KEY, DIARY_KEY, DIARY_CLOUD_USER_KEY } from "./constants.js";
 
 /** @returns {string[]} */
 export function getRecentEmotions() {
@@ -45,4 +45,18 @@ export function getDiaryEntries() {
 /** @param {any[]} entries */
 export function setDiaryEntries(entries) {
     localStorage.setItem(DIARY_KEY, JSON.stringify(entries));
+}
+
+/** @returns {string | null} */
+export function getDiaryCloudUserId() {
+    return localStorage.getItem(DIARY_CLOUD_USER_KEY);
+}
+
+/** @param {string | null} userId */
+export function setDiaryCloudUserId(userId) {
+    if (userId) {
+        localStorage.setItem(DIARY_CLOUD_USER_KEY, userId);
+        return;
+    }
+    localStorage.removeItem(DIARY_CLOUD_USER_KEY);
 }

@@ -224,3 +224,14 @@ html.dark #ios-install-panel { background-color: #1e293b; }
 html.dark #ios-install-title { color: #f1f5f9; }
 html.dark #ios-install-modal ol { color: #cbd5e1; }
 html.dark #ios-install-close { background-color: #334155; color: #f1f5f9; }
+
+/* Auth section */
+html.dark #settings-panel hr { border-color: #334155; }
+html.dark .auth-email-input { background-color: #0f172a; border-color: #334155; color: #f1f5f9; }
+html.dark .auth-email-input::placeholder { color: #475569; }
+
+/* Reports */
+html.dark #reports-content .bg-white  { background-color: #1e293b; }
+html.dark #reports-content .bg-violet-50 { background-color: #1e1340; }
+html.dark #reports-content .bg-slate-100 { background-color: #334155; }
+html.dark #reports-content text { fill: #94a3b8; }
