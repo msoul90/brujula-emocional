@@ -4318,15 +4318,29 @@
         /** @type {any} */
         globalThis
       );
-      if (!win.turnstile || !turnstileContainer.current) return;
-      const id = win.turnstile.render(turnstileContainer.current, {
-        sitekey: TURNSTILE_SITE_KEY,
-        theme: "light",
-        size: "compact",
-        callback: (token) => setCaptchaToken(token),
-        "expired-callback": () => setCaptchaToken("")
-      });
-      return () => win.turnstile?.remove(id);
+      let widgetId;
+      function mountWidget() {
+        if (!win.turnstile || !turnstileContainer.current) return;
+        widgetId = win.turnstile.render(turnstileContainer.current, {
+          sitekey: TURNSTILE_SITE_KEY,
+          theme: "light",
+          size: "compact",
+          callback: (token) => setCaptchaToken(token),
+          "expired-callback": () => setCaptchaToken("")
+        });
+      }
+      if (win.turnstile) {
+        mountWidget();
+      } else {
+        const prev = win.__onTurnstileLoad;
+        win.__onTurnstileLoad = () => {
+          mountWidget();
+          if (typeof prev === "function") prev();
+        };
+      }
+      return () => {
+        if (widgetId !== void 0) win.turnstile?.remove(widgetId);
+      };
     }, [email]);
     if (email) {
       return k(
@@ -4651,7 +4665,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mpen3hog";
+  var BUILD_VERSION = "mpenovm4";
 
   // node_modules/posthog-js/dist/module.js
   var t3 = "undefined" != typeof window ? window : void 0;
