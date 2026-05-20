@@ -274,9 +274,9 @@ function EmptyState({ t }) {
 }
 
 /**
- * @param {{ t: TFn, getDisplayName: GetDisplayNameFn, emociones: Emotion[], showForm: boolean, onNewEntry: () => void, onSave: (emotion: string, note: string, tags: string[]) => void, onCancel: () => void, onDelete: (id: number) => void, onClearAll: () => void, onExport: () => void }} props
+ * @param {{ t: TFn, getDisplayName: GetDisplayNameFn, emociones: Emotion[], showForm: boolean, isCloud: boolean, onNewEntry: () => void, onSave: (emotion: string, note: string, tags: string[]) => void, onCancel: () => void, onDelete: (id: number) => void, onClearAll: () => void, onExport: () => void }} props
  */
-function DiaryPanel({ t, getDisplayName, emociones, showForm, onNewEntry, onSave, onCancel,
+function DiaryPanel({ t, getDisplayName, emociones, showForm, isCloud, onNewEntry, onSave, onCancel,
     onDelete, onClearAll, onExport }) {
     const entries = loadEntries();
 
@@ -317,7 +317,7 @@ function DiaryPanel({ t, getDisplayName, emociones, showForm, onNewEntry, onSave
                 <svg class="w-3.5 h-3.5 shrink-0 mt-0.5" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
                     <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2zm-6 9c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2zm3.1-9H8.9V6c0-1.71 1.39-3.1 3.1-3.1 1.71 0 3.1 1.39 3.1 3.1v2z"/>
                 </svg>
-                {t("diary.privacyNote")}
+                {isCloud ? t("diary.privacyNoteCloud") : t("diary.privacyNote")}
             </p>
 
             {showForm && (
@@ -339,14 +339,28 @@ function DiaryPanel({ t, getDisplayName, emociones, showForm, onNewEntry, onSave
 // ── Factory ───────────────────────────────────────────────────────────────────
 
 /**
- * @param {{ t: TFn, getDisplayName: GetDisplayNameFn, emociones: Emotion[] }} opts
+ * @param {{ t: TFn, getDisplayName: GetDisplayNameFn, emociones: Emotion[], getSession?: () => Promise<any>, cloudSync?: { syncOnCreate: (entry: DiaryEntry) => Promise<void>, syncOnDelete: (id: number) => Promise<void> } }} opts
  * @returns {{ renderForTab: () => void, addEntry: (nombre: string, note?: string, tags?: string[]) => DiaryEntry }}
  */
-export function createDiary({ t, getDisplayName, emociones }) {
+export function createDiary({ t, getDisplayName, emociones, getSession = null, cloudSync = null }) {
     let showForm = false;
+    let isCloud = false;
+
+    async function syncCreate(entry) {
+        if (!getSession || !cloudSync) return;
+        const session = await getSession();
+        if (session) cloudSync.syncOnCreate(entry);
+    }
+
+    async function syncDelete(id) {
+        if (!getSession || !cloudSync) return;
+        const session = await getSession();
+        if (session) cloudSync.syncOnDelete(id);
+    }
 
     on("diary:add", (/** @type {{ nombre: string, note: string }} */ { nombre, note }) => {
-        addEntry(nombre, note);
+        const entry = addEntry(nombre, note);
+        syncCreate(entry);
         if (get("currentTab") === "diario") renderForTab();
     });
 
@@ -357,6 +371,7 @@ export function createDiary({ t, getDisplayName, emociones }) {
         render(
             <DiaryPanel t={t} getDisplayName={getDisplayName} emociones={emociones}
                 showForm={showForm}
+                isCloud={isCloud}
                 onNewEntry={() => {
                     showForm = !showForm;
                     rerender();
@@ -365,12 +380,13 @@ export function createDiary({ t, getDisplayName, emociones }) {
                     }
                 }}
                 onSave={(emotionNombre, note, tags) => {
-                    addEntryToStorage(emotionNombre, note, tags);
+                    const entry = addEntryToStorage(emotionNombre, note, tags);
+                    syncCreate(entry);
                     showForm = false;
                     rerender();
                 }}
                 onCancel={() => { showForm = false; rerender(); }}
-                onDelete={(id) => { deleteEntryFromStorage(id); rerender(); }}
+                onDelete={(id) => { deleteEntryFromStorage(id); syncDelete(id); rerender(); }}
                 onClearAll={() => {
                     if (confirm(t("diary.clearConfirm"))) {
                         saveEntries([]);
@@ -397,5 +413,11 @@ export function createDiary({ t, getDisplayName, emociones }) {
         rerender();
     }
 
-    return { addEntry, renderForTab };
+    /** @param {boolean} value */
+    function setIsCloud(value) {
+        isCloud = value;
+        rerender();
+    }
+
+    return { addEntry, renderForTab, setIsCloud };
 }

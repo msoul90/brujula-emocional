@@ -1,5 +1,7 @@
 // @ts-check
 import { getTheme as getPersistedTheme, setTheme as persistTheme } from "./persistence.js";
+import { render, h } from "preact";
+import { useState, useEffect, useRef } from "preact/hooks";
 
 /** @typedef {"light" | "auto" | "dark"} Theme */
 /** @typedef {"es" | "en"} Language */
@@ -51,11 +53,96 @@ function updateActiveStates(theme, lang) {
     }
 }
 
+const TURNSTILE_SITE_KEY = process.env.TURNSTILE_SITE_KEY || "";
+
 /**
- * @param {{ setLanguage: (lang: Language) => void, getLang: () => Language }} opts
+ * @param {{ email: string | null, t: (key: string) => string, onSignIn: (email: string, captchaToken?: string) => Promise<{error: Error|null}>, onSignOut: () => Promise<void> }} props
+ */
+function AuthSection({ email, t, onSignIn, onSignOut }) {
+    const [inputEmail, setInputEmail]     = useState("");
+    const [captchaToken, setCaptchaToken] = useState("");
+    const [status, setStatus]             = useState(/** @type {"idle"|"sending"|"sent"|"error"} */ ("idle"));
+    const turnstileContainer              = useRef(/** @type {HTMLDivElement|null} */ (null));
+
+    useEffect(() => {
+        if (!TURNSTILE_SITE_KEY || email) return;
+        const win = /** @type {any} */ (globalThis);
+        if (!win.turnstile || !turnstileContainer.current) return;
+        const id = win.turnstile.render(turnstileContainer.current, {
+            sitekey: TURNSTILE_SITE_KEY,
+            theme: "light",
+            size: "compact",
+            callback: (/** @type {string} */ token) => setCaptchaToken(token),
+            "expired-callback": () => setCaptchaToken(""),
+        });
+        return () => win.turnstile?.remove(id);
+    }, [email]);
+
+    if (email) {
+        return h("div", { class: "min-w-[13rem]" },
+            h("p", { class: "text-[10px] font-semibold text-slate-400 uppercase tracking-wide mb-1.5" }, t("auth.sectionTitle")),
+            h("p", { class: "text-xs text-slate-500 mb-2 truncate max-w-[13rem]" },
+                h("span", { class: "font-medium" }, t("auth.signedInAs") + " "),
+                email
+            ),
+            h("p", { class: "text-[10px] text-emerald-600 font-medium mb-2" }, t("auth.cloudBackupOn")),
+            h("button", {
+                type: "button",
+                onClick: onSignOut,
+                class: "text-xs text-slate-500 hover:text-slate-800 transition-colors underline underline-offset-2",
+            }, t("auth.signOutButton"))
+        );
+    }
+
+    const captchaReady = !TURNSTILE_SITE_KEY || captchaToken;
+
+    async function handleSubmit(e) {
+        e.preventDefault();
+        if (!inputEmail || !captchaReady) return;
+        setStatus("sending");
+        const { error } = await onSignIn(inputEmail, captchaToken || undefined);
+        setStatus(error ? "error" : "sent");
+    }
+
+    if (status === "sent") {
+        return h("div", { class: "min-w-[13rem]" },
+            h("p", { class: "text-xs text-emerald-600 font-medium" }, t("auth.checkEmail"))
+        );
+    }
+
+    const btnLabel = status === "sending" ? t("auth.sending") : t("auth.sendLinkButton");
+
+    return h("div", { class: "min-w-[13rem]" },
+        h("p", { class: "text-[10px] font-semibold text-slate-400 uppercase tracking-wide mb-1.5" }, t("auth.sectionTitle")),
+        h("p", { class: "text-[10px] text-slate-400 mb-2" }, t("auth.cloudBackupOff")),
+        h("form", { onSubmit: handleSubmit, class: "flex flex-col gap-1.5" },
+            h("div", { class: "flex gap-1.5" },
+                h("input", {
+                    type: "email",
+                    required: true,
+                    value: inputEmail,
+                    onInput: (/** @type {any} */ e) => setInputEmail(e.target.value),
+                    placeholder: t("auth.emailPlaceholder"),
+                    class: "auth-email-input flex-1 min-w-0 text-xs px-2.5 py-2 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-violet-300",
+                    disabled: status === "sending",
+                }),
+                h("button", {
+                    type: "submit",
+                    disabled: status === "sending" || !captchaReady,
+                    class: "text-xs font-bold bg-violet-600 text-white px-3 py-2 rounded-xl hover:bg-violet-700 transition-colors disabled:opacity-50 whitespace-nowrap",
+                }, btnLabel)
+            ),
+            TURNSTILE_SITE_KEY && h("div", { ref: turnstileContainer })
+        ),
+        status === "error" && h("p", { class: "text-[10px] text-rose-500 mt-1" }, t("auth.sendError"))
+    );
+}
+
+/**
+ * @param {{ setLanguage: (lang: Language) => void, getLang: () => Language, getSession: () => Promise<import("@supabase/supabase-js").Session|null>, onAuthStateChange: (cb: (event: string, session: import("@supabase/supabase-js").Session|null) => void) => () => void, signIn: (email: string) => Promise<{error: Error|null}>, signOut: () => Promise<void>, t: (key: string) => string }} opts
  * @returns {{ applyTheme: (theme: Theme) => void, getTheme: () => Theme, updateActiveStates: (theme: Theme, lang: Language) => void } | undefined}
  */
-export function initSettings({ setLanguage, getLang }) {
+export function initSettings({ setLanguage, getLang, getSession, onAuthStateChange, signIn, signOut, t }) {
     const settingsBtn = document.getElementById("settings-btn");
     const settingsPanel = document.getElementById("settings-panel");
     if (!settingsBtn || !settingsPanel) return;
@@ -107,5 +194,18 @@ export function initSettings({ setLanguage, getLang }) {
     });
 
     updateActiveStates(getTheme(), getLang());
+
+    const authContainer = document.getElementById("auth-section");
+    if (authContainer && getSession) {
+        function renderAuthSection(/** @type {import("@supabase/supabase-js").Session|null} */ session) {
+            const email = session?.user?.email ?? null;
+            render(h(AuthSection, { email, t, onSignIn: signIn, onSignOut: signOut }), authContainer);
+        }
+        getSession().then(renderAuthSection);
+        if (onAuthStateChange) {
+            onAuthStateChange((_event, session) => renderAuthSection(session));
+        }
+    }
+
     return { applyTheme: (theme) => applyTheme(theme, getLang), getTheme, updateActiveStates };
 }

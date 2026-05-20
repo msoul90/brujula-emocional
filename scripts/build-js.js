@@ -26,6 +26,9 @@ esbuild
       "process.env.POSTHOG_ENABLED": JSON.stringify(env.POSTHOG_ENABLED || "false"),
       "process.env.POSTHOG_API_KEY": JSON.stringify(env.POSTHOG_API_KEY || ""),
       "process.env.POSTHOG_HOST": JSON.stringify(env.POSTHOG_HOST || ""),
+      "process.env.SUPABASE_URL": JSON.stringify(env.SUPABASE_URL || ""),
+      "process.env.SUPABASE_ANON_KEY": JSON.stringify(env.SUPABASE_ANON_KEY || ""),
+      "process.env.TURNSTILE_SITE_KEY": JSON.stringify(env.TURNSTILE_SITE_KEY || ""),
     },
   })
   .then(() => console.log("JS bundle → dist/app.bundle.js"))

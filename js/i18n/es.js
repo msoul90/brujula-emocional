@@ -30,6 +30,7 @@ export const es = {
         checkin:   "¿Qué siento?",
         diary:     "Diario",
         mapa:      "Mapa",
+        reportes:  "Reportes",
     },
 
     // ── Settings ──────────────────────────────────────────────────────────────
@@ -66,6 +67,7 @@ export const es = {
         triggerSub:      "Solo se guarda en tu dispositivo",
         title:           "Diario emocional",
         privacyNote:     "Tus entradas se guardan solo en este dispositivo. Nunca salen de aquí.",
+        privacyNoteCloud: "Tus entradas se guardan en este dispositivo y en la nube.",
         empty:           "Aún no hay entradas.",
         addShort:        "Diario",
         noteLabel:       "Nota (opcional)",
@@ -179,5 +181,30 @@ export const es = {
     technique: {
         practice: "Practicar ahora",
         label:    "Técnica guiada",
+    },
+
+    // ── Auth ──────────────────────────────────────────────────────────────────
+    auth: {
+        sectionTitle:   "Cuenta",
+        emailPlaceholder: "tu@email.com",
+        sendLinkButton: "Enviar enlace",
+        checkEmail:     "Revisa tu correo — te enviamos un enlace de acceso.",
+        signedInAs:     "Sesión iniciada como",
+        signOutButton:  "Cerrar sesión",
+        cloudBackupOn:  "Copia en la nube activada",
+        cloudBackupOff: "Datos guardados solo en este dispositivo",
+        sending:        "Enviando…",
+        sendError:      "No se pudo enviar. Intenta de nuevo.",
+    },
+
+    // ── Reports ───────────────────────────────────────────────────────────────
+    reports: {
+        title:       "Mis reportes",
+        noEntries:   "Todavía no hay entradas en el diario.",
+        emotionFreq: "Emociones más registradas",
+        tagDist:     "Contextos",
+        weeklyCount: "Entradas por semana",
+        allTimeStat: "Emoción más frecuente",
+        times:       "veces",
     },
 };

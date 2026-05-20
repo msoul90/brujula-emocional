@@ -5,6 +5,7 @@ import { createQuiz } from "./js/quiz.jsx";
 import { createDiary } from "./js/diary.jsx";
 import { createEmotionMap } from "./js/emotionMap.jsx";
 import { createCrisisFlow } from "./js/crisis.jsx";
+import { createReports } from "./js/reports.jsx";
 import { initSettings } from "./js/settings.js";
 import { initInstall } from "./js/install.js";
 import { initOfflineBanner } from "./js/offlineBanner.js";
@@ -12,8 +13,11 @@ import { initServiceWorker } from "./js/serviceWorker.js";
 import { migrateStorageSchema } from "./js/storageSchema.js";
 import { on } from "./js/bus.js";
 import { get, set } from "./js/store.js";
+import { getDiaryEntries, setDiaryEntries } from "./js/persistence.js";
 import { BUILD_VERSION } from "./js/version.js";
 import { initAnalytics, capture } from "./js/analytics.js";
+import { getSession, onAuthStateChange, signInWithMagicLink, signOut } from "./js/auth.js";
+import { syncEntriesToCloud, fetchEntriesFromCloud, mergeEntries, syncOnCreate as cloudSyncOnCreate, syncOnDelete as cloudSyncOnDelete } from "./js/cloudSync.js";
 
 const reducedMotion = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
 const modalAnimationMs = reducedMotion ? 0 : 200;
@@ -22,6 +26,7 @@ let ui;
 let diary;
 let quiz;
 let emotionMap;
+let reports;
 let searchInput;
 let searchQuery = "";
 
@@ -34,6 +39,7 @@ const i18n = createI18n({
         ui.renderRecentEmotions();
         ui.renderEmociones(searchQuery);
         if (get("currentTab") === "diario") diary.renderForTab();
+        if (get("currentTab") === "reportes") reports?.renderForTab();
         emotionMap?.onLanguageChanged();
         const bannerText = document.getElementById("offline-banner-text");
         if (bannerText) bannerText.textContent = i18n.t("offlineBanner");
@@ -44,6 +50,8 @@ diary = createDiary({
     t: i18n.t,
     getDisplayName: i18n.getDisplayName,
     emociones,
+    getSession,
+    cloudSync: { syncOnCreate: cloudSyncOnCreate, syncOnDelete: cloudSyncOnDelete },
 });
 
 on("tab:switch", ({ tabId }) => {
@@ -85,6 +93,7 @@ function switchTab(tabId) {
     set("currentTab", nextTab);
     if (nextTab === "diario") diary.renderForTab();
     if (nextTab === "mapa") emotionMap?.renderForTab();
+    if (nextTab === "reportes") reports?.renderForTab();
 }
 
 function initTabNav() {
@@ -102,7 +111,15 @@ function bootstrap() {
     const versionEl = document.getElementById("build-version");
     if (versionEl) versionEl.textContent = BUILD_VERSION;
 
-    initSettings({ setLanguage: i18n.setLanguage, getLang: () => get("currentLang") });
+    initSettings({
+        setLanguage: i18n.setLanguage,
+        getLang: () => get("currentLang"),
+        getSession,
+        onAuthStateChange,
+        signIn: signInWithMagicLink,
+        signOut,
+        t: i18n.t,
+    });
     initTabNav();
     ui.bindBaseEvents();
     searchInput = /** @type {HTMLInputElement | null} */ (document.getElementById("search"));
@@ -115,6 +132,27 @@ function bootstrap() {
         emociones,
         getDisplayName: i18n.getDisplayName,
         t: i18n.t,
+    });
+
+    reports = createReports({
+        t: i18n.t,
+        getDisplayName: i18n.getDisplayName,
+        emociones,
+    });
+
+    onAuthStateChange(async (event, session) => {
+        if (event === "SIGNED_IN") {
+            diary.setIsCloud(true);
+            const local  = getDiaryEntries();
+            const remote = await fetchEntriesFromCloud();
+            const merged = mergeEntries(local, remote);
+            setDiaryEntries(merged);
+            syncEntriesToCloud(merged);
+            if (get("currentTab") === "diario") diary.renderForTab();
+            if (get("currentTab") === "reportes") reports?.renderForTab();
+        } else if (event === "SIGNED_OUT") {
+            diary.setIsCloud(false);
+        }
     });
 
     quiz = createQuiz({

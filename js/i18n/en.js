@@ -30,6 +30,7 @@ export const en = {
         checkin:   "How do I feel?",
         diary:     "Diary",
         mapa:      "Map",
+        reportes:  "Reports",
     },
 
     // ── Settings ──────────────────────────────────────────────────────────────
@@ -66,6 +67,7 @@ export const en = {
         triggerSub:      "Saved only on your device",
         title:           "Emotional diary",
         privacyNote:     "Your entries are saved only on this device. They never leave it.",
+        privacyNoteCloud: "Your entries are saved on this device and in the cloud.",
         empty:           "No entries yet.",
         addShort:        "Diary",
         noteLabel:       "Note (optional)",
@@ -179,5 +181,30 @@ export const en = {
     technique: {
         practice: "Practice now",
         label:    "Guided technique",
+    },
+
+    // ── Auth ──────────────────────────────────────────────────────────────────
+    auth: {
+        sectionTitle:   "Account",
+        emailPlaceholder: "your@email.com",
+        sendLinkButton: "Send link",
+        checkEmail:     "Check your email — we sent you a sign-in link.",
+        signedInAs:     "Signed in as",
+        signOutButton:  "Sign out",
+        cloudBackupOn:  "Cloud backup enabled",
+        cloudBackupOff: "Data saved only on this device",
+        sending:        "Sending…",
+        sendError:      "Could not send. Please try again.",
+    },
+
+    // ── Reports ───────────────────────────────────────────────────────────────
+    reports: {
+        title:       "My reports",
+        noEntries:   "No diary entries yet.",
+        emotionFreq: "Most recorded emotions",
+        tagDist:     "Contexts",
+        weeklyCount: "Entries per week",
+        allTimeStat: "Most frequent emotion",
+        times:       "times",
     },
 };
