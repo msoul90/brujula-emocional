@@ -4114,7 +4114,7 @@
     const day = d4.getUTCDay() || 7;
     d4.setUTCDate(d4.getUTCDate() + 4 - day);
     const year = d4.getUTCFullYear();
-    const week = Math.ceil(((d4 - new Date(Date.UTC(year, 0, 1))) / 864e5 + 1) / 7);
+    const week = Math.ceil(((d4.getTime() - Date.UTC(year, 0, 1)) / 864e5 + 1) / 7);
     return `${year}-W${String(week).padStart(2, "0")}`;
   }
   function last8Weeks(entries) {
@@ -4296,7 +4296,11 @@
       document.getElementById(`lang-btn-${l4}`)?.classList.toggle("settings-option-active", l4 === lang);
     }
   }
-  var TURNSTILE_SITE_KEY = "";
+  var turnstileSiteKey = (
+    /** @type {Record<string, unknown>} */
+    ""
+  );
+  var TURNSTILE_SITE_KEY = typeof turnstileSiteKey === "string" ? turnstileSiteKey : "";
   function AuthSection({ email, t: t4, onSignIn, onSignOut }) {
     const [inputEmail, setInputEmail] = d2("");
     const [captchaToken, setCaptchaToken] = d2("");
@@ -4647,7 +4651,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mpelupyy";
+  var BUILD_VERSION = "mpemf6w6";
 
   // node_modules/posthog-js/dist/module.js
   var t3 = "undefined" != typeof window ? window : void 0;
@@ -9963,9 +9967,9 @@
   })(), Ua);
 
   // js/analytics.js
-  var apiKey = "";
-  var host = "";
-  var isEnabled = false;
+  var apiKey = "phc_D44Jy6qHZTek7u4xBeasusCsbzbpc7kVLxAEbnxUDVQQ";
+  var host = "https://us.i.posthog.com";
+  var isEnabled = true;
   var isInitialized = false;
   function getCspContent() {
     const cspMeta = document.querySelector('meta[http-equiv="Content-Security-Policy"]');

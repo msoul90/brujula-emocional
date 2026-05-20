@@ -53,7 +53,8 @@ function updateActiveStates(theme, lang) {
     }
 }
 
-const TURNSTILE_SITE_KEY = process.env.TURNSTILE_SITE_KEY || "";
+const turnstileSiteKey = /** @type {Record<string, unknown>} */ (globalThis)["__TURNSTILE_SITE_KEY__"];
+const TURNSTILE_SITE_KEY = typeof turnstileSiteKey === "string" ? turnstileSiteKey : "";
 
 /**
  * @param {{ email: string | null, t: (key: string) => string, onSignIn: (email: string, captchaToken?: string) => Promise<{error: Error|null}>, onSignOut: () => Promise<void> }} props
@@ -96,6 +97,7 @@ function AuthSection({ email, t, onSignIn, onSignOut }) {
 
     const captchaReady = !TURNSTILE_SITE_KEY || captchaToken;
 
+    /** @param {Event} e */
     async function handleSubmit(e) {
         e.preventDefault();
         if (!inputEmail || !captchaReady) return;
