@@ -4651,7 +4651,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mpemf6w6";
+  var BUILD_VERSION = "mpen3hog";
 
   // node_modules/posthog-js/dist/module.js
   var t3 = "undefined" != typeof window ? window : void 0;
@@ -10009,7 +10009,8 @@
     La.init(apiKey, {
       api_host: host,
       person_profiles: "identified_only",
-      capture_pageview: false
+      capture_pageview: false,
+      autocapture: false
     });
     isInitialized = true;
   }

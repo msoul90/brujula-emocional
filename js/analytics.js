@@ -60,6 +60,7 @@ export function initAnalytics() {
         api_host: host,
         person_profiles: "identified_only",
         capture_pageview: false,
+        autocapture: false,
     });
     isInitialized = true;
 }
