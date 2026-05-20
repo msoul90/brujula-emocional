@@ -4298,7 +4298,7 @@
   }
   var turnstileSiteKey = (
     /** @type {Record<string, unknown>} */
-    "0x4AAAAAADTVCQSMBDI_HafG"
+    ""
   );
   var TURNSTILE_SITE_KEY = typeof turnstileSiteKey === "string" ? turnstileSiteKey : "";
   function AuthSection({ email, t: t4, onSignIn, onSignOut }) {
@@ -4318,15 +4318,29 @@
         /** @type {any} */
         globalThis
       );
-      if (!win.turnstile || !turnstileContainer.current) return;
-      const id = win.turnstile.render(turnstileContainer.current, {
-        sitekey: TURNSTILE_SITE_KEY,
-        theme: "light",
-        size: "compact",
-        callback: (token) => setCaptchaToken(token),
-        "expired-callback": () => setCaptchaToken("")
-      });
-      return () => win.turnstile?.remove(id);
+      let widgetId;
+      function mountWidget() {
+        if (!win.turnstile || !turnstileContainer.current) return;
+        widgetId = win.turnstile.render(turnstileContainer.current, {
+          sitekey: TURNSTILE_SITE_KEY,
+          theme: "light",
+          size: "compact",
+          callback: (token) => setCaptchaToken(token),
+          "expired-callback": () => setCaptchaToken("")
+        });
+      }
+      if (win.turnstile) {
+        mountWidget();
+      } else {
+        const prev = win.__onTurnstileLoad;
+        win.__onTurnstileLoad = () => {
+          mountWidget();
+          if (typeof prev === "function") prev();
+        };
+      }
+      return () => {
+        if (widgetId !== void 0) win.turnstile?.remove(widgetId);
+      };
     }, [email]);
     if (email) {
       return k(
@@ -4651,7 +4665,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mpen8jv2";
+  var BUILD_VERSION = "mpent1fz";
 
   // node_modules/posthog-js/dist/module.js
   var t3 = "undefined" != typeof window ? window : void 0;
@@ -9967,8 +9981,8 @@
   })(), Ua);
 
   // js/analytics.js
-  var apiKey = "true";
-  var host = "https://us.i.posthog.com";
+  var apiKey = "";
+  var host = "";
   var isEnabled = false;
   var isInitialized = false;
   function getCspContent() {
@@ -30773,8 +30787,8 @@ ${suffix}`;
   // js/supabase.js
   var client = null;
   function getSupabaseClient() {
-    const url = "https://hhphxxsnvflsuyypazbs.supabase.co";
-    const key = "sb_publishable_yhUBofb-kpChOY23Nll4Dg_9yjAhekL";
+    const url = "";
+    const key = "";
     if (!url || !key) return null;
     if (!client) {
       client = createClient(url, key, {

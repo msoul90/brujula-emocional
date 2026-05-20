@@ -1,5 +1,5 @@
 (function () {
-    const turnstileUrl = "https://challenges.cloudflare.com/turnstile/v0/api.js";
+    const turnstileUrl = "https://challenges.cloudflare.com/turnstile/v0/api.js?onload=__onTurnstileLoad&render=explicit";
 
     function appendScript(src, options) {
         const script = document.createElement("script");

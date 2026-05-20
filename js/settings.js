@@ -68,15 +68,31 @@ function AuthSection({ email, t, onSignIn, onSignOut }) {
     useEffect(() => {
         if (!TURNSTILE_SITE_KEY || email) return;
         const win = /** @type {any} */ (globalThis);
-        if (!win.turnstile || !turnstileContainer.current) return;
-        const id = win.turnstile.render(turnstileContainer.current, {
-            sitekey: TURNSTILE_SITE_KEY,
-            theme: "light",
-            size: "compact",
-            callback: (/** @type {string} */ token) => setCaptchaToken(token),
-            "expired-callback": () => setCaptchaToken(""),
-        });
-        return () => win.turnstile?.remove(id);
+        /** @type {string|undefined} */
+        let widgetId;
+
+        function mountWidget() {
+            if (!win.turnstile || !turnstileContainer.current) return;
+            widgetId = win.turnstile.render(turnstileContainer.current, {
+                sitekey: TURNSTILE_SITE_KEY,
+                theme: "light",
+                size: "compact",
+                callback: (/** @type {string} */ token) => setCaptchaToken(token),
+                "expired-callback": () => setCaptchaToken(""),
+            });
+        }
+
+        if (win.turnstile) {
+            mountWidget();
+        } else {
+            const prev = win.__onTurnstileLoad;
+            win.__onTurnstileLoad = () => {
+                mountWidget();
+                if (typeof prev === "function") prev();
+            };
+        }
+
+        return () => { if (widgetId !== undefined) win.turnstile?.remove(widgetId); };
     }, [email]);
 
     if (email) {
