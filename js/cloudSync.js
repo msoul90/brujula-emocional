@@ -35,7 +35,21 @@ export async function syncEntriesToCloud(entries) {
   const session = await getSession();
   if (!session) return;
   const rows = entries.map((e) => toRow(e, session.user.id));
-  await supabase.from("diary_entries").upsert(rows, { onConflict: "id,user_id" });
+  const { error } = await supabase.from("diary_entries").upsert(rows, { onConflict: "id,user_id" });
+  if (error) throw error;
+}
+
+export async function syncOnDeleteBatch(ids) {
+  const supabase = getSupabaseClient();
+  if (!supabase) return;
+  const session = await getSession();
+  if (!session) return;
+  const { error } = await supabase
+    .from("diary_entries")
+    .delete()
+    .in("id", ids)
+    .eq("user_id", session.user.id);
+  if (error) throw error;
 }
 
 export async function fetchEntriesFromCloud() {

@@ -17,7 +17,7 @@ import { getDiaryEntries, setDiaryEntries, getDiaryCloudUserId, setDiaryCloudUse
 import { BUILD_VERSION } from "./js/version.js";
 import { initAnalytics, capture } from "./js/analytics.js";
 import { completeMagicLinkSignIn, getSession, onAuthStateChange, signInWithMagicLink, signOut } from "./js/auth.js";
-import { syncEntriesToCloud, fetchEntriesFromCloud, mergeEntries, syncOnCreate as cloudSyncOnCreate, syncOnDelete as cloudSyncOnDelete, deleteAllEntries } from "./js/cloudSync.js";
+import { syncEntriesToCloud, fetchEntriesFromCloud, mergeEntries, syncOnCreate as cloudSyncOnCreate, syncOnDelete as cloudSyncOnDelete, deleteAllEntries, syncOnDeleteBatch } from "./js/cloudSync.js";
 import { flushQueue } from "./js/offlineQueue.js";
 
 const reducedMotion = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
@@ -172,10 +172,18 @@ async function bootstrap() {
         emociones,
     });
 
-    const cloudSyncOpts = { syncOnCreate: cloudSyncOnCreate, syncOnDelete: cloudSyncOnDelete, syncOnClearAll: deleteAllEntries };
+    const cloudSyncOpts = {
+        syncOnCreate: cloudSyncOnCreate,
+        syncOnDelete: cloudSyncOnDelete,
+        syncOnClearAll: deleteAllEntries,
+        syncEntriesToCloud: syncEntriesToCloud,
+        syncOnDeleteBatch: syncOnDeleteBatch
+    };
 
+    let isSyncingDiary = false;
     async function syncDiaryForSession(session) {
-        if (!session?.user?.id) return;
+        if (!session?.user?.id || isSyncingDiary) return;
+        isSyncingDiary = true;
         try {
             diary.setIsCloud(true);
             await flushQueue(cloudSyncOpts, getSession);
@@ -197,15 +205,13 @@ async function bootstrap() {
             if (get("currentTab") === "reportes") reports?.renderForTab();
         } catch (error) {
             console.error("Cloud diary sync failed", error);
+        } finally {
+            isSyncingDiary = false;
         }
     }
 
-    getSession().then((session) => {
-        if (session) void syncDiaryForSession(session);
-    });
-
     onAuthStateChange(async (event, session) => {
-        if (event === "SIGNED_IN" && session) {
+        if ((event === "SIGNED_IN" || event === "INITIAL_SESSION") && session) {
             await syncDiaryForSession(session);
         } else if (event === "SIGNED_OUT") {
             diary.setIsCloud(false);

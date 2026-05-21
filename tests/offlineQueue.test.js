@@ -139,3 +139,101 @@ describe("flushQueue — op clear", () => {
         expect(getOfflineQueue()).toHaveLength(0);
     });
 });
+
+describe("flushQueue — batching y fallback", () => {
+    const mockGetSession = vi.fn();
+
+    beforeEach(() => {
+        mockGetSession.mockReset();
+    });
+
+    it("utiliza syncEntriesToCloud y syncOnDeleteBatch si están definidos", async () => {
+        const entry1 = { id: 10, date: "2024-01-01T00:00:00.000Z", emotion: "Miedo", note: "", tags: [] };
+        const entry2 = { id: 11, date: "2024-01-02T00:00:00.000Z", emotion: "Alegría", note: "", tags: [] };
+        enqueueCreate(entry1);
+        enqueueCreate(entry2);
+        enqueueDelete(20);
+        enqueueDelete(21);
+
+        const mockSync = {
+            syncOnCreate: vi.fn(),
+            syncOnDelete: vi.fn(),
+            syncEntriesToCloud: vi.fn().mockResolvedValue(undefined),
+            syncOnDeleteBatch: vi.fn().mockResolvedValue(undefined),
+        };
+        mockGetSession.mockResolvedValue({ user: { id: "u1" } });
+
+        await flushQueue(mockSync, mockGetSession);
+
+        expect(mockSync.syncEntriesToCloud).toHaveBeenCalledWith([entry1, entry2]);
+        expect(mockSync.syncOnDeleteBatch).toHaveBeenCalledWith([20, 21]);
+        expect(mockSync.syncOnCreate).not.toHaveBeenCalled();
+        expect(mockSync.syncOnDelete).not.toHaveBeenCalled();
+        expect(getOfflineQueue()).toHaveLength(0);
+    });
+
+    it("re-encola operaciones fallidas de lotes", async () => {
+        const entry1 = { id: 10, date: "2024-01-01T00:00:00.000Z", emotion: "Miedo", note: "", tags: [] };
+        enqueueCreate(entry1);
+        enqueueDelete(20);
+
+        const mockSync = {
+            syncOnCreate: vi.fn(),
+            syncOnDelete: vi.fn(),
+            syncEntriesToCloud: vi.fn().mockRejectedValue(new Error("Batch create failed")),
+            syncOnDeleteBatch: vi.fn().mockRejectedValue(new Error("Batch delete failed")),
+        };
+        mockGetSession.mockResolvedValue({ user: { id: "u1" } });
+
+        await flushQueue(mockSync, mockGetSession);
+
+        expect(mockSync.syncEntriesToCloud).toHaveBeenCalledOnce();
+        expect(mockSync.syncOnDeleteBatch).toHaveBeenCalledOnce();
+        // Siguen en la cola las fallidas
+        const q = getOfflineQueue();
+        expect(q).toHaveLength(2);
+        expect(q[0]).toEqual({ type: "create", entry: entry1 });
+        expect(q[1]).toEqual({ type: "delete", id: 20 });
+    });
+
+    it("hace fallback a peticiones secuenciales individuales si falta alguna función de lote", async () => {
+        const entry1 = { id: 10, date: "2024-01-01T00:00:00.000Z", emotion: "Miedo", note: "", tags: [] };
+        enqueueCreate(entry1);
+        enqueueDelete(20);
+
+        const mockSync = {
+            syncOnCreate: vi.fn().mockResolvedValue(undefined),
+            syncOnDelete: vi.fn().mockResolvedValue(undefined),
+            syncEntriesToCloud: vi.fn(), // Pero no syncOnDeleteBatch
+        };
+        mockGetSession.mockResolvedValue({ user: { id: "u1" } });
+
+        await flushQueue(mockSync, mockGetSession);
+
+        expect(mockSync.syncEntriesToCloud).not.toHaveBeenCalled();
+        expect(mockSync.syncOnCreate).toHaveBeenCalledWith(entry1);
+        expect(mockSync.syncOnDelete).toHaveBeenCalledWith(20);
+        expect(getOfflineQueue()).toHaveLength(0);
+    });
+
+    it("re-encola operaciones fallidas individuales en fallback secuencial", async () => {
+        const entry1 = { id: 10, date: "2024-01-01T00:00:00.000Z", emotion: "Miedo", note: "", tags: [] };
+        enqueueCreate(entry1);
+        enqueueDelete(20);
+
+        const mockSync = {
+            syncOnCreate: vi.fn().mockRejectedValue(new Error("individual fail")),
+            syncOnDelete: vi.fn().mockResolvedValue(undefined),
+        };
+        mockGetSession.mockResolvedValue({ user: { id: "u1" } });
+
+        await flushQueue(mockSync, mockGetSession);
+
+        expect(mockSync.syncOnCreate).toHaveBeenCalledWith(entry1);
+        expect(mockSync.syncOnDelete).toHaveBeenCalledWith(20);
+        
+        // Solo la fallida queda en la cola
+        const q = getOfflineQueue();
+        expect(q).toEqual([{ type: "create", entry: entry1 }]);
+    });
+});
