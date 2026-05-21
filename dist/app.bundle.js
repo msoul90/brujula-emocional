@@ -2787,21 +2787,54 @@
     if (!q3.length) return;
     const session = await getSession2();
     if (!session) return;
-    const failed = [];
-    for (const op of q3) {
+    const clearOp = q3.find((op) => op.type === "clear");
+    if (clearOp) {
       try {
-        if (op.type === "create") {
-          await cloudSync.syncOnCreate(op.entry);
-        } else if (op.type === "delete") {
-          await cloudSync.syncOnDelete(op.id);
-        } else if (op.type === "clear") {
-          await cloudSync.syncOnClearAll?.();
-        }
-      } catch {
-        failed.push(op);
+        await cloudSync.syncOnClearAll?.();
+        setOfflineQueue([]);
+      } catch (error) {
+        console.warn("Batch clear failed", error);
       }
+      return;
     }
-    setOfflineQueue(failed);
+    if (typeof cloudSync.syncEntriesToCloud === "function" && typeof cloudSync.syncOnDeleteBatch === "function") {
+      const creates = q3.filter((op) => op.type === "create");
+      const deletes = q3.filter((op) => op.type === "delete");
+      const failed = [];
+      if (creates.length > 0) {
+        try {
+          const entries = creates.map((op) => op.entry);
+          await cloudSync.syncEntriesToCloud(entries);
+        } catch (error) {
+          console.warn("Batch create sync failed", error);
+          failed.push(...creates);
+        }
+      }
+      if (deletes.length > 0) {
+        try {
+          const ids = deletes.map((op) => op.id);
+          await cloudSync.syncOnDeleteBatch(ids);
+        } catch (error) {
+          console.warn("Batch delete sync failed", error);
+          failed.push(...deletes);
+        }
+      }
+      setOfflineQueue(failed);
+    } else {
+      const failed = [];
+      for (const op of q3) {
+        try {
+          if (op.type === "create") {
+            await cloudSync.syncOnCreate(op.entry);
+          } else if (op.type === "delete") {
+            await cloudSync.syncOnDelete(op.id);
+          }
+        } catch {
+          failed.push(op);
+        }
+      }
+      setOfflineQueue(failed);
+    }
   }
 
   // js/diary.jsx
@@ -4397,7 +4430,7 @@
   }
   var turnstileSiteKey = (
     /** @type {Record<string, unknown>} */
-    "0x4AAAAAADTVCQSMBDI_HafG"
+    ""
   );
   var TURNSTILE_SITE_KEY = typeof turnstileSiteKey === "string" ? turnstileSiteKey : "";
   function AuthSection({ email, t: t4, onSignIn, onSignOut }) {
@@ -4804,7 +4837,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mpfmdgrm";
+  var BUILD_VERSION = "1b911c9a";
 
   // node_modules/posthog-js/dist/module.js
   var t3 = "undefined" != typeof window ? window : void 0;
@@ -10120,9 +10153,9 @@
   })(), Ua);
 
   // js/analytics.js
-  var apiKey = "true";
+  var apiKey = "phc_D44Jy6qHZTek7u4xBeasusCsbzbpc7kVLxAEbnxUDVQQ";
   var host = "https://us.i.posthog.com";
-  var isEnabled = false;
+  var isEnabled = true;
   var isInitialized = false;
   function getCspContent() {
     const cspMeta = document.querySelector('meta[http-equiv="Content-Security-Policy"]');
@@ -30926,8 +30959,8 @@ ${suffix}`;
   // js/supabase.js
   var client = null;
   function getSupabaseClient() {
-    const url = "https://hhphxxsnvflsuyypazbs.supabase.co";
-    const key = "sb_publishable_yhUBofb-kpChOY23Nll4Dg_9yjAhekL";
+    const url = "";
+    const key = "";
     if (!url || !key) return null;
     if (!client) {
       client = createClient(url, key, {
@@ -31072,7 +31105,16 @@ ${suffix}`;
     const session = await getSession();
     if (!session) return;
     const rows = entries.map((e4) => toRow(e4, session.user.id));
-    await supabase.from("diary_entries").upsert(rows, { onConflict: "id,user_id" });
+    const { error } = await supabase.from("diary_entries").upsert(rows, { onConflict: "id,user_id" });
+    if (error) throw error;
+  }
+  async function syncOnDeleteBatch(ids) {
+    const supabase = getSupabaseClient();
+    if (!supabase) return;
+    const session = await getSession();
+    if (!session) return;
+    const { error } = await supabase.from("diary_entries").delete().in("id", ids).eq("user_id", session.user.id);
+    if (error) throw error;
   }
   async function fetchEntriesFromCloud() {
     const supabase = getSupabaseClient();
@@ -31242,9 +31284,17 @@ ${suffix}`;
       getDisplayName: i18n.getDisplayName,
       emociones
     });
-    const cloudSyncOpts = { syncOnCreate, syncOnDelete, syncOnClearAll: deleteAllEntries };
+    const cloudSyncOpts = {
+      syncOnCreate,
+      syncOnDelete,
+      syncOnClearAll: deleteAllEntries,
+      syncEntriesToCloud,
+      syncOnDeleteBatch
+    };
+    let isSyncingDiary = false;
     async function syncDiaryForSession(session) {
-      if (!session?.user?.id) return;
+      if (!session?.user?.id || isSyncingDiary) return;
+      isSyncingDiary = true;
       try {
         diary.setIsCloud(true);
         await flushQueue(cloudSyncOpts, getSession);
@@ -31266,13 +31316,12 @@ ${suffix}`;
         if (get("currentTab") === "reportes") reports?.renderForTab();
       } catch (error) {
         console.error("Cloud diary sync failed", error);
+      } finally {
+        isSyncingDiary = false;
       }
     }
-    getSession().then((session) => {
-      if (session) void syncDiaryForSession(session);
-    });
     onAuthStateChange(async (event, session) => {
-      if (event === "SIGNED_IN" && session) {
+      if ((event === "SIGNED_IN" || event === "INITIAL_SESSION") && session) {
         await syncDiaryForSession(session);
       } else if (event === "SIGNED_OUT") {
         diary.setIsCloud(false);
