@@ -4382,14 +4382,19 @@
         globalThis
       );
       let widgetId;
+      let active = true;
       function mountWidget() {
-        if (!win.turnstile || !turnstileContainer.current) return;
+        if (!active || !win.turnstile || !turnstileContainer.current) return;
         widgetId = win.turnstile.render(turnstileContainer.current, {
           sitekey: TURNSTILE_SITE_KEY,
           theme: "light",
           size: "compact",
-          callback: (token) => setCaptchaToken(token),
-          "expired-callback": () => setCaptchaToken("")
+          callback: (token) => {
+            if (active) setCaptchaToken(token);
+          },
+          "expired-callback": () => {
+            if (active) setCaptchaToken("");
+          }
         });
       }
       if (win.turnstile) {
@@ -4402,7 +4407,14 @@
         };
       }
       return () => {
-        if (widgetId !== void 0) win.turnstile?.remove(widgetId);
+        active = false;
+        if (widgetId !== void 0) {
+          try {
+            win.turnstile?.remove(widgetId);
+          } catch (_3) {
+          }
+          widgetId = void 0;
+        }
       };
     }, [email]);
     if (email) {
@@ -4732,7 +4744,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mpeybeev";
+  var BUILD_VERSION = "mpeyw4ls";
 
   // node_modules/posthog-js/dist/module.js
   var t3 = "undefined" != typeof window ? window : void 0;

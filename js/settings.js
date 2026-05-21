@@ -70,15 +70,16 @@ function AuthSection({ email, t, onSignIn, onSignOut }) {
         const win = /** @type {any} */ (globalThis);
         /** @type {string|undefined} */
         let widgetId;
+        let active = true;
 
         function mountWidget() {
-            if (!win.turnstile || !turnstileContainer.current) return;
+            if (!active || !win.turnstile || !turnstileContainer.current) return;
             widgetId = win.turnstile.render(turnstileContainer.current, {
                 sitekey: TURNSTILE_SITE_KEY,
                 theme: "light",
                 size: "compact",
-                callback: (/** @type {string} */ token) => setCaptchaToken(token),
-                "expired-callback": () => setCaptchaToken(""),
+                callback: (/** @type {string} */ token) => { if (active) setCaptchaToken(token); },
+                "expired-callback": () => { if (active) setCaptchaToken(""); },
             });
         }
 
@@ -92,7 +93,13 @@ function AuthSection({ email, t, onSignIn, onSignOut }) {
             };
         }
 
-        return () => { if (widgetId !== undefined) win.turnstile?.remove(widgetId); };
+        return () => {
+            active = false;
+            if (widgetId !== undefined) {
+                try { win.turnstile?.remove(widgetId); } catch (_) {}
+                widgetId = undefined;
+            }
+        };
     }, [email]);
 
     if (email) {
