@@ -101,7 +101,8 @@ export async function completeMagicLinkSignIn() {
   url.searchParams.delete("code");
   url.searchParams.delete("type");
   const cleanedSearch = url.searchParams.toString();
-  const cleanUrl = `${url.pathname}${cleanedSearch ? `?${cleanedSearch}` : ""}${url.hash}`;
+  const searchSuffix = cleanedSearch ? "?" + cleanedSearch : "";
+  const cleanUrl = `${url.pathname}${searchSuffix}${url.hash}`;
   history.replaceState({}, "", cleanUrl);
 
   return data?.session ?? null;

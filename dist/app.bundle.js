@@ -4804,7 +4804,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mpfm9x3w";
+  var BUILD_VERSION = "mpfmcuc2";
 
   // node_modules/posthog-js/dist/module.js
   var t3 = "undefined" != typeof window ? window : void 0;
@@ -31027,7 +31027,8 @@ ${suffix}`;
     url.searchParams.delete("code");
     url.searchParams.delete("type");
     const cleanedSearch = url.searchParams.toString();
-    const cleanUrl = `${url.pathname}${cleanedSearch ? `?${cleanedSearch}` : ""}${url.hash}`;
+    const searchSuffix = cleanedSearch ? "?" + cleanedSearch : "";
+    const cleanUrl = `${url.pathname}${searchSuffix}${url.hash}`;
     history.replaceState({}, "", cleanUrl);
     return data?.session ?? null;
   }
