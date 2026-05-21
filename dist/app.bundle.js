@@ -4365,7 +4365,7 @@
   }
   var turnstileSiteKey = (
     /** @type {Record<string, unknown>} */
-    ""
+    "0x4AAAAAADTVCQSMBDI_HafG"
   );
   var TURNSTILE_SITE_KEY = typeof turnstileSiteKey === "string" ? turnstileSiteKey : "";
   function AuthSection({ email, t: t4, onSignIn, onSignOut }) {
@@ -4766,7 +4766,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mpezn047";
+  var BUILD_VERSION = "mpeznhcz";
 
   // node_modules/posthog-js/dist/module.js
   var t3 = "undefined" != typeof window ? window : void 0;
@@ -10082,9 +10082,9 @@
   })(), Ua);
 
   // js/analytics.js
-  var apiKey = "phc_D44Jy6qHZTek7u4xBeasusCsbzbpc7kVLxAEbnxUDVQQ";
+  var apiKey = "true";
   var host = "https://us.i.posthog.com";
-  var isEnabled = true;
+  var isEnabled = false;
   var isInitialized = false;
   function getCspContent() {
     const cspMeta = document.querySelector('meta[http-equiv="Content-Security-Policy"]');
@@ -30888,8 +30888,8 @@ ${suffix}`;
   // js/supabase.js
   var client = null;
   function getSupabaseClient() {
-    const url = "";
-    const key = "";
+    const url = "https://hhphxxsnvflsuyypazbs.supabase.co";
+    const key = "sb_publishable_yhUBofb-kpChOY23Nll4Dg_9yjAhekL";
     if (!url || !key) return null;
     if (!client) {
       client = createClient(url, key, {
