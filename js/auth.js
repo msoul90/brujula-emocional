@@ -7,7 +7,7 @@ export async function signInWithMagicLink(email, captchaToken) {
   return supabase.auth.signInWithOtp({
     email,
     options: {
-      emailRedirectTo: location.origin,
+      emailRedirectTo: location.origin + location.pathname,
       ...(captchaToken ? { captchaToken } : {}),
     },
   });

@@ -229,6 +229,8 @@ html.dark #ios-install-close { background-color: #334155; color: #f1f5f9; }
 html.dark #settings-panel hr { border-color: #334155; }
 html.dark .auth-email-input { background-color: #0f172a; border-color: #334155; color: #f1f5f9; }
 html.dark .auth-email-input::placeholder { color: #475569; }
+html.dark .auth-signout-btn { background-color: #334155; color: #cbd5e1; }
+html.dark .auth-signout-btn:hover { background-color: #475569; }
 
 /* Reports */
 html.dark #reports-content .bg-white  { background-color: #1e293b; }

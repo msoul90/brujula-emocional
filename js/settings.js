@@ -96,17 +96,17 @@ function AuthSection({ email, t, onSignIn, onSignOut }) {
     }, [email]);
 
     if (email) {
-        return h("div", { class: "min-w-[13rem]" },
-            h("p", { class: "text-[10px] font-semibold text-slate-400 uppercase tracking-wide mb-1.5" }, t("auth.sectionTitle")),
-            h("p", { class: "text-xs text-slate-500 mb-2 truncate max-w-[13rem]" },
-                h("span", { class: "font-medium" }, t("auth.signedInAs") + " "),
-                email
+        return h("div", { class: "min-w-[15rem]" },
+            h("p", { class: "text-[10px] font-semibold text-slate-400 uppercase tracking-wide mb-2" }, t("auth.sectionTitle")),
+            h("div", { class: "flex items-center gap-1.5 mb-1" },
+                h("span", { class: "w-2 h-2 rounded-full bg-emerald-500 shrink-0", "aria-hidden": "true" }),
+                h("p", { class: "text-[11px] text-emerald-600 font-semibold" }, t("auth.cloudBackupOn"))
             ),
-            h("p", { class: "text-[10px] text-emerald-600 font-medium mb-2" }, t("auth.cloudBackupOn")),
+            h("p", { class: "text-[11px] text-slate-500 mb-3 truncate" }, email),
             h("button", {
                 type: "button",
                 onClick: onSignOut,
-                class: "text-xs text-slate-500 hover:text-slate-800 transition-colors underline underline-offset-2",
+                class: "auth-signout-btn w-full text-sm font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 py-2.5 rounded-xl transition-colors",
             }, t("auth.signOutButton"))
         );
     }
@@ -123,36 +123,34 @@ function AuthSection({ email, t, onSignIn, onSignOut }) {
     }
 
     if (status === "sent") {
-        return h("div", { class: "min-w-[13rem]" },
-            h("p", { class: "text-xs text-emerald-600 font-medium" }, t("auth.checkEmail"))
+        return h("div", { class: "min-w-[15rem]" },
+            h("p", { class: "text-sm text-emerald-600 font-medium" }, t("auth.checkEmail"))
         );
     }
 
     const btnLabel = status === "sending" ? t("auth.sending") : t("auth.sendLinkButton");
 
-    return h("div", { class: "min-w-[13rem]" },
+    return h("div", { class: "min-w-[15rem]" },
         h("p", { class: "text-[10px] font-semibold text-slate-400 uppercase tracking-wide mb-1.5" }, t("auth.sectionTitle")),
-        h("p", { class: "text-[10px] text-slate-400 mb-2" }, t("auth.cloudBackupOff")),
-        h("form", { onSubmit: handleSubmit, class: "flex flex-col gap-1.5" },
-            h("div", { class: "flex gap-1.5" },
-                h("input", {
-                    type: "email",
-                    required: true,
-                    value: inputEmail,
-                    onInput: (/** @type {any} */ e) => setInputEmail(e.target.value),
-                    placeholder: t("auth.emailPlaceholder"),
-                    class: "auth-email-input flex-1 min-w-0 text-xs px-2.5 py-2 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-violet-300",
-                    disabled: status === "sending",
-                }),
-                h("button", {
-                    type: "submit",
-                    disabled: status === "sending" || !captchaReady,
-                    class: "text-xs font-bold bg-violet-600 text-white px-3 py-2 rounded-xl hover:bg-violet-700 transition-colors disabled:opacity-50 whitespace-nowrap",
-                }, btnLabel)
-            ),
+        h("p", { class: "text-[11px] text-slate-400 mb-2.5" }, t("auth.cloudBackupOff")),
+        h("form", { onSubmit: handleSubmit, class: "flex flex-col gap-2" },
+            h("input", {
+                type: "email",
+                required: true,
+                value: inputEmail,
+                onInput: (/** @type {any} */ e) => setInputEmail(e.target.value),
+                placeholder: t("auth.emailPlaceholder"),
+                class: "auth-email-input w-full text-sm px-3 py-2.5 rounded-xl border border-slate-200 outline-none focus:ring-2 focus:ring-violet-300",
+                disabled: status === "sending",
+            }),
+            h("button", {
+                type: "submit",
+                disabled: status === "sending" || !captchaReady,
+                class: "w-full text-sm font-bold bg-violet-600 text-white py-2.5 rounded-xl hover:bg-violet-700 transition-colors disabled:opacity-50",
+            }, btnLabel),
             TURNSTILE_SITE_KEY && h("div", { ref: turnstileContainer })
         ),
-        status === "error" && h("p", { class: "text-[10px] text-rose-500 mt-1" }, t("auth.sendError"))
+        status === "error" && h("p", { class: "text-xs text-rose-500 mt-1" }, t("auth.sendError"))
     );
 }
 
