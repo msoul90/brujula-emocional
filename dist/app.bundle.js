@@ -4365,7 +4365,7 @@
   }
   var turnstileSiteKey = (
     /** @type {Record<string, unknown>} */
-    "0x4AAAAAADTVCQSMBDI_HafG"
+    ""
   );
   var TURNSTILE_SITE_KEY = typeof turnstileSiteKey === "string" ? turnstileSiteKey : "";
   function AuthSection({ email, t: t4, onSignIn, onSignOut }) {
@@ -4772,7 +4772,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mpf0h56k";
+  var BUILD_VERSION = "mpf0tfa1";
 
   // node_modules/posthog-js/dist/module.js
   var t3 = "undefined" != typeof window ? window : void 0;
@@ -10088,9 +10088,9 @@
   })(), Ua);
 
   // js/analytics.js
-  var apiKey = "true";
+  var apiKey = "phc_D44Jy6qHZTek7u4xBeasusCsbzbpc7kVLxAEbnxUDVQQ";
   var host = "https://us.i.posthog.com";
-  var isEnabled = false;
+  var isEnabled = true;
   var isInitialized = false;
   function getCspContent() {
     const cspMeta = document.querySelector('meta[http-equiv="Content-Security-Policy"]');
@@ -30894,8 +30894,8 @@ ${suffix}`;
   // js/supabase.js
   var client = null;
   function getSupabaseClient() {
-    const url = "https://hhphxxsnvflsuyypazbs.supabase.co";
-    const key = "sb_publishable_yhUBofb-kpChOY23Nll4Dg_9yjAhekL";
+    const url = "";
+    const key = "";
     if (!url || !key) return null;
     if (!client) {
       client = createClient(url, key, {
@@ -30911,16 +30911,31 @@ ${suffix}`;
 
   // js/auth.js
   var AUTH_REQUEST_TIMEOUT_MS = 1e4;
-  function withTimeout(promise, timeoutMs, label) {
+  var TIMEOUT_RESULT = /* @__PURE__ */ Symbol("timeout");
+  function withTimeout(promise, timeoutMs) {
     let timeoutId;
-    const timeoutPromise = new Promise((_3, reject) => {
+    const timeoutPromise = new Promise((resolve) => {
       timeoutId = globalThis.setTimeout(() => {
-        reject(new Error(`${label} timed out`));
+        resolve(TIMEOUT_RESULT);
       }, timeoutMs);
     });
     return Promise.race([promise, timeoutPromise]).finally(() => {
       if (timeoutId !== void 0) globalThis.clearTimeout(timeoutId);
     });
+  }
+  function clearLocalSupabaseSession() {
+    if (!("localStorage" in globalThis)) return;
+    const keysToRemove = [];
+    for (let index = 0; index < localStorage.length; index += 1) {
+      const key = localStorage.key(index);
+      if (!key) continue;
+      if (!key.startsWith("sb-")) continue;
+      if (!key.includes("auth-token") && !key.includes("code-verifier")) continue;
+      keysToRemove.push(key);
+    }
+    for (const key of keysToRemove) {
+      localStorage.removeItem(key);
+    }
   }
   async function signInWithMagicLink(email, captchaToken) {
     const supabase = getSupabaseClient();
@@ -30936,10 +30951,14 @@ ${suffix}`;
   async function signOut() {
     const supabase = getSupabaseClient();
     if (!supabase) return;
-    const request = supabase.auth.signOut({ scope: "local" }).then(({ error }) => {
-      if (error) throw error;
-    });
-    await withTimeout(request, AUTH_REQUEST_TIMEOUT_MS, "Sign out");
+    const request = supabase.auth.signOut({ scope: "local" });
+    const result = await withTimeout(request, AUTH_REQUEST_TIMEOUT_MS);
+    if (result === TIMEOUT_RESULT) {
+      console.warn("Sign out timed out. Falling back to local session cleanup.");
+      clearLocalSupabaseSession();
+      return;
+    }
+    if (result?.error) throw result.error;
   }
   async function getSession() {
     const supabase = getSupabaseClient();
