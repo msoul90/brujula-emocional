@@ -73,3 +73,11 @@ export async function syncOnDelete(id) {
     .eq("id", id)
     .eq("user_id", session.user.id);
 }
+
+export async function deleteAllEntries() {
+  const supabase = getSupabaseClient();
+  if (!supabase) return;
+  const session = await getSession();
+  if (!session) return;
+  await supabase.from("diary_entries").delete().eq("user_id", session.user.id);
+}
