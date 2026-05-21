@@ -631,9 +631,37 @@
       noEntries: "Todav\xEDa no hay entradas en el diario.",
       emotionFreq: "Emociones m\xE1s registradas",
       tagDist: "Contextos",
-      weeklyCount: "Entradas por semana",
-      allTimeStat: "Emoci\xF3n m\xE1s frecuente",
-      times: "veces"
+      weeklyCount: "\xDAltimas 8 semanas",
+      // period filter
+      period7d: "7 d\xEDas",
+      period30d: "30 d\xEDas",
+      periodAll: "Todo",
+      // metrics row
+      totalEntries: "Entradas",
+      streak: "Racha",
+      trend: "vs. antes",
+      distinctEmotions: "Emociones",
+      // narrative
+      narrativeWeek: "Esta semana",
+      narrativeMonth: "Este mes",
+      narrativeAll: "En total,",
+      narrativeRegistered: "registraste 1 emoci\xF3n.",
+      narrativeRegisteredPlural: "registraste {n} emociones.",
+      narrativeTop: "{emotion} fue la m\xE1s frecuente.",
+      narrativeTopWithTag: "{emotion} fue la m\xE1s frecuente, sobre todo en {context}.",
+      // time of day
+      timeOfDay: "\xBFCu\xE1ndo sueles registrar?",
+      timeMorning: "Ma\xF1ana",
+      timeAfternoon: "Tarde",
+      timeNight: "Noche",
+      // empty / notes
+      noEntriesInPeriod: "No hay entradas en los \xFAltimos {period}.",
+      noTagsNote: "A\xFAn no usas contextos en tus entradas. Etiquetarlas te ayuda a ver patrones.",
+      motiveLow: "Cada registro es un paso. Sigue as\xED.",
+      motiveMid: "Buen ritmo. Est\xE1s construyendo un h\xE1bito.",
+      motiveHigh: "Constancia admirable. Tu diario emocional est\xE1 tomando forma.",
+      emptyPrompt: "Cuando registres tus emociones, aqu\xED ver\xE1s tu resumen.",
+      goToEntries: "Ir a Entradas"
     }
   };
 
@@ -834,9 +862,37 @@
       noEntries: "No diary entries yet.",
       emotionFreq: "Most recorded emotions",
       tagDist: "Contexts",
-      weeklyCount: "Entries per week",
-      allTimeStat: "Most frequent emotion",
-      times: "times"
+      weeklyCount: "Last 8 weeks",
+      // period filter
+      period7d: "7 days",
+      period30d: "30 days",
+      periodAll: "All",
+      // metrics row
+      totalEntries: "Entries",
+      streak: "Streak",
+      trend: "vs. before",
+      distinctEmotions: "Emotions",
+      // narrative
+      narrativeWeek: "This week",
+      narrativeMonth: "This month",
+      narrativeAll: "Overall,",
+      narrativeRegistered: "you recorded 1 emotion.",
+      narrativeRegisteredPlural: "you recorded {n} emotions.",
+      narrativeTop: "{emotion} was the most frequent.",
+      narrativeTopWithTag: "{emotion} was the most frequent, especially in {context}.",
+      // time of day
+      timeOfDay: "When do you usually record?",
+      timeMorning: "Morning",
+      timeAfternoon: "Afternoon",
+      timeNight: "Night",
+      // empty / notes
+      noEntriesInPeriod: "No entries in the last {period}.",
+      noTagsNote: "You haven't used contexts yet. Tagging entries helps you spot patterns.",
+      motiveLow: "Every entry counts. Keep it up.",
+      motiveMid: "Good pace. You're building a habit.",
+      motiveHigh: "Impressive consistency. Your diary is really taking shape.",
+      emptyPrompt: "Once you record some emotions, you'll see your summary here.",
+      goToEntries: "Go to Entries"
     }
   };
 
@@ -4256,22 +4312,82 @@
     const week = Math.ceil(((d4.getTime() - Date.UTC(year, 0, 1)) / 864e5 + 1) / 7);
     return `${year}-W${String(week).padStart(2, "0")}`;
   }
+  function isoWeekToMonday(weekKey) {
+    const [yearStr, weekStr] = weekKey.split("-W");
+    const year = Number.parseInt(yearStr, 10);
+    const week = Number.parseInt(weekStr, 10);
+    const jan4 = new Date(Date.UTC(year, 0, 4));
+    const dow = jan4.getUTCDay() || 7;
+    return new Date(jan4.getTime() + (week - 1) * 7 * 864e5 - (dow - 1) * 864e5);
+  }
   function last8Weeks(entries) {
     const today = /* @__PURE__ */ new Date();
     const weeks = [];
     for (let i4 = 7; i4 >= 0; i4--) {
       const d4 = new Date(today);
       d4.setUTCDate(today.getUTCDate() - i4 * 7);
-      weeks.push(isoWeekKey(d4.toISOString()));
+      const key = isoWeekKey(d4.toISOString());
+      const monday = isoWeekToMonday(key);
+      const label = `${monday.getUTCDate()} ${monday.toLocaleDateString("es", { month: "short" })}`;
+      weeks.push({ key, label });
     }
-    const counts = new Map(weeks.map((w4) => [w4, 0]));
+    const counts = new Map(weeks.map((w4) => [w4.key, 0]));
     for (const e4 of entries) {
       const k4 = isoWeekKey(e4.date);
       if (counts.has(k4)) counts.set(k4, counts.get(k4) + 1);
     }
-    return weeks.map((key) => ({ key, count: counts.get(key) ?? 0 }));
+    return weeks.map(({ key, label }) => ({ key, count: counts.get(key) ?? 0, label }));
   }
-  function VerticalBarChart({ items, t: t4 }) {
+  function filterByPeriod(entries, period) {
+    if (period === "all") return entries;
+    const days = period === "7d" ? 7 : 30;
+    const cutoff = Date.now() - days * 864e5;
+    return entries.filter((e4) => new Date(e4.date).getTime() >= cutoff);
+  }
+  function dayKey(d4) {
+    return `${d4.getFullYear()}-${d4.getMonth()}-${d4.getDate()}`;
+  }
+  function calcStreak(allEntries) {
+    if (!allEntries.length) return 0;
+    const days = new Set(allEntries.map((e4) => dayKey(new Date(e4.date))));
+    const today = /* @__PURE__ */ new Date();
+    const yesterday = new Date(today);
+    yesterday.setDate(today.getDate() - 1);
+    if (!days.has(dayKey(today)) && !days.has(dayKey(yesterday))) return 0;
+    const startOffset = days.has(dayKey(today)) ? 0 : 1;
+    let streak = 0;
+    for (let i4 = startOffset; i4 <= 365; i4++) {
+      const d4 = new Date(today);
+      d4.setDate(today.getDate() - i4);
+      if (days.has(dayKey(d4))) streak++;
+      else break;
+    }
+    return streak;
+  }
+  function calcTrend(allEntries, period) {
+    if (period === "all") return 0;
+    const days = period === "7d" ? 7 : 30;
+    const now = Date.now();
+    const currentCutoff = now - days * 864e5;
+    const prevCutoff = now - 2 * days * 864e5;
+    const current = allEntries.filter((e4) => new Date(e4.date).getTime() >= currentCutoff).length;
+    const prev = allEntries.filter((e4) => {
+      const t4 = new Date(e4.date).getTime();
+      return t4 >= prevCutoff && t4 < currentCutoff;
+    }).length;
+    return current - prev;
+  }
+  function countByTimeOfDay(entries) {
+    let morning = 0, afternoon = 0, night = 0;
+    for (const e4 of entries) {
+      const hour = new Date(e4.date).getHours();
+      if (hour >= 6 && hour < 12) morning++;
+      else if (hour >= 12 && hour < 20) afternoon++;
+      else night++;
+    }
+    return { morning, afternoon, night };
+  }
+  function VerticalBarChart({ items, currentWeekKey }) {
     const max = Math.max(...items.map((i4) => i4.count), 1);
     const svgW = items.length * (BAR_WIDTH + BAR_GAP) - BAR_GAP + 8;
     return /* @__PURE__ */ u3("div", { class: "overflow-x-auto hide-scroll pb-1", children: /* @__PURE__ */ u3("svg", { width: svgW, height: CHART_HEIGHT + 36, "aria-hidden": "true", children: items.map((item, idx) => {
@@ -4279,6 +4395,10 @@
       const x3 = idx * (BAR_WIDTH + BAR_GAP) + 4;
       const y4 = CHART_HEIGHT - barH;
       const fill = item.color ?? "#7C5CFC";
+      let opacity = "0.85";
+      if (currentWeekKey != null) {
+        opacity = item.key === currentWeekKey ? "1" : "0.55";
+      }
       return /* @__PURE__ */ u3("g", { children: [
         /* @__PURE__ */ u3(
           "rect",
@@ -4289,20 +4409,20 @@
             height: barH,
             rx: "4",
             fill,
-            opacity: "0.85"
+            opacity
           }
         ),
         /* @__PURE__ */ u3(
           "text",
           {
             x: x3 + BAR_WIDTH / 2,
-            y: CHART_HEIGHT + 13,
+            y: CHART_HEIGHT + 14,
             "text-anchor": "middle",
-            "font-size": "9",
+            "font-size": "8",
             fill: "currentColor",
             class: "text-slate-400",
             opacity: "0.8",
-            children: item.label.slice(0, 5)
+            children: item.label.length > 6 ? item.label.slice(0, 5) + "." : item.label
           }
         ),
         item.count > 0 && /* @__PURE__ */ u3(
@@ -4323,7 +4443,7 @@
   }
   function HorizontalBarChart({ items, max }) {
     return /* @__PURE__ */ u3("div", { class: "space-y-2", children: items.map((item) => /* @__PURE__ */ u3("div", { class: "flex items-center gap-2", children: [
-      /* @__PURE__ */ u3("span", { class: "text-xs text-slate-500 w-14 shrink-0 truncate capitalize", children: item.label }),
+      /* @__PURE__ */ u3("span", { class: "text-xs text-slate-500 w-16 shrink-0 truncate capitalize", children: item.label }),
       /* @__PURE__ */ u3("div", { class: "flex-1 bg-slate-100 rounded-full h-2 overflow-hidden", children: /* @__PURE__ */ u3(
         "div",
         {
@@ -4340,64 +4460,205 @@
       children
     ] });
   }
-  function ReportsPanel({ entries, t: t4, getDisplayName, emociones: emociones2 }) {
-    if (entries.length === 0) {
-      return /* @__PURE__ */ u3("div", { class: "flex flex-col items-center justify-center py-16 text-center px-4", children: [
-        /* @__PURE__ */ u3("svg", { class: "w-12 h-12 text-slate-200 mb-4", viewBox: "0 0 24 24", fill: "currentColor", "aria-hidden": "true", children: /* @__PURE__ */ u3("path", { d: "M5 9.2h3V19H5V9.2zM10.6 5h2.8v14h-2.8V5zm5.6 8H19v6h-2.8v-6z" }) }),
-        /* @__PURE__ */ u3("p", { class: "text-slate-400 text-sm", children: t4("reports.noEntries") })
-      ] });
+  function PeriodFilter({ period, onChange, t: t4 }) {
+    const options = [
+      ["7d", t4("reports.period7d")],
+      ["30d", t4("reports.period30d")],
+      ["all", t4("reports.periodAll")]
+    ];
+    return /* @__PURE__ */ u3("div", { class: "flex gap-2 mb-4", children: options.map(([id, label]) => /* @__PURE__ */ u3(
+      "button",
+      {
+        type: "button",
+        class: `px-3 py-1.5 rounded-full text-xs font-bold transition-colors ${period === id ? "bg-slate-800 text-white" : "bg-slate-100 text-slate-500 hover:bg-slate-200"}`,
+        onClick: () => onChange(id),
+        children: label
+      },
+      id
+    )) });
+  }
+  function NarrativeCard({ filtered, period, topNombre, topTag, t: t4, getDisplayName }) {
+    const count = filtered.length;
+    if (count === 0) return null;
+    let periodLabel = t4("reports.narrativeAll");
+    if (period === "7d") periodLabel = t4("reports.narrativeWeek");
+    else if (period === "30d") periodLabel = t4("reports.narrativeMonth");
+    const countPhrase = count === 1 ? t4("reports.narrativeRegistered") : t4("reports.narrativeRegisteredPlural").replace("{n}", String(count));
+    let topPhrase = "";
+    if (topNombre) {
+      const emotionName = getDisplayName(topNombre);
+      if (topTag) {
+        const tagLabel = t4(`diary.tag${topTag.charAt(0).toUpperCase()}${topTag.slice(1)}`).toLowerCase();
+        topPhrase = " " + t4("reports.narrativeTopWithTag").replace("{emotion}", emotionName).replace("{context}", tagLabel);
+      } else {
+        topPhrase = " " + t4("reports.narrativeTop").replace("{emotion}", emotionName);
+      }
     }
-    const emotionCounts = countByEmotion(entries);
+    return /* @__PURE__ */ u3("p", { class: "text-sm text-slate-600 leading-relaxed mb-4 px-1", children: [
+      /* @__PURE__ */ u3("span", { class: "font-semibold text-slate-700", children: periodLabel }),
+      " ",
+      countPhrase,
+      topPhrase
+    ] });
+  }
+  function MetricsRow({ total, streak, trend, period, distinctEmotions, t: t4 }) {
+    let trendColor = "text-slate-400";
+    if (trend > 0) trendColor = "text-emerald-600";
+    else if (trend < 0) trendColor = "text-rose-500";
+    let trendLabel = String(trend);
+    if (trend > 0) trendLabel = `+${trend}`;
+    else if (trend === 0) trendLabel = "=";
+    return /* @__PURE__ */ u3("div", { class: "grid grid-cols-3 gap-2 mb-4", children: [
+      /* @__PURE__ */ u3("div", { class: "bg-white rounded-2xl p-3 shadow-sm text-center", children: [
+        /* @__PURE__ */ u3("p", { class: "text-2xl font-black text-slate-800", children: total }),
+        /* @__PURE__ */ u3("p", { class: "text-[10px] font-bold text-slate-400 uppercase tracking-wide mt-0.5", children: t4("reports.totalEntries") })
+      ] }),
+      /* @__PURE__ */ u3("div", { class: "bg-white rounded-2xl p-3 shadow-sm text-center", children: [
+        /* @__PURE__ */ u3("p", { class: "text-2xl font-black text-slate-800", children: streak }),
+        /* @__PURE__ */ u3("p", { class: "text-[10px] font-bold text-slate-400 uppercase tracking-wide mt-0.5", children: t4("reports.streak") })
+      ] }),
+      period === "all" ? /* @__PURE__ */ u3("div", { class: "bg-white rounded-2xl p-3 shadow-sm text-center", children: [
+        /* @__PURE__ */ u3("p", { class: "text-2xl font-black text-slate-800", children: distinctEmotions }),
+        /* @__PURE__ */ u3("p", { class: "text-[10px] font-bold text-slate-400 uppercase tracking-wide mt-0.5", children: t4("reports.distinctEmotions") })
+      ] }) : /* @__PURE__ */ u3("div", { class: "bg-white rounded-2xl p-3 shadow-sm text-center", children: [
+        /* @__PURE__ */ u3("p", { class: `text-2xl font-black ${trendColor}`, children: trendLabel }),
+        /* @__PURE__ */ u3("p", { class: "text-[10px] font-bold text-slate-400 uppercase tracking-wide mt-0.5", children: t4("reports.trend") })
+      ] })
+    ] });
+  }
+  function TimeOfDayCard({ counts, t: t4 }) {
+    const total = counts.morning + counts.afternoon + counts.night;
+    if (total === 0) return null;
+    const items = [
+      { label: t4("reports.timeMorning"), count: counts.morning },
+      { label: t4("reports.timeAfternoon"), count: counts.afternoon },
+      { label: t4("reports.timeNight"), count: counts.night }
+    ];
+    return /* @__PURE__ */ u3(Card, { title: t4("reports.timeOfDay"), children: /* @__PURE__ */ u3("div", { class: "flex gap-3", children: items.map((item) => {
+      const pct = Math.round(item.count / total * 100);
+      return /* @__PURE__ */ u3("div", { class: "flex-1 text-center", children: [
+        /* @__PURE__ */ u3("div", { class: "bg-slate-100 rounded-full h-1.5 overflow-hidden mb-2", children: /* @__PURE__ */ u3(
+          "div",
+          {
+            class: "h-1.5 rounded-full bg-violet-400",
+            style: { width: `${pct}%` }
+          }
+        ) }),
+        /* @__PURE__ */ u3("p", { class: "text-[10px] text-slate-500 font-medium", children: item.label }),
+        /* @__PURE__ */ u3("p", { class: "text-xs font-bold text-slate-700", children: item.count })
+      ] }, item.label);
+    }) }) });
+  }
+  function MotivationalNote({ total, t: t4 }) {
+    let msg = t4("reports.motiveLow");
+    if (total >= 15) msg = t4("reports.motiveHigh");
+    else if (total >= 5) msg = t4("reports.motiveMid");
+    return /* @__PURE__ */ u3("p", { class: "text-center text-xs text-slate-400 leading-relaxed pb-2 px-4 italic", children: msg });
+  }
+  function EmptyState2({ t: t4, onGoToEntries }) {
+    return /* @__PURE__ */ u3("div", { class: "flex flex-col items-center justify-center py-12 text-center px-6", children: [
+      /* @__PURE__ */ u3("svg", { class: "w-12 h-12 text-slate-200 mb-4", viewBox: "0 0 24 24", fill: "currentColor", "aria-hidden": "true", children: /* @__PURE__ */ u3("path", { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z" }) }),
+      /* @__PURE__ */ u3("p", { class: "text-slate-600 font-semibold text-sm mb-1", children: t4("reports.noEntries") }),
+      /* @__PURE__ */ u3("p", { class: "text-slate-400 text-xs leading-relaxed mb-5", children: t4("reports.emptyPrompt") }),
+      /* @__PURE__ */ u3(
+        "button",
+        {
+          type: "button",
+          onClick: onGoToEntries,
+          class: "bg-slate-800 text-white text-xs font-bold px-4 py-2.5 rounded-xl hover:bg-slate-700 transition-colors",
+          children: t4("reports.goToEntries")
+        }
+      )
+    ] });
+  }
+  function EmptyPeriodState({ period, t: t4 }) {
+    const periodLabel = period === "7d" ? t4("reports.period7d") : t4("reports.period30d");
+    return /* @__PURE__ */ u3("div", { class: "bg-white rounded-2xl p-6 shadow-sm text-center mt-2", children: /* @__PURE__ */ u3("p", { class: "text-slate-400 text-sm", children: t4("reports.noEntriesInPeriod").replace("{period}", periodLabel) }) });
+  }
+  function ReportsPanel({ entries, t: t4, getDisplayName, emociones: emociones2, onGoToEntries }) {
+    const [period, setPeriod] = d2(
+      /** @type {Period} */
+      "30d"
+    );
+    if (entries.length === 0) {
+      return /* @__PURE__ */ u3(EmptyState2, { t: t4, onGoToEntries });
+    }
+    const filtered = filterByPeriod(entries, period);
+    const streak = calcStreak(entries);
+    const trend = calcTrend(entries, period);
+    const distinctEmotions = new Set(filtered.map((e4) => e4.emotion)).size;
+    const emotionCounts = countByEmotion(filtered);
     const topEmotions = Array.from(emotionCounts.entries()).sort((a4, b3) => b3[1] - a4[1]).slice(0, 8);
     const emotionItems = topEmotions.map(([nombre, count]) => {
       const emocion = emociones2.find((e4) => e4.nombre === nombre);
       return { label: getDisplayName(nombre), count, color: emocion?.color ?? "#7C5CFC" };
     });
-    const [topNombre, topCount] = topEmotions[0] ?? ["", 0];
-    const tagCounts = countByTag(entries);
+    const [topNombre] = topEmotions[0] ?? ["", 0];
+    const tagCounts = countByTag(filtered);
+    const topTagEntry = Array.from(tagCounts.entries()).filter(([, c4]) => c4 > 0).sort((a4, b3) => b3[1] - a4[1])[0];
+    const topTag = topTagEntry?.[0] ?? "";
     const tagItems = DIARY_TAGS.map((tag) => ({
       label: t4(`diary.tag${tag.charAt(0).toUpperCase()}${tag.slice(1)}`),
       count: tagCounts.get(tag) ?? 0
-    }));
+    })).filter((item) => item.count > 0);
     const tagMax = Math.max(...tagItems.map((i4) => i4.count), 1);
+    const currentWeekKey = isoWeekKey((/* @__PURE__ */ new Date()).toISOString());
     const weeks = last8Weeks(entries);
-    const weekItems = weeks.map((w4) => ({ label: w4.key.slice(5), count: w4.count }));
+    const weekItems = weeks.map((w4) => ({ label: w4.label, count: w4.count, key: w4.key }));
+    const timeOfDay = countByTimeOfDay(filtered);
     return /* @__PURE__ */ u3("div", { children: [
-      /* @__PURE__ */ u3("h2", { class: "text-xl font-black text-slate-800 mb-4", children: t4("reports.title") }),
-      topNombre && /* @__PURE__ */ u3("div", { class: "bg-violet-50 rounded-2xl p-4 mb-4 flex items-center gap-3", children: [
-        /* @__PURE__ */ u3(
-          "div",
-          {
-            class: "w-10 h-10 rounded-xl flex items-center justify-center shrink-0",
-            style: { backgroundColor: emociones2.find((e4) => e4.nombre === topNombre)?.color ?? "#7C5CFC" },
-            children: /* @__PURE__ */ u3("span", { class: "text-white text-lg", children: "\u2605" })
-          }
-        ),
-        /* @__PURE__ */ u3("div", { children: [
-          /* @__PURE__ */ u3("p", { class: "text-xs text-violet-500 font-semibold uppercase tracking-wide", children: t4("reports.allTimeStat") }),
-          /* @__PURE__ */ u3("p", { class: "text-slate-800 font-bold", children: [
-            getDisplayName(topNombre),
-            /* @__PURE__ */ u3("span", { class: "text-xs text-slate-400 font-normal ml-1", children: [
-              "\xB7 ",
-              topCount,
-              " ",
-              t4("reports.times")
-            ] })
-          ] })
-        ] })
-      ] }),
-      /* @__PURE__ */ u3(Card, { title: t4("reports.emotionFreq"), children: /* @__PURE__ */ u3(VerticalBarChart, { items: emotionItems, t: t4 }) }),
-      /* @__PURE__ */ u3(Card, { title: t4("reports.tagDist"), children: /* @__PURE__ */ u3(HorizontalBarChart, { items: tagItems, max: tagMax }) }),
-      /* @__PURE__ */ u3(Card, { title: t4("reports.weeklyCount"), children: /* @__PURE__ */ u3(VerticalBarChart, { items: weekItems, t: t4 }) })
+      /* @__PURE__ */ u3(PeriodFilter, { period, onChange: setPeriod, t: t4 }),
+      /* @__PURE__ */ u3(
+        NarrativeCard,
+        {
+          filtered,
+          period,
+          topNombre,
+          topTag,
+          t: t4,
+          getDisplayName
+        }
+      ),
+      /* @__PURE__ */ u3(
+        MetricsRow,
+        {
+          total: filtered.length,
+          streak,
+          trend,
+          period,
+          distinctEmotions,
+          t: t4
+        }
+      ),
+      filtered.length === 0 ? /* @__PURE__ */ u3(EmptyPeriodState, { period, t: t4 }) : /* @__PURE__ */ u3(S, { children: [
+        emotionItems.length > 0 && /* @__PURE__ */ u3(Card, { title: t4("reports.emotionFreq"), children: /* @__PURE__ */ u3(VerticalBarChart, { items: emotionItems }) }),
+        /* @__PURE__ */ u3(TimeOfDayCard, { counts: timeOfDay, t: t4 }),
+        tagItems.length > 0 ? /* @__PURE__ */ u3(Card, { title: t4("reports.tagDist"), children: /* @__PURE__ */ u3(HorizontalBarChart, { items: tagItems, max: tagMax }) }) : /* @__PURE__ */ u3("div", { class: "bg-white rounded-2xl p-4 shadow-sm mb-4", children: [
+          /* @__PURE__ */ u3("h3", { class: "text-sm font-bold text-slate-600 mb-1", children: t4("reports.tagDist") }),
+          /* @__PURE__ */ u3("p", { class: "text-xs text-slate-400 leading-relaxed", children: t4("reports.noTagsNote") })
+        ] }),
+        /* @__PURE__ */ u3(Card, { title: t4("reports.weeklyCount"), children: /* @__PURE__ */ u3(VerticalBarChart, { items: weekItems, currentWeekKey }) }),
+        /* @__PURE__ */ u3(MotivationalNote, { total: entries.length, t: t4 })
+      ] })
     ] });
   }
-  function createReports({ t: t4, getDisplayName, emociones: emociones2 }) {
+  function createReports({ t: t4, getDisplayName, emociones: emociones2, onGoToEntries = () => {
+  } }) {
     function renderForTab() {
       const content = document.getElementById("reports-content");
       if (!content) return;
       const entries = getDiaryEntries();
       R(
-        /* @__PURE__ */ u3(ReportsPanel, { entries, t: t4, getDisplayName, emociones: emociones2 }),
+        /* @__PURE__ */ u3(
+          ReportsPanel,
+          {
+            entries,
+            t: t4,
+            getDisplayName,
+            emociones: emociones2,
+            onGoToEntries
+          }
+        ),
         content
       );
     }
@@ -4437,7 +4698,7 @@
   }
   var turnstileSiteKey = (
     /** @type {Record<string, unknown>} */
-    "0x4AAAAAADTVCQSMBDI_HafG"
+    ""
   );
   var TURNSTILE_SITE_KEY = typeof turnstileSiteKey === "string" ? turnstileSiteKey : "";
   function AuthSection({ email, t: t4, onSignIn, onSignOut }) {
@@ -4844,7 +5105,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "72398a4d";
+  var BUILD_VERSION = "26bbbb06";
 
   // node_modules/posthog-js/dist/module.js
   var t3 = "undefined" != typeof window ? window : void 0;
@@ -10160,9 +10421,9 @@
   })(), Ua);
 
   // js/analytics.js
-  var apiKey = "true";
+  var apiKey = "phc_D44Jy6qHZTek7u4xBeasusCsbzbpc7kVLxAEbnxUDVQQ";
   var host = "https://us.i.posthog.com";
-  var isEnabled = false;
+  var isEnabled = true;
   var isInitialized = false;
   function getCspContent() {
     const cspMeta = document.querySelector('meta[http-equiv="Content-Security-Policy"]');
@@ -30966,8 +31227,8 @@ ${suffix}`;
   // js/supabase.js
   var client = null;
   function getSupabaseClient() {
-    const url = "https://hhphxxsnvflsuyypazbs.supabase.co";
-    const key = "sb_publishable_yhUBofb-kpChOY23Nll4Dg_9yjAhekL";
+    const url = "";
+    const key = "";
     if (!url || !key) return null;
     if (!client) {
       client = createClient(url, key, {
@@ -31320,7 +31581,8 @@ ${suffix}`;
     reports = createReports({
       t: i18n.t,
       getDisplayName: i18n.getDisplayName,
-      emociones
+      emociones,
+      onGoToEntries: () => switchDiarySubTab("entradas")
     });
     const cloudSyncOpts = {
       syncOnCreate,

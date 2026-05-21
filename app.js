@@ -193,6 +193,7 @@ async function bootstrap() {
         t: i18n.t,
         getDisplayName: i18n.getDisplayName,
         emociones,
+        onGoToEntries: () => switchDiarySubTab("entradas"),
     });
 
     const cloudSyncOpts = {
