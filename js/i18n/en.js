@@ -85,6 +85,8 @@ export const en = {
         emptyAction1:    "Do a check-in",
         emptyAction2:    "Discover what I feel",
         exportButton:    "Export",
+        tabEntradas:     "Entries",
+        tabResumen:      "Summary",
         tagLabel:        "Context (optional)",
         tagTrabajo:      "Work",
         tagPareja:       "Partner",

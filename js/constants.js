@@ -13,8 +13,8 @@
 /** @type {string[]} */
 export const DIARY_TAGS = ["trabajo", "pareja", "familia", "cuerpo", "dinero"];
 
-/** @type {readonly ["emociones", "checkin", "diario", "mapa", "reportes"]} */
-export const APP_TABS = ["emociones", "checkin", "diario", "mapa", "reportes"];
+/** @type {readonly ["emociones", "checkin", "diario", "mapa"]} */
+export const APP_TABS = ["emociones", "checkin", "diario", "mapa"];
 /** @typedef {(typeof APP_TABS)[number]} TabId */
 /** @type {TabId} */
 export const DEFAULT_TAB = APP_TABS[0];

@@ -30,6 +30,7 @@ let emotionMap;
 let reports;
 let searchInput;
 let searchQuery = "";
+let currentDiarySubTab = "entradas";
 
 const i18n = createI18n({
     getLang: () => get("currentLang"),
@@ -39,8 +40,10 @@ const i18n = createI18n({
         ui.renderCheckinTab();
         ui.renderRecentEmotions();
         ui.renderEmociones(searchQuery);
-        if (get("currentTab") === "diario") diary.renderForTab();
-        if (get("currentTab") === "reportes") reports?.renderForTab();
+        if (get("currentTab") === "diario") {
+            diary.renderForTab();
+            if (currentDiarySubTab === "resumen") reports?.renderForTab();
+        }
         emotionMap?.onLanguageChanged();
         const bannerText = document.getElementById("offline-banner-text");
         if (bannerText) bannerText.textContent = i18n.t("offlineBanner");
@@ -76,6 +79,21 @@ ui = createUI({
     moodCategories: MOOD_CATEGORIES,
 });
 
+function switchDiarySubTab(subTab) {
+    const isResumen = subTab === "resumen";
+    document.getElementById("diary-tab-entradas")?.classList.toggle("hidden", isResumen);
+    document.getElementById("diary-tab-resumen")?.classList.toggle("hidden", !isResumen);
+    for (const btn of document.querySelectorAll(".diary-subtab")) {
+        const active = /** @type {HTMLElement} */ (btn).dataset.diarySubtab === subTab;
+        btn.classList.toggle("text-slate-800", active);
+        btn.classList.toggle("border-slate-800", active);
+        btn.classList.toggle("text-slate-400", !active);
+        btn.classList.toggle("border-transparent", !active);
+    }
+    currentDiarySubTab = subTab;
+    if (isResumen) reports?.renderForTab();
+}
+
 function switchTab(tabId) {
     const nextTab = APP_TABS.includes(tabId) ? tabId : DEFAULT_TAB;
     for (const id of APP_TABS) {
@@ -92,14 +110,19 @@ function switchTab(tabId) {
         }
     }
     set("currentTab", nextTab);
-    if (nextTab === "diario") diary.renderForTab();
+    if (nextTab === "diario") {
+        diary.renderForTab();
+        if (currentDiarySubTab === "resumen") reports?.renderForTab();
+    }
     if (nextTab === "mapa") emotionMap?.renderForTab();
-    if (nextTab === "reportes") reports?.renderForTab();
 }
 
 function initTabNav() {
     for (const btn of document.querySelectorAll(".nav-tab")) {
-        btn.addEventListener("click", () => switchTab(btn.dataset.tab));
+        btn.addEventListener("click", () => switchTab(/** @type {HTMLElement} */ (btn).dataset.tab));
+    }
+    for (const btn of document.querySelectorAll(".diary-subtab")) {
+        btn.addEventListener("click", () => switchDiarySubTab(/** @type {HTMLElement} */ (btn).dataset.diarySubtab));
     }
 }
 
@@ -192,8 +215,10 @@ async function bootstrap() {
             if (previousUserId && previousUserId !== session.user.id) {
                 setDiaryEntries(remote);
                 setDiaryCloudUserId(session.user.id);
-                if (get("currentTab") === "diario") diary.renderForTab();
-                if (get("currentTab") === "reportes") reports?.renderForTab();
+                if (get("currentTab") === "diario") {
+                    diary.renderForTab();
+                    if (currentDiarySubTab === "resumen") reports?.renderForTab();
+                }
                 return;
             }
             const local  = getDiaryEntries();
@@ -201,8 +226,10 @@ async function bootstrap() {
             setDiaryEntries(merged);
             setDiaryCloudUserId(session.user.id);
             await syncEntriesToCloud(merged);
-            if (get("currentTab") === "diario") diary.renderForTab();
-            if (get("currentTab") === "reportes") reports?.renderForTab();
+            if (get("currentTab") === "diario") {
+                diary.renderForTab();
+                if (currentDiarySubTab === "resumen") reports?.renderForTab();
+            }
         } catch (error) {
             console.error("Cloud diary sync failed", error);
         } finally {

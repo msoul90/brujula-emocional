@@ -517,6 +517,8 @@
       emptyAction1: "Hacer check-in",
       emptyAction2: "Descubrir qu\xE9 siento",
       exportButton: "Exportar",
+      tabEntradas: "Entradas",
+      tabResumen: "Resumen",
       tagLabel: "Contexto (opcional)",
       tagTrabajo: "Trabajo",
       tagPareja: "Pareja",
@@ -718,6 +720,8 @@
       emptyAction1: "Do a check-in",
       emptyAction2: "Discover what I feel",
       exportButton: "Export",
+      tabEntradas: "Entries",
+      tabResumen: "Summary",
       tagLabel: "Context (optional)",
       tagTrabajo: "Work",
       tagPareja: "Partner",
@@ -847,7 +851,7 @@
   var STORAGE_SCHEMA_VERSION = 1;
   var RECENT_LIMIT = 5;
   var DIARY_TAGS = ["trabajo", "pareja", "familia", "cuerpo", "dinero"];
-  var APP_TABS = ["emociones", "checkin", "diario", "mapa", "reportes"];
+  var APP_TABS = ["emociones", "checkin", "diario", "mapa"];
   var DEFAULT_TAB = APP_TABS[0];
   var TRANSLATIONS = { es, en };
 
@@ -996,8 +1000,11 @@
         "nav-label-mapa": (el) => {
           el.textContent = t4("nav.mapa");
         },
-        "nav-label-reportes": (el) => {
-          el.textContent = t4("nav.reportes");
+        "diary-subtab-entradas-label": (el) => {
+          el.textContent = t4("diary.tabEntradas");
+        },
+        "diary-subtab-resumen-label": (el) => {
+          el.textContent = t4("diary.tabResumen");
         },
         "install-app-button": (el) => {
           el.textContent = t4("install.button");
@@ -4430,7 +4437,7 @@
   }
   var turnstileSiteKey = (
     /** @type {Record<string, unknown>} */
-    "0x4AAAAAADTVCQSMBDI_HafG"
+    ""
   );
   var TURNSTILE_SITE_KEY = typeof turnstileSiteKey === "string" ? turnstileSiteKey : "";
   function AuthSection({ email, t: t4, onSignIn, onSignOut }) {
@@ -4837,7 +4844,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "6c20ed6d";
+  var BUILD_VERSION = "9bf290c7";
 
   // node_modules/posthog-js/dist/module.js
   var t3 = "undefined" != typeof window ? window : void 0;
@@ -10153,9 +10160,9 @@
   })(), Ua);
 
   // js/analytics.js
-  var apiKey = "true";
+  var apiKey = "phc_D44Jy6qHZTek7u4xBeasusCsbzbpc7kVLxAEbnxUDVQQ";
   var host = "https://us.i.posthog.com";
-  var isEnabled = false;
+  var isEnabled = true;
   var isInitialized = false;
   function getCspContent() {
     const cspMeta = document.querySelector('meta[http-equiv="Content-Security-Policy"]');
@@ -30959,8 +30966,8 @@ ${suffix}`;
   // js/supabase.js
   var client = null;
   function getSupabaseClient() {
-    const url = "https://hhphxxsnvflsuyypazbs.supabase.co";
-    const key = "sb_publishable_yhUBofb-kpChOY23Nll4Dg_9yjAhekL";
+    const url = "";
+    const key = "";
     if (!url || !key) return null;
     if (!client) {
       client = createClient(url, key, {
@@ -31157,6 +31164,7 @@ ${suffix}`;
   var reports;
   var searchInput;
   var searchQuery = "";
+  var currentDiarySubTab = "entradas";
   var i18n = createI18n({
     getLang: () => get("currentLang"),
     setLang: (lang) => set("currentLang", lang),
@@ -31165,8 +31173,10 @@ ${suffix}`;
       ui2.renderCheckinTab();
       ui2.renderRecentEmotions();
       ui2.renderEmociones(searchQuery);
-      if (get("currentTab") === "diario") diary.renderForTab();
-      if (get("currentTab") === "reportes") reports?.renderForTab();
+      if (get("currentTab") === "diario") {
+        diary.renderForTab();
+        if (currentDiarySubTab === "resumen") reports?.renderForTab();
+      }
       emotionMap?.onLanguageChanged();
       const bannerText = document.getElementById("offline-banner-text");
       if (bannerText) bannerText.textContent = i18n.t("offlineBanner");
@@ -31198,6 +31208,23 @@ ${suffix}`;
     modalAnimationMs,
     moodCategories: MOOD_CATEGORIES
   });
+  function switchDiarySubTab(subTab) {
+    const isResumen = subTab === "resumen";
+    document.getElementById("diary-tab-entradas")?.classList.toggle("hidden", isResumen);
+    document.getElementById("diary-tab-resumen")?.classList.toggle("hidden", !isResumen);
+    for (const btn of document.querySelectorAll(".diary-subtab")) {
+      const active = (
+        /** @type {HTMLElement} */
+        btn.dataset.diarySubtab === subTab
+      );
+      btn.classList.toggle("text-slate-800", active);
+      btn.classList.toggle("border-slate-800", active);
+      btn.classList.toggle("text-slate-400", !active);
+      btn.classList.toggle("border-transparent", !active);
+    }
+    currentDiarySubTab = subTab;
+    if (isResumen) reports?.renderForTab();
+  }
   function switchTab(tabId) {
     const nextTab = APP_TABS.includes(tabId) ? tabId : DEFAULT_TAB;
     for (const id of APP_TABS) {
@@ -31214,13 +31241,24 @@ ${suffix}`;
       }
     }
     set("currentTab", nextTab);
-    if (nextTab === "diario") diary.renderForTab();
+    if (nextTab === "diario") {
+      diary.renderForTab();
+      if (currentDiarySubTab === "resumen") reports?.renderForTab();
+    }
     if (nextTab === "mapa") emotionMap?.renderForTab();
-    if (nextTab === "reportes") reports?.renderForTab();
   }
   function initTabNav() {
     for (const btn of document.querySelectorAll(".nav-tab")) {
-      btn.addEventListener("click", () => switchTab(btn.dataset.tab));
+      btn.addEventListener("click", () => switchTab(
+        /** @type {HTMLElement} */
+        btn.dataset.tab
+      ));
+    }
+    for (const btn of document.querySelectorAll(".diary-subtab")) {
+      btn.addEventListener("click", () => switchDiarySubTab(
+        /** @type {HTMLElement} */
+        btn.dataset.diarySubtab
+      ));
     }
   }
   async function bootstrap() {
@@ -31303,8 +31341,10 @@ ${suffix}`;
         if (previousUserId && previousUserId !== session.user.id) {
           setDiaryEntries(remote);
           setDiaryCloudUserId(session.user.id);
-          if (get("currentTab") === "diario") diary.renderForTab();
-          if (get("currentTab") === "reportes") reports?.renderForTab();
+          if (get("currentTab") === "diario") {
+            diary.renderForTab();
+            if (currentDiarySubTab === "resumen") reports?.renderForTab();
+          }
           return;
         }
         const local = getDiaryEntries();
@@ -31312,8 +31352,10 @@ ${suffix}`;
         setDiaryEntries(merged);
         setDiaryCloudUserId(session.user.id);
         await syncEntriesToCloud(merged);
-        if (get("currentTab") === "diario") diary.renderForTab();
-        if (get("currentTab") === "reportes") reports?.renderForTab();
+        if (get("currentTab") === "diario") {
+          diary.renderForTab();
+          if (currentDiarySubTab === "resumen") reports?.renderForTab();
+        }
       } catch (error) {
         console.error("Cloud diary sync failed", error);
       } finally {
