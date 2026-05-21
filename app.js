@@ -16,7 +16,7 @@ import { get, set } from "./js/store.js";
 import { getDiaryEntries, setDiaryEntries, getDiaryCloudUserId, setDiaryCloudUserId } from "./js/persistence.js";
 import { BUILD_VERSION } from "./js/version.js";
 import { initAnalytics, capture } from "./js/analytics.js";
-import { getSession, onAuthStateChange, signInWithMagicLink, signOut } from "./js/auth.js";
+import { completeMagicLinkSignIn, getSession, onAuthStateChange, signInWithMagicLink, signOut } from "./js/auth.js";
 import { syncEntriesToCloud, fetchEntriesFromCloud, mergeEntries, syncOnCreate as cloudSyncOnCreate, syncOnDelete as cloudSyncOnDelete } from "./js/cloudSync.js";
 import { flushQueue } from "./js/offlineQueue.js";
 
@@ -103,8 +103,14 @@ function initTabNav() {
     }
 }
 
-function bootstrap() {
+async function bootstrap() {
     migrateStorageSchema();
+
+    try {
+        await completeMagicLinkSignIn();
+    } catch (error) {
+        console.warn("Magic link completion failed", error);
+    }
 
     set("currentLang", i18n.detectInitialLanguage());
     i18n.applyStaticTranslations();
@@ -213,4 +219,4 @@ function bootstrap() {
     capture("app_loaded", { lang: get("currentLang") });
 }
 
-bootstrap();
+void bootstrap();

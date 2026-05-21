@@ -2644,7 +2644,7 @@
     ] });
   }
   function createQuiz({ emociones: emociones2, getDisplayName, t: t4 }) {
-    let history = [];
+    let history2 = [];
     let currentStepKey = "q1";
     let showingResult = false;
     let resultEmotions = [];
@@ -2659,7 +2659,7 @@
       t: t4,
       onDismiss: dismiss,
       onSwitchToQuiz: () => {
-        history = [];
+        history2 = [];
         currentStepKey = "q1";
         showingResult = false;
         resultEmotions = [];
@@ -2681,7 +2681,7 @@
                 emotions: resultEmotions,
                 getDisplayName,
                 onRestart: () => {
-                  history = [];
+                  history2 = [];
                   currentStepKey = "q1";
                   showingResult = false;
                   resultEmotions = [];
@@ -2706,10 +2706,10 @@
                   /** @type {Record<string, QuizStepData>} */
                   QUIZ_STEPS[currentStepKey]
                 ),
-                historyLen: history.length,
+                historyLen: history2.length,
                 onPickOption: pickOption,
                 onBack: () => {
-                  currentStepKey = history.pop() ?? "q1";
+                  currentStepKey = history2.pop() ?? "q1";
                   rerender();
                 },
                 onSwitchToBody: () => bodyMap.render()
@@ -2726,13 +2726,13 @@
         option.result.map((nombre) => emociones2.find((e4) => e4.nombre === nombre)).filter(Boolean);
         showingResult = true;
       } else {
-        history.push(currentStepKey);
+        history2.push(currentStepKey);
         currentStepKey = option.next;
       }
       rerender();
     }
     const open = () => {
-      history = [];
+      history2 = [];
       currentStepKey = "q1";
       showingResult = false;
       resultEmotions = [];
@@ -4463,8 +4463,13 @@
       e4.preventDefault();
       if (!inputEmail || !captchaReady) return;
       setStatus("sending");
-      const { error } = await onSignIn(inputEmail, captchaToken || void 0);
-      setStatus(error ? "error" : "sent");
+      try {
+        const { error } = await onSignIn(inputEmail, captchaToken || void 0);
+        setStatus(error ? "error" : "sent");
+      } catch (error) {
+        console.warn("Magic link request failed", error);
+        setStatus("error");
+      }
     }
     if (status === "sent") {
       return k(
@@ -4569,7 +4574,8 @@
       renderAuthSection(null);
       getSession2().then((session) => {
         if (session) renderAuthSection(session);
-      }).catch(() => {
+      }).catch((error) => {
+        console.warn("Unable to restore auth session", error);
       });
       if (onAuthStateChange2) {
         onAuthStateChange2((_event, session) => renderAuthSection(session));
@@ -4766,7 +4772,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mpezn047";
+  var BUILD_VERSION = "mpf000vx";
 
   // node_modules/posthog-js/dist/module.js
   var t3 = "undefined" != typeof window ? window : void 0;
@@ -30926,6 +30932,21 @@ ${suffix}`;
     const { data } = await supabase.auth.getSession();
     return data?.session ?? null;
   }
+  async function completeMagicLinkSignIn() {
+    const supabase = getSupabaseClient();
+    if (!supabase) return null;
+    const url = new URL(location.href);
+    const authCode = url.searchParams.get("code");
+    if (!authCode) return null;
+    const { data, error } = await supabase.auth.exchangeCodeForSession(authCode);
+    if (error) throw error;
+    url.searchParams.delete("code");
+    url.searchParams.delete("type");
+    const cleanedSearch = url.searchParams.toString();
+    const cleanUrl = `${url.pathname}${cleanedSearch ? `?${cleanedSearch}` : ""}${url.hash}`;
+    history.replaceState({}, "", cleanUrl);
+    return data?.session ?? null;
+  }
   function onAuthStateChange(callback) {
     const supabase = getSupabaseClient();
     if (!supabase) return () => {
@@ -31068,8 +31089,13 @@ ${suffix}`;
       btn.addEventListener("click", () => switchTab(btn.dataset.tab));
     }
   }
-  function bootstrap() {
+  async function bootstrap() {
     migrateStorageSchema();
+    try {
+      await completeMagicLinkSignIn();
+    } catch (error) {
+      console.warn("Magic link completion failed", error);
+    }
     set("currentLang", i18n.detectInitialLanguage());
     i18n.applyStaticTranslations();
     const versionEl = document.getElementById("build-version");
@@ -31164,5 +31190,5 @@ ${suffix}`;
     capture("$pageview");
     capture("app_loaded", { lang: get("currentLang") });
   }
-  bootstrap();
+  void bootstrap();
 })();

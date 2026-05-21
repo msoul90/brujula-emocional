@@ -149,8 +149,13 @@ function AuthSection({ email, t, onSignIn, onSignOut }) {
         e.preventDefault();
         if (!inputEmail || !captchaReady) return;
         setStatus("sending");
-        const { error } = await onSignIn(inputEmail, captchaToken || undefined);
-        setStatus(error ? "error" : "sent");
+        try {
+            const { error } = await onSignIn(inputEmail, captchaToken || undefined);
+            setStatus(error ? "error" : "sent");
+        } catch (error) {
+            console.warn("Magic link request failed", error);
+            setStatus("error");
+        }
     }
 
     if (status === "sent") {
@@ -253,7 +258,11 @@ export function initSettings({ setLanguage, getLang, getSession, onAuthStateChan
             render(h(AuthSection, { email, t, onSignIn: signIn, onSignOut: handleSignOut }), authContainer);
         }
         renderAuthSection(null);
-        getSession().then(session => { if (session) renderAuthSection(session); }).catch(() => {});
+        getSession()
+            .then(session => { if (session) renderAuthSection(session); })
+            .catch((error) => {
+                console.warn("Unable to restore auth session", error);
+            });
         if (onAuthStateChange) {
             onAuthStateChange((_event, session) => renderAuthSection(session));
         }

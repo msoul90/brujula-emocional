@@ -26,6 +26,26 @@ export async function getSession() {
   return data?.session ?? null;
 }
 
+export async function completeMagicLinkSignIn() {
+  const supabase = getSupabaseClient();
+  if (!supabase) return null;
+
+  const url = new URL(location.href);
+  const authCode = url.searchParams.get("code");
+  if (!authCode) return null;
+
+  const { data, error } = await supabase.auth.exchangeCodeForSession(authCode);
+  if (error) throw error;
+
+  url.searchParams.delete("code");
+  url.searchParams.delete("type");
+  const cleanedSearch = url.searchParams.toString();
+  const cleanUrl = `${url.pathname}${cleanedSearch ? `?${cleanedSearch}` : ""}${url.hash}`;
+  history.replaceState({}, "", cleanUrl);
+
+  return data?.session ?? null;
+}
+
 export function onAuthStateChange(callback) {
   const supabase = getSupabaseClient();
   if (!supabase) return () => {};
