@@ -195,6 +195,8 @@ export const en = {
         cloudBackupOff: "Data saved only on this device",
         sending:        "Sending…",
         sendError:      "Could not send. Please try again.",
+        signingOut:     "Signing out…",
+        signOutError:   "Could not sign out. Please try again.",
     },
 
     // ── Reports ───────────────────────────────────────────────────────────────

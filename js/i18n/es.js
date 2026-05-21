@@ -195,6 +195,8 @@ export const es = {
         cloudBackupOff: "Datos guardados solo en este dispositivo",
         sending:        "Enviando…",
         sendError:      "No se pudo enviar. Intenta de nuevo.",
+        signingOut:     "Cerrando sesión…",
+        signOutError:   "No se pudo cerrar sesión. Intenta de nuevo.",
     },
 
     // ── Reports ───────────────────────────────────────────────────────────────

@@ -63,6 +63,8 @@ function AuthSection({ email, t, onSignIn, onSignOut }) {
     const [inputEmail, setInputEmail]     = useState("");
     const [captchaToken, setCaptchaToken] = useState("");
     const [status, setStatus]             = useState(/** @type {"idle"|"sending"|"sent"|"error"} */ ("idle"));
+    const [isSigningOut, setIsSigningOut] = useState(false);
+    const [signOutError, setSignOutError] = useState(false);
     const turnstileContainer              = useRef(/** @type {HTMLDivElement|null} */ (null));
 
     useEffect(() => {
@@ -108,6 +110,21 @@ function AuthSection({ email, t, onSignIn, onSignOut }) {
     }, [email]);
 
     if (email) {
+        async function handleSignOutClick() {
+            if (isSigningOut) return;
+            setSignOutError(false);
+            setIsSigningOut(true);
+            try {
+                await onSignOut();
+            } catch (error) {
+                console.warn("Sign out failed", error);
+                setSignOutError(true);
+                setIsSigningOut(false);
+            }
+        }
+
+        const signOutLabel = isSigningOut ? t("auth.signingOut") : t("auth.signOutButton");
+
         return h("div", { class: "min-w-[15rem]" },
             h("p", { class: "text-[10px] font-semibold text-slate-400 uppercase tracking-wide mb-2" }, t("auth.sectionTitle")),
             h("div", { class: "flex items-center gap-1.5 mb-1" },
@@ -117,9 +134,11 @@ function AuthSection({ email, t, onSignIn, onSignOut }) {
             h("p", { class: "text-[11px] text-slate-500 mb-3 truncate" }, email),
             h("button", {
                 type: "button",
-                onClick: onSignOut,
-                class: "auth-signout-btn w-full text-sm font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 py-2.5 rounded-xl transition-colors",
-            }, t("auth.signOutButton"))
+                onClick: handleSignOutClick,
+                disabled: isSigningOut,
+                class: "auth-signout-btn w-full text-sm font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 py-2.5 rounded-xl transition-colors disabled:opacity-60 disabled:cursor-not-allowed",
+            }, signOutLabel),
+            signOutError && h("p", { class: "text-xs text-rose-500 mt-1" }, t("auth.signOutError"))
         );
     }
 

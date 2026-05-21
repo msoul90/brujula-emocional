@@ -619,7 +619,9 @@
       cloudBackupOn: "Copia en la nube activada",
       cloudBackupOff: "Datos guardados solo en este dispositivo",
       sending: "Enviando\u2026",
-      sendError: "No se pudo enviar. Intenta de nuevo."
+      sendError: "No se pudo enviar. Intenta de nuevo.",
+      signingOut: "Cerrando sesi\xF3n\u2026",
+      signOutError: "No se pudo cerrar sesi\xF3n. Intenta de nuevo."
     },
     // ── Reports ───────────────────────────────────────────────────────────────
     reports: {
@@ -818,7 +820,9 @@
       cloudBackupOn: "Cloud backup enabled",
       cloudBackupOff: "Data saved only on this device",
       sending: "Sending\u2026",
-      sendError: "Could not send. Please try again."
+      sendError: "Could not send. Please try again.",
+      signingOut: "Signing out\u2026",
+      signOutError: "Could not sign out. Please try again."
     },
     // ── Reports ───────────────────────────────────────────────────────────────
     reports: {
@@ -4361,7 +4365,7 @@
   }
   var turnstileSiteKey = (
     /** @type {Record<string, unknown>} */
-    "0x4AAAAAADTVCQSMBDI_HafG"
+    ""
   );
   var TURNSTILE_SITE_KEY = typeof turnstileSiteKey === "string" ? turnstileSiteKey : "";
   function AuthSection({ email, t: t4, onSignIn, onSignOut }) {
@@ -4371,6 +4375,8 @@
       /** @type {"idle"|"sending"|"sent"|"error"} */
       "idle"
     );
+    const [isSigningOut, setIsSigningOut] = d2(false);
+    const [signOutError, setSignOutError] = d2(false);
     const turnstileContainer = A2(
       /** @type {HTMLDivElement|null} */
       null
@@ -4419,6 +4425,19 @@
       };
     }, [email]);
     if (email) {
+      async function handleSignOutClick() {
+        if (isSigningOut) return;
+        setSignOutError(false);
+        setIsSigningOut(true);
+        try {
+          await onSignOut();
+        } catch (error) {
+          console.warn("Sign out failed", error);
+          setSignOutError(true);
+          setIsSigningOut(false);
+        }
+      }
+      const signOutLabel = isSigningOut ? t4("auth.signingOut") : t4("auth.signOutButton");
       return k(
         "div",
         { class: "min-w-[15rem]" },
@@ -4432,9 +4451,11 @@
         k("p", { class: "text-[11px] text-slate-500 mb-3 truncate" }, email),
         k("button", {
           type: "button",
-          onClick: onSignOut,
-          class: "auth-signout-btn w-full text-sm font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 py-2.5 rounded-xl transition-colors"
-        }, t4("auth.signOutButton"))
+          onClick: handleSignOutClick,
+          disabled: isSigningOut,
+          class: "auth-signout-btn w-full text-sm font-medium text-slate-600 bg-slate-100 hover:bg-slate-200 py-2.5 rounded-xl transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
+        }, signOutLabel),
+        signOutError && k("p", { class: "text-xs text-rose-500 mt-1" }, t4("auth.signOutError"))
       );
     }
     const captchaReady = !TURNSTILE_SITE_KEY || captchaToken;
@@ -4745,7 +4766,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mpeyytt3";
+  var BUILD_VERSION = "mpezn047";
 
   // node_modules/posthog-js/dist/module.js
   var t3 = "undefined" != typeof window ? window : void 0;
@@ -10061,9 +10082,9 @@
   })(), Ua);
 
   // js/analytics.js
-  var apiKey = "true";
+  var apiKey = "phc_D44Jy6qHZTek7u4xBeasusCsbzbpc7kVLxAEbnxUDVQQ";
   var host = "https://us.i.posthog.com";
-  var isEnabled = false;
+  var isEnabled = true;
   var isInitialized = false;
   function getCspContent() {
     const cspMeta = document.querySelector('meta[http-equiv="Content-Security-Policy"]');
@@ -30867,8 +30888,8 @@ ${suffix}`;
   // js/supabase.js
   var client = null;
   function getSupabaseClient() {
-    const url = "https://hhphxxsnvflsuyypazbs.supabase.co";
-    const key = "sb_publishable_yhUBofb-kpChOY23Nll4Dg_9yjAhekL";
+    const url = "";
+    const key = "";
     if (!url || !key) return null;
     if (!client) {
       client = createClient(url, key, {
