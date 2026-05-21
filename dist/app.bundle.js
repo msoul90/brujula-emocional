@@ -4744,7 +4744,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mpeyw4ls";
+  var BUILD_VERSION = "mpeywstk";
 
   // node_modules/posthog-js/dist/module.js
   var t3 = "undefined" != typeof window ? window : void 0;
