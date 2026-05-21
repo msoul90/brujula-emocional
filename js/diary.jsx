@@ -7,6 +7,7 @@ import { useState } from "preact/hooks";
 /** @typedef {import('./data/emotions.js').Emotion} Emotion */
 import { DIARY_TAGS } from "./constants.js";
 import { getDiaryEntries, setDiaryEntries } from "./persistence.js";
+import { enqueueCreate, enqueueDelete } from "./offlineQueue.js";
 import { normalizeText } from "./utils.js";
 import { on, emit } from "./bus.js";
 import { get } from "./store.js";
@@ -351,10 +352,14 @@ export function createDiary({ t, getDisplayName, emociones, getSession = null, c
         if (!getSession || !cloudSync) return;
         const session = await getSession();
         if (!session) return;
+        if (!navigator.onLine) {
+            enqueueCreate(entry);
+            return;
+        }
         try {
             await cloudSync.syncOnCreate(entry);
-        } catch (error) {
-            console.error("Cloud sync create failed", error);
+        } catch {
+            enqueueCreate(entry);
         }
     }
 
@@ -363,10 +368,14 @@ export function createDiary({ t, getDisplayName, emociones, getSession = null, c
         if (!getSession || !cloudSync) return;
         const session = await getSession();
         if (!session) return;
+        if (!navigator.onLine) {
+            enqueueDelete(id);
+            return;
+        }
         try {
             await cloudSync.syncOnDelete(id);
-        } catch (error) {
-            console.error("Cloud sync delete failed", error);
+        } catch {
+            enqueueDelete(id);
         }
     }
 

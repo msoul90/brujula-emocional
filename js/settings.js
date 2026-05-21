@@ -217,7 +217,11 @@ export function initSettings({ setLanguage, getLang, getSession, onAuthStateChan
     if (authContainer && getSession) {
         function renderAuthSection(/** @type {import("@supabase/supabase-js").Session|null} */ session) {
             const email = session?.user?.email ?? null;
-            render(h(AuthSection, { email, t, onSignIn: signIn, onSignOut: signOut }), authContainer);
+            const handleSignOut = async () => {
+                await signOut();
+                renderAuthSection(null);
+            };
+            render(h(AuthSection, { email, t, onSignIn: signIn, onSignOut: handleSignOut }), authContainer);
         }
         getSession().then(renderAuthSection);
         if (onAuthStateChange) {

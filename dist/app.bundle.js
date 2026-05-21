@@ -838,6 +838,7 @@
   var THEME_KEY = "brujulaThema";
   var DIARY_KEY = "brujulaDiario";
   var DIARY_CLOUD_USER_KEY = "brujulaDiarioCloudUserId";
+  var OFFLINE_QUEUE_KEY = "brujulaOfflineQueue";
   var STORAGE_SCHEMA_KEY = "brujulaSchemaVersion";
   var STORAGE_SCHEMA_VERSION = 1;
   var RECENT_LIMIT = 5;
@@ -890,6 +891,17 @@
       return;
     }
     localStorage.removeItem(DIARY_CLOUD_USER_KEY);
+  }
+  function getOfflineQueue() {
+    try {
+      const parsed = JSON.parse(localStorage.getItem(OFFLINE_QUEUE_KEY) || "[]");
+      return Array.isArray(parsed) ? parsed : [];
+    } catch {
+      return [];
+    }
+  }
+  function setOfflineQueue(queue) {
+    localStorage.setItem(OFFLINE_QUEUE_KEY, JSON.stringify(queue));
   }
 
   // js/i18n.js
@@ -2737,6 +2749,49 @@
     return { init, open };
   }
 
+  // js/offlineQueue.js
+  function enqueueCreate(entry) {
+    const q3 = getOfflineQueue();
+    q3.push(
+      /** @type {CreateOp} */
+      { type: "create", entry }
+    );
+    setOfflineQueue(q3);
+  }
+  function enqueueDelete(id) {
+    const q3 = getOfflineQueue();
+    const withoutCreate = q3.filter((op) => !(op.type === "create" && op.entry?.id === id));
+    if (withoutCreate.length < q3.length) {
+      setOfflineQueue(withoutCreate);
+      return;
+    }
+    const deduped = withoutCreate.filter((op) => !(op.type === "delete" && op.id === id));
+    deduped.push(
+      /** @type {DeleteOp} */
+      { type: "delete", id }
+    );
+    setOfflineQueue(deduped);
+  }
+  async function flushQueue(cloudSync, getSession2) {
+    const q3 = getOfflineQueue();
+    if (!q3.length) return;
+    const session = await getSession2();
+    if (!session) return;
+    const failed = [];
+    for (const op of q3) {
+      try {
+        if (op.type === "create") {
+          await cloudSync.syncOnCreate(op.entry);
+        } else if (op.type === "delete") {
+          await cloudSync.syncOnDelete(op.id);
+        }
+      } catch {
+        failed.push(op);
+      }
+    }
+    setOfflineQueue(failed);
+  }
+
   // js/diary.jsx
   function createDiaryEntry(emotionNombre, note = "", tags = []) {
     return {
@@ -3091,20 +3146,28 @@
       if (!getSession2 || !cloudSync) return;
       const session = await getSession2();
       if (!session) return;
+      if (!navigator.onLine) {
+        enqueueCreate(entry);
+        return;
+      }
       try {
         await cloudSync.syncOnCreate(entry);
-      } catch (error) {
-        console.error("Cloud sync create failed", error);
+      } catch {
+        enqueueCreate(entry);
       }
     }
     async function syncDelete(id) {
       if (!getSession2 || !cloudSync) return;
       const session = await getSession2();
       if (!session) return;
+      if (!navigator.onLine) {
+        enqueueDelete(id);
+        return;
+      }
       try {
         await cloudSync.syncOnDelete(id);
-      } catch (error) {
-        console.error("Cloud sync delete failed", error);
+      } catch {
+        enqueueDelete(id);
       }
     }
     on("diary:add", ({ nombre, note }) => {
@@ -4298,7 +4361,7 @@
   }
   var turnstileSiteKey = (
     /** @type {Record<string, unknown>} */
-    "0x4AAAAAADTVCQSMBDI_HafG"
+    ""
   );
   var TURNSTILE_SITE_KEY = typeof turnstileSiteKey === "string" ? turnstileSiteKey : "";
   function AuthSection({ email, t: t4, onSignIn, onSignOut }) {
@@ -4467,7 +4530,11 @@
     if (authContainer && getSession2) {
       let renderAuthSection = function(session) {
         const email = session?.user?.email ?? null;
-        R(k(AuthSection, { email, t: t4, onSignIn: signIn, onSignOut: signOut2 }), authContainer);
+        const handleSignOut = async () => {
+          await signOut2();
+          renderAuthSection(null);
+        };
+        R(k(AuthSection, { email, t: t4, onSignIn: signIn, onSignOut: handleSignOut }), authContainer);
       };
       getSession2().then(renderAuthSection);
       if (onAuthStateChange2) {
@@ -4665,7 +4732,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mpeppw9x";
+  var BUILD_VERSION = "mpetsnes";
 
   // node_modules/posthog-js/dist/module.js
   var t3 = "undefined" != typeof window ? window : void 0;
@@ -9981,8 +10048,8 @@
   })(), Ua);
 
   // js/analytics.js
-  var apiKey = "true";
-  var host = "https://us.i.posthog.com";
+  var apiKey = "";
+  var host = "";
   var isEnabled = false;
   var isInitialized = false;
   function getCspContent() {
@@ -30787,8 +30854,8 @@ ${suffix}`;
   // js/supabase.js
   var client = null;
   function getSupabaseClient() {
-    const url = "https://hhphxxsnvflsuyypazbs.supabase.co";
-    const key = "sb_publishable_yhUBofb-kpChOY23Nll4Dg_9yjAhekL";
+    const url = "";
+    const key = "";
     if (!url || !key) return null;
     if (!client) {
       client = createClient(url, key, {
@@ -30973,13 +31040,17 @@ ${suffix}`;
     i18n.applyStaticTranslations();
     const versionEl = document.getElementById("build-version");
     if (versionEl) versionEl.textContent = BUILD_VERSION;
+    async function handleSignOut() {
+      await signOut();
+      diary.setIsCloud(false);
+    }
     initSettings({
       setLanguage: i18n.setLanguage,
       getLang: () => get("currentLang"),
       getSession,
       onAuthStateChange,
       signIn: signInWithMagicLink,
-      signOut,
+      signOut: handleSignOut,
       t: i18n.t
     });
     initTabNav();
@@ -31001,10 +31072,12 @@ ${suffix}`;
       getDisplayName: i18n.getDisplayName,
       emociones
     });
+    const cloudSyncOpts = { syncOnCreate, syncOnDelete };
     async function syncDiaryForSession(session) {
       if (!session?.user?.id) return;
       try {
         diary.setIsCloud(true);
+        await flushQueue(cloudSyncOpts, getSession);
         const previousUserId = getDiaryCloudUserId();
         const remote = await fetchEntriesFromCloud();
         if (previousUserId && previousUserId !== session.user.id) {
@@ -31034,6 +31107,10 @@ ${suffix}`;
       } else if (event === "SIGNED_OUT") {
         diary.setIsCloud(false);
       }
+    });
+    globalThis.addEventListener("online", async () => {
+      const session = await getSession();
+      if (session) await flushQueue(cloudSyncOpts, getSession);
     });
     quiz = createQuiz({
       emociones,
