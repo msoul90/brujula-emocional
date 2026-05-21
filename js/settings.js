@@ -223,7 +223,8 @@ export function initSettings({ setLanguage, getLang, getSession, onAuthStateChan
             };
             render(h(AuthSection, { email, t, onSignIn: signIn, onSignOut: handleSignOut }), authContainer);
         }
-        getSession().then(renderAuthSection);
+        renderAuthSection(null);
+        getSession().then(session => { if (session) renderAuthSection(session); }).catch(() => {});
         if (onAuthStateChange) {
             onAuthStateChange((_event, session) => renderAuthSection(session));
         }
