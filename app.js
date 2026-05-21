@@ -18,6 +18,7 @@ import { BUILD_VERSION } from "./js/version.js";
 import { initAnalytics, capture } from "./js/analytics.js";
 import { getSession, onAuthStateChange, signInWithMagicLink, signOut } from "./js/auth.js";
 import { syncEntriesToCloud, fetchEntriesFromCloud, mergeEntries, syncOnCreate as cloudSyncOnCreate, syncOnDelete as cloudSyncOnDelete } from "./js/cloudSync.js";
+import { flushQueue } from "./js/offlineQueue.js";
 
 const reducedMotion = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
 const modalAnimationMs = reducedMotion ? 0 : 200;
@@ -111,13 +112,18 @@ function bootstrap() {
     const versionEl = document.getElementById("build-version");
     if (versionEl) versionEl.textContent = BUILD_VERSION;
 
+    async function handleSignOut() {
+        await signOut();
+        diary.setIsCloud(false);
+    }
+
     initSettings({
         setLanguage: i18n.setLanguage,
         getLang: () => get("currentLang"),
         getSession,
         onAuthStateChange,
         signIn: signInWithMagicLink,
-        signOut,
+        signOut: handleSignOut,
         t: i18n.t,
     });
     initTabNav();
@@ -140,10 +146,13 @@ function bootstrap() {
         emociones,
     });
 
+    const cloudSyncOpts = { syncOnCreate: cloudSyncOnCreate, syncOnDelete: cloudSyncOnDelete };
+
     async function syncDiaryForSession(session) {
         if (!session?.user?.id) return;
         try {
             diary.setIsCloud(true);
+            await flushQueue(cloudSyncOpts, getSession);
             const previousUserId = getDiaryCloudUserId();
             const remote = await fetchEntriesFromCloud();
             if (previousUserId && previousUserId !== session.user.id) {
@@ -175,6 +184,11 @@ function bootstrap() {
         } else if (event === "SIGNED_OUT") {
             diary.setIsCloud(false);
         }
+    });
+
+    globalThis.addEventListener("online", async () => {
+        const session = await getSession();
+        if (session) await flushQueue(cloudSyncOpts, getSession);
     });
 
     quiz = createQuiz({

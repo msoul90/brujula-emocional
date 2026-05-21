@@ -1,5 +1,5 @@
 // @ts-check
-import { RECENT_KEY, LANGUAGE_KEY, THEME_KEY, DIARY_KEY, DIARY_CLOUD_USER_KEY } from "./constants.js";
+import { RECENT_KEY, LANGUAGE_KEY, THEME_KEY, DIARY_KEY, DIARY_CLOUD_USER_KEY, OFFLINE_QUEUE_KEY } from "./constants.js";
 
 /** @returns {string[]} */
 export function getRecentEmotions() {
@@ -59,4 +59,17 @@ export function setDiaryCloudUserId(userId) {
         return;
     }
     localStorage.removeItem(DIARY_CLOUD_USER_KEY);
+}
+
+/** @returns {any[]} */
+export function getOfflineQueue() {
+    try {
+        const parsed = JSON.parse(localStorage.getItem(OFFLINE_QUEUE_KEY) || "[]");
+        return Array.isArray(parsed) ? parsed : [];
+    } catch { return []; }
+}
+
+/** @param {any[]} queue */
+export function setOfflineQueue(queue) {
+    localStorage.setItem(OFFLINE_QUEUE_KEY, JSON.stringify(queue));
 }
