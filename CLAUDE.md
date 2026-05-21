@@ -4,89 +4,151 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Development
 
-**Instalar dependencias (primera vez):**
+**Install dependencies (first time):**
 
 ```bash
 npm install
 ```
 
-**Build completo** (bundle JS + CSS + bump SW version):
+**Full build** (bundle JS + CSS + bump SW version):
 
 ```bash
 npm run build
 ```
 
-El pre-commit hook ejecuta `npm run build` automáticamente en cada `git commit`.
+The pre-commit hook runs `npm run build` automatically on each `git commit`.
 
 **Run locally:**
 
 ```bash
-npm run dev   # alias de npx serve .
+npm run dev   # alias for npx serve .
 ```
 
-Or open `index.html` directly in a browser. Note: the service worker and PWA install prompt require `http://` or `https://` — they won't work on `file://`.
+The service worker and PWA install prompt require `http://` or `https://` — they won't work on `file://`.
 
 **Tests:**
 
 ```bash
-npm test            # ejecuta todos los tests una vez
-npm run test:watch  # modo watch durante desarrollo
+npm test              # run all tests once
+npm run test:watch    # watch mode
 ```
 
-Tests automatizados con **Vitest** en `tests/`. Manual test scenarios are documented in `README.md`.
+**Run a single test file:**
+
+```bash
+npx vitest run tests/diary.test.js
+```
+
+**Type check (JSDoc-based):**
+
+```bash
+npm run typecheck
+```
+
+Tests use **Vitest** + **jsdom** in `tests/`.
 
 ## Build system
 
-The project uses **esbuild** (devDependency) to bundle `app.js` and all its ES6 module imports into `dist/app.bundle.js`. The bundle is used in **all modes** (`file://` and `http://`) because modules use JSX and Preact bare specifiers that the browser cannot process natively.
+esbuild bundles `app.js` and all ES6 module imports into `dist/app.bundle.js` (IIFE format). The bundle is required in all modes because modules use JSX and Preact bare specifiers that browsers can't process natively.
 
 | Script | What it does |
 | --- | --- |
-| `npm run build:js` | Bundle `app.js` → `dist/app.bundle.js` (esbuild IIFE) |
+| `npm run build:js` | Bundle `app.js` → `dist/app.bundle.js` |
 | `npm run build:css` | Compile Tailwind → `dist/tailwind.css` (minified) |
-| `npm run build:sw` | Auto-bump `CACHE_NAME` in `sw.js` (timestamp-based) |
+| `npm run build:sw` | Auto-bump `CACHE_NAME` in `sw.js` + regenerate `js/version.js` |
 | `npm run build` | Runs all three in sequence |
 
-`scripts/bump-sw-version.js` replaces `CACHE_NAME` with a timestamp tag — no need to bump it manually.
+`dist/app.bundle.js` is committed to the repo and must be rebuilt whenever `app.js` or any of its imports change. The pre-commit hook does this automatically.
 
-Content sources for Tailwind are declared in `tailwind.config.js`.
+## Environment variables
+
+Injected at build time by esbuild (see `scripts/build-js.js`). Copy `.env` and fill in values:
+
+| Variable | Purpose |
+| --- | --- |
+| `SUPABASE_URL` | Supabase project URL (optional — cloud sync disabled if absent) |
+| `SUPABASE_ANON_KEY` | Supabase anon key |
+| `POSTHOG_API_KEY` | PostHog analytics key |
+| `POSTHOG_HOST` | PostHog host |
+| `POSTHOG_ENABLED` | Set to `"true"` to enable analytics |
+| `TURNSTILE_SITE_KEY` | Cloudflare Turnstile CAPTCHA key (used in auth flow) |
+
+All features that depend on these variables degrade gracefully when the variable is absent.
 
 ## Architecture
 
-The app is a **Preact + JSX** PWA bundled with **esbuild**. Tailwind CSS is served from `dist/tailwind.css` (pre-generated static file). Icons are inline SVGs — no icon library dependency.
+**Preact + JSX** PWA bundled with esbuild. Tailwind CSS pre-generated to `dist/tailwind.css`. Fully offline-capable via service worker; diary entries sync to Supabase when the user is authenticated.
 
-**Module roles:**
+**App tabs:** `emociones` | `checkin` | `diario` | `mapa` | `reportes`
+
+### Core infrastructure
 
 | File | Role |
 | --- | --- |
-| `js/constants.js` | Emotion data, translations, localStorage key names, config constants |
-| `js/persistence.js` | Thin wrapper over localStorage — all reads/writes go through typed helpers |
-| `js/store.js` | In-memory state for 4 transient values (currentLang, currentTab, lastFocusedCard, isClosingModal); emits `store:<key>` on the bus on change |
+| `app.js` | Entry point — bootstraps all modules, owns `searchQuery`, wires bus events |
+| `loader.js` | Always loads `dist/app.bundle.js`; shows a warning banner on `file://` |
+| `sw.js` | Service worker — cache-first strategy for offline support |
+| `js/version.js` | Auto-generated build version constant (do not edit manually) |
 | `js/bus.js` | Minimal pub/sub event bus for decoupled inter-module communication |
-| `js/i18n.js` | Language detection, `t()` helper, applies translations to the DOM |
-| `js/ui.jsx` | Renders emotion cards, modal, and check-in tab; handles search and all keyboard/click events |
-| `js/diary.jsx` | Emotional diary — CRUD in localStorage, Preact render |
-| `js/quiz.jsx` | 3-question identification quiz |
+| `js/store.js` | In-memory transient state (currentLang, currentTab, lastFocusedCard, isClosingModal); emits `store:<key>` on bus |
+| `js/persistence.js` | Thin wrapper over localStorage — all reads/writes go through typed helpers |
+| `js/storageSchema.js` | One-time schema migrations; may access localStorage directly |
+| `js/constants.js` | Storage key names, config constants, app tab list; re-exports from data/i18n modules |
+| `js/utils.js` | Shared pure utilities: `escapeHtml`, `normalizeText`, `isDarkMode`, `getReadableTextColor`, `wrapTextLines` |
+| `js/types.js` | JSDoc `@typedef` re-exports (`TFn`, `GetDisplayNameFn`, `ShowDetailFn`) |
+
+### UI modules
+
+| File | Role |
+| --- | --- |
+| `js/ui.jsx` | Renders emotion cards, modal, and check-in tab; handles search and keyboard/click events |
+| `js/uiHelpers.js` | Pure UI helpers: `filterEmotions`, `shortRecentLabel` |
+| `js/diary.jsx` | Emotional diary — CRUD in localStorage + cloud sync, Preact render |
+| `js/quiz.jsx` | 3-question emotion identification quiz |
 | `js/crisis.jsx` | 3-step crisis support flow |
-| `js/emotionMap.jsx` | Emotion relationship map — force-layout graph + quadrant view |
+| `js/emotionMap.jsx` | Emotion relationship map — orchestrates view + logic |
+| `js/emotionMap.logic.js` | Force-layout graph algorithm (pure, no DOM) |
+| `js/emotionMap.view.jsx` | Emotion map Preact view component |
+| `js/bodyMap.jsx` | Body map — select body zones to find matching emotions |
+| `js/reports.jsx` | Diary statistics and charts (emotion frequency, tag breakdown) |
 | `js/settings.js` | Theme and language settings panel |
 | `js/emotionCanvas.js` | Generates share PNG via Canvas 2D API |
-| `loader.js` | Always loads `dist/app.bundle.js`; shows a warning banner on `file://` |
-| `app.js` | Entry point — bootstraps all modules, owns `searchQuery`, wires events |
-| `sw.js` | Service worker — cache-first strategy for offline support |
+| `js/install.js` | PWA install prompt handling |
+| `js/offlineBanner.js` | Offline/online banner |
+| `js/serviceWorker.js` | Service worker registration |
+| `js/i18n.js` | Language detection, `t()` helper, applies translations to the DOM |
 
-**Data flow:** `constants.js` → `persistence.js` ← modules; `bus.js` decouples module-to-module events; `store.js` holds transient UI state; `app.js` bootstraps everything.
+### Backend / sync
 
-**`dist/app.bundle.js`** is the esbuild-generated bundle committed to the repo. It must be rebuilt (`npm run build:js`) whenever `app.js` or any of its imports change. The pre-commit hook does this automatically.
+| File | Role |
+| --- | --- |
+| `js/supabase.js` | Supabase client factory (singleton, returns `null` if not configured) |
+| `js/auth.js` | Magic-link sign-in, sign-out, session helpers, `onAuthStateChange` |
+| `js/cloudSync.js` | Sync diary entries to/from Supabase `diary_entries` table; `mergeEntries` (remote wins on conflict) |
+| `js/offlineQueue.js` | Persists pending cloud ops to localStorage; `flushQueue` replays them on reconnect |
+| `js/analytics.js` | PostHog analytics — CSP-aware; all calls are no-ops when disabled or unconfigured |
 
-## Emotion Data Structure
+### Data & i18n
 
-Each emotion object in the `emociones` array in `js/constants.js` has these fields:
+| File | Role |
+| --- | --- |
+| `js/data/emotions.js` | Emotion array (`emociones`), type definitions (`Emotion`, `EmotionRelation`, `MoodCategory`), `EMOTION_NAME_TRANSLATIONS`, `EMOTION_CONTENT_TRANSLATIONS`, `EMOTION_RELATIONS`, `MOOD_CATEGORIES` |
+| `js/data/techniques.js` | Regulation techniques (`REGULATION_TECHNIQUES`) |
+| `js/data/bodyMap.data.js` | Body zone definitions (`BODY_ZONES`, `SIMPLE_ZONE_GROUPS`, `BODY_ZONE_EMOTIONS`) |
+| `js/i18n/es.js` | Spanish UI string translations |
+| `js/i18n/en.js` | English UI string translations |
+
+**Data flow:** `js/data/*` → `constants.js` (re-exports) → modules; `bus.js` decouples module-to-module events; `store.js` holds transient UI state.
+
+## Emotion data structure
+
+Each emotion object in `js/data/emotions.js` (`emociones` array):
 
 | Field | Description |
 | --- | --- |
-| `nombre` | Emotion name in Spanish |
+| `nombre` | Emotion name in Spanish (used as the canonical ID) |
 | `color` | Background hex color for the card |
-| `text` | Text hex color (dark, for contrast on the card) |
+| `text` | Text hex color (for contrast on the card) |
 | `siente` | Physical sensations |
 | `dispara` | Triggers |
 | `funcion` | Biological/psychological function |
@@ -94,21 +156,30 @@ Each emotion object in the `emociones` array in `js/constants.js` has these fiel
 | `impulso` | Unhelpful impulse to avoid |
 | `respuesta` | Suggested healthy response |
 
-English translations for all fields live in `EMOTION_NAME_TRANSLATIONS` and `EMOTION_CONTENT_TRANSLATIONS` in the same file.
-
-## Service Worker versioning
-
-`sw.js` uses a single cache. `CACHE_NAME` is auto-bumped by `npm run build:sw` (called from `npm run build` and the pre-commit hook) — no manual editing required.
-
-## Styling
-
-Custom styles are in `styles.css` (card transitions, focus rings, scrollbar hiding, `<dialog>` positioning, reduced-motion). All layout and spacing uses Tailwind utility classes directly in the HTML, compiled into `dist/tailwind.css`.
+English translations live in `EMOTION_NAME_TRANSLATIONS` and `EMOTION_CONTENT_TRANSLATIONS` in the same file.
 
 ## Persistence
 
-Normal app reads/writes should go through `js/persistence.js`; `js/storageSchema.js` may access localStorage directly for one-time schema migrations. Keys are defined as constants in `js/constants.js`:
+All reads/writes go through `js/persistence.js`. Keys are defined as constants in `js/constants.js`:
 
-- `RECENT_KEY` — stores the 5 most recently viewed emotion names
-- `LANGUAGE_KEY` — stores the user's language preference (`"es"` or `"en"`)
-- `THEME_KEY` — stores the user's theme preference (`"light"`, `"dark"`, or `"auto"`)
-- `DIARY_KEY` — stores diary entries as a JSON array
+| Key constant | What it stores |
+| --- | --- |
+| `RECENT_KEY` | Last 5 viewed emotion names |
+| `LANGUAGE_KEY` | Language preference (`"es"` or `"en"`) |
+| `THEME_KEY` | Theme preference (`"light"`, `"dark"`, or `"auto"`) |
+| `DIARY_KEY` | Diary entries as a JSON array |
+| `DIARY_CLOUD_USER_KEY` | User ID for last cloud sync (detect account switches) |
+| `OFFLINE_QUEUE_KEY` | Pending cloud sync ops (create/delete) |
+| `STORAGE_SCHEMA_KEY` | Schema migration version number |
+
+## Cloud sync
+
+Diary entries are synced to Supabase when the user is signed in. The schema lives in `scripts/supabase-schema.sql` — apply it once in the Supabase SQL editor. Authentication uses magic links (OTP). Row-Level Security policies enforce per-user data isolation.
+
+## Styling
+
+Custom styles in `styles.css` (card transitions, focus rings, scrollbar hiding, `<dialog>` positioning, reduced-motion). All layout/spacing uses Tailwind utilities compiled into `dist/tailwind.css`. Tailwind content sources declared in `tailwind.config.js`.
+
+## Service worker versioning
+
+`CACHE_NAME` in `sw.js` is auto-bumped by `npm run build:sw` (timestamp-based). Never edit it manually.

@@ -28,6 +28,18 @@
 - `js/store.js`: central app state (`currentLang`, `currentTab`, etc.).
 - `js/bus.js`: event bus for cross-module communication.
 
+## Auth / Magic Link Notes
+- Auth flow is Supabase PKCE-based and must run in browser context (`http://`/`https://`).
+- `js/auth.js` is the source of truth for auth operations (`signInWithMagicLink`, `completeMagicLinkSignIn`, `getSession`, `onAuthStateChange`, `signOut`).
+- `app.js` calls `completeMagicLinkSignIn()` during bootstrap; do not remove this unless you replace it with an equivalent code-exchange step.
+- `js/settings.js` owns auth UI states (send link, signing out, errors) and should handle rejected promises gracefully.
+- Turnstile script is loaded in `loader.js` with origin validation; auth UI in `js/settings.js` expects `globalThis.__onTurnstileLoad` callback behavior.
+- Turnstile site key is injected at build time and read from `globalThis.__TURNSTILE_SITE_KEY__` (not from runtime `process.env` in browser modules).
+
+## Build-Time Environment
+- `scripts/build-js.js` injects env vars for browser code (`SUPABASE_URL`, `SUPABASE_ANON_KEY`, `POSTHOG_*`, `TURNSTILE_SITE_KEY`).
+- For auth/captcha changes, verify both `scripts/build-js.js` and the consuming module (`js/auth.js` / `js/settings.js`).
+
 ## Domain Conventions
 - Emotion identifiers (`nombre`) are Spanish and act as canonical IDs.
 - If adding an emotion, update:
@@ -49,6 +61,7 @@
 	- diary persistence and rendering.
 	- quiz flow outcomes.
 	- modal and share button behavior.
+	- auth UI state transitions (send link errors/loading, sign-out loading/errors).
 
 ## Existing Docs (Link, Do Not Duplicate)
 - `README.md`: product rationale, emotional framework, catalog details.

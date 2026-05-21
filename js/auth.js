@@ -1,5 +1,21 @@
 import { getSupabaseClient } from "./supabase.js";
 
+const AUTH_REQUEST_TIMEOUT_MS = 10000;
+
+/** @template T @param {Promise<T>} promise @param {number} timeoutMs @param {string} label */
+function withTimeout(promise, timeoutMs, label) {
+  let timeoutId;
+  const timeoutPromise = new Promise((_, reject) => {
+    timeoutId = globalThis.setTimeout(() => {
+      reject(new Error(`${label} timed out`));
+    }, timeoutMs);
+  });
+
+  return Promise.race([promise, timeoutPromise]).finally(() => {
+    if (timeoutId !== undefined) globalThis.clearTimeout(timeoutId);
+  });
+}
+
 /** @param {string} email @param {string} [captchaToken] */
 export async function signInWithMagicLink(email, captchaToken) {
   const supabase = getSupabaseClient();
@@ -16,7 +32,12 @@ export async function signInWithMagicLink(email, captchaToken) {
 export async function signOut() {
   const supabase = getSupabaseClient();
   if (!supabase) return;
-  return supabase.auth.signOut({ scope: "local" });
+
+  const request = supabase.auth.signOut({ scope: "local" }).then(({ error }) => {
+    if (error) throw error;
+  });
+
+  await withTimeout(request, AUTH_REQUEST_TIMEOUT_MS, "Sign out");
 }
 
 export async function getSession() {
