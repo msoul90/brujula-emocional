@@ -1,0 +1,5 @@
+# Use the ours-built merge driver to automatically resolve conflicts in built files
+# by keeping the version from the current branch.
+sw.js merge=ours-built
+js/version.js merge=ours-built
+dist/** merge=ours-built
