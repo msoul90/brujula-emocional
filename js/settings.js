@@ -96,7 +96,12 @@ function AuthSection({ email, t, onSignIn, onSignOut }) {
         return () => {
             active = false;
             if (widgetId !== undefined) {
-                try { win.turnstile?.remove(widgetId); } catch (_) {}
+                try {
+                    win.turnstile?.remove(widgetId);
+                } catch (error) {
+                    // Avoid breaking unmount if Turnstile widget is already gone.
+                    console.warn("Turnstile cleanup failed", error);
+                }
                 widgetId = undefined;
             }
         };

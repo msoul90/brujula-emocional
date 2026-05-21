@@ -4411,7 +4411,8 @@
         if (widgetId !== void 0) {
           try {
             win.turnstile?.remove(widgetId);
-          } catch (_3) {
+          } catch (error) {
+            console.warn("Turnstile cleanup failed", error);
           }
           widgetId = void 0;
         }
@@ -4744,7 +4745,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mpeywstk";
+  var BUILD_VERSION = "mpeyy9aj";
 
   // node_modules/posthog-js/dist/module.js
   var t3 = "undefined" != typeof window ? window : void 0;
