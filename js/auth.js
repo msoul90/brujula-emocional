@@ -51,16 +51,33 @@ export async function signOut() {
   const supabase = getSupabaseClient();
   if (!supabase) return;
 
-  const request = supabase.auth.signOut({ scope: "local" });
-  const result = await withTimeout(request, AUTH_REQUEST_TIMEOUT_MS);
+  try {
+    const request = supabase.auth.signOut({ scope: "local" });
+    const result = await withTimeout(request, AUTH_REQUEST_TIMEOUT_MS);
 
-  if (result === TIMEOUT_RESULT) {
-    console.warn("Sign out timed out. Falling back to local session cleanup.");
-    clearLocalSupabaseSession();
-    return;
+    if (result === TIMEOUT_RESULT) {
+      console.warn("Sign out timed out. Falling back to local session cleanup.");
+      if (typeof supabase.auth._removeSession === "function") {
+        await supabase.auth._removeSession();
+      } else {
+        clearLocalSupabaseSession();
+      }
+    } else if (result?.error) {
+      console.warn("Sign out API error. Falling back to local session cleanup.", result.error);
+      if (typeof supabase.auth._removeSession === "function") {
+        await supabase.auth._removeSession();
+      } else {
+        clearLocalSupabaseSession();
+      }
+    }
+  } catch (error) {
+    console.warn("Sign out exception. Falling back to local session cleanup.", error);
+    if (typeof supabase.auth._removeSession === "function") {
+      await supabase.auth._removeSession();
+    } else {
+      clearLocalSupabaseSession();
+    }
   }
-
-  if (result?.error) throw result.error;
 }
 
 export async function getSession() {

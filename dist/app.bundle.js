@@ -4397,7 +4397,7 @@
   }
   var turnstileSiteKey = (
     /** @type {Record<string, unknown>} */
-    "0x4AAAAAADTVCQSMBDI_HafG"
+    ""
   );
   var TURNSTILE_SITE_KEY = typeof turnstileSiteKey === "string" ? turnstileSiteKey : "";
   function AuthSection({ email, t: t4, onSignIn, onSignOut }) {
@@ -4804,7 +4804,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mpf1kwid";
+  var BUILD_VERSION = "mpfm9x3w";
 
   // node_modules/posthog-js/dist/module.js
   var t3 = "undefined" != typeof window ? window : void 0;
@@ -10120,9 +10120,9 @@
   })(), Ua);
 
   // js/analytics.js
-  var apiKey = "true";
+  var apiKey = "phc_D44Jy6qHZTek7u4xBeasusCsbzbpc7kVLxAEbnxUDVQQ";
   var host = "https://us.i.posthog.com";
-  var isEnabled = false;
+  var isEnabled = true;
   var isInitialized = false;
   function getCspContent() {
     const cspMeta = document.querySelector('meta[http-equiv="Content-Security-Policy"]');
@@ -30926,8 +30926,8 @@ ${suffix}`;
   // js/supabase.js
   var client = null;
   function getSupabaseClient() {
-    const url = "https://hhphxxsnvflsuyypazbs.supabase.co";
-    const key = "sb_publishable_yhUBofb-kpChOY23Nll4Dg_9yjAhekL";
+    const url = "";
+    const key = "";
     if (!url || !key) return null;
     if (!client) {
       client = createClient(url, key, {
@@ -30983,14 +30983,32 @@ ${suffix}`;
   async function signOut() {
     const supabase = getSupabaseClient();
     if (!supabase) return;
-    const request = supabase.auth.signOut({ scope: "local" });
-    const result = await withTimeout(request, AUTH_REQUEST_TIMEOUT_MS);
-    if (result === TIMEOUT_RESULT) {
-      console.warn("Sign out timed out. Falling back to local session cleanup.");
-      clearLocalSupabaseSession();
-      return;
+    try {
+      const request = supabase.auth.signOut({ scope: "local" });
+      const result = await withTimeout(request, AUTH_REQUEST_TIMEOUT_MS);
+      if (result === TIMEOUT_RESULT) {
+        console.warn("Sign out timed out. Falling back to local session cleanup.");
+        if (typeof supabase.auth._removeSession === "function") {
+          await supabase.auth._removeSession();
+        } else {
+          clearLocalSupabaseSession();
+        }
+      } else if (result?.error) {
+        console.warn("Sign out API error. Falling back to local session cleanup.", result.error);
+        if (typeof supabase.auth._removeSession === "function") {
+          await supabase.auth._removeSession();
+        } else {
+          clearLocalSupabaseSession();
+        }
+      }
+    } catch (error) {
+      console.warn("Sign out exception. Falling back to local session cleanup.", error);
+      if (typeof supabase.auth._removeSession === "function") {
+        await supabase.auth._removeSession();
+      } else {
+        clearLocalSupabaseSession();
+      }
     }
-    if (result?.error) throw result.error;
   }
   async function getSession() {
     const supabase = getSupabaseClient();
@@ -31176,9 +31194,17 @@ ${suffix}`;
     async function handleSignOut() {
       if (navigator.onLine) {
         try {
-          await flushQueue(cloudSyncOpts, getSession);
-          await syncEntriesToCloud(getDiaryEntries());
-        } catch {
+          await Promise.race([
+            (async () => {
+              await flushQueue(cloudSyncOpts, getSession);
+              await syncEntriesToCloud(getDiaryEntries());
+            })(),
+            new Promise(
+              (_3, reject) => setTimeout(() => reject(new Error("Cloud sync timed out")), 2500)
+            )
+          ]);
+        } catch (error) {
+          console.warn("Pre-signout cloud sync timed out or failed:", error);
         }
       }
       await signOut();

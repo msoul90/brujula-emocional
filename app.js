@@ -121,10 +121,19 @@ async function bootstrap() {
     async function handleSignOut() {
         if (navigator.onLine) {
             try {
-                await flushQueue(cloudSyncOpts, getSession);
-                await syncEntriesToCloud(getDiaryEntries());
-            } catch {
-                // best-effort — sign out regardless
+                // Limit pre-signout best-effort sync to a maximum of 2500ms
+                // so flakiness/poor connection on mobile doesn't block the sign-out flow.
+                await Promise.race([
+                    (async () => {
+                        await flushQueue(cloudSyncOpts, getSession);
+                        await syncEntriesToCloud(getDiaryEntries());
+                    })(),
+                    new Promise((_, reject) =>
+                        setTimeout(() => reject(new Error("Cloud sync timed out")), 2500)
+                    )
+                ]);
+            } catch (error) {
+                console.warn("Pre-signout cloud sync timed out or failed:", error);
             }
         }
         await signOut();
