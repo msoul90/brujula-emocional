@@ -2762,6 +2762,12 @@
     );
     setOfflineQueue(q3);
   }
+  function enqueueClear() {
+    setOfflineQueue([
+      /** @type {ClearOp} */
+      { type: "clear" }
+    ]);
+  }
   function enqueueDelete(id) {
     const q3 = getOfflineQueue();
     const withoutCreate = q3.filter((op) => !(op.type === "create" && op.entry?.id === id));
@@ -2788,6 +2794,8 @@
           await cloudSync.syncOnCreate(op.entry);
         } else if (op.type === "delete") {
           await cloudSync.syncOnDelete(op.id);
+        } else if (op.type === "clear") {
+          await cloudSync.syncOnClearAll?.();
         }
       } catch {
         failed.push(op);
@@ -3148,9 +3156,12 @@
     let isCloud = false;
     async function syncCreate(entry) {
       if (!getSession2 || !cloudSync) return;
-      const session = await getSession2();
-      if (!session) return;
       if (!navigator.onLine) {
+        enqueueCreate(entry);
+        return;
+      }
+      const session = await getSession2();
+      if (!session) {
         enqueueCreate(entry);
         return;
       }
@@ -3162,9 +3173,12 @@
     }
     async function syncDelete(id) {
       if (!getSession2 || !cloudSync) return;
-      const session = await getSession2();
-      if (!session) return;
       if (!navigator.onLine) {
+        enqueueDelete(id);
+        return;
+      }
+      const session = await getSession2();
+      if (!session) {
         enqueueDelete(id);
         return;
       }
@@ -3172,6 +3186,23 @@
         await cloudSync.syncOnDelete(id);
       } catch {
         enqueueDelete(id);
+      }
+    }
+    async function syncClearAll() {
+      if (!getSession2 || !cloudSync) return;
+      if (!navigator.onLine) {
+        enqueueClear();
+        return;
+      }
+      const session = await getSession2();
+      if (!session) {
+        enqueueClear();
+        return;
+      }
+      try {
+        await cloudSync.syncOnClearAll?.();
+      } catch {
+        enqueueClear();
       }
     }
     on("diary:add", ({ nombre, note }) => {
@@ -3216,6 +3247,7 @@
             onClearAll: () => {
               if (confirm(t4("diary.clearConfirm"))) {
                 saveEntries([]);
+                void syncClearAll();
                 rerender();
               }
             },
@@ -4772,7 +4804,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "mpf0tfa1";
+  var BUILD_VERSION = "mpf1e4sh";
 
   // node_modules/posthog-js/dist/module.js
   var t3 = "undefined" != typeof window ? window : void 0;
@@ -31046,6 +31078,13 @@ ${suffix}`;
     if (!session) return;
     await supabase.from("diary_entries").delete().eq("id", id).eq("user_id", session.user.id);
   }
+  async function deleteAllEntries() {
+    const supabase = getSupabaseClient();
+    if (!supabase) return;
+    const session = await getSession();
+    if (!session) return;
+    await supabase.from("diary_entries").delete().eq("user_id", session.user.id);
+  }
 
   // app.js
   var reducedMotion = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
@@ -31077,7 +31116,7 @@ ${suffix}`;
     getDisplayName: i18n.getDisplayName,
     emociones,
     getSession,
-    cloudSync: { syncOnCreate, syncOnDelete }
+    cloudSync: { syncOnCreate, syncOnDelete, syncOnClearAll: deleteAllEntries }
   });
   on("tab:switch", ({ tabId }) => {
     switchTab(tabId);
@@ -31135,7 +31174,17 @@ ${suffix}`;
     const versionEl = document.getElementById("build-version");
     if (versionEl) versionEl.textContent = BUILD_VERSION;
     async function handleSignOut() {
+      if (navigator.onLine) {
+        try {
+          await flushQueue(cloudSyncOpts, getSession);
+          await syncEntriesToCloud(getDiaryEntries());
+        } catch {
+        }
+      }
       await signOut();
+      setDiaryEntries([]);
+      setOfflineQueue([]);
+      setDiaryCloudUserId(null);
       diary.setIsCloud(false);
     }
     initSettings({
@@ -31166,7 +31215,7 @@ ${suffix}`;
       getDisplayName: i18n.getDisplayName,
       emociones
     });
-    const cloudSyncOpts = { syncOnCreate, syncOnDelete };
+    const cloudSyncOpts = { syncOnCreate, syncOnDelete, syncOnClearAll: deleteAllEntries };
     async function syncDiaryForSession(session) {
       if (!session?.user?.id) return;
       try {
@@ -31204,7 +31253,7 @@ ${suffix}`;
     });
     globalThis.addEventListener("online", async () => {
       const session = await getSession();
-      if (session) await flushQueue(cloudSyncOpts, getSession);
+      if (session) await syncDiaryForSession(session);
     });
     quiz = createQuiz({
       emociones,

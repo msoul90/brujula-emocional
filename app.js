@@ -13,11 +13,11 @@ import { initServiceWorker } from "./js/serviceWorker.js";
 import { migrateStorageSchema } from "./js/storageSchema.js";
 import { on } from "./js/bus.js";
 import { get, set } from "./js/store.js";
-import { getDiaryEntries, setDiaryEntries, getDiaryCloudUserId, setDiaryCloudUserId } from "./js/persistence.js";
+import { getDiaryEntries, setDiaryEntries, getDiaryCloudUserId, setDiaryCloudUserId, setOfflineQueue } from "./js/persistence.js";
 import { BUILD_VERSION } from "./js/version.js";
 import { initAnalytics, capture } from "./js/analytics.js";
 import { completeMagicLinkSignIn, getSession, onAuthStateChange, signInWithMagicLink, signOut } from "./js/auth.js";
-import { syncEntriesToCloud, fetchEntriesFromCloud, mergeEntries, syncOnCreate as cloudSyncOnCreate, syncOnDelete as cloudSyncOnDelete } from "./js/cloudSync.js";
+import { syncEntriesToCloud, fetchEntriesFromCloud, mergeEntries, syncOnCreate as cloudSyncOnCreate, syncOnDelete as cloudSyncOnDelete, deleteAllEntries } from "./js/cloudSync.js";
 import { flushQueue } from "./js/offlineQueue.js";
 
 const reducedMotion = globalThis.matchMedia?.("(prefers-reduced-motion: reduce)").matches ?? false;
@@ -52,7 +52,7 @@ diary = createDiary({
     getDisplayName: i18n.getDisplayName,
     emociones,
     getSession,
-    cloudSync: { syncOnCreate: cloudSyncOnCreate, syncOnDelete: cloudSyncOnDelete },
+    cloudSync: { syncOnCreate: cloudSyncOnCreate, syncOnDelete: cloudSyncOnDelete, syncOnClearAll: deleteAllEntries },
 });
 
 on("tab:switch", ({ tabId }) => {
@@ -119,7 +119,18 @@ async function bootstrap() {
     if (versionEl) versionEl.textContent = BUILD_VERSION;
 
     async function handleSignOut() {
+        if (navigator.onLine) {
+            try {
+                await flushQueue(cloudSyncOpts, getSession);
+                await syncEntriesToCloud(getDiaryEntries());
+            } catch {
+                // best-effort — sign out regardless
+            }
+        }
         await signOut();
+        setDiaryEntries([]);
+        setOfflineQueue([]);
+        setDiaryCloudUserId(null);
         diary.setIsCloud(false);
     }
 
@@ -152,7 +163,7 @@ async function bootstrap() {
         emociones,
     });
 
-    const cloudSyncOpts = { syncOnCreate: cloudSyncOnCreate, syncOnDelete: cloudSyncOnDelete };
+    const cloudSyncOpts = { syncOnCreate: cloudSyncOnCreate, syncOnDelete: cloudSyncOnDelete, syncOnClearAll: deleteAllEntries };
 
     async function syncDiaryForSession(session) {
         if (!session?.user?.id) return;
@@ -194,7 +205,7 @@ async function bootstrap() {
 
     globalThis.addEventListener("online", async () => {
         const session = await getSession();
-        if (session) await flushQueue(cloudSyncOpts, getSession);
+        if (session) await syncDiaryForSession(session);
     });
 
     quiz = createQuiz({

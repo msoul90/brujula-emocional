@@ -7,7 +7,7 @@ import { useState } from "preact/hooks";
 /** @typedef {import('./data/emotions.js').Emotion} Emotion */
 import { DIARY_TAGS } from "./constants.js";
 import { getDiaryEntries, setDiaryEntries } from "./persistence.js";
-import { enqueueCreate, enqueueDelete } from "./offlineQueue.js";
+import { enqueueCreate, enqueueDelete, enqueueClear } from "./offlineQueue.js";
 import { normalizeText } from "./utils.js";
 import { on, emit } from "./bus.js";
 import { get } from "./store.js";
@@ -340,7 +340,7 @@ function DiaryPanel({ t, getDisplayName, emociones, showForm, isCloud, onNewEntr
 // ── Factory ───────────────────────────────────────────────────────────────────
 
 /**
- * @param {{ t: TFn, getDisplayName: GetDisplayNameFn, emociones: Emotion[], getSession?: () => Promise<any>, cloudSync?: { syncOnCreate: (entry: DiaryEntry) => Promise<void>, syncOnDelete: (id: number) => Promise<void> } }} opts
+ * @param {{ t: TFn, getDisplayName: GetDisplayNameFn, emociones: Emotion[], getSession?: () => Promise<any>, cloudSync?: { syncOnCreate: (entry: DiaryEntry) => Promise<void>, syncOnDelete: (id: number) => Promise<void>, syncOnClearAll?: () => Promise<void> } }} opts
  * @returns {{ renderForTab: () => void, addEntry: (nombre: string, note?: string, tags?: string[]) => DiaryEntry, setIsCloud: (value: boolean) => void }}
  */
 export function createDiary({ t, getDisplayName, emociones, getSession = null, cloudSync = null }) {
@@ -350,9 +350,12 @@ export function createDiary({ t, getDisplayName, emociones, getSession = null, c
     /** @param {DiaryEntry} entry */
     async function syncCreate(entry) {
         if (!getSession || !cloudSync) return;
-        const session = await getSession();
-        if (!session) return;
         if (!navigator.onLine) {
+            enqueueCreate(entry);
+            return;
+        }
+        const session = await getSession();
+        if (!session) {
             enqueueCreate(entry);
             return;
         }
@@ -366,9 +369,12 @@ export function createDiary({ t, getDisplayName, emociones, getSession = null, c
     /** @param {number} id */
     async function syncDelete(id) {
         if (!getSession || !cloudSync) return;
-        const session = await getSession();
-        if (!session) return;
         if (!navigator.onLine) {
+            enqueueDelete(id);
+            return;
+        }
+        const session = await getSession();
+        if (!session) {
             enqueueDelete(id);
             return;
         }
@@ -376,6 +382,24 @@ export function createDiary({ t, getDisplayName, emociones, getSession = null, c
             await cloudSync.syncOnDelete(id);
         } catch {
             enqueueDelete(id);
+        }
+    }
+
+    async function syncClearAll() {
+        if (!getSession || !cloudSync) return;
+        if (!navigator.onLine) {
+            enqueueClear();
+            return;
+        }
+        const session = await getSession();
+        if (!session) {
+            enqueueClear();
+            return;
+        }
+        try {
+            await cloudSync.syncOnClearAll?.();
+        } catch {
+            enqueueClear();
         }
     }
 
@@ -411,6 +435,7 @@ export function createDiary({ t, getDisplayName, emociones, getSession = null, c
                 onClearAll={() => {
                     if (confirm(t("diary.clearConfirm"))) {
                         saveEntries([]);
+                        void syncClearAll();
                         rerender();
                     }
                 }}
