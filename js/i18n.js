@@ -60,6 +60,7 @@ export function createI18n({ getLang, setLang, onLanguageChanged }) {
             "app-title":             (el) => { el.textContent = t("title"); },
             "app-subtitle":          (el) => { el.textContent = t("subtitle"); },
             "search":                (el) => { el.placeholder = t("searchPlaceholder"); },
+            "search-label":          (el) => { el.textContent = t("searchLabel"); },
             "recent-title":          (el) => { el.textContent = t("recentTitle"); },
             "close-button":          (el) => { el.textContent = t("closeButton"); },
             "share-btn":             (el) => { el.setAttribute("aria-label", t("shareButton")); },

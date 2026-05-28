@@ -442,6 +442,7 @@
     langLabel: "Idioma",
     offlineBanner: "Sin conexi\xF3n \xB7 Usando datos guardados",
     searchPlaceholder: "\xBFQu\xE9 sientes hoy? (ej. Ansiedad, Placer...)",
+    searchLabel: "Buscar emoci\xF3n",
     recentTitle: "Vistas recientemente",
     closeButton: "Entendido",
     emotionTag: "Emoci\xF3n",
@@ -673,6 +674,7 @@
     langLabel: "Language",
     offlineBanner: "Offline \xB7 Using saved data",
     searchPlaceholder: "How are you feeling today? (e.g. Anxiety, Joy...)",
+    searchLabel: "Search emotion",
     recentTitle: "Recently viewed",
     closeButton: "Got it",
     emotionTag: "Emotion",
@@ -1025,6 +1027,9 @@
         },
         "search": (el) => {
           el.placeholder = t4("searchPlaceholder");
+        },
+        "search-label": (el) => {
+          el.textContent = t4("searchLabel");
         },
         "recent-title": (el) => {
           el.textContent = t4("recentTitle");
@@ -1945,6 +1950,55 @@
       ] })
     ] });
   }
+  function DiaryInlineForm({ t: t4, onSave, onCancel }) {
+    const [saved, setSaved] = d2(false);
+    function handleSave() {
+      const note = (
+        /** @type {HTMLTextAreaElement|null} */
+        document.getElementById("diary-inline-note")?.value ?? ""
+      );
+      setSaved(true);
+      onSave(note);
+    }
+    if (saved) {
+      return /* @__PURE__ */ u3("p", { class: "text-emerald-600 font-bold text-sm text-center py-2", children: [
+        "\u2713 ",
+        t4("diary.addedFeedback")
+      ] });
+    }
+    return /* @__PURE__ */ u3("div", { children: [
+      /* @__PURE__ */ u3("label", { for: "diary-inline-note", class: "text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2 block", children: t4("diary.noteLabel") }),
+      /* @__PURE__ */ u3(
+        "textarea",
+        {
+          id: "diary-inline-note",
+          rows: 2,
+          placeholder: t4("diary.notePlaceholder"),
+          class: "w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-700 resize-none focus:outline-none focus:ring-2 focus:ring-blue-200"
+        }
+      ),
+      /* @__PURE__ */ u3("div", { class: "flex gap-2 mt-2", children: [
+        /* @__PURE__ */ u3(
+          "button",
+          {
+            type: "button",
+            onClick: handleSave,
+            class: "flex-1 bg-slate-800 text-white py-2.5 rounded-xl font-bold text-sm hover:bg-slate-700 transition-colors",
+            children: t4("diary.saveButton")
+          }
+        ),
+        /* @__PURE__ */ u3(
+          "button",
+          {
+            type: "button",
+            onClick: onCancel,
+            class: "flex-1 bg-slate-100 text-slate-600 py-2.5 rounded-xl font-bold text-sm hover:bg-slate-200 transition-colors",
+            children: t4("diary.cancelButton")
+          }
+        )
+      ] })
+    ] });
+  }
   function createUI({
     emociones: emociones2,
     relaciones = [],
@@ -2086,32 +2140,36 @@
     function showDiaryForm(emotionNombre) {
       const existingForm = document.getElementById("diary-inline-form");
       if (existingForm) {
+        R(null, existingForm);
         existingForm.remove();
         return;
       }
       const form = document.createElement("div");
       form.id = "diary-inline-form";
       form.className = "mt-4 border-t border-slate-100 pt-4";
-      form.innerHTML = `
-            <label for="diary-note-input" class="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2 block">${t4("diary.noteLabel")}</label>
-            <textarea id="diary-note-input" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-700 resize-none focus:outline-none focus:ring-2 focus:ring-blue-200" rows="2" placeholder="${t4("diary.notePlaceholder")}"></textarea>
-            <div class="flex gap-2 mt-2">
-                <button id="diary-note-save" type="button" class="flex-1 bg-slate-800 text-white py-2.5 rounded-xl font-bold text-sm hover:bg-slate-700 transition-colors">${t4("diary.saveButton")}</button>
-                <button id="diary-note-cancel" type="button" class="flex-1 bg-slate-100 text-slate-600 py-2.5 rounded-xl font-bold text-sm hover:bg-slate-200 transition-colors">${t4("diary.cancelButton")}</button>
-            </div>
-        `;
       const panel = document.getElementById("modal-panel");
       if (!panel) return;
       panel.appendChild(form);
-      form.querySelector("#diary-note-input").focus();
+      function cleanup() {
+        R(null, form);
+        form.remove();
+      }
+      R(
+        /* @__PURE__ */ u3(
+          DiaryInlineForm,
+          {
+            t: t4,
+            onSave: (note) => {
+              emit("diary:add", { nombre: emotionNombre, note });
+              setTimeout(cleanup, 1800);
+            },
+            onCancel: cleanup
+          }
+        ),
+        form
+      );
+      document.getElementById("diary-inline-note")?.focus();
       panel.scrollTop = panel.scrollHeight;
-      form.querySelector("#diary-note-save").addEventListener("click", () => {
-        const note = form.querySelector("#diary-note-input").value;
-        emit("diary:add", { nombre: emotionNombre, note });
-        form.innerHTML = `<p class="text-emerald-600 font-bold text-sm text-center py-2">\u2713 ${t4("diary.addedFeedback")}</p>`;
-        setTimeout(() => form.remove(), 1800);
-      });
-      form.querySelector("#diary-note-cancel").addEventListener("click", () => form.remove());
     }
     function showDetail(e4) {
       document.getElementById("diary-inline-form")?.remove();
@@ -2137,7 +2195,7 @@
       if (!modal || !panel) return;
       if (!modal.open) modal.showModal();
       panel.scrollTop = 0;
-      document.body.style.overflow = "hidden";
+      document.body.classList.add("modal-open");
       requestAnimationFrame(() => {
         panel.classList.remove("translate-y-8", "sm:scale-95", "opacity-0");
       });
@@ -2185,7 +2243,7 @@
         modal.close();
         set("isClosingModal", false);
       }, modalAnimationMs2);
-      document.body.style.overflow = "auto";
+      document.body.classList.remove("modal-open");
       const lastFocusedCard = get("lastFocusedCard");
       if (lastFocusedCard) lastFocusedCard.focus();
     }
@@ -4320,7 +4378,7 @@
     const dow = jan4.getUTCDay() || 7;
     return new Date(jan4.getTime() + (week - 1) * 7 * 864e5 - (dow - 1) * 864e5);
   }
-  function last8Weeks(entries) {
+  function last8Weeks(entries, lang = "es") {
     const today = /* @__PURE__ */ new Date();
     const weeks = [];
     for (let i4 = 7; i4 >= 0; i4--) {
@@ -4328,7 +4386,7 @@
       d4.setUTCDate(today.getUTCDate() - i4 * 7);
       const key = isoWeekKey(d4.toISOString());
       const monday = isoWeekToMonday(key);
-      const label = `${monday.getUTCDate()} ${monday.toLocaleDateString("es", { month: "short" })}`;
+      const label = `${monday.getUTCDate()} ${monday.toLocaleDateString(lang, { month: "short" })}`;
       weeks.push({ key, label });
     }
     const counts = new Map(weeks.map((w4) => [w4.key, 0]));
@@ -4602,8 +4660,12 @@
       count: tagCounts.get(tag) ?? 0
     })).filter((item) => item.count > 0);
     const tagMax = Math.max(...tagItems.map((i4) => i4.count), 1);
+    const lang = (
+      /** @type {string} */
+      get("currentLang") || "es"
+    );
     const currentWeekKey = isoWeekKey((/* @__PURE__ */ new Date()).toISOString());
-    const weeks = last8Weeks(entries);
+    const weeks = last8Weeks(entries, lang);
     const weekItems = weeks.map((w4) => ({ label: w4.label, count: w4.count, key: w4.key }));
     const timeOfDay = countByTimeOfDay(filtered);
     return /* @__PURE__ */ u3("div", { children: [
@@ -4698,7 +4760,7 @@
   }
   var turnstileSiteKey = (
     /** @type {Record<string, unknown>} */
-    "0x4AAAAAADTVCQSMBDI_HafG"
+    ""
   );
   var TURNSTILE_SITE_KEY = typeof turnstileSiteKey === "string" ? turnstileSiteKey : "";
   function AuthSection({ email, t: t4, onSignIn, onSignOut }) {
@@ -5105,7 +5167,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "fc551f2c";
+  var BUILD_VERSION = "e6223b14";
 
   // node_modules/posthog-js/dist/module.js
   var t3 = "undefined" != typeof window ? window : void 0;
@@ -10421,9 +10483,9 @@
   })(), Ua);
 
   // js/analytics.js
-  var apiKey = "true";
+  var apiKey = "phc_D44Jy6qHZTek7u4xBeasusCsbzbpc7kVLxAEbnxUDVQQ";
   var host = "https://us.i.posthog.com";
-  var isEnabled = false;
+  var isEnabled = true;
   var isInitialized = false;
   function getCspContent() {
     const cspMeta = document.querySelector('meta[http-equiv="Content-Security-Policy"]');
@@ -31227,8 +31289,8 @@ ${suffix}`;
   // js/supabase.js
   var client = null;
   function getSupabaseClient() {
-    const url = "https://hhphxxsnvflsuyypazbs.supabase.co";
-    const key = "sb_publishable_yhUBofb-kpChOY23Nll4Dg_9yjAhekL";
+    const url = "";
+    const key = "";
     if (!url || !key) return null;
     if (!client) {
       client = createClient(url, key, {

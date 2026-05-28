@@ -3,6 +3,7 @@ import { render } from "preact";
 import { useState } from "preact/hooks";
 import { DIARY_TAGS } from "./constants.js";
 import { getDiaryEntries } from "./persistence.js";
+import { get } from "./store.js";
 
 /** @typedef {import('./types.js').TFn} TFn */
 /** @typedef {import('./types.js').GetDisplayNameFn} GetDisplayNameFn */
@@ -55,8 +56,8 @@ function isoWeekToMonday(weekKey) {
     return new Date(jan4.getTime() + (week - 1) * 7 * 86400000 - (dow - 1) * 86400000);
 }
 
-/** @param {DiaryEntry[]} entries @returns {{ key: string, count: number, label: string }[]} last 8 weeks */
-export function last8Weeks(entries) {
+/** @param {DiaryEntry[]} entries @param {string} [lang] @returns {{ key: string, count: number, label: string }[]} last 8 weeks */
+export function last8Weeks(entries, lang = "es") {
     const today = new Date();
     const weeks = [];
     for (let i = 7; i >= 0; i--) {
@@ -64,7 +65,7 @@ export function last8Weeks(entries) {
         d.setUTCDate(today.getUTCDate() - i * 7);
         const key    = isoWeekKey(d.toISOString());
         const monday = isoWeekToMonday(key);
-        const label  = `${monday.getUTCDate()} ${monday.toLocaleDateString("es", { month: "short" })}`;
+        const label  = `${monday.getUTCDate()} ${monday.toLocaleDateString(lang, { month: "short" })}`;
         weeks.push({ key, label });
     }
     const counts = new Map(weeks.map((w) => [w.key, 0]));
@@ -417,8 +418,9 @@ function ReportsPanel({ entries, t, getDisplayName, emociones, onGoToEntries }) 
     const tagMax = Math.max(...tagItems.map((i) => i.count), 1);
 
     // Weekly chart — always last 8 weeks, independent of period filter
+    const lang           = /** @type {string} */ (get("currentLang") || "es");
     const currentWeekKey = isoWeekKey(new Date().toISOString());
-    const weeks      = last8Weeks(entries);
+    const weeks          = last8Weeks(entries, lang);
     const weekItems  = weeks.map((w) => ({ label: w.label, count: w.count, key: w.key }));
 
     const timeOfDay = countByTimeOfDay(filtered);

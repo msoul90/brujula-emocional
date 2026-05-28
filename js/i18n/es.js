@@ -5,6 +5,7 @@ export const es = {
     langLabel: "Idioma",
     offlineBanner: "Sin conexión · Usando datos guardados",
     searchPlaceholder: "¿Qué sientes hoy? (ej. Ansiedad, Placer...)",
+    searchLabel: "Buscar emoción",
     recentTitle: "Vistas recientemente",
     closeButton: "Entendido",
     emotionTag: "Emoción",

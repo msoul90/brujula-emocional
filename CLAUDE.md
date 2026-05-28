@@ -58,7 +58,7 @@ esbuild bundles `app.js` and all ES6 module imports into `dist/app.bundle.js` (I
 | `npm run build:sw` | Auto-bump `CACHE_NAME` in `sw.js` + regenerate `js/version.js` |
 | `npm run build` | Runs all three in sequence |
 
-`dist/app.bundle.js` is committed to the repo and must be rebuilt whenever `app.js` or any of its imports change. The pre-commit hook does this automatically.
+`dist/app.bundle.js` and `dist/tailwind.css` are both committed to the repo and must be rebuilt whenever source files change. The pre-commit hook runs `npm run build` automatically on each commit.
 
 ## Environment variables
 
@@ -79,7 +79,9 @@ All features that depend on these variables degrade gracefully when the variable
 
 **Preact + JSX** PWA bundled with esbuild. Tailwind CSS pre-generated to `dist/tailwind.css`. Fully offline-capable via service worker; diary entries sync to Supabase when the user is authenticated.
 
-**App tabs:** `emociones` | `checkin` | `diario` | `mapa` | `reportes`
+**App tabs:** `emociones` | `checkin` | `diario` | `mapa`
+
+The `diario` tab has two subtabs: `entradas` (entry list, in `js/diary.jsx`) and `resumen` (charts/statistics, in `js/reports.jsx`). `reports.jsx` renders only when `currentDiarySubTab === "resumen"`.
 
 ### Core infrastructure
 
@@ -139,6 +141,30 @@ All features that depend on these variables degrade gracefully when the variable
 | `js/i18n/en.js` | English UI string translations |
 
 **Data flow:** `js/data/*` → `constants.js` (re-exports) → modules; `bus.js` decouples module-to-module events; `store.js` holds transient UI state.
+
+### Module patterns
+
+**Factory pattern:** UI modules export a `createXxx(deps)` function that receives injected dependencies (e.g., `t`, `emociones`, `getSession`) and returns an object of render methods called by `app.js`. Never instantiate UI modules directly.
+
+**Pure-first layout:** Each module keeps pure data functions (no DOM, no localStorage) at the top so they can be imported and tested in isolation. Preact render code and side effects follow below. Tests import these pure exports directly.
+
+**Key bus events** (see `js/bus.js` for the full list):
+
+| Event | Payload |
+| --- | --- |
+| `"tab:switch"` | `{ tabId: string }` |
+| `"quiz:open"` | `{}` |
+| `"diary:entry-added"` | `{ nombre: string, note: string }` |
+| `"lang:changed"` | `{}` |
+| `"store:<key>"` | `{ value, prev }` |
+
+### Testing conventions
+
+- `tests/*.test.js` — unit tests (Node environment, no DOM)
+- `tests/*.dom.test.js` — DOM tests; must have `// @vitest-environment jsdom` as the first line
+- Tests import pure functions directly from source; DOM tests use `jsdom` to render Preact components
+
+The `DIARY_TAGS` constant (`["trabajo", "pareja", "familia", "cuerpo", "dinero"]`) is the fixed allowed set — diary entries store a subset of these tags.
 
 ## Emotion data structure
 

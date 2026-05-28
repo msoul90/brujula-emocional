@@ -197,6 +197,42 @@ function ModalContent({ e, t, getDisplayName, getEmotionField, relaciones, emoci
     );
 }
 
+// ── Diary inline form (rendered inside the modal panel) ───────────────────────
+
+function DiaryInlineForm({ t, onSave, onCancel }) {
+    const [saved, setSaved] = useState(false);
+
+    function handleSave() {
+        const note = /** @type {HTMLTextAreaElement|null} */ (document.getElementById("diary-inline-note"))?.value ?? "";
+        setSaved(true);
+        onSave(note);
+    }
+
+    if (saved) {
+        return <p class="text-emerald-600 font-bold text-sm text-center py-2">✓ {t("diary.addedFeedback")}</p>;
+    }
+
+    return (
+        <div>
+            <label for="diary-inline-note" class="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2 block">
+                {t("diary.noteLabel")}
+            </label>
+            <textarea id="diary-inline-note" rows={2} placeholder={t("diary.notePlaceholder")}
+                class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-700 resize-none focus:outline-none focus:ring-2 focus:ring-blue-200" />
+            <div class="flex gap-2 mt-2">
+                <button type="button" onClick={handleSave}
+                    class="flex-1 bg-slate-800 text-white py-2.5 rounded-xl font-bold text-sm hover:bg-slate-700 transition-colors">
+                    {t("diary.saveButton")}
+                </button>
+                <button type="button" onClick={onCancel}
+                    class="flex-1 bg-slate-100 text-slate-600 py-2.5 rounded-xl font-bold text-sm hover:bg-slate-200 transition-colors">
+                    {t("diary.cancelButton")}
+                </button>
+            </div>
+        </div>
+    );
+}
+
 // ── Factory ───────────────────────────────────────────────────────────────────
 
 export function createUI({
@@ -338,32 +374,31 @@ export function createUI({
 
     function showDiaryForm(emotionNombre) {
         const existingForm = document.getElementById("diary-inline-form");
-        if (existingForm) { existingForm.remove(); return; }
+        if (existingForm) { render(null, existingForm); existingForm.remove(); return; }
 
         const form = document.createElement("div");
         form.id = "diary-inline-form";
         form.className = "mt-4 border-t border-slate-100 pt-4";
-        form.innerHTML = `
-            <label for="diary-note-input" class="text-[11px] font-black text-slate-500 uppercase tracking-widest mb-2 block">${t("diary.noteLabel")}</label>
-            <textarea id="diary-note-input" class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-700 resize-none focus:outline-none focus:ring-2 focus:ring-blue-200" rows="2" placeholder="${t("diary.notePlaceholder")}"></textarea>
-            <div class="flex gap-2 mt-2">
-                <button id="diary-note-save" type="button" class="flex-1 bg-slate-800 text-white py-2.5 rounded-xl font-bold text-sm hover:bg-slate-700 transition-colors">${t("diary.saveButton")}</button>
-                <button id="diary-note-cancel" type="button" class="flex-1 bg-slate-100 text-slate-600 py-2.5 rounded-xl font-bold text-sm hover:bg-slate-200 transition-colors">${t("diary.cancelButton")}</button>
-            </div>
-        `;
+
         const panel = document.getElementById("modal-panel");
         if (!panel) return;
         panel.appendChild(form);
-        form.querySelector("#diary-note-input").focus();
-        panel.scrollTop = panel.scrollHeight;
 
-        form.querySelector("#diary-note-save").addEventListener("click", () => {
-            const note = form.querySelector("#diary-note-input").value;
-            emit("diary:add", { nombre: emotionNombre, note });
-            form.innerHTML = `<p class="text-emerald-600 font-bold text-sm text-center py-2">✓ ${t("diary.addedFeedback")}</p>`;
-            setTimeout(() => form.remove(), 1800);
-        });
-        form.querySelector("#diary-note-cancel").addEventListener("click", () => form.remove());
+        function cleanup() { render(null, form); form.remove(); }
+
+        render(
+            <DiaryInlineForm t={t}
+                onSave={(note) => {
+                    emit("diary:add", { nombre: emotionNombre, note });
+                    setTimeout(cleanup, 1800);
+                }}
+                onCancel={cleanup}
+            />,
+            form
+        );
+
+        document.getElementById("diary-inline-note")?.focus();
+        panel.scrollTop = panel.scrollHeight;
     }
 
     function showDetail(e) {
@@ -384,7 +419,7 @@ export function createUI({
         if (!modal || !panel) return;
         if (!modal.open) modal.showModal();
         panel.scrollTop = 0;
-        document.body.style.overflow = "hidden";
+        document.body.classList.add("modal-open");
         requestAnimationFrame(() => {
             panel.classList.remove("translate-y-8", "sm:scale-95", "opacity-0");
         });
@@ -434,7 +469,7 @@ export function createUI({
             set("isClosingModal", false);
         }, modalAnimationMs);
 
-        document.body.style.overflow = "auto";
+        document.body.classList.remove("modal-open");
         const lastFocusedCard = get("lastFocusedCard");
         if (lastFocusedCard) lastFocusedCard.focus();
     }
