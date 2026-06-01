@@ -375,6 +375,78 @@
     Angustia: {
       es: { name: "T\xE9cnica 5-4-3-2-1", steps: ["Nombra 5 cosas que puedes ver ahora mismo.", "Nombra 4 cosas que puedes tocar (y t\xF3calas).", "Nombra 3 cosas que puedes escuchar.", "Nombra 2 cosas que puedes oler.", "Nombra 1 cosa que puedes saborear."] },
       en: { name: "5-4-3-2-1 Grounding", steps: ["Name 5 things you can see right now.", "Name 4 things you can touch (and touch them).", "Name 3 things you can hear.", "Name 2 things you can smell.", "Name 1 thing you can taste."] }
+    },
+    Celos: {
+      es: { name: "Explorar la necesidad real", steps: ["Identifica qu\xE9 necesitas realmente: \xBFseguridad, atenci\xF3n, pertenencia?", "Preg\xFAntate si la amenaza que percibes es real o imaginada.", "Comunica esa necesidad sin acusar ni controlar.", "Refuerza tu autoestima de forma independiente a la relaci\xF3n."] },
+      en: { name: "Explore the real need", steps: ["Identify what you really need: security, attention, belonging?", "Ask yourself whether the threat you perceive is real or imagined.", "Communicate that need without accusing or controlling.", "Strengthen your self-esteem independently of the relationship."] }
+    },
+    Soledad: {
+      es: { name: "Conexi\xF3n en peque\xF1os pasos", steps: ["Elige un gesto m\xEDnimo de conexi\xF3n: un mensaje, una llamada corta, salir a un lugar con personas.", "No busques conexi\xF3n profunda de inmediato \u2014 cualquier contacto cuenta.", "Nota c\xF3mo te sientes despu\xE9s, aunque sea un peque\xF1o cambio.", "Repite ma\xF1ana con otro gesto peque\xF1o."] },
+      en: { name: "Connection in small steps", steps: ["Choose a minimal gesture of connection: a message, a short call, going somewhere with people.", "Don't seek deep connection right away \u2014 any contact counts.", "Notice how you feel afterwards, even a small shift.", "Repeat tomorrow with another small gesture."] }
+    },
+    Alegr\u00EDa: {
+      es: { name: "Saborear el momento", steps: ["Detente y nombra lo que sientes: \xBFd\xF3nde lo notas en el cuerpo?", "Comparte la alegr\xEDa con alguien si es posible \u2014 amplifica la experiencia.", "Anota qu\xE9 la gener\xF3; es informaci\xF3n valiosa sobre lo que te nutre.", "Perm\xEDtete disfrutarla sin acortarla ni minimizarla."] },
+      en: { name: "Savour the moment", steps: ["Stop and name what you feel: where do you notice it in your body?", "Share the joy with someone if possible \u2014 it amplifies the experience.", "Note what generated it; it's valuable information about what nourishes you.", "Let yourself enjoy it without cutting it short or minimizing it."] }
+    },
+    Calma: {
+      es: { name: "Anclar la calma", steps: ["Nota conscientemente la sensaci\xF3n de calma en tu cuerpo ahora mismo.", "Pon una mano en el pecho, respira despacio y observa la suavidad.", "Asocia esta sensaci\xF3n con una palabra o imagen que puedas recordar f\xE1cilmente.", "Practica evocar este estado cuando est\xE9s agitado: la calma es una habilidad, no solo suerte."] },
+      en: { name: "Anchor calm", steps: ["Consciously notice the feeling of calm in your body right now.", "Place one hand on your chest, breathe slowly, and observe the softness.", "Associate this sensation with a word or image you can easily recall.", "Practice evoking this state when agitated: calm is a skill, not just luck."] }
+    },
+    Confusi\u00F3n: {
+      es: { name: "Ordenar con papel", steps: ["Toma papel y escribe todo lo que tienes en la cabeza sin filtro.", "Agrupa las ideas por tema o pregunta.", "Identifica cu\xE1l es la pregunta m\xE1s importante que necesitas responder.", "Decide: \xBFpuedes responderla ahora o necesitas m\xE1s tiempo o informaci\xF3n?"] },
+      en: { name: "Clarify on paper", steps: ["Get paper and write everything on your mind without filtering.", "Group ideas by topic or question.", "Identify the most important question you need to answer.", "Decide: can you answer it now, or do you need more time or information?"] }
+    },
+    Felicidad: {
+      es: { name: "Registro de bienestar", steps: ["Toma un momento para notar qu\xE9 est\xE1 contribuyendo a tu bienestar ahora mismo.", "Escr\xEDbelo: personas, actividades, condiciones.", "Preg\xFAntate c\xF3mo puedes proteger o repetir esas condiciones.", "Perm\xEDtete simplemente estar bien, sin buscarle un problema ni subestimarlo."] },
+      en: { name: "Wellbeing log", steps: ["Take a moment to notice what is contributing to your wellbeing right now.", "Write it down: people, activities, conditions.", "Ask yourself how you can protect or repeat those conditions.", "Let yourself simply feel good, without looking for a problem or downplaying it."] }
+    },
+    Entusiasmo: {
+      es: { name: "Canalizar con ritmo", steps: ["Reconoce la energ\xEDa y el impulso que sientes sin actuar de inmediato.", "Lista todo lo que quieres hacer o emprender.", "Elige las 1-2 acciones m\xE1s importantes ahora mismo.", "Establece un primer paso concreto y un l\xEDmite de tiempo para no agotar la energ\xEDa."] },
+      en: { name: "Channel with rhythm", steps: ["Acknowledge the energy and impulse you feel without acting immediately.", "List everything you want to do or start.", "Choose the 1-2 most important actions right now.", "Set a concrete first step and a time limit to avoid burning out the energy."] }
+    },
+    Placer: {
+      es: { name: "Disfrute consciente", steps: ["Ralentiza lo que est\xE1s haciendo o experimentando.", "Activa los sentidos: \xBFqu\xE9 ves, escuchas, sientes, hueles o saboreas?", "Nota la satisfacci\xF3n en el cuerpo sin juzgarla.", "Cuando termine, agradece la experiencia antes de pasar a lo siguiente."] },
+      en: { name: "Mindful enjoyment", steps: ["Slow down what you're doing or experiencing.", "Activate your senses: what do you see, hear, feel, smell, or taste?", "Notice the satisfaction in your body without judging it.", "When it ends, appreciate the experience before moving on."] }
+    },
+    Rechazo: {
+      es: { name: "Examinar la fuente", steps: ["Identifica de d\xF3nde viene el rechazo: \xBFde da\xF1o real o de inseguridad?", "Si es da\xF1o real: nombra el l\xEDmite que fue cruzado y c\xF3mo quieres responder.", "Si es inseguridad: preg\xFAntate qu\xE9 historia te est\xE1s contando sobre ti mismo.", "En ambos casos, act\xFAa con claridad y no con reactividad."] },
+      en: { name: "Examine the source", steps: ["Identify where the rejection comes from: real harm or insecurity?", "If real harm: name the boundary that was crossed and how you want to respond.", "If insecurity: ask yourself what story you're telling yourself about yourself.", "In both cases, act with clarity, not reactivity."] }
+    },
+    Envidia: {
+      es: { name: "Br\xFAjula hacia tus metas", steps: ["Nombra exactamente qu\xE9 envidias \u2014 eso se\xF1ala algo que valoras.", "Preg\xFAntate: \xBFqu\xE9 me impide tener o lograr eso?", "Transforma la envidia en una meta concreta tuya.", "Deseng\xE1nchate del otro y pon el foco en tu propio camino."] },
+      en: { name: "Compass to your goals", steps: ["Name exactly what you envy \u2014 that points to something you value.", "Ask yourself: what is stopping me from having or achieving that?", "Turn the envy into a concrete goal of your own.", "Detach from the other person and focus on your own path."] }
+    },
+    Gratitud: {
+      es: { name: "Carta de gratitud expr\xE9s", steps: ["Piensa en una persona, momento o cosa que te haya aportado algo hoy.", "Escribe 2-3 frases describiendo qu\xE9 fue y c\xF3mo te afect\xF3.", "Si es una persona, considera envi\xE1rselo o dec\xEDrselo en persona.", "Nota c\xF3mo cambia tu estado al hacerlo."] },
+      en: { name: "Express gratitude letter", steps: ["Think of a person, moment, or thing that brought you something today.", "Write 2-3 sentences describing what it was and how it affected you.", "If it's a person, consider sending it or saying it to them in person.", "Notice how your state shifts when you do this."] }
+    },
+    Orgullo: {
+      es: { name: "Celebraci\xF3n con prop\xF3sito", steps: ["Reconoce espec\xEDficamente qu\xE9 hiciste o superaste para llegar aqu\xED.", "Comp\xE1rtelo con alguien que te importe \u2014 la celebraci\xF3n compartida es m\xE1s profunda.", "Anota qu\xE9 valores o esfuerzos hicieron posible este logro.", "\xDAsalo como impulso: \xBFqu\xE9 sigue?"] },
+      en: { name: "Purposeful celebration", steps: ["Acknowledge specifically what you did or overcame to get here.", "Share it with someone who matters to you \u2014 shared celebration is deeper.", "Note what values or efforts made this achievement possible.", "Use it as momentum: what's next?"] }
+    },
+    Nostalgia: {
+      es: { name: "Puente pasado-presente", steps: ["Deja que el recuerdo llegue sin resistirlo ni aferrarte a \xE9l.", "Preg\xFAntate: \xBFqu\xE9 me daba ese tiempo o persona que tanto valoro?", "Identifica si puedes traer algo de eso al presente de una forma nueva.", "Honra el pasado sin vivir en \xE9l."] },
+      en: { name: "Past-present bridge", steps: ["Let the memory arrive without resisting it or clinging to it.", "Ask yourself: what did that time or person give me that I value so much?", "Identify if you can bring something of that into the present in a new form.", "Honor the past without living in it."] }
+    },
+    Alivio: {
+      es: { name: "Descanso consciente", steps: ["Detente y respira profundamente \u2014 el peligro pas\xF3.", "Permite que tu cuerpo se descargue: estira, mueve los hombros, suelta la mand\xEDbula.", "Usa esta calma para reflexionar: \xBFqu\xE9 aprend\xED? \xBFQu\xE9 har\xEDa diferente?", "Recarga conscientemente antes de pasar a lo siguiente."] },
+      en: { name: "Conscious rest", steps: ["Stop and breathe deeply \u2014 the danger has passed.", "Let your body discharge: stretch, roll your shoulders, release your jaw.", "Use this calm to reflect: what did I learn? What would I do differently?", "Consciously recharge before moving on."] }
+    },
+    Aburrimiento: {
+      es: { name: "Activaci\xF3n con intenci\xF3n", steps: ["Reconoce que tu mente est\xE1 pidiendo estimulaci\xF3n o significado.", "Descarta las distracciones f\xE1ciles (redes sociales, scroll sin fin).", "Elige algo que requiera atenci\xF3n real: aprende algo, crea algo, mueve el cuerpo.", "Comprom\xE9tete 15 minutos \u2014 el inter\xE9s suele aparecer una vez que empiezas."] },
+      en: { name: "Intentional activation", steps: ["Acknowledge that your mind is asking for stimulation or meaning.", "Discard easy distractions (social media, endless scrolling).", "Choose something that requires real attention: learn something, create, move your body.", "Commit for 15 minutes \u2014 interest usually appears once you start."] }
+    },
+    Disgusto: {
+      es: { name: "Poner l\xEDmites claros", steps: ["Nombra con precisi\xF3n qu\xE9 es lo que te genera disgusto.", "Preg\xFAntate: \xBFqu\xE9 valor o l\xEDmite est\xE1 siendo cruzado aqu\xED?", "Decide si necesitas alejarte, comunicarlo o simplemente reconocerlo.", "Act\xFAa desde la claridad, no desde la repulsi\xF3n."] },
+      en: { name: "Set clear boundaries", steps: ["Name precisely what is generating the disgust.", "Ask yourself: what value or boundary is being crossed here?", "Decide if you need to step away, communicate it, or simply acknowledge it.", "Act from clarity, not from repulsion."] }
+    },
+    Decepci\u00F3n: {
+      es: { name: "Reajustar expectativas", steps: ["Valida que la expectativa era importante para ti \u2014 es normal sentir decepci\xF3n.", "Preg\xFAntate: \xBFera realista esa expectativa? \xBFFue comunicada claramente?", "Identifica qu\xE9 quieres hacer diferente la pr\xF3xima vez.", "Redirige tu energ\xEDa hacia lo que s\xED puedes controlar o cambiar."] },
+      en: { name: "Reframe expectations", steps: ["Validate that the expectation mattered to you \u2014 it's normal to feel this.", "Ask yourself: was that expectation realistic? Was it clearly communicated?", "Identify what you want to do differently next time.", "Redirect your energy toward what you can control or change."] }
+    },
+    Ternura: {
+      es: { name: "Expresar y recibir", steps: ["Nota la calidez que sientes hacia alguien o algo sin minimizarla.", "Si es hacia una persona, expr\xE9salo de forma simple y genuina.", "Aprende a recibirla tambi\xE9n cuando te la dan \u2014 no la desv\xEDes.", "La ternura compartida fortalece v\xEDnculos: no la cortes ni la exageres."] },
+      en: { name: "Express and receive", steps: ["Notice the warmth you feel toward someone or something without minimizing it.", "If it's toward a person, express it simply and genuinely.", "Also learn to receive it when others give it to you \u2014 don't deflect it.", "Shared tenderness strengthens bonds: don't cut it short or overdo it."] }
     }
   };
 
@@ -5167,7 +5239,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "e6223b14";
+  var BUILD_VERSION = "76ae2d83";
 
   // node_modules/posthog-js/dist/module.js
   var t3 = "undefined" != typeof window ? window : void 0;
