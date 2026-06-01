@@ -403,8 +403,8 @@ export function createDiary({ t, getDisplayName, emociones, getSession = null, c
         }
     }
 
-    on("diary:add", (/** @type {{ nombre: string, note: string }} */ { nombre, note }) => {
-        const entry = addEntry(nombre, note);
+    on("diary:add", (/** @type {{ nombre: string, note: string, tags?: string[] }} */ { nombre, note, tags = [] }) => {
+        const entry = addEntry(nombre, note, tags);
         void syncCreate(entry);
         if (get("currentTab") === "diario") renderForTab();
     });

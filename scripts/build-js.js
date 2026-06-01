@@ -2,6 +2,8 @@ const esbuild = require("esbuild");
 const fs = require("node:fs");
 const path = require("node:path");
 
+const pkg = JSON.parse(fs.readFileSync(path.join(__dirname, "../package.json"), "utf8"));
+
 const envFile = path.join(__dirname, "../.env");
 const envFromFile = {};
 if (fs.existsSync(envFile)) {
@@ -30,6 +32,7 @@ esbuild
       "process.env.SUPABASE_ANON_KEY": JSON.stringify(env.SUPABASE_ANON_KEY || ""),
       "process.env.TURNSTILE_SITE_KEY": JSON.stringify(env.TURNSTILE_SITE_KEY || ""),
       "globalThis.__TURNSTILE_SITE_KEY__": JSON.stringify(env.TURNSTILE_SITE_KEY || ""),
+      "process.env.APP_VERSION": JSON.stringify(pkg.version || ""),
     },
   })
   .then(() => console.log("JS bundle → dist/app.bundle.js"))

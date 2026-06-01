@@ -1,5 +1,12 @@
 import { createClient } from "@supabase/supabase-js";
 
+/**
+ * Typed shim for browser-side build-time env replacements.
+ * esbuild replaces process.env.* at bundle time.
+ * @type {{ env: { SUPABASE_URL?: string, SUPABASE_ANON_KEY?: string } }}
+ */
+const process = { env: {} };
+
 let client = null;
 
 export function getSupabaseClient() {

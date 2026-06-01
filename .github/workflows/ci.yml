@@ -31,3 +31,41 @@ jobs:
 
       - name: Type check
         run: npm run typecheck
+
+  security-audit:
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Use Node.js 22.x
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.x
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci --omit=dev
+
+      - name: Audit production dependencies (high or critical)
+        id: npm_audit
+        run: |
+          set +e
+          npm audit --omit=dev --audit-level=high --json > npm-audit-report.json
+          exit_code=$?
+          echo "exit_code=$exit_code" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Upload audit report artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: npm-audit-report
+          path: npm-audit-report.json
+
+      - name: Fail when vulnerabilities are found
+        if: steps.npm_audit.outputs.exit_code != '0'
+        run: |
+          echo "High or critical vulnerabilities detected in production dependencies."
+          exit 1

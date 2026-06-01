@@ -1,5 +1,7 @@
 # Brújula Emocional
 
+> **v1.3.0** — PWA de autoconocimiento emocional
+
 Aplicación web progresiva para identificar, comprender y explorar las relaciones entre emociones de forma clara y práctica.
 
 ---
@@ -227,32 +229,56 @@ Anclas de regulación: activar una reduce la otra (base de la técnica de Acció
 
 ## Funcionalidades
 
+### Exploración emocional
+
 - **28 emociones** en tarjetas con color, detalle completo y búsqueda en tiempo real
 - **Búsqueda** por nombre, sensación corporal, disparador y mensaje (ES y EN simultáneamente)
-- **Check-in de estado de ánimo** — 4 estados de ánimo que filtran emociones relacionadas
+- **Check-in de estado de ánimo** — 4 estados de ánimo (circumplejo de Russell) que filtran emociones relacionadas
 - **Quiz de identificación** — árbol de 3 preguntas para quienes no saben qué sienten
+- **Mapa corporal** — selecciona zonas del cuerpo donde sientes algo y encuentra emociones relacionadas
 - **Mapa de relaciones** — grafo interactivo con layout de fuerza y vista por cuadrantes; 35 relaciones en 4 tipos
-- **Diario emocional** — registro de entradas con emoción, nota y fecha; persiste en `localStorage`
-- **Compartir emoción** — genera imagen PNG con la tarjeta y la comparte via Web Share API o descarga directa
+- **Técnicas de regulación** — cada una de las 28 emociones incluye una técnica práctica guiada paso a paso (ES y EN)
+- **Flujo de crisis** — modo "estoy desbordado" con 3 pasos: validación, grounding 5-4-3-2-1 y acción concreta
+
+### Diario emocional
+
+- **Registro de entradas** — emoción, nota libre y etiquetas de contexto (trabajo, pareja, familia, cuerpo, dinero)
+- **Registro rápido desde el modal** — botón "Diario" en el modal de cada emoción abre un formulario inline con etiquetas
+- **Estadísticas y reportes** — frecuencia de emociones, distribución por etiquetas y filtro por período (semana / mes / todo)
+- **Exportar diario** — descarga las entradas en formato JSON
+- **Sync en la nube** — sincronización con Supabase cuando el usuario está autenticado; merge inteligente (remoto gana en conflicto)
+- **Cola offline** — las operaciones pendientes se guardan y replayan al recuperar conexión
+- **Autenticación** — magic link por email con protección Cloudflare Turnstile; sin contraseñas
+
+### Interfaz y accesibilidad
+
 - **Emociones vistas recientemente** — historial de las últimas 5, persistente
+- **Compartir emoción** — genera imagen PNG con la tarjeta y la comparte via Web Share API o descarga directa
 - **Modo claro / automático / oscuro** con detección de preferencia del sistema
 - **Soporte multi-idioma** ES / EN con persistencia
-- **PWA instalable** — botón inteligente para Android/Chrome y guía para iOS/Safari
-- **Funciona offline** — Service Worker con estrategia cache-first y auto-actualización
 - **Navegación por teclado** completa (Tab, Enter, Espacio, Escape, retorno de foco)
 - **Reducción de movimiento** — respeta `prefers-reduced-motion`
+- **Banner offline** — indicador visible cuando no hay conexión
+
+### PWA
+
+- **Instalable** — botón inteligente para Android/Chrome y guía para iOS/Safari
+- **Funciona offline** — Service Worker con estrategia cache-first y auto-actualización
+- **Versión de la app** — visible en el panel de ajustes (`v1.3.0`)
 
 ---
 
 ## Tecnologías
 
-- HTML5 + CSS personalizado (`styles.css`) + Tailwind CSS pre-generado (`dist/tailwind.css`)
-- JavaScript vanilla modular (ES6) con esbuild como único bundler
-- Fuente Inter self-hosted (`pwa/fonts/inter.woff2`)
-- Íconos SVG inline — sin dependencia externa
-- Service Worker para soporte offline
-- Vitest para tests automatizados
-- Algoritmo de layout Fruchterman–Reingold (implementación propia, ~500 iteraciones, sin dependencias de grafos)
+- **Preact + JSX** — UI reactiva sin React; componentes en `js/*.jsx`
+- **esbuild** — bundle IIFE + inyección de variables de entorno en tiempo de build
+- **Tailwind CSS** — pre-generado a `dist/tailwind.css`; sin CDN en producción
+- **Supabase** — backend para sync del diario (PostgreSQL + Row-Level Security)
+- **PostHog** — analytics con soporte CSP estricto; desactivable por variable de entorno
+- **Cloudflare Turnstile** — CAPTCHA en el flujo de autenticación por magic link
+- **Vitest + jsdom** — tests unitarios y de DOM; 200+ casos automatizados
+- **Service Worker** — cache-first con auto-actualización; versión gestionada por `scripts/bump-sw-version.js`
+- **Algoritmo Fruchterman–Reingold** — layout de fuerza para el mapa (implementación propia, sin dependencias de grafos)
 
 ---
 
@@ -291,32 +317,51 @@ El pre-commit hook ejecuta `npm run build` automáticamente en cada `git commit`
 
 ```text
 ├── index.html               Estructura principal de la interfaz
-├── app.js                   Punto de entrada (ES6 modules): estado, bootstrap
-├── loader.js                Detecta file:// vs http:// y carga dist/app.bundle.js o app.js
+├── app.js                   Punto de entrada: bootstrap, wiring de módulos, estado global
+├── loader.js                Detecta file:// vs http:// y carga dist/app.bundle.js
 ├── styles.css               Estilos personalizados (transiciones, foco, scrollbar, dark mode)
 ├── sw.js                    Service Worker (cache-first, soporte offline)
-├── vitest.config.js         Configuración de tests
 ├── js/
-│   ├── constants.js         Emociones, relaciones, traducciones, claves de localStorage
-│   ├── i18n.js              Detección de idioma, función t(), traducciones al DOM
-│   ├── ui.js                Render de tarjetas y modal, búsqueda, eventos, canvas share
-│   ├── quiz.js              Árbol de decisión de identificación emocional
-│   ├── diary.js             Diario emocional (CRUD en localStorage, render)
-│   ├── emotionMap.js        Mapa de relaciones: layout de fuerza + cuadrantes, render SVG
-│   ├── utils.js             Funciones puras: normalizeText, getReadableTextColor, wrapTextLines
-│   └── version.js           Versión de build auto-generada (no editar manualmente)
+│   ├── ui.jsx               Tarjetas, modal, check-in, formulario inline del diario
+│   ├── diary.jsx            Diario emocional (CRUD localStorage + cloud sync, Preact)
+│   ├── reports.jsx          Estadísticas del diario (frecuencia, etiquetas, filtro período)
+│   ├── quiz.jsx             Quiz de identificación emocional (3 preguntas)
+│   ├── crisis.jsx           Flujo de crisis — 3 pasos guiados
+│   ├── emotionMap.jsx       Orquestación del mapa de relaciones
+│   ├── emotionMap.view.jsx  Componente Preact del mapa
+│   ├── emotionMap.logic.js  Algoritmo Fruchterman–Reingold (puro, sin DOM)
+│   ├── bodyMap.jsx          Mapa corporal — zonas del cuerpo → emociones
+│   ├── settings.js          Panel de ajustes (tema, idioma, auth, versión)
+│   ├── auth.js              Magic link, sign-out, sesión, onAuthStateChange
+│   ├── cloudSync.js         Sync diario ↔ Supabase; mergeEntries (remoto gana)
+│   ├── offlineQueue.js      Cola de operaciones pendientes (create/delete/clear)
+│   ├── supabase.js          Cliente Supabase singleton
+│   ├── analytics.js         PostHog CSP-aware; no-op si no configurado
+│   ├── bus.js               Pub/sub mínimo para comunicación entre módulos
+│   ├── store.js             Estado transiente en memoria (tab activo, idioma, etc.)
+│   ├── persistence.js       Wrapper tipado sobre localStorage
+│   ├── constants.js         Re-exporta emociones, relaciones, traducciones, claves
+│   ├── i18n.js              Detección de idioma, t(), aplica traducciones al DOM
+│   ├── utils.js             Funciones puras: normalizeText, escapeHtml, isDarkMode
+│   ├── version.js           Versión de build auto-generada (no editar manualmente)
+│   ├── data/
+│   │   ├── emotions.js      Catálogo de 28 emociones + traducciones + relaciones
+│   │   ├── techniques.js    Técnicas de regulación para las 28 emociones (ES + EN)
+│   │   └── bodyMap.data.js  Zonas corporales y emociones asociadas
+│   └── i18n/
+│       ├── es.js            Cadenas de UI en español
+│       └── en.js            Cadenas de UI en inglés
 ├── dist/
 │   ├── tailwind.css         CSS de Tailwind pre-generado (no editar manualmente)
-│   └── app.bundle.js        Bundle para uso con file:// (no editar manualmente)
-├── tests/
-│   ├── utils.test.js        Tests de normalizeText, getReadableTextColor, wrapTextLines
-│   ├── i18n.test.js         Tests de t(), getDisplayName(), getEmotionField()
-│   └── quiz.test.js         Tests de estructura y caminos del quiz
+│   └── app.bundle.js        Bundle IIFE generado por esbuild (no editar manualmente)
+├── tests/                   Vitest — unitarios (Node) y DOM (jsdom); 200+ casos
 ├── scripts/
-│   └── bump-sw-version.js   Actualiza CACHE_NAME en sw.js y genera js/version.js
+│   ├── build-js.js          esbuild con inyección de variables de entorno
+│   ├── bump-sw-version.js   Auto-bump de CACHE_NAME en sw.js y genera version.js
+│   └── supabase-schema.sql  Schema SQL para aplicar en el editor de Supabase
 └── pwa/
     ├── manifest.webmanifest
-    ├── fonts/inter.woff2    Fuente Inter variable (latin subset)
+    ├── fonts/inter.woff2
     └── icons/
 ```
 
@@ -452,17 +497,15 @@ Para que la instalación esté disponible, la app debe ejecutarse en `http://` o
 
 ### Corto plazo
 
-- **Estadísticas del diario:** gráfico de emociones más frecuentes por semana / mes derivado de las entradas existentes en localStorage
-- **Contexto en entradas del diario:** etiquetas opcionales (trabajo, pareja, familia, cuerpo, dinero) para filtrar patrones por área de vida
-- **Técnicas de regulación por emoción:** expandir la "respuesta sugerida" con 1-2 técnicas prácticas guiadas (ej. respiración 4-7-8 para ansiedad, técnica STOP para enojo)
-- **Exportar el diario:** descarga en JSON o texto plano para que el usuario tenga respaldo de sus datos
+- **Recordatorio de check-in:** push notification configurable via PWA para convertir el check-in en hábito diario
+- **Exportar resumen en PDF:** versión imprimible del diario semanal/mensual para llevar a terapia
 - **Traducciones adicionales:** PT / FR
 
 ### Mediano plazo
 
-- **Recordatorio diario de check-in:** push notification configurable via PWA para convertir el check-in en hábito diario
-- **Flujo "estoy desbordado":** modo de crisis con 3 pasos — validación, anclaje (técnica 5-4-3-2-1) y una acción concreta; sin búsquedas ni exploración
-- **Rutina de cierre del día:** flujo guiado de 3 preguntas (¿qué sentiste?, ¿qué lo desencadenó?, ¿qué necesitas mañana?) más rápido y estructurado que el diario libre
+- **Patrones temporales en reportes:** detectar automáticamente tendencias por día de la semana u hora del día a partir del diario
+- **Modo pareja:** compartir check-ins emocionales con una persona de confianza sin exponer el diario completo
+- **Rutina de cierre del día:** flujo guiado de 3 preguntas (¿qué sentiste?, ¿qué lo desencadenó?, ¿qué necesitas mañana?)
 
 ### Más adelante
 

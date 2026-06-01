@@ -2024,13 +2024,23 @@
   }
   function DiaryInlineForm({ t: t4, onSave, onCancel }) {
     const [saved, setSaved] = d2(false);
+    const [selectedTags, setSelectedTags] = d2(
+      /** @type {Set<string>} */
+      /* @__PURE__ */ new Set()
+    );
+    function toggleTag(tag) {
+      const next = new Set(selectedTags);
+      if (next.has(tag)) next.delete(tag);
+      else next.add(tag);
+      setSelectedTags(next);
+    }
     function handleSave() {
       const note = (
         /** @type {HTMLTextAreaElement|null} */
         document.getElementById("diary-inline-note")?.value ?? ""
       );
       setSaved(true);
-      onSave(note);
+      onSave(note, [...selectedTags]);
     }
     if (saved) {
       return /* @__PURE__ */ u3("p", { class: "text-emerald-600 font-bold text-sm text-center py-2", children: [
@@ -2046,10 +2056,27 @@
           id: "diary-inline-note",
           rows: 2,
           placeholder: t4("diary.notePlaceholder"),
-          class: "w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-700 resize-none focus:outline-none focus:ring-2 focus:ring-blue-200"
+          class: "w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-700 resize-none focus:outline-none focus:ring-2 focus:ring-blue-200 mb-3"
         }
       ),
-      /* @__PURE__ */ u3("div", { class: "flex gap-2 mt-2", children: [
+      /* @__PURE__ */ u3("div", { class: "mb-3", children: [
+        /* @__PURE__ */ u3("p", { class: "text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2", children: t4("diary.tagLabel") }),
+        /* @__PURE__ */ u3("div", { class: "flex flex-wrap gap-1.5", children: DIARY_TAGS.map((tag) => {
+          const active = selectedTags.has(tag);
+          const label = t4(`diary.tag${tag.charAt(0).toUpperCase()}${tag.slice(1)}`);
+          return /* @__PURE__ */ u3(
+            "button",
+            {
+              type: "button",
+              class: `px-3 py-1 rounded-full text-[11px] font-bold transition-colors ${active ? "bg-slate-800 text-white" : "bg-slate-100 text-slate-500 hover:bg-slate-200"}`,
+              onClick: () => toggleTag(tag),
+              children: label
+            },
+            tag
+          );
+        }) })
+      ] }),
+      /* @__PURE__ */ u3("div", { class: "flex gap-2", children: [
         /* @__PURE__ */ u3(
           "button",
           {
@@ -2231,8 +2258,8 @@
           DiaryInlineForm,
           {
             t: t4,
-            onSave: (note) => {
-              emit("diary:add", { nombre: emotionNombre, note });
+            onSave: (note, tags) => {
+              emit("diary:add", { nombre: emotionNombre, note, tags });
               setTimeout(cleanup, 1800);
             },
             onCancel: cleanup
@@ -3431,8 +3458,8 @@
         enqueueClear();
       }
     }
-    on("diary:add", ({ nombre, note }) => {
-      const entry = addEntry(nombre, note);
+    on("diary:add", ({ nombre, note, tags = [] }) => {
+      const entry = addEntry(nombre, note, tags);
       void syncCreate(entry);
       if (get("currentTab") === "diario") renderForTab();
     });
@@ -4802,6 +4829,7 @@
   // js/settings.js
   var THEMES = ["light", "auto", "dark"];
   var LANGUAGES = ["es", "en"];
+  var process = { env: {} };
   function isTheme(theme) {
     return typeof theme === "string" && THEMES.includes(theme);
   }
@@ -5028,6 +5056,8 @@
       if (getTheme2() === "auto") applyTheme("auto", getLang);
     });
     updateActiveStates(getTheme2(), getLang());
+    const versionEl = document.getElementById("app-version-display");
+    if (versionEl) versionEl.textContent = `v${process.env.APP_VERSION}`;
     const authContainer = document.getElementById("auth-section");
     if (authContainer && getSession2) {
       let renderAuthSection = function(session) {
@@ -5239,7 +5269,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "76ae2d83";
+  var BUILD_VERSION = "93ed1aa6";
 
   // node_modules/posthog-js/dist/module.js
   var t3 = "undefined" != typeof window ? window : void 0;
@@ -10555,9 +10585,10 @@
   })(), Ua);
 
   // js/analytics.js
-  var apiKey = "phc_D44Jy6qHZTek7u4xBeasusCsbzbpc7kVLxAEbnxUDVQQ";
-  var host = "https://us.i.posthog.com";
-  var isEnabled = true;
+  var process2 = { env: {} };
+  var apiKey = process2.env.POSTHOG_API_KEY;
+  var host = process2.env.POSTHOG_HOST;
+  var isEnabled = process2.env.POSTHOG_ENABLED === "true";
   var isInitialized = false;
   function getCspContent() {
     const cspMeta = document.querySelector('meta[http-equiv="Content-Security-Policy"]');
@@ -31359,10 +31390,11 @@ ${suffix}`;
   if (shouldShowDeprecationWarning()) console.warn("\u26A0\uFE0F  Node.js 18 and below are deprecated and will no longer be supported in future versions of @supabase/supabase-js. Please upgrade to Node.js 20 or later. For more information, visit: https://github.com/orgs/supabase/discussions/37217");
 
   // js/supabase.js
+  var process3 = { env: {} };
   var client = null;
   function getSupabaseClient() {
-    const url = "";
-    const key = "";
+    const url = process3.env.SUPABASE_URL;
+    const key = process3.env.SUPABASE_ANON_KEY;
     if (!url || !key) return null;
     if (!client) {
       client = createClient(url, key, {

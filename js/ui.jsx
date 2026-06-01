@@ -1,6 +1,6 @@
 import { render } from "preact";
 import { useState } from "preact/hooks";
-import { RECENT_LIMIT, REGULATION_TECHNIQUES } from "./constants.js";
+import { RECENT_LIMIT, REGULATION_TECHNIQUES, DIARY_TAGS } from "./constants.js";
 import { getReadableTextColor } from "./utils.js";
 import { buildEmotionCanvas } from "./emotionCanvas.js";
 import { get, set } from "./store.js";
@@ -200,12 +200,20 @@ function ModalContent({ e, t, getDisplayName, getEmotionField, relaciones, emoci
 // ── Diary inline form (rendered inside the modal panel) ───────────────────────
 
 function DiaryInlineForm({ t, onSave, onCancel }) {
-    const [saved, setSaved] = useState(false);
+    const [saved, setSaved]           = useState(false);
+    const [selectedTags, setSelectedTags] = useState(/** @type {Set<string>} */ (new Set()));
+
+    /** @param {string} tag */
+    function toggleTag(tag) {
+        const next = new Set(selectedTags);
+        if (next.has(tag)) next.delete(tag); else next.add(tag);
+        setSelectedTags(next);
+    }
 
     function handleSave() {
         const note = /** @type {HTMLTextAreaElement|null} */ (document.getElementById("diary-inline-note"))?.value ?? "";
         setSaved(true);
-        onSave(note);
+        onSave(note, [...selectedTags]);
     }
 
     if (saved) {
@@ -218,8 +226,24 @@ function DiaryInlineForm({ t, onSave, onCancel }) {
                 {t("diary.noteLabel")}
             </label>
             <textarea id="diary-inline-note" rows={2} placeholder={t("diary.notePlaceholder")}
-                class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-700 resize-none focus:outline-none focus:ring-2 focus:ring-blue-200" />
-            <div class="flex gap-2 mt-2">
+                class="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 text-sm text-slate-700 resize-none focus:outline-none focus:ring-2 focus:ring-blue-200 mb-3" />
+            <div class="mb-3">
+                <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2">{t("diary.tagLabel")}</p>
+                <div class="flex flex-wrap gap-1.5">
+                    {DIARY_TAGS.map((tag) => {
+                        const active = selectedTags.has(tag);
+                        const label = t(`diary.tag${tag.charAt(0).toUpperCase()}${tag.slice(1)}`);
+                        return (
+                            <button key={tag} type="button"
+                                class={`px-3 py-1 rounded-full text-[11px] font-bold transition-colors ${active ? "bg-slate-800 text-white" : "bg-slate-100 text-slate-500 hover:bg-slate-200"}`}
+                                onClick={() => toggleTag(tag)}>
+                                {label}
+                            </button>
+                        );
+                    })}
+                </div>
+            </div>
+            <div class="flex gap-2">
                 <button type="button" onClick={handleSave}
                     class="flex-1 bg-slate-800 text-white py-2.5 rounded-xl font-bold text-sm hover:bg-slate-700 transition-colors">
                     {t("diary.saveButton")}
@@ -388,8 +412,8 @@ export function createUI({
 
         render(
             <DiaryInlineForm t={t}
-                onSave={(note) => {
-                    emit("diary:add", { nombre: emotionNombre, note });
+                onSave={(note, tags) => {
+                    emit("diary:add", { nombre: emotionNombre, note, tags });
                     setTimeout(cleanup, 1800);
                 }}
                 onCancel={cleanup}

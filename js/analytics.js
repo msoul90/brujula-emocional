@@ -1,5 +1,12 @@
 import posthog from "posthog-js";
 
+/**
+ * Typed shim for browser-side build-time env replacements.
+ * esbuild replaces process.env.* at bundle time.
+ * @type {{ env: { POSTHOG_API_KEY?: string, POSTHOG_HOST?: string, POSTHOG_ENABLED?: string } }}
+ */
+const process = { env: {} };
+
 const apiKey = process.env.POSTHOG_API_KEY;
 const host = process.env.POSTHOG_HOST;
 const isEnabled = process.env.POSTHOG_ENABLED === "true";

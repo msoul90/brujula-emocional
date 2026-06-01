@@ -10,6 +10,13 @@ const THEMES = ["light", "auto", "dark"];
 const LANGUAGES = ["es", "en"];
 
 /**
+ * Typed shim for browser-side build-time env replacements.
+ * esbuild replaces process.env.APP_VERSION at bundle time.
+ * @type {{ env: { APP_VERSION?: string } }}
+ */
+const process = { env: {} };
+
+/**
  * @param {string | null | undefined} theme
  * @returns {theme is Theme}
  */
@@ -246,6 +253,9 @@ export function initSettings({ setLanguage, getLang, getSession, onAuthStateChan
     });
 
     updateActiveStates(getTheme(), getLang());
+
+    const versionEl = document.getElementById("app-version-display");
+    if (versionEl) versionEl.textContent = `v${process.env.APP_VERSION}`;
 
     const authContainer = document.getElementById("auth-section");
     if (authContainer && getSession) {

@@ -2,7 +2,10 @@
   "permissions": {
     "allow": [
       "Bash(config)",
-      "Bash(mock\")"
+      "Bash(mock\")",
+      "Bash(node -e \"const p = require\\('./node_modules/preact/package.json'\\); console.log\\(p.version\\)\")",
+      "Bash(node -e \"const src = require\\('fs'\\).readFileSync\\('./node_modules/preact/src/component.js', 'utf8'\\); const lines = src.split\\('\\\\n'\\).slice\\(0,80\\); console.log\\(lines.join\\('\\\\n'\\)\\)\")",
+      "Bash(node -e \"const p = require\\('./package.json'\\); console.log\\(p.version, p.name\\)\")"
     ]
   }
 }
