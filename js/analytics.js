@@ -1,15 +1,15 @@
 import posthog from "posthog-js";
 
 /**
- * Typed shim for browser-side build-time env replacements.
- * esbuild replaces process.env.* at bundle time.
- * @type {{ env: { POSTHOG_API_KEY?: string, POSTHOG_HOST?: string, POSTHOG_ENABLED?: string } }}
+ * Typed env access for browser code without requiring Node typings.
+ * Values are replaced at build-time and available in tests via Node's process.env.
+ * @type {{ POSTHOG_API_KEY?: string, POSTHOG_HOST?: string, POSTHOG_ENABLED?: string }}
  */
-const process = { env: {} };
+const env = /** @type {any} */ (globalThis).process?.env ?? {};
 
-const apiKey = process.env.POSTHOG_API_KEY;
-const host = process.env.POSTHOG_HOST;
-const isEnabled = process.env.POSTHOG_ENABLED === "true";
+const apiKey = env.POSTHOG_API_KEY;
+const host = env.POSTHOG_HOST;
+const isEnabled = env.POSTHOG_ENABLED === "true";
 let isInitialized = false;
 
 function getCspContent() {

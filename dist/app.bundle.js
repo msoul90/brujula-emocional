@@ -4829,7 +4829,10 @@
   // js/settings.js
   var THEMES = ["light", "auto", "dark"];
   var LANGUAGES = ["es", "en"];
-  var process = { env: {} };
+  var env = (
+    /** @type {any} */
+    globalThis.process?.env ?? {}
+  );
   function isTheme(theme) {
     return typeof theme === "string" && THEMES.includes(theme);
   }
@@ -5057,7 +5060,7 @@
     });
     updateActiveStates(getTheme2(), getLang());
     const versionEl = document.getElementById("app-version-display");
-    if (versionEl) versionEl.textContent = `v${process.env.APP_VERSION}`;
+    if (versionEl) versionEl.textContent = `v${env.APP_VERSION ?? ""}`;
     const authContainer = document.getElementById("auth-section");
     if (authContainer && getSession2) {
       let renderAuthSection = function(session) {
@@ -5269,7 +5272,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "93ed1aa6";
+  var BUILD_VERSION = "8ec807cb";
 
   // node_modules/posthog-js/dist/module.js
   var t3 = "undefined" != typeof window ? window : void 0;
@@ -10585,10 +10588,13 @@
   })(), Ua);
 
   // js/analytics.js
-  var process2 = { env: {} };
-  var apiKey = process2.env.POSTHOG_API_KEY;
-  var host = process2.env.POSTHOG_HOST;
-  var isEnabled = process2.env.POSTHOG_ENABLED === "true";
+  var env2 = (
+    /** @type {any} */
+    globalThis.process?.env ?? {}
+  );
+  var apiKey = env2.POSTHOG_API_KEY;
+  var host = env2.POSTHOG_HOST;
+  var isEnabled = env2.POSTHOG_ENABLED === "true";
   var isInitialized = false;
   function getCspContent() {
     const cspMeta = document.querySelector('meta[http-equiv="Content-Security-Policy"]');
@@ -16018,15 +16024,15 @@ ${cause.stack}`;
      * ```
      */
     static getWebSocketConstructor() {
-      const env = this.detectEnvironment();
-      if (env.wsConstructor) {
-        return env.wsConstructor;
+      const env4 = this.detectEnvironment();
+      if (env4.wsConstructor) {
+        return env4.wsConstructor;
       }
-      let errorMessage = env.error || "WebSocket not supported in this environment.";
-      if (env.workaround) {
+      let errorMessage = env4.error || "WebSocket not supported in this environment.";
+      if (env4.workaround) {
         errorMessage += `
 
-Suggested solution: ${env.workaround}`;
+Suggested solution: ${env4.workaround}`;
       }
       throw new Error(errorMessage);
     }
@@ -16045,8 +16051,8 @@ Suggested solution: ${env.workaround}`;
      */
     static isWebSocketSupported() {
       try {
-        const env = this.detectEnvironment();
-        return env.type === "native" || env.type === "ws";
+        const env4 = this.detectEnvironment();
+        return env4.type === "native" || env4.type === "ws";
       } catch (_a2) {
         return false;
       }
@@ -31390,11 +31396,14 @@ ${suffix}`;
   if (shouldShowDeprecationWarning()) console.warn("\u26A0\uFE0F  Node.js 18 and below are deprecated and will no longer be supported in future versions of @supabase/supabase-js. Please upgrade to Node.js 20 or later. For more information, visit: https://github.com/orgs/supabase/discussions/37217");
 
   // js/supabase.js
-  var process3 = { env: {} };
+  var env3 = (
+    /** @type {any} */
+    globalThis.process?.env ?? {}
+  );
   var client = null;
   function getSupabaseClient() {
-    const url = process3.env.SUPABASE_URL;
-    const key = process3.env.SUPABASE_ANON_KEY;
+    const url = env3.SUPABASE_URL;
+    const key = env3.SUPABASE_ANON_KEY;
     if (!url || !key) return null;
     if (!client) {
       client = createClient(url, key, {
