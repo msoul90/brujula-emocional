@@ -4860,7 +4860,7 @@
   }
   var turnstileSiteKey = (
     /** @type {Record<string, unknown>} */
-    ""
+    "0x4AAAAAADTVCQSMBDI_HafG"
   );
   var TURNSTILE_SITE_KEY = typeof turnstileSiteKey === "string" ? turnstileSiteKey : "";
   function AuthSection({ email, t: t4, onSignIn, onSignOut }) {
@@ -5269,7 +5269,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "93ed1aa6";
+  var BUILD_VERSION = "ff73ff48";
 
   // node_modules/posthog-js/dist/module.js
   var t3 = "undefined" != typeof window ? window : void 0;
