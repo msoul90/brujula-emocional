@@ -2,6 +2,16 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+## Git workflow
+
+**Always work on a new branch for every new feature or improvement.** Never commit new work directly to `main`.
+
+1. Create a branch: `git checkout -b feat/short-description`
+2. Make changes, commit, and push the branch
+3. Open a Pull Request to merge into `main`
+
+The `main` branch is protected — force pushes and deletions are blocked.
+
 ## Development
 
 **Install dependencies (first time):**
