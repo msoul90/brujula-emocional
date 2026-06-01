@@ -21,7 +21,7 @@ La app no sustituye atención profesional en salud mental. Es una herramienta de
 Cada emoción del catálogo está documentada con seis campos derivados de modelos contemporáneos de regulación emocional (principalmente la **Terapia Dialéctica Conductual — DBT** y el modelo de **Appraisal Theory**):
 
 | Campo | Qué documenta | Base teórica |
-|---|---|---|
+| --- | --- | --- |
 | `siente` | Sensaciones corporales asociadas | Interoception / Teoría somática |
 | `dispara` | Situaciones o pensamientos que la activan | Appraisal Theory (Lazarus) |
 | `funcion` | Para qué sirve evolutiva y psicológicamente | Teoría funcional de las emociones |
@@ -34,7 +34,7 @@ Cada emoción del catálogo está documentada con seis campos derivados de model
 Las 28 emociones no son un listado arbitrario. Se construyó contrastando tres taxonomías de referencia y aplicando criterios de utilidad práctica:
 
 | Taxonomía | Cantidad | Limitación para este uso |
-|---|---|---|
+| --- | --- | --- |
 | Ekman (1992) | 6 emociones básicas | Demasiado genéricas — no distinguen, por ej., ansiedad de miedo, o culpa de vergüenza |
 | Plutchik (1980) | 8 primarias + derivadas | Organización radial útil teóricamente, pero poco intuitiva para autoidentificación |
 | Barrett — Teoría Constructiva (2017) | Continuo, sin categorías fijas | Conceptualmente sólida pero no operacionalizable en una UI de tarjetas |
@@ -52,7 +52,7 @@ Quedan fuera del catálogo emociones como esperanza, asombro o vergüenza ajena 
 
 El check-in usa una aproximación al **modelo circumplejo de Russell** (1980), que organiza los estados emocionales en dos ejes: **activación** (alta/baja) y **valencia** (positiva/negativa):
 
-```
+```text
           Alta activación
               │
    AGITADO   │   BIEN
@@ -73,7 +73,7 @@ Los cuatro estados agrupan emociones más específicas para facilitar la identif
 Las 35 relaciones modeladas en el mapa de emociones corresponden a cuatro tipos clínicamente documentados:
 
 | Tipo | Descripción | Origen conceptual |
-|---|---|---|
+| --- | --- | --- |
 | **Coexiste** | Se sienten con frecuencia al mismo tiempo | Co-ocurrencia en estudios de afecto |
 | **Escala a** | Una puede intensificarse y convertirse en otra | Cadenas de emociones (DBT) |
 | **Enmascara** | Una emoción superficial oculta otra más vulnerable | Emociones primarias/secundarias (EFT) |
@@ -119,7 +119,7 @@ La app incluye **28 emociones** organizadas en cuatro familias de estado de áni
 ### Agitado — alta activación, valencia negativa (9 emociones)
 
 | Emoción | Función principal |
-|---|---|
+| --- | --- |
 | Enojo | Proteger límites, movilizar cambio |
 | Frustración | Señalar meta bloqueada |
 | Irritabilidad | Señalar saturación o necesidad de pausa |
@@ -133,7 +133,7 @@ La app incluye **28 emociones** organizadas en cuatro familias de estado de áni
 ### Triste — baja activación, valencia negativa (7 emociones)
 
 | Emoción | Función principal |
-|---|---|
+| --- | --- |
 | Tristeza | Procesar pérdida, pedir apoyo, bajar ritmo |
 | Soledad | Motivar conexión significativa |
 | Nostalgia | Reforzar identidad, valorar lo vivido |
@@ -145,7 +145,7 @@ La app incluye **28 emociones** organizadas en cuatro familias de estado de áni
 ### Confundido — activación mixta, valencia incierta (3 emociones)
 
 | Emoción | Función principal |
-|---|---|
+| --- | --- |
 | Confusión | Señalar necesidad de claridad o información |
 | Aburrimiento | Señalar necesidad de estimulación o significado |
 | Celos | Proteger vínculo, detectar necesidad de seguridad |
@@ -153,7 +153,7 @@ La app incluye **28 emociones** organizadas en cuatro familias de estado de áni
 ### Bien — activación variada, valencia positiva (9 emociones)
 
 | Emoción | Función principal |
-|---|---|
+| --- | --- |
 | Calma | Recuperación y equilibrio |
 | Alivio | Señalar que el peligro pasó, permitir recuperación |
 | Gratitud | Fortalecer vínculos, ampliar perspectiva |
