@@ -20,7 +20,7 @@
   },
   "dependencies": {
     "@supabase/supabase-js": "^2",
-    "posthog-js": "^1.374.2",
+    "posthog-js": "^1.386.4",
     "preact": "^10.29.1"
   }
 }
