@@ -5288,7 +5288,7 @@
   var l3 = null == e3 ? void 0 : e3.CompressionStream;
   var u4 = null == i3 ? void 0 : i3.userAgent;
   var h3 = null != t3 ? t3 : {};
-  var d3 = "1.386.5";
+  var d3 = "1.386.6";
   var v3 = { DEBUG: false, LIB_VERSION: d3, LIB_NAME: "web", JS_SDK_VERSION: d3 };
   function c3(t4, e4, i4, r4, s4, n3, o4) {
     try {
@@ -5417,18 +5417,18 @@
   };
   var D3 = (t4) => "function" == typeof t4;
   var N2 = (t4) => t4 === Object(t4) && !M(t4);
-  var U = (t4) => {
+  var L2 = (t4) => {
     if (N2(t4)) {
       for (var e4 in t4) if (A3.call(t4, e4)) return false;
       return true;
     }
     return false;
   };
-  var L2 = (t4) => void 0 === t4;
+  var U = (t4) => void 0 === t4;
   var j3 = (t4) => "[object String]" == F.call(t4);
   var z3 = (t4) => j3(t4) && 0 === t4.trim().length;
   var B3 = (t4) => null === t4;
-  var H2 = (t4) => L2(t4) || B3(t4);
+  var H2 = (t4) => U(t4) || B3(t4);
   var V2 = (t4) => "[object Number]" == F.call(t4) && t4 == t4;
   var q2 = (t4) => V2(t4) && t4 > 0;
   var G2 = (t4) => "[object Boolean]" === F.call(t4);
@@ -5506,10 +5506,10 @@
   var Mt = "Windows";
   var Dt = Mt + " Phone";
   var Nt = "Nokia";
-  var Ut = "Ouya";
-  var Lt = "Generic";
-  var jt = Lt + " " + ot.toLowerCase();
-  var zt = Lt + " " + ut.toLowerCase();
+  var Lt = "Ouya";
+  var Ut = "Generic";
+  var jt = Ut + " " + ot.toLowerCase();
+  var zt = Ut + " " + ut.toLowerCase();
   var Bt = "Konqueror";
   var Ht = "Oculus Browser";
   var Vt = "Vivaldi";
@@ -5539,7 +5539,7 @@
   var oe = { [Et]: [new RegExp("rv:" + Qt)], [kt]: [new RegExp(Tt + "?\\/" + Qt)], [bt]: [new RegExp("(" + bt + "|CrMo)\\/" + Qt)], [wt]: [new RegExp("CriOS\\/" + Qt)], "UC Browser": [new RegExp("(UCBrowser|UCWEB)\\/" + Qt)], [pt]: [Zt], [Ft]: [Zt], [St]: [new RegExp("(Opera|OPR)\\/" + Qt)], [Rt]: [new RegExp(Rt + "\\/" + Qt)], [Pt]: [new RegExp("FxiOS\\/" + Qt)], [Bt]: [new RegExp("Konqueror[:/]?" + Qt, "i")], [ft]: [new RegExp(ft + " " + Qt), Zt], [At]: [new RegExp("android\\s" + Qt, "i")], [mt]: [new RegExp(gt + "\\/" + Qt)], [Ht]: [new RegExp("OculusBrowser\\/" + Qt)], [Vt]: [new RegExp(Vt + "\\/" + Qt)], [qt]: [new RegExp("YaBrowser\\/" + Qt)], [Gt]: [new RegExp(Gt + "\\/" + Qt)], [Kt]: [new RegExp(Kt + "\\/" + Qt)], [Wt]: [new RegExp("(DuckDuckGo|Ddg)\\/" + Qt)], [Yt]: [new RegExp("PaleMoon\\/" + Qt)], [Jt]: [new RegExp(Jt + "\\/" + Qt)], [Xt]: [new RegExp("GSA\\/" + Qt)], [xt]: [new RegExp("(rv:|MSIE )" + Qt)], Mozilla: [new RegExp("rv:" + Qt)] };
   var ae = function(t4, e4, i4, r4) {
     var s4 = ne(t4, e4, i4, r4), n3 = oe[s4];
-    if (L2(n3)) return null;
+    if (U(n3)) return null;
     for (var o4 = 0; n3.length > o4; o4++) {
       var a4 = t4.match(n3[o4]);
       if (a4) return parseFloat(a4[a4.length - 2]);
@@ -5557,13 +5557,13 @@
     return [Mt, ""];
   }], [/((iPhone|iPad|iPod).*?OS (\d+)_(\d+)_?(\d+)?|iPhone)/, (t4) => t4 && t4[3] ? [at, [t4[3], t4[4], t4[5] || "0"].join(".")] : [at, ""]], [/(watch.*\/(\d+\.\d+\.\d+)|watch os,(\d+\.\d+),)/i, (t4) => {
     var e4 = "";
-    return t4 && t4.length >= 3 && (e4 = L2(t4[2]) ? t4[3] : t4[2]), ["watchOS", e4];
+    return t4 && t4.length >= 3 && (e4 = U(t4[2]) ? t4[3] : t4[2]), ["watchOS", e4];
   }], [new RegExp("(" + lt + " (\\d+)\\.(\\d+)\\.?(\\d+)?|" + lt + ")", "i"), (t4) => t4 && t4[2] ? [lt, [t4[2], t4[3], t4[4] || "0"].join(".")] : [lt, ""]], [/Mac OS X (\d+)[_.](\d+)[_.]?(\d+)?/i, (t4) => {
     var e4 = ["Mac OS X", ""];
     return t4 && t4[1] && (e4[1] = [t4[1], t4[2], t4[3] || "0"].join(".")), e4;
   }], [/Mac/i, ["Mac OS X", ""]], [/CrOS/, [yt, ""]], [/Linux|debian/i, ["Linux", ""]]];
   var ue = function(t4) {
-    return ie.test(t4) ? Ot : ee.test(t4) ? It : te.test(t4) ? Ct : new RegExp(Ut, "i").test(t4) ? Ut : new RegExp("(" + Dt + "|WPDesktop)", "i").test(t4) ? Dt : /iPad/.test(t4) ? dt : /iPod/.test(t4) ? "iPod Touch" : /iPhone/.test(t4) ? "iPhone" : /(watch)(?: ?os[,/]|\d,\d\/)[\d.]+/i.test(t4) ? ct : re.test(t4) ? ft : /(kobo)\s(ereader|touch)/i.test(t4) ? "Kobo" : new RegExp(Nt, "i").test(t4) ? Nt : /(kf[a-z]{2}wi|aeo[c-r]{2})( bui|\))/i.test(t4) || /(kf[a-z]+)( bui|\)).+silk\//i.test(t4) ? "Kindle Fire" : /(Android|ZTE)/i.test(t4) ? new RegExp(ot).test(t4) && !/(9138B|TB782B|Nexus [97]|pixel c|HUAWEISHT|BTV|noble nook|smart ultra 6)/i.test(t4) || /pixel[\daxl ]{1,6}/i.test(t4) && !/pixel c/i.test(t4) || /(huaweimed-al00|tah-|APA|SM-G92|i980|zte|U304AA)/i.test(t4) || /lmy47v/i.test(t4) && !/QTAQZ3/i.test(t4) ? lt : ht : new RegExp("(pda|" + ot + ")", "i").test(t4) ? jt : new RegExp(ut, "i").test(t4) && !new RegExp(ut + " pc", "i").test(t4) ? zt : "";
+    return ie.test(t4) ? Ot : ee.test(t4) ? It : te.test(t4) ? Ct : new RegExp(Lt, "i").test(t4) ? Lt : new RegExp("(" + Dt + "|WPDesktop)", "i").test(t4) ? Dt : /iPad/.test(t4) ? dt : /iPod/.test(t4) ? "iPod Touch" : /iPhone/.test(t4) ? "iPhone" : /(watch)(?: ?os[,/]|\d,\d\/)[\d.]+/i.test(t4) ? ct : re.test(t4) ? ft : /(kobo)\s(ereader|touch)/i.test(t4) ? "Kobo" : new RegExp(Nt, "i").test(t4) ? Nt : /(kf[a-z]{2}wi|aeo[c-r]{2})( bui|\))/i.test(t4) || /(kf[a-z]+)( bui|\)).+silk\//i.test(t4) ? "Kindle Fire" : /(Android|ZTE)/i.test(t4) ? new RegExp(ot).test(t4) && !/(9138B|TB782B|Nexus [97]|pixel c|HUAWEISHT|BTV|noble nook|smart ultra 6)/i.test(t4) || /pixel[\daxl ]{1,6}/i.test(t4) && !/pixel c/i.test(t4) || /(huaweimed-al00|tah-|APA|SM-G92|i980|zte|U304AA)/i.test(t4) || /lmy47v/i.test(t4) && !/QTAQZ3/i.test(t4) ? lt : ht : new RegExp("(pda|" + ot + ")", "i").test(t4) ? jt : new RegExp(ut, "i").test(t4) && !new RegExp(ut + " pc", "i").test(t4) ? zt : "";
   };
   var he = (t4) => t4 instanceof Error;
   var de = { trace: { text: "TRACE", number: 1 }, debug: { text: "DEBUG", number: 5 }, info: { text: "INFO", number: 9 }, warn: { text: "WARN", number: 13 }, error: { text: "ERROR", number: 17 }, fatal: { text: "FATAL", number: 21 } };
@@ -5583,7 +5583,7 @@
     var e4 = [];
     for (var i4 in t4) {
       var r4 = t4[i4];
-      B3(r4) || L2(r4) || e4.push({ key: i4, value: ce(r4) });
+      B3(r4) || U(r4) || e4.push({ key: i4, value: ce(r4) });
     }
     return e4;
   }
@@ -5669,7 +5669,7 @@
   var ge = "?";
   function me(t4, e4, i4, r4, s4) {
     var n3 = { platform: t4, filename: e4, function: "<anonymous>" === i4 ? ge : i4, in_app: true };
-    return L2(r4) || (n3.lineno = r4), L2(s4) || (n3.colno = s4), n3;
+    return U(r4) || (n3.lineno = r4), U(s4) || (n3.colno = s4), n3;
   }
   var be = (t4, e4) => {
     var i4 = -1 !== t4.indexOf("safari-extension"), r4 = -1 !== t4.indexOf("safari-web-extension");
@@ -5840,7 +5840,7 @@
       return { type: "Error", value: "Primitive value captured as exception: " + String(t4), stack: null == (i4 = e4.syntheticException) ? void 0 : i4.stack, synthetic: true };
     }
   };
-  var Ue = class {
+  var Le = class {
     match(t4) {
       return K2(t4, "PromiseRejectionEvent") || this.isCustomEventWrappingRejection(t4);
     }
@@ -5866,9 +5866,9 @@
       return t4;
     }
   };
-  var Le = "$message";
+  var Ue = "$message";
   var je = "$timestamp";
-  var ze = /* @__PURE__ */ new Set([Le, je]);
+  var ze = /* @__PURE__ */ new Set([Ue, je]);
   var Be = { enabled: true, max_bytes: 32768 };
   function He(t4) {
     var e4;
@@ -5905,7 +5905,7 @@
         if (e5) try {
           var i5 = JSON.parse(e5);
           if (!N2(i5)) return;
-          var r4 = i5, s4 = r4[Le], n3 = r4[je];
+          var r4 = i5, s4 = r4[Ue], n3 = r4[je];
           if (!j3(s4) || 0 === s4.trim().length) return;
           if (!j3(n3) && !V2(n3)) return;
           return { step: r4, json: e5 };
@@ -5945,7 +5945,7 @@
   }
   var Ge = function(e4, i4) {
     var { debugEnabled: r4 } = void 0 === i4 ? {} : i4, s4 = { k(i5) {
-      if (t3 && (v3.DEBUG || h3.POSTHOG_DEBUG || r4) && !L2(t3.console) && t3.console) {
+      if (t3 && (v3.DEBUG || h3.POSTHOG_DEBUG || r4) && !U(t3.console) && t3.console) {
         for (var s5 = ("__rrweb_original__" in t3.console[i5]) ? t3.console[i5].__rrweb_original__ : t3.console[i5], n3 = arguments.length, o4 = new Array(n3 > 1 ? n3 - 1 : 0), a4 = 1; n3 > a4; a4++) o4[a4 - 1] = arguments[a4];
         s5(e4, ...o4);
       }
@@ -6061,8 +6061,8 @@
   var Mi = "$feature_flag_evaluated_at";
   var Di = "$user_state";
   var Ni = "$client_session_props";
-  var Ui = "$capture_rate_limit";
-  var Li = "$initial_campaign_params";
+  var Li = "$capture_rate_limit";
+  var Ui = "$initial_campaign_params";
   var ji = "$initial_referrer_info";
   var zi = "$initial_person_info";
   var Bi = "$epp";
@@ -6177,10 +6177,10 @@
     }
     generate() {
       var t4 = this.generateOrAbort();
-      if (L2(t4)) {
+      if (U(t4)) {
         this.S = 0;
         var e4 = this.generateOrAbort();
-        if (L2(e4)) throw new Error("Could not generate UUID after timestamp reset");
+        if (U(e4)) throw new Error("Could not generate UUID after timestamp reset");
         return e4;
       }
       return t4;
@@ -6204,7 +6204,7 @@
     for (var e4 = 0; t4.length > e4; e4++) t4[e4] = 65536 * Math.trunc(65536 * Math.random()) + Math.trunc(65536 * Math.random());
     return t4;
   };
-  t3 && !L2(t3.crypto) && crypto.getRandomValues && (yr = (t4) => crypto.getRandomValues(t4));
+  t3 && !U(t3.crypto) && crypto.getRandomValues && (yr = (t4) => crypto.getRandomValues(t4));
   var wr = class {
     constructor() {
       this.M = new Uint32Array(8), this.R = 1 / 0;
@@ -6284,7 +6284,7 @@
   var Rr = { O() {
     if (!B3(kr)) return kr;
     var e4 = true;
-    if (L2(t3)) e4 = false;
+    if (U(t3)) e4 = false;
     else try {
       var i4 = "__mplssupport__";
       Rr.N(i4, "xyz"), '"xyz"' !== Rr.A(i4) && (e4 = false), Rr.q(i4);
@@ -6331,7 +6331,7 @@
   var Cr = null;
   var Ar = { O() {
     if (!B3(Cr)) return Cr;
-    if (Cr = true, L2(t3)) Cr = false;
+    if (Cr = true, U(t3)) Cr = false;
     else try {
       var e4 = "__support__";
       Ar.N(e4, "xyz"), '"xyz"' !== Ar.A(e4) && (Cr = false), Ar.q(e4);
@@ -6420,10 +6420,10 @@
   var Mr = 1;
   var Dr = 3;
   var Nr = 11;
-  function Ur(t4) {
+  function Lr(t4) {
     return t4 instanceof Element && (t4.id === Hi || !(null == t4.closest || !t4.closest(".toolbar-global-fade-container")));
   }
-  function Lr(t4) {
+  function Ur(t4) {
     return !!t4 && t4.nodeType === Mr;
   }
   function jr(t4, e4) {
@@ -6433,7 +6433,7 @@
     return !!t4 && t4.nodeType === Dr;
   }
   function Br(t4) {
-    return !!t4 && t4.nodeType === Nr && Lr(t4.host);
+    return !!t4 && t4.nodeType === Nr && Ur(t4.host);
   }
   function Hr(t4) {
     return t4 ? O2(t4).split(/\s+/) : [];
@@ -6467,12 +6467,12 @@
     })), O2(e4);
   }
   function Yr(t4) {
-    return L2(t4.target) ? t4.srcElement || null : null != (e4 = t4.target) && e4.shadowRoot ? t4.composedPath()[0] || null : t4.target || null;
+    return U(t4.target) ? t4.srcElement || null : null != (e4 = t4.target) && e4.shadowRoot ? t4.composedPath()[0] || null : t4.target || null;
     var e4;
   }
   var Jr = ["a", "button", "form", "input", "select", "textarea", "label"];
   function Kr(t4, e4) {
-    if (L2(e4)) return true;
+    if (U(e4)) return true;
     var i4, r4 = function(t5) {
       if (e4.some(((e5) => t5.matches(e5)))) return { v: true };
     };
@@ -6481,7 +6481,7 @@
   }
   function Xr(t4) {
     var e4 = t4.parentNode;
-    return !(!e4 || !Lr(e4)) && e4;
+    return !(!e4 || !Ur(e4)) && e4;
   }
   var Qr = ["next", "previous", "prev", ">", "<"];
   var Zr = [...Qr, "+", "-", "\u2212", "\u2013"];
@@ -6493,7 +6493,7 @@
     var r4, s4, n3, o4, a4;
     if (G2(i4) ? (r4 = !!i4 && es2, s4 = void 0, n3 = false) : (r4 = null !== (o4 = null == i4 ? void 0 : i4.css_selector_ignorelist) && void 0 !== o4 ? o4 : es2, s4 = null == i4 ? void 0 : i4.content_ignorelist, n3 = null !== (a4 = null == i4 ? void 0 : i4.ignore_text_selection) && void 0 !== a4 && a4), false === r4) return false;
     if (n3 && (function(t4) {
-      return !(!t4 || !Lr(t4)) && (!!jr(t4, "textarea") || (jr(t4, "input") ? P2(is, (t4.getAttribute("type") || "").toLowerCase()) : (function(t5) {
+      return !(!t4 || !Ur(t4)) && (!!jr(t4, "textarea") || (jr(t4, "input") ? P2(is, (t4.getAttribute("type") || "").toLowerCase()) : (function(t5) {
         if (t5.isContentEditable) return true;
         var e5 = null == t5.getAttribute ? void 0 : t5.getAttribute("contenteditable");
         return "true" === e5 || "" === e5;
@@ -6501,7 +6501,7 @@
     })(e4)) return false;
     var { targetElementList: l4 } = ns(e4, false);
     return !(function(t4, e5) {
-      if (false === t4 || L2(t4)) return false;
+      if (false === t4 || U(t4)) return false;
       var i5;
       if (true === t4) i5 = Qr;
       else {
@@ -6518,7 +6518,7 @@
       return { safeText: Wr(t4).toLowerCase(), ariaLabel: (null == (e5 = t4.getAttribute("aria-label")) ? void 0 : e5.toLowerCase().trim()) || "" };
     }))) && !Kr(l4, r4);
   }
-  var ss = (t4) => !t4 || jr(t4, "html") || !Lr(t4);
+  var ss = (t4) => !t4 || jr(t4, "html") || !Ur(t4);
   var ns = (e4, i4) => {
     if (!t3 || ss(e4)) return { parentIsUsefulElement: false, targetElementList: [] };
     for (var r4 = false, s4 = [e4], n3 = e4; n3.parentNode && !jr(n3, "body"); ) if (Br(n3.parentNode)) s4.push(n3.parentNode.host), n3 = n3.parentNode.host;
@@ -6682,7 +6682,7 @@
       var r4 = { $pageview_id: e4, $prev_pageview_id: i4.pageViewId }, s4 = this._instance.scrollManager.getContext();
       if (s4 && !this._instance.config.disable_scroll_properties) {
         var { maxScrollHeight: n3, lastScrollY: o4, maxScrollY: a4, maxContentHeight: l4, lastContentY: u5, maxContentY: h4 } = s4;
-        if (!(L2(n3) || L2(o4) || L2(a4) || L2(l4) || L2(u5) || L2(h4))) {
+        if (!(U(n3) || U(o4) || U(a4) || U(l4) || U(u5) || U(h4))) {
           n3 = Math.ceil(n3), o4 = Math.ceil(o4), a4 = Math.ceil(a4), l4 = Math.ceil(l4), u5 = Math.ceil(u5), h4 = Math.ceil(h4);
           var d4 = n3 > 1 ? et(o4 / n3, 0, 1, We) : 1, v4 = n3 > 1 ? et(a4 / n3, 0, 1, We) : 1, c4 = l4 > 1 ? et(u5 / l4, 0, 1, We) : 1, p4 = l4 > 1 ? et(h4 / l4, 0, 1, We) : 1;
           r4 = lr(r4, { $prev_pageview_last_scroll: o4, $prev_pageview_last_scroll_percentage: d4, $prev_pageview_max_scroll: a4, $prev_pageview_max_scroll_percentage: v4, $prev_pageview_last_content: u5, $prev_pageview_last_content_percentage: c4, $prev_pageview_max_content: h4, $prev_pageview_max_content_percentage: p4 });
@@ -6696,7 +6696,7 @@
     if (!N2(t4)) return {};
     for (var e4 = {}, i4 = Object.keys(t4), r4 = 0; i4.length > r4; r4++) e4["$feature/" + i4[r4]] = t4[i4[r4]];
     return e4;
-  } }, [bi]: { exposure: "event", storageGroup: "flags" }, [yi]: { exposure: "hidden" }, [wi]: { exposure: "hidden", storageGroup: "flags" }, [xi]: { exposure: "event", storageGroup: "flags" }, [Ei]: { exposure: "event", storageGroup: "flags", volatile: true }, [Si]: { exposure: "event" }, [$i]: { exposure: "hidden" }, [Ti]: { exposure: "hidden" }, [ki]: { exposure: "hidden" }, [Ri]: { exposure: "hidden", storageGroup: "surveys" }, [Pi]: { exposure: "hidden", storageGroup: "surveys", volatile: true }, [Oi]: { exposure: "event" }, [Ii]: { exposure: "hidden" }, $product_tours_activated: { exposure: "hidden" }, $conversations_widget_session_id: { exposure: "event" }, $conversations_ticket_id: { exposure: "event" }, $conversations_widget_state: { exposure: "event" }, $conversations_user_traits: { exposure: "event" }, [Ci]: { exposure: "hidden" }, [Ai]: { exposure: "hidden" }, [Fi]: { exposure: "hidden" }, [Mi]: { exposure: "hidden", storageGroup: "flags", volatile: true }, [Di]: { exposure: "hidden" }, [Ni]: { exposure: "hidden" }, [Ui]: { exposure: "hidden" }, [Li]: { exposure: "hidden" }, [ji]: { exposure: "hidden" }, [zi]: { exposure: "hidden" }, [Bi]: { exposure: "hidden" }, [vi]: { exposure: "event" }, [ci]: { exposure: "event" }, [pi]: { exposure: "event" }, [fi]: { exposure: "event" }, [qi]: { exposure: "event" }, [Gi]: { exposure: "event" }, [Wi]: { exposure: "event" }, $sdk_debug_replay_event_trigger_status: { exposure: "event" }, $sdk_debug_replay_linked_flag_trigger_status: { exposure: "event" }, $sdk_debug_replay_matched_recording_trigger_groups: { exposure: "event" }, $sdk_debug_replay_remote_trigger_matching_config: { exposure: "event" }, $sdk_debug_replay_trigger_groups_count: { exposure: "event" }, $sdk_debug_replay_url_trigger_status: { exposure: "event" }, $session_recording_start_reason: { exposure: "event" } };
+  } }, [bi]: { exposure: "event", storageGroup: "flags" }, [yi]: { exposure: "hidden" }, [wi]: { exposure: "hidden", storageGroup: "flags" }, [xi]: { exposure: "event", storageGroup: "flags" }, [Ei]: { exposure: "event", storageGroup: "flags", volatile: true }, [Si]: { exposure: "event" }, [$i]: { exposure: "hidden" }, [Ti]: { exposure: "hidden" }, [ki]: { exposure: "hidden" }, [Ri]: { exposure: "hidden", storageGroup: "surveys" }, [Pi]: { exposure: "hidden", storageGroup: "surveys", volatile: true }, [Oi]: { exposure: "event" }, [Ii]: { exposure: "hidden" }, $product_tours_activated: { exposure: "hidden" }, $conversations_widget_session_id: { exposure: "event" }, $conversations_ticket_id: { exposure: "event" }, $conversations_widget_state: { exposure: "event" }, $conversations_user_traits: { exposure: "event" }, [Ci]: { exposure: "hidden" }, [Ai]: { exposure: "hidden" }, [Fi]: { exposure: "hidden" }, [Mi]: { exposure: "hidden", storageGroup: "flags", volatile: true }, [Di]: { exposure: "hidden" }, [Ni]: { exposure: "hidden" }, [Li]: { exposure: "hidden" }, [Ui]: { exposure: "hidden" }, [ji]: { exposure: "hidden" }, [zi]: { exposure: "hidden" }, [Bi]: { exposure: "hidden" }, [vi]: { exposure: "event" }, [ci]: { exposure: "event" }, [pi]: { exposure: "event" }, [fi]: { exposure: "event" }, [qi]: { exposure: "event" }, [Gi]: { exposure: "event" }, [Wi]: { exposure: "event" }, $sdk_debug_replay_event_trigger_status: { exposure: "event" }, $sdk_debug_replay_linked_flag_trigger_status: { exposure: "event" }, $sdk_debug_replay_matched_recording_trigger_groups: { exposure: "event" }, $sdk_debug_replay_remote_trigger_matching_config: { exposure: "event" }, $sdk_debug_replay_trigger_groups_count: { exposure: "event" }, $sdk_debug_replay_url_trigger_status: { exposure: "event" }, $session_recording_start_reason: { exposure: "event" } };
   var Os = [["$posthog_sr_group_event_trigger_", { exposure: "hidden" }], ["$posthog_sr_group_url_trigger_", { exposure: "hidden" }], ["$posthog_sr_group_sampling_", { exposure: "hidden" }]];
   var Is = (t4) => {
     var e4 = Ps[t4];
@@ -6705,7 +6705,7 @@
   };
   var Cs = (t4) => {
     var e4 = null == r3 ? void 0 : r3.createElement("a");
-    return L2(e4) ? null : (e4.href = t4, e4);
+    return U(e4) ? null : (e4.href = t4, e4);
   };
   var As = function(t4, e4) {
     for (var i4, r4 = ((t4.split("#")[0] || "").split(/\?(.*)/)[1] || "").replace(/^\?+/g, "").split("&"), s4 = 0; r4.length > s4; s4++) {
@@ -6739,19 +6739,19 @@
   };
   var Ds = "https?://(.*)";
   var Ns = ["gclid", "gclsrc", "dclid", "gbraid", "wbraid", "fbclid", "msclkid", "twclid", "li_fat_id", "igshid", "ttclid", "rdt_cid", "epik", "qclid", "sccid", "irclid", "_kx"];
-  var Us = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "gad_source", "mc_cid", ...Ns];
-  var Ls = "<masked>";
+  var Ls = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "gad_source", "mc_cid", ...Ns];
+  var Us = "<masked>";
   var js = ["li_fat_id"];
   function zs(t4, e4, i4) {
     if (!r3) return {};
-    var s4, n3 = e4 ? [...Ns, ...i4 || []] : [], o4 = Bs(Fs(r3.URL, n3, Ls), t4), a4 = (s4 = {}, ar(js, (function(t5) {
+    var s4, n3 = e4 ? [...Ns, ...i4 || []] : [], o4 = Bs(Fs(r3.URL, n3, Us), t4), a4 = (s4 = {}, ar(js, (function(t5) {
       var e5 = Tr.A(t5);
       s4[t5] = e5 || null;
     })), s4);
     return lr(a4, o4);
   }
   function Bs(t4, e4) {
-    var i4 = Us.concat(e4 || []), r4 = {};
+    var i4 = Ls.concat(e4 || []), r4 = {};
     return ar(i4, (function(e5) {
       var i5 = As(t4, e5);
       r4[e5] = i5 || null;
@@ -6777,7 +6777,7 @@
   }
   function Ws(t4, e4) {
     var i4 = t4 ? [...Ns, ...e4 || []] : [], r4 = null == s3 ? void 0 : s3.href.substring(0, 1e3);
-    return { r: Gs().substring(0, 1e3), u: r4 ? Fs(r4, i4, Ls) : void 0 };
+    return { r: Gs().substring(0, 1e3), u: r4 ? Fs(r4, i4, Us) : void 0 };
   }
   function Ys(t4) {
     var e4, { r: i4, u: r4 } = t4, s4 = { $referrer: i4, $referring_domain: null == i4 ? void 0 : i4 == qs ? qs : null == (e4 = Cs(i4)) ? void 0 : e4.host };
@@ -6908,7 +6908,7 @@
     Rr() {
       for (var t4 of Rs) {
         var e4 = Rr.F(this.Er(t4));
-        if (e4 && !U(e4)) {
+        if (e4 && !L2(e4)) {
           var i4 = this.Pr(t4);
           i4.persisted = true, this.Or(t4) || (i4.fingerprint = this.Lr(e4, t4)), this.Ar(t4, e4) || lr(this.props, e4);
         }
@@ -6943,13 +6943,13 @@
     save() {
       if (!this.Tr) {
         var t4 = this.Ir();
-        t4 > 0 ? L2(this.Dr) && (this.Dr = setTimeout((() => {
+        t4 > 0 ? U(this.Dr) && (this.Dr = setTimeout((() => {
           this.Dr = void 0, this.$r();
         }), t4)) : this.$r();
       }
     }
     flush() {
-      L2(this.Dr) || (clearTimeout(this.Dr), this.Dr = void 0, this.$r());
+      U(this.Dr) || (clearTimeout(this.Dr), this.Dr = void 0, this.$r());
     }
     $r() {
       this.Tr || (this.br ? this.qr() : this.jr(this.nr, this.kr, this.props, Zs));
@@ -6958,7 +6958,7 @@
       var { main: t4, groups: e4 } = this.Br();
       for (var i4 of (this.jr(this.nr, this.kr, t4, Zs), Rs)) {
         var r4, s4 = e4[i4];
-        (!U(s4) || null != (r4 = this.mr[i4]) && r4.persisted) && this.jr(Rr, this.Er(i4), s4, i4);
+        (!L2(s4) || null != (r4 = this.mr[i4]) && r4.persisted) && this.jr(Rr, this.Er(i4), s4, i4);
       }
     }
     Br() {
@@ -6979,19 +6979,19 @@
     }
     jr(t4, e4, i4, r4) {
       var s4 = this.Pr(r4);
-      if (r4 === Zs || s4.dirty || L2(s4.fingerprint)) {
+      if (r4 === Zs || s4.dirty || U(s4.fingerprint)) {
         var n3;
         try {
           if ((n3 = this.Lr(i4, r4)) === s4.fingerprint) return void (s4.dirty = false);
         } catch (t5) {
           n3 = void 0;
         }
-        t4.N(e4, i4, this.Hr, this.Ur, this.zr, this.qt.debug) ? (s4.dirty = false, r4 !== Zs && (s4.persisted = true), L2(n3) || (s4.fingerprint = n3)) : this.qt.debug && We.warn('failed to persist storage entry "' + e4 + '"; will retry on next save');
+        t4.N(e4, i4, this.Hr, this.Ur, this.zr, this.qt.debug) ? (s4.dirty = false, r4 !== Zs && (s4.persisted = true), U(n3) || (s4.fingerprint = n3)) : this.qt.debug && We.warn('failed to persist storage entry "' + e4 + '"; will retry on next save');
       }
     }
     remove(t4) {
       var { keepGroupEntries: e4 = false } = void 0 === t4 ? {} : t4;
-      if (L2(this.Dr) || (clearTimeout(this.Dr), this.Dr = void 0), this.nr.q(this.kr, false), this.nr.q(this.kr, true), !e4 && this._r) for (var i4 of Rs) Rr.q(this.Er(i4));
+      if (U(this.Dr) || (clearTimeout(this.Dr), this.Dr = void 0), this.nr.q(this.kr, false), this.nr.q(this.kr, true), !e4 && this._r) for (var i4 of Rs) Rr.q(this.Er(i4));
       e4 ? delete this.mr[Zs] : this.mr = {};
     }
     clear() {
@@ -6999,7 +6999,7 @@
     }
     register_once(t4, e4, i4) {
       if (N2(t4)) {
-        L2(e4) && (e4 = "None"), this.Hr = L2(i4) ? this.Vr : i4;
+        U(e4) && (e4 = "None"), this.Hr = U(i4) ? this.Vr : i4;
         var r4 = false;
         if (ar(t4, ((t5, i5) => {
           this.props.hasOwnProperty(i5) && this.props[i5] !== e4 || (this.Fr(i5, t5), r4 = true);
@@ -7009,7 +7009,7 @@
     }
     register(t4, e4) {
       if (N2(t4)) {
-        this.Hr = L2(e4) ? this.Vr : e4;
+        this.Hr = U(e4) ? this.Vr : e4;
         var i4 = false;
         if (ar(t4, ((e5, r4) => {
           t4.hasOwnProperty(r4) && this.props[r4] !== e5 && (this.Fr(r4, e5), i4 = true);
@@ -7023,7 +7023,7 @@
     update_campaign_params() {
       if (!this.wr) {
         var t4 = zs(this.qt.custom_campaign_params, this.qt.mask_personal_data_properties, this.qt.custom_personal_data_properties);
-        U(vr(t4)) || this.register(t4), this.wr = true;
+        L2(vr(t4)) || this.register(t4), this.wr = true;
       }
     }
     update_search_keyword() {
@@ -7035,11 +7035,11 @@
       this.register_once({ $referrer: Gs(), $referring_domain: null != r3 && r3.referrer && (null == (t4 = Cs(r3.referrer)) ? void 0 : t4.host) || qs }, void 0);
     }
     set_initial_person_info() {
-      this.props[Li] || this.props[ji] || this.register_once({ [zi]: Ws(this.qt.mask_personal_data_properties, this.qt.custom_personal_data_properties) }, void 0);
+      this.props[Ui] || this.props[ji] || this.register_once({ [zi]: Ws(this.qt.mask_personal_data_properties, this.qt.custom_personal_data_properties) }, void 0);
     }
     get_initial_props() {
       var t4 = {};
-      ar([ji, Li], ((e5) => {
+      ar([ji, Ui], ((e5) => {
         var i5 = this.props[e5];
         i5 && ar(i5, (function(e6, i6) {
           t4["$initial_" + I2(i6)] = e6;
@@ -7086,7 +7086,7 @@
     }
     remove_event_timer(t4) {
       var e4 = this.props[ti] || {}, i4 = e4[t4];
-      return L2(i4) || (delete e4[t4], this.Fr(ti, e4), this.save()), i4;
+      return U(i4) || (delete e4[t4], this.Fr(ti, e4), this.save()), i4;
     }
     get_property(t4) {
       return this.props[t4];
@@ -7141,10 +7141,10 @@
     clientRateLimitContext(t4) {
       var e4, i4, r4;
       void 0 === t4 && (t4 = false);
-      var { captureEventsBurstLimit: s4, captureEventsPerSecond: n3 } = this, o4 = (/* @__PURE__ */ new Date()).getTime(), a4 = null !== (e4 = null == (i4 = this.instance.persistence) ? void 0 : i4.get_property(Ui)) && void 0 !== e4 ? e4 : { tokens: s4, last: o4 };
+      var { captureEventsBurstLimit: s4, captureEventsPerSecond: n3 } = this, o4 = (/* @__PURE__ */ new Date()).getTime(), a4 = null !== (e4 = null == (i4 = this.instance.persistence) ? void 0 : i4.get_property(Li)) && void 0 !== e4 ? e4 : { tokens: s4, last: o4 };
       a4.tokens += (o4 - a4.last) / 1e3 * n3, a4.last = o4, a4.tokens > s4 && (a4.tokens = s4);
       var l4 = 1 > a4.tokens;
-      return l4 || t4 || (a4.tokens = Math.max(0, a4.tokens - 1)), !l4 || this.lastEventRateLimited || t4 || this.instance.capture("$$client_ingestion_warning", { $$client_ingestion_warning_message: "posthog-js client rate limited. Config is set to " + n3 + " events per second and " + s4 + " events burst limit." }, { skip_client_rate_limiting: true }), this.lastEventRateLimited = l4, null == (r4 = this.instance.persistence) || r4.set_property(Ui, a4), { isRateLimited: l4, remainingTokens: a4.tokens };
+      return l4 || t4 || (a4.tokens = Math.max(0, a4.tokens - 1)), !l4 || this.lastEventRateLimited || t4 || this.instance.capture("$$client_ingestion_warning", { $$client_ingestion_warning_message: "posthog-js client rate limited. Config is set to " + n3 + " events per second and " + s4 + " events burst limit." }, { skip_client_rate_limiting: true }), this.lastEventRateLimited = l4, null == (r4 = this.instance.persistence) || r4.set_property(Li, a4), { isRateLimited: l4, remainingTokens: a4.tokens };
     }
     isServerRateLimited(t4) {
       var e4 = this.serverLimits[t4 || "events"] || false;
@@ -7245,8 +7245,8 @@
   for (An = 280; 288 > An; ++An) Dn[An] = 8;
   var Nn = new xn(32);
   for (An = 0; 32 > An; ++An) Nn[An] = 5;
-  var Un = Mn(Dn, 9, 0);
-  var Ln = Mn(Nn, 5, 0);
+  var Ln = Mn(Dn, 9, 0);
+  var Un = Mn(Nn, 5, 0);
   var jn = function(t4) {
     return (t4 / 8 >> 0) + (7 & t4 && 1);
   };
@@ -7344,11 +7344,11 @@
       var N3 = Mn(k4, R4, 0);
       for (Bn(e4, h4, b3 - 257), Bn(e4, h4 + 5, x3 - 1), Bn(e4, h4 + 10, P3 - 4), h4 += 14, S3 = 0; P3 > S3; ++S3) Bn(e4, h4 + 3 * S3, k4[kn[S3]]);
       h4 += 3 * P3;
-      for (var U2 = [m4, w4], L3 = 0; 2 > L3; ++L3) {
-        var j4 = U2[L3];
+      for (var L3 = [m4, w4], U2 = 0; 2 > U2; ++U2) {
+        var j4 = L3[U2];
         for (S3 = 0; j4.length > S3; ++S3) Bn(e4, h4, N3[z4 = 31 & j4[S3]]), h4 += k4[z4], z4 > 15 && (Bn(e4, h4, j4[S3] >>> 5 & 127), h4 += j4[S3] >>> 12);
       }
-    } else O3 = Un, I3 = Dn, C4 = Ln, A4 = Nn;
+    } else O3 = Ln, I3 = Dn, C4 = Un, A4 = Nn;
     for (S3 = 0; a4 > S3; ++S3) if (r4[S3] > 255) {
       var z4;
       Hn(e4, h4, O3[257 + (z4 = r4[S3] >>> 18 & 31)]), h4 += I3[z4 + 257], z4 > 7 && (Bn(e4, h4, r4[S3] >>> 23 & 31), h4 += $n[z4]);
@@ -7398,20 +7398,20 @@
               for (var F2 = 0; 286 > F2; ++F2) x3[F2] = 0;
               for (F2 = 0; 30 > F2; ++F2) E3[F2] = 0;
             }
-            var M2 = 2, D4 = 0, N3 = p4, U2 = I3 - C4 & 32767;
-            if (A4 > 2 && O3 == y4(h5 - U2)) for (var L3 = Math.min(c4, A4) - 1, j4 = Math.min(32767, h5), z4 = Math.min(258, A4); j4 >= U2 && --N3 && I3 != C4; ) {
-              if (t5[h5 + M2] == t5[h5 + M2 - U2]) {
-                for (var B4 = 0; z4 > B4 && t5[h5 + B4] == t5[h5 + B4 - U2]; ++B4) ;
+            var M2 = 2, D4 = 0, N3 = p4, L3 = I3 - C4 & 32767;
+            if (A4 > 2 && O3 == y4(h5 - L3)) for (var U2 = Math.min(c4, A4) - 1, j4 = Math.min(32767, h5), z4 = Math.min(258, A4); j4 >= L3 && --N3 && I3 != C4; ) {
+              if (t5[h5 + M2] == t5[h5 + M2 - L3]) {
+                for (var B4 = 0; z4 > B4 && t5[h5 + B4] == t5[h5 + B4 - L3]; ++B4) ;
                 if (B4 > M2) {
-                  if (M2 = B4, D4 = U2, B4 > L3) break;
-                  var H3 = Math.min(U2, B4 - 2), V3 = 0;
+                  if (M2 = B4, D4 = L3, B4 > U2) break;
+                  var H3 = Math.min(L3, B4 - 2), V3 = 0;
                   for (F2 = 0; H3 > F2; ++F2) {
-                    var q3 = h5 - U2 + F2 + 32768 & 32767, G3 = q3 - _3[q3] + 32768 & 32767;
+                    var q3 = h5 - L3 + F2 + 32768 & 32767, G3 = q3 - _3[q3] + 32768 & 32767;
                     G3 > V3 && (V3 = G3, C4 = q3);
                   }
                 }
               }
-              U2 += (I3 = C4) - (C4 = _3[I3]) + 32768 & 32767;
+              L3 += (I3 = C4) - (C4 = _3[I3]) + 32768 & 32767;
             }
             if (D4) {
               w4[k4++] = 268435456 | On[M2] << 18 | In[D4];
@@ -7452,7 +7452,7 @@
       void 0 === e5 && (e5 = "&");
       var s5 = [];
       return ar(t5, (function(t6, e6) {
-        L2(t6) || L2(e6) || "undefined" === e6 || (i5 = encodeURIComponent(((t7) => t7 instanceof File)(t6) ? t6.name : t6.toString()), r5 = encodeURIComponent(e6), s5[s5.length] = r5 + "=" + i5);
+        U(t6) || U(e6) || "undefined" === e6 || (i5 = encodeURIComponent(((t7) => t7 instanceof File)(t6) ? t6.name : t6.toString()), r5 = encodeURIComponent(e6), s5[s5.length] = r5 + "=" + i5);
       })), s5.join(e5);
     })(o4);
     return l4 && a4.push(l4), s4 + "?" + a4.join("&");
@@ -7594,14 +7594,14 @@
       var t4 = {};
       return ar(this.ei, ((e4) => {
         var i4, r4 = e4, s4 = (r4 ? r4.batchKey : null) || r4.url;
-        L2(t4[s4]) && (t4[s4] = f4({}, r4, { data: [] })), null == (i4 = t4[s4].data) || i4.push(r4.data);
+        U(t4[s4]) && (t4[s4] = f4({}, r4, { data: [] })), null == (i4 = t4[s4].data) || i4.push(r4.data);
       })), this.ei = [], t4;
     }
   };
   var po = ["retriesPerformedSoFar"];
   var fo = class {
     constructor(e4) {
-      this.ai = false, this.li = 3e3, this.ei = [], this._instance = e4, this.ei = [], this.ui = true, !L2(t3) && "onLine" in t3.navigator && (this.ui = t3.navigator.onLine, this.hi = () => {
+      this.ai = false, this.li = 3e3, this.ei = [], this._instance = e4, this.ei = [], this.ui = true, !U(t3) && "onLine" in t3.navigator && (this.ui = t3.navigator.onLine, this.hi = () => {
         this.ui = true, this.ci();
       }, this.di = () => {
         this.ui = false;
@@ -7638,7 +7638,7 @@
       if (this.ei = e4, i4.length > 0) for (var { requestOptions: r4 } of i4) this.retriableRequest(r4);
     }
     unload() {
-      for (var { requestOptions: e4 } of (this.pi && (clearTimeout(this.pi), this.pi = void 0), this.ai = false, L2(t3) || (this.hi && (t3.removeEventListener("online", this.hi), this.hi = void 0), this.di && (t3.removeEventListener("offline", this.di), this.di = void 0)), this.ei)) try {
+      for (var { requestOptions: e4 } of (this.pi && (clearTimeout(this.pi), this.pi = void 0), this.ai = false, U(t3) || (this.hi && (t3.removeEventListener("online", this.hi), this.hi = void 0), this.di && (t3.removeEventListener("offline", this.di), this.di = void 0)), this.ei)) try {
         this._instance._send_request(f4({}, e4, { transport: "sendBeacon" }));
       } catch (t4) {
         We.error(t4);
@@ -7762,7 +7762,7 @@
       return this._sessionTimeoutMs;
     }
     onSessionId(t4) {
-      return L2(this.Mi) && (this.Mi = []), this.Mi.push(t4), this.Ai && t4(this.Ai, this.Li), () => {
+      return U(this.Mi) && (this.Mi = []), this.Mi.push(t4), this.Ai && t4(this.Ai, this.Li), () => {
         this.Mi = this.Mi.filter(((e4) => e4 !== t4));
       };
     }
@@ -7878,7 +7878,7 @@
   function ko(t4, e4) {
     return !t4 || Object.entries(t4).every(((t5) => {
       var [i4, r4] = t5, s4 = null == e4 ? void 0 : e4[i4];
-      if (L2(s4) || B3(s4)) return false;
+      if (U(s4) || B3(s4)) return false;
       var n3 = [String(s4)], o4 = $o[r4.operator];
       return !!o4 && o4(r4.values, n3);
     }));
@@ -7934,7 +7934,7 @@
   var Mo = { ignoreConditions: false, ignoreDelay: false, displayType: vn.Popover };
   var Do = Ye("[PostHog ExternalIntegrations]");
   var No = { intercom: "intercom-integration", crispChat: "crisp-chat-integration" };
-  var Uo = class {
+  var Lo = class {
     constructor(t4) {
       this._instance = t4;
     }
@@ -7959,7 +7959,7 @@
       }
     }
   };
-  var Lo;
+  var Uo;
   var jo = {};
   var zo = 0;
   var Bo = () => {
@@ -7979,9 +7979,9 @@
   var Ko = [["process_person", "person_profiles"], ["xhr_headers", "request_headers"], ["cookie_name", "persistence_name"], ["disable_cookie", "disable_persistence"], ["__preview_disable_beacon", "disable_beacon"], ["store_google", "save_campaign_params"], ["verbose", "debug"]];
   var Xo = (t4) => {
     var e4 = {};
-    for (var [i4, r4] of Ko) L2(t4[i4]) || (e4[r4] = t4[i4]);
+    for (var [i4, r4] of Ko) U(t4[i4]) || (e4[r4] = t4[i4]);
     var s4 = lr({}, e4, t4), n3 = t4.__preview_external_dependency_versioned_paths;
-    return L2(n3) || (L2(t4.strict_script_versioning) && (s4.strict_script_versioning = !!n3), j3(n3) && L2(t4.asset_host) && (s4.asset_host = n3)), M(t4.property_blacklist) && (L2(t4.property_denylist) ? s4.property_denylist = t4.property_blacklist : M(t4.property_denylist) ? s4.property_denylist = [...t4.property_blacklist, ...t4.property_denylist] : We.error(Go + t4.property_denylist)), s4;
+    return U(n3) || (U(t4.strict_script_versioning) && (s4.strict_script_versioning = !!n3), j3(n3) && U(t4.asset_host) && (s4.asset_host = n3)), M(t4.property_blacklist) && (U(t4.property_denylist) ? s4.property_denylist = t4.property_blacklist : M(t4.property_denylist) ? s4.property_denylist = [...t4.property_blacklist, ...t4.property_denylist] : We.error(Go + t4.property_denylist)), s4;
   };
   var Qo = class {
     constructor() {
@@ -8018,7 +8018,7 @@
       this.webPerformance = new Qo(), this.an = false, this.version = v3.LIB_VERSION, this.ln = new bo(), this.nn = [], this._calculate_event_properties = this.calculateEventProperties.bind(this), this.config = Jo(), this.SentryIntegration = Ts, this.sentryIntegration = (t5) => (function(t6, e5) {
         var i4 = $s(t6, e5);
         return { name: Ss, processEvent: (t7) => i4(t7) };
-      })(this, t5), this.__request_queue = [], this.__loaded = false, this.analyticsDefaultEndpoint = "/e/", this.un = false, this.hn = null, this.cn = null, this.dn = null, this.scrollManager = new _o(this), this.pageViewManager = new ks(this), this.rateLimiter = new gn(this), this.requestRouter = new Io(this), this.consent = new Fr(this), this.externalIntegrations = new Uo(this);
+      })(this, t5), this.__request_queue = [], this.__loaded = false, this.analyticsDefaultEndpoint = "/e/", this.un = false, this.hn = null, this.cn = null, this.dn = null, this.scrollManager = new _o(this), this.pageViewManager = new ks(this), this.rateLimiter = new gn(this), this.requestRouter = new Io(this), this.consent = new Fr(this), this.externalIntegrations = new Lo(this);
       var e4 = null !== (t4 = _Zo.__defaultExtensionClasses) && void 0 !== t4 ? t4 : {};
       this.featureFlags = e4.featureFlags && new e4.featureFlags(this), this.toolbar = e4.toolbar && new e4.toolbar(this), this.surveys = e4.surveys && new e4.surveys(this), this.conversations = e4.conversations && new e4.conversations(this), this.logs = e4.logs && new e4.logs(this), this.experiments = e4.experiments && new e4.experiments(this), this.exceptions = e4.exceptions && new e4.exceptions(this), this.people = { set: (t5, e5, i4) => {
         var r4 = j3(t5) ? { [t5]: e5 } : t5;
@@ -8155,7 +8155,7 @@
       null == (t4 = this.surveys) || t4.handlePageUnload(), this.config.request_batching ? (this.En() && this.capture(rr), null == (e4 = this.logs) || e4.flushLogs("sendBeacon"), null == (i4 = this.mn) || i4.unload(), null == (r4 = this.bn) || r4.unload()) : this.En() && this.capture(rr, null, { transport: "sendBeacon" });
     }
     _send_request(t4) {
-      this.__loaded && (Yo ? this.__request_queue.push(t4) : this.rateLimiter.isServerRateLimited(t4.batchKey) || (t4.transport = t4.transport || this.config.api_transport, t4.url = so(t4.url, { ip: this.config.ip ? 1 : 0 }), t4.headers = f4({}, this.config.request_headers, t4.headers), t4.compression = "best-available" === t4.compression ? this.compression : t4.compression, (L2(this.config.disable_beacon) ? this.config.__preview_disable_beacon : this.config.disable_beacon) && (t4.disableTransport = ["sendBeacon"]), t4.fetchOptions = t4.fetchOptions || this.config.fetch_options, ((t5) => {
+      this.__loaded && (Yo ? this.__request_queue.push(t4) : this.rateLimiter.isServerRateLimited(t4.batchKey) || (t4.transport = t4.transport || this.config.api_transport, t4.url = so(t4.url, { ip: this.config.ip ? 1 : 0 }), t4.headers = f4({}, this.config.request_headers, t4.headers), t4.compression = "best-available" === t4.compression ? this.compression : t4.compression, (U(this.config.disable_beacon) ? this.config.__preview_disable_beacon : this.config.disable_beacon) && (t4.disableTransport = ["sendBeacon"]), t4.fetchOptions = t4.fetchOptions || this.config.fetch_options, ((t5) => {
         var e4, i4, r4, s4 = f4({}, t5);
         s4.timeout = s4.timeout || 6e4, s4.url = uo(s4.url, s4.compression);
         var n3 = null !== (e4 = s4.transport) && void 0 !== e4 ? e4 : "fetch", o4 = ho.filter(((t6) => !s4.disableTransport || !t6.transport || !s4.disableTransport.includes(t6.transport))), a4 = null !== (i4 = null == (r4 = (function(t6, e5) {
@@ -8221,7 +8221,7 @@
     capture(t4, e4, i4) {
       var r4, s4, n3, o4, a4;
       if (this.__loaded && this.persistence && this.sessionPersistence && this.mn) {
-        if (this.is_capturing()) if (!L2(t4) && j3(t4)) {
+        if (this.is_capturing()) if (!U(t4) && j3(t4)) {
           var l4 = !this.config.opt_out_useragent_filter && this._is_bot();
           if (!l4 || this.config.__preview_capture_bot_pageviews) {
             var u5 = null != i4 && i4.skip_client_rate_limiting ? void 0 : this.rateLimiter.clientRateLimitContext();
@@ -8237,7 +8237,7 @@
                   a4.has(e6) || (r5[i6] = t5(e6, i6));
                 }))), r5);
                 var r5;
-              })(n3)), c4.timestamp = d4, L2(null == i4 ? void 0 : i4.timestamp) || (c4.properties.$event_time_override_provided = true, c4.properties.$event_time_override_system_time = h4), t4 === hn.DISMISSED || t4 === hn.SENT) {
+              })(n3)), c4.timestamp = d4, U(null == i4 ? void 0 : i4.timestamp) || (c4.properties.$event_time_override_provided = true, c4.properties.$event_time_override_system_time = h4), t4 === hn.DISMISSED || t4 === hn.SENT) {
                 var b3 = null == e4 ? void 0 : e4[dn.SURVEY_ID], y4 = null == e4 ? void 0 : e4[dn.SURVEY_ITERATION];
                 ((t5) => {
                   try {
@@ -8257,7 +8257,7 @@
                 w4 && (c4.$set = f4({}, c4.$set, { [fn.TOUR_LAST_SEEN_DATE + "/" + w4]: (/* @__PURE__ */ new Date()).toISOString() }));
               }
               var x3 = f4({}, c4.properties.$set, c4.$set);
-              if (U(x3) || this.setPersonPropertiesForFlags(x3), !H2(this.config.before_send)) {
+              if (L2(x3) || this.setPersonPropertiesForFlags(x3), !H2(this.config.before_send)) {
                 var E3 = this.Pn(c4);
                 if (!E3) return;
                 c4 = E3;
@@ -8290,7 +8290,7 @@
             if (n5) return n5;
           }
           return ["", ""];
-        })(u4), E3 = null != (h5 = "undefined" != typeof navigator ? navigator : void 0) && h5.brave ? { brave: true } : {}, S3 = { detectGoogleSearchApp: r4 }, T4 = lr(vr({ $os: w5, $os_version: x3, $browser: ne(u4, navigator.vendor, E3, S3), $device: ue(u4), $device_type: (c5 = u4, p5 = { userAgentDataPlatform: null == (n4 = navigator) || null == (n4 = n4.userAgentData) ? void 0 : n4.platform, maxTouchPoints: null == (o5 = navigator) ? void 0 : o5.maxTouchPoints, screenWidth: null == t3 || null == (a5 = t3.screen) ? void 0 : a5.width, screenHeight: null == t3 || null == (l5 = t3.screen) ? void 0 : l5.height, devicePixelRatio: null == t3 ? void 0 : t3.devicePixelRatio }, b4 = ue(c5), b4 === dt || b4 === ht || "Kobo" === b4 || "Kindle Fire" === b4 || b4 === zt ? ut : b4 === Ot || b4 === Ct || b4 === It || b4 === Ut ? "Console" : b4 === ct ? "Wearable" : b4 ? ot : "Android" === (null == p5 ? void 0 : p5.userAgentDataPlatform) && (null !== (f5 = null == p5 ? void 0 : p5.maxTouchPoints) && void 0 !== f5 ? f5 : 0) > 0 ? 600 > Math.min(null !== (_4 = null == p5 ? void 0 : p5.screenWidth) && void 0 !== _4 ? _4 : 0, null !== (g4 = null == p5 ? void 0 : p5.screenHeight) && void 0 !== g4 ? g4 : 0) / (null !== (m5 = null == p5 ? void 0 : p5.devicePixelRatio) && void 0 !== m5 ? m5 : 1) ? ot : ut : "Desktop"), $timezone: Js(), $timezone_offset: Ks() }), { $current_url: Fs(null == s3 ? void 0 : s3.href, y5, Ls), $host: null == s3 ? void 0 : s3.host, $pathname: null == s3 ? void 0 : s3.pathname, $raw_user_agent: u4.length > 1e3 ? u4.substring(0, 997) + "..." : u4, $browser_version: ae(u4, navigator.vendor, E3, S3), $browser_language: Vs(), $browser_language_prefix: (d5 = Vs(), "string" == typeof d5 ? d5.split("-")[0] : void 0), $screen_height: null == t3 ? void 0 : t3.screen.height, $screen_width: null == t3 ? void 0 : t3.screen.width, $viewport_height: null == t3 ? void 0 : t3.innerHeight, $viewport_width: null == t3 ? void 0 : t3.innerWidth, $lib: v3.LIB_NAME, $lib_version: v3.LIB_VERSION, $insert_id: Math.random().toString(36).substring(2, 10) + Math.random().toString(36).substring(2, 10), $time: Date.now() / 1e3 });
+        })(u4), E3 = null != (h5 = "undefined" != typeof navigator ? navigator : void 0) && h5.brave ? { brave: true } : {}, S3 = { detectGoogleSearchApp: r4 }, T4 = lr(vr({ $os: w5, $os_version: x3, $browser: ne(u4, navigator.vendor, E3, S3), $device: ue(u4), $device_type: (c5 = u4, p5 = { userAgentDataPlatform: null == (n4 = navigator) || null == (n4 = n4.userAgentData) ? void 0 : n4.platform, maxTouchPoints: null == (o5 = navigator) ? void 0 : o5.maxTouchPoints, screenWidth: null == t3 || null == (a5 = t3.screen) ? void 0 : a5.width, screenHeight: null == t3 || null == (l5 = t3.screen) ? void 0 : l5.height, devicePixelRatio: null == t3 ? void 0 : t3.devicePixelRatio }, b4 = ue(c5), b4 === dt || b4 === ht || "Kobo" === b4 || "Kindle Fire" === b4 || b4 === zt ? ut : b4 === Ot || b4 === Ct || b4 === It || b4 === Lt ? "Console" : b4 === ct ? "Wearable" : b4 ? ot : "Android" === (null == p5 ? void 0 : p5.userAgentDataPlatform) && (null !== (f5 = null == p5 ? void 0 : p5.maxTouchPoints) && void 0 !== f5 ? f5 : 0) > 0 ? 600 > Math.min(null !== (_4 = null == p5 ? void 0 : p5.screenWidth) && void 0 !== _4 ? _4 : 0, null !== (g4 = null == p5 ? void 0 : p5.screenHeight) && void 0 !== g4 ? g4 : 0) / (null !== (m5 = null == p5 ? void 0 : p5.devicePixelRatio) && void 0 !== m5 ? m5 : 1) ? ot : ut : "Desktop"), $timezone: Js(), $timezone_offset: Ks() }), { $current_url: Fs(null == s3 ? void 0 : s3.href, y5, Us), $host: null == s3 ? void 0 : s3.host, $pathname: null == s3 ? void 0 : s3.pathname, $raw_user_agent: u4.length > 1e3 ? u4.substring(0, 997) + "..." : u4, $browser_version: ae(u4, navigator.vendor, E3, S3), $browser_language: Vs(), $browser_language_prefix: (d5 = Vs(), "string" == typeof d5 ? d5.split("-")[0] : void 0), $screen_height: null == t3 ? void 0 : t3.screen.height, $screen_width: null == t3 ? void 0 : t3.screen.width, $viewport_height: null == t3 ? void 0 : t3.innerHeight, $viewport_width: null == t3 ? void 0 : t3.innerWidth, $lib: v3.LIB_NAME, $lib_version: v3.LIB_VERSION, $insert_id: Math.random().toString(36).substring(2, 10) + Math.random().toString(36).substring(2, 10), $time: Date.now() / 1e3 });
         return v3.SDK_DIST_CHANNEL && (T4.$sdk_dist_channel = v3.SDK_DIST_CHANNEL), T4;
       })(this.config.mask_personal_data_properties, this.config.custom_personal_data_properties, this.config.detect_google_search_app);
       if (this.sessionManager) {
@@ -8304,7 +8304,7 @@
       } catch (t4) {
         h4.$sdk_debug_error_capturing_properties = String(t4);
       }
-      if (this.requestRouter.region === Ro && (h4.$lib_custom_api_host = this.config.api_host), c4 = e4 !== ir || a4 ? e4 !== rr || a4 ? this.pageViewManager.doEvent() : this.pageViewManager.doPageLeave(n3) : this.pageViewManager.doPageView(n3, o4), h4 = lr(h4, c4), e4 === ir && r3 && (h4.title = r3.title), !L2(l4)) {
+      if (this.requestRouter.region === Ro && (h4.$lib_custom_api_host = this.config.api_host), c4 = e4 !== ir || a4 ? e4 !== rr || a4 ? this.pageViewManager.doEvent() : this.pageViewManager.doPageLeave(n3) : this.pageViewManager.doPageView(n3, o4), h4 = lr(h4, c4), e4 === ir && r3 && (h4.title = r3.title), !U(l4)) {
         var b3 = n3.getTime() - l4;
         h4.$duration = parseFloat((b3 / 1e3).toFixed(3));
       }
@@ -8321,7 +8321,7 @@
       if (void 0 === e4 && (e4 = true), void 0 === i4 && (i4 = false), !this.persistence || !this.On()) return t4;
       if (this.an && !i4) return t4;
       var s4 = this.persistence.get_initial_props(), n3 = null == (r4 = this.sessionPropsManager) ? void 0 : r4.getSetOnceProps(), o4 = lr({}, s4, n3 || {}, t4 || {}), a4 = this.config.sanitize_properties;
-      return a4 && (We.error(qo), o4 = a4(o4, "$set_once")), e4 && (this.an = true), U(o4) ? void 0 : o4;
+      return a4 && (We.error(qo), o4 = a4(o4, "$set_once")), e4 && (this.an = true), L2(o4) ? void 0 : o4;
     }
     register(t4, e4) {
       var i4;
@@ -8471,7 +8471,7 @@
       var e4, i4, r4, s4, n3, o4, a4, l4;
       if (We.info("reset"), !this.__loaded) return We.uninitializedWarning("posthog.reset");
       var u5, h4 = this.get_property(Qe), d4 = this.get_property(hi);
-      if (this.consent.reset(), null == (e4 = this.persistence) || e4.clear(), null == (i4 = this.sessionPersistence) || i4.clear(), L2(d4) || null == (u5 = this.persistence) || u5.register({ [hi]: d4 }), null == (r4 = this.surveys) || r4.reset(), null == (s4 = this.Tn) || s4.stop(), null == (n3 = this.featureFlags) || n3.reset(), null == (o4 = this.conversations) || o4.reset(), null == (a4 = this.persistence) || a4.set_property(Di, Xi), null == (l4 = this.sessionManager) || l4.resetSessionId(), this.dn = null, this.config.cookieless_mode === Ki) this.register_once({ distinct_id: Vi, $device_id: null }, "");
+      if (this.consent.reset(), null == (e4 = this.persistence) || e4.clear(), null == (i4 = this.sessionPersistence) || i4.clear(), U(d4) || null == (u5 = this.persistence) || u5.register({ [hi]: d4 }), null == (r4 = this.surveys) || r4.reset(), null == (s4 = this.Tn) || s4.stop(), null == (n3 = this.featureFlags) || n3.reset(), null == (o4 = this.conversations) || o4.reset(), null == (a4 = this.persistence) || a4.set_property(Di, Xi), null == (l4 = this.sessionManager) || l4.resetSessionId(), this.dn = null, this.config.cookieless_mode === Ki) this.register_once({ distinct_id: Vi, $device_id: null }, "");
       else {
         var v4 = this.config.get_device_id(xr());
         this.register_once({ distinct_id: v4, $device_id: t4 ? v4 : h4 }, "");
@@ -8507,7 +8507,7 @@
       return r4;
     }
     alias(t4, e4) {
-      return t4 === this.get_property(Xe) ? (We.critical("Attempting to create alias for existing People user - aborting."), -2) : this.Ln("posthog.alias") ? (L2(e4) && (e4 = this.get_distinct_id()), t4 !== e4 ? (this.An(Ze, t4), this.capture("$create_alias", { alias: t4, distinct_id: e4 })) : (We.warn("alias matches current distinct_id - skipping api call."), this.identify(t4), -1)) : void 0;
+      return t4 === this.get_property(Xe) ? (We.critical("Attempting to create alias for existing People user - aborting."), -2) : this.Ln("posthog.alias") ? (U(e4) && (e4 = this.get_distinct_id()), t4 !== e4 ? (this.An(Ze, t4), this.capture("$create_alias", { alias: t4, distinct_id: e4 })) : (We.warn("alias matches current distinct_id - skipping api call."), this.identify(t4), -1)) : void 0;
     }
     set_config(t4) {
       var e4 = f4({}, this.config);
@@ -8581,7 +8581,7 @@
     }
     On() {
       var t4, e4;
-      return !("never" === this.config.person_profiles || this.config.person_profiles === Zi && !this._isIdentified() && U(this.getGroups()) && (null == (t4 = this.persistence) || null == (t4 = t4.props) || !t4[Ze]) && (null == (e4 = this.persistence) || null == (e4 = e4.props) || !e4[Bi]));
+      return !("never" === this.config.person_profiles || this.config.person_profiles === Zi && !this._isIdentified() && L2(this.getGroups()) && (null == (t4 = this.persistence) || null == (t4 = t4.props) || !t4[Ze]) && (null == (e4 = this.persistence) || null == (e4 = e4.props) || !e4[Bi]));
     }
     En() {
       return true === this.config.capture_pageleave || "if_capture_pageview" === this.config.capture_pageleave && (true === this.config.capture_pageview || "history_change" === this.config.capture_pageview);
@@ -8614,7 +8614,7 @@
           l4 && (this.sessionRecording = this.rn(this.sessionRecording, new l4(this)), this.Sn && (null == (a4 = this.sessionRecording) || null == a4.onRemoteConfig || a4.onRemoteConfig(this.Sn)));
         }
         var u5, h4;
-        this.consent.optInOut(true), this.$n(), this.Cn(), null == (e4 = this.sessionRecording) || e4.startIfEnabledOrStop(), this.config.cookieless_mode == Ji && (null == (u5 = this.surveys) || u5.loadIfEnabled()), (L2(null == t4 ? void 0 : t4.captureEventName) || null != t4 && t4.captureEventName) && this.capture(null !== (h4 = null == t4 ? void 0 : t4.captureEventName) && void 0 !== h4 ? h4 : "$opt_in", null == t4 ? void 0 : t4.captureProperties, { send_instantly: true }), this.config.capture_pageview && this.In();
+        this.consent.optInOut(true), this.$n(), this.Cn(), null == (e4 = this.sessionRecording) || e4.startIfEnabledOrStop(), this.config.cookieless_mode == Ji && (null == (u5 = this.surveys) || u5.loadIfEnabled()), (U(null == t4 ? void 0 : t4.captureEventName) || null != t4 && t4.captureEventName) && this.capture(null !== (h4 = null == t4 ? void 0 : t4.captureEventName) && void 0 !== h4 ? h4 : "$opt_in", null == t4 ? void 0 : t4.captureProperties, { send_instantly: true }), this.config.capture_pageview && this.In();
       } else We.warn(Ho);
     }
     opt_out_capturing() {
@@ -8658,7 +8658,7 @@
           var s4 = "Event '" + t4.event + "' was rejected in beforeSend function";
           return Y(t4.event) ? We.warn(s4 + ". This can cause unexpected behavior.") : We.info(s4), null;
         }
-        i4.properties && !U(i4.properties) || We.warn("Event '" + t4.event + "' has no properties after beforeSend function, this is likely an error.");
+        i4.properties && !L2(i4.properties) || We.warn("Event '" + t4.event + "' has no properties after beforeSend function, this is likely an error.");
       }
       return i4;
     }
@@ -8677,8 +8677,8 @@
       return !e4 && (!!i4 || t4);
     }
   };
-  Zo.__defaultExtensionClasses = {}, Zo.qn = { trace: Lo = () => {
-  }, debug: Lo, info: Lo, warn: Lo, error: Lo, fatal: Lo }, (function(t4, e4) {
+  Zo.__defaultExtensionClasses = {}, Zo.qn = { trace: Uo = () => {
+  }, debug: Uo, info: Uo, warn: Uo, error: Uo, fatal: Uo }, (function(t4, e4) {
     for (var i4 = 0; e4.length > i4; i4++) t4.prototype[e4[i4]] = dr(t4.prototype[e4[i4]]);
   })(Zo, ["identify"]);
   var ta = class {
@@ -8706,15 +8706,15 @@
     var e4 = t4;
     do {
       e4 = e4.previousSibling;
-    } while (e4 && !Lr(e4));
+    } while (e4 && !Ur(e4));
     return e4;
   }
   function na(e4, i4) {
     var r4, s4, { e: n3, maskAllElementAttributes: o4, maskAllText: a4, elementAttributeIgnoreList: l4, elementsChainAsString: u5 } = i4;
-    if (!Lr(e4)) return { props: {} };
+    if (!Ur(e4)) return { props: {} };
     for (var h4 = [e4], d4 = e4; d4.parentNode && !jr(d4, "body"); ) if (Br(d4.parentNode)) h4.push(d4.parentNode.host), d4 = d4.parentNode.host;
     else {
-      if (!Lr(d4.parentNode)) break;
+      if (!Ur(d4.parentNode)) break;
       h4.push(d4.parentNode), d4 = d4.parentNode;
     }
     var v4, c4, p4 = [], _3 = {}, g3 = false, m4 = false;
@@ -8803,10 +8803,14 @@
     return N2(t4) && "clientX" in t4 && "clientY" in t4 && V2(t4.clientX) && V2(t4.clientY);
   }
   var ma = Ye("[Product Tours]");
-  var ba = ["$set_once", "$set"];
-  var ya = Ye("[SiteApps]");
-  var wa = "Error while initializing PostHog app with config id ";
-  function xa(t4, e4, i4) {
+  var ba = (t4) => {
+    var e4;
+    return !t4.config.disable_product_tours && !(null == (e4 = t4.persistence) || !e4.get_property(li));
+  };
+  var ya = ["$set_once", "$set"];
+  var wa = Ye("[SiteApps]");
+  var xa = "Error while initializing PostHog app with config id ";
+  function Ea(t4, e4, i4) {
     if (H2(t4)) return false;
     switch (i4) {
       case "exact":
@@ -8824,19 +8828,19 @@
         return false;
     }
   }
-  var Ea = class {
+  var Sa = class {
     constructor(t4) {
       this.jn = new bo(), this.Bn = (t5, e4) => this.Hn(t5, e4) && this.Un(t5, e4) && this.zn(t5, e4) && this.Vn(t5, e4), this.Hn = (t5, e4) => null == e4 || !e4.event || (null == t5 ? void 0 : t5.event) === (null == e4 ? void 0 : e4.event), this._instance = t4, this.Wn = /* @__PURE__ */ new Set(), this.Gn = /* @__PURE__ */ new Set();
     }
     init() {
       var t4, e4;
-      L2(null == (t4 = this._instance) ? void 0 : t4._addCaptureHook) || (null == (e4 = this._instance) || e4._addCaptureHook(((t5, e5) => {
+      U(null == (t4 = this._instance) ? void 0 : t4._addCaptureHook) || (null == (e4 = this._instance) || e4._addCaptureHook(((t5, e5) => {
         this.on(t5, e5);
       })));
     }
     register(t4) {
       var e4, i4;
-      if (!L2(null == (e4 = this._instance) ? void 0 : e4._addCaptureHook) && (t4.forEach(((t5) => {
+      if (!U(null == (e4 = this._instance) ? void 0 : e4._addCaptureHook) && (t4.forEach(((t5) => {
         var e5, i5;
         null == (e5 = this.Gn) || e5.add(t5), null == (i5 = t5.steps) || i5.forEach(((t6) => {
           var e6;
@@ -8873,7 +8877,7 @@
       if (null != e4 && e4.url) {
         var i4, r4 = null == t4 || null == (i4 = t4.properties) ? void 0 : i4.$current_url;
         if (!r4 || "string" != typeof r4) return false;
-        if (!xa(r4, e4.url, e4.url_matching || "contains")) return false;
+        if (!Ea(r4, e4.url, e4.url_matching || "contains")) return false;
       }
       return true;
     }
@@ -8884,20 +8888,20 @@
       var i4;
       if (null == e4 || !e4.href) return true;
       var r4 = this.Xn(t4);
-      if (r4.length > 0) return r4.some(((t5) => xa(t5.href, e4.href, e4.href_matching || "exact")));
+      if (r4.length > 0) return r4.some(((t5) => Ea(t5.href, e4.href, e4.href_matching || "exact")));
       var s4, n3 = (null == t4 || null == (i4 = t4.properties) ? void 0 : i4.$elements_chain) || "";
-      return !!n3 && xa((s4 = n3.match(/(?::|")href="(.*?)"/)) ? s4[1] : "", e4.href, e4.href_matching || "exact");
+      return !!n3 && Ea((s4 = n3.match(/(?::|")href="(.*?)"/)) ? s4[1] : "", e4.href, e4.href_matching || "exact");
     }
     Kn(t4, e4) {
       var i4;
       if (null == e4 || !e4.text) return true;
       var r4 = this.Xn(t4);
-      if (r4.length > 0) return r4.some(((t5) => xa(t5.text, e4.text, e4.text_matching || "exact") || xa(t5.$el_text, e4.text, e4.text_matching || "exact")));
+      if (r4.length > 0) return r4.some(((t5) => Ea(t5.text, e4.text, e4.text_matching || "exact") || Ea(t5.$el_text, e4.text, e4.text_matching || "exact")));
       var s4, n3, o4, a4 = (null == t4 || null == (i4 = t4.properties) ? void 0 : i4.$elements_chain) || "";
       return !!a4 && (s4 = (function(t5) {
         for (var e5, i5 = [], r5 = /(?::|")text="(.*?)"/g; !H2(e5 = r5.exec(t5)); ) i5.includes(e5[1]) || i5.push(e5[1]);
         return i5;
-      })(a4), n3 = e4.text, o4 = e4.text_matching || "exact", s4.some(((t5) => xa(t5, n3, o4))));
+      })(a4), n3 = e4.text, o4 = e4.text_matching || "exact", s4.some(((t5) => Ea(t5, n3, o4))));
     }
     Yn(t4, e4) {
       var i4, r4;
@@ -8923,7 +8927,7 @@
       }), {}), null == t4 ? void 0 : t4.properties);
     }
   };
-  var Sa = class {
+  var $a = class {
     constructor(t4) {
       this._instance = t4, this.es = /* @__PURE__ */ new Map(), this.ts = /* @__PURE__ */ new Map(), this.rs = /* @__PURE__ */ new Map();
     }
@@ -8953,14 +8957,14 @@
     }
     register(t4) {
       var e4;
-      L2(null == (e4 = this._instance) ? void 0 : e4._addCaptureHook) || (this.us(t4), this.hs(t4));
+      U(null == (e4 = this._instance) ? void 0 : e4._addCaptureHook) || (this.us(t4), this.hs(t4));
     }
     hs(t4) {
       var e4 = t4.filter(((t5) => {
         var e5, i4;
         return (null == (e5 = t5.conditions) ? void 0 : e5.actions) && (null == (i4 = t5.conditions) || null == (i4 = i4.actions) || null == (i4 = i4.values) ? void 0 : i4.length) > 0;
       }));
-      0 !== e4.length && (null == this.cs && (this.cs = new Ea(this._instance), this.cs.init(), this.cs.Qn(((t5) => {
+      0 !== e4.length && (null == this.cs && (this.cs = new Sa(this._instance), this.cs.init(), this.cs.Qn(((t5) => {
         this.onAction(t5);
       }))), e4.forEach(((t5) => {
         var e5, i4, r4, s4, n3;
@@ -9028,7 +9032,7 @@
       return this.cs;
     }
   };
-  var $a = class extends Sa {
+  var Ta = class extends $a {
     constructor(t4) {
       super(t4);
     }
@@ -9063,27 +9067,27 @@
       return this.getEventToItemsMap();
     }
   };
-  var Ta = "SDK is not enabled or survey functionality is not yet loaded";
-  var ka = "Disabled. Not loading surveys.";
-  var Ra = null != t3 && t3.location ? Ms(t3.location.hash, "__posthog") || Ms(location.hash, "state") : null;
-  var Pa = "_postHogToolbarParams";
-  var Oa = Ye("[Toolbar]");
-  var Ia = Ye("[FeatureFlags]");
-  var Ca = Ye("[FeatureFlags]", { debugEnabled: true });
-  var Aa = `" failed. Feature flags didn't load in time.`;
-  var Fa = (t4) => {
+  var ka = "SDK is not enabled or survey functionality is not yet loaded";
+  var Ra = "Disabled. Not loading surveys.";
+  var Pa = null != t3 && t3.location ? Ms(t3.location.hash, "__posthog") || Ms(location.hash, "state") : null;
+  var Oa = "_postHogToolbarParams";
+  var Ia = Ye("[Toolbar]");
+  var Ca = Ye("[FeatureFlags]");
+  var Aa = Ye("[FeatureFlags]", { debugEnabled: true });
+  var Fa = `" failed. Feature flags didn't load in time.`;
+  var Ma = (t4) => {
     for (var e4 = {}, i4 = 0; t4.length > i4; i4++) e4[t4[i4]] = true;
     return e4;
   };
-  var Ma = (t4) => {
+  var Da = (t4) => {
     var e4 = {};
     for (var [i4, r4] of ur(t4 || {})) r4 && (e4[i4] = r4);
     return e4;
   };
-  var Da = Ye("[Error tracking]");
-  var Na = "Refusing to render web experiment since the viewer is a likely bot";
+  var Na = Ye("[Error tracking]");
+  var La = "Refusing to render web experiment since the viewer is a likely bot";
   var Ua = { icontains: (e4, i4) => !!t3 && i4.href.toLowerCase().indexOf(e4.toLowerCase()) > -1, not_icontains: (e4, i4) => !!t3 && -1 === i4.href.toLowerCase().indexOf(e4.toLowerCase()), regex: (e4, i4) => !!t3 && Eo(i4.href, e4), not_regex: (e4, i4) => !!t3 && !Eo(i4.href, e4), exact: (t4, e4) => e4.href === t4, is_not: (t4, e4) => e4.href !== t4 };
-  var La = class _La {
+  var ja = class _ja {
     get qt() {
       return this._instance.config;
     }
@@ -9091,15 +9095,15 @@
       var e4 = this;
       this.getWebExperimentsAndEvaluateDisplayLogic = function(t5) {
         void 0 === t5 && (t5 = false), e4.getWebExperiments(((t6) => {
-          _La._s("retrieved web experiments from the server"), e4.ws = /* @__PURE__ */ new Map(), t6.forEach(((t7) => {
+          _ja._s("retrieved web experiments from the server"), e4.ws = /* @__PURE__ */ new Map(), t6.forEach(((t7) => {
             if (t7.feature_flag_key) {
               var i4;
-              e4.ws && (_La._s("setting flag key ", t7.feature_flag_key, " to web experiment ", t7), null == (i4 = e4.ws) || i4.set(t7.feature_flag_key, t7));
+              e4.ws && (_ja._s("setting flag key ", t7.feature_flag_key, " to web experiment ", t7), null == (i4 = e4.ws) || i4.set(t7.feature_flag_key, t7));
               var r4 = e4._instance.getFeatureFlag(t7.feature_flag_key);
               j3(r4) && t7.variants[r4] && e4.xs(t7.name, r4, t7.variants[r4].transforms);
             } else if (t7.variants) for (var s4 in t7.variants) {
               var n3 = t7.variants[s4];
-              _La.ks(n3) && e4.xs(t7.name, s4, n3.transforms);
+              _ja.ks(n3) && e4.xs(t7.name, s4, n3.transforms);
             }
           }));
         }), t5);
@@ -9110,10 +9114,10 @@
     initialize() {
     }
     onFeatureFlags(t4) {
-      if (this._is_bot()) _La._s(Na);
+      if (this._is_bot()) _ja._s(La);
       else if (!this.qt.disable_web_experiments) {
         if (H2(this.ws)) return this.ws = /* @__PURE__ */ new Map(), this.loadIfEnabled(), void this.previewWebExperiment();
-        _La._s("applying feature flags", t4), t4.forEach(((t5) => {
+        _ja._s("applying feature flags", t4), t4.forEach(((t5) => {
           var e4;
           if (this.ws && null != (e4 = this.ws) && e4.has(t5)) {
             var i4, r4 = this._instance.getFeatureFlag(t5), s4 = null == (i4 = this.ws) ? void 0 : i4.get(t5);
@@ -9123,10 +9127,10 @@
       }
     }
     previewWebExperiment() {
-      var t4 = _La.getWindowLocation();
+      var t4 = _ja.getWindowLocation();
       if (null != t4 && t4.search) {
         var e4 = As(null == t4 ? void 0 : t4.search, "__experiment_id"), i4 = As(null == t4 ? void 0 : t4.search, "__experiment_variant");
-        e4 && i4 && (_La._s("previewing web experiments " + e4 + " && " + i4), this.getWebExperiments(((t5) => {
+        e4 && i4 && (_ja._s("previewing web experiments " + e4 + " && " + i4), this.getWebExperiments(((t5) => {
           this.Ss(parseInt(e4), i4, t5);
         }), false, true));
       }
@@ -9142,15 +9146,15 @@
     }
     Ss(t4, e4, i4) {
       var r4 = i4.filter(((e5) => e5.id === t4));
-      r4 && r4.length > 0 && (_La._s("Previewing web experiment [" + r4[0].name + "] with variant [" + e4 + "]"), this.xs(r4[0].name, e4, r4[0].variants[e4].transforms));
+      r4 && r4.length > 0 && (_ja._s("Previewing web experiment [" + r4[0].name + "] with variant [" + e4 + "]"), this.xs(r4[0].name, e4, r4[0].variants[e4].transforms));
     }
     static ks(t4) {
-      return !H2(t4.conditions) && _La.Cs(t4) && _La.Is(t4);
+      return !H2(t4.conditions) && _ja.Cs(t4) && _ja.Is(t4);
     }
     static Cs(t4) {
       var e4;
       if (H2(t4.conditions) || H2(null == (e4 = t4.conditions) ? void 0 : e4.url)) return true;
-      var i4, r4, s4, n3 = _La.getWindowLocation();
+      var i4, r4, s4, n3 = _ja.getWindowLocation();
       return !!n3 && (null == (i4 = t4.conditions) || !i4.url || Ua[null !== (r4 = null == (s4 = t4.conditions) ? void 0 : s4.urlMatchType) && void 0 !== r4 ? r4 : "icontains"](t4.conditions.url, n3));
     }
     static getWindowLocation() {
@@ -9171,25 +9175,25 @@
       We.info("[WebExperiments] " + t4, i4);
     }
     xs(t4, e4, i4) {
-      this._is_bot() ? _La._s(Na) : "control" !== e4 ? i4.forEach(((i5) => {
+      this._is_bot() ? _ja._s(La) : "control" !== e4 ? i4.forEach(((i5) => {
         if (i5.selector) {
           var r4;
-          _La._s("applying transform of variant " + e4 + " for experiment " + t4 + " ", i5);
+          _ja._s("applying transform of variant " + e4 + " for experiment " + t4 + " ", i5);
           var s4 = null == (r4 = document) ? void 0 : r4.querySelectorAll(i5.selector);
           null == s4 || s4.forEach(((t5) => {
             var e5 = t5;
             i5.html && (e5.innerHTML = i5.html), i5.css && e5.setAttribute("style", i5.css);
           }));
         }
-      })) : _La._s("Control variants leave the page unmodified.");
+      })) : _ja._s("Control variants leave the page unmodified.");
     }
     _is_bot() {
       return i3 && this._instance ? xo(i3, this.qt.custom_blocked_useragents) : void 0;
     }
   };
-  var ja = Ye("[Conversations]");
-  var za = "Conversations not available yet.";
-  var Ba = { featureFlags: class {
+  var za = Ye("[Conversations]");
+  var Ba = "Conversations not available yet.";
+  var Ha = { featureFlags: class {
     constructor(t4) {
       this.Ts = false, this.Es = false, this.Ms = false, this.Rs = false, this.Ps = false, this.Os = false, this.Ls = false, this.As = false, this._instance = t4, this.featureFlagEventHandlers = [];
     }
@@ -9207,13 +9211,13 @@
       return null !== (t4 = null == (e4 = this.Si) ? void 0 : e4.Mr(this.qt.feature_flag_cache_ttl_ms)) && void 0 !== t4 && t4;
     }
     Ds() {
-      return !!this.Ns() && (this.As || this.Ms || (this.As = true, Ia.warn("Feature flag cache is stale, triggering refresh..."), this.reloadFeatureFlags()), true);
+      return !!this.Ns() && (this.As || this.Ms || (this.As = true, Ca.warn("Feature flag cache is stale, triggering refresh..."), this.reloadFeatureFlags()), true);
     }
     $s() {
       var t4, e4 = null !== (t4 = this.qt.evaluation_contexts) && void 0 !== t4 ? t4 : this.qt.evaluation_environments;
-      return !this.qt.evaluation_environments || this.qt.evaluation_contexts || this.Ls || (Ia.warn("evaluation_environments is deprecated. Use evaluation_contexts instead. evaluation_environments will be removed in a future version."), this.Ls = true), null != e4 && e4.length ? e4.filter(((t5) => {
+      return !this.qt.evaluation_environments || this.qt.evaluation_contexts || this.Ls || (Ca.warn("evaluation_environments is deprecated. Use evaluation_contexts instead. evaluation_environments will be removed in a future version."), this.Ls = true), null != e4 && e4.length ? e4.filter(((t5) => {
         var e5 = t5 && "string" == typeof t5 && t5.trim().length > 0;
-        return e5 || Ia.error("Invalid evaluation context found:", t5, "Expected non-empty string"), e5;
+        return e5 || Ca.error("Invalid evaluation context found:", t5, "Expected non-empty string"), e5;
       })) : [];
     }
     qs() {
@@ -9221,12 +9225,12 @@
     }
     js() {
       var t4 = this.qt.flag_keys;
-      if (!L2(t4)) {
+      if (!U(t4)) {
         if (M(t4)) return t4.filter(((t5) => {
           var e4 = t5 && "string" == typeof t5 && t5.trim().length > 0;
-          return e4 || Ia.error("Invalid flag key found:", t5, "Expected non-empty string"), e4;
+          return e4 || Ca.error("Invalid flag key found:", t5, "Expected non-empty string"), e4;
         }));
-        Ia.error("Invalid flag_keys found:", t4, "Expected array of non-empty strings");
+        Ca.error("Invalid flag_keys found:", t4, "Expected array of non-empty strings");
       }
     }
     initialize() {
@@ -9240,7 +9244,7 @@
       var r4 = null != i4 && i4.merge ? this.getFlagVariants() : {}, s4 = null != i4 && i4.merge ? this.getFlagPayloads() : {}, n3 = f4({}, r4, t4), o4 = f4({}, s4, e4), a4 = {};
       for (var [l4, u5] of Object.entries(n3)) {
         var h4 = "string" == typeof u5;
-        a4[l4] = { key: l4, enabled: !!h4 || Boolean(u5), variant: h4 ? u5 : void 0, reason: void 0, metadata: L2(null == o4 ? void 0 : o4[l4]) ? void 0 : { id: 0, version: void 0, description: void 0, payload: o4[l4] } };
+        a4[l4] = { key: l4, enabled: !!h4 || Boolean(u5), variant: h4 ? u5 : void 0, reason: void 0, metadata: U(null == o4 ? void 0 : o4[l4]) ? void 0 : { id: 0, version: void 0, description: void 0, payload: o4[l4] } };
       }
       this.receivedFeatureFlags({ flags: a4 });
     }
@@ -9255,22 +9259,22 @@
       if (!i4 && !e4) return t4 || {};
       var r4 = lr({}, t4 || {}), s4 = [.../* @__PURE__ */ new Set([...Object.keys(i4 || {}), ...Object.keys(e4 || {})])];
       for (var n3 of s4) {
-        var o4, a4, l4 = r4[n3], u5 = null == e4 ? void 0 : e4[n3], h4 = L2(u5) ? null !== (o4 = null == l4 ? void 0 : l4.enabled) && void 0 !== o4 && o4 : !!u5, d4 = L2(u5) ? l4.variant : "string" == typeof u5 ? u5 : void 0, v4 = null == i4 ? void 0 : i4[n3], c4 = f4({}, l4, { enabled: h4, variant: h4 ? null != d4 ? d4 : null == l4 ? void 0 : l4.variant : void 0 });
+        var o4, a4, l4 = r4[n3], u5 = null == e4 ? void 0 : e4[n3], h4 = U(u5) ? null !== (o4 = null == l4 ? void 0 : l4.enabled) && void 0 !== o4 && o4 : !!u5, d4 = U(u5) ? l4.variant : "string" == typeof u5 ? u5 : void 0, v4 = null == i4 ? void 0 : i4[n3], c4 = f4({}, l4, { enabled: h4, variant: h4 ? null != d4 ? d4 : null == l4 ? void 0 : l4.variant : void 0 });
         h4 !== (null == l4 ? void 0 : l4.enabled) && (c4.original_enabled = null == l4 ? void 0 : l4.enabled), d4 !== (null == l4 ? void 0 : l4.variant) && (c4.original_variant = null == l4 ? void 0 : l4.variant), v4 && (c4.metadata = f4({}, null == l4 ? void 0 : l4.metadata, { payload: v4, original_payload: null == l4 || null == (a4 = l4.metadata) ? void 0 : a4.payload })), r4[n3] = c4;
       }
-      return this.Ts || (Ia.warn(" Overriding feature flag details!", { flagDetails: t4, overriddenPayloads: i4, finalDetails: r4 }), this.Ts = true), r4;
+      return this.Ts || (Ca.warn(" Overriding feature flag details!", { flagDetails: t4, overriddenPayloads: i4, finalDetails: r4 }), this.Ts = true), r4;
     }
     getFlagVariants() {
       var t4 = this.Fs(mi), e4 = this.Fs(Si);
       if (!e4) return t4 || {};
       for (var i4 = lr({}, t4), r4 = Object.keys(e4), s4 = 0; r4.length > s4; s4++) i4[r4[s4]] = e4[r4[s4]];
-      return this.Ts || (Ia.warn(" Overriding feature flags!", { enabledFlags: t4, overriddenFlags: e4, finalFlags: i4 }), this.Ts = true), i4;
+      return this.Ts || (Ca.warn(" Overriding feature flags!", { enabledFlags: t4, overriddenFlags: e4, finalFlags: i4 }), this.Ts = true), i4;
     }
     getFlagPayloads() {
       var t4 = this.Fs(xi), e4 = this.Fs($i);
       if (!e4) return t4 || {};
       for (var i4 = lr({}, t4 || {}), r4 = Object.keys(e4), s4 = 0; r4.length > s4; s4++) i4[r4[s4]] = e4[r4[s4]];
-      return this.Ts || (Ia.warn(" Overriding feature flag payloads!", { flagPayloads: t4, overriddenPayloads: e4, finalPayloads: i4 }), this.Ts = true), i4;
+      return this.Ts || (Ca.warn(" Overriding feature flag payloads!", { flagPayloads: t4, overriddenPayloads: e4, finalPayloads: i4 }), this.Ts = true), i4;
     }
     reloadFeatureFlags() {
       this.Rs || this.qt.advanced_disable_feature_flags || this.Bs || (this._instance.ln.emit("featureFlagsReloading", true), this.Bs = setTimeout((() => {
@@ -9294,9 +9298,9 @@
       if (this.Us(), !this._instance.Kr()) if (this.Ms) this.Ps = true;
       else {
         var i4 = this.qt.token, r4 = this.Fs(Qe), s4 = { token: i4, distinct_id: this._instance.get_distinct_id(), groups: this._instance.getGroups(), $anon_distinct_id: this.$anon_distinct_id, person_properties: f4({}, (null == (e4 = this.Si) ? void 0 : e4.get_initial_props()) || {}, this.Fs(Ti) || {}), group_properties: this.Fs(ki), timezone: Js() };
-        B3(r4) || L2(r4) || (s4.$device_id = r4), (null != t4 && t4.disableFlags || this.qt.advanced_disable_feature_flags) && (s4.disable_flags = true), this.qs() && (s4.evaluation_contexts = this.$s());
+        B3(r4) || U(r4) || (s4.$device_id = r4), (null != t4 && t4.disableFlags || this.qt.advanced_disable_feature_flags) && (s4.disable_flags = true), this.qs() && (s4.evaluation_contexts = this.$s());
         var n3 = this.js();
-        L2(n3) || (s4.flag_keys = n3);
+        U(n3) || (s4.flag_keys = n3);
         var o4 = !!this.qt.advanced_only_evaluate_survey_feature_flags, a4 = this._instance.requestRouter.endpointFor("flags", "/flags/?v=2" + (this.qt.advanced_only_evaluate_survey_feature_flags ? "&only_evaluate_survey_feature_flags=true" : ""));
         this.Ms = true, this._instance._send_request({ method: "POST", url: a4, data: s4, compression: this.qt.disable_compression ? void 0 : wn.Base64, timeout: this.qt.feature_flag_request_timeout_ms, callback: (t5) => {
           var e5, i5, r5, n4 = true;
@@ -9305,7 +9309,7 @@
             var a5 = [];
             t5.error ? t5.error instanceof Error ? a5.push("AbortError" === t5.error.name ? "timeout" : "connection_error") : a5.push("unknown_error") : 200 !== t5.statusCode && a5.push("api_error_" + t5.statusCode), null != (e5 = t5.json) && e5.errorsWhileComputingFlags && a5.push("errors_while_computing_flags");
             var l4, u5 = !(null == (i5 = t5.json) || null == (i5 = i5.quotaLimited) || !i5.includes("feature_flags"));
-            if (u5 && a5.push("quota_limited"), null == (r5 = this.Si) || r5.register({ [Fi]: a5 }), u5) Ia.warn("You have hit your feature flags quota limit, and will not be able to load feature flags until the quota is reset.  Please visit https://posthog.com/docs/billing/limits-alerts to learn more.");
+            if (u5 && a5.push("quota_limited"), null == (r5 = this.Si) || r5.register({ [Fi]: a5 }), u5) Ca.warn("You have hit your feature flags quota limit, and will not be able to load feature flags until the quota is reset.  Please visit https://posthog.com/docs/billing/limits-alerts to learn more.");
             else s4.disable_flags || this.receivedFeatureFlags(null !== (l4 = t5.json) && void 0 !== l4 ? l4 : {}, n4, { partialResponse: o4 }), this.Ps && (this.Ps = false, this.Hs());
           }
         } });
@@ -9318,7 +9322,7 @@
           var r4 = this.getFeatureFlagResult(t4, e4);
           return null !== (i4 = null == r4 ? void 0 : r4.variant) && void 0 !== i4 ? i4 : null == r4 ? void 0 : r4.enabled;
         }
-      } else Ia.warn('getFeatureFlag for key "' + t4 + Aa);
+      } else Ca.warn('getFeatureFlag for key "' + t4 + Fa);
     }
     getFeatureFlagDetails(t4) {
       return this.getFlagsWithDetails()[t4];
@@ -9339,28 +9343,28 @@
             var c4, p4, f5, _3, g3, m4, b3, y4, w4, x3;
             M(u5[t4]) ? u5[t4].push(o4) : u5[t4] = [o4], null == (c4 = this.Si) || c4.register({ [Ci]: u5 });
             var E3 = this.getFeatureFlagDetails(t4), S3 = [...null !== (p4 = this.Fs(Fi)) && void 0 !== p4 ? p4 : []];
-            L2(s4) && S3.push("flag_missing");
+            U(s4) && S3.push("flag_missing");
             var T4 = { $feature_flag: t4, $feature_flag_response: s4, $feature_flag_payload: n3 || null, $feature_flag_request_id: a4, $feature_flag_evaluated_at: l4, $feature_flag_bootstrapped_response: (null == (f5 = this.qt.bootstrap) || null == (f5 = f5.featureFlags) ? void 0 : f5[t4]) || null, $feature_flag_bootstrapped_payload: (null == (_3 = this.qt.bootstrap) || null == (_3 = _3.featureFlagPayloads) ? void 0 : _3[t4]) || null, $used_bootstrap_value: !this.Os };
-            L2(null == E3 || null == (g3 = E3.metadata) ? void 0 : g3.version) || (T4.$feature_flag_version = E3.metadata.version);
+            U(null == E3 || null == (g3 = E3.metadata) ? void 0 : g3.version) || (T4.$feature_flag_version = E3.metadata.version);
             var k4, R4 = null !== (m4 = null == E3 || null == (b3 = E3.reason) ? void 0 : b3.description) && void 0 !== m4 ? m4 : null == E3 || null == (y4 = E3.reason) ? void 0 : y4.code;
-            R4 && (T4.$feature_flag_reason = R4), null != E3 && null != (w4 = E3.metadata) && w4.id && (T4.$feature_flag_id = E3.metadata.id), L2(null == E3 ? void 0 : E3.original_variant) && L2(null == E3 ? void 0 : E3.original_enabled) || (T4.$feature_flag_original_response = L2(E3.original_variant) ? E3.original_enabled : E3.original_variant), null != E3 && null != (x3 = E3.metadata) && x3.original_payload && (T4.$feature_flag_original_payload = null == E3 || null == (k4 = E3.metadata) ? void 0 : k4.original_payload), S3.length && (T4.$feature_flag_error = S3.join(",")), this._instance.capture("$feature_flag_called", T4);
+            R4 && (T4.$feature_flag_reason = R4), null != E3 && null != (w4 = E3.metadata) && w4.id && (T4.$feature_flag_id = E3.metadata.id), U(null == E3 ? void 0 : E3.original_variant) && U(null == E3 ? void 0 : E3.original_enabled) || (T4.$feature_flag_original_response = U(E3.original_variant) ? E3.original_enabled : E3.original_variant), null != E3 && null != (x3 = E3.metadata) && x3.original_payload && (T4.$feature_flag_original_payload = null == E3 || null == (k4 = E3.metadata) ? void 0 : k4.original_payload), S3.length && (T4.$feature_flag_error = S3.join(",")), this._instance.capture("$feature_flag_called", T4);
           }
           if (r4) {
             var P3 = n3;
-            if (!L2(n3)) try {
+            if (!U(n3)) try {
               P3 = JSON.parse(n3);
             } catch (t5) {
             }
             return { key: t4, enabled: !!s4, variant: "string" == typeof s4 ? s4 : void 0, payload: P3 };
           }
         }
-      } else Ia.warn('getFeatureFlagResult for key "' + t4 + Aa);
+      } else Ca.warn('getFeatureFlagResult for key "' + t4 + Fa);
     }
     getRemoteConfigPayload(t4, e4) {
       var i4 = this.qt.token, r4 = { distinct_id: this._instance.get_distinct_id(), token: i4 };
       this.qs() && (r4.evaluation_contexts = this.$s());
       var s4 = this.js();
-      L2(s4) || (r4.flag_keys = s4), this._instance._send_request({ method: "POST", url: this._instance.requestRouter.endpointFor("flags", "/flags/?v=2"), data: r4, compression: this.qt.disable_compression ? void 0 : wn.Base64, timeout: this.qt.feature_flag_request_timeout_ms, callback(i5) {
+      U(s4) || (r4.flag_keys = s4), this._instance._send_request({ method: "POST", url: this._instance.requestRouter.endpointFor("flags", "/flags/?v=2"), data: r4, compression: this.qt.disable_compression ? void 0 : wn.Base64, timeout: this.qt.feature_flag_request_timeout_ms, callback(i5) {
         var r5, s5 = null == (r5 = i5.json) ? void 0 : r5.featureFlagPayloads;
         e4((null == s5 ? void 0 : s5[t4]) || void 0);
       } });
@@ -9369,9 +9373,9 @@
       if (void 0 === e4 && (e4 = {}), !e4.fresh || this.Os) {
         if (this.Es || this.getFlags() && this.getFlags().length > 0) {
           var i4 = this.getFeatureFlag(t4, e4);
-          return L2(i4) ? void 0 : !!i4;
+          return U(i4) ? void 0 : !!i4;
         }
-        Ia.warn('isFeatureEnabled for key "' + t4 + Aa);
+        Ca.warn('isFeatureEnabled for key "' + t4 + Fa);
       }
     }
     addFeatureFlagsHandler(t4) {
@@ -9397,12 +9401,12 @@
             })).map(((t7) => {
               var i6;
               return [t7, null == (i6 = e6[t7].metadata) ? void 0 : i6.payload];
-            })))) : Ia.warn("Using an older version of the feature flags endpoint. Please upgrade your PostHog server to the latest version"), t6;
+            })))) : Ca.warn("Using an older version of the feature flags endpoint. Please upgrade your PostHog server to the latest version"), t6;
           })(t5), a4 = o4.flags, l4 = o4.featureFlags, u5 = o4.featureFlagPayloads;
           if (l4) {
             var h4 = t5.requestId, d4 = t5.evaluatedAt;
             if (M(l4)) {
-              Ia.warn("v1 of the feature flags endpoint is deprecated. Please use the latest version.");
+              Ca.warn("v1 of the feature flags endpoint is deprecated. Please use the latest version.");
               var v4 = {};
               if (l4) for (var c4 = 0; l4.length > c4; c4++) v4[l4[c4]] = true;
               e5 && e5.register({ [bi]: l4, [mi]: v4 });
@@ -9425,38 +9429,38 @@
                   return m4.has(e6);
                 }))));
               } else p4 = f4({}, i5, p4), _3 = f4({}, r5, _3), g3 = f4({}, s5, g3);
-              e5 && e5.register(f4({ [bi]: Object.keys(Ma(p4)), [mi]: p4 || {}, [xi]: _3 || {}, [wi]: g3 || {} }, h4 ? { [Ei]: h4 } : {}, d4 ? { [Mi]: d4 } : {}));
+              e5 && e5.register(f4({ [bi]: Object.keys(Da(p4)), [mi]: p4 || {}, [xi]: _3 || {}, [wi]: g3 || {} }, h4 ? { [Ei]: h4 } : {}, d4 ? { [Mi]: d4 } : {}));
             }
           }
         })(t4, this.Si, r4, s4, n3, i4), e4 || (this.As = false), this.zs(e4);
       }
     }
     override(t4, e4) {
-      void 0 === e4 && (e4 = false), Ia.warn("override is deprecated. Please use overrideFeatureFlags instead."), this.overrideFeatureFlags({ flags: t4, suppressWarning: e4 });
+      void 0 === e4 && (e4 = false), Ca.warn("override is deprecated. Please use overrideFeatureFlags instead."), this.overrideFeatureFlags({ flags: t4, suppressWarning: e4 });
     }
     overrideFeatureFlags(t4) {
-      if (!this._instance.__loaded || !this.Si) return Ia.uninitializedWarning("posthog.featureFlags.overrideFeatureFlags");
-      if (false === t4) return this.Si.unregister(Si), this.Si.unregister($i), this.zs(), Ca.info("All overrides cleared");
+      if (!this._instance.__loaded || !this.Si) return Ca.uninitializedWarning("posthog.featureFlags.overrideFeatureFlags");
+      if (false === t4) return this.Si.unregister(Si), this.Si.unregister($i), this.zs(), Aa.info("All overrides cleared");
       if (M(t4)) {
-        var e4 = Fa(t4);
-        return this.Si.register({ [Si]: e4 }), this.zs(), Ca.info("Flag overrides set", { flags: t4 });
+        var e4 = Ma(t4);
+        return this.Si.register({ [Si]: e4 }), this.zs(), Aa.info("Flag overrides set", { flags: t4 });
       }
       if (t4 && "object" == typeof t4 && ("flags" in t4 || "payloads" in t4)) {
         var i4, r4 = t4;
         if (this.Ts = Boolean(null !== (i4 = r4.suppressWarning) && void 0 !== i4 && i4), "flags" in r4) {
-          if (false === r4.flags) this.Si.unregister(Si), Ca.info("Flag overrides cleared");
+          if (false === r4.flags) this.Si.unregister(Si), Aa.info("Flag overrides cleared");
           else if (r4.flags) {
             if (M(r4.flags)) {
-              var s4 = Fa(r4.flags);
+              var s4 = Ma(r4.flags);
               this.Si.register({ [Si]: s4 });
             } else this.Si.register({ [Si]: r4.flags });
-            Ca.info("Flag overrides set", { flags: r4.flags });
+            Aa.info("Flag overrides set", { flags: r4.flags });
           }
         }
-        return "payloads" in r4 && (false === r4.payloads ? (this.Si.unregister($i), Ca.info("Payload overrides cleared")) : r4.payloads && (this.Si.register({ [$i]: r4.payloads }), Ca.info("Payload overrides set", { payloads: r4.payloads }))), void this.zs();
+        return "payloads" in r4 && (false === r4.payloads ? (this.Si.unregister($i), Aa.info("Payload overrides cleared")) : r4.payloads && (this.Si.register({ [$i]: r4.payloads }), Aa.info("Payload overrides set", { payloads: r4.payloads }))), void this.zs();
       }
-      if (t4 && "object" == typeof t4) return this.Si.register({ [Si]: t4 }), this.zs(), Ca.info("Flag overrides set", { flags: t4 });
-      Ia.warn("Invalid overrideOptions provided to overrideFeatureFlags", { overrideOptions: t4 });
+      if (t4 && "object" == typeof t4) return this.Si.register({ [Si]: t4 }), this.zs(), Aa.info("Flag overrides set", { flags: t4 });
+      Ca.warn("Invalid overrideOptions provided to overrideFeatureFlags", { overrideOptions: t4 });
     }
     onFeatureFlags(t4) {
       if (this.addFeatureFlagsHandler(t4), this.Es) {
@@ -9469,7 +9473,7 @@
       var r4, s4 = (this.Fs(yi) || []).find(((e5) => e5.flagKey === t4)), n3 = { ["$feature_enrollment/" + t4]: e4 }, o4 = { $feature_flag: t4, $feature_enrollment: e4, $set: n3 };
       s4 && (o4.$early_access_feature_name = s4.name), i4 && (o4.$feature_enrollment_stage = i4), this._instance.capture("$feature_enrollment_update", o4), this.setPersonPropertiesForFlags(n3, false);
       var a4 = f4({}, this.getFlagVariants(), { [t4]: e4 });
-      null == (r4 = this.Si) || r4.register({ [bi]: Object.keys(Ma(a4)), [mi]: a4 }), this.zs();
+      null == (r4 = this.Si) || r4.register({ [bi]: Object.keys(Da(a4)), [mi]: a4 }), this.zs();
     }
     getEarlyAccessFeatures(t4, e4, i4) {
       void 0 === e4 && (e4 = false);
@@ -9517,7 +9521,7 @@
       this.Es = false, this.Ms = false, this.Rs = false, this.Ps = false, this.Os = false, this.$anon_distinct_id = void 0, this.Us(), this.Ts = false;
     }
   } };
-  var Ha = { sessionRecording: class {
+  var Va = { sessionRecording: class {
     get qt() {
       return this._instance.config;
     }
@@ -9546,7 +9550,7 @@
     startIfEnabledOrStop(t4) {
       var e4;
       if (!this.Qs || null == (e4 = this.Ws) || !e4.isStarted) {
-        var i4 = !L2(Object.assign) && !L2(Array.from);
+        var i4 = !U(Object.assign) && !U(Array.from);
         this.Qs && i4 ? (this.Js(t4), fa.info("starting")) : (this.Gs = ha, this.stopRecording());
       }
     }
@@ -9580,7 +9584,7 @@
           var e5, i5 = false === t4.sessionRecording ? void 0 : t4.sessionRecording, s5 = this.ro(null == (e5 = this.qt.session_recording) ? void 0 : e5.sampleRate, "session_recording.sampleRate"), n3 = this.ro(null == i5 ? void 0 : i5.sampleRate, "remote config sampleRate"), o4 = null != s5 ? s5 : n3;
           H2(o4) && this.eo();
           var a4 = null == i5 ? void 0 : i5.minimumDurationMilliseconds;
-          r4.register({ [hi]: f4({ cache_timestamp: Date.now(), enabled: !!i5 }, i5, { networkPayloadCapture: f4({ capturePerformance: t4.capturePerformance }, null == i5 ? void 0 : i5.networkPayloadCapture), canvasRecording: { enabled: null == i5 ? void 0 : i5.recordCanvas, fps: null == i5 ? void 0 : i5.canvasFps, quality: null == i5 ? void 0 : i5.canvasQuality }, sampleRate: o4, minimumDurationMilliseconds: L2(a4) ? null : a4, endpoint: null == i5 ? void 0 : i5.endpoint, triggerMatchType: null == i5 ? void 0 : i5.triggerMatchType, masking: null == i5 ? void 0 : i5.masking, urlTriggers: null == i5 ? void 0 : i5.urlTriggers, version: null == i5 ? void 0 : i5.version, triggerGroups: null == i5 ? void 0 : i5.triggerGroups }) });
+          r4.register({ [hi]: f4({ cache_timestamp: Date.now(), enabled: !!i5 }, i5, { networkPayloadCapture: f4({ capturePerformance: t4.capturePerformance }, null == i5 ? void 0 : i5.networkPayloadCapture), canvasRecording: { enabled: null == i5 ? void 0 : i5.recordCanvas, fps: null == i5 ? void 0 : i5.canvasFps, quality: null == i5 ? void 0 : i5.canvasQuality }, sampleRate: o4, minimumDurationMilliseconds: U(a4) ? null : a4, endpoint: null == i5 ? void 0 : i5.endpoint, triggerMatchType: null == i5 ? void 0 : i5.triggerMatchType, masking: null == i5 ? void 0 : i5.masking, urlTriggers: null == i5 ? void 0 : i5.urlTriggers, version: null == i5 ? void 0 : i5.version, triggerGroups: null == i5 ? void 0 : i5.triggerGroups }) });
         };
         s4(), null == (e4 = this.Zs) || e4.call(this), this.Zs = null == (i4 = this._instance.sessionManager) ? void 0 : i4.onSessionId(s4);
       }
@@ -9641,7 +9645,7 @@
       return !(null == (i4 = this.Ws) || !i4.tryAddCustomEvent(t4, e4));
     }
   } };
-  var Va = { autocapture: class {
+  var qa = { autocapture: class {
     constructor(t4) {
       this.so = false, this.oo = null, this.ao = false, this.instance = t4, this.rageclicks = new ta(t4.config.rageclick), this.lo = null;
     }
@@ -9718,7 +9722,7 @@
           var { parentIsUsefulElement: d5, targetElementList: v4 } = ns(e5, s5);
           if (!(function(t4, e6) {
             var i6 = null == e6 ? void 0 : e6.element_allowlist;
-            if (L2(i6)) return true;
+            if (U(i6)) return true;
             var r6, s6 = function(t5) {
               if (i6.some(((e7) => t5.tagName.toLowerCase() === e7))) return { v: true };
             };
@@ -9869,7 +9873,7 @@
     }
     Mo(e4, i4) {
       var r4 = this.instance.scrollManager.scrollY(), s4 = this.instance.scrollManager.scrollX(), n3 = this.instance.scrollManager.scrollElement(), o4 = (function(e5, i5, r5) {
-        for (var s5 = e5; s5 && Lr(s5) && !jr(s5, "body"); ) {
+        for (var s5 = e5; s5 && Ur(s5) && !jr(s5, "body"); ) {
           if (s5 === r5) return false;
           if (P2(i5, null == t3 ? void 0 : t3.getComputedStyle(s5).position)) return true;
           s5 = Xr(s5);
@@ -9880,24 +9884,24 @@
     }
     Mt(t4, e4) {
       var i4;
-      if (void 0 === e4 && (e4 = "click"), !Ur(t4.target) && ga(t4)) {
+      if (void 0 === e4 && (e4 = "click"), !Lr(t4.target) && ga(t4)) {
         var r4 = this.Mo(t4, e4);
         null != (i4 = this.rageclicks) && i4.isRageClick(t4.clientX, t4.clientY, (/* @__PURE__ */ new Date()).getTime()) && rs(Yr(t4), this.instance.config.rageclick) && this.Ro(f4({}, r4, { type: "rageclick" })), this.Ro(r4);
       }
     }
     Co(t4) {
-      !Ur(t4.target) && ga(t4) && (clearTimeout(this.Eo), this.Eo = setTimeout((() => {
+      !Lr(t4.target) && ga(t4) && (clearTimeout(this.Eo), this.Eo = setTimeout((() => {
         this.Ro(this.Mo(t4, "mousemove"));
       }), 500));
     }
     Ro(e4) {
       if (t3) {
-        var i4 = t3.location.href, r4 = this.qt.custom_personal_data_properties, s4 = this.qt.mask_personal_data_properties ? [...Ns, ...r4 || []] : [], n3 = Fs(i4, s4, Ls);
+        var i4 = t3.location.href, r4 = this.qt.custom_personal_data_properties, s4 = this.qt.mask_personal_data_properties ? [...Ns, ...r4 || []] : [], n3 = Fs(i4, s4, Us);
         this.M = this.M || {}, this.M[n3] || (this.M[n3] = []), this.M[n3].push(e4);
       }
     }
     ci() {
-      this.M && !U(this.M) && this.instance.capture("$$heatmap", { $heatmap_data: this.getAndClearBuffer() });
+      this.M && !L2(this.M) && this.instance.capture("$$heatmap", { $heatmap_data: this.getAndClearBuffer() });
     }
   }, deadClicksAutocapture: xs, webVitalsAutocapture: class {
     constructor(t4) {
@@ -9908,16 +9912,16 @@
         var e5;
         this.M = this.M || { url: void 0, metrics: [], firstMetricTimestamp: void 0 };
         var i4 = this.Lo();
-        if (!L2(i4)) if (H2(null == t5 ? void 0 : t5.name) || H2(null == t5 ? void 0 : t5.value)) la.error("Invalid metric received", t5);
+        if (!U(i4)) if (H2(null == t5 ? void 0 : t5.name) || H2(null == t5 ? void 0 : t5.value)) la.error("Invalid metric received", t5);
         else if (!this.Ao || this.Ao > t5.value) {
-          this.M.url !== i4 && (this.Po(), this.Oo = setTimeout(this.Po, this.flushToCaptureTimeoutMs)), L2(this.M.url) && (this.M.url = i4), this.M.firstMetricTimestamp = L2(this.M.firstMetricTimestamp) ? Date.now() : this.M.firstMetricTimestamp, t5.attribution && t5.attribution.interactionTargetElement && (t5.attribution.interactionTargetElement = void 0);
+          this.M.url !== i4 && (this.Po(), this.Oo = setTimeout(this.Po, this.flushToCaptureTimeoutMs)), U(this.M.url) && (this.M.url = i4), this.M.firstMetricTimestamp = U(this.M.firstMetricTimestamp) ? Date.now() : this.M.firstMetricTimestamp, t5.attribution && t5.attribution.interactionTargetElement && (t5.attribution.interactionTargetElement = void 0);
           var r4 = null == (e5 = this._instance.sessionManager) ? void 0 : e5.checkAndGetSessionAndWindowId(true), s4 = f4({}, t5, { $current_url: i4, timestamp: Date.now() });
-          L2(r4) || (s4.$session_id = r4.sessionId, s4.$window_id = r4.windowId), this.M.metrics.push(s4), this.M.metrics.length === this.allowedMetrics.length && this.Po();
+          U(r4) || (s4.$session_id = r4.sessionId, s4.$window_id = r4.windowId), this.M.metrics.push(s4), this.M.metrics.length === this.allowedMetrics.length && this.Po();
         } else la.error("Ignoring metric with value >= " + this.Ao, t5);
       }, this.Fo = () => {
         if (!this.so) {
           var t5, e5, i4, r4, s4 = h3.__PosthogExtensions__;
-          L2(s4) || L2(s4.postHogWebVitalsCallbacks) || ({ onLCP: t5, onCLS: e5, onFCP: i4, onINP: r4 } = s4.postHogWebVitalsCallbacks), t5 && e5 && i4 && r4 ? (this.allowedMetrics.indexOf("LCP") > -1 && t5(this.ht.bind(this)), this.allowedMetrics.indexOf("CLS") > -1 && e5(this.ht.bind(this)), this.allowedMetrics.indexOf("FCP") > -1 && i4(this.ht.bind(this)), this.allowedMetrics.indexOf("INP") > -1 && r4(this.ht.bind(this)), this.so = true) : la.error("web vitals callbacks not loaded - not starting");
+          U(s4) || U(s4.postHogWebVitalsCallbacks) || ({ onLCP: t5, onCLS: e5, onFCP: i4, onINP: r4 } = s4.postHogWebVitalsCallbacks), t5 && e5 && i4 && r4 ? (this.allowedMetrics.indexOf("LCP") > -1 && t5(this.ht.bind(this)), this.allowedMetrics.indexOf("CLS") > -1 && e5(this.ht.bind(this)), this.allowedMetrics.indexOf("FCP") > -1 && i4(this.ht.bind(this)), this.allowedMetrics.indexOf("INP") > -1 && r4(this.ht.bind(this)), this.so = true) : la.error("web vitals callbacks not loaded - not starting");
         }
       }, this._instance = t4, this.mo = !(null == (e4 = this._instance.persistence) || !e4.props[oi]), this.startIfEnabled();
     }
@@ -9964,12 +9968,12 @@
       var e4 = t3 ? t3.location.href : void 0;
       if (e4) {
         var i4 = this._instance.config.custom_personal_data_properties, r4 = this._instance.config.mask_personal_data_properties ? [...Ns, ...i4 || []] : [];
-        return Fs(e4, r4, Ls);
+        return Fs(e4, r4, Us);
       }
       la.error("Could not determine current URL");
     }
   } };
-  var qa = { exceptionObserver: class {
+  var Ga = { exceptionObserver: class {
     constructor(e4) {
       var i4, r4, s4;
       this.Fo = () => {
@@ -9986,7 +9990,7 @@
     }
     Uo() {
       var t4 = this._instance.config.capture_exceptions, e4 = { capture_unhandled_errors: false, capture_unhandled_rejections: false, capture_console_errors: false };
-      return N2(t4) ? e4 = f4({}, e4, t4) : (L2(t4) ? this.Bo : t4) && (e4 = f4({}, e4, { capture_unhandled_errors: true, capture_unhandled_rejections: true })), e4;
+      return N2(t4) ? e4 = f4({}, e4, t4) : (U(t4) ? this.Bo : t4) && (e4 = f4({}, e4, { capture_unhandled_errors: true, capture_unhandled_rejections: true })), e4;
     }
     get isEnabled() {
       return this.qt.capture_console_errors || this.qt.capture_unhandled_errors || this.qt.capture_unhandled_rejections;
@@ -10018,7 +10022,7 @@
   }, exceptions: class {
     constructor(t4) {
       var e4, i4;
-      this.zo = [], this.Vo = new _e([new Re(), new Ue(), new Oe(), new Pe(), new De(), new Me(), new Ce(), new Ne()], (function(t5) {
+      this.zo = [], this.Vo = new _e([new Re(), new Le(), new Oe(), new Pe(), new De(), new Me(), new Ce(), new Ne()], (function(t5) {
         for (var e5 = arguments.length, i5 = new Array(e5 > 1 ? e5 - 1 : 0), r4 = 1; e5 > r4; r4++) i5[r4 - 1] = arguments[r4];
         return function(e6, r5) {
           void 0 === r5 && (r5 = 0);
@@ -10068,34 +10072,34 @@
     }
     addExceptionStep(t4, e4) {
       if (this.Wo.enabled) try {
-        if (!j3(t4) || 0 === t4.trim().length) return void Da.warn("Ignoring exception step because message must be a non-empty string");
+        if (!j3(t4) || 0 === t4.trim().length) return void Na.warn("Ignoring exception step because message must be a non-empty string");
         var i4 = this.Jo(e4), { sanitizedProperties: r4, droppedKeys: s4 } = (function(t5) {
           if (!t5) return { sanitizedProperties: {}, droppedKeys: [] };
           var e5 = [];
           return { sanitizedProperties: Object.keys(t5).reduce(((i5, r5) => ze.has(r5) ? (e5.push(r5), i5) : (i5[r5] = t5[r5], i5)), {}), droppedKeys: e5 };
         })(i4);
-        s4.length > 0 && Da.warn("Ignoring reserved exception step fields", { droppedKeys: s4 }), this.Zo.add(f4({ [Le]: t4, [je]: (/* @__PURE__ */ new Date()).toISOString() }, r4));
+        s4.length > 0 && Na.warn("Ignoring reserved exception step fields", { droppedKeys: s4 }), this.Zo.add(f4({ [Ue]: t4, [je]: (/* @__PURE__ */ new Date()).toISOString() }, r4));
       } catch (t5) {
-        Da.error("Failed to add exception step. Ignoring breadcrumb.", t5);
+        Na.error("Failed to add exception step. Ignoring breadcrumb.", t5);
       }
     }
     sendExceptionEvent(t4) {
       try {
         var e4 = t4.$exception_list;
         if (this.Ko(e4)) {
-          if (this.Yo(e4)) return this.Xo("Exception dropped: matched a suppression rule"), void Da.info("Skipping exception capture because a suppression rule matched");
-          if (!this.Qo && this.ea(e4)) return this.Xo("Exception dropped: thrown by a browser extension"), void Da.info("Skipping exception capture because it was thrown by an extension");
-          if (!this._instance.config.error_tracking.__capturePostHogExceptions && this.ta(e4)) return this.Xo("Exception dropped: thrown by the PostHog SDK"), void Da.info("Skipping exception capture because it was thrown by the PostHog SDK");
+          if (this.Yo(e4)) return this.Xo("Exception dropped: matched a suppression rule"), void Na.info("Skipping exception capture because a suppression rule matched");
+          if (!this.Qo && this.ea(e4)) return this.Xo("Exception dropped: thrown by a browser extension"), void Na.info("Skipping exception capture because it was thrown by an extension");
+          if (!this._instance.config.error_tracking.__capturePostHogExceptions && this.ta(e4)) return this.Xo("Exception dropped: thrown by the PostHog SDK"), void Na.info("Skipping exception capture because it was thrown by the PostHog SDK");
         }
         var i4 = this.Wo.enabled && H2(t4.$exception_steps) ? this.ra(t4) : t4;
         try {
           var r4 = this._instance.capture("$exception", i4, { _noTruncate: true, _batchKey: "exceptionEvent", Mn: true });
           return r4 && this.Zo.clear(), r4;
         } catch (t5) {
-          return Da.error("Failed to capture exception event. Dropping this exception.", t5), void this.Zo.clear();
+          return Na.error("Failed to capture exception event. Dropping this exception.", t5), void this.Zo.clear();
         }
       } catch (t5) {
-        return void Da.error("Failed to process exception event. Ignoring this exception.", t5);
+        return void Na.error("Failed to process exception event. Ignoring this exception.", t5);
       }
     }
     ra(t4) {
@@ -10103,11 +10107,11 @@
         var e4 = this.Zo.getAttachable();
         return 0 === e4.length ? t4 : f4({}, t4, { $exception_steps: e4 });
       } catch (e5) {
-        return Da.error("Failed to read buffered exception steps. Capturing exception without steps.", e5), t4;
+        return Na.error("Failed to read buffered exception steps. Capturing exception without steps.", e5), t4;
       }
     }
     Xo(t4) {
-      this.Wo.enabled && this.Zo.add({ [Le]: t4, [je]: (/* @__PURE__ */ new Date()).toISOString() });
+      this.Wo.enabled && this.Zo.add({ [Ue]: t4, [je]: (/* @__PURE__ */ new Date()).toISOString() });
     }
     Jo(t4) {
       return N2(t4) ? f4({}, t4) : {};
@@ -10147,7 +10151,7 @@
       return !H2(t4) && M(t4);
     }
   } };
-  var Ga = f4({ productTours: class {
+  var Wa = f4({ productTours: class {
     get Si() {
       return this._instance.persistence;
     }
@@ -10158,11 +10162,14 @@
       this.loadIfEnabled();
     }
     onRemoteConfig(t4) {
-      "productTours" in t4 && (this.Si && this.Si.register({ [li]: !!t4.productTours }), this.loadIfEnabled());
+      if ("productTours" in t4) {
+        var e4, i4;
+        if (this.Si && this.Si.register({ [li]: !!t4.productTours }), !ba(this._instance)) return !this.ia && H2(null == (e4 = this.Si) ? void 0 : e4.props[Ii]) || ma.info("product tours disabled; stopping and clearing cached tours"), null == (i4 = this.ia) || i4.stop(), this.ia = null, void this.clearCache();
+        this.loadIfEnabled();
+      }
     }
     loadIfEnabled() {
-      var t4, e4;
-      this.ia || (t4 = this._instance).config.disable_product_tours || null == (e4 = t4.persistence) || !e4.get_property(li) || this.ur((() => this.sa()));
+      !this.ia && ba(this._instance) && this.ur((() => this.sa()));
     }
     ur(t4) {
       var e4, i4;
@@ -10182,13 +10189,15 @@
           if (M(r4) && !e4) return this.na = r4, void t4(r4, { isLoaded: true });
         }
         this._instance._send_request({ url: this._instance.requestRouter.endpointFor("api", "/api/product_tours/?token=" + this._instance.config.token), method: "GET", callback: (e5) => {
-          var r5 = e5.statusCode;
-          if (200 !== r5 || !e5.json) {
-            var s4 = "Product Tours API could not be loaded, status: " + r5;
-            return ma.error(s4), void t4([], { isLoaded: false, error: s4 });
-          }
-          var n3 = M(e5.json.product_tours) ? e5.json.product_tours : [];
-          this.na = n3, i4 && i4.register({ [Ii]: n3 }), t4(n3, { isLoaded: true });
+          if (ba(this._instance)) {
+            var r5 = e5.statusCode;
+            if (200 !== r5 || !e5.json) {
+              var s4 = "Product Tours API could not be loaded, status: " + r5;
+              return ma.error(s4), void t4([], { isLoaded: false, error: s4 });
+            }
+            var n3 = M(e5.json.product_tours) ? e5.json.product_tours : [];
+            this.na = n3, i4 && i4.register({ [Ii]: n3 }), t4(n3, { isLoaded: true });
+          } else t4([], { isLoaded: true });
         } });
       } else t4(this.na, { isLoaded: true });
     }
@@ -10233,8 +10242,8 @@
       var e4;
       null == (e4 = this.ia) || e4.cancelPendingTour(t4);
     }
-  } }, Ba);
-  var Wa = { siteApps: class {
+  } }, Ha);
+  var Ya = { siteApps: class {
     constructor(t4) {
       this._instance = t4, this.oa = [], this.apps = {};
     }
@@ -10265,14 +10274,14 @@
       var l4 = {}, u5 = this._instance.get_property("$groups") || [], h4 = this._instance.get_property("$stored_group_properties") || {};
       for (var [d4, v4] of Object.entries(h4)) l4[d4] = { id: u5[d4], type: d4, properties: v4 };
       var { $set_once: c4, $set: p4 } = t4;
-      return { event: f4({}, _2(t4, ba), { properties: f4({}, t4.properties, p4 ? { $set: f4({}, null !== (e4 = null == (i4 = t4.properties) ? void 0 : i4.$set) && void 0 !== e4 ? e4 : {}, p4) } : {}, c4 ? { $set_once: f4({}, null !== (r4 = null == (s4 = t4.properties) ? void 0 : s4.$set_once) && void 0 !== r4 ? r4 : {}, c4) } : {}), elements_chain: null !== (n3 = null == (o4 = t4.properties) ? void 0 : o4.$elements_chain) && void 0 !== n3 ? n3 : "", distinct_id: null == (a4 = t4.properties) ? void 0 : a4.distinct_id }), person: { properties: this._instance.get_property("$stored_person_properties") }, groups: l4 };
+      return { event: f4({}, _2(t4, ya), { properties: f4({}, t4.properties, p4 ? { $set: f4({}, null !== (e4 = null == (i4 = t4.properties) ? void 0 : i4.$set) && void 0 !== e4 ? e4 : {}, p4) } : {}, c4 ? { $set_once: f4({}, null !== (r4 = null == (s4 = t4.properties) ? void 0 : s4.$set_once) && void 0 !== r4 ? r4 : {}, c4) } : {}), elements_chain: null !== (n3 = null == (o4 = t4.properties) ? void 0 : o4.$elements_chain) && void 0 !== n3 ? n3 : "", distinct_id: null == (a4 = t4.properties) ? void 0 : a4.distinct_id }), person: { properties: this._instance.get_property("$stored_person_properties") }, groups: l4 };
     }
     setupSiteApp(t4) {
       var e4 = this.apps[t4.id], i4 = () => {
         var i5;
-        !e4.errored && this.oa.length && (ya.info("Processing " + this.oa.length + " events for site app with id " + t4.id), this.oa.forEach(((t5) => null == e4.processEvent ? void 0 : e4.processEvent(t5))), e4.processedBuffer = true), Object.values(this.apps).every(((t5) => t5.processedBuffer || t5.errored)) && (null == (i5 = this.la) || i5.call(this));
+        !e4.errored && this.oa.length && (wa.info("Processing " + this.oa.length + " events for site app with id " + t4.id), this.oa.forEach(((t5) => null == e4.processEvent ? void 0 : e4.processEvent(t5))), e4.processedBuffer = true), Object.values(this.apps).every(((t5) => t5.processedBuffer || t5.errored)) && (null == (i5 = this.la) || i5.call(this));
       }, r4 = false, s4 = (s5) => {
-        e4.errored = !s5, e4.loaded = true, ya.info("Site app with id " + t4.id + " " + (s5 ? "loaded" : "errored")), r4 && i4();
+        e4.errored = !s5, e4.loaded = true, wa.info("Site app with id " + t4.id + " " + (s5 ? "loaded" : "errored")), r4 && i4();
       };
       try {
         var { processEvent: n3 } = t4.init({ posthog: this._instance, callback(t5) {
@@ -10280,12 +10289,12 @@
         } });
         n3 && (e4.processEvent = n3), r4 = true;
       } catch (e5) {
-        ya.error(wa + t4.id, e5), s4(false);
+        wa.error(xa + t4.id, e5), s4(false);
       }
       if (r4 && e4.loaded) try {
         i4();
       } catch (i5) {
-        ya.error("Error while processing buffered events PostHog app with config id " + t4.id, i5), e4.errored = true;
+        wa.error("Error while processing buffered events PostHog app with config id " + t4.id, i5), e4.errored = true;
       }
     }
     ua() {
@@ -10299,29 +10308,29 @@
         for (var i4 of Object.values(this.apps)) try {
           null == i4.processEvent || i4.processEvent(e4);
         } catch (e5) {
-          ya.error("Error while processing event " + t4.event + " for site app " + i4.id, e5);
+          wa.error("Error while processing event " + t4.event + " for site app " + i4.id, e5);
         }
       }
     }
     onRemoteConfig(t4) {
       var e4, i4, r4, s4 = this;
-      if (null != (e4 = this.siteAppLoaders) && e4.length) return this.isEnabled ? (this.ua(), void this._instance.on("eventCaptured", ((t5) => this.ha(t5)))) : void ya.error('PostHog site apps are disabled. Enable the "opt_in_site_apps" config to proceed.');
+      if (null != (e4 = this.siteAppLoaders) && e4.length) return this.isEnabled ? (this.ua(), void this._instance.on("eventCaptured", ((t5) => this.ha(t5)))) : void wa.error('PostHog site apps are disabled. Enable the "opt_in_site_apps" config to proceed.');
       if (null == (i4 = this.la) || i4.call(this), null != (r4 = t4.siteApps) && r4.length) if (this.isEnabled) {
         var n3 = function(t5) {
           var e5;
           h3["__$$ph_site_app_" + t5] = s4._instance, null == (e5 = h3.__PosthogExtensions__) || null == e5.loadSiteApp || e5.loadSiteApp(s4._instance, a4, ((e6) => {
-            if (e6) return ya.error(wa + t5, e6);
+            if (e6) return wa.error(xa + t5, e6);
           }));
         };
         for (var { id: o4, url: a4 } of t4.siteApps) n3(o4);
-      } else ya.error('PostHog site apps are disabled. Enable the "opt_in_site_apps" config to proceed.');
+      } else wa.error('PostHog site apps are disabled. Enable the "opt_in_site_apps" config to proceed.');
     }
   } };
-  var Ya = { tracingHeaders: class {
+  var Ja = { tracingHeaders: class {
     constructor(t4) {
       this.ca = void 0, this.da = void 0, this.va = void 0, this.Fo = () => {
         var t5, e4, i4 = this.fa();
-        i4 ? (L2(this.ca) && (this.ca = null == (t5 = h3.__PosthogExtensions__) || null == (t5 = t5.tracingHeadersPatchFns) ? void 0 : t5._patchXHR(i4, (() => this._instance.get_distinct_id()), this._instance.sessionManager)), L2(this.da) && (this.da = null == (e4 = h3.__PosthogExtensions__) || null == (e4 = e4.tracingHeadersPatchFns) ? void 0 : e4._patchFetch(i4, (() => this._instance.get_distinct_id()), this._instance.sessionManager))) : this.jo();
+        i4 ? (U(this.ca) && (this.ca = null == (t5 = h3.__PosthogExtensions__) || null == (t5 = t5.tracingHeadersPatchFns) ? void 0 : t5._patchXHR(i4, (() => this._instance.get_distinct_id()), this._instance.sessionManager)), U(this.da) && (this.da = null == (e4 = h3.__PosthogExtensions__) || null == (e4 = e4.tracingHeadersPatchFns) ? void 0 : e4._patchFetch(i4, (() => this._instance.get_distinct_id()), this._instance.sessionManager))) : this.jo();
       }, this._instance = t4;
     }
     initialize() {
@@ -10350,7 +10359,7 @@
       this.fa() ? this.ur(this.Fo) : this.jo();
     }
   } };
-  var Ja = f4({ surveys: class {
+  var Ka = f4({ surveys: class {
     get qt() {
       return this._instance.config;
     }
@@ -10378,12 +10387,12 @@
     }
     loadIfEnabled() {
       if (!this._surveyManager) if (this.ma) Co.info("Already initializing surveys, skipping...");
-      else if (this.qt.disable_surveys) Co.info(ka);
+      else if (this.qt.disable_surveys) Co.info(Ra);
       else if (this.qt.cookieless_mode && this._instance.consent.isOptedOut()) Co.info("Not loading surveys in cookieless mode without consent.");
       else {
         var t4 = null == h3 ? void 0 : h3.__PosthogExtensions__;
         if (t4) {
-          if (!L2(this.ga) || this.qt.advanced_enable_surveys) {
+          if (!U(this.ga) || this.qt.advanced_enable_surveys) {
             var e4 = this.ga || this.qt.advanced_enable_surveys;
             this.ma = true;
             try {
@@ -10404,7 +10413,7 @@
       }
     }
     _a(t4, e4) {
-      this._surveyManager = t4(this._instance, e4), this._surveyEventReceiver = new $a(this._instance), Co.info("Surveys loaded successfully"), this.xa({ isLoaded: true });
+      this._surveyManager = t4(this._instance, e4), this._surveyEventReceiver = new Ta(this._instance), Co.info("Surveys loaded successfully"), this.xa({ isLoaded: true });
     }
     wa(t4, e4) {
       Co.error(t4, e4), this.xa({ isLoaded: false, error: t4 });
@@ -10415,7 +10424,7 @@
       };
     }
     getSurveys(t4, e4) {
-      if (void 0 === e4 && (e4 = false), this.qt.disable_surveys) return Co.info(ka), t4([]);
+      if (void 0 === e4 && (e4 = false), this.qt.disable_surveys) return Co.info(Ra), t4([]);
       var i4, r4 = this._instance.get_property(Ri);
       if (r4 && !e4) return t4(r4, { isLoaded: true });
       "undefined" != typeof Promise && this.ba ? this.ba.then(((e5) => {
@@ -10467,17 +10476,17 @@
       })), e4;
     }
     Sa(t4) {
-      if (H2(this._surveyManager)) return { eligible: false, reason: Ta };
+      if (H2(this._surveyManager)) return { eligible: false, reason: ka };
       var e4 = "string" == typeof t4 ? this.ka(t4) : t4;
       return e4 ? this._surveyManager.checkSurveyEligibility(e4) : { eligible: false, reason: "Survey not found" };
     }
     canRenderSurvey(t4) {
-      if (H2(this._surveyManager)) return Co.warn("init was not called"), { visible: false, disabledReason: Ta };
+      if (H2(this._surveyManager)) return Co.warn("init was not called"), { visible: false, disabledReason: ka };
       var e4 = this.Sa(t4);
       return { visible: e4.eligible, disabledReason: e4.reason };
     }
     canRenderSurveyAsync(t4, e4) {
-      return H2(this._surveyManager) ? (Co.warn("init was not called"), Promise.resolve({ visible: false, disabledReason: Ta })) : new Promise(((i4) => {
+      return H2(this._surveyManager) ? (Co.warn("init was not called"), Promise.resolve({ visible: false, disabledReason: ka })) : new Promise(((i4) => {
         this.getSurveys(((e5) => {
           var r4, s4 = null !== (r4 = e5.find(((e6) => e6.id === t4))) && void 0 !== r4 ? r4 : null;
           if (s4) {
@@ -10525,8 +10534,8 @@
       var t4;
       null == (t4 = this._surveyManager) || t4.handlePageUnload();
     }
-  } }, Ba);
-  var Ka = { toolbar: class {
+  } }, Ha);
+  var Xa = { toolbar: class {
     constructor(t4) {
       this.instance = t4;
     }
@@ -10553,25 +10562,25 @@
           }
           i4 = null == t3 ? void 0 : t3.localStorage;
         }
-        var n3, o4 = Ra || Ms(e4.hash, "__posthog") || Ms(e4.hash, "state"), a4 = o4 ? hr((() => JSON.parse(atob(decodeURIComponent(o4))))) || hr((() => JSON.parse(decodeURIComponent(o4)))) : null;
-        return a4 && "ph_authorize" === a4.action ? ((n3 = a4).source = "url", n3 && Object.keys(n3).length > 0 && (a4.desiredHash ? e4.hash = a4.desiredHash : s4 ? s4.replaceState(s4.state, "", e4.pathname + e4.search) : e4.hash = "")) : ((n3 = JSON.parse(i4.getItem(Pa) || "{}")).source = "localstorage", delete n3.userIntent), !(!n3.token || this.instance.config.token !== n3.token || (this.loadToolbar(n3), 0));
+        var n3, o4 = Pa || Ms(e4.hash, "__posthog") || Ms(e4.hash, "state"), a4 = o4 ? hr((() => JSON.parse(atob(decodeURIComponent(o4))))) || hr((() => JSON.parse(decodeURIComponent(o4)))) : null;
+        return a4 && "ph_authorize" === a4.action ? ((n3 = a4).source = "url", n3 && Object.keys(n3).length > 0 && (a4.desiredHash ? e4.hash = a4.desiredHash : s4 ? s4.replaceState(s4.state, "", e4.pathname + e4.search) : e4.hash = "")) : ((n3 = JSON.parse(i4.getItem(Oa) || "{}")).source = "localstorage", delete n3.userIntent), !(!n3.token || this.instance.config.token !== n3.token || (this.loadToolbar(n3), 0));
       } catch (t4) {
         return false;
       }
     }
     Ta(t4) {
       var e4 = h3.ph_load_toolbar || h3.ph_load_editor;
-      !H2(e4) && D3(e4) ? e4(t4, this.instance) : Oa.warn("No toolbar load function found");
+      !H2(e4) && D3(e4) ? e4(t4, this.instance) : Ia.warn("No toolbar load function found");
     }
     loadToolbar(e4) {
       var i4 = !(null == r3 || !r3.getElementById(Hi));
       if (!t3 || i4) return false;
       var s4 = "custom" === this.instance.requestRouter.region && this.instance.config.advanced_disable_toolbar_metrics, n3 = f4({ token: this.instance.config.token }, e4, { apiURL: this.instance.requestRouter.endpointFor("ui") }, s4 ? { instrument: false } : {});
-      if (t3.localStorage.setItem(Pa, JSON.stringify(f4({}, n3, { source: void 0 }))), 2 === this.Ia()) this.Ta(n3);
+      if (t3.localStorage.setItem(Oa, JSON.stringify(f4({}, n3, { source: void 0 }))), 2 === this.Ia()) this.Ta(n3);
       else if (0 === this.Ia()) {
         var o4;
         this.Ca(1), null == (o4 = h3.__PosthogExtensions__) || null == o4.loadExternalDependency || o4.loadExternalDependency(this.instance, "toolbar", ((t4) => {
-          if (t4) return Oa.error("[Toolbar] Failed to load", t4), void this.Ca(0);
+          if (t4) return Ia.error("[Toolbar] Failed to load", t4), void this.Ca(0);
           this.Ca(2), this.Ta(n3);
         })), fr(t3, "turbolinks:load", (() => {
           this.Ca(0), this.loadToolbar(n3);
@@ -10586,8 +10595,8 @@
       return void 0 === t4 && (t4 = void 0), void 0 === e4 && (e4 = void 0), void 0 === i4 && (i4 = void 0), this.maybeLoadToolbar(t4, e4, i4);
     }
   } };
-  var Xa = f4({ experiments: La }, Ba);
-  var Qa = { conversations: class {
+  var Qa = f4({ experiments: ja }, Ha);
+  var Za = { conversations: class {
     constructor(t4) {
       this.Ma = void 0, this._conversationsManager = null, this.Ra = false, this.Pa = null, this._instance = t4;
     }
@@ -10607,7 +10616,7 @@
     loadIfEnabled() {
       if (!(this._conversationsManager || this.Ra || this._instance.config.disable_conversations || _r(this._instance.config) || this._instance.config.cookieless_mode && this._instance.consent.isOptedOut())) {
         var t4 = null == h3 ? void 0 : h3.__PosthogExtensions__;
-        if (t4 && !L2(this.Ma) && this.Ma) if (this.Pa && this.Pa.token) {
+        if (t4 && !U(this.Ma) && this.Ma) if (this.Pa && this.Pa.token) {
           this.Ra = true;
           try {
             var e4 = t4.initConversations;
@@ -10620,22 +10629,22 @@
           } catch (t5) {
             this.La("Error initializing conversations", t5), this.Ra = false;
           }
-        } else ja.error("Conversations enabled but missing token in remote config.");
+        } else za.error("Conversations enabled but missing token in remote config.");
       }
     }
     Oa(t4) {
       if (this.Pa) try {
-        this._conversationsManager = t4(this.Pa, this._instance), ja.info("Conversations loaded successfully");
+        this._conversationsManager = t4(this.Pa, this._instance), za.info("Conversations loaded successfully");
       } catch (t5) {
         this.La("Error completing conversations initialization", t5);
       }
-      else ja.error("Cannot complete initialization: remote config is null");
+      else za.error("Cannot complete initialization: remote config is null");
     }
     La(t4, e4) {
-      ja.error(t4, e4), this._conversationsManager = null, this.Ra = false;
+      za.error(t4, e4), this._conversationsManager = null, this.Ra = false;
     }
     show() {
-      this._conversationsManager ? this._conversationsManager.show() : ja.warn("Conversations not loaded yet.");
+      this._conversationsManager ? this._conversationsManager.show() : za.warn("Conversations not loaded yet.");
     }
     hide() {
       this._conversationsManager && this._conversationsManager.hide();
@@ -10650,43 +10659,43 @@
     sendMessage(t4, e4, i4) {
       var r4 = this;
       return p3((function* () {
-        return r4._conversationsManager ? r4._conversationsManager.sendMessage(t4, e4, i4) : (ja.warn(za), null);
+        return r4._conversationsManager ? r4._conversationsManager.sendMessage(t4, e4, i4) : (za.warn(Ba), null);
       }))();
     }
     getMessages(t4, e4) {
       var i4 = this;
       return p3((function* () {
-        return i4._conversationsManager ? i4._conversationsManager.getMessages(t4, e4) : (ja.warn(za), null);
+        return i4._conversationsManager ? i4._conversationsManager.getMessages(t4, e4) : (za.warn(Ba), null);
       }))();
     }
     markAsRead(t4) {
       var e4 = this;
       return p3((function* () {
-        return e4._conversationsManager ? e4._conversationsManager.markAsRead(t4) : (ja.warn(za), null);
+        return e4._conversationsManager ? e4._conversationsManager.markAsRead(t4) : (za.warn(Ba), null);
       }))();
     }
     getTickets(t4) {
       var e4 = this;
       return p3((function* () {
-        return e4._conversationsManager ? e4._conversationsManager.getTickets(t4) : (ja.warn(za), null);
+        return e4._conversationsManager ? e4._conversationsManager.getTickets(t4) : (za.warn(Ba), null);
       }))();
     }
     requestRestoreLink(t4) {
       var e4 = this;
       return p3((function* () {
-        return e4._conversationsManager ? e4._conversationsManager.requestRestoreLink(t4) : (ja.warn(za), null);
+        return e4._conversationsManager ? e4._conversationsManager.requestRestoreLink(t4) : (za.warn(Ba), null);
       }))();
     }
     restoreFromToken(t4) {
       var e4 = this;
       return p3((function* () {
-        return e4._conversationsManager ? e4._conversationsManager.restoreFromToken(t4) : (ja.warn(za), null);
+        return e4._conversationsManager ? e4._conversationsManager.restoreFromToken(t4) : (za.warn(Ba), null);
       }))();
     }
     restoreFromUrlToken() {
       var t4 = this;
       return p3((function* () {
-        return t4._conversationsManager ? t4._conversationsManager.restoreFromUrlToken() : (ja.warn(za), null);
+        return t4._conversationsManager ? t4._conversationsManager.restoreFromUrlToken() : (za.warn(Ba), null);
       }))();
     }
     getCurrentTicketId() {
@@ -10706,7 +10715,7 @@
       null == (t4 = this._conversationsManager) || t4.clearIdentity();
     }
   } };
-  var Za = { logs: class {
+  var tl = { logs: class {
     constructor(t4) {
       var e4;
       this.Aa = false, this.Fa = false, this.Zt = Ye("[logs]"), this.Na = [], this.Da = 0, this.$a = 0, this.qa = false, this._instance = t4, this._instance && null != (e4 = this._instance.config.logs) && e4.captureConsoleLogs && (this.Aa = true);
@@ -10743,7 +10752,7 @@
             var i5 = t5.level || "info", { text: r5, number: s5 } = de[i5] || ve, n4 = String(Date.now()) + "000000", o5 = {};
             e5.distinctId && (o5.posthogDistinctId = e5.distinctId), e5.sessionId && (o5.sessionId = e5.sessionId), e5.currentUrl && (o5["url.full"] = e5.currentUrl), e5.screenName && (o5["screen.name"] = e5.screenName), e5.appState && (o5["app.state"] = e5.appState), e5.activeFeatureFlags && e5.activeFeatureFlags.length > 0 && (o5.feature_flags = e5.activeFeatureFlags);
             var a5 = f4({}, o5, t5.attributes || {}), l5 = { timeUnixNano: n4, observedTimeUnixNano: n4, severityNumber: s5, severityText: r5, body: { stringValue: t5.body }, attributes: pe(a5) };
-            return t5.trace_id && (l5.traceId = t5.trace_id), t5.span_id && (l5.spanId = t5.span_id), L2(t5.trace_flags) || (l5.flags = t5.trace_flags), l5;
+            return t5.trace_id && (l5.traceId = t5.trace_id), t5.span_id && (l5.spanId = t5.span_id), U(t5.trace_flags) || (l5.flags = t5.trace_flags), l5;
           })(t4, this.ja());
           this.Na.push({ record: h4 }), (null !== (n3 = null == (o4 = this._instance.config.logs) ? void 0 : o4.maxBufferSize) && void 0 !== n3 ? n3 : 100) > this.Na.length ? this.Ba() : this.flushLogs();
         } else this.qa || (this.Zt.warn("captureLog dropping logs: exceeded " + l4 + " logs per " + a4 + "ms"), this.qa = true);
@@ -10781,9 +10790,9 @@
       return e4;
     }
   } };
-  var tl = f4({}, Ba, Ha, Va, qa, Ga, Wa, Ja, Ya, Ka, Xa, Qa, Za);
-  Zo.__defaultExtensionClasses = f4({}, tl);
-  var el = (function() {
+  var el = f4({}, Ha, Va, qa, Ga, Wa, Ya, Ka, Ja, Xa, Qa, Za, tl);
+  Zo.__defaultExtensionClasses = f4({}, el);
+  var il = (function() {
     v3.SDK_DIST_CHANNEL = "npm";
     var e4 = jo[Wo] = new Zo();
     return (function() {
@@ -10840,7 +10849,7 @@
   function initAnalytics() {
     if (!isEnabled || !apiKey || !host) return;
     if (!isAllowedByCsp(host)) return;
-    el.init(apiKey, {
+    il.init(apiKey, {
       api_host: host,
       person_profiles: "identified_only",
       capture_pageview: false,
@@ -10850,7 +10859,7 @@
   }
   function capture(event, properties) {
     if (!isInitialized) return;
-    el.capture(event, properties);
+    il.capture(event, properties);
   }
 
   // node_modules/tslib/tslib.es6.mjs
