@@ -443,6 +443,7 @@ export function createUI({
         if (!modal || !panel) return;
         if (!modal.open) modal.showModal();
         panel.scrollTop = 0;
+        document.body.style.top = `-${window.scrollY}px`;
         document.body.classList.add("modal-open");
         requestAnimationFrame(() => {
             panel.classList.remove("translate-y-8", "sm:scale-95", "opacity-0");
@@ -488,12 +489,15 @@ export function createUI({
         panel.classList.add("translate-y-8", "sm:scale-95", "opacity-0");
         if (scrollCleanup) { scrollCleanup(); scrollCleanup = null; }
 
+        const bodyTop = document.body.style.top;
+        document.body.style.top = "";
+        document.body.classList.remove("modal-open");
+        if (bodyTop) window.scrollTo(0, parseInt(bodyTop) * -1);
+
         setTimeout(() => {
             modal.close();
             set("isClosingModal", false);
         }, modalAnimationMs);
-
-        document.body.classList.remove("modal-open");
         const lastFocusedCard = get("lastFocusedCard");
         if (lastFocusedCard) lastFocusedCard.focus();
     }
