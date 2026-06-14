@@ -2294,6 +2294,7 @@
       if (!modal || !panel) return;
       if (!modal.open) modal.showModal();
       panel.scrollTop = 0;
+      document.body.style.top = `-${window.scrollY}px`;
       document.body.classList.add("modal-open");
       requestAnimationFrame(() => {
         panel.classList.remove("translate-y-8", "sm:scale-95", "opacity-0");
@@ -2338,11 +2339,14 @@
         scrollCleanup();
         scrollCleanup = null;
       }
+      const bodyTop = document.body.style.top;
+      document.body.style.top = "";
+      document.body.classList.remove("modal-open");
+      if (bodyTop) window.scrollTo(0, parseInt(bodyTop) * -1);
       setTimeout(() => {
         modal.close();
         set("isClosingModal", false);
       }, modalAnimationMs2);
-      document.body.classList.remove("modal-open");
       const lastFocusedCard = get("lastFocusedCard");
       if (lastFocusedCard) lastFocusedCard.focus();
     }
@@ -4863,7 +4867,7 @@
   }
   var turnstileSiteKey = (
     /** @type {Record<string, unknown>} */
-    "0x4AAAAAADTVCQSMBDI_HafG"
+    ""
   );
   var TURNSTILE_SITE_KEY = typeof turnstileSiteKey === "string" ? turnstileSiteKey : "";
   function AuthSection({ email, t: t4, onSignIn, onSignOut }) {
@@ -5272,7 +5276,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "189f5f04";
+  var BUILD_VERSION = "b5485296";
 
   // node_modules/posthog-js/dist/module.js
   var t3 = "undefined" != typeof window ? window : void 0;
