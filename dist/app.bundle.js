@@ -4561,10 +4561,22 @@
     const irritability = detectIrritabilitySpike(entries);
     const negativity = detectNegativityDominance(entries);
     const allSignals = [
-      { key: "fatigue", score: fatigue.score, value: fatigue.ratio },
-      { key: "numbness", score: numbness.score, value: numbness.distinctRatio },
-      { key: "irritability", score: irritability.score, value: irritability.delta },
-      { key: "negativity", score: negativity.score, value: negativity.negativeRatio }
+      { key: (
+        /** @type {const} */
+        "fatigue"
+      ), score: fatigue.score, value: fatigue.ratio },
+      { key: (
+        /** @type {const} */
+        "numbness"
+      ), score: numbness.score, value: numbness.distinctRatio },
+      { key: (
+        /** @type {const} */
+        "irritability"
+      ), score: irritability.score, value: irritability.delta },
+      { key: (
+        /** @type {const} */
+        "negativity"
+      ), score: negativity.score, value: negativity.negativeRatio }
     ];
     const signals = allSignals.filter((s4) => s4.score > 0);
     const totalScore = Math.min(100, allSignals.reduce((sum, s4) => sum + s4.score, 0));
@@ -5031,7 +5043,7 @@
   }
   var turnstileSiteKey = (
     /** @type {Record<string, unknown>} */
-    ""
+    "0x4AAAAAADTVCQSMBDI_HafG"
   );
   var TURNSTILE_SITE_KEY = typeof turnstileSiteKey === "string" ? turnstileSiteKey : "";
   function AuthSection({ email, t: t4, onSignIn, onSignOut }) {
@@ -5440,7 +5452,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "ae6b5a9b";
+  var BUILD_VERSION = "fd4b91e8";
 
   // node_modules/posthog-js/dist/module.js
   var t3 = "undefined" != typeof window ? window : void 0;
