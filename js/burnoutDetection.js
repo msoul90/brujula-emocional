@@ -92,7 +92,7 @@ export function detectNegativityDominance(entries) {
 
 /**
  * @typedef {Object} BurnoutSignal
- * @property {string} key
+ * @property {"fatigue"|"numbness"|"irritability"|"negativity"} key
  * @property {number} score
  * @property {number} value
  */
@@ -123,11 +123,12 @@ export function assessBurnoutRisk(entries) {
     const irritability = detectIrritabilitySpike(entries);
     const negativity   = detectNegativityDominance(entries);
 
+    /** @type {BurnoutSignal[]} */
     const allSignals = [
-        { key: "fatigue",      score: fatigue.score,      value: fatigue.ratio },
-        { key: "numbness",     score: numbness.score,     value: numbness.distinctRatio },
-        { key: "irritability", score: irritability.score, value: irritability.delta },
-        { key: "negativity",   score: negativity.score,   value: negativity.negativeRatio },
+        { key: /** @type {const} */ ("fatigue"),      score: fatigue.score,      value: fatigue.ratio },
+        { key: /** @type {const} */ ("numbness"),     score: numbness.score,     value: numbness.distinctRatio },
+        { key: /** @type {const} */ ("irritability"), score: irritability.score, value: irritability.delta },
+        { key: /** @type {const} */ ("negativity"),   score: negativity.score,   value: negativity.negativeRatio },
     ];
 
     const signals    = allSignals.filter((s) => s.score > 0);
