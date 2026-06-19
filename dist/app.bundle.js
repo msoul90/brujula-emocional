@@ -698,6 +698,20 @@
       signingOut: "Cerrando sesi\xF3n\u2026",
       signOutError: "No se pudo cerrar sesi\xF3n. Intenta de nuevo."
     },
+    // ── Burnout ───────────────────────────────────────────────────────────────
+    burnout: {
+      title: "Radar de desgaste emocional",
+      subtitle: "Basado en tus \xFAltimas 4 semanas",
+      levelLow: "Sin se\xF1ales de alerta",
+      levelModerate: "Se\xF1ales leves de desgaste",
+      levelHigh: "Se\xF1ales claras de desgaste",
+      signalFatigue: "Patr\xF3n de fatiga o apat\xEDa",
+      signalNumbness: "Poca variedad emocional",
+      signalIrritability: "Aumento de irritabilidad o estr\xE9s",
+      signalNegativity: "Predominio de emociones negativas",
+      tip: "Detectar el desgaste a tiempo es el primer paso para cuidarte.",
+      notEnoughData: "Necesitas al menos 10 registros en los \xFAltimos 30 d\xEDas para activar este an\xE1lisis."
+    },
     // ── Reports ───────────────────────────────────────────────────────────────
     reports: {
       title: "Mis reportes",
@@ -929,6 +943,20 @@
       sendError: "Could not send. Please try again.",
       signingOut: "Signing out\u2026",
       signOutError: "Could not sign out. Please try again."
+    },
+    // ── Burnout ───────────────────────────────────────────────────────────────
+    burnout: {
+      title: "Emotional Burnout Radar",
+      subtitle: "Based on your last 4 weeks",
+      levelLow: "No warning signs",
+      levelModerate: "Mild signs of burnout",
+      levelHigh: "Clear signs of burnout",
+      signalFatigue: "Fatigue or apathy pattern",
+      signalNumbness: "Low emotional variety",
+      signalIrritability: "Increased irritability or stress",
+      signalNegativity: "Predominantly negative emotions",
+      tip: "Detecting burnout early is the first step to taking care of yourself.",
+      notEnoughData: "You need at least 10 entries in the last 30 days to activate this analysis."
     },
     // ── Reports ───────────────────────────────────────────────────────────────
     reports: {
@@ -4446,6 +4474,104 @@
     return { init };
   }
 
+  // js/burnoutDetection.js
+  var FATIGUE_EMOTIONS = /* @__PURE__ */ new Set(["Tristeza", "Soledad", "Aburrimiento", "Angustia", "Confusi\xF3n"]);
+  var STRESS_EMOTIONS = /* @__PURE__ */ new Set(["Irritabilidad", "Enojo", "Frustraci\xF3n", "Ansiedad", "Preocupaci\xF3n"]);
+  var NEGATIVE_EMOTIONS = /* @__PURE__ */ new Set([
+    "Tristeza",
+    "Enojo",
+    "Miedo",
+    "Ansiedad",
+    "Verg\xFCenza",
+    "Culpa",
+    "Frustraci\xF3n",
+    "Celos",
+    "Soledad",
+    "Confusi\xF3n",
+    "Preocupaci\xF3n",
+    "Angustia",
+    "Irritabilidad",
+    "Rechazo",
+    "Envidia",
+    "Disgusto",
+    "Decepci\xF3n",
+    "Aburrimiento"
+  ]);
+  function isFatigueEmotion(nombre) {
+    return FATIGUE_EMOTIONS.has(nombre);
+  }
+  function isStressEmotion(nombre) {
+    return STRESS_EMOTIONS.has(nombre);
+  }
+  function isNegativeEmotion(nombre) {
+    return NEGATIVE_EMOTIONS.has(nombre);
+  }
+  function splitPeriods(entries, windowDays = 30) {
+    const now = Date.now();
+    const cutCurrent = now - windowDays * 864e5;
+    const cutPrevious = now - 2 * windowDays * 864e5;
+    const current = entries.filter((e4) => new Date(e4.date).getTime() >= cutCurrent);
+    const previous = entries.filter((e4) => {
+      const t4 = new Date(e4.date).getTime();
+      return t4 >= cutPrevious && t4 < cutCurrent;
+    });
+    return { current, previous };
+  }
+  function detectFatiguePattern(entries) {
+    const { current } = splitPeriods(entries);
+    if (current.length < 3) return { score: 0, ratio: 0 };
+    const count = current.filter((e4) => isFatigueEmotion(e4.emotion)).length;
+    const ratio = count / current.length;
+    const score = ratio >= 0.6 ? 25 : ratio >= 0.4 ? 15 : ratio >= 0.25 ? 5 : 0;
+    return { score, ratio };
+  }
+  function detectEmotionalNumbness(entries) {
+    const { current } = splitPeriods(entries);
+    if (current.length < 5) return { score: 0, distinctRatio: 1 };
+    const distinct = new Set(current.map((e4) => e4.emotion)).size;
+    const distinctRatio = distinct / current.length;
+    const score = distinctRatio <= 0.15 ? 25 : distinctRatio <= 0.25 ? 15 : distinctRatio <= 0.35 ? 5 : 0;
+    return { score, distinctRatio };
+  }
+  function detectIrritabilitySpike(entries) {
+    const { current, previous } = splitPeriods(entries);
+    if (current.length < 3) return { score: 0, delta: 0 };
+    const currentRatio = current.filter((e4) => isStressEmotion(e4.emotion)).length / current.length;
+    const previousRatio = previous.length > 0 ? previous.filter((e4) => isStressEmotion(e4.emotion)).length / previous.length : 0;
+    const delta = currentRatio - previousRatio;
+    const score = delta >= 0.3 ? 25 : delta >= 0.2 ? 15 : delta >= 0.1 ? 5 : 0;
+    return { score, delta };
+  }
+  function detectNegativityDominance(entries) {
+    const { current } = splitPeriods(entries);
+    if (current.length < 5) return { score: 0, negativeRatio: 0 };
+    const negCount = current.filter((e4) => isNegativeEmotion(e4.emotion)).length;
+    const negativeRatio = negCount / current.length;
+    const score = negativeRatio >= 0.8 ? 25 : negativeRatio >= 0.65 ? 15 : negativeRatio >= 0.5 ? 5 : 0;
+    return { score, negativeRatio };
+  }
+  var BURNOUT_MIN_ENTRIES = 10;
+  function assessBurnoutRisk(entries) {
+    const { current } = splitPeriods(entries);
+    if (current.length < BURNOUT_MIN_ENTRIES) {
+      return { totalScore: 0, level: "low", signals: [], hasEnoughData: false };
+    }
+    const fatigue = detectFatiguePattern(entries);
+    const numbness = detectEmotionalNumbness(entries);
+    const irritability = detectIrritabilitySpike(entries);
+    const negativity = detectNegativityDominance(entries);
+    const allSignals = [
+      { key: "fatigue", score: fatigue.score, value: fatigue.ratio },
+      { key: "numbness", score: numbness.score, value: numbness.distinctRatio },
+      { key: "irritability", score: irritability.score, value: irritability.delta },
+      { key: "negativity", score: negativity.score, value: negativity.negativeRatio }
+    ];
+    const signals = allSignals.filter((s4) => s4.score > 0);
+    const totalScore = Math.min(100, allSignals.reduce((sum, s4) => sum + s4.score, 0));
+    const level = totalScore >= 60 ? "high" : totalScore >= 30 ? "moderate" : "low";
+    return { totalScore, level, signals, hasEnoughData: true };
+  }
+
   // js/reports.jsx
   var CHART_HEIGHT = 80;
   var BAR_WIDTH = 24;
@@ -4716,6 +4842,43 @@
     else if (total >= 5) msg = t4("reports.motiveMid");
     return /* @__PURE__ */ u3("p", { class: "text-center text-xs text-slate-400 leading-relaxed pb-2 px-4 italic", children: msg });
   }
+  function BurnoutCard({ entries, t: t4 }) {
+    const assessment = assessBurnoutRisk(entries);
+    const levelColors = {
+      low: { bg: "bg-emerald-50", border: "border-emerald-200", dot: "bg-emerald-400", text: "text-emerald-700" },
+      moderate: { bg: "bg-amber-50", border: "border-amber-200", dot: "bg-amber-400", text: "text-amber-700" },
+      high: { bg: "bg-rose-50", border: "border-rose-200", dot: "bg-rose-500", text: "text-rose-700" }
+    };
+    const signalLabels = {
+      fatigue: t4("burnout.signalFatigue"),
+      numbness: t4("burnout.signalNumbness"),
+      irritability: t4("burnout.signalIrritability"),
+      negativity: t4("burnout.signalNegativity")
+    };
+    const levelLabel = {
+      low: t4("burnout.levelLow"),
+      moderate: t4("burnout.levelModerate"),
+      high: t4("burnout.levelHigh")
+    };
+    const colors = levelColors[assessment.hasEnoughData ? assessment.level : "low"];
+    return /* @__PURE__ */ u3("div", { class: `rounded-2xl p-4 shadow-sm mb-4 border ${colors.bg} ${colors.border}`, children: [
+      /* @__PURE__ */ u3("div", { class: "flex items-start justify-between mb-1", children: [
+        /* @__PURE__ */ u3("h3", { class: "text-sm font-bold text-slate-700", children: t4("burnout.title") }),
+        assessment.hasEnoughData && /* @__PURE__ */ u3("span", { class: `flex items-center gap-1.5 text-xs font-semibold ${colors.text}`, children: [
+          /* @__PURE__ */ u3("span", { class: `w-2 h-2 rounded-full shrink-0 ${colors.dot}` }),
+          levelLabel[assessment.level]
+        ] })
+      ] }),
+      /* @__PURE__ */ u3("p", { class: "text-[11px] text-slate-400 mb-3", children: t4("burnout.subtitle") }),
+      !assessment.hasEnoughData ? /* @__PURE__ */ u3("p", { class: "text-xs text-slate-400 leading-relaxed", children: t4("burnout.notEnoughData") }) : /* @__PURE__ */ u3(S, { children: [
+        assessment.signals.length > 0 && /* @__PURE__ */ u3("ul", { class: "space-y-1.5 mb-3", children: assessment.signals.map((signal) => /* @__PURE__ */ u3("li", { class: "flex items-center gap-2 text-xs text-slate-600", children: [
+          /* @__PURE__ */ u3("span", { class: `w-1.5 h-1.5 rounded-full shrink-0 ${colors.dot}` }),
+          signalLabels[signal.key]
+        ] }, signal.key)) }),
+        /* @__PURE__ */ u3("p", { class: "text-[11px] text-slate-400 leading-relaxed italic", children: t4("burnout.tip") })
+      ] })
+    ] });
+  }
   function EmptyState2({ t: t4, onGoToEntries }) {
     return /* @__PURE__ */ u3("div", { class: "flex flex-col items-center justify-center py-12 text-center px-6", children: [
       /* @__PURE__ */ u3("svg", { class: "w-12 h-12 text-slate-200 mb-4", viewBox: "0 0 24 24", fill: "currentColor", "aria-hidden": "true", children: /* @__PURE__ */ u3("path", { d: "M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z" }) }),
@@ -4803,7 +4966,8 @@
           /* @__PURE__ */ u3("p", { class: "text-xs text-slate-400 leading-relaxed", children: t4("reports.noTagsNote") })
         ] }),
         /* @__PURE__ */ u3(Card, { title: t4("reports.weeklyCount"), children: /* @__PURE__ */ u3(VerticalBarChart, { items: weekItems, currentWeekKey }) }),
-        /* @__PURE__ */ u3(MotivationalNote, { total: entries.length, t: t4 })
+        /* @__PURE__ */ u3(MotivationalNote, { total: entries.length, t: t4 }),
+        /* @__PURE__ */ u3(BurnoutCard, { entries, t: t4 })
       ] })
     ] });
   }
@@ -4867,7 +5031,7 @@
   }
   var turnstileSiteKey = (
     /** @type {Record<string, unknown>} */
-    "0x4AAAAAADTVCQSMBDI_HafG"
+    ""
   );
   var TURNSTILE_SITE_KEY = typeof turnstileSiteKey === "string" ? turnstileSiteKey : "";
   function AuthSection({ email, t: t4, onSignIn, onSignOut }) {
@@ -5276,7 +5440,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "b5485296";
+  var BUILD_VERSION = "ae6b5a9b";
 
   // node_modules/posthog-js/dist/module.js
   var t3 = "undefined" != typeof window ? window : void 0;

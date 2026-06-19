@@ -202,6 +202,21 @@ export const en = {
         signOutError:   "Could not sign out. Please try again.",
     },
 
+    // ── Burnout ───────────────────────────────────────────────────────────────
+    burnout: {
+        title:          "Emotional Burnout Radar",
+        subtitle:       "Based on your last 4 weeks",
+        levelLow:       "No warning signs",
+        levelModerate:  "Mild signs of burnout",
+        levelHigh:      "Clear signs of burnout",
+        signalFatigue:      "Fatigue or apathy pattern",
+        signalNumbness:     "Low emotional variety",
+        signalIrritability: "Increased irritability or stress",
+        signalNegativity:   "Predominantly negative emotions",
+        tip:            "Detecting burnout early is the first step to taking care of yourself.",
+        notEnoughData:  "You need at least 10 entries in the last 30 days to activate this analysis.",
+    },
+
     // ── Reports ───────────────────────────────────────────────────────────────
     reports: {
         title:       "My reports",

@@ -202,6 +202,21 @@ export const es = {
         signOutError:   "No se pudo cerrar sesión. Intenta de nuevo.",
     },
 
+    // ── Burnout ───────────────────────────────────────────────────────────────
+    burnout: {
+        title:          "Radar de desgaste emocional",
+        subtitle:       "Basado en tus últimas 4 semanas",
+        levelLow:       "Sin señales de alerta",
+        levelModerate:  "Señales leves de desgaste",
+        levelHigh:      "Señales claras de desgaste",
+        signalFatigue:      "Patrón de fatiga o apatía",
+        signalNumbness:     "Poca variedad emocional",
+        signalIrritability: "Aumento de irritabilidad o estrés",
+        signalNegativity:   "Predominio de emociones negativas",
+        tip:            "Detectar el desgaste a tiempo es el primer paso para cuidarte.",
+        notEnoughData:  "Necesitas al menos 10 registros en los últimos 30 días para activar este análisis.",
+    },
+
     // ── Reports ───────────────────────────────────────────────────────────────
     reports: {
         title:       "Mis reportes",
