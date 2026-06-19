@@ -4,6 +4,7 @@ import { useState } from "preact/hooks";
 import { DIARY_TAGS } from "./constants.js";
 import { getDiaryEntries } from "./persistence.js";
 import { get } from "./store.js";
+import { assessBurnoutRisk } from "./burnoutDetection.js";
 
 /** @typedef {import('./types.js').TFn} TFn */
 /** @typedef {import('./types.js').GetDisplayNameFn} GetDisplayNameFn */
@@ -346,6 +347,67 @@ function MotivationalNote({ total, t }) {
     );
 }
 
+// ── Burnout card ──────────────────────────────────────────────────────────────
+
+/** @param {{ entries: DiaryEntry[], t: TFn }} props */
+function BurnoutCard({ entries, t }) {
+    const assessment = assessBurnoutRisk(entries);
+
+    const levelColors = {
+        low:      { bg: "bg-emerald-50",  border: "border-emerald-200", dot: "bg-emerald-400", text: "text-emerald-700" },
+        moderate: { bg: "bg-amber-50",    border: "border-amber-200",   dot: "bg-amber-400",   text: "text-amber-700"  },
+        high:     { bg: "bg-rose-50",     border: "border-rose-200",    dot: "bg-rose-500",    text: "text-rose-700"   },
+    };
+
+    const signalLabels = {
+        fatigue:      t("burnout.signalFatigue"),
+        numbness:     t("burnout.signalNumbness"),
+        irritability: t("burnout.signalIrritability"),
+        negativity:   t("burnout.signalNegativity"),
+    };
+
+    const levelLabel = {
+        low:      t("burnout.levelLow"),
+        moderate: t("burnout.levelModerate"),
+        high:     t("burnout.levelHigh"),
+    };
+
+    const colors = levelColors[assessment.hasEnoughData ? assessment.level : "low"];
+
+    return (
+        <div class={`rounded-2xl p-4 shadow-sm mb-4 border ${colors.bg} ${colors.border}`}>
+            <div class="flex items-start justify-between mb-1">
+                <h3 class="text-sm font-bold text-slate-700">{t("burnout.title")}</h3>
+                {assessment.hasEnoughData && (
+                    <span class={`flex items-center gap-1.5 text-xs font-semibold ${colors.text}`}>
+                        <span class={`w-2 h-2 rounded-full shrink-0 ${colors.dot}`} />
+                        {levelLabel[assessment.level]}
+                    </span>
+                )}
+            </div>
+            <p class="text-[11px] text-slate-400 mb-3">{t("burnout.subtitle")}</p>
+
+            {!assessment.hasEnoughData ? (
+                <p class="text-xs text-slate-400 leading-relaxed">{t("burnout.notEnoughData")}</p>
+            ) : (
+                <>
+                    {assessment.signals.length > 0 && (
+                        <ul class="space-y-1.5 mb-3">
+                            {assessment.signals.map((signal) => (
+                                <li key={signal.key} class="flex items-center gap-2 text-xs text-slate-600">
+                                    <span class={`w-1.5 h-1.5 rounded-full shrink-0 ${colors.dot}`} />
+                                    {signalLabels[signal.key]}
+                                </li>
+                            ))}
+                        </ul>
+                    )}
+                    <p class="text-[11px] text-slate-400 leading-relaxed italic">{t("burnout.tip")}</p>
+                </>
+            )}
+        </div>
+    );
+}
+
 // ── Empty states ──────────────────────────────────────────────────────────────
 
 /** @param {{ t: TFn, onGoToEntries: () => void }} props */
@@ -463,6 +525,8 @@ function ReportsPanel({ entries, t, getDisplayName, emociones, onGoToEntries }) 
                     </Card>
 
                     <MotivationalNote total={entries.length} t={t} />
+
+                    <BurnoutCard entries={entries} t={t} />
                 </>
             )}
         </div>
