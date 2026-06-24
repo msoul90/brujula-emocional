@@ -2860,7 +2860,6 @@
           class: "quiz-result-card w-full text-left p-4 rounded-2xl flex items-center gap-4 hover:shadow-md transition-all",
           style: `border-left:6px solid ${e4.color}; background:${e4.color}${dark ? "22" : "15"}`,
           onClick: () => {
-            onDismiss();
             emit("emotion:select", { nombre: e4.nombre });
           },
           children: [
@@ -5043,7 +5042,7 @@
   }
   var turnstileSiteKey = (
     /** @type {Record<string, unknown>} */
-    "0x4AAAAAADTVCQSMBDI_HafG"
+    ""
   );
   var TURNSTILE_SITE_KEY = typeof turnstileSiteKey === "string" ? turnstileSiteKey : "";
   function AuthSection({ email, t: t4, onSignIn, onSignOut }) {
@@ -5452,7 +5451,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "fd4b91e8";
+  var BUILD_VERSION = "035cc2d5";
 
   // node_modules/posthog-js/dist/module.js
   var t3 = "undefined" != typeof window ? window : void 0;
