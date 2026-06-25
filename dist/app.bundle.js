@@ -5042,7 +5042,7 @@
   }
   var turnstileSiteKey = (
     /** @type {Record<string, unknown>} */
-    ""
+    "0x4AAAAAADTVCQSMBDI_HafG"
   );
   var TURNSTILE_SITE_KEY = typeof turnstileSiteKey === "string" ? turnstileSiteKey : "";
   function AuthSection({ email, t: t4, onSignIn, onSignOut }) {
