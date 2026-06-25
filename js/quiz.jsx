@@ -126,7 +126,7 @@ function QuizResult({ t, dark, emotions, getDisplayName, onRestart, onDismiss })
                     <button key={e.nombre} type="button"
                         class="quiz-result-card w-full text-left p-4 rounded-2xl flex items-center gap-4 hover:shadow-md transition-all"
                         style={`border-left:6px solid ${e.color}; background:${e.color}${dark ? "22" : "15"}`}
-                        onClick={() => { onDismiss(); emit("emotion:select", { nombre: e.nombre }); }}>
+                        onClick={() => { emit("emotion:select", { nombre: e.nombre }); }}>
                         <span class="font-bold" style={`color:${e.text}`}>{getDisplayName(e.nombre)}</span>
                         <span class="ml-auto text-xs font-bold opacity-70 shrink-0" style={`color:${e.text}`}>Ver →</span>
                     </button>

@@ -47,6 +47,8 @@ describe("reports helpers", () => {
 
 describe("createReports", () => {
     it("usa etiquetas traducidas para contextos", () => {
+        vi.useFakeTimers();
+        vi.setSystemTime(new Date("2026-05-25T12:00:00.000Z"));
         setDiaryEntries([{ id: 1, date: "2026-05-20T10:00:00.000Z", emotion: "Calma", note: "", tags: ["trabajo"] }]);
         const t = (key) => ({
             "reports.title": "Reports",
