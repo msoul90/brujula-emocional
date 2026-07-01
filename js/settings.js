@@ -72,17 +72,16 @@ function AuthSection({ email, t, onSignIn, onSignOut }) {
     const [isSigningOut, setIsSigningOut] = useState(false);
     const [signOutError, setSignOutError] = useState(false);
     const turnstileContainer              = useRef(/** @type {HTMLDivElement|null} */ (null));
+    const widgetIdRef                     = useRef(/** @type {string|undefined} */ (undefined));
 
     useEffect(() => {
         if (!TURNSTILE_SITE_KEY || email) return;
         const win = /** @type {any} */ (globalThis);
-        /** @type {string|undefined} */
-        let widgetId;
         let active = true;
 
         function mountWidget() {
             if (!active || !win.turnstile || !turnstileContainer.current) return;
-            widgetId = win.turnstile.render(turnstileContainer.current, {
+            widgetIdRef.current = win.turnstile.render(turnstileContainer.current, {
                 sitekey: TURNSTILE_SITE_KEY,
                 theme: "light",
                 size: "compact",
@@ -103,14 +102,14 @@ function AuthSection({ email, t, onSignIn, onSignOut }) {
 
         return () => {
             active = false;
-            if (widgetId !== undefined) {
+            if (widgetIdRef.current !== undefined) {
                 try {
-                    win.turnstile?.remove(widgetId);
+                    win.turnstile?.remove(widgetIdRef.current);
                 } catch (error) {
                     // Avoid breaking unmount if Turnstile widget is already gone.
                     console.warn("Turnstile cleanup failed", error);
                 }
-                widgetId = undefined;
+                widgetIdRef.current = undefined;
             }
         };
     }, [email]);
@@ -150,6 +149,18 @@ function AuthSection({ email, t, onSignIn, onSignOut }) {
 
     const captchaReady = !TURNSTILE_SITE_KEY || captchaToken;
 
+    function resetTurnstile() {
+        const win = /** @type {any} */ (globalThis);
+        if (widgetIdRef.current !== undefined) {
+            try {
+                win.turnstile?.reset(widgetIdRef.current);
+            } catch (err) {
+                console.warn("Turnstile reset failed", err);
+            }
+        }
+        setCaptchaToken("");
+    }
+
     /** @param {Event} e */
     async function handleSubmit(e) {
         e.preventDefault();
@@ -157,9 +168,16 @@ function AuthSection({ email, t, onSignIn, onSignOut }) {
         setStatus("sending");
         try {
             const { error } = await onSignIn(inputEmail, captchaToken || undefined);
-            setStatus(error ? "error" : "sent");
+            if (error) {
+                console.warn("Magic link error", error);
+                resetTurnstile();
+                setStatus("error");
+            } else {
+                setStatus("sent");
+            }
         } catch (error) {
             console.warn("Magic link request failed", error);
+            resetTurnstile();
             setStatus("error");
         }
     }
