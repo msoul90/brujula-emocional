@@ -5042,7 +5042,7 @@
   }
   var turnstileSiteKey = (
     /** @type {Record<string, unknown>} */
-    "0x4AAAAAADTVCQSMBDI_HafG"
+    ""
   );
   var TURNSTILE_SITE_KEY = typeof turnstileSiteKey === "string" ? turnstileSiteKey : "";
   function AuthSection({ email, t: t4, onSignIn, onSignOut }) {
@@ -5058,17 +5058,20 @@
       /** @type {HTMLDivElement|null} */
       null
     );
+    const widgetIdRef = A2(
+      /** @type {string|undefined} */
+      void 0
+    );
     y2(() => {
       if (!TURNSTILE_SITE_KEY || email) return;
       const win = (
         /** @type {any} */
         globalThis
       );
-      let widgetId;
       let active = true;
       function mountWidget() {
         if (!active || !win.turnstile || !turnstileContainer.current) return;
-        widgetId = win.turnstile.render(turnstileContainer.current, {
+        widgetIdRef.current = win.turnstile.render(turnstileContainer.current, {
           sitekey: TURNSTILE_SITE_KEY,
           theme: "light",
           size: "compact",
@@ -5091,13 +5094,13 @@
       }
       return () => {
         active = false;
-        if (widgetId !== void 0) {
+        if (widgetIdRef.current !== void 0) {
           try {
-            win.turnstile?.remove(widgetId);
+            win.turnstile?.remove(widgetIdRef.current);
           } catch (error) {
             console.warn("Turnstile cleanup failed", error);
           }
-          widgetId = void 0;
+          widgetIdRef.current = void 0;
         }
       };
     }, [email]);
@@ -5136,15 +5139,36 @@
       );
     }
     const captchaReady = !TURNSTILE_SITE_KEY || captchaToken;
+    function resetTurnstile() {
+      const win = (
+        /** @type {any} */
+        globalThis
+      );
+      if (widgetIdRef.current !== void 0) {
+        try {
+          win.turnstile?.reset(widgetIdRef.current);
+        } catch (err) {
+          console.warn("Turnstile reset failed", err);
+        }
+      }
+      setCaptchaToken("");
+    }
     async function handleSubmit(e4) {
       e4.preventDefault();
       if (!inputEmail || !captchaReady) return;
       setStatus("sending");
       try {
         const { error } = await onSignIn(inputEmail, captchaToken || void 0);
-        setStatus(error ? "error" : "sent");
+        if (error) {
+          console.warn("Magic link error", error);
+          resetTurnstile();
+          setStatus("error");
+        } else {
+          setStatus("sent");
+        }
       } catch (error) {
         console.warn("Magic link request failed", error);
+        resetTurnstile();
         setStatus("error");
       }
     }
@@ -5451,7 +5475,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "035cc2d5";
+  var BUILD_VERSION = "30f168cd";
 
   // node_modules/posthog-js/dist/module.js
   var t3 = "undefined" != typeof window ? window : void 0;
