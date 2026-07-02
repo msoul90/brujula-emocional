@@ -10,10 +10,14 @@ const THEMES = ["light", "auto", "dark"];
 const LANGUAGES = ["es", "en"];
 
 /**
- * Typed env access for browser code without requiring Node typings.
+ * Referencing `process.env.X` directly (rather than through a `globalThis.process`
+ * indirection) is required so esbuild's `define` can statically replace the
+ * value at build time — see scripts/build-js.js.
  * @type {{ APP_VERSION?: string }}
  */
-const env = /** @type {any} */ (globalThis).process?.env ?? {};
+const env = {
+    APP_VERSION: process.env.APP_VERSION,
+};
 
 /**
  * @param {string | null | undefined} theme

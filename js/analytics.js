@@ -1,11 +1,17 @@
 import posthog from "posthog-js";
 
 /**
- * Typed env access for browser code without requiring Node typings.
- * Values are replaced at build-time and available in tests via Node's process.env.
+ * Referencing `process.env.X` directly (rather than through a `globalThis.process`
+ * indirection) is required so esbuild's `define` can statically replace each
+ * value at build time — see scripts/build-js.js. Values are also available in
+ * tests via Node's real process.env.
  * @type {{ POSTHOG_API_KEY?: string, POSTHOG_HOST?: string, POSTHOG_ENABLED?: string }}
  */
-const env = /** @type {any} */ (globalThis).process?.env ?? {};
+const env = {
+    POSTHOG_API_KEY: process.env.POSTHOG_API_KEY,
+    POSTHOG_HOST: process.env.POSTHOG_HOST,
+    POSTHOG_ENABLED: process.env.POSTHOG_ENABLED,
+};
 
 const apiKey = env.POSTHOG_API_KEY;
 const host = env.POSTHOG_HOST;

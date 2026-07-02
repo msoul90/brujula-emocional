@@ -12,6 +12,6 @@
     "jsxImportSource": "preact",
     "skipLibCheck": true
   },
-  "include": ["js/**/*.js", "js/**/*.jsx", "app.js"],
+  "include": ["js/**/*.js", "js/**/*.jsx", "js/**/*.d.ts", "app.js"],
   "exclude": ["node_modules", "dist"]
 }

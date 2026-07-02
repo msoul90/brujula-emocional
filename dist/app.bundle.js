@@ -5009,10 +5009,9 @@
   // js/settings.js
   var THEMES = ["light", "auto", "dark"];
   var LANGUAGES = ["es", "en"];
-  var env = (
-    /** @type {any} */
-    globalThis.process?.env ?? {}
-  );
+  var env = {
+    APP_VERSION: "1.3.3"
+  };
   function isTheme(theme) {
     return typeof theme === "string" && THEMES.includes(theme);
   }
@@ -5476,7 +5475,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "a5816735";
+  var BUILD_VERSION = "b9e76069";
 
   // node_modules/posthog-js/dist/module.js
   var t3 = "undefined" != typeof window ? window : void 0;
@@ -11441,10 +11440,11 @@
   })();
 
   // js/analytics.js
-  var env2 = (
-    /** @type {any} */
-    globalThis.process?.env ?? {}
-  );
+  var env2 = {
+    POSTHOG_API_KEY: "phc_D44Jy6qHZTek7u4xBeasusCsbzbpc7kVLxAEbnxUDVQQ",
+    POSTHOG_HOST: "https://us.i.posthog.com",
+    POSTHOG_ENABLED: "true"
+  };
   var apiKey = env2.POSTHOG_API_KEY;
   var host = env2.POSTHOG_HOST;
   var isEnabled = env2.POSTHOG_ENABLED === "true";
@@ -31468,10 +31468,10 @@ ${suffix}`;
   if (shouldShowDeprecationWarning()) console.warn("\u26A0\uFE0F  Node.js 20 and below are deprecated and will no longer be supported in future versions of @supabase/supabase-js. Please upgrade to Node.js 22 or later. For more information, visit: https://github.com/orgs/supabase/discussions/45715");
 
   // js/supabase.js
-  var env3 = (
-    /** @type {any} */
-    globalThis.process?.env ?? {}
-  );
+  var env3 = {
+    SUPABASE_URL: "",
+    SUPABASE_ANON_KEY: ""
+  };
   var client = null;
   function getSupabaseClient() {
     const url = env3.SUPABASE_URL;
