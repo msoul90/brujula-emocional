@@ -5042,7 +5042,7 @@
   }
   var turnstileSiteKey = (
     /** @type {Record<string, unknown>} */
-    ""
+    "0x4AAAAAADTVCQSMBDI_HafG"
   );
   var TURNSTILE_SITE_KEY = typeof turnstileSiteKey === "string" ? turnstileSiteKey : "";
   function AuthSection({ email, t: t4, onSignIn, onSignOut }) {
@@ -11441,8 +11441,8 @@
 
   // js/analytics.js
   var env2 = {
-    POSTHOG_API_KEY: "",
-    POSTHOG_HOST: "",
+    POSTHOG_API_KEY: "true",
+    POSTHOG_HOST: "https://us.i.posthog.com",
     POSTHOG_ENABLED: "false"
   };
   var apiKey = env2.POSTHOG_API_KEY;
@@ -31469,8 +31469,8 @@ ${suffix}`;
 
   // js/supabase.js
   var env3 = {
-    SUPABASE_URL: "",
-    SUPABASE_ANON_KEY: ""
+    SUPABASE_URL: "https://hhphxxsnvflsuyypazbs.supabase.co",
+    SUPABASE_ANON_KEY: "sb_publishable_yhUBofb-kpChOY23Nll4Dg_9yjAhekL"
   };
   var client = null;
   function getSupabaseClient() {
