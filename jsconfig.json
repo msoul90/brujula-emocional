@@ -8,6 +8,6 @@
         "target": "ES2022",
         "allowJs": true
     },
-    "include": ["js/**/*.js", "app.js"],
+    "include": ["js/**/*.js", "js/**/*.d.ts", "app.js"],
     "exclude": ["node_modules", "dist"]
 }
