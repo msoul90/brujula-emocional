@@ -5475,7 +5475,7 @@
   }
 
   // js/version.js
-  var BUILD_VERSION = "b9e76069";
+  var BUILD_VERSION = "0fce8754";
 
   // node_modules/posthog-js/dist/module.js
   var t3 = "undefined" != typeof window ? window : void 0;
@@ -11441,9 +11441,9 @@
 
   // js/analytics.js
   var env2 = {
-    POSTHOG_API_KEY: "phc_D44Jy6qHZTek7u4xBeasusCsbzbpc7kVLxAEbnxUDVQQ",
-    POSTHOG_HOST: "https://us.i.posthog.com",
-    POSTHOG_ENABLED: "true"
+    POSTHOG_API_KEY: "",
+    POSTHOG_HOST: "",
+    POSTHOG_ENABLED: "false"
   };
   var apiKey = env2.POSTHOG_API_KEY;
   var host = env2.POSTHOG_HOST;
