@@ -1400,15 +1400,13 @@
         } while (p4.__d && ++A4 < 25);
         p4.state = p4.__s, null != p4.getChildContext && (i4 = m(m({}, i4), p4.getChildContext())), M2 && !v4 && null != p4.getSnapshotBeforeUpdate && (_3 = p4.getSnapshotBeforeUpdate(y4, d4)), H3 = null != s4 && s4.type === S && null == s4.key ? E(s4.props.children) : s4, f5 = L(n3, g(H3) ? H3 : [H3], u5, t4, i4, r4, o4, e4, f5, c4, a4), p4.base = u5.__e, u5.__u &= -161, p4.__h.length && e4.push(p4), k4 && (p4.__E = p4.__ = null);
       } catch (n4) {
-        if (e4.length = h4, u5.__v = null, c4 || null != o4) if (n4.then) {
-          for (u5.__u |= c4 ? 160 : 128; f5 && 8 == f5.nodeType && f5.nextSibling; ) f5 = f5.nextSibling;
-          null != o4 && (o4[o4.indexOf(f5)] = null), u5.__e = f5;
-        } else {
-          if (null != o4) for (T4 = o4.length; T4--; ) b(o4[T4]);
-          B(u5);
-        }
-        else u5.__e = t4.__e, !u5.__k && t4.__k && (u5.__k = t4.__k), n4.then || B(u5);
-        l.__e(n4, u5, t4);
+        if (e4.length = h4, u5.__v = null, c4 || null != o4) {
+          if (n4.then) {
+            for (u5.__u |= c4 ? 160 : 128; f5 && 8 == f5.nodeType && f5.nextSibling; ) f5 = f5.nextSibling;
+            null != o4 && (o4[o4.indexOf(f5)] = null), u5.__e = f5;
+          } else if (null != o4) for (T4 = o4.length; T4--; ) b(o4[T4]);
+        } else u5.__e = t4.__e;
+        null == u5.__k && (u5.__k = t4.__k || []), n4.then || B(u5), l.__e(n4, u5, t4);
       }
     } else null == o4 && u5.__v == t4.__v ? (u5.__k = t4.__k, u5.__e = t4.__e) : f5 = u5.__e = G(t4.__e, u5, t4, i4, r4, o4, e4, c4, a4);
     return (s4 = l.diffed) && s4(u5), 128 & u5.__u ? void 0 : f5;
@@ -1589,7 +1587,7 @@
     var i4 = (r2 = n3.__c).__H;
     i4 && (u2 === r2 ? (i4.__h = [], r2.__h = [], i4.__.some(function(n4) {
       n4.__N && (n4.__ = n4.__N), n4.u = n4.__N = void 0;
-    })) : (i4.__h.length && j2(), t2 = 0)), u2 = r2;
+    })) : (i4.__h.some(z2), i4.__h.some(B2), i4.__h = [], t2 = 0)), u2 = r2;
   }, c2.diffed = function(n3) {
     v2 && v2(n3);
     var t4 = n3.__c;
@@ -5010,7 +5008,7 @@
   var THEMES = ["light", "auto", "dark"];
   var LANGUAGES = ["es", "en"];
   var env = {
-    APP_VERSION: "1.3.3"
+    APP_VERSION: "1.3.4"
   };
   function isTheme(theme) {
     return typeof theme === "string" && THEMES.includes(theme);
@@ -5491,9 +5489,12 @@
   var l3 = null == e3 ? void 0 : e3.CompressionStream;
   var u4 = null == i3 ? void 0 : i3.userAgent;
   var h3 = null != t3 ? t3 : {};
-  var d3 = "1.396.4";
-  var v3 = { DEBUG: false, LIB_VERSION: d3, LIB_NAME: "web", JS_SDK_VERSION: d3 };
-  function c3(t4, e4, i4, r4, s4, n3, o4) {
+  function d3() {
+    return !(!t3 || false === t3.navigator.onLine);
+  }
+  var v3 = "1.404.1";
+  var c3 = { DEBUG: false, LIB_VERSION: v3, LIB_NAME: "web", JS_SDK_VERSION: v3 };
+  function f4(t4, e4, i4, r4, s4, n3, o4) {
     try {
       var a4 = t4[n3](o4), l4 = a4.value;
     } catch (t5) {
@@ -5507,25 +5508,25 @@
       return new Promise((function(r4, s4) {
         var n3 = t4.apply(e4, i4);
         function o4(t5) {
-          c3(n3, r4, s4, o4, a4, "next", t5);
+          f4(n3, r4, s4, o4, a4, "next", t5);
         }
         function a4(t5) {
-          c3(n3, r4, s4, o4, a4, "throw", t5);
+          f4(n3, r4, s4, o4, a4, "throw", t5);
         }
         o4(void 0);
       }));
     };
   }
-  function f4() {
-    return f4 = Object.assign ? Object.assign.bind() : function(t4) {
+  function _2() {
+    return _2 = Object.assign ? Object.assign.bind() : function(t4) {
       for (var e4 = 1; arguments.length > e4; e4++) {
         var i4 = arguments[e4];
         for (var r4 in i4) ({}).hasOwnProperty.call(i4, r4) && (t4[r4] = i4[r4]);
       }
       return t4;
-    }, f4.apply(null, arguments);
+    }, _2.apply(null, arguments);
   }
-  function _2(t4, e4) {
+  function g2(t4, e4) {
     if (null == t4) return {};
     var i4 = {};
     for (var r4 in t4) if ({}.hasOwnProperty.call(t4, r4)) {
@@ -5534,7 +5535,7 @@
     }
     return i4;
   }
-  var g2 = (t4) => {
+  var m3 = (t4) => {
     if ("string" != typeof t4) return t4;
     try {
       return JSON.parse(t4);
@@ -5542,44 +5543,44 @@
       return t4;
     }
   };
-  function m3(t4) {
+  function b2(t4) {
     return "string" == typeof t4 || t4;
   }
   function y3(t4) {
     return "string" == typeof t4 ? t4 : void 0;
   }
-  var b2;
-  var w3 = (function(t4) {
-    return t4.AnonymousId = "anonymous_id", t4.DistinctId = "distinct_id", t4.Props = "props", t4.EnablePersonProcessing = "enable_person_processing", t4.PersonMode = "person_mode", t4.FeatureFlagDetails = "feature_flag_details", t4.FeatureFlags = "feature_flags", t4.FeatureFlagPayloads = "feature_flag_payloads", t4.BootstrapFeatureFlagDetails = "bootstrap_feature_flag_details", t4.BootstrapFeatureFlags = "bootstrap_feature_flags", t4.BootstrapFeatureFlagPayloads = "bootstrap_feature_flag_payloads", t4.OverrideFeatureFlags = "override_feature_flags", t4.Queue = "queue", t4.LogsQueue = "logs_queue", t4.OptedOut = "opted_out", t4.SessionId = "session_id", t4.SessionStartTimestamp = "session_start_timestamp", t4.SessionLastTimestamp = "session_timestamp", t4.PersonProperties = "person_properties", t4.GroupProperties = "group_properties", t4.InstalledAppBuild = "installed_app_build", t4.InstalledAppVersion = "installed_app_version", t4.SessionReplay = "session_replay", t4.SessionReplayEventTriggerActivatedSession = "session_replay_event_trigger_activated_session", t4.SurveyLastSeenDate = "survey_last_seen_date", t4.SurveysSeen = "surveys_seen", t4.Surveys = "surveys", t4.RemoteConfig = "remote_config", t4.FlagsEndpointWasHit = "flags_endpoint_was_hit", t4.DeviceId = "device_id", t4;
-  })({});
+  var w3;
   var E2 = (function(t4) {
+    return t4.AnonymousId = "anonymous_id", t4.DistinctId = "distinct_id", t4.Props = "props", t4.EnablePersonProcessing = "enable_person_processing", t4.PersonMode = "person_mode", t4.FeatureFlagDetails = "feature_flag_details", t4.FeatureFlags = "feature_flags", t4.FeatureFlagPayloads = "feature_flag_payloads", t4.BootstrapFeatureFlagDetails = "bootstrap_feature_flag_details", t4.BootstrapFeatureFlags = "bootstrap_feature_flags", t4.BootstrapFeatureFlagPayloads = "bootstrap_feature_flag_payloads", t4.OverrideFeatureFlags = "override_feature_flags", t4.Queue = "queue", t4.AiQueue = "ai_queue", t4.LogsQueue = "logs_queue", t4.OptedOut = "opted_out", t4.SessionId = "session_id", t4.SessionStartTimestamp = "session_start_timestamp", t4.SessionLastTimestamp = "session_timestamp", t4.PersonProperties = "person_properties", t4.GroupProperties = "group_properties", t4.InstalledAppBuild = "installed_app_build", t4.InstalledAppVersion = "installed_app_version", t4.SessionReplay = "session_replay", t4.SessionReplayEventTriggerActivatedSession = "session_replay_event_trigger_activated_session", t4.SurveyLastSeenDate = "survey_last_seen_date", t4.SurveysSeen = "surveys_seen", t4.Surveys = "surveys", t4.RemoteConfig = "remote_config", t4.FlagsEndpointWasHit = "flags_endpoint_was_hit", t4.DeviceId = "device_id", t4;
+  })({});
+  var x2 = (function(t4) {
     return t4.GZipJS = "gzip-js", t4.Base64 = "base64", t4;
   })({});
-  var x2 = ["$snapshot", "$pageview", "$pageleave", "$set", "survey dismissed", "survey sent", "survey shown", "$identify", "$groupidentify", "$create_alias", "$$client_ingestion_warning", "$web_experiment_applied", "$feature_enrollment_update", "$feature_flag_called"];
-  var S2 = ["token"];
+  var S2 = ["$snapshot", "$pageview", "$pageleave", "$set", "survey dismissed", "survey sent", "survey shown", "$identify", "$groupidentify", "$create_alias", "$$client_ingestion_warning", "$web_experiment_applied", "$feature_enrollment_update", "$feature_flag_called"];
+  var k3 = ["token"];
   var T3 = "NativeGzipValidationError";
-  var k3 = (t4) => t4.length >= 2 && 31 === t4[0] && 139 === t4[1];
-  var R3 = (t4, e4) => t4 === E2.GZipJS || e4 === E2.GZipJS || "gzip" === e4;
-  var P2 = (t4) => !(!t4 || "object" != typeof t4) && "NotReadableError" === ("name" in t4 ? String(t4.name) : "");
+  var R3 = (t4) => t4.length >= 2 && 31 === t4[0] && 139 === t4[1];
+  var P2 = (t4, e4) => t4 === x2.GZipJS || e4 === x2.GZipJS || "gzip" === e4;
+  var O2 = (t4) => !(!t4 || "object" != typeof t4) && "NotReadableError" === ("name" in t4 ? String(t4.name) : "");
   var I2 = (t4) => {
     var e4 = new Error("Native gzip produced invalid output: " + t4);
     throw e4.name = T3, e4;
   };
-  var O2 = (function() {
+  var C3 = (function() {
     var t4 = p3((function* (t5, e4) {
       18 > t5.size && I2("too-short");
       var i4 = new Uint8Array(yield t5.slice(0, 10).arrayBuffer());
-      k3(i4) && 8 === i4[2] || I2("invalid-header");
+      R3(i4) && 8 === i4[2] || I2("invalid-header");
       var r4 = new DataView(yield t5.slice(t5.size - 8).arrayBuffer());
       r4.getUint32(0, true) !== ((t6) => {
         for (var e5 = (() => {
-          if (b2) return b2;
-          b2 = [];
+          if (w3) return w3;
+          w3 = [];
           for (var t7 = 0; 256 > t7; t7++) {
             for (var e6 = t7, i6 = 0; 8 > i6; i6++) e6 = 1 & e6 ? 3988292384 ^ e6 >>> 1 : e6 >>> 1;
-            b2[t7] = e6 >>> 0;
+            w3[t7] = e6 >>> 0;
           }
-          return b2;
+          return w3;
         })(), i5 = 4294967295, r5 = 0; t6.length > r5; r5++) i5 = e5[255 & (i5 ^ t6[r5])] ^ i5 >>> 8;
         return (4294967295 ^ i5) >>> 0;
       })(e4) && I2("invalid-crc");
@@ -5590,11 +5591,11 @@
       return t4.apply(this, arguments);
     };
   })();
-  function C3() {
-    return C3 = p3((function* (t4, e4, i4) {
+  function M() {
+    return M = p3((function* (t4, e4, i4) {
       void 0 === e4 && (e4 = true);
       try {
-        var r4 = new TextEncoder().encode(t4), s4 = new CompressionStream("gzip"), n3 = s4.writable.getWriter(), o4 = n3.write(r4).then((() => n3.close())).catch((function() {
+        var r4 = new TextEncoder().encode(t4), s4 = new globalThis.CompressionStream("gzip"), n3 = s4.writable.getWriter(), o4 = n3.write(r4).then((() => n3.close())).catch((function() {
           var t5 = p3((function* (t6) {
             try {
               yield n3.abort(t6);
@@ -5605,13 +5606,13 @@
           return function(e5) {
             return t5.apply(this, arguments);
           };
-        })()), a4 = new Response(s4.readable).blob(), [l4] = yield Promise.all([a4, o4]);
-        return yield O2(l4, r4), l4;
+        })()), a4 = new Response(s4.readable).blob(), l4 = (yield Promise.all([a4, o4]))[0];
+        return yield C3(l4, r4), l4;
       } catch (t5) {
         if (null != i4 && i4.rethrow) throw t5;
         return e4 && console.error("Failed to gzip compress data", t5), null;
       }
-    })), C3.apply(this, arguments);
+    })), M.apply(this, arguments);
   }
   var A3 = ["amazonbot", "amazonproductbot", "app.hypefactors.com", "applebot", "archive.org_bot", "awariobot", "backlinksextendedbot", "baiduspider", "bingbot", "bingpreview", "chrome-lighthouse", "dataforseobot", "deepscan", "duckduckbot", "facebookexternal", "facebookcatalog", "http://yandex.com/bots", "hubspot", "ia_archiver", "leikibot", "linkedinbot", "meta-externalagent", "mj12bot", "msnbot", "nessus", "petalbot", "pinterest", "prerender", "rogerbot", "screaming frog", "sebot-wa", "sitebulb", "slackbot", "slurp", "trendictionbot", "turnitin", "twitterbot", "vercel-screenshot", "vercelbot", "yahoo! slurp", "yandexbot", "zoombot", "bot.htm", "bot.php", "(bot;", "bot/", "crawler", "ahrefsbot", "ahrefssiteaudit", "semrushbot", "siteauditbot", "splitsignalbot", "gptbot", "oai-searchbot", "chatgpt-user", "perplexitybot", "better uptime bot", "sentryuptimebot", "uptimerobot", "headlesschrome", "cypress", "google-hoteladsverifier", "adsbot-google", "apis-google", "duplexweb-google", "feedfetcher-google", "google favicon", "google web preview", "google-read-aloud", "googlebot", "googleother", "google-cloudvertexbot", "googleweblight", "mediapartners-google", "storebot-google", "google-inspectiontool", "bytespider"];
   var F = function(t4, e4) {
@@ -5622,48 +5623,63 @@
       return -1 !== i4.indexOf(e5);
     }));
   };
-  function M(t4, e4) {
+  function D3(t4, e4) {
     return -1 !== t4.indexOf(e4);
   }
-  var D3 = function(t4) {
+  var N2 = function(t4) {
     return t4.trim();
   };
-  var L2 = function(t4) {
+  var U = function(t4) {
     return t4.replace(/^\$/, "");
   };
-  var N2 = Object.prototype;
-  var U = N2.hasOwnProperty;
-  var j3 = N2.toString;
-  var B3 = Array.isArray || function(t4) {
-    return "[object Array]" === j3.call(t4);
+  function L2(t4) {
+    var e4, i4 = [];
+    return null !== (e4 = JSON.stringify(t4, (function(t5, e5) {
+      if ("bigint" == typeof e5) return e5.toString();
+      if ("function" != typeof e5 && "symbol" != typeof e5) {
+        if (e5 instanceof Error) return { name: e5.name, message: e5.message, stack: e5.stack };
+        if (e5 && "object" == typeof e5) {
+          for (; i4.length > 0 && i4[i4.length - 1] !== this; ) i4.pop();
+          if (i4.includes(e5)) return "[Circular]";
+          i4.push(e5);
+        }
+        return e5;
+      }
+    }))) && void 0 !== e4 ? e4 : "null";
+  }
+  var j3 = Object.prototype;
+  var B3 = j3.hasOwnProperty;
+  var z3 = j3.toString;
+  var H2 = Array.isArray || function(t4) {
+    return "[object Array]" === z3.call(t4);
   };
-  var z3 = (t4) => "function" == typeof t4;
-  var H2 = (t4) => t4 === Object(t4) && !B3(t4);
-  var q2 = (t4) => {
-    if (H2(t4)) {
-      for (var e4 in t4) if (U.call(t4, e4)) return false;
+  var q2 = (t4) => "function" == typeof t4;
+  var V2 = (t4) => t4 === Object(t4) && !H2(t4);
+  var G2 = (t4) => {
+    if (V2(t4)) {
+      for (var e4 in t4) if (B3.call(t4, e4)) return false;
       return true;
     }
     return false;
   };
-  var V2 = (t4) => void 0 === t4;
-  var G2 = (t4) => "[object String]" == j3.call(t4);
-  var W = (t4) => G2(t4) && 0 === t4.trim().length;
+  var W = (t4) => void 0 === t4;
+  var J2 = (t4) => "[object String]" == z3.call(t4);
+  var K2 = (t4) => J2(t4) && 0 === t4.trim().length;
   var Y = (t4) => null === t4;
-  var K2 = (t4) => V2(t4) || Y(t4);
-  var J2 = (t4) => "[object Number]" == j3.call(t4) && t4 == t4;
-  var Q2 = (t4) => J2(t4) && t4 > 0;
-  var X = (t4) => "[object Boolean]" === j3.call(t4);
-  var Z = (t4) => t4 instanceof FormData;
-  var tt = (t4) => M(x2, t4);
-  var et = (t4) => M(S2, t4);
-  function it(t4) {
+  var Q2 = (t4) => W(t4) || Y(t4);
+  var X = (t4) => "[object Number]" == z3.call(t4) && t4 == t4;
+  var Z = (t4) => X(t4) && t4 > 0;
+  var tt = (t4) => "[object Boolean]" === z3.call(t4);
+  var et = (t4) => t4 instanceof FormData;
+  var it = (t4) => D3(S2, t4);
+  var rt = (t4) => D3(k3, t4);
+  function st(t4) {
     return null === t4 || "object" != typeof t4;
   }
-  function rt(t4, e4) {
+  function nt(t4, e4) {
     return {}.toString.call(t4) === "[object " + e4 + "]";
   }
-  function st(t4) {
+  function ot(t4) {
     return "undefined" != typeof Event && (function(t5, e4) {
       try {
         return t5 instanceof e4;
@@ -5672,274 +5688,274 @@
       }
     })(t4, Event);
   }
-  var nt = [true, "true", 1, "1", "yes"];
-  var ot = (t4) => M(nt, t4);
-  var at = [false, "false", 0, "0", "no"];
-  function lt(t4, e4, i4, r4, s4) {
-    return e4 > i4 && (r4.warn("min cannot be greater than max."), e4 = i4), J2(t4) ? t4 > i4 ? (r4.warn(" cannot be  greater than max: " + i4 + ". Using max value instead."), i4) : e4 > t4 ? (r4.warn(" cannot be less than min: " + e4 + ". Using min value instead."), e4) : t4 : (r4.warn(" must be a number. using max or fallback. max: " + i4 + ", fallback: " + s4), lt(s4 || i4, e4, i4, r4));
+  var at = [true, "true", 1, "1", "yes"];
+  var lt = (t4) => D3(at, t4);
+  var ut = [false, "false", 0, "0", "no"];
+  function ht(t4, e4, i4, r4, s4) {
+    return e4 > i4 && (r4.warn("min cannot be greater than max."), e4 = i4), X(t4) ? t4 > i4 ? (r4.warn(" cannot be  greater than max: " + i4 + ". Using max value instead."), i4) : e4 > t4 ? (r4.warn(" cannot be less than min: " + e4 + ". Using min value instead."), e4) : t4 : (r4.warn(" must be a number. using max or fallback. max: " + i4 + ", fallback: " + s4), ht(s4 || i4, e4, i4, r4));
   }
-  var ut = class {
+  var dt = class {
     constructor(t4) {
-      this.Ee = {}, this.Pe = t4.Pe, this.Fe = lt(t4.bucketSize, 0, 100, t4.Ae), this.$e = lt(t4.refillRate, 0, this.Fe, t4.Ae), this.De = lt(t4.refillInterval, 0, 864e5, t4.Ae);
+      this.tt = {}, this.et = t4.et, this.rt = ht(t4.bucketSize, 0, 100, t4.it), this.nt = ht(t4.refillRate, 0, this.rt, t4.it), this.st = ht(t4.refillInterval, 0, 864e5, t4.it);
     }
-    Ne(t4, e4) {
-      var i4 = Math.floor((e4 - t4.lastAccess) / this.De);
-      i4 > 0 && (t4.tokens = Math.min(t4.tokens + i4 * this.$e, this.Fe), t4.lastAccess = t4.lastAccess + i4 * this.De);
+    ot(t4, e4) {
+      var i4 = Math.floor((e4 - t4.lastAccess) / this.st);
+      i4 > 0 && (t4.tokens = Math.min(t4.tokens + i4 * this.nt, this.rt), t4.lastAccess = t4.lastAccess + i4 * this.st);
     }
     consumeRateLimit(t4) {
-      var e4, i4 = Date.now(), r4 = String(t4), s4 = this.Ee[r4];
-      return s4 ? this.Ne(s4, i4) : this.Ee[r4] = s4 = { tokens: this.Fe, lastAccess: i4 }, 0 === s4.tokens || (s4.tokens--, 0 === s4.tokens && (null == (e4 = this.Pe) || e4.call(this, t4)), 0 === s4.tokens);
+      var e4, i4 = Date.now(), r4 = String(t4), s4 = this.tt[r4];
+      return s4 ? this.ot(s4, i4) : this.tt[r4] = s4 = { tokens: this.rt, lastAccess: i4 }, 0 === s4.tokens || (s4.tokens--, 0 === s4.tokens && (null == (e4 = this.et) || e4.call(this, t4)), 0 === s4.tokens);
     }
     stop() {
-      this.Ee = {};
+      this.tt = {};
     }
   };
-  var ht = "Mobile";
-  var dt = "iOS";
-  var vt = "Android";
-  var ct = "Tablet";
-  var pt = vt + " " + ct;
-  var ft = "iPad";
-  var _t = "Apple";
-  var gt = _t + " Watch";
-  var mt = "Safari";
-  var yt = "BlackBerry";
-  var bt = "Samsung";
-  var wt = bt + "Browser";
-  var Et = bt + " Internet";
-  var xt = "Chrome";
-  var St = xt + " OS";
-  var Tt = xt + " " + dt;
-  var $t = "Internet Explorer";
-  var kt = $t + " " + ht;
-  var Rt = "Opera";
-  var Pt = Rt + " Mini";
-  var It = "Edge";
-  var Ot = "Microsoft " + It;
-  var Ct = "Firefox";
-  var At = Ct + " " + dt;
-  var Ft = "Nintendo";
-  var Mt = "PlayStation";
-  var Dt = "Xbox";
-  var Lt = vt + " " + ht;
-  var Nt = ht + " " + mt;
-  var Ut = "Windows";
-  var jt = Ut + " Phone";
-  var Bt = "Nokia";
-  var zt = "Ouya";
-  var Ht = "Generic";
-  var qt = Ht + " " + ht.toLowerCase();
-  var Vt = Ht + " " + ct.toLowerCase();
-  var Gt = "Konqueror";
-  var Wt = "Oculus Browser";
+  var vt = "Mobile";
+  var ct = "iOS";
+  var ft = "Android";
+  var pt = "Tablet";
+  var _t = ft + " " + pt;
+  var gt = "iPad";
+  var mt = "Apple";
+  var bt = mt + " Watch";
+  var yt = "Safari";
+  var wt = "BlackBerry";
+  var Et = "Samsung";
+  var xt = Et + "Browser";
+  var St = Et + " Internet";
+  var kt = "Chrome";
+  var Tt = kt + " OS";
+  var $t = kt + " " + ct;
+  var Rt = "Internet Explorer";
+  var Pt = Rt + " " + vt;
+  var Ot = "Opera";
+  var It = Ot + " Mini";
+  var Ct = "Edge";
+  var Mt = "Microsoft " + Ct;
+  var At = "Firefox";
+  var Ft = At + " " + ct;
+  var Dt = "Nintendo";
+  var Nt = "PlayStation";
+  var Ut = "Xbox";
+  var Lt = ft + " " + vt;
+  var jt = vt + " " + yt;
+  var Bt = "Windows";
+  var zt = Bt + " Phone";
+  var Ht = "Nokia";
+  var qt = "Ouya";
+  var Vt = "Generic";
+  var Gt = Vt + " " + vt.toLowerCase();
+  var Wt = Vt + " " + pt.toLowerCase();
+  var Jt = "Konqueror";
+  var Kt = "Oculus Browser";
   var Yt = "Vivaldi";
-  var Kt = "Yandex";
-  var Jt = "Whale";
-  var Qt = "DuckDuckGo";
-  var Xt = "Pale Moon";
-  var Zt = "Waterfox";
-  var te = "Brave";
-  var ee = "Google Search App";
-  var ie = "(\\d+(\\.\\d+)?)";
-  var re = new RegExp("Version/" + ie);
-  var se = new RegExp(Dt, "i");
-  var ne = new RegExp(Mt + " \\w+", "i");
-  var oe = new RegExp(Ft + " \\w+", "i");
-  var ae = new RegExp(yt + "|PlayBook|BB10", "i");
-  var le = { "NT3.51": "NT 3.11", "NT4.0": "NT 4.0", "5.0": "2000", 5.1: "XP", 5.2: "XP", "6.0": "Vista", 6.1: "7", 6.2: "8", 6.3: "8.1", 6.4: "10", "10.0": "10" };
-  var ue = function(t4, e4, i4, r4) {
+  var Qt = "Yandex";
+  var Xt = "Whale";
+  var Zt = "DuckDuckGo";
+  var te = "Pale Moon";
+  var ee = "Waterfox";
+  var ie = "Brave";
+  var re = "Google Search App";
+  var se = "(\\d+(\\.\\d+)?)";
+  var ne = new RegExp("Version/" + se);
+  var oe = new RegExp(Ut, "i");
+  var ae = new RegExp(Nt + " \\w+", "i");
+  var le = new RegExp(Dt + " \\w+", "i");
+  var ue = new RegExp(wt + "|PlayBook|BB10", "i");
+  var he = { "NT3.51": "NT 3.11", "NT4.0": "NT 4.0", "5.0": "2000", 5.1: "XP", 5.2: "XP", "6.0": "Vista", 6.1: "7", 6.2: "8", 6.3: "8.1", 6.4: "10", "10.0": "10" };
+  var de = function(t4, e4, i4, r4) {
     e4 = e4 || "";
     var s4 = (function(t5) {
-      return null != t5 && t5.brave ? te : null;
+      return null != t5 && t5.brave ? ie : null;
     })(i4);
-    return s4 || (null != r4 && r4.detectGoogleSearchApp && M(t4, "GSA/") ? ee : M(t4, " OPR/") && M(t4, "Mini") ? Pt : M(t4, " OPR/") ? Rt : ae.test(t4) ? yt : M(t4, "IE" + ht) || M(t4, "WPDesktop") ? kt : M(t4, "OculusBrowser") ? Wt : M(t4, wt) ? Et : M(t4, It) || M(t4, "Edg/") ? Ot : M(t4, Yt + "/") ? Yt : M(t4, "YaBrowser/") ? Kt : M(t4, Jt + "/") ? Jt : M(t4, Qt + "/") || M(t4, "Ddg/") ? Qt : M(t4, "FBIOS") ? "Facebook " + ht : M(t4, "UCWEB") || M(t4, "UCBrowser") ? "UC Browser" : M(t4, "CriOS") ? Tt : M(t4, "CrMo") || M(t4, xt) ? xt : M(t4, vt) && M(t4, mt) ? Lt : M(t4, "FxiOS") ? At : M(t4.toLowerCase(), Gt.toLowerCase()) ? Gt : M(t4, te + "/") ? te : ((t5, e5) => e5 && M(e5, _t) || (function(t6) {
-      return M(t6, mt) && !M(t6, xt) && !M(t6, vt);
-    })(t5))(t4, e4) ? M(t4, ht) ? Nt : mt : M(t4, "PaleMoon/") ? Xt : M(t4, Zt + "/") ? Zt : M(t4, Ct) ? Ct : M(t4, "MSIE") || M(t4, "Trident/") ? $t : M(t4, "Gecko") ? Ct : "");
+    return s4 || (null != r4 && r4.detectGoogleSearchApp && D3(t4, "GSA/") ? re : D3(t4, " OPR/") && D3(t4, "Mini") ? It : D3(t4, " OPR/") ? Ot : ue.test(t4) ? wt : D3(t4, "IE" + vt) || D3(t4, "WPDesktop") ? Pt : D3(t4, "OculusBrowser") ? Kt : D3(t4, xt) ? St : D3(t4, Ct) || D3(t4, "Edg/") ? Mt : D3(t4, Yt + "/") ? Yt : D3(t4, "YaBrowser/") ? Qt : D3(t4, Xt + "/") ? Xt : D3(t4, Zt + "/") || D3(t4, "Ddg/") ? Zt : D3(t4, "FBIOS") ? "Facebook " + vt : D3(t4, "UCWEB") || D3(t4, "UCBrowser") ? "UC Browser" : D3(t4, "CriOS") ? $t : D3(t4, "CrMo") || D3(t4, kt) ? kt : D3(t4, ft) && D3(t4, yt) ? Lt : D3(t4, "FxiOS") ? Ft : D3(t4.toLowerCase(), Jt.toLowerCase()) ? Jt : D3(t4, ie + "/") ? ie : ((t5, e5) => e5 && D3(e5, mt) || (function(t6) {
+      return D3(t6, yt) && !D3(t6, kt) && !D3(t6, ft);
+    })(t5))(t4, e4) ? D3(t4, vt) ? jt : yt : D3(t4, "PaleMoon/") ? te : D3(t4, ee + "/") ? ee : D3(t4, At) ? At : D3(t4, "MSIE") || D3(t4, "Trident/") ? Rt : D3(t4, "Gecko") ? At : "");
   };
-  var he = { [kt]: [new RegExp("rv:" + ie)], [Ot]: [new RegExp(It + "?\\/" + ie)], [xt]: [new RegExp("(" + xt + "|CrMo)\\/" + ie)], [Tt]: [new RegExp("CriOS\\/" + ie)], "UC Browser": [new RegExp("(UCBrowser|UCWEB)\\/" + ie)], [mt]: [re], [Nt]: [re], [Rt]: [new RegExp("(Opera|OPR)\\/" + ie)], [Ct]: [new RegExp(Ct + "\\/" + ie)], [At]: [new RegExp("FxiOS\\/" + ie)], [Gt]: [new RegExp("Konqueror[:/]?" + ie, "i")], [yt]: [new RegExp(yt + " " + ie), re], [Lt]: [new RegExp("android\\s" + ie, "i")], [Et]: [new RegExp(wt + "\\/" + ie)], [Wt]: [new RegExp("OculusBrowser\\/" + ie)], [Yt]: [new RegExp(Yt + "\\/" + ie)], [Kt]: [new RegExp("YaBrowser\\/" + ie)], [Jt]: [new RegExp(Jt + "\\/" + ie)], [te]: [new RegExp(te + "\\/" + ie)], [Qt]: [new RegExp("(DuckDuckGo|Ddg)\\/" + ie)], [Xt]: [new RegExp("PaleMoon\\/" + ie)], [Zt]: [new RegExp(Zt + "\\/" + ie)], [ee]: [new RegExp("GSA\\/" + ie)], [$t]: [new RegExp("(rv:|MSIE )" + ie)], Mozilla: [new RegExp("rv:" + ie)] };
-  var de = function(t4, e4, i4, r4) {
-    var s4 = ue(t4, e4, i4, r4), n3 = he[s4];
-    if (V2(n3)) return null;
+  var ve = { [Pt]: [new RegExp("rv:" + se)], [Mt]: [new RegExp(Ct + "?\\/" + se)], [kt]: [new RegExp("(" + kt + "|CrMo)\\/" + se)], [$t]: [new RegExp("CriOS\\/" + se)], "UC Browser": [new RegExp("(UCBrowser|UCWEB)\\/" + se)], [yt]: [ne], [jt]: [ne], [Ot]: [new RegExp("(Opera|OPR)\\/" + se)], [At]: [new RegExp(At + "\\/" + se)], [Ft]: [new RegExp("FxiOS\\/" + se)], [Jt]: [new RegExp("Konqueror[:/]?" + se, "i")], [wt]: [new RegExp(wt + " " + se), ne], [Lt]: [new RegExp("android\\s" + se, "i")], [St]: [new RegExp(xt + "\\/" + se)], [Kt]: [new RegExp("OculusBrowser\\/" + se)], [Yt]: [new RegExp(Yt + "\\/" + se)], [Qt]: [new RegExp("YaBrowser\\/" + se)], [Xt]: [new RegExp(Xt + "\\/" + se)], [ie]: [new RegExp(ie + "\\/" + se)], [Zt]: [new RegExp("(DuckDuckGo|Ddg)\\/" + se)], [te]: [new RegExp("PaleMoon\\/" + se)], [ee]: [new RegExp(ee + "\\/" + se)], [re]: [new RegExp("GSA\\/" + se)], [Rt]: [new RegExp("(rv:|MSIE )" + se)], Mozilla: [new RegExp("rv:" + se)] };
+  var ce = function(t4, e4, i4, r4) {
+    var s4 = de(t4, e4, i4, r4), n3 = ve[s4];
+    if (W(n3)) return null;
     for (var o4 = 0; n3.length > o4; o4++) {
       var a4 = t4.match(n3[o4]);
       if (a4) return parseFloat(a4[a4.length - 2]);
     }
     return null;
   };
-  var ve = [[new RegExp(Dt + "; " + Dt + " (.*?)[);]", "i"), (t4) => [Dt, t4 && t4[1] || ""]], [new RegExp(Ft, "i"), [Ft, ""]], [new RegExp(Mt, "i"), [Mt, ""]], [ae, [yt, ""]], [new RegExp(Ut, "i"), (t4, e4) => {
-    if (/Phone/.test(e4) || /WPDesktop/.test(e4)) return [jt, ""];
-    if (new RegExp(ht).test(e4) && !/IEMobile\b/.test(e4)) return [Ut + " " + ht, ""];
+  var fe = [[new RegExp(Ut + "; " + Ut + " (.*?)[);]", "i"), (t4) => [Ut, t4 && t4[1] || ""]], [new RegExp(Dt, "i"), [Dt, ""]], [new RegExp(Nt, "i"), [Nt, ""]], [ue, [wt, ""]], [new RegExp(Bt, "i"), (t4, e4) => {
+    if (/Phone/.test(e4) || /WPDesktop/.test(e4)) return [zt, ""];
+    if (new RegExp(vt).test(e4) && !/IEMobile\b/.test(e4)) return [Bt + " " + vt, ""];
     var i4 = /Windows NT ([0-9.]+)/i.exec(e4);
     if (i4 && i4[1]) {
-      var r4 = le[i4[1]] || "";
-      return /arm/i.test(e4) && (r4 = "RT"), [Ut, r4];
+      var r4 = he[i4[1]] || "";
+      return /arm/i.test(e4) && (r4 = "RT"), [Bt, r4];
     }
-    return [Ut, ""];
-  }], [/((iPhone|iPad|iPod).*?OS (\d+)_(\d+)_?(\d+)?|iPhone)/, (t4) => t4 && t4[3] ? [dt, [t4[3], t4[4], t4[5] || "0"].join(".")] : [dt, ""]], [/(watch.*\/(\d+\.\d+\.\d+)|watch os,(\d+\.\d+),)/i, (t4) => {
+    return [Bt, ""];
+  }], [/((iPhone|iPad|iPod).*?OS (\d+)_(\d+)_?(\d+)?|iPhone)/, (t4) => t4 && t4[3] ? [ct, [t4[3], t4[4], t4[5] || "0"].join(".")] : [ct, ""]], [/(watch.*\/(\d+\.\d+\.\d+)|watch os,(\d+\.\d+),)/i, (t4) => {
     var e4 = "";
-    return t4 && t4.length >= 3 && (e4 = V2(t4[2]) ? t4[3] : t4[2]), ["watchOS", e4];
-  }], [new RegExp("(" + vt + " (\\d+)\\.(\\d+)\\.?(\\d+)?|" + vt + ")", "i"), (t4) => t4 && t4[2] ? [vt, [t4[2], t4[3], t4[4] || "0"].join(".")] : [vt, ""]], [/Mac OS X (\d+)[_.](\d+)[_.]?(\d+)?/i, (t4) => {
+    return t4 && t4.length >= 3 && (e4 = W(t4[2]) ? t4[3] : t4[2]), ["watchOS", e4];
+  }], [new RegExp("(" + ft + " (\\d+)\\.(\\d+)\\.?(\\d+)?|" + ft + ")", "i"), (t4) => t4 && t4[2] ? [ft, [t4[2], t4[3], t4[4] || "0"].join(".")] : [ft, ""]], [/Mac OS X (\d+)[_.](\d+)[_.]?(\d+)?/i, (t4) => {
     var e4 = ["Mac OS X", ""];
     return t4 && t4[1] && (e4[1] = [t4[1], t4[2], t4[3] || "0"].join(".")), e4;
-  }], [/Mac/i, ["Mac OS X", ""]], [/CrOS/, [St, ""]], [/Linux|debian/i, ["Linux", ""]]];
-  var ce = function(t4) {
-    return oe.test(t4) ? Ft : ne.test(t4) ? Mt : se.test(t4) ? Dt : new RegExp(zt, "i").test(t4) ? zt : new RegExp("(" + jt + "|WPDesktop)", "i").test(t4) ? jt : /iPad/.test(t4) ? ft : /iPod/.test(t4) ? "iPod Touch" : /iPhone/.test(t4) ? "iPhone" : /(watch)(?: ?os[,/]|\d,\d\/)[\d.]+/i.test(t4) ? gt : ae.test(t4) ? yt : /(kobo)\s(ereader|touch)/i.test(t4) ? "Kobo" : new RegExp(Bt, "i").test(t4) ? Bt : /(kf[a-z]{2}wi|aeo[c-r]{2})( bui|\))/i.test(t4) || /(kf[a-z]+)( bui|\)).+silk\//i.test(t4) ? "Kindle Fire" : /(Android|ZTE)/i.test(t4) ? new RegExp(ht).test(t4) && !/(9138B|TB782B|Nexus [97]|pixel c|HUAWEISHT|BTV|noble nook|smart ultra 6)/i.test(t4) || /pixel[\daxl ]{1,6}/i.test(t4) && !/pixel c/i.test(t4) || /(huaweimed-al00|tah-|APA|SM-G92|i980|zte|U304AA)/i.test(t4) || /lmy47v/i.test(t4) && !/QTAQZ3/i.test(t4) ? vt : pt : new RegExp("(pda|" + ht + ")", "i").test(t4) ? qt : new RegExp(ct, "i").test(t4) && !new RegExp(ct + " pc", "i").test(t4) ? Vt : "";
+  }], [/Mac/i, ["Mac OS X", ""]], [/CrOS/, [Tt, ""]], [/Linux|debian/i, ["Linux", ""]]];
+  var pe = function(t4) {
+    return le.test(t4) ? Dt : ae.test(t4) ? Nt : oe.test(t4) ? Ut : new RegExp(qt, "i").test(t4) ? qt : new RegExp("(" + zt + "|WPDesktop)", "i").test(t4) ? zt : /iPad/.test(t4) ? gt : /iPod/.test(t4) ? "iPod Touch" : /iPhone/.test(t4) ? "iPhone" : /(watch)(?: ?os[,/]|\d,\d\/)[\d.]+/i.test(t4) ? bt : ue.test(t4) ? wt : /(kobo)\s(ereader|touch)/i.test(t4) ? "Kobo" : new RegExp(Ht, "i").test(t4) ? Ht : /(kf[a-z]{2}wi|aeo[c-r]{2})( bui|\))/i.test(t4) || /(kf[a-z]+)( bui|\)).+silk\//i.test(t4) ? "Kindle Fire" : /(Android|ZTE)/i.test(t4) ? new RegExp(vt).test(t4) && !/(9138B|TB782B|Nexus [97]|pixel c|HUAWEISHT|BTV|noble nook|smart ultra 6)/i.test(t4) || /pixel[\daxl ]{1,6}/i.test(t4) && !/pixel c/i.test(t4) || /(huaweimed-al00|tah-|APA|SM-G92|i980|zte|U304AA)/i.test(t4) || /lmy47v/i.test(t4) && !/QTAQZ3/i.test(t4) ? ft : _t : new RegExp("(pda|" + vt + ")", "i").test(t4) ? Gt : new RegExp(pt, "i").test(t4) && !new RegExp(pt + " pc", "i").test(t4) ? Wt : "";
   };
-  var pe = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
-  function fe(t4, e4) {
-    return "string" == typeof (i4 = t4) && pe.test(i4) ? t4 : e4();
+  var _e = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+  function ge(t4, e4) {
+    return "string" == typeof (i4 = t4) && _e.test(i4) ? t4 : e4();
     var i4;
   }
-  function _e(t4) {
+  function me(t4) {
     return t4 ? t4.split("#")[0] : t4;
   }
-  function ge(t4, e4) {
+  function be(t4, e4) {
     var i4 = setTimeout(t4, e4);
     return (null == i4 ? void 0 : i4.unref) && (null == i4 || i4.unref()), i4;
   }
-  var me = (t4) => t4 instanceof Error;
-  var ye = { trace: { text: "TRACE", number: 1 }, debug: { text: "DEBUG", number: 5 }, info: { text: "INFO", number: 9 }, warn: { text: "WARN", number: 13 }, error: { text: "ERROR", number: 17 }, fatal: { text: "FATAL", number: 21 } };
-  var be = ye.info;
-  function we(t4) {
-    if (X(t4)) return { boolValue: t4 };
+  var ye = (t4) => t4 instanceof Error;
+  var we = { trace: { text: "TRACE", number: 1 }, debug: { text: "DEBUG", number: 5 }, info: { text: "INFO", number: 9 }, warn: { text: "WARN", number: 13 }, error: { text: "ERROR", number: 17 }, fatal: { text: "FATAL", number: 21 } };
+  var Ee = we.info;
+  function xe(t4) {
+    if (tt(t4)) return { boolValue: t4 };
     if ("number" == typeof t4) return Number.isFinite(t4) ? Number.isInteger(t4) ? { intValue: t4 } : { doubleValue: t4 } : { stringValue: String(t4) };
     if ("string" == typeof t4) return { stringValue: t4 };
-    if (B3(t4)) return { arrayValue: { values: t4.map(((t5) => we(t5))) } };
+    if (H2(t4)) return { arrayValue: { values: t4.map(((t5) => xe(t5))) } };
     try {
       return { stringValue: JSON.stringify(t4) };
     } catch (e4) {
       return { stringValue: String(t4) };
     }
   }
-  function Ee(t4) {
+  function Se(t4) {
     var e4 = [];
     for (var i4 in t4) {
       var r4 = t4[i4];
-      Y(r4) || V2(r4) || e4.push({ key: i4, value: we(r4) });
+      Y(r4) || W(r4) || e4.push({ key: i4, value: xe(r4) });
     }
     return e4;
   }
-  function xe(t4, e4) {
-    var i4 = t4.level || "info", { text: r4, number: s4 } = ye[i4] || be, n3 = String(Date.now()) + "000000", o4 = {};
-    e4.distinctId && (o4.posthogDistinctId = e4.distinctId), e4.sessionId && (o4.sessionId = e4.sessionId), e4.windowId && (o4["window.id"] = e4.windowId), K2(e4.sessionStartTimestamp) || (o4.sessionStartTimestamp = String(e4.sessionStartTimestamp)), K2(e4.lastActivityTimestamp) || (o4.lastActivityTimestamp = String(e4.lastActivityTimestamp)), e4.currentUrl && (o4["url.full"] = e4.currentUrl), e4.screenName && (o4["screen.name"] = e4.screenName), e4.appState && (o4["app.state"] = e4.appState), e4.activeFeatureFlags && e4.activeFeatureFlags.length > 0 && (o4.feature_flags = e4.activeFeatureFlags);
-    var a4 = f4({}, o4, t4.attributes || {}), l4 = { timeUnixNano: n3, observedTimeUnixNano: n3, severityNumber: s4, severityText: r4, body: { stringValue: t4.body }, attributes: Ee(a4) };
-    return t4.trace_id && (l4.traceId = t4.trace_id), t4.span_id && (l4.spanId = t4.span_id), V2(t4.trace_flags) || (l4.flags = t4.trace_flags), l4;
+  function ke(t4, e4) {
+    var i4 = we[t4.level || "info"] || Ee, r4 = i4.text, s4 = i4.number, n3 = String(Date.now()) + "000000", o4 = {};
+    e4.distinctId && (o4.posthogDistinctId = e4.distinctId), e4.sessionId && (o4.sessionId = e4.sessionId), e4.windowId && (o4["window.id"] = e4.windowId), Q2(e4.sessionStartTimestamp) || (o4.sessionStartTimestamp = String(e4.sessionStartTimestamp)), Q2(e4.lastActivityTimestamp) || (o4.lastActivityTimestamp = String(e4.lastActivityTimestamp)), e4.currentUrl && (o4["url.full"] = e4.currentUrl), e4.screenName && (o4["screen.name"] = e4.screenName), e4.appState && (o4["app.state"] = e4.appState), e4.activeFeatureFlags && e4.activeFeatureFlags.length > 0 && (o4.feature_flags = e4.activeFeatureFlags);
+    var a4 = _2({}, o4, t4.attributes || {}), l4 = { timeUnixNano: n3, observedTimeUnixNano: n3, severityNumber: s4, severityText: r4, body: { stringValue: t4.body }, attributes: Se(a4) };
+    return t4.trace_id && (l4.traceId = t4.trace_id), t4.span_id && (l4.spanId = t4.span_id), W(t4.trace_flags) || (l4.flags = t4.trace_flags), l4;
   }
-  function Se(t4, e4, i4) {
-    return f4({}, t4.resourceAttributes, { "service.name": t4.serviceName || "unknown_service" }, t4.environment && { "deployment.environment": t4.environment }, t4.serviceVersion && { "service.version": t4.serviceVersion }, { "telemetry.sdk.name": e4, "telemetry.sdk.version": i4 });
+  function Te(t4, e4, i4) {
+    return _2({}, t4.resourceAttributes, { "service.name": t4.serviceName || "unknown_service" }, t4.environment && { "deployment.environment": t4.environment }, t4.serviceVersion && { "service.version": t4.serviceVersion }, { "telemetry.sdk.name": e4, "telemetry.sdk.version": i4 });
   }
-  function Te(t4, e4, i4, r4) {
-    return { resourceLogs: [{ resource: { attributes: Ee(e4) }, scopeLogs: [{ scope: { name: i4, version: r4 }, logRecords: t4 }] }] };
+  function $e(t4, e4, i4, r4) {
+    return { resourceLogs: [{ resource: { attributes: Se(e4) }, scopeLogs: [{ scope: { name: i4, version: r4 }, logRecords: t4 }] }] };
   }
-  var $e = class {
+  var Re = class {
     constructor(t4, e4, i4, r4, s4, n3, o4) {
       var a4;
-      void 0 === n3 && (n3 = () => Promise.resolve()), this._instance = t4, this.Se = e4, this.Ae = i4, this.qe = r4, this.je = s4, this.Be = n3, this.He = o4, this.Ue = null, this.ze = 0, this.Ve = 0, this.We = 0, this.Ge = 0, this.Ze = false, this.Qe = e4.maxBufferSize, this.Je = Math.max(null !== (a4 = e4.maxQueueSize) && void 0 !== a4 ? a4 : e4.maxBufferSize, e4.maxBufferSize), this.Ye = e4.flushIntervalMs, this.Ke = e4.maxBatchRecordsPerPost, this.Xe = e4.rateCapWindowMs, this.et = e4.maxLogsPerInterval;
+      void 0 === n3 && (n3 = () => Promise.resolve()), this._instance = t4, this.Te = e4, this.it = i4, this.ut = r4, this.ht = s4, this.dt = n3, this.ct = o4, this.vt = null, this.ft = 0, this.yt = 0, this.bt = 0, this._t = 0, this.wt = false, this.xt = e4.maxBufferSize, this.kt = Math.max(null !== (a4 = e4.maxQueueSize) && void 0 !== a4 ? a4 : e4.maxBufferSize, e4.maxBufferSize), this.St = e4.flushIntervalMs, this.Ct = e4.maxBatchRecordsPerPost, this.It = e4.rateCapWindowMs, this.Tt = e4.maxLogsPerInterval;
     }
     reset() {
-      this.tt(), this.Ue = null, this.We = 0, this.Ge = 0, this.Ze = false, this.ze = 0, this.Ve = 0, this.Ke = this.Se.maxBatchRecordsPerPost;
+      this.Mt(), this.vt = null, this.bt = 0, this._t = 0, this.wt = false, this.ft = 0, this.yt = 0, this.Ct = this.Te.maxBatchRecordsPerPost;
     }
     onReconnect() {
-      this.Ve = 0, this.rt();
+      this.yt = 0, this.Et();
     }
     captureLog(t4) {
       if (!this._instance.isDisabled && !this._instance.optedOut && null != t4 && t4.body) {
-        var e4 = this.it(t4);
+        var e4 = this.Rt(t4);
         if (null !== e4) if (e4.body) {
-          if (this.nt()) {
-            var i4 = { record: xe(e4, this.qe()) };
-            this.je((() => this.st(i4)));
+          if (this.Pt()) {
+            var i4 = { record: ke(e4, this.ut()) };
+            this.ht((() => this.Ot(i4)));
           }
-        } else this.Ae.info("Log was rejected in beforeSend function");
+        } else this.it.info("Log was rejected in beforeSend function");
       }
     }
-    it(t4) {
-      var e4 = this.Se.beforeSend;
+    Rt(t4) {
+      var e4 = this.Te.beforeSend;
       if (!e4) return t4;
-      var i4 = B3(e4) ? e4 : [e4], r4 = t4;
+      var i4 = H2(e4) ? e4 : [e4], r4 = t4;
       for (var s4 of i4) try {
         var n3 = s4(r4);
-        if (!n3) return this.Ae.info("Log was rejected in beforeSend function"), null;
+        if (!n3) return this.it.info("Log was rejected in beforeSend function"), null;
         r4 = n3;
       } catch (t5) {
-        return this.Ae.error("Error in beforeSend function for log:", t5), null;
+        return this.it.error("Error in beforeSend function for log:", t5), null;
       }
       return r4;
     }
-    nt() {
-      if (void 0 === this.et) return true;
-      var t4 = Date.now(), e4 = t4 - this.We;
-      return this.Xe > e4 && e4 >= 0 || (this.We = t4, this.Ge = 0, this.Ze = false), this.et > this.Ge ? (this.Ge++, true) : (this.Ze || (this.Ae.warn("captureLog dropping logs: exceeded " + this.et + " logs per " + this.Xe + "ms"), this.Ze = true), false);
+    Pt() {
+      if (void 0 === this.Tt) return true;
+      var t4 = Date.now(), e4 = t4 - this.bt;
+      return this.It > e4 && e4 >= 0 || (this.bt = t4, this._t = 0, this.wt = false), this.Tt > this._t ? (this._t++, true) : (this.wt || (this.it.warn("captureLog dropping logs: exceeded " + this.Tt + " logs per " + this.It + "ms"), this.wt = true), false);
     }
     flush() {
       var t4 = this;
       return p3((function* () {
-        if (!t4._instance.isDisabled) return t4.Ue || (t4.Ue = t4.ot().finally((() => {
-          t4.Ue = null;
-        }))), t4.Ue;
+        if (!t4._instance.isDisabled) return t4.vt || (t4.vt = t4.Ft().finally((() => {
+          t4.vt = null;
+        }))), t4.vt;
       }))();
     }
-    ot() {
+    Ft() {
       var t4 = this;
       return p3((function* () {
         var e4;
-        t4.tt();
-        var i4 = null !== (e4 = t4._instance.getPersistedProperty(w3.LogsQueue)) && void 0 !== e4 ? e4 : [];
+        t4.Mt();
+        var i4 = null !== (e4 = t4._instance.getPersistedProperty(E2.LogsQueue)) && void 0 !== e4 ? e4 : [];
         if (0 !== i4.length) for (var r4 = i4.length, s4 = 0; i4.length > 0 && r4 > s4; ) {
           var n3, o4;
-          t4.ze = 0;
-          var a4 = Math.min(i4.length, t4.Ke), l4 = i4.slice(0, a4), u5 = Te(l4.map(((t5) => t5.record)), t4.ut(), null !== (n3 = t4.He) && void 0 !== n3 ? n3 : t4._instance.getLibraryId(), t4._instance.getLibraryVersion()), h4 = yield t4._instance.ht(u5);
-          if ("too-large" === h4.kind && l4.length > 1) t4.Ke = Math.max(1, Math.floor(l4.length / 2)), t4.Ae.warn("Received 413 when sending logs batch of size " + l4.length + ", reducing batch size to " + t4.Ke);
+          t4.ft = 0;
+          var a4 = Math.min(i4.length, t4.Ct), l4 = i4.slice(0, a4), u5 = $e(l4.map(((t5) => t5.record)), t4.Lt(), null !== (n3 = t4.ct) && void 0 !== n3 ? n3 : t4._instance.getLibraryId(), t4._instance.getLibraryVersion()), h4 = yield t4._instance.At(u5);
+          if ("too-large" === h4.kind && l4.length > 1) t4.Ct = Math.max(1, Math.floor(l4.length / 2)), t4.it.warn("Received 413 when sending logs batch of size " + l4.length + ", reducing batch size to " + t4.Ct);
           else {
             if ("retry-later" === h4.kind) throw h4.error;
-            if ("too-large" === h4.kind ? t4.Ae.warn("Dropping a single log record after 413 with batch size 1 \u2014 the record is larger than the server cap and cannot be split further.") : "ok" === h4.kind && t4.Se.maxBatchRecordsPerPost > t4.Ke && (t4.Ke = Math.min(t4.Se.maxBatchRecordsPerPost, t4.Ke + 1)), yield t4.dt(l4.length), i4 = null !== (o4 = t4._instance.getPersistedProperty(w3.LogsQueue)) && void 0 !== o4 ? o4 : [], s4 += l4.length, "fatal" === h4.kind) throw h4.error;
+            if ("too-large" === h4.kind ? t4.it.warn("Dropping a single log record after 413 with batch size 1 \u2014 the record is larger than the server cap and cannot be split further.") : "ok" === h4.kind && t4.Te.maxBatchRecordsPerPost > t4.Ct && (t4.Ct = Math.min(t4.Te.maxBatchRecordsPerPost, t4.Ct + 1)), yield t4.$t(l4.length), i4 = null !== (o4 = t4._instance.getPersistedProperty(E2.LogsQueue)) && void 0 !== o4 ? o4 : [], s4 += l4.length, "fatal" === h4.kind) throw h4.error;
           }
         }
       }))();
     }
-    dt(t4) {
+    $t(t4) {
       var e4 = this;
       return p3((function* () {
-        var i4, r4 = Math.max(0, t4 - e4.ze), s4 = null !== (i4 = e4._instance.getPersistedProperty(w3.LogsQueue)) && void 0 !== i4 ? i4 : [];
-        e4._instance.setPersistedProperty(w3.LogsQueue, s4.slice(r4)), yield e4.Be();
+        var i4, r4 = Math.max(0, t4 - e4.ft), s4 = null !== (i4 = e4._instance.getPersistedProperty(E2.LogsQueue)) && void 0 !== i4 ? i4 : [];
+        e4._instance.setPersistedProperty(E2.LogsQueue, s4.slice(r4)), yield e4.dt();
       }))();
     }
-    ut() {
-      return Se(this.Se, this._instance.getLibraryId(), this._instance.getLibraryVersion());
+    Lt() {
+      return Te(this.Te, this._instance.getLibraryId(), this._instance.getLibraryVersion());
     }
-    st(t4) {
+    Ot(t4) {
       var e4;
       if (!this._instance.optedOut) {
-        var i4 = null !== (e4 = this._instance.getPersistedProperty(w3.LogsQueue)) && void 0 !== e4 ? e4 : [];
-        this.Je > i4.length || (i4.shift(), this.ze++, this.Ae.info("Logs queue is full, dropping oldest record.")), i4.push(t4), this._instance.setPersistedProperty(w3.LogsQueue, i4), this.Qe > i4.length ? this.ct() : this.rt();
+        var i4 = null !== (e4 = this._instance.getPersistedProperty(E2.LogsQueue)) && void 0 !== e4 ? e4 : [];
+        this.kt > i4.length || (i4.shift(), this.ft++, this.it.info("Logs queue is full, dropping oldest record.")), i4.push(t4), this._instance.setPersistedProperty(E2.LogsQueue, i4), this.xt > i4.length ? this.Nt() : this.Et();
       }
     }
-    ct(t4) {
-      void 0 === t4 && (t4 = this.Ye), this.vt || (this.vt = ge((() => {
-        this.vt = void 0, this.rt();
+    Nt(t4) {
+      void 0 === t4 && (t4 = this.St), this.Dt || (this.Dt = be((() => {
+        this.Dt = void 0, this.Et();
       }), t4));
     }
-    ft() {
-      var t4 = Math.min(Math.max(0, this.Ve - 1), 6);
-      return this.Ye * Math.pow(2, t4);
+    qt() {
+      var t4 = Math.min(Math.max(0, this.yt - 1), 6);
+      return this.St * Math.pow(2, t4);
     }
-    yt() {
-      var t4 = this._instance.getPersistedProperty(w3.LogsQueue);
+    jt() {
+      var t4 = this._instance.getPersistedProperty(E2.LogsQueue);
       return !!t4 && t4.length > 0;
     }
     shutdown(t4) {
       var e4 = this;
       return p3((function* () {
-        e4.tt();
+        e4.Mt();
         var i4 = e4.flush().catch((() => {
         }));
-        void 0 !== t4 ? yield Promise.race([i4, new Promise(((e5) => ge(e5, t4)))]) : yield i4;
+        void 0 !== t4 ? yield Promise.race([i4, new Promise(((e5) => be(e5, t4)))]) : yield i4;
       }))();
     }
     flushWithTimeout(t4) {
       var e4 = this;
       return p3((function* () {
-        var i4 = false, r4 = e4.flush(), s4 = new Promise(((e5) => ge((() => {
+        var i4 = false, r4 = e4.flush(), s4 = new Promise(((e5) => be((() => {
           i4 = true, e5();
         }), t4)));
         try {
@@ -5950,42 +5966,214 @@
         }
       }))();
     }
-    rt() {
+    Et() {
       this.flush().then((() => {
-        this.Ve = 0;
+        this.yt = 0;
       }), ((t4) => {
-        this.Ve++, this.Ae.error("PostHog logs flush failed:", t4);
+        this.yt++, this.it.error("PostHog logs flush failed:", t4);
       })).finally((() => {
-        !this._instance.isDisabled && this.yt() && this.ct(this.ft());
+        !this._instance.isDisabled && this.jt() && this.Nt(this.qt());
       }));
     }
-    tt() {
-      this.vt && (clearTimeout(this.vt), this.vt = void 0);
+    Mt() {
+      this.Dt && (clearTimeout(this.Dt), this.Dt = void 0);
     }
   };
-  var ke;
-  var Re;
-  var Pe;
-  function Ie(t4) {
+  var Pe = [0, 5, 10, 25, 50, 75, 100, 250, 500, 750, 1e3, 2500, 5e3, 7500, 1e4];
+  function Oe(t4) {
+    return String(t4) + "000000";
+  }
+  function Ie(t4, e4, i4, r4) {
+    var s4 = "";
+    return r4 && (s4 = Object.keys(r4).sort().map(((t5) => JSON.stringify(t5) + ":" + JSON.stringify(r4[t5]))).join(",")), t4 + "\0" + e4 + "\0" + (null != i4 ? i4 : "") + "\0" + s4;
+  }
+  var Ce = class {
+    constructor(t4, e4, i4) {
+      this._instance = t4, this.Te = e4, this.it = i4, this.Ht = /* @__PURE__ */ new Map(), this.vt = null, this.Bt = false, this.Ut = /* @__PURE__ */ new Map(), this.zt = /* @__PURE__ */ new Set(), this.Vt = 0;
+    }
+    count(t4, e4, i4) {
+      void 0 === e4 && (e4 = 1), this.Wt({ name: t4, type: "count", value: e4, unit: null == i4 ? void 0 : i4.unit, attributes: null == i4 ? void 0 : i4.attributes });
+    }
+    gauge(t4, e4, i4) {
+      this.Wt({ name: t4, type: "gauge", value: e4, unit: null == i4 ? void 0 : i4.unit, attributes: null == i4 ? void 0 : i4.attributes });
+    }
+    histogram(t4, e4, i4) {
+      this.Wt({ name: t4, type: "histogram", value: e4, unit: null == i4 ? void 0 : i4.unit, attributes: null == i4 ? void 0 : i4.attributes });
+    }
+    flush() {
+      var t4 = this, e4 = this.vt, i4 = (function() {
+        var i5 = p3((function* () {
+          e4 && (yield e4.catch((() => {
+          }))), yield t4.Zt();
+        }));
+        return function() {
+          return i5.apply(this, arguments);
+        };
+      })(), r4 = i4().finally((() => {
+        this.vt === r4 && (this.vt = null);
+      }));
+      return this.vt = r4, r4;
+    }
+    drainWindow() {
+      if (0 === this.Ht.size) return null;
+      var t4 = this.Ht;
+      return this.Ht = /* @__PURE__ */ new Map(), this.Bt = false, this.Ut = /* @__PURE__ */ new Map(), this.zt = /* @__PURE__ */ new Set(), this.Gt(t4);
+    }
+    reset() {
+      this.Vt++, this.Mt(), this.Ht = /* @__PURE__ */ new Map(), this.vt = null, this.Bt = false, this.Ut = /* @__PURE__ */ new Map(), this.zt = /* @__PURE__ */ new Set();
+    }
+    Wt(t4) {
+      if (!this._instance.isDisabled && !this._instance.optedOut) {
+        var e4 = this.Rt(t4);
+        if (null !== e4) if (e4.name && "string" == typeof e4.name) if ("number" == typeof e4.value && Number.isFinite(e4.value)) if ("count" === e4.type && 0 > e4.value) this.it.warn("Dropping count '" + e4.name + "': counters are monotonic, value must be >= 0");
+        else {
+          var i4, r4;
+          try {
+            i4 = e4.attributes ? _2({}, e4.attributes) : void 0, r4 = Ie(e4.type, e4.name, e4.unit, i4);
+          } catch (t5) {
+            return void this.it.warn("Dropping metric '" + e4.name + "': attributes could not be serialized", t5);
+          }
+          var s4 = this.Ht.get(r4);
+          if (!s4) {
+            if (!this.Qt()) return;
+            s4 = { name: e4.name, type: e4.type, unit: e4.unit, attributes: i4, windowStartMs: Date.now() }, this.Ht.set(r4, s4);
+          }
+          var n3 = this.Ut.get(e4.name);
+          void 0 === n3 ? this.Ut.set(e4.name, e4.type) : n3 === e4.type || this.zt.has(e4.name) || (this.zt.add(e4.name), this.it.warn("Metric name '" + e4.name + "' is already used as a " + n3 + "; recording it as a " + e4.type + " too will blend both series in charts. Use a distinct name.")), this.Jt(s4, e4.value), this.Nt();
+        }
+        else this.it.warn("Dropping metric '" + e4.name + "': value must be a finite number");
+        else this.it.warn("Dropping metric with empty name");
+      }
+    }
+    Qt() {
+      return this.Te.maxSeriesPerFlush > this.Ht.size || (this.Bt || (this.Bt = true, this.it.warn("Metric series cap reached (" + this.Te.maxSeriesPerFlush + " per flush window); dropping new series until the next flush. Reduce attribute cardinality.")), false);
+    }
+    Jt(t4, e4) {
+      var i4;
+      switch (t4.type) {
+        case "count":
+          t4.total = (null !== (i4 = t4.total) && void 0 !== i4 ? i4 : 0) + e4;
+          break;
+        case "gauge":
+          t4.last = e4;
+          break;
+        case "histogram":
+          t4.hist || (t4.hist = { count: 0, sum: 0, min: e4, max: e4, bucketCounts: new Array(Pe.length + 1).fill(0) });
+          var r4 = t4.hist;
+          r4.count += 1, r4.sum += e4, r4.min = Math.min(r4.min, e4), r4.max = Math.max(r4.max, e4), r4.bucketCounts[(function(t5, e5) {
+            for (var i5 = 0; e5.length > i5; i5++) if (e5[i5] >= t5) return i5;
+            return e5.length;
+          })(e4, Pe)] += 1;
+      }
+    }
+    Rt(t4) {
+      var e4 = this.Te.beforeSend;
+      if (!e4) return t4;
+      var i4 = H2(e4) ? e4 : [e4], r4 = t4;
+      for (var s4 of i4) try {
+        var n3 = s4(r4);
+        if (!n3) return this.it.info("Metric was rejected in beforeSend function"), null;
+        r4 = n3;
+      } catch (t5) {
+        return this.it.error("Error in beforeSend function for metric:", t5), null;
+      }
+      return r4;
+    }
+    Nt() {
+      this.Dt || (this.Dt = be((() => {
+        this.Dt = void 0, this.flush().catch(((t4) => {
+          this.it.error("Metrics flush failed:", t4);
+        }));
+      }), this.Te.flushIntervalMs));
+    }
+    Mt() {
+      this.Dt && (clearTimeout(this.Dt), this.Dt = void 0);
+    }
+    Zt() {
+      var t4 = this;
+      return p3((function* () {
+        if (0 !== t4.Ht.size) {
+          var e4 = t4.Ht;
+          t4.Ht = /* @__PURE__ */ new Map(), t4.Bt = false, t4.Ut = /* @__PURE__ */ new Map(), t4.zt = /* @__PURE__ */ new Set();
+          var i4 = t4.Vt, r4 = yield t4._instance.Kt(t4.Gt(e4));
+          if (i4 === t4.Vt) switch (r4.kind) {
+            case "ok":
+              return;
+            case "retry-later":
+              return t4.Yt(e4), void t4.Nt();
+            case "too-large":
+              return void t4.it.warn("Metrics batch exceeded the server size limit and was dropped");
+            case "fatal":
+              return void t4.it.error("Failed to send metrics batch:", r4.error);
+          }
+        }
+      }))();
+    }
+    Gt(t4) {
+      return (function(t5, e5, i5, r5) {
+        return { resourceMetrics: [{ resource: { attributes: Se(e5) }, scopeMetrics: [{ scope: { name: i5, version: r5 }, metrics: t5 }] }] };
+      })(this.Xt(t4), (e4 = this.Te, i4 = this._instance.getLibraryId(), r4 = this._instance.getLibraryVersion(), _2({}, e4.resourceAttributes, { "service.name": e4.serviceName || "unknown_service" }, e4.environment && { "deployment.environment": e4.environment }, e4.serviceVersion && { "service.version": e4.serviceVersion }, { "telemetry.sdk.name": i4, "telemetry.sdk.version": r4 })), this._instance.getLibraryId(), this._instance.getLibraryVersion());
+      var e4, i4, r4;
+    }
+    Xt(t4) {
+      var e4 = Oe(Date.now()), i4 = /* @__PURE__ */ new Map();
+      for (var r4 of t4.values()) {
+        var s4, n3 = Ie(r4.type, r4.name, r4.unit, void 0), o4 = i4.get(n3);
+        o4 || (o4 = _2({ name: r4.name }, r4.unit && { unit: r4.unit }), "count" === r4.type ? o4.sum = { aggregationTemporality: 1, isMonotonic: true, dataPoints: [] } : "gauge" === r4.type ? o4.gauge = { dataPoints: [] } : o4.histogram = { aggregationTemporality: 1, dataPoints: [] }, i4.set(n3, o4));
+        var a4 = Se(null !== (s4 = r4.attributes) && void 0 !== s4 ? s4 : {}), l4 = Oe(r4.windowStartMs);
+        if ("count" === r4.type) {
+          var u5, h4 = { attributes: a4, startTimeUnixNano: l4, timeUnixNano: e4, asDouble: null !== (u5 = r4.total) && void 0 !== u5 ? u5 : 0 };
+          o4.sum.dataPoints.push(h4);
+        } else if ("gauge" === r4.type) {
+          var d4, v4 = { attributes: a4, timeUnixNano: e4, asDouble: null !== (d4 = r4.last) && void 0 !== d4 ? d4 : 0 };
+          o4.gauge.dataPoints.push(v4);
+        } else r4.hist && o4.histogram.dataPoints.push({ attributes: a4, startTimeUnixNano: l4, timeUnixNano: e4, count: r4.hist.count, sum: r4.hist.sum, min: r4.hist.min, max: r4.hist.max, bucketCounts: r4.hist.bucketCounts, explicitBounds: Pe });
+      }
+      return Array.from(i4.values());
+    }
+    Yt(t4) {
+      var e4, i4;
+      for (var r4 of t4) {
+        var s4 = r4[0], n3 = r4[1], o4 = this.Ht.get(s4);
+        if (o4) switch (o4.windowStartMs = Math.min(o4.windowStartMs, n3.windowStartMs), o4.type) {
+          case "count":
+            o4.total = (null !== (e4 = o4.total) && void 0 !== e4 ? e4 : 0) + (null !== (i4 = n3.total) && void 0 !== i4 ? i4 : 0);
+            break;
+          case "gauge":
+            break;
+          case "histogram":
+            if (n3.hist) if (o4.hist) {
+              o4.hist.count += n3.hist.count, o4.hist.sum += n3.hist.sum, o4.hist.min = Math.min(o4.hist.min, n3.hist.min), o4.hist.max = Math.max(o4.hist.max, n3.hist.max);
+              for (var a4 = 0; o4.hist.bucketCounts.length > a4; a4++) o4.hist.bucketCounts[a4] += n3.hist.bucketCounts[a4];
+            } else o4.hist = n3.hist;
+        }
+        else this.Qt() && this.Ht.set(s4, n3);
+      }
+    }
+  };
+  var Me;
+  var Ae;
+  var Fe;
+  function De(t4) {
     var e4 = globalThis._posthogChunkIds;
     if (e4) {
       var i4 = Object.keys(e4);
-      return Pe && i4.length === Re || (Re = i4.length, Pe = i4.reduce(((i5, r4) => {
-        ke || (ke = {});
-        var s4 = ke[r4];
+      return Fe && i4.length === Ae || (Ae = i4.length, Fe = i4.reduce(((i5, r4) => {
+        Me || (Me = {});
+        var s4 = Me[r4];
         if (s4) i5[s4[0]] = s4[1];
         else for (var n3 = t4(r4), o4 = n3.length - 1; o4 >= 0; o4--) {
           var a4 = n3[o4], l4 = null == a4 ? void 0 : a4.filename, u5 = e4[r4];
           if (l4 && u5) {
-            i5[l4] = u5, ke[r4] = [l4, u5];
+            i5[l4] = u5, Me[r4] = [l4, u5];
             break;
           }
         }
         return i5;
-      }), {})), Pe;
+      }), {})), Fe;
     }
   }
-  var Oe = class {
+  var Ne = class {
     constructor(t4, e4, i4) {
       void 0 === i4 && (i4 = []), this.coercers = t4, this.stackParser = e4, this.modifiers = i4;
     }
@@ -5997,7 +6185,7 @@
     modifyFrames(t4) {
       var e4 = this;
       return p3((function* () {
-        for (var i4 of t4) i4.stacktrace && i4.stacktrace.frames && B3(i4.stacktrace.frames) && (i4.stacktrace.frames = yield e4.applyModifiers(i4.stacktrace.frames));
+        for (var i4 of t4) i4.stacktrace && i4.stacktrace.frames && H2(i4.stacktrace.frames) && (i4.stacktrace.frames = yield e4.applyModifiers(i4.stacktrace.frames));
         return t4;
       }))();
     }
@@ -6007,7 +6195,7 @@
     }
     parseStacktrace(t4, e4) {
       var i4, r4;
-      return null != t4.cause && (i4 = this.parseStacktrace(t4.cause, e4)), "" != t4.stack && null != t4.stack && (r4 = this.applyChunkIds(this.stackParser(t4.stack, t4.synthetic ? e4.skipFirstLines : 0), e4.chunkIdMap)), f4({}, t4, { cause: i4, stack: r4 });
+      return null != t4.cause && (i4 = this.parseStacktrace(t4.cause, e4)), "" != t4.stack && null != t4.stack && (r4 = this.applyChunkIds(this.stackParser(t4.stack, t4.synthetic ? e4.skipFirstLines : 0), e4.chunkIdMap)), _2({}, t4, { cause: i4, stack: r4 });
     }
     applyChunkIds(t4, e4) {
       return t4.map(((t5) => (t5.filename && e4 && (t5.chunk_id = e4[t5.filename]), t5)));
@@ -6028,11 +6216,11 @@
       var i4, r4, s4, n3 = { type: t4.type, value: t4.value, mechanism: { type: null !== (i4 = e4.type) && void 0 !== i4 ? i4 : "generic", handled: null === (r4 = e4.handled) || void 0 === r4 || r4, synthetic: null !== (s4 = t4.synthetic) && void 0 !== s4 && s4 } };
       t4.stack && (n3.stacktrace = { type: "raw", frames: t4.stack });
       var o4 = [n3];
-      return null != t4.cause && o4.push(...this.convertToExceptionList(t4.cause, f4({}, e4, { handled: true }))), o4;
+      return null != t4.cause && o4.push(...this.convertToExceptionList(t4.cause, _2({}, e4, { handled: true }))), o4;
     }
     buildParsingContext(t4) {
       var e4;
-      return { chunkIdMap: Ie(this.stackParser), skipFirstLines: null !== (e4 = t4.skipFirstLines) && void 0 !== e4 ? e4 : 1 };
+      return { chunkIdMap: De(this.stackParser), skipFirstLines: null !== (e4 = t4.skipFirstLines) && void 0 !== e4 ? e4 : 1 };
     }
     buildCoercingContext(t4, e4, i4) {
       void 0 === i4 && (i4 = 0);
@@ -6042,57 +6230,54 @@
           return this.applyCoercers(i5, s4);
         }
       };
-      return f4({}, e4, { syntheticException: 0 == i4 ? e4.syntheticException : void 0, mechanism: t4, apply: (t5) => r4(t5, i4), next: (t5) => r4(t5, i4 + 1) });
+      return _2({}, e4, { syntheticException: 0 == i4 ? e4.syntheticException : void 0, mechanism: t4, apply: (t5) => r4(t5, i4), next: (t5) => r4(t5, i4 + 1) });
     }
   };
-  var Ce = "?";
-  function Ae(t4, e4, i4, r4, s4) {
-    var n3 = { platform: t4, filename: e4, function: "<anonymous>" === i4 ? Ce : i4, in_app: true };
-    return V2(r4) || (n3.lineno = r4), V2(s4) || (n3.colno = s4), n3;
+  var Ue = "?";
+  function Le(t4, e4, i4, r4, s4) {
+    var n3 = { platform: t4, filename: e4, function: "<anonymous>" === i4 ? Ue : i4, in_app: true };
+    return W(r4) || (n3.lineno = r4), W(s4) || (n3.colno = s4), n3;
   }
-  var Fe = (t4, e4) => {
+  var je = (t4, e4) => {
     var i4 = -1 !== t4.indexOf("safari-extension"), r4 = -1 !== t4.indexOf("safari-web-extension");
-    return i4 || r4 ? [-1 !== t4.indexOf("@") ? t4.split("@")[0] : Ce, i4 ? "safari-extension:" + e4 : "safari-web-extension:" + e4] : [t4, e4];
+    return i4 || r4 ? [-1 !== t4.indexOf("@") ? t4.split("@")[0] : Ue, i4 ? "safari-extension:" + e4 : "safari-web-extension:" + e4] : [t4, e4];
   };
-  var Me = /^\s*at (\S+?)(?::(\d+))(?::(\d+))\s*$/i;
-  var De = /^\s*at (?:(.+?\)(?: \[.+\])?|.*?) ?\((?:address at )?)?(?:async )?((?:<anonymous>|[-a-z]+:|.*bundle|\/)?.*?)(?::(\d+))?(?::(\d+))?\)?\s*$/i;
-  var Le = /\((\S*)(?::(\d+))(?::(\d+))\)/;
-  var Ne = (t4, e4) => {
-    var i4 = Me.exec(t4);
-    if (i4) {
-      var [, r4, s4, n3] = i4;
-      return Ae(e4, r4, Ce, +s4, +n3);
-    }
-    var o4 = De.exec(t4);
-    if (o4) {
-      if (o4[2] && 0 === o4[2].indexOf("eval")) {
-        var a4 = Le.exec(o4[2]);
-        a4 && (o4[2] = a4[1], o4[3] = a4[2], o4[4] = a4[3]);
+  var Be = /^\s*at (\S+?)(?::(\d+))(?::(\d+))\s*$/i;
+  var ze = /^\s*at (?:(.+?\)(?: \[.+\])?|.*?) ?\((?:address at )?)?(?:async )?((?:<anonymous>|[-a-z]+:|.*bundle|\/)?.*?)(?::(\d+))?(?::(\d+))?\)?\s*$/i;
+  var He = /\((\S*)(?::(\d+))(?::(\d+))\)/;
+  var qe = (t4, e4) => {
+    var i4 = Be.exec(t4);
+    if (i4) return Le(e4, i4[1], Ue, +i4[2], +i4[3]);
+    var r4 = ze.exec(t4);
+    if (r4) {
+      if (r4[2] && 0 === r4[2].indexOf("eval")) {
+        var s4 = He.exec(r4[2]);
+        s4 && (r4[2] = s4[1], r4[3] = s4[2], r4[4] = s4[3]);
       }
-      var [l4, u5] = Fe(o4[1] || Ce, o4[2]);
-      return Ae(e4, u5, l4, o4[3] ? +o4[3] : void 0, o4[4] ? +o4[4] : void 0);
+      var n3 = je(r4[1] || Ue, r4[2]);
+      return Le(e4, n3[1], n3[0], r4[3] ? +r4[3] : void 0, r4[4] ? +r4[4] : void 0);
     }
   };
-  var Ue = /^\s*(.*?)(?:\((.*?)\))?(?:^|@)?((?:[-a-z]+)?:\/.*?|\[native code\]|[^@]*(?:bundle|\d+\.js)|\/[\w\-. /=]+)(?::(\d+))?(?::(\d+))?\s*$/i;
-  var je = /(\S+) line (\d+)(?: > eval line \d+)* > eval/i;
-  var Be = (t4, e4) => {
-    var i4 = Ue.exec(t4);
+  var Ve = /^\s*(.*?)(?:\((.*?)\))?(?:^|@)?((?:[-a-z]+)?:\/.*?|\[native code\]|[^@]*(?:bundle|\d+\.js)|\/[\w\-. /=]+)(?::(\d+))?(?::(\d+))?\s*$/i;
+  var Ge = /(\S+) line (\d+)(?: > eval line \d+)* > eval/i;
+  var We = (t4, e4) => {
+    var i4 = Ve.exec(t4);
     if (i4) {
       if (i4[3] && i4[3].indexOf(" > eval") > -1) {
-        var r4 = je.exec(i4[3]);
+        var r4 = Ge.exec(i4[3]);
         r4 && (i4[1] = i4[1] || "eval", i4[3] = r4[1], i4[4] = r4[2], i4[5] = "");
       }
-      var s4 = i4[3], n3 = i4[1] || Ce;
-      return [n3, s4] = Fe(n3, s4), Ae(e4, s4, n3, i4[4] ? +i4[4] : void 0, i4[5] ? +i4[5] : void 0);
+      var s4 = i4[3], n3 = i4[1] || Ue, o4 = je(n3, s4);
+      return Le(e4, s4 = o4[1], n3 = o4[0], i4[4] ? +i4[4] : void 0, i4[5] ? +i4[5] : void 0);
     }
   };
-  var ze = /\(error: (.*)\)/;
-  var He = class {
+  var Je = /\(error: (.*)\)/;
+  var Ke = class {
     match(t4) {
       return this.isDOMException(t4) || this.isDOMError(t4);
     }
     coerce(t4, e4) {
-      var i4 = G2(t4.stack);
+      var i4 = J2(t4.stack);
       return { type: this.getType(t4), value: this.getValue(t4), stack: i4 ? t4.stack : void 0, cause: t4.cause ? e4.next(t4.cause) : void 0, synthetic: false };
     }
     getType(t4) {
@@ -6103,13 +6288,13 @@
       return t4.message ? e4 + ": " + t4.message : e4;
     }
     isDOMException(t4) {
-      return rt(t4, "DOMException");
+      return nt(t4, "DOMException");
     }
     isDOMError(t4) {
-      return rt(t4, "DOMError");
+      return nt(t4, "DOMError");
     }
   };
-  var qe = class {
+  var Ye = class {
     match(t4) {
       return ((t5) => t5 instanceof Error)(t4);
     }
@@ -6127,33 +6312,33 @@
       return t4.stacktrace || t4.stack || void 0;
     }
   };
-  var Ve = class {
+  var Qe = class {
     constructor() {
     }
     match(t4) {
-      return rt(t4, "ErrorEvent") && null != t4.error;
+      return nt(t4, "ErrorEvent") && null != t4.error;
     }
     coerce(t4, e4) {
       var i4;
       return e4.apply(t4.error) || { type: "ErrorEvent", value: t4.message, stack: null == (i4 = e4.syntheticException) ? void 0 : i4.stack, synthetic: true };
     }
   };
-  var Ge = /^(?:[Uu]ncaught (?:exception: )?)?(?:((?:Eval|Internal|Range|Reference|Syntax|Type|URI|)Error): )?(.*)$/i;
-  var We = class {
+  var Xe = /^(?:[Uu]ncaught (?:exception: )?)?(?:((?:Eval|Internal|Range|Reference|Syntax|Type|URI|)Error): )?(.*)$/i;
+  var Ze = class {
     match(t4) {
       return "string" == typeof t4;
     }
     coerce(t4, e4) {
-      var i4, [r4, s4] = this.getInfos(t4);
-      return { type: null != r4 ? r4 : "Error", value: null != s4 ? s4 : t4, stack: null == (i4 = e4.syntheticException) ? void 0 : i4.stack, synthetic: true };
+      var i4, r4 = this.getInfos(t4), s4 = r4[0], n3 = r4[1];
+      return { type: null != s4 ? s4 : "Error", value: null != n3 ? n3 : t4, stack: null == (i4 = e4.syntheticException) ? void 0 : i4.stack, synthetic: true };
     }
     getInfos(t4) {
-      var e4 = "Error", i4 = t4, r4 = t4.match(Ge);
+      var e4 = "Error", i4 = t4, r4 = t4.match(Xe);
       return r4 && (e4 = r4[1], i4 = r4[2]), [e4, i4];
     }
   };
-  var Ye = ["fatal", "error", "warning", "log", "info", "debug"];
-  function Ke(t4, e4) {
+  var ti = ["fatal", "error", "warning", "log", "info", "debug"];
+  function ei(t4, e4) {
     void 0 === e4 && (e4 = 40);
     var i4 = Object.keys(t4);
     if (i4.sort(), !i4.length) return "[object has no keys]";
@@ -6163,7 +6348,7 @@
     }
     return "";
   }
-  var Je = class {
+  var ii = class {
     match(t4) {
       return "object" == typeof t4 && null !== t4;
     }
@@ -6172,7 +6357,7 @@
       return r4 ? e4.apply(r4) : { type: this.getType(t4), value: this.getValue(t4), stack: null == (i4 = e4.syntheticException) ? void 0 : i4.stack, level: this.isSeverityLevel(t4.level) ? t4.level : "error", synthetic: true };
     }
     getType(t4) {
-      return st(t4) ? t4.constructor.name : "Error";
+      return ot(t4) ? t4.constructor.name : "Error";
     }
     getValue(t4) {
       if ("name" in t4 && "string" == typeof t4.name) {
@@ -6181,15 +6366,15 @@
       }
       if ("message" in t4 && "string" == typeof t4.message) return t4.message;
       var i4 = this.getObjectClassName(t4);
-      return (i4 && "Object" !== i4 ? "'" + i4 + "'" : "Object") + " captured as exception with keys: " + Ke(t4);
+      return (i4 && "Object" !== i4 ? "'" + i4 + "'" : "Object") + " captured as exception with keys: " + ei(t4);
     }
     isSeverityLevel(t4) {
-      return G2(t4) && !W(t4) && Ye.indexOf(t4) >= 0;
+      return J2(t4) && !K2(t4) && ti.indexOf(t4) >= 0;
     }
     getErrorPropertyFromObject(t4) {
       for (var e4 in t4) if ({}.hasOwnProperty.call(t4, e4)) {
         var i4 = t4[e4];
-        if (me(i4)) return i4;
+        if (ye(i4)) return i4;
       }
     }
     getObjectClassName(t4) {
@@ -6201,30 +6386,30 @@
       }
     }
   };
-  var Qe = class {
+  var ri = class {
     match(t4) {
-      return st(t4);
+      return ot(t4);
     }
     coerce(t4, e4) {
       var i4, r4 = t4.constructor.name;
-      return { type: r4, value: r4 + " captured as exception with keys: " + Ke(t4), stack: null == (i4 = e4.syntheticException) ? void 0 : i4.stack, synthetic: true };
+      return { type: r4, value: r4 + " captured as exception with keys: " + ei(t4), stack: null == (i4 = e4.syntheticException) ? void 0 : i4.stack, synthetic: true };
     }
   };
-  var Xe = class {
+  var si = class {
     match(t4) {
-      return it(t4);
+      return st(t4);
     }
     coerce(t4, e4) {
       var i4;
       return { type: "Error", value: "Primitive value captured as exception: " + String(t4), stack: null == (i4 = e4.syntheticException) ? void 0 : i4.stack, synthetic: true };
     }
   };
-  var Ze = class {
+  var ni = class {
     match(t4) {
-      return rt(t4, "PromiseRejectionEvent") || this.isCustomEventWrappingRejection(t4);
+      return nt(t4, "PromiseRejectionEvent") || this.isCustomEventWrappingRejection(t4);
     }
     isCustomEventWrappingRejection(t4) {
-      if (!st(t4)) return false;
+      if (!ot(t4)) return false;
       try {
         var e4 = t4.detail;
         return null != e4 && "object" == typeof e4 && "reason" in e4;
@@ -6234,7 +6419,7 @@
     }
     coerce(t4, e4) {
       var i4, r4 = this.getUnhandledRejectionReason(t4);
-      return it(r4) ? { type: "UnhandledRejection", value: "Non-Error promise rejection captured with value: " + String(r4), stack: null == (i4 = e4.syntheticException) ? void 0 : i4.stack, synthetic: true } : e4.apply(r4);
+      return st(r4) ? { type: "UnhandledRejection", value: "Non-Error promise rejection captured with value: " + String(r4), stack: null == (i4 = e4.syntheticException) ? void 0 : i4.stack, synthetic: true } : e4.apply(r4);
     }
     getUnhandledRejectionReason(t4) {
       try {
@@ -6245,47 +6430,36 @@
       return t4;
     }
   };
-  var ti = "$message";
-  var ei = "$timestamp";
-  var ii = /* @__PURE__ */ new Set([ti, ei]);
-  var ri = { enabled: true, max_bytes: 32768 };
-  function si(t4) {
+  var oi = "$message";
+  var ai = "$timestamp";
+  var li = /* @__PURE__ */ new Set([oi, ai]);
+  var ui = { enabled: true, max_bytes: 32768 };
+  function hi(t4) {
     var e4;
-    return t4 ? { enabled: null !== (e4 = t4.enabled) && void 0 !== e4 ? e4 : ri.enabled, max_bytes: oi(t4.max_bytes, ri.max_bytes) } : f4({}, ri);
+    return t4 ? { enabled: null !== (e4 = t4.enabled) && void 0 !== e4 ? e4 : ui.enabled, max_bytes: vi(t4.max_bytes, ui.max_bytes) } : _2({}, ui);
   }
-  var ni = class {
+  var di = class {
     constructor(t4) {
-      this.bt = [], this._t = 0, this.Se = si(t4);
+      this.$e = [], this.ze = 0, this.Te = hi(t4);
     }
     setConfig(t4) {
-      this.Se = si(t4), this.wt();
+      this.Te = hi(t4), this.Ze();
     }
     add(t4) {
       var e4 = (function(t5) {
-        var e5, i5, r4;
+        var e5;
         try {
-          r4 = [], e5 = null !== (i5 = JSON.stringify(t5, (function(t6, e6) {
-            if ("bigint" == typeof e6) return e6.toString();
-            if ("function" != typeof e6 && "symbol" != typeof e6) {
-              if (e6 instanceof Error) return { name: e6.name, message: e6.message, stack: e6.stack };
-              if (e6 && "object" == typeof e6) {
-                for (; r4.length > 0 && r4[r4.length - 1] !== this; ) r4.pop();
-                if (r4.includes(e6)) return "[Circular]";
-                r4.push(e6);
-              }
-              return e6;
-            }
-          }))) && void 0 !== i5 ? i5 : "null";
+          e5 = L2(t5);
         } catch (t6) {
           return;
         }
         try {
-          var s4 = JSON.parse(e5);
-          if (!H2(s4)) return;
-          var n3 = s4, o4 = n3[ti], a4 = n3[ei];
-          if (!G2(o4) || 0 === o4.trim().length) return;
-          if (!G2(a4) && !J2(a4)) return;
-          return { step: n3, json: e5 };
+          var i5 = JSON.parse(e5);
+          if (!V2(i5)) return;
+          var r4 = i5, s4 = r4[oi], n3 = r4[ai];
+          if (!J2(s4) || 0 === s4.trim().length) return;
+          if (!J2(n3) && !X(n3)) return;
+          return { step: r4, json: e5 };
         } catch (t6) {
           return;
         }
@@ -6296,33 +6470,33 @@
           for (var e5 = encodeURIComponent(t5), i5 = 0, r4 = 0; e5.length > r4; r4++) "%" === e5[r4] ? (i5 += 1, r4 += 2) : i5 += 1;
           return i5;
         })(e4.json);
-        i4 > this.Se.max_bytes || (this.bt.push({ step: e4.step, bytes: i4 }), this._t += i4, this.wt());
+        i4 > this.Te.max_bytes || (this.$e.push({ step: e4.step, bytes: i4 }), this.ze += i4, this.Ze());
       }
     }
     getAttachable() {
-      return this.bt.map(((t4) => t4.step));
+      return this.$e.map(((t4) => t4.step));
     }
     clear() {
-      this.bt = [], this._t = 0;
+      this.$e = [], this.ze = 0;
     }
     size() {
-      return this.bt.length;
+      return this.$e.length;
     }
-    wt() {
-      for (; this._t > this.Se.max_bytes && this.bt.length > 0; ) {
-        var t4 = this.bt.shift();
-        t4 && (this._t -= t4.bytes);
+    Ze() {
+      for (; this.ze > this.Te.max_bytes && this.$e.length > 0; ) {
+        var t4 = this.$e.shift();
+        t4 && (this.ze -= t4.bytes);
       }
     }
   };
-  function oi(t4, e4) {
-    if (!J2(t4) || t4 === 1 / 0 || t4 === -1 / 0) return e4;
+  function vi(t4, e4) {
+    if (!X(t4) || t4 === 1 / 0 || t4 === -1 / 0) return e4;
     var i4 = Math.floor(t4);
     return 0 > i4 ? e4 : i4;
   }
-  var ai = function(e4, i4) {
-    var { debugEnabled: r4 } = void 0 === i4 ? {} : i4, s4 = { k(i5) {
-      if (t3 && (v3.DEBUG || h3.POSTHOG_DEBUG || r4) && !V2(t3.console) && t3.console) {
+  var ci = function(e4, i4) {
+    var r4 = (void 0 === i4 ? {} : i4).debugEnabled, s4 = { k(i5) {
+      if (t3 && (c3.DEBUG || h3.POSTHOG_DEBUG || r4) && !W(t3.console) && t3.console) {
         for (var s5 = ("__rrweb_original__" in t3.console[i5]) ? t3.console[i5].__rrweb_original__ : t3.console[i5], n3 = arguments.length, o4 = new Array(n3 > 1 ? n3 - 1 : 0), a4 = 1; n3 > a4; a4++) o4[a4 - 1] = arguments[a4];
         s5(e4, ...o4);
       }
@@ -6343,14 +6517,14 @@
       console.error(e4, ...i5);
     }, uninitializedWarning(t4) {
       s4.error("You must initialize PostHog before calling " + t4);
-    }, createLogger: (t4, i5) => ai(e4 + " " + t4, i5) };
+    }, createLogger: (t4, i5) => ci(e4 + " " + t4, i5) };
     return s4;
   };
-  var li = ai("[PostHog.js]");
-  var ui = li.createLogger;
-  var hi = ui("[ExternalScriptsLoader]");
-  var di = (t4, e4, i4) => {
-    if (t4.config.disable_external_dependency_loading) return hi.warn(e4 + " was requested but loading of external scripts is disabled."), i4("Loading of external scripts is disabled");
+  var fi = ci("[PostHog.js]");
+  var pi = fi.createLogger;
+  var _i = pi("[ExternalScriptsLoader]");
+  var gi = (t4, e4, i4) => {
+    if (t4.config.disable_external_dependency_loading) return _i.warn(e4 + " was requested but loading of external scripts is disabled."), i4("Loading of external scripts is disabled");
     var s4 = null == r3 ? void 0 : r3.querySelectorAll("script");
     if (s4) {
       for (var n3, o4 = function() {
@@ -6388,147 +6562,147 @@
         }
         r4 = t4.requestRouter.endpointFor("assets", s4);
       }
-      di(t4, r4, i4);
+      gi(t4, r4, i4);
     } else {
       var o4 = t4.requestRouter.endpointFor("assets", "/array/" + t4.config.token + "/config.js");
-      di(t4, o4, i4);
+      gi(t4, o4, i4);
     }
   }, h3.__PosthogExtensions__.loadSiteApp = (t4, e4, i4) => {
     var r4 = t4.requestRouter.endpointFor("api", e4);
-    di(t4, r4, i4);
+    gi(t4, r4, i4);
   };
-  var vi = "$people_distinct_id";
-  var ci = "$device_id";
-  var pi = "$device_model";
-  var fi = "__alias";
-  var _i = "__timers";
-  var gi = "$autocapture_disabled_server_side";
-  var mi = "$heatmaps_enabled_server_side";
-  var yi = "$exception_capture_enabled_server_side";
-  var bi = "$error_tracking_suppression_rules";
-  var wi = "$error_tracking_capture_extension_exceptions";
-  var Ei = "$web_vitals_enabled_server_side";
-  var xi = "$dead_clicks_enabled_server_side";
-  var Si = "$product_tours_enabled_server_side";
-  var Ti = "$web_vitals_allowed_metrics";
-  var $i = "$session_recording_remote_config";
-  var ki = "$replay_sample_rate";
-  var Ri = "$replay_override_sampling";
-  var Pi = "$replay_override_linked_flag";
-  var Ii = "$replay_override_url_trigger";
-  var Oi = "$replay_override_event_trigger";
-  var Ci = "$sesid";
-  var Ai = "$session_is_sampled";
-  var Fi = "$enabled_feature_flags";
-  var Mi = "$active_feature_flags";
-  var Di = "$early_access_features";
-  var Li = "$feature_flag_details";
-  var Ni = "$feature_flag_payloads";
-  var Ui = "$feature_flag_request_id";
-  var ji = "$override_feature_flags";
-  var Bi = "$override_feature_flag_payloads";
-  var zi = "$stored_person_properties";
-  var Hi = "$stored_group_properties";
-  var qi = "$surveys";
-  var Vi = "$surveys_loaded_at";
-  var Gi = "$surveys_activated";
-  var Wi = "ph_product_tours";
-  var Yi = "$flag_call_reported";
-  var Ki = "$flag_call_reported_session_id";
-  var Ji = "$feature_flag_errors";
-  var Qi = "$feature_flag_evaluated_at";
-  var Xi = "$user_state";
-  var Zi = "$client_session_props";
-  var tr = "$capture_rate_limit";
-  var er = "$initial_campaign_params";
-  var ir = "$initial_referrer_info";
-  var rr = "$initial_person_info";
-  var sr = "$epp";
-  var nr = "__POSTHOG_TOOLBAR__";
-  var or = "$posthog_cookieless";
-  var ar = "$sdk_debug_extensions_init_method";
-  var lr = "$sdk_debug_extensions_init_time_ms";
-  var ur = "$sdk_debug_recording_script_not_loaded";
-  var hr = "PostHog loadExternalDependency extension not found.";
-  var dr = "on_reject";
-  var vr = "always";
-  var cr = "anonymous";
-  var pr = "identified";
-  var fr = "identified_only";
-  var _r = "visibilitychange";
-  var gr = "beforeunload";
-  var mr = "$pageview";
-  var yr = "$pageleave";
-  var br = "$identify";
-  var wr = "$groupidentify";
-  function Er(t4, e4) {
-    B3(t4) && t4.forEach(e4);
+  var mi = "$people_distinct_id";
+  var bi = "$device_id";
+  var yi = "$device_model";
+  var wi = "__alias";
+  var Ei = "__timers";
+  var xi = "$autocapture_disabled_server_side";
+  var Si = "$heatmaps_enabled_server_side";
+  var ki = "$exception_capture_enabled_server_side";
+  var Ti = "$error_tracking_suppression_rules";
+  var $i = "$error_tracking_capture_extension_exceptions";
+  var Ri = "$web_vitals_enabled_server_side";
+  var Pi = "$dead_clicks_enabled_server_side";
+  var Oi = "$product_tours_enabled_server_side";
+  var Ii = "$web_vitals_allowed_metrics";
+  var Ci = "$session_recording_remote_config";
+  var Mi = "$replay_sample_rate";
+  var Ai = "$replay_override_sampling";
+  var Fi = "$replay_override_linked_flag";
+  var Di = "$replay_override_url_trigger";
+  var Ni = "$replay_override_event_trigger";
+  var Ui = "$sesid";
+  var Li = "$session_is_sampled";
+  var ji = "$enabled_feature_flags";
+  var Bi = "$active_feature_flags";
+  var zi = "$early_access_features";
+  var Hi = "$feature_flag_details";
+  var qi = "$feature_flag_payloads";
+  var Vi = "$feature_flag_request_id";
+  var Gi = "$override_feature_flags";
+  var Wi = "$override_feature_flag_payloads";
+  var Ji = "$stored_person_properties";
+  var Ki = "$stored_group_properties";
+  var Yi = "$surveys";
+  var Qi = "$surveys_loaded_at";
+  var Xi = "$surveys_activated";
+  var Zi = "ph_product_tours";
+  var tr = "$flag_call_reported";
+  var er = "$flag_call_reported_session_id";
+  var ir = "$feature_flag_errors";
+  var rr = "$feature_flag_evaluated_at";
+  var sr = "$user_state";
+  var nr = "$client_session_props";
+  var or = "$capture_rate_limit";
+  var ar = "$initial_campaign_params";
+  var lr = "$initial_referrer_info";
+  var ur = "$initial_person_info";
+  var hr = "$epp";
+  var dr = "__POSTHOG_TOOLBAR__";
+  var vr = "$posthog_cookieless";
+  var cr = "$sdk_debug_extensions_init_method";
+  var fr = "$sdk_debug_extensions_init_time_ms";
+  var pr = "$sdk_debug_recording_script_not_loaded";
+  var _r = "PostHog loadExternalDependency extension not found.";
+  var gr = "on_reject";
+  var mr = "always";
+  var br = "anonymous";
+  var yr = "identified";
+  var wr = "identified_only";
+  var Er = "visibilitychange";
+  var xr = "beforeunload";
+  var Sr = "$pageview";
+  var kr = "$pageleave";
+  var Tr = "$identify";
+  var $r = "$groupidentify";
+  function Rr(t4, e4) {
+    H2(t4) && t4.forEach(e4);
   }
-  function xr(t4, e4) {
-    if (!K2(t4)) if (B3(t4)) t4.forEach(e4);
-    else if (Z(t4)) t4.forEach(((t5, i5) => e4(t5, i5)));
-    else for (var i4 in t4) U.call(t4, i4) && e4(t4[i4], i4);
+  function Pr(t4, e4) {
+    if (!Q2(t4)) if (H2(t4)) t4.forEach(e4);
+    else if (et(t4)) t4.forEach(((t5, i5) => e4(t5, i5)));
+    else for (var i4 in t4) B3.call(t4, i4) && e4(t4[i4], i4);
   }
-  var Sr = function(t4) {
+  var Or = function(t4) {
     for (var e4 = arguments.length, i4 = new Array(e4 > 1 ? e4 - 1 : 0), r4 = 1; e4 > r4; r4++) i4[r4 - 1] = arguments[r4];
     for (var s4 of i4) for (var n3 in s4) void 0 !== s4[n3] && (t4[n3] = s4[n3]);
     return t4;
   };
-  function Tr(t4) {
+  function Ir(t4) {
     for (var e4 = Object.keys(t4), i4 = e4.length, r4 = new Array(i4); i4--; ) r4[i4] = [e4[i4], t4[e4[i4]]];
     return r4;
   }
-  var $r = function(t4) {
+  var Cr = function(t4) {
     try {
       return t4();
     } catch (t5) {
       return;
     }
   };
-  var kr = function(t4) {
+  var Mr = function(t4) {
     return function() {
       try {
         for (var e4 = arguments.length, i4 = new Array(e4), r4 = 0; e4 > r4; r4++) i4[r4] = arguments[r4];
         return t4.apply(this, i4);
       } catch (t5) {
-        li.critical("Implementation error. Please turn on debug mode and open a ticket on https://app.posthog.com/home#panel=support%3Asupport%3A."), li.critical(t5);
+        fi.critical("Implementation error. Please turn on debug mode and open a ticket on https://app.posthog.com/home#panel=support%3Asupport%3A."), fi.critical(t5);
       }
     };
   };
-  var Rr = function(t4) {
+  var Ar = function(t4) {
     var e4 = {};
-    return xr(t4, (function(t5, i4) {
-      (G2(t5) && t5.length > 0 || J2(t5)) && (e4[i4] = t5);
+    return Pr(t4, (function(t5, i4) {
+      (J2(t5) && t5.length > 0 || X(t5)) && (e4[i4] = t5);
     })), e4;
   };
-  var Pr = ["herokuapp.com", "vercel.app", "netlify.app"];
-  function Ir(t4) {
+  var Fr = ["herokuapp.com", "vercel.app", "netlify.app"];
+  function Dr(t4) {
     var e4 = null == t4 ? void 0 : t4.hostname;
-    if (!G2(e4)) return false;
+    if (!J2(e4)) return false;
     var i4 = e4.split(".").slice(-2).join(".");
-    for (var r4 of Pr) if (i4 === r4) return false;
+    for (var r4 of Fr) if (i4 === r4) return false;
     return true;
   }
-  function Or(t4, e4, i4, r4) {
-    var { capture: s4 = false, passive: n3 = true } = null != r4 ? r4 : {};
-    null == t4 || t4.addEventListener(e4, i4, { capture: s4, passive: n3 });
+  function Nr(t4, e4, i4, r4) {
+    var s4 = null != r4 ? r4 : {}, n3 = s4.capture, o4 = s4.passive;
+    null == t4 || t4.addEventListener(e4, i4, { capture: void 0 !== n3 && n3, passive: void 0 === o4 || o4 });
   }
-  function Cr(t4) {
+  function Ur(t4) {
     return "ph_toolbar_internal" === t4.name;
   }
   Math.trunc || (Math.trunc = function(t4) {
     return 0 > t4 ? Math.ceil(t4) : Math.floor(t4);
   }), Number.isInteger || (Number.isInteger = function(t4) {
-    return J2(t4) && isFinite(t4) && Math.floor(t4) === t4;
+    return X(t4) && isFinite(t4) && Math.floor(t4) === t4;
   });
-  var Ar = class _Ar {
+  var Lr = class _Lr {
     constructor(t4) {
       if (this.bytes = t4, 16 !== t4.length) throw new TypeError("not 128-bit length");
     }
     static fromFieldsV7(t4, e4, i4, r4) {
       if (!Number.isInteger(t4) || !Number.isInteger(e4) || !Number.isInteger(i4) || !Number.isInteger(r4) || 0 > t4 || 0 > e4 || 0 > i4 || 0 > r4 || t4 > 281474976710655 || e4 > 4095 || i4 > 1073741823 || r4 > 4294967295) throw new RangeError("invalid field value");
       var s4 = new Uint8Array(16);
-      return s4[0] = t4 / Math.pow(2, 40), s4[1] = t4 / Math.pow(2, 32), s4[2] = t4 / Math.pow(2, 24), s4[3] = t4 / Math.pow(2, 16), s4[4] = t4 / Math.pow(2, 8), s4[5] = t4, s4[6] = 112 | e4 >>> 8, s4[7] = e4, s4[8] = 128 | i4 >>> 24, s4[9] = i4 >>> 16, s4[10] = i4 >>> 8, s4[11] = i4, s4[12] = r4 >>> 24, s4[13] = r4 >>> 16, s4[14] = r4 >>> 8, s4[15] = r4, new _Ar(s4);
+      return s4[0] = t4 / Math.pow(2, 40), s4[1] = t4 / Math.pow(2, 32), s4[2] = t4 / Math.pow(2, 24), s4[3] = t4 / Math.pow(2, 16), s4[4] = t4 / Math.pow(2, 8), s4[5] = t4, s4[6] = 112 | e4 >>> 8, s4[7] = e4, s4[8] = 128 | i4 >>> 24, s4[9] = i4 >>> 16, s4[10] = i4 >>> 8, s4[11] = i4, s4[12] = r4 >>> 24, s4[13] = r4 >>> 16, s4[14] = r4 >>> 8, s4[15] = r4, new _Lr(s4);
     }
     toString() {
       for (var t4 = "", e4 = 0; this.bytes.length > e4; e4++) t4 = t4 + (this.bytes[e4] >>> 4).toString(16) + (15 & this.bytes[e4]).toString(16), 3 !== e4 && 5 !== e4 && 7 !== e4 && 9 !== e4 || (t4 += "-");
@@ -6536,7 +6710,7 @@
       return t4;
     }
     clone() {
-      return new _Ar(this.bytes.slice(0));
+      return new _Lr(this.bytes.slice(0));
     }
     equals(t4) {
       return 0 === this.compareTo(t4);
@@ -6549,16 +6723,16 @@
       return 0;
     }
   };
-  var Fr = class {
+  var jr = class {
     constructor() {
-      this.S = 0, this.C = 0, this.I = new Lr();
+      this.S = 0, this.C = 0, this.I = new Hr();
     }
     generate() {
       var t4 = this.generateOrAbort();
-      if (V2(t4)) {
+      if (W(t4)) {
         this.S = 0;
         var e4 = this.generateOrAbort();
-        if (V2(e4)) throw new Error("Could not generate UUID after timestamp reset");
+        if (W(e4)) throw new Error("Could not generate UUID after timestamp reset");
         return e4;
       }
       return t4;
@@ -6570,33 +6744,33 @@
         if (this.S >= t4 + 1e4) return;
         this.C++, this.C > 4398046511103 && (this.S++, this.M());
       }
-      return Ar.fromFieldsV7(this.S, Math.trunc(this.C / Math.pow(2, 30)), this.C & Math.pow(2, 30) - 1, this.I.nextUint32());
+      return Lr.fromFieldsV7(this.S, Math.trunc(this.C / Math.pow(2, 30)), this.C & Math.pow(2, 30) - 1, this.I.nextUint32());
     }
     M() {
       this.C = 1024 * this.I.nextUint32() + (1023 & this.I.nextUint32());
     }
   };
-  var Mr;
-  var Dr = (t4) => {
+  var Br;
+  var zr = (t4) => {
     if ("undefined" != typeof UUIDV7_DENY_WEAK_RNG && UUIDV7_DENY_WEAK_RNG) throw new Error("no cryptographically strong RNG available");
     for (var e4 = 0; t4.length > e4; e4++) t4[e4] = 65536 * Math.trunc(65536 * Math.random()) + Math.trunc(65536 * Math.random());
     return t4;
   };
-  t3 && !V2(t3.crypto) && crypto.getRandomValues && (Dr = (t4) => crypto.getRandomValues(t4));
-  var Lr = class {
+  t3 && !W(t3.crypto) && crypto.getRandomValues && (zr = (t4) => crypto.getRandomValues(t4));
+  var Hr = class {
     constructor() {
       this.R = new Uint32Array(8), this.O = 1 / 0;
     }
     nextUint32() {
-      return this.R.length > this.O || (Dr(this.R), this.O = 0), this.R[this.O++];
+      return this.R.length > this.O || (zr(this.R), this.O = 0), this.R[this.O++];
     }
   };
-  var Nr = () => Ur().toString();
-  var Ur = () => (Mr || (Mr = new Fr())).generate();
-  var jr = "";
-  var Br = /[a-z0-9][a-z0-9-]+\.[a-z]{2,}$/i;
-  var zr = { N: () => !!r3, D(t4) {
-    li.error("cookieStore error: " + t4);
+  var qr = () => Vr().toString();
+  var Vr = () => (Br || (Br = new jr())).generate();
+  var Gr = "";
+  var Wr = /[a-z0-9][a-z0-9-]+\.[a-z]{2,}$/i;
+  var Jr = { N: () => !!r3, D(t4) {
+    fi.error("cookieStore error: " + t4);
   }, A(t4) {
     if (r3) {
       try {
@@ -6611,7 +6785,7 @@
   }, F(t4) {
     var e4;
     try {
-      e4 = JSON.parse(zr.A(t4)) || {};
+      e4 = JSON.parse(Jr.A(t4)) || {};
     } catch (t5) {
     }
     return e4;
@@ -6621,21 +6795,21 @@
       var o4 = "", a4 = "", l4 = (function(t5, e5) {
         if (e5) {
           var i5 = (function(t6, e6) {
-            if (void 0 === e6 && (e6 = r3), jr) return jr;
+            if (void 0 === e6 && (e6 = r3), Gr) return Gr;
             if (!e6) return "";
             if (["localhost", "127.0.0.1"].includes(t6)) return "";
-            for (var i6 = t6.split("."), s6 = Math.min(i6.length, 8), n4 = "dmn_chk_" + Nr(); !jr && s6--; ) {
+            for (var i6 = t6.split("."), s6 = Math.min(i6.length, 8), n4 = "dmn_chk_" + qr(); !Gr && s6--; ) {
               var o5 = i6.slice(s6).join("."), a5 = n4 + "=1;domain=." + o5 + ";path=/";
-              e6.cookie = a5 + ";max-age=3", e6.cookie.includes(n4) && (e6.cookie = a5 + ";max-age=0", jr = o5);
+              e6.cookie = a5 + ";max-age=3", e6.cookie.includes(n4) && (e6.cookie = a5 + ";max-age=0", Gr = o5);
             }
-            return jr;
+            return Gr;
           })(t5);
           if (!i5) {
             var s5 = ((t6) => {
-              var e6 = t6.match(Br);
+              var e6 = t6.match(Wr);
               return e6 ? e6[0] : "";
             })(t5);
-            s5 !== i5 && li.info("Warning: cookie subdomain discovery mismatch", s5, i5), i5 = s5;
+            s5 !== i5 && fi.info("Warning: cookie subdomain discovery mismatch", s5, i5), i5 = s5;
           }
           return i5 ? "; domain=." + i5 : "";
         }
@@ -6647,41 +6821,41 @@
       }
       n3 && (a4 = "; secure");
       var h4 = t4 + "=" + encodeURIComponent(JSON.stringify(e4)) + o4 + "; SameSite=Lax; path=/" + l4 + a4;
-      return h4.length > 3686.4 && li.warn("cookieStore warning: large cookie, len=" + h4.length), r3.cookie = h4, true;
+      return h4.length > 3686.4 && fi.warn("cookieStore warning: large cookie, len=" + h4.length), r3.cookie = h4, true;
     } catch (t5) {
       return false;
     }
   }, P(t4, e4) {
     if (null != r3 && r3.cookie) try {
-      zr.q(t4, "", -1, e4);
+      Jr.q(t4, "", -1, e4);
     } catch (t5) {
       return;
     }
   } };
-  var Hr = null;
-  var qr = { N() {
-    if (!Y(Hr)) return Hr;
+  var Kr = null;
+  var Yr = { N() {
+    if (!Y(Kr)) return Kr;
     var e4 = true;
-    if (V2(t3)) e4 = false;
+    if (W(t3)) e4 = false;
     else try {
       var i4 = "__mplssupport__";
-      qr.q(i4, "xyz"), '"xyz"' !== qr.A(i4) && (e4 = false), qr.P(i4);
+      Yr.q(i4, "xyz"), '"xyz"' !== Yr.A(i4) && (e4 = false), Yr.P(i4);
     } catch (t4) {
       e4 = false;
     }
-    return e4 || li.error("localStorage unsupported; falling back to cookie store"), Hr = e4, e4;
+    return e4 || fi.error("localStorage unsupported; falling back to cookie store"), Kr = e4, e4;
   }, D(t4) {
-    li.error("localStorage error: " + t4);
+    fi.error("localStorage error: " + t4);
   }, A(e4) {
     try {
       return null == t3 ? void 0 : t3.localStorage.getItem(e4);
     } catch (t4) {
-      qr.D(t4);
+      Yr.D(t4);
     }
     return null;
   }, F(t4) {
     try {
-      return JSON.parse(qr.A(t4)) || {};
+      return JSON.parse(Yr.A(t4)) || {};
     } catch (t5) {
     }
     return null;
@@ -6689,46 +6863,46 @@
     try {
       return null == t3 || t3.localStorage.setItem(e4, JSON.stringify(i4)), true;
     } catch (t4) {
-      qr.D(t4);
+      Yr.D(t4);
     }
     return false;
   }, P(e4) {
     try {
       null == t3 || t3.localStorage.removeItem(e4);
     } catch (t4) {
-      qr.D(t4);
+      Yr.D(t4);
     }
   } };
-  var Vr = [ci, "distinct_id", Ci, Ai, sr, rr, Xi];
-  var Gr = {};
-  var Wr = { N: () => true, D(t4) {
-    li.error("memoryStorage error: " + t4);
-  }, A: (t4) => Gr[t4] || null, F: (t4) => Gr[t4] || null, q: (t4, e4) => (Gr[t4] = e4, true), P(t4) {
-    delete Gr[t4];
+  var Qr = [bi, "distinct_id", Ui, Li, hr, ur, sr];
+  var Xr = {};
+  var Zr = { N: () => true, D(t4) {
+    fi.error("memoryStorage error: " + t4);
+  }, A: (t4) => Xr[t4] || null, F: (t4) => Xr[t4] || null, q: (t4, e4) => (Xr[t4] = e4, true), P(t4) {
+    delete Xr[t4];
   } };
-  var Yr = null;
-  var Kr = { N() {
-    if (!Y(Yr)) return Yr;
-    if (Yr = true, V2(t3)) Yr = false;
+  var ts = null;
+  var es2 = { N() {
+    if (!Y(ts)) return ts;
+    if (ts = true, W(t3)) ts = false;
     else try {
       var e4 = "__support__";
-      Kr.q(e4, "xyz"), '"xyz"' !== Kr.A(e4) && (Yr = false), Kr.P(e4);
+      es2.q(e4, "xyz"), '"xyz"' !== es2.A(e4) && (ts = false), es2.P(e4);
     } catch (t4) {
-      Yr = false;
+      ts = false;
     }
-    return Yr;
+    return ts;
   }, D(t4) {
-    li.error("sessionStorage error: ", t4);
+    fi.error("sessionStorage error: ", t4);
   }, A(e4) {
     try {
       return null == t3 ? void 0 : t3.sessionStorage.getItem(e4);
     } catch (t4) {
-      Kr.D(t4);
+      es2.D(t4);
     }
     return null;
   }, F(t4) {
     try {
-      return JSON.parse(Kr.A(t4)) || null;
+      return JSON.parse(es2.A(t4)) || null;
     } catch (t5) {
     }
     return null;
@@ -6736,28 +6910,28 @@
     try {
       return null == t3 || t3.sessionStorage.setItem(e4, JSON.stringify(i4)), true;
     } catch (t4) {
-      Kr.D(t4);
+      es2.D(t4);
     }
     return false;
   }, P(e4) {
     try {
       null == t3 || t3.sessionStorage.removeItem(e4);
     } catch (t4) {
-      Kr.D(t4);
+      es2.D(t4);
     }
   } };
-  var Jr = class {
+  var is = class {
     constructor(t4) {
       this._instance = t4;
     }
-    get Se() {
+    get Te() {
       return this._instance.config;
     }
     get consent() {
-      return this.kt() ? 0 : this.St;
+      return this.Je() ? 0 : this.Ke;
     }
     isOptedOut() {
-      return this.Se.cookieless_mode === vr || this.isRejected() || -1 === this.consent && this.Se.cookieless_mode === dr;
+      return this.Te.cookieless_mode === mr || this.isRejected() || -1 === this.consent && this.Te.cookieless_mode === gr;
     }
     isOptedIn() {
       return !this.isOptedOut();
@@ -6766,74 +6940,75 @@
       return 0 === this.consent;
     }
     isRejected() {
-      return 0 === this.consent || -1 === this.consent && this.Se.opt_out_capturing_by_default;
+      return 0 === this.consent || -1 === this.consent && this.Te.opt_out_capturing_by_default;
     }
     optInOut(t4) {
-      this.Ct.q(this.It, t4 ? 1 : 0, this.Se.cookie_expiration, this.Se.cross_subdomain_cookie, this.Se.secure_cookie);
+      this.Ye.q(this.Xe, t4 ? 1 : 0, this.Te.cookie_expiration, this.Te.cross_subdomain_cookie, this.Te.secure_cookie);
     }
     reset() {
-      this.Ct.P(this.It, this.Se.cross_subdomain_cookie);
+      this.Ye.P(this.Xe, this.Te.cross_subdomain_cookie);
     }
-    get It() {
-      var { token: t4, opt_out_capturing_cookie_prefix: e4, consent_persistence_name: i4 } = this._instance.config;
-      return i4 || (e4 ? e4 + t4 : "__ph_opt_in_out_" + t4);
+    get Xe() {
+      var t4 = this._instance.config, e4 = t4.token, i4 = t4.opt_out_capturing_cookie_prefix;
+      return t4.consent_persistence_name || (i4 ? i4 + e4 : "__ph_opt_in_out_" + e4);
     }
-    get St() {
-      var t4 = this.Ct.A(this.It);
-      return ot(t4) ? 1 : M(at, t4) ? 0 : -1;
+    get Ke() {
+      var t4 = this.Ye.A(this.Xe);
+      return lt(t4) ? 1 : D3(ut, t4) ? 0 : -1;
     }
-    get Ct() {
-      var t4 = this.Se.opt_out_capturing_persistence_type, e4 = "localStorage" === t4 ? qr : zr;
-      if (!this.Tt || this.Tt !== e4) {
-        this.Tt = e4;
-        var i4 = "localStorage" === t4 ? zr : qr;
-        i4.A(this.It) && (this.Tt.A(this.It) || this.optInOut(ot(i4.A(this.It))), i4.P(this.It, this.Se.cross_subdomain_cookie));
+    get Ye() {
+      var t4 = this.Te.opt_out_capturing_persistence_type, e4 = "localStorage" === t4 ? Yr : Jr;
+      if (!this.tr || this.tr !== e4) {
+        this.tr = e4;
+        var i4 = "localStorage" === t4 ? Jr : Yr;
+        i4.A(this.Xe) && (this.tr.A(this.Xe) || this.optInOut(lt(i4.A(this.Xe))), i4.P(this.Xe, this.Te.cross_subdomain_cookie));
       }
-      return this.Tt;
+      return this.tr;
     }
-    kt() {
-      return !!this.Se.respect_dnt && [null == i3 ? void 0 : i3.doNotTrack, null == i3 ? void 0 : i3.msDoNotTrack, h3.doNotTrack].some(((t4) => ot(t4)));
+    Je() {
+      return !!this.Te.respect_dnt && [null == i3 ? void 0 : i3.doNotTrack, null == i3 ? void 0 : i3.msDoNotTrack, h3.doNotTrack].some(((t4) => lt(t4)));
     }
   };
-  function Qr(t4, e4) {
+  function rs(t4, e4) {
     var i4, r4 = null == t4 || null == (i4 = t4.config) ? void 0 : i4.get_current_url;
-    if (!z3(r4)) return e4;
+    if (!q2(r4)) return e4;
     try {
       var s4 = r4(e4);
-      return G2(s4) && s4 ? s4 : e4;
+      return J2(s4) && s4 ? s4 : e4;
     } catch (t5) {
-      return li.error("Error in get_current_url, falling back to window.location.href", t5), e4;
+      return fi.error("Error in get_current_url, falling back to window.location.href", t5), e4;
     }
   }
-  var Xr = 1;
-  var Zr = 3;
-  var ts = 11;
-  function es2(t4) {
-    return t4 instanceof Element && (t4.id === nr || !(null == t4.closest || !t4.closest(".toolbar-global-fade-container")));
+  var ss = 1;
+  var ns = 3;
+  var os = 11;
+  function as(t4) {
+    return t4 instanceof Element && (t4.id === dr || !(null == t4.closest || !t4.closest(".toolbar-global-fade-container")));
   }
-  function is(t4) {
-    return !!t4 && t4.nodeType === Xr;
+  function ls(t4) {
+    return !!t4 && t4.nodeType === ss;
   }
-  function rs(t4, e4) {
+  function us(t4, e4) {
     return !!t4 && !!t4.tagName && t4.tagName.toLowerCase() === e4.toLowerCase();
   }
-  function ss(t4) {
-    return !!t4 && t4.nodeType === Zr;
+  function hs(t4) {
+    return !!t4 && t4.nodeType === ns;
   }
-  function ns(t4) {
-    return !!t4 && t4.nodeType === ts && is(t4.host);
+  function ds(t4) {
+    return !!t4 && t4.nodeType === os && ls(t4.host);
   }
-  function os(t4) {
-    return t4 ? D3(t4).split(/\s+/) : [];
+  var vs = 1e3;
+  function cs(t4) {
+    return t4 ? N2(t4).split(/\s+/) : [];
   }
-  function as(e4, i4) {
+  function fs(e4, i4) {
     var r4 = (function(e5) {
       var i5, r5 = null == t3 || null == (i5 = t3.location) ? void 0 : i5.href;
-      return V2(r5) ? void 0 : Qr(e5, r5);
+      return W(r5) ? void 0 : rs(e5, r5);
     })(i4);
     return !!(r4 && e4 && e4.some(((t4) => r4.match(t4))));
   }
-  function ls(t4) {
+  function ps(t4) {
     var e4 = "";
     switch (typeof t4.className) {
       case "string":
@@ -6845,25 +7020,25 @@
       default:
         e4 = "";
     }
-    return os(e4);
+    return cs(e4);
   }
-  function us(t4) {
-    return K2(t4) ? null : D3(t4).split(/(\s+)/).filter(((t5) => Cs(t5))).join("").replace(/[\r\n]/g, " ").replace(/[ ]+/g, " ").substring(0, 255);
+  function _s(t4) {
+    return Q2(t4) ? null : N2(t4).split(/(\s+)/).filter(((t5) => Ls(t5))).join("").replace(/[\r\n]/g, " ").replace(/[ ]+/g, " ").substring(0, 255);
   }
-  function hs(t4) {
+  function gs(t4) {
     var e4 = "";
-    return Ss(t4) && !Ts(t4) && t4.childNodes && t4.childNodes.length && xr(t4.childNodes, (function(t5) {
+    return Is(t4) && !Cs(t4) && t4.childNodes && t4.childNodes.length && Pr(t4.childNodes, (function(t5) {
       var i4;
-      ss(t5) && t5.textContent && (e4 += null !== (i4 = us(t5.textContent)) && void 0 !== i4 ? i4 : "");
-    })), D3(e4);
+      hs(t5) && t5.textContent && (e4 += null !== (i4 = _s(t5.textContent)) && void 0 !== i4 ? i4 : "");
+    })), N2(e4);
   }
-  function ds(t4) {
-    return V2(t4.target) ? t4.srcElement || null : null != (e4 = t4.target) && e4.shadowRoot ? t4.composedPath()[0] || null : t4.target || null;
+  function ms(t4) {
+    return W(t4.target) ? t4.srcElement || null : null != (e4 = t4.target) && e4.shadowRoot ? t4.composedPath()[0] || null : t4.target || null;
     var e4;
   }
-  var vs = ["a", "button", "form", "input", "select", "textarea", "label"];
-  function cs(t4, e4) {
-    if (V2(e4)) return true;
+  var bs = ["a", "button", "form", "input", "select", "textarea", "label"];
+  function ys(t4, e4) {
+    if (W(e4)) return true;
     var i4, r4 = function(t5) {
       if (e4.some(((e5) => (function(t6, e6) {
         var i5 = t6.matches || t6.matchesSelector || t6.msMatchesSelector || t6.mozMatchesSelector || t6.webkitMatchesSelector || t6.oMatchesSelector;
@@ -6877,236 +7052,242 @@
     for (var s4 of t4) if (i4 = r4(s4)) return i4.v;
     return false;
   }
-  function ps(t4) {
+  function ws(t4) {
     var e4 = t4.parentNode;
-    return !(!e4 || !is(e4)) && e4;
+    return !(!e4 || !ls(e4)) && e4;
   }
-  var fs = [".ph-no-autocapture", "[data-ph-no-autocapture]"];
-  var _s = ["next", "previous", "prev", ">", "<"];
-  var gs = [..._s, "+", "-", "\u2212", "\u2013"];
-  var ms = (t4, e4) => /[a-z0-9]/i.test(e4) ? t4.includes(e4) : t4 === e4;
-  var ys = [".ph-no-rageclick", ".ph-no-capture"];
-  var bs = ["", "text", "search", "email", "password", "url", "tel", "number"];
-  function ws(e4, i4) {
-    if (!t3 || Es(e4)) return false;
+  var Es = [".ph-no-autocapture", "[data-ph-no-autocapture]"];
+  var xs = ["next", "previous", "prev", ">", "<"];
+  var Ss = [...xs, "+", "-", "\u2212", "\u2013"];
+  var ks = (t4, e4) => /[a-z0-9]/i.test(e4) ? t4.includes(e4) : t4 === e4;
+  var Ts = [".ph-no-rageclick", ".ph-no-capture"];
+  var $s = ["", "text", "search", "email", "password", "url", "tel", "number"];
+  function Rs(e4, i4) {
+    if (!t3 || Ps(e4)) return false;
     var r4, s4, n3, o4, a4;
-    if (X(i4) ? (r4 = !!i4 && ys, s4 = void 0, n3 = false) : (r4 = null !== (o4 = null == i4 ? void 0 : i4.css_selector_ignorelist) && void 0 !== o4 ? o4 : ys, s4 = null == i4 ? void 0 : i4.content_ignorelist, n3 = null !== (a4 = null == i4 ? void 0 : i4.ignore_text_selection) && void 0 !== a4 && a4), false === r4) return false;
+    if (tt(i4) ? (r4 = !!i4 && Ts, s4 = void 0, n3 = false) : (r4 = null !== (o4 = null == i4 ? void 0 : i4.css_selector_ignorelist) && void 0 !== o4 ? o4 : Ts, s4 = null == i4 ? void 0 : i4.content_ignorelist, n3 = null !== (a4 = null == i4 ? void 0 : i4.ignore_text_selection) && void 0 !== a4 && a4), false === r4) return false;
     if (n3 && (function(t4) {
-      return !(!t4 || !is(t4)) && (!!rs(t4, "textarea") || (rs(t4, "input") ? M(bs, (t4.getAttribute("type") || "").toLowerCase()) : (function(t5) {
+      return !(!t4 || !ls(t4)) && (!!us(t4, "textarea") || (us(t4, "input") ? D3($s, (t4.getAttribute("type") || "").toLowerCase()) : (function(t5) {
         if (t5.isContentEditable) return true;
         var e5 = null == t5.getAttribute ? void 0 : t5.getAttribute("contenteditable");
         return "true" === e5 || "" === e5;
       })(t4)));
     })(e4)) return false;
-    var { targetElementList: l4 } = xs(e4, false);
+    var l4 = Os(e4, false).targetElementList;
     return !(function(t4, e5) {
-      if (false === t4 || V2(t4)) return false;
+      if (false === t4 || W(t4)) return false;
       var i5;
-      if (true === t4) i5 = _s;
+      if (true === t4) i5 = xs;
       else {
-        if (!B3(t4)) return false;
-        if (t4.length > 10) return li.error("[PostHog] content_ignorelist array cannot exceed 10 items. Use css_selector_ignorelist for more complex matching."), false;
+        if (!H2(t4)) return false;
+        if (t4.length > 10) return fi.error("[PostHog] content_ignorelist array cannot exceed 10 items. Use css_selector_ignorelist for more complex matching."), false;
         i5 = t4.map(((t5) => t5.toLowerCase()));
       }
       return e5.some(((t5) => {
-        var { safeText: e6, ariaLabel: r5 } = t5;
-        return i5.some(((t6) => ms(e6, t6) || ms(r5, t6)));
+        var e6 = t5.safeText, r5 = t5.ariaLabel;
+        return i5.some(((t6) => ks(e6, t6) || ks(r5, t6)));
       }));
     })(s4, l4.map(((t4) => {
       var e5;
-      return { safeText: hs(t4).toLowerCase(), ariaLabel: (null == (e5 = t4.getAttribute("aria-label")) ? void 0 : e5.toLowerCase().trim()) || "" };
-    }))) && !cs(l4, r4);
+      return { safeText: gs(t4).toLowerCase(), ariaLabel: (null == (e5 = t4.getAttribute("aria-label")) ? void 0 : e5.toLowerCase().trim()) || "" };
+    }))) && !ys(l4, r4);
   }
-  var Es = (t4) => !t4 || rs(t4, "html") || !is(t4);
-  var xs = (e4, i4) => {
-    if (!t3 || Es(e4)) return { parentIsUsefulElement: false, targetElementList: [] };
-    for (var r4 = false, s4 = [e4], n3 = e4; n3.parentNode && !rs(n3, "body"); ) if (ns(n3.parentNode)) s4.push(n3.parentNode.host), n3 = n3.parentNode.host;
+  var Ps = (t4) => !t4 || us(t4, "html") || !ls(t4);
+  var Os = (e4, i4) => {
+    if (!t3 || Ps(e4)) return { parentIsUsefulElement: false, targetElementList: [] };
+    for (var r4 = false, s4 = [e4], n3 = e4; n3.parentNode && !us(n3, "body"); ) if (ds(n3.parentNode)) s4.push(n3.parentNode.host), n3 = n3.parentNode.host;
     else {
-      var o4 = ps(n3);
+      var o4 = ws(n3);
       if (!o4) break;
-      if (i4 || vs.indexOf(o4.tagName.toLowerCase()) > -1) r4 = true;
-      else {
+      if (i4 || bs.indexOf(o4.tagName.toLowerCase()) > -1) r4 = true;
+      else try {
         var a4 = t3.getComputedStyle(o4);
         a4 && "pointer" === a4.getPropertyValue("cursor") && (r4 = true);
+      } catch (t4) {
       }
       s4.push(o4), n3 = o4;
     }
     return { parentIsUsefulElement: r4, targetElementList: s4 };
   };
-  function Ss(t4) {
-    for (var e4 = t4; e4.parentNode && !rs(e4, "body"); e4 = e4.parentNode) {
-      var i4 = ls(e4);
-      if (M(i4, "ph-sensitive") || M(i4, "ph-no-capture")) return false;
+  function Is(t4) {
+    for (var e4 = /* @__PURE__ */ new Set(), i4 = 0, r4 = t4; r4.parentNode && !us(r4, "body"); r4 = r4.parentNode) {
+      if (i4++ >= vs || e4.has(r4)) return false;
+      e4.add(r4);
+      var s4 = ps(r4);
+      if (D3(s4, "ph-sensitive") || D3(s4, "ph-no-capture")) return false;
     }
-    if (M(ls(t4), "ph-include")) return true;
-    var r4 = t4.type || "";
-    if (G2(r4)) switch (r4.toLowerCase()) {
+    if (D3(ps(t4), "ph-include")) return true;
+    var n3 = t4.type || "";
+    if (J2(n3)) switch (n3.toLowerCase()) {
       case "hidden":
       case "password":
         return false;
     }
-    var s4 = t4.name || t4.id || "";
-    return !G2(s4) || !/^cc|cardnum|ccnum|creditcard|csc|cvc|cvv|exp|pass|pwd|routing|seccode|securitycode|securitynum|socialsec|socsec|ssn/i.test(s4.replace(/[^a-zA-Z0-9]/g, ""));
+    var o4 = t4.name || t4.id || "";
+    return !J2(o4) || !/^cc|cardnum|ccnum|creditcard|csc|cvc|cvv|exp|pass|pwd|routing|seccode|securitycode|securitynum|socialsec|socsec|ssn/i.test(o4.replace(/[^a-zA-Z0-9]/g, ""));
   }
-  function Ts(t4) {
-    return !!(rs(t4, "input") && !["button", "checkbox", "submit", "reset"].includes(t4.type) || rs(t4, "select") || rs(t4, "textarea") || "true" === t4.getAttribute("contenteditable"));
+  function Cs(t4) {
+    return !!(us(t4, "input") && !["button", "checkbox", "submit", "reset"].includes(t4.type) || us(t4, "select") || us(t4, "textarea") || "true" === t4.getAttribute("contenteditable"));
   }
-  var $s = "(4[0-9]{12}(?:[0-9]{3})?)|(5[1-5][0-9]{14})|(6(?:011|5[0-9]{2})[0-9]{12})|(3[47][0-9]{13})|(3(?:0[0-5]|[68][0-9])[0-9]{11})|((?:2131|1800|35[0-9]{3})[0-9]{11})";
-  var ks = new RegExp("^(?:" + $s + ")$");
-  var Rs = new RegExp($s);
-  var Ps = "\\d{3}-?\\d{2}-?\\d{4}";
-  var Is = new RegExp("^(" + Ps + ")$");
-  var Os = new RegExp("(" + Ps + ")");
-  function Cs(t4, e4) {
-    if (void 0 === e4 && (e4 = true), K2(t4)) return false;
-    if (G2(t4)) {
-      if (t4 = D3(t4), (e4 ? ks : Rs).test((t4 || "").replace(/[- ]/g, ""))) return false;
-      if ((e4 ? Is : Os).test(t4)) return false;
+  var Ms = "(4[0-9]{12}(?:[0-9]{3})?)|(5[1-5][0-9]{14})|(6(?:011|5[0-9]{2})[0-9]{12})|(3[47][0-9]{13})|(3(?:0[0-5]|[68][0-9])[0-9]{11})|((?:2131|1800|35[0-9]{3})[0-9]{11})";
+  var As = new RegExp("^(?:" + Ms + ")$");
+  var Fs = new RegExp(Ms);
+  var Ds = "\\d{3}-?\\d{2}-?\\d{4}";
+  var Ns = new RegExp("^(" + Ds + ")$");
+  var Us = new RegExp("(" + Ds + ")");
+  function Ls(t4, e4) {
+    if (void 0 === e4 && (e4 = true), Q2(t4)) return false;
+    if (J2(t4)) {
+      if (t4 = N2(t4), (e4 ? As : Fs).test((t4 || "").replace(/[- ]/g, ""))) return false;
+      if ((e4 ? Ns : Us).test(t4)) return false;
     }
     return true;
   }
-  function As(t4) {
-    var e4 = hs(t4);
-    return Cs(e4 = (e4 + " " + Fs(t4)).trim()) ? e4 : "";
+  function js(t4) {
+    var e4 = gs(t4);
+    return Ls(e4 = (e4 + " " + Bs(t4)).trim()) ? e4 : "";
   }
-  function Fs(t4) {
+  function Bs(t4) {
     var e4 = "";
-    return t4 && t4.childNodes && t4.childNodes.length && xr(t4.childNodes, (function(t5) {
+    return t4 && t4.childNodes && t4.childNodes.length && Pr(t4.childNodes, (function(t5) {
       var i4;
       if (t5 && "span" === (null == (i4 = t5.tagName) ? void 0 : i4.toLowerCase())) try {
-        var r4 = hs(t5);
-        e4 = (e4 + " " + r4).trim(), t5.childNodes && t5.childNodes.length && (e4 = (e4 + " " + Fs(t5)).trim());
+        var r4 = gs(t5);
+        e4 = (e4 + " " + r4).trim(), t5.childNodes && t5.childNodes.length && (e4 = (e4 + " " + Bs(t5)).trim());
       } catch (t6) {
-        li.error("[AutoCapture]", t6);
+        fi.error("[AutoCapture]", t6);
       }
     })), e4;
   }
-  function Ms(t4) {
+  function zs(t4) {
     return t4.replace(/"|\\"/g, '\\"');
   }
-  function Ds(t4) {
+  function Hs(t4) {
     var e4 = t4.attr__class;
-    return e4 ? B3(e4) ? e4 : os(e4) : void 0;
+    return e4 ? H2(e4) ? e4 : cs(e4) : void 0;
   }
-  var Ls = ui("[Dead Clicks]");
-  var Ns = () => true;
-  var Us = (t4) => {
-    var e4, i4 = !(null == (e4 = t4.instance.persistence) || !e4.get_property(xi)), r4 = t4.instance.config.capture_dead_clicks;
-    return X(r4) ? r4 : !!H2(r4) || i4;
+  var qs = pi("[Dead Clicks]");
+  var Vs = () => true;
+  var Gs = (t4) => {
+    var e4, i4 = !(null == (e4 = t4.instance.persistence) || !e4.get_property(Pi)), r4 = t4.instance.config.capture_dead_clicks;
+    return tt(r4) ? r4 : !!V2(r4) || i4;
   };
-  var js = class {
+  var Ws = class {
     get lazyLoadedDeadClicksAutocapture() {
-      return this.Et;
+      return this.er;
     }
     constructor(t4, e4, i4) {
       this.instance = t4, this.isEnabled = e4, this.onCapture = i4, this.startIfEnabledOrStop();
     }
     onRemoteConfig(t4) {
-      "captureDeadClicks" in t4 && (this.instance.persistence && this.instance.persistence.register({ [xi]: t4.captureDeadClicks }), this.startIfEnabledOrStop());
+      "captureDeadClicks" in t4 && (this.instance.persistence && this.instance.persistence.register({ [Pi]: t4.captureDeadClicks }), this.startIfEnabledOrStop());
     }
     startIfEnabledOrStop() {
-      this.isEnabled(this) ? this.Mt((() => {
-        this.Pt();
+      this.isEnabled(this) ? this.rr((() => {
+        this.ir();
       })) : this.stop();
     }
-    Mt(t4) {
+    rr(t4) {
       var e4, i4;
       null != (e4 = h3.__PosthogExtensions__) && e4.initDeadClicksAutocapture ? t4() : null == (i4 = h3.__PosthogExtensions__) || null == i4.loadExternalDependency || i4.loadExternalDependency(this.instance, "dead-clicks-autocapture", ((e5) => {
-        e5 ? Ls.error("failed to load script", e5) : t4();
+        e5 ? qs.error("failed to load script", e5) : t4();
       }));
     }
-    Pt() {
+    ir() {
       var t4;
       if (r3) {
-        if (!this.Et && null != (t4 = h3.__PosthogExtensions__) && t4.initDeadClicksAutocapture) {
-          var e4 = H2(this.instance.config.capture_dead_clicks) ? this.instance.config.capture_dead_clicks : {};
-          e4.__onCapture = this.onCapture, this.Et = h3.__PosthogExtensions__.initDeadClicksAutocapture(this.instance, e4), this.Et.start(r3), Ls.info("starting...");
+        if (!this.er && null != (t4 = h3.__PosthogExtensions__) && t4.initDeadClicksAutocapture) {
+          var e4 = V2(this.instance.config.capture_dead_clicks) ? _2({}, this.instance.config.capture_dead_clicks) : {};
+          e4.__onCapture = this.onCapture, this.onCapture && (e4.capture_dead_swipes = false), this.er = h3.__PosthogExtensions__.initDeadClicksAutocapture(this.instance, e4), this.er.start(r3), qs.info("starting...");
         }
-      } else Ls.error("`document` not found. Cannot start.");
+      } else qs.error("`document` not found. Cannot start.");
     }
     stop() {
-      this.Et && (this.Et.stop(), this.Et = void 0, Ls.info("stopping..."));
+      this.er && (this.er.stop(), this.er = void 0, qs.info("stopping..."));
     }
   };
-  var Bs = ui("[SegmentIntegration]");
-  var zs = "posthog-js";
-  function Hs(t4, e4) {
-    var { organization: i4, projectId: r4, prefix: s4, severityAllowList: n3 = ["error"], sendExceptionsToPostHog: o4 = true } = void 0 === e4 ? {} : e4;
+  var Js = pi("[SegmentIntegration]");
+  var Ks = "posthog-js";
+  function Ys(t4, e4) {
+    var i4 = void 0 === e4 ? {} : e4, r4 = i4.organization, s4 = i4.projectId, n3 = i4.prefix, o4 = i4.severityAllowList, a4 = void 0 === o4 ? ["error"] : o4, l4 = i4.sendExceptionsToPostHog, u5 = void 0 === l4 || l4;
     return (e5) => {
-      var a4, l4, u5, h4, d4;
-      if ("*" !== n3 && !n3.includes(e5.level) || !t4.__loaded) return e5;
+      var i5, o5, l5, h4, d4;
+      if ("*" !== a4 && !a4.includes(e5.level) || !t4.__loaded) return e5;
       e5.tags || (e5.tags = {});
       var v4 = t4.requestRouter.endpointFor("ui", "/project/" + t4.config.token + "/person/" + t4.get_distinct_id());
       e5.tags["PostHog Person URL"] = v4, t4.sessionRecordingStarted() && (e5.tags["PostHog Recording URL"] = t4.get_session_replay_url({ withTimestamp: true }));
-      var c4, p4 = (null == (a4 = e5.exception) ? void 0 : a4.values) || [], _3 = p4.map(((t5) => f4({}, t5, { stacktrace: t5.stacktrace ? f4({}, t5.stacktrace, { type: "raw", frames: (t5.stacktrace.frames || []).map(((t6) => f4({}, t6, { platform: "web:javascript" }))) }) : void 0 }))), g3 = { $exception_message: (null == (l4 = p4[0]) ? void 0 : l4.value) || e5.message, $exception_type: null == (u5 = p4[0]) ? void 0 : u5.type, $exception_level: e5.level, $exception_list: _3, $sentry_event_id: e5.event_id, $sentry_exception: e5.exception, $sentry_exception_message: (null == (h4 = p4[0]) ? void 0 : h4.value) || e5.message, $sentry_exception_type: null == (d4 = p4[0]) ? void 0 : d4.type, $sentry_tags: e5.tags };
-      return i4 && r4 && (g3.$sentry_url = (s4 || "https://sentry.io/organizations/") + i4 + "/issues/?project=" + r4 + "&query=" + e5.event_id), o4 && (null == (c4 = t4.exceptions) || c4.sendExceptionEvent(g3)), e5;
+      var c4, f5 = (null == (i5 = e5.exception) ? void 0 : i5.values) || [], p4 = f5.map(((t5) => _2({}, t5, { stacktrace: t5.stacktrace ? _2({}, t5.stacktrace, { type: "raw", frames: (t5.stacktrace.frames || []).map(((t6) => _2({}, t6, { platform: "web:javascript" }))) }) : void 0 }))), g3 = { $exception_message: (null == (o5 = f5[0]) ? void 0 : o5.value) || e5.message, $exception_type: null == (l5 = f5[0]) ? void 0 : l5.type, $exception_level: e5.level, $exception_list: p4, $sentry_event_id: e5.event_id, $sentry_exception: e5.exception, $sentry_exception_message: (null == (h4 = f5[0]) ? void 0 : h4.value) || e5.message, $sentry_exception_type: null == (d4 = f5[0]) ? void 0 : d4.type, $sentry_tags: e5.tags };
+      return r4 && s4 && (g3.$sentry_url = (n3 || "https://sentry.io/organizations/") + r4 + "/issues/?project=" + s4 + "&query=" + e5.event_id), u5 && (null == (c4 = t4.exceptions) || c4.sendExceptionEvent(g3)), e5;
     };
   }
-  var qs = class {
+  var Qs = class {
     constructor(t4, e4, i4, r4, s4, n3) {
-      this.name = zs, this.setupOnce = function(o4) {
-        o4(Hs(t4, { organization: e4, projectId: i4, prefix: r4, severityAllowList: s4, sendExceptionsToPostHog: null == n3 || n3 }));
+      this.name = Ks, this.setupOnce = function(o4) {
+        o4(Ys(t4, { organization: e4, projectId: i4, prefix: r4, severityAllowList: s4, sendExceptionsToPostHog: null == n3 || n3 }));
       };
     }
   };
-  var Vs = class {
+  var Xs = class {
     constructor(t4) {
-      this.Rt = (t5, e4, i4) => {
-        i4 && (i4.noSessionId || i4.activityTimeout || i4.sessionPastMaximumLength || i4.crossTabAdoption) && (li.info("[PageViewManager] Session rotated, clearing pageview state", { sessionId: t5, changeReason: i4 }), this.Ot = void 0, this._instance.scrollManager.resetContext());
-      }, this._instance = t4, this.Lt();
+      this.nr = (t5, e4, i4) => {
+        i4 && (i4.noSessionId || i4.activityTimeout || i4.sessionPastMaximumLength || i4.crossTabAdoption) && (fi.info("[PageViewManager] Session rotated, clearing pageview state", { sessionId: t5, changeReason: i4 }), this.sr = void 0, this._instance.scrollManager.resetContext());
+      }, this._instance = t4, this.ar();
     }
-    Lt() {
+    ar() {
       var t4;
-      this.Ft = null == (t4 = this._instance.sessionManager) ? void 0 : t4.onSessionId(this.Rt);
+      this.lr = null == (t4 = this._instance.sessionManager) ? void 0 : t4.onSessionId(this.nr);
     }
     destroy() {
       var t4;
-      null == (t4 = this.Ft) || t4.call(this), this.Ft = void 0;
+      null == (t4 = this.lr) || t4.call(this), this.lr = void 0;
     }
     doPageView(e4, i4) {
-      var r4, s4 = this.At(e4, i4);
-      return this.Ot = { pathname: null !== (r4 = null == t3 ? void 0 : t3.location.pathname) && void 0 !== r4 ? r4 : "", pageViewId: i4, timestamp: e4 }, this._instance.scrollManager.resetContext(), s4;
+      var r4, s4 = this.ur(e4, i4);
+      return this.sr = { pathname: null !== (r4 = null == t3 ? void 0 : t3.location.pathname) && void 0 !== r4 ? r4 : "", pageViewId: i4, timestamp: e4 }, this._instance.scrollManager.resetContext(), s4;
     }
     doPageLeave(t4) {
       var e4;
-      return this.At(t4, null == (e4 = this.Ot) ? void 0 : e4.pageViewId);
+      return this.ur(t4, null == (e4 = this.sr) ? void 0 : e4.pageViewId);
     }
     doEvent() {
       var t4;
-      return { $pageview_id: null == (t4 = this.Ot) ? void 0 : t4.pageViewId };
+      return { $pageview_id: null == (t4 = this.sr) ? void 0 : t4.pageViewId };
     }
-    At(t4, e4) {
-      var i4 = this.Ot;
+    ur(t4, e4) {
+      var i4 = this.sr;
       if (!i4) return { $pageview_id: e4 };
       var r4 = { $pageview_id: e4, $prev_pageview_id: i4.pageViewId }, s4 = this._instance.scrollManager.getContext();
       if (s4 && !this._instance.config.disable_scroll_properties) {
-        var { maxScrollHeight: n3, lastScrollY: o4, maxScrollY: a4, maxContentHeight: l4, lastContentY: u5, maxContentY: h4 } = s4;
-        if (!(V2(n3) || V2(o4) || V2(a4) || V2(l4) || V2(u5) || V2(h4))) {
+        var n3 = s4.maxScrollHeight, o4 = s4.lastScrollY, a4 = s4.maxScrollY, l4 = s4.maxContentHeight, u5 = s4.lastContentY, h4 = s4.maxContentY;
+        if (!(W(n3) || W(o4) || W(a4) || W(l4) || W(u5) || W(h4))) {
           n3 = Math.ceil(n3), o4 = Math.ceil(o4), a4 = Math.ceil(a4), l4 = Math.ceil(l4), u5 = Math.ceil(u5), h4 = Math.ceil(h4);
-          var d4 = n3 > 1 ? lt(o4 / n3, 0, 1, li) : 1, v4 = n3 > 1 ? lt(a4 / n3, 0, 1, li) : 1, c4 = l4 > 1 ? lt(u5 / l4, 0, 1, li) : 1, p4 = l4 > 1 ? lt(h4 / l4, 0, 1, li) : 1;
-          r4 = Sr(r4, { $prev_pageview_last_scroll: o4, $prev_pageview_last_scroll_percentage: d4, $prev_pageview_max_scroll: a4, $prev_pageview_max_scroll_percentage: v4, $prev_pageview_last_content: u5, $prev_pageview_last_content_percentage: c4, $prev_pageview_max_content: h4, $prev_pageview_max_content_percentage: p4 });
+          var d4 = n3 > 1 ? ht(o4 / n3, 0, 1, fi) : 1, v4 = n3 > 1 ? ht(a4 / n3, 0, 1, fi) : 1, c4 = l4 > 1 ? ht(u5 / l4, 0, 1, fi) : 1, f5 = l4 > 1 ? ht(h4 / l4, 0, 1, fi) : 1;
+          r4 = Or(r4, { $prev_pageview_last_scroll: o4, $prev_pageview_last_scroll_percentage: d4, $prev_pageview_max_scroll: a4, $prev_pageview_max_scroll_percentage: v4, $prev_pageview_last_content: u5, $prev_pageview_last_content_percentage: c4, $prev_pageview_max_content: h4, $prev_pageview_max_content_percentage: f5 });
         }
       }
       return i4.pathname && (r4.$prev_pageview_pathname = i4.pathname), i4.timestamp && (r4.$prev_pageview_duration = (t4.getTime() - i4.timestamp.getTime()) / 1e3), r4;
     }
   };
-  var Gs = ["flags", "surveys"];
-  var Ws = { [vi]: { exposure: "hidden" }, [fi]: { exposure: "hidden" }, __cmpns: { exposure: "hidden" }, [_i]: { exposure: "hidden" }, [gi]: { exposure: "event" }, [mi]: { exposure: "hidden" }, [yi]: { exposure: "event" }, [bi]: { exposure: "hidden" }, [wi]: { exposure: "event" }, [Ei]: { exposure: "event" }, [xi]: { exposure: "event" }, [Si]: { exposure: "hidden" }, [Ti]: { exposure: "event" }, [$i]: { exposure: "hidden" }, $session_recording_enabled_server_side: { exposure: "hidden" }, [Ci]: { exposure: "hidden" }, [Ai]: { exposure: "event" }, [ki]: { exposure: "event", shouldSkipFromEventProperties: (t4) => Y(t4) }, $session_past_minimum_duration: { exposure: "event" }, $session_recording_url_trigger_activated_session: { exposure: "event" }, $session_recording_event_trigger_activated_session: { exposure: "event" }, $debug_first_full_snapshot_timestamp: { exposure: "event" }, $sess_rec_flush_size: { exposure: "hidden" }, [Fi]: { exposure: "derived", storageGroup: "flags", shouldSkipFromEventProperties: (t4, e4) => e4(), transformToEventProperties(t4) {
-    if (!H2(t4)) return {};
+  var Zs = ["flags", "surveys"];
+  var tn = { [mi]: { exposure: "hidden" }, [wi]: { exposure: "hidden" }, __cmpns: { exposure: "hidden" }, [Ei]: { exposure: "hidden" }, [xi]: { exposure: "event" }, [Si]: { exposure: "hidden" }, [ki]: { exposure: "event" }, [Ti]: { exposure: "hidden" }, [$i]: { exposure: "event" }, [Ri]: { exposure: "event" }, [Pi]: { exposure: "event" }, [Oi]: { exposure: "hidden" }, [Ii]: { exposure: "event" }, [Ci]: { exposure: "hidden" }, $session_recording_enabled_server_side: { exposure: "hidden" }, [Ui]: { exposure: "hidden" }, [Li]: { exposure: "event" }, [Mi]: { exposure: "event", shouldSkipFromEventProperties: (t4) => Y(t4) }, $session_past_minimum_duration: { exposure: "event" }, $session_recording_url_trigger_activated_session: { exposure: "event" }, $session_recording_event_trigger_activated_session: { exposure: "event" }, $debug_first_full_snapshot_timestamp: { exposure: "event" }, $sess_rec_flush_size: { exposure: "hidden" }, [ji]: { exposure: "derived", storageGroup: "flags", shouldSkipFromEventProperties: (t4, e4) => e4(), transformToEventProperties(t4) {
+    if (!V2(t4)) return {};
     for (var e4 = {}, i4 = Object.keys(t4), r4 = 0; i4.length > r4; r4++) e4["$feature/" + i4[r4]] = t4[i4[r4]];
     return e4;
-  } }, [Mi]: { exposure: "event", storageGroup: "flags" }, [Di]: { exposure: "hidden" }, [Li]: { exposure: "hidden", storageGroup: "flags" }, [Ni]: { exposure: "event", storageGroup: "flags" }, [Ui]: { exposure: "event", storageGroup: "flags", volatile: true }, [ji]: { exposure: "event" }, [Bi]: { exposure: "hidden" }, [zi]: { exposure: "hidden" }, [Hi]: { exposure: "hidden" }, [qi]: { exposure: "hidden", storageGroup: "surveys" }, [Vi]: { exposure: "hidden", storageGroup: "surveys", volatile: true }, [Gi]: { exposure: "event" }, [Wi]: { exposure: "hidden" }, $product_tours_activated: { exposure: "hidden" }, $conversations_widget_session_id: { exposure: "event" }, $conversations_ticket_id: { exposure: "event" }, $conversations_widget_state: { exposure: "event" }, $conversations_user_traits: { exposure: "event" }, [Yi]: { exposure: "hidden" }, [Ki]: { exposure: "hidden" }, [Ji]: { exposure: "hidden" }, [Qi]: { exposure: "hidden", storageGroup: "flags", volatile: true }, [Xi]: { exposure: "hidden" }, [Zi]: { exposure: "hidden" }, [tr]: { exposure: "hidden" }, [er]: { exposure: "hidden" }, [ir]: { exposure: "hidden" }, [rr]: { exposure: "hidden" }, [sr]: { exposure: "hidden" }, [Ri]: { exposure: "event" }, [Pi]: { exposure: "event" }, [Ii]: { exposure: "event" }, [Oi]: { exposure: "event" }, [ar]: { exposure: "event" }, [lr]: { exposure: "event" }, [ur]: { exposure: "event" }, $sdk_debug_replay_event_trigger_status: { exposure: "event" }, $sdk_debug_replay_linked_flag_trigger_status: { exposure: "event" }, $sdk_debug_replay_matched_recording_trigger_groups: { exposure: "event" }, $sdk_debug_replay_remote_trigger_matching_config: { exposure: "event" }, $sdk_debug_replay_trigger_groups_count: { exposure: "event" }, $sdk_debug_replay_url_trigger_status: { exposure: "event" }, $session_recording_start_reason: { exposure: "event" } };
-  var Ys = [["$posthog_sr_group_event_trigger_", { exposure: "hidden" }], ["$posthog_sr_group_url_trigger_", { exposure: "hidden" }], ["$posthog_sr_group_sampling_", { exposure: "hidden" }]];
-  var Ks = (t4) => {
-    var e4 = Ws[t4];
+  } }, [Bi]: { exposure: "event", storageGroup: "flags" }, [zi]: { exposure: "hidden" }, [Hi]: { exposure: "hidden", storageGroup: "flags" }, [qi]: { exposure: "event", storageGroup: "flags" }, [Vi]: { exposure: "event", storageGroup: "flags", volatile: true }, [Gi]: { exposure: "event" }, [Wi]: { exposure: "hidden" }, [Ji]: { exposure: "hidden" }, [Ki]: { exposure: "hidden" }, [Yi]: { exposure: "hidden", storageGroup: "surveys" }, [Qi]: { exposure: "hidden", storageGroup: "surveys", volatile: true }, [Xi]: { exposure: "event" }, [Zi]: { exposure: "hidden" }, $product_tours_activated: { exposure: "hidden" }, $conversations_widget_session_id: { exposure: "event" }, $conversations_ticket_id: { exposure: "event" }, $conversations_widget_state: { exposure: "event" }, $conversations_user_traits: { exposure: "event" }, [tr]: { exposure: "hidden" }, [er]: { exposure: "hidden" }, [ir]: { exposure: "hidden" }, [rr]: { exposure: "hidden", storageGroup: "flags", volatile: true }, [sr]: { exposure: "hidden" }, [nr]: { exposure: "hidden" }, [or]: { exposure: "hidden" }, [ar]: { exposure: "hidden" }, [lr]: { exposure: "hidden" }, [ur]: { exposure: "hidden" }, [hr]: { exposure: "hidden" }, [Ai]: { exposure: "event" }, [Fi]: { exposure: "event" }, [Di]: { exposure: "event" }, [Ni]: { exposure: "event" }, [cr]: { exposure: "event" }, [fr]: { exposure: "event" }, [pr]: { exposure: "event" }, $sdk_debug_replay_event_trigger_status: { exposure: "event" }, $sdk_debug_replay_linked_flag_trigger_status: { exposure: "event" }, $sdk_debug_replay_matched_recording_trigger_groups: { exposure: "event" }, $sdk_debug_replay_remote_trigger_matching_config: { exposure: "event" }, $sdk_debug_replay_trigger_groups_count: { exposure: "event" }, $sdk_debug_replay_url_trigger_status: { exposure: "event" }, $session_recording_start_reason: { exposure: "event" } };
+  var en2 = [["$posthog_sr_group_event_trigger_", { exposure: "hidden" }], ["$posthog_sr_group_url_trigger_", { exposure: "hidden" }], ["$posthog_sr_group_sampling_", { exposure: "hidden" }]];
+  var rn = (t4) => {
+    var e4 = tn[t4];
     if (e4) return e4;
-    for (var [i4, r4] of Ys) if (0 === t4.indexOf(i4)) return r4;
+    for (var i4 of en2) {
+      var r4 = i4[1];
+      if (0 === t4.indexOf(i4[0])) return r4;
+    }
   };
-  var Js = (t4) => {
+  var sn = (t4) => {
     var e4 = null == r3 ? void 0 : r3.createElement("a");
-    return V2(e4) ? null : (e4.href = t4, e4);
+    return W(e4) ? null : (e4.href = t4, e4);
   };
-  var Qs = function(t4, e4) {
+  var nn = function(t4, e4) {
     for (var i4, r4 = ((t4.split("#")[0] || "").split(/\?(.*)/)[1] || "").replace(/^\?+/g, "").split("&"), s4 = 0; r4.length > s4; s4++) {
       var n3 = r4[s4].split("=");
       if (n3[0] === e4) {
@@ -7114,187 +7295,198 @@
         break;
       }
     }
-    if (!B3(i4) || 2 > i4.length) return "";
+    if (!H2(i4) || 2 > i4.length) return "";
     var o4 = i4[1];
     try {
       o4 = decodeURIComponent(o4);
     } catch (t5) {
-      li.error("Skipping decoding for malformed query param: " + o4);
+      fi.error("Skipping decoding for malformed query param: " + o4);
     }
     return o4.replace(/\+/g, " ");
   };
-  var Xs = function(t4, e4, i4) {
+  var on2 = function(t4, e4, i4) {
     if (!t4 || !e4 || !e4.length) return t4;
     for (var r4 = t4.split("#"), s4 = r4[1], n3 = (r4[0] || "").split("?"), o4 = n3[1], a4 = n3[0], l4 = (o4 || "").split("&"), u5 = [], h4 = 0; l4.length > h4; h4++) {
       var d4 = l4[h4].split("=");
-      B3(d4) && (e4.includes(d4[0]) ? u5.push(d4[0] + "=" + i4) : u5.push(l4[h4]));
+      H2(d4) && (e4.includes(d4[0]) ? u5.push(d4[0] + "=" + i4) : u5.push(l4[h4]));
     }
     var v4 = a4;
     return null != o4 && (v4 += "?" + u5.join("&")), null != s4 && (v4 += "#" + s4), v4;
   };
-  var Zs = function(t4, e4) {
+  var an = function(t4, e4) {
     var i4 = t4.match(new RegExp(e4 + "=([^&]*)"));
     return i4 ? i4[1] : null;
   };
-  var tn = "https?://(.*)";
-  var en2 = ["gclid", "gclsrc", "dclid", "gbraid", "wbraid", "fbclid", "msclkid", "twclid", "li_fat_id", "igshid", "ttclid", "rdt_cid", "epik", "qclid", "sccid", "irclid", "_kx"];
-  var rn = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "gad_source", "mc_cid", ...en2];
-  var sn = "<masked>";
-  var nn = ["li_fat_id"];
-  function on2(t4, e4, i4) {
+  var ln = (t4, e4) => t4 >= e4 && d3();
+  var un = (t4, e4, i4, r4) => {
+    if (0 === t4) {
+      if (d3()) {
+        var s4 = e4 + 1;
+        return s4 === i4 && r4(), s4;
+      }
+      return e4;
+    }
+    return 0;
+  };
+  var hn = "https?://(.*)";
+  var dn = ["gclid", "gclsrc", "dclid", "gbraid", "wbraid", "fbclid", "msclkid", "twclid", "li_fat_id", "igshid", "ttclid", "rdt_cid", "epik", "qclid", "sccid", "irclid", "_kx"];
+  var vn = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term", "gad_source", "mc_cid", ...dn];
+  var cn = "<masked>";
+  var fn = ["li_fat_id"];
+  function pn(t4, e4, i4) {
     if (!r3) return {};
-    var s4, n3 = e4 ? [...en2, ...i4 || []] : [], o4 = an(Xs(r3.URL, n3, sn), t4), a4 = (s4 = {}, xr(nn, (function(t5) {
-      var e5 = zr.A(t5);
+    var s4, n3 = e4 ? [...dn, ...i4 || []] : [], o4 = _n(on2(r3.URL, n3, cn), t4), a4 = (s4 = {}, Pr(fn, (function(t5) {
+      var e5 = Jr.A(t5);
       s4[t5] = e5 || null;
     })), s4);
-    return Sr(a4, o4);
+    return Or(a4, o4);
   }
-  function an(t4, e4) {
-    var i4 = rn.concat(e4 || []), r4 = {};
-    return xr(i4, (function(e5) {
-      var i5 = Qs(t4, e5);
+  function _n(t4, e4) {
+    var i4 = vn.concat(e4 || []), r4 = {};
+    return Pr(i4, (function(e5) {
+      var i5 = nn(t4, e5);
       r4[e5] = i5 || null;
     })), r4;
   }
-  function ln(t4) {
+  function gn(t4) {
     var e4 = (function(t5) {
-      return t5 ? 0 === t5.search(tn + "google.([^/?]*)") ? "google" : 0 === t5.search(tn + "bing.com") ? "bing" : 0 === t5.search(tn + "yahoo.com") ? "yahoo" : 0 === t5.search(tn + "duckduckgo.com") ? "duckduckgo" : null : null;
+      return t5 ? 0 === t5.search(hn + "google.([^/?]*)") ? "google" : 0 === t5.search(hn + "bing.com") ? "bing" : 0 === t5.search(hn + "yahoo.com") ? "yahoo" : 0 === t5.search(hn + "duckduckgo.com") ? "duckduckgo" : null : null;
     })(t4), i4 = "yahoo" != e4 ? "q" : "p", s4 = {};
     if (!Y(e4)) {
       s4.$search_engine = e4;
-      var n3 = r3 ? Qs(r3.referrer, i4) : "";
+      var n3 = r3 ? nn(r3.referrer, i4) : "";
       n3.length && (s4.ph_keyword = n3);
     }
     return s4;
   }
-  function un() {
+  function mn() {
     return navigator.language || navigator.userLanguage;
   }
-  var hn = "$direct";
-  function dn() {
-    return (null == r3 ? void 0 : r3.referrer) || hn;
+  var bn = "$direct";
+  function yn() {
+    return (null == r3 ? void 0 : r3.referrer) || bn;
   }
-  function vn(t4, e4, i4) {
+  function wn(t4, e4, i4) {
     void 0 === i4 && (i4 = false);
-    var r4 = t4 ? [...en2, ...e4 || []] : [], n3 = i4 ? _e(null == s3 ? void 0 : s3.href) : null == s3 ? void 0 : s3.href, o4 = null == n3 ? void 0 : n3.substring(0, 1e3);
-    return { r: dn().substring(0, 1e3), u: o4 ? Xs(o4, r4, sn) : void 0 };
+    var r4 = t4 ? [...dn, ...e4 || []] : [], n3 = i4 ? me(null == s3 ? void 0 : s3.href) : null == s3 ? void 0 : s3.href, o4 = null == n3 ? void 0 : n3.substring(0, 1e3);
+    return { r: yn().substring(0, 1e3), u: o4 ? on2(o4, r4, cn) : void 0 };
   }
-  function cn(t4, e4) {
+  function En(t4, e4) {
     var i4;
     void 0 === e4 && (e4 = false);
-    var { r: r4, u: s4 } = t4, n3 = e4 ? _e(s4) : s4, o4 = { $referrer: r4, $referring_domain: null == r4 ? void 0 : r4 == hn ? hn : null == (i4 = Js(r4)) ? void 0 : i4.host };
+    var r4 = t4.r, s4 = t4.u, n3 = e4 ? me(s4) : s4, o4 = { $referrer: r4, $referring_domain: null == r4 ? void 0 : r4 == bn ? bn : null == (i4 = sn(r4)) ? void 0 : i4.host };
     if (n3) {
       o4.$current_url = n3;
-      var a4 = Js(n3);
+      var a4 = sn(n3);
       o4.$host = null == a4 ? void 0 : a4.host, o4.$pathname = null == a4 ? void 0 : a4.pathname;
-      var l4 = an(n3);
-      Sr(o4, l4);
+      var l4 = _n(n3);
+      Or(o4, l4);
     }
     if (r4) {
-      var u5 = ln(r4);
-      Sr(o4, u5);
+      var u5 = gn(r4);
+      Or(o4, u5);
     }
     return o4;
   }
-  function pn() {
+  function xn() {
     try {
       return Intl.DateTimeFormat().resolvedOptions().timeZone;
     } catch (t4) {
       return;
     }
   }
-  function fn() {
+  function Sn() {
     try {
       return (/* @__PURE__ */ new Date()).getTimezoneOffset();
     } catch (t4) {
       return;
     }
   }
-  var _n = { flags: Qi, surveys: Vi };
-  var gn = ["cookie", "localstorage", "localstorage+cookie", "sessionstorage", "memory"];
-  var mn = "main";
-  var yn = class {
+  var kn = { flags: rr, surveys: Qi };
+  var Tn = ["cookie", "localstorage", "localstorage+cookie", "sessionstorage", "memory"];
+  var $n = "main";
+  var Rn = class {
     constructor(e4, i4, r4) {
-      if (void 0 === r4 && (r4 = true), this.$t = {}, this.Dt = false, this.Nt = false, this.Se = e4, this.qt = r4, this.props = {}, this.jt = false, this.Bt = ((t4) => {
+      if (void 0 === r4 && (r4 = true), this.hr = {}, this.dr = false, this.cr = false, this.Te = e4, this.vr = r4, this.props = {}, this.pr = false, this.gr = ((t4) => {
         var e5 = "";
         return t4.token && (e5 = t4.token.replace(/\+/g, "PL").replace(/\//g, "SL").replace(/=/g, "EQ")), t4.persistence_name ? "ph_" + t4.persistence_name : "ph_" + e5 + "_posthog";
-      })(e4), this.Ct = this.Ht(e4), this.Nt = this.Ut(e4), this.load(), e4.debug && li.info("Persistence loaded", e4.persistence, f4({}, this.props)), this.update_config(e4, e4, i4), this.save(), t3) {
+      })(e4), this.Ye = this.mr(e4), this.cr = this.yr(e4), this.load(), e4.debug && fi.info("Persistence loaded", e4.persistence, _2({}, this.props)), this.update_config(e4, e4, i4), this.save(), t3) {
         var s4 = () => this.flush();
-        Or(t3, "beforeunload", s4, { capture: false }), Or(t3, "pagehide", s4, { capture: false });
+        Nr(t3, "beforeunload", s4, { capture: false }), Nr(t3, "pagehide", s4, { capture: false });
       }
     }
-    zt() {
-      var t4, e4 = null == (t4 = this.Se) ? void 0 : t4.persistence_save_debounce_ms;
-      return J2(e4) && e4 > 0 ? e4 : 0;
+    br() {
+      var t4, e4 = null == (t4 = this.Te) ? void 0 : t4.persistence_save_debounce_ms;
+      return X(e4) && e4 > 0 ? e4 : 0;
     }
     isDisabled() {
-      return !!this.Vt;
+      return !!this._r;
     }
-    Ht(e4) {
-      -1 === gn.indexOf(e4.persistence.toLowerCase()) && (li.critical("Unknown persistence type " + e4.persistence + "; falling back to localStorage+cookie"), e4.persistence = "localStorage+cookie");
+    mr(e4) {
+      -1 === Tn.indexOf(e4.persistence.toLowerCase()) && (fi.critical("Unknown persistence type " + e4.persistence + "; falling back to localStorage+cookie"), e4.persistence = "localStorage+cookie");
       var i4, r4 = (function(e5, i5) {
         void 0 === e5 && (e5 = []), void 0 === i5 && (i5 = false);
-        var r5 = [...Vr, ...e5];
-        return f4({}, qr, { F(t4) {
+        var r5 = [...Qr, ...e5];
+        return _2({}, Yr, { F(t4) {
           try {
             var e6 = {};
             try {
-              e6 = zr.F(t4) || {};
+              e6 = Jr.F(t4) || {};
             } catch (t5) {
             }
-            var r6, s5 = JSON.parse(qr.A(t4) || "{}");
+            var r6, s5 = JSON.parse(Yr.A(t4) || "{}");
             if (i5) {
               var n4 = {};
               for (var o4 in e6) {
                 var a4 = e6[o4];
                 Y(a4) || "" === a4 || (n4[o4] = a4);
               }
-              r6 = Sr(s5, n4);
-            } else r6 = Sr(e6, s5);
-            return qr.q(t4, r6), r6;
+              r6 = Or(s5, n4);
+            } else r6 = Or(e6, s5);
+            return Yr.q(t4, r6), r6;
           } catch (t5) {
           }
           return null;
         }, q(t4, e6, i6, s5, n4, o4) {
-          var a4 = qr.q(t4, e6, void 0, void 0, o4);
+          var a4 = Yr.q(t4, e6, void 0, void 0, o4);
           try {
             var l4 = {};
             r5.forEach(((t5) => {
               e6[t5] && (l4[t5] = e6[t5]);
-            })), Object.keys(l4).length && zr.q(t4, l4, i6, s5, n4, o4);
+            })), Object.keys(l4).length && Jr.q(t4, l4, i6, s5, n4, o4);
           } catch (t5) {
-            qr.D(t5);
+            Yr.D(t5);
           }
           return a4;
         }, P(e6, i6) {
           try {
-            null == t3 || t3.localStorage.removeItem(e6), zr.P(e6, i6);
+            null == t3 || t3.localStorage.removeItem(e6), Jr.P(e6, i6);
           } catch (t4) {
-            qr.D(t4);
+            Yr.D(t4);
           }
         } });
       })(e4.cookie_persisted_properties || [], e4.__preview_cookie_wins_on_conflict || false), s4 = false, n3 = e4.persistence.toLowerCase();
-      return "localstorage" === n3 && qr.N() ? (i4 = qr, s4 = true) : "localstorage+cookie" === n3 && r4.N() ? (i4 = r4, s4 = true) : "sessionstorage" === n3 && Kr.N() ? i4 = Kr : "memory" === n3 ? i4 = Wr : "cookie" === n3 ? i4 = zr : r4.N() ? (i4 = r4, s4 = true) : i4 = zr, this.Dt = s4, i4;
+      return "localstorage" === n3 && Yr.N() ? (i4 = Yr, s4 = true) : "localstorage+cookie" === n3 && r4.N() ? (i4 = r4, s4 = true) : "sessionstorage" === n3 && es2.N() ? i4 = es2 : "memory" === n3 ? i4 = Zr : "cookie" === n3 ? i4 = Jr : r4.N() ? (i4 = r4, s4 = true) : i4 = Jr, this.dr = s4, i4;
     }
-    Wt(t4) {
-      return this.Bt + "__" + t4;
+    wr(t4) {
+      return this.gr + "__" + t4;
     }
-    Ut(t4) {
-      return this.Dt && !!t4.split_storage;
+    yr(t4) {
+      return this.dr && !!t4.split_storage;
     }
-    Gt(t4) {
-      var e4 = null != t4 ? t4 : this.Se.feature_flag_cache_ttl_ms;
+    kr(t4) {
+      var e4 = null != t4 ? t4 : this.Te.feature_flag_cache_ttl_ms;
       if (!e4 || 0 >= e4) return false;
-      var i4 = this.props[Qi];
+      var i4 = this.props[rr];
       return !i4 || "number" != typeof i4 || Date.now() - i4 > e4;
     }
     properties() {
       var t4 = {};
-      return xr(this.props, ((e4, i4) => {
-        var r4 = Ks(i4);
+      return Pr(this.props, ((e4, i4) => {
+        var r4 = rn(i4);
         if ("derived" === (null == r4 ? void 0 : r4.exposure)) {
-          if (null != r4.shouldSkipFromEventProperties && r4.shouldSkipFromEventProperties(e4, i4 === Fi ? () => this.Gt() : () => false)) return;
-          r4.transformToEventProperties && Sr(t4, r4.transformToEventProperties(e4));
+          if (null != r4.shouldSkipFromEventProperties && r4.shouldSkipFromEventProperties(e4, i4 === ji ? () => this.kr() : () => false)) return;
+          r4.transformToEventProperties && Or(t4, r4.transformToEventProperties(e4));
         } else if (!r4 || "event" === r4.exposure) {
           if (null != r4 && null != r4.shouldSkipFromEventProperties && r4.shouldSkipFromEventProperties(e4, (() => false))) return;
           t4[i4] = e4;
@@ -7302,238 +7494,236 @@
       })), t4;
     }
     load() {
-      if (!this.Vt) {
-        var t4 = this.Ct.F(this.Bt);
-        t4 && (this.props = Sr({}, t4)), this.Nt && this.Zt();
+      if (!this._r) {
+        var t4 = this.Ye.F(this.gr);
+        t4 && (this.props = Or({}, t4)), this.cr && this.Sr();
       }
     }
-    Zt() {
-      for (var t4 of Gs) {
-        var e4 = qr.F(this.Wt(t4));
-        if (e4 && !q2(e4)) {
-          var i4 = this.Qt(t4);
-          i4.persisted = true, this.Jt(t4) || (i4.fingerprint = this.Yt(e4, t4)), this.Kt(t4, e4) || Sr(this.props, e4);
+    Sr() {
+      for (var t4 of Zs) {
+        var e4 = Yr.F(this.wr(t4));
+        if (e4 && !G2(e4)) {
+          var i4 = this.Cr(t4);
+          i4.persisted = true, this.Ir(t4) || (i4.fingerprint = this.Tr(e4, t4)), this.Mr(t4, e4) || Or(this.props, e4);
         }
       }
     }
-    Jt(t4) {
+    Ir(t4) {
       return Object.keys(this.props).some(((e4) => {
         var i4;
-        return (null == (i4 = Ks(e4)) ? void 0 : i4.storageGroup) === t4;
+        return (null == (i4 = rn(e4)) ? void 0 : i4.storageGroup) === t4;
       }));
     }
-    Kt(t4, e4) {
-      var i4 = _n[t4];
+    Mr(t4, e4) {
+      var i4 = kn[t4];
       if (!i4) return false;
       var r4 = e4[i4], s4 = this.props[i4];
-      return J2(r4) && J2(s4) && s4 > r4;
+      return X(r4) && X(s4) && s4 > r4;
     }
     refreshKey(t4) {
       var e4;
-      if (!this.Vt) {
-        var i4 = this.Nt ? null == (e4 = Ks(t4)) ? void 0 : e4.storageGroup : void 0, r4 = i4 ? qr.F(this.Wt(i4)) : this.Ct.F(this.Bt);
-        if (r4 && t4 in r4) this.Xt(t4, r4[t4]);
+      if (!this._r) {
+        var i4 = this.cr ? null == (e4 = rn(t4)) ? void 0 : e4.storageGroup : void 0, r4 = i4 ? Yr.F(this.wr(i4)) : this.Ye.F(this.gr);
+        if (r4 && t4 in r4) this.Er(t4, r4[t4]);
         else {
           if (i4) {
-            var s4 = this.Ct.F(this.Bt);
-            if (s4 && t4 in s4) return void this.Xt(t4, s4[t4]);
+            var s4 = this.Ye.F(this.gr);
+            if (s4 && t4 in s4) return void this.Er(t4, s4[t4]);
           }
-          this.er(t4);
+          this.Rr(t4);
         }
       }
     }
     save() {
-      if (!this.Vt) {
-        var t4 = this.zt();
-        t4 > 0 ? V2(this.tr) && (this.tr = setTimeout((() => {
-          this.tr = void 0, this.rr();
-        }), t4)) : this.rr();
+      if (!this._r) {
+        var t4 = this.br();
+        t4 > 0 ? W(this.Pr) && (this.Pr = setTimeout((() => {
+          this.Pr = void 0, this.Or();
+        }), t4)) : this.Or();
       }
     }
     flush() {
-      V2(this.tr) || (clearTimeout(this.tr), this.tr = void 0, this.rr());
+      W(this.Pr) || (clearTimeout(this.Pr), this.Pr = void 0, this.Or());
     }
-    rr() {
-      this.Vt || (this.Nt ? this.ir() : this.nr(this.Ct, this.Bt, this.props, mn));
+    Or() {
+      this._r || (this.cr ? this.Fr() : this.Lr(this.Ye, this.gr, this.props, $n));
     }
-    ir() {
-      var { main: t4, groups: e4 } = this.sr();
-      for (var i4 of (this.nr(this.Ct, this.Bt, t4, mn), Gs)) {
-        var r4, s4 = e4[i4];
-        (!q2(s4) || null != (r4 = this.$t[i4]) && r4.persisted) && this.nr(qr, this.Wt(i4), s4, i4);
+    Fr() {
+      var t4 = this.Ar(), e4 = t4.main, i4 = t4.groups;
+      for (var r4 of (this.Lr(this.Ye, this.gr, e4, $n), Zs)) {
+        var s4, n3 = i4[r4];
+        (!G2(n3) || null != (s4 = this.hr[r4]) && s4.persisted) && this.Lr(Yr, this.wr(r4), n3, r4);
       }
     }
-    sr() {
-      var t4 = {}, e4 = {};
-      for (var i4 of Gs) e4[i4] = {};
-      return xr(this.props, ((i5, r4) => {
-        var s4, n3 = null == (s4 = Ks(r4)) ? void 0 : s4.storageGroup;
-        n3 ? e4[n3][r4] = i5 : t4[r4] = i5;
+    Ar() {
+      var t4 = {}, e4 = { flags: {}, surveys: {} };
+      return Pr(this.props, ((i4, r4) => {
+        var s4, n3 = null == (s4 = rn(r4)) ? void 0 : s4.storageGroup;
+        n3 ? e4[n3][r4] = i4 : t4[r4] = i4;
       })), { main: t4, groups: e4 };
     }
-    Yt(t4, e4) {
-      if (e4 === mn) return JSON.stringify(t4) + "|" + this.ar + "|" + this.lr + "|" + this.ur;
+    Tr(t4, e4) {
+      if (e4 === $n) return JSON.stringify(t4) + "|" + this.$r + "|" + this.Nr + "|" + this.Dr;
       var i4 = {};
-      return xr(t4, ((t5, e5) => {
+      return Pr(t4, ((t5, e5) => {
         var r4;
-        i4[e5] = null != (r4 = Ks(e5)) && r4.volatile ? "__volatile__" : t5;
+        i4[e5] = null != (r4 = rn(e5)) && r4.volatile ? "__volatile__" : t5;
       })), JSON.stringify(i4);
     }
-    nr(t4, e4, i4, r4) {
-      var s4 = this.Qt(r4);
-      if (r4 === mn || s4.dirty || V2(s4.fingerprint)) {
+    Lr(t4, e4, i4, r4) {
+      var s4 = this.Cr(r4);
+      if (r4 === $n || s4.dirty || W(s4.fingerprint)) {
         var n3;
         try {
-          if ((n3 = this.Yt(i4, r4)) === s4.fingerprint) return void (s4.dirty = false);
+          if ((n3 = this.Tr(i4, r4)) === s4.fingerprint) return void (s4.dirty = false);
         } catch (t5) {
           n3 = void 0;
         }
-        t4.q(e4, i4, this.ar, this.lr, this.ur, this.Se.debug) ? (s4.dirty = false, r4 !== mn && (s4.persisted = true), V2(n3) || (s4.fingerprint = n3)) : this.Se.debug && li.warn('failed to persist storage entry "' + e4 + '"; will retry on next save');
+        t4.q(e4, i4, this.$r, this.Nr, this.Dr, this.Te.debug) ? (s4.dirty = false, r4 !== $n && (s4.persisted = true), W(n3) || (s4.fingerprint = n3)) : this.Te.debug && fi.warn('failed to persist storage entry "' + e4 + '"; will retry on next save');
       }
     }
     remove(t4) {
-      var { keepGroupEntries: e4 = false } = void 0 === t4 ? {} : t4;
-      if (V2(this.tr) || (clearTimeout(this.tr), this.tr = void 0), this.Ct.P(this.Bt, false), this.Ct.P(this.Bt, true), !e4 && this.qt) for (var i4 of Gs) qr.P(this.Wt(i4));
-      e4 ? delete this.$t[mn] : this.$t = {};
+      var e4 = (void 0 === t4 ? {} : t4).keepGroupEntries, i4 = void 0 !== e4 && e4;
+      if (W(this.Pr) || (clearTimeout(this.Pr), this.Pr = void 0), this.Ye.P(this.gr, false), this.Ye.P(this.gr, true), !i4 && this.vr) for (var r4 of Zs) Yr.P(this.wr(r4));
+      i4 ? delete this.hr[$n] : this.hr = {};
     }
     clear() {
       this.remove(), this.props = {};
     }
     register_once(t4, e4, i4) {
-      if (H2(t4)) {
-        V2(e4) && (e4 = "None"), this.ar = V2(i4) ? this.hr : i4;
+      if (V2(t4)) {
+        W(e4) && (e4 = "None"), this.$r = W(i4) ? this.qr : i4;
         var r4 = false;
-        if (xr(t4, ((t5, i5) => {
-          this.props.hasOwnProperty(i5) && this.props[i5] !== e4 || (this.Xt(i5, t5), r4 = true);
+        if (Pr(t4, ((t5, i5) => {
+          this.props.hasOwnProperty(i5) && this.props[i5] !== e4 || (this.Er(i5, t5), r4 = true);
         })), r4) return this.save(), true;
       }
       return false;
     }
     register(t4, e4) {
-      if (H2(t4)) {
-        this.ar = V2(e4) ? this.hr : e4;
+      if (V2(t4)) {
+        this.$r = W(e4) ? this.qr : e4;
         var i4 = false;
-        if (xr(t4, ((e5, r4) => {
-          t4.hasOwnProperty(r4) && this.props[r4] !== e5 && (this.Xt(r4, e5), i4 = true);
+        if (Pr(t4, ((e5, r4) => {
+          t4.hasOwnProperty(r4) && this.props[r4] !== e5 && (this.Er(r4, e5), i4 = true);
         })), i4) return this.save(), true;
       }
       return false;
     }
     unregister(t4) {
-      t4 in this.props && (this.er(t4), this.save());
+      t4 in this.props && (this.Rr(t4), this.save());
     }
     update_campaign_params() {
-      if (!this.jt) {
-        var t4 = on2(this.Se.custom_campaign_params, this.Se.mask_personal_data_properties, this.Se.custom_personal_data_properties);
-        q2(Rr(t4)) || this.register(t4), this.jt = true;
+      if (!this.pr) {
+        var t4 = pn(this.Te.custom_campaign_params, this.Te.mask_personal_data_properties, this.Te.custom_personal_data_properties);
+        G2(Ar(t4)) || this.register(t4), this.pr = true;
       }
     }
     update_search_keyword() {
       var t4;
-      this.register((t4 = null == r3 ? void 0 : r3.referrer) ? ln(t4) : {});
+      this.register((t4 = null == r3 ? void 0 : r3.referrer) ? gn(t4) : {});
     }
     update_referrer_info() {
       var t4;
-      this.register_once({ $referrer: dn(), $referring_domain: null != r3 && r3.referrer && (null == (t4 = Js(r3.referrer)) ? void 0 : t4.host) || hn }, void 0);
+      this.register_once({ $referrer: yn(), $referring_domain: null != r3 && r3.referrer && (null == (t4 = sn(r3.referrer)) ? void 0 : t4.host) || bn }, void 0);
     }
     set_initial_person_info() {
-      this.props[er] || this.props[ir] || this.register_once({ [rr]: vn(this.Se.mask_personal_data_properties, this.Se.custom_personal_data_properties, this.Se.disable_capture_url_hashes) }, void 0);
+      this.props[ar] || this.props[lr] || this.register_once({ [ur]: wn(this.Te.mask_personal_data_properties, this.Te.custom_personal_data_properties, this.Te.disable_capture_url_hashes) }, void 0);
     }
     get_initial_props() {
       var t4 = {};
-      xr([ir, er], ((e5) => {
+      Pr([lr, ar], ((e5) => {
         var i5 = this.props[e5];
-        i5 && xr(i5, (function(e6, i6) {
-          t4["$initial_" + L2(i6)] = e6;
+        i5 && Pr(i5, (function(e6, i6) {
+          t4["$initial_" + U(i6)] = e6;
         }));
       }));
-      var e4 = this.props[rr];
+      var e4 = this.props[ur];
       if (e4) {
         var i4 = (function(t5, e5) {
           void 0 === e5 && (e5 = false);
-          var i5 = cn(t5, e5), r4 = {};
-          return xr(i5, (function(t6, e6) {
-            r4["$initial_" + L2(e6)] = t6;
+          var i5 = En(t5, e5), r4 = {};
+          return Pr(i5, (function(t6, e6) {
+            r4["$initial_" + U(e6)] = t6;
           })), r4;
-        })(e4, this.Se.disable_capture_url_hashes);
-        Sr(t4, i4);
+        })(e4, this.Te.disable_capture_url_hashes);
+        Or(t4, i4);
       }
       return t4;
     }
     safe_merge(t4) {
-      return xr(this.props, (function(e4, i4) {
+      return Pr(this.props, (function(e4, i4) {
         i4 in t4 || (t4[i4] = e4);
       })), t4;
     }
     update_config(t4, e4, i4) {
-      this.hr = this.ar = t4.cookie_expiration, this.set_disabled(t4.disable_persistence || !!i4), this.set_cross_subdomain(t4.cross_subdomain_cookie), this.set_secure(t4.secure_cookie);
+      this.qr = this.$r = t4.cookie_expiration, this.set_disabled(t4.disable_persistence || !!i4), this.set_cross_subdomain(t4.cross_subdomain_cookie), this.set_secure(t4.secure_cookie);
       var r4 = t4.persistence !== e4.persistence || !((t5, e5) => {
         if (t5.length !== e5.length) return false;
         var i5 = [...t5].sort(), r5 = [...e5].sort();
         return i5.every(((t6, e6) => t6 === r5[e6]));
-      })(t4.cookie_persisted_properties || [], e4.cookie_persisted_properties || []), s4 = r4 ? this.Ht(t4) : this.Ct, n3 = this.Ut(t4);
-      if (r4 || n3 !== this.Nt) {
+      })(t4.cookie_persisted_properties || [], e4.cookie_persisted_properties || []), s4 = r4 ? this.mr(t4) : this.Ye, n3 = this.yr(t4);
+      if (r4 || n3 !== this.cr) {
         var o4 = this.props;
-        this.clear(), this.Ct = s4, this.Nt = n3, this.props = o4, this.save();
+        this.clear(), this.Ye = s4, this.cr = n3, this.props = o4, this.save();
       }
     }
     set_disabled(t4) {
-      this.Vt = t4, this.Vt ? this.remove() : this.save();
+      this._r = t4, this._r ? this.remove() : this.save();
     }
     set_cross_subdomain(t4) {
-      t4 !== this.lr && (this.lr = t4, this.remove({ keepGroupEntries: true }), this.save());
+      t4 !== this.Nr && (this.Nr = t4, this.remove({ keepGroupEntries: true }), this.save());
     }
     set_secure(t4) {
-      t4 !== this.ur && (this.ur = t4, this.remove({ keepGroupEntries: true }), this.save());
+      t4 !== this.Dr && (this.Dr = t4, this.remove({ keepGroupEntries: true }), this.save());
     }
     set_event_timer(t4, e4) {
-      var i4 = this.props[_i] || {};
-      i4[t4] = e4, this.Xt(_i, i4), this.save();
+      var i4 = this.props[Ei] || {};
+      i4[t4] = e4, this.Er(Ei, i4), this.save();
     }
     remove_event_timer(t4) {
-      var e4 = this.props[_i] || {}, i4 = e4[t4];
-      return V2(i4) || (delete e4[t4], this.Xt(_i, e4), this.save()), i4;
+      var e4 = this.props[Ei] || {}, i4 = e4[t4];
+      return W(i4) || (delete e4[t4], this.Er(Ei, e4), this.save()), i4;
     }
     get_property(t4) {
       return this.props[t4];
     }
     set_property(t4, e4) {
-      this.Xt(t4, e4), this.save();
+      this.Er(t4, e4), this.save();
     }
-    Xt(t4, e4) {
+    Er(t4, e4) {
       var i4;
-      this.props[t4] = e4, null != (i4 = Ks(t4)) && i4.volatile || this.dr(t4);
+      this.props[t4] = e4, null != (i4 = rn(t4)) && i4.volatile || this.jr(t4);
     }
-    er(t4) {
-      delete this.props[t4], this.dr(t4);
+    Rr(t4) {
+      delete this.props[t4], this.jr(t4);
     }
-    dr(t4) {
-      var e4, i4 = null == (e4 = Ks(t4)) ? void 0 : e4.storageGroup;
-      i4 && (this.Qt(i4).dirty = true);
+    jr(t4) {
+      var e4, i4 = null == (e4 = rn(t4)) ? void 0 : e4.storageGroup;
+      i4 && (this.Cr(i4).dirty = true);
     }
-    Qt(t4) {
-      return this.$t[t4] || (this.$t[t4] = {});
+    Cr(t4) {
+      return this.hr[t4] || (this.hr[t4] = {});
     }
   };
-  var bn = { Activation: "events", Cancellation: "cancelEvents" };
-  var Sn = { Popover: "popover", API: "api", Widget: "widget", ExternalSurvey: "external_survey" };
-  var kn = { Once: "once", Recurring: "recurring", Always: "always" };
-  var Rn = { SHOWN: "survey shown", DISMISSED: "survey dismissed", SENT: "survey sent", ABANDONED: "survey abandoned" };
-  var Pn = { SURVEY_ID: "$survey_id", SURVEY_NAME: "$survey_name", SURVEY_RESPONSE: "$survey_response", SURVEY_ITERATION: "$survey_iteration", SURVEY_ITERATION_START_DATE: "$survey_iteration_start_date", SURVEY_PARTIALLY_COMPLETED: "$survey_partially_completed", SURVEY_SUBMISSION_ID: "$survey_submission_id", SURVEY_QUESTIONS: "$survey_questions", SURVEY_COMPLETED: "$survey_completed", PRODUCT_TOUR_ID: "$product_tour_id", SURVEY_LAST_SEEN_DATE: "$survey_last_seen_date", SURVEY_LANGUAGE: "$survey_language" };
-  var In = { Popover: "popover", Inline: "inline" };
-  var Cn = { SHOWN: "product tour shown", DISMISSED: "product tour dismissed", COMPLETED: "product tour completed", STEP_SHOWN: "product tour step shown", STEP_COMPLETED: "product tour step completed", BUTTON_CLICKED: "product tour button clicked", STEP_SELECTOR_FAILED: "product tour step selector failed", BANNER_CONTAINER_SELECTOR_FAILED: "product tour banner container selector failed", BANNER_ACTION_CLICKED: "product tour banner action clicked" };
-  var An = { TOUR_ID: "$product_tour_id", TOUR_NAME: "$product_tour_name", TOUR_ITERATION: "$product_tour_iteration", TOUR_RENDER_REASON: "$product_tour_render_reason", TOUR_STEP_ID: "$product_tour_step_id", TOUR_STEP_ORDER: "$product_tour_step_order", TOUR_STEP_TYPE: "$product_tour_step_type", TOUR_DISMISS_REASON: "$product_tour_dismiss_reason", TOUR_BUTTON_TEXT: "$product_tour_button_text", TOUR_BUTTON_ACTION: "$product_tour_button_action", TOUR_BUTTON_LINK: "$product_tour_button_link", TOUR_BUTTON_TOUR_ID: "$product_tour_button_tour_id", TOUR_STEPS_COUNT: "$product_tour_steps_count", TOUR_STEP_SELECTOR: "$product_tour_step_selector", TOUR_STEP_SELECTOR_FOUND: "$product_tour_step_selector_found", TOUR_STEP_ELEMENT_TAG: "$product_tour_step_element_tag", TOUR_STEP_ELEMENT_ID: "$product_tour_step_element_id", TOUR_STEP_ELEMENT_CLASSES: "$product_tour_step_element_classes", TOUR_STEP_ELEMENT_TEXT: "$product_tour_step_element_text", TOUR_ERROR: "$product_tour_error", TOUR_MATCHES_COUNT: "$product_tour_matches_count", TOUR_FAILURE_PHASE: "$product_tour_failure_phase", TOUR_WAITED_FOR_ELEMENT: "$product_tour_waited_for_element", TOUR_WAIT_DURATION_MS: "$product_tour_wait_duration_ms", TOUR_BANNER_SELECTOR: "$product_tour_banner_selector", TOUR_LINKED_SURVEY_ID: "$product_tour_linked_survey_id", USE_MANUAL_SELECTOR: "$use_manual_selector", INFERENCE_DATA_PRESENT: "$inference_data_present", TOUR_LAST_SEEN_DATE: "$product_tour_last_seen_date", TOUR_TYPE: "$product_tour_type" };
-  var Fn = ui("[RateLimiter]");
-  var Mn = class {
+  var Pn = { Activation: "events", Cancellation: "cancelEvents" };
+  var Mn = { Popover: "popover", API: "api", Widget: "widget", ExternalSurvey: "external_survey" };
+  var Nn = { SHOWN: "survey shown", DISMISSED: "survey dismissed", SENT: "survey sent", ABANDONED: "survey abandoned" };
+  var Un = { SURVEY_ID: "$survey_id", SURVEY_NAME: "$survey_name", SURVEY_RESPONSE: "$survey_response", SURVEY_ITERATION: "$survey_iteration", SURVEY_ITERATION_START_DATE: "$survey_iteration_start_date", SURVEY_PARTIALLY_COMPLETED: "$survey_partially_completed", SURVEY_SUBMISSION_ID: "$survey_submission_id", SURVEY_QUESTIONS: "$survey_questions", SURVEY_COMPLETED: "$survey_completed", PRODUCT_TOUR_ID: "$product_tour_id", SURVEY_LAST_SEEN_DATE: "$survey_last_seen_date", SURVEY_LANGUAGE: "$survey_language" };
+  var Ln = { Popover: "popover", Inline: "inline" };
+  var Bn = { SHOWN: "product tour shown", DISMISSED: "product tour dismissed", COMPLETED: "product tour completed", STEP_SHOWN: "product tour step shown", STEP_COMPLETED: "product tour step completed", BUTTON_CLICKED: "product tour button clicked", STEP_SELECTOR_FAILED: "product tour step selector failed", BANNER_CONTAINER_SELECTOR_FAILED: "product tour banner container selector failed", BANNER_ACTION_CLICKED: "product tour banner action clicked" };
+  var zn = { TOUR_ID: "$product_tour_id", TOUR_NAME: "$product_tour_name", TOUR_ITERATION: "$product_tour_iteration", TOUR_RENDER_REASON: "$product_tour_render_reason", TOUR_STEP_ID: "$product_tour_step_id", TOUR_STEP_ORDER: "$product_tour_step_order", TOUR_STEP_TYPE: "$product_tour_step_type", TOUR_DISMISS_REASON: "$product_tour_dismiss_reason", TOUR_BUTTON_TEXT: "$product_tour_button_text", TOUR_BUTTON_ACTION: "$product_tour_button_action", TOUR_BUTTON_LINK: "$product_tour_button_link", TOUR_BUTTON_TOUR_ID: "$product_tour_button_tour_id", TOUR_STEPS_COUNT: "$product_tour_steps_count", TOUR_STEP_SELECTOR: "$product_tour_step_selector", TOUR_STEP_SELECTOR_FOUND: "$product_tour_step_selector_found", TOUR_STEP_ELEMENT_TAG: "$product_tour_step_element_tag", TOUR_STEP_ELEMENT_ID: "$product_tour_step_element_id", TOUR_STEP_ELEMENT_CLASSES: "$product_tour_step_element_classes", TOUR_STEP_ELEMENT_TEXT: "$product_tour_step_element_text", TOUR_ERROR: "$product_tour_error", TOUR_MATCHES_COUNT: "$product_tour_matches_count", TOUR_FAILURE_PHASE: "$product_tour_failure_phase", TOUR_WAITED_FOR_ELEMENT: "$product_tour_waited_for_element", TOUR_WAIT_DURATION_MS: "$product_tour_wait_duration_ms", TOUR_BANNER_SELECTOR: "$product_tour_banner_selector", TOUR_LINKED_SURVEY_ID: "$product_tour_linked_survey_id", USE_MANUAL_SELECTOR: "$use_manual_selector", INFERENCE_DATA_PRESENT: "$inference_data_present", TOUR_LAST_SEEN_DATE: "$product_tour_last_seen_date", TOUR_TYPE: "$product_tour_type" };
+  var Hn = pi("[RateLimiter]");
+  var qn = class {
     constructor(t4) {
       this.serverLimits = {}, this.lastEventRateLimited = false, this.checkForLimiting = (t5) => {
         var e4 = t5.text;
         if (e4 && e4.length) try {
           (JSON.parse(e4).quota_limited || []).forEach(((t6) => {
-            Fn.info((t6 || "events") + " is quota limited."), this.serverLimits[t6] = (/* @__PURE__ */ new Date()).getTime() + 6e4;
+            Hn.info((t6 || "events") + " is quota limited."), this.serverLimits[t6] = (/* @__PURE__ */ new Date()).getTime() + 6e4;
           }));
         } catch (t6) {
-          return void Fn.warn('could not rate limit - continuing. Error: "' + (null == t6 ? void 0 : t6.message) + '"', { text: e4 });
+          return void Hn.warn('could not rate limit - continuing. Error: "' + (null == t6 ? void 0 : t6.message) + '"', { text: e4 });
         }
       }, this.instance = t4, this.lastEventRateLimited = this.clientRateLimitContext(true).isRateLimited;
     }
@@ -7548,18 +7738,18 @@
     clientRateLimitContext(t4) {
       var e4, i4, r4;
       void 0 === t4 && (t4 = false);
-      var { captureEventsBurstLimit: s4, captureEventsPerSecond: n3 } = this, o4 = (/* @__PURE__ */ new Date()).getTime(), a4 = null !== (e4 = null == (i4 = this.instance.persistence) ? void 0 : i4.get_property(tr)) && void 0 !== e4 ? e4 : { tokens: s4, last: o4 };
+      var s4 = this.captureEventsBurstLimit, n3 = this.captureEventsPerSecond, o4 = (/* @__PURE__ */ new Date()).getTime(), a4 = null !== (e4 = null == (i4 = this.instance.persistence) ? void 0 : i4.get_property(or)) && void 0 !== e4 ? e4 : { tokens: s4, last: o4 };
       a4.tokens += (o4 - a4.last) / 1e3 * n3, a4.last = o4, a4.tokens > s4 && (a4.tokens = s4);
       var l4 = 1 > a4.tokens;
-      return l4 || t4 || (a4.tokens = Math.max(0, a4.tokens - 1)), !l4 || this.lastEventRateLimited || t4 || this.instance.capture("$$client_ingestion_warning", { $$client_ingestion_warning_message: "posthog-js client rate limited. Config is set to " + n3 + " events per second and " + s4 + " events burst limit." }, { skip_client_rate_limiting: true }), this.lastEventRateLimited = l4, null == (r4 = this.instance.persistence) || r4.set_property(tr, a4), { isRateLimited: l4, remainingTokens: a4.tokens };
+      return l4 || t4 || (a4.tokens = Math.max(0, a4.tokens - 1)), !l4 || this.lastEventRateLimited || t4 || this.instance.capture("$$client_ingestion_warning", { $$client_ingestion_warning_message: "posthog-js client rate limited. Config is set to " + n3 + " events per second and " + s4 + " events burst limit." }, { skip_client_rate_limiting: true }), this.lastEventRateLimited = l4, null == (r4 = this.instance.persistence) || r4.set_property(or, a4), { isRateLimited: l4, remainingTokens: a4.tokens };
     }
     isServerRateLimited(t4) {
       var e4 = this.serverLimits[t4 || "events"] || false;
       return false !== e4 && (/* @__PURE__ */ new Date()).getTime() < e4;
     }
   };
-  var Dn = ui("[RemoteConfig]");
-  var Ln = class {
+  var Vn = pi("[RemoteConfig]");
+  var Gn = class {
     constructor(t4) {
       this._instance = t4;
     }
@@ -7567,115 +7757,115 @@
       var t4;
       return null == (t4 = h3._POSTHOG_REMOTE_CONFIG) || null == (t4 = t4[this._instance.config.token]) ? void 0 : t4.config;
     }
-    cr(t4) {
+    Hr(t4) {
       var e4, i4;
       null != (e4 = h3.__PosthogExtensions__) && e4.loadExternalDependency ? null == (i4 = h3.__PosthogExtensions__) || null == i4.loadExternalDependency || i4.loadExternalDependency(this._instance, "remote-config", (() => t4(this.remoteConfig))) : t4();
     }
-    vr(t4) {
+    Br(t4) {
       this._instance._send_request({ method: "GET", url: this._instance.requestRouter.endpointFor("assets", "/array/" + this._instance.config.token + "/config"), callback(e4) {
         t4(e4.json);
       } });
     }
     load() {
       try {
-        if (this.remoteConfig) return Dn.info("Using preloaded remote config", this.remoteConfig), this.pr(this.remoteConfig), void this.gr();
-        if (this._instance.mr()) return void Dn.warn("Remote config is disabled. Falling back to local config.");
-        this.cr(((t4) => {
-          if (!t4) return Dn.info("No config found after loading remote JS config. Falling back to JSON."), void this.vr(((t5) => {
-            this.pr(t5), this.gr();
+        if (this.remoteConfig) return Vn.info("Using preloaded remote config", this.remoteConfig), this.Ur(this.remoteConfig), void this.zr();
+        if (this._instance.Vr()) return void Vn.warn("Remote config is disabled. Falling back to local config.");
+        this.Hr(((t4) => {
+          if (!t4) return Vn.info("No config found after loading remote JS config. Falling back to JSON."), void this.Br(((t5) => {
+            this.Ur(t5), this.zr();
           }));
-          this.pr(t4), this.gr();
+          this.Ur(t4), this.zr();
         }));
       } catch (t4) {
-        Dn.error("Error loading remote config", t4);
+        Vn.error("Error loading remote config", t4);
       }
     }
     stop() {
-      this.yr && (clearInterval(this.yr), this.yr = void 0);
+      this.Wr && (clearInterval(this.Wr), this.Wr = void 0);
     }
     refresh() {
-      !this._instance.mr() && r3 && "hidden" !== r3.visibilityState && this._instance.reloadFeatureFlags();
+      !this._instance.Vr() && r3 && "hidden" !== r3.visibilityState && this._instance.reloadFeatureFlags();
     }
-    gr() {
+    zr() {
       var t4;
-      if (!this.yr) {
+      if (!this.Wr) {
         var e4 = null !== (t4 = this._instance.config.remote_config_refresh_interval_ms) && void 0 !== t4 ? t4 : 3e5;
-        0 !== e4 && (this.yr = setInterval((() => {
+        0 !== e4 && (this.Wr = setInterval((() => {
           this.refresh();
         }), e4));
       }
     }
-    pr(t4) {
+    Ur(t4) {
       var e4;
-      t4 || Dn.error("Failed to fetch remote config from PostHog."), this._instance.pr(null != t4 ? t4 : {}), false !== (null == t4 ? void 0 : t4.hasFeatureFlags) && (this._instance.config.advanced_disable_feature_flags_on_first_load || null == (e4 = this._instance.featureFlags) || e4.ensureFlagsLoaded());
+      t4 || Vn.error("Failed to fetch remote config from PostHog."), this._instance.Ur(t4 ? { ok: true, config: t4 } : { ok: false }), false !== (null == t4 ? void 0 : t4.hasFeatureFlags) && (this._instance.config.advanced_disable_feature_flags_on_first_load || null == (e4 = this._instance.featureFlags) || e4.ensureFlagsLoaded());
     }
   };
-  var Un = { GZipJS: "gzip-js", Base64: "base64" };
-  var jn = Uint8Array;
-  var Bn = Uint16Array;
-  var zn = Uint32Array;
-  var Hn = new jn([0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 0, 0, 0, 0]);
-  var qn = new jn([0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 0, 0]);
-  var Vn = new jn([16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15]);
-  var Gn = function(t4, e4) {
-    for (var i4 = new Bn(31), r4 = 0; 31 > r4; ++r4) i4[r4] = e4 += 1 << t4[r4 - 1];
-    var s4 = new zn(i4[30]);
+  var Jn = { GZipJS: "gzip-js", Base64: "base64" };
+  var Kn = Uint8Array;
+  var Yn = Uint16Array;
+  var Qn = Uint32Array;
+  var Xn = new Kn([0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 3, 3, 3, 3, 4, 4, 4, 4, 5, 5, 5, 5, 0, 0, 0, 0]);
+  var Zn = new Kn([0, 0, 0, 0, 1, 1, 2, 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 11, 12, 12, 13, 13, 0, 0]);
+  var to = new Kn([16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15]);
+  var eo = function(t4, e4) {
+    for (var i4 = new Yn(31), r4 = 0; 31 > r4; ++r4) i4[r4] = e4 += 1 << t4[r4 - 1];
+    var s4 = new Qn(i4[30]);
     for (r4 = 1; 30 > r4; ++r4) for (var n3 = i4[r4]; i4[r4 + 1] > n3; ++n3) s4[n3] = n3 - i4[r4] << 5 | r4;
     return [i4, s4];
   };
-  var Wn = Gn(Hn, 2);
-  var Yn = Wn[1];
-  Wn[0][28] = 258, Yn[258] = 28;
-  for (Kn = Gn(qn, 0)[1], Jn = new Bn(32768), Qn = 0; 32768 > Qn; ++Qn) {
-    Xn = (43690 & Qn) >>> 1 | (21845 & Qn) << 1;
-    Jn[Qn] = ((65280 & (Xn = (61680 & (Xn = (52428 & Xn) >>> 2 | (13107 & Xn) << 2)) >>> 4 | (3855 & Xn) << 4)) >>> 8 | (255 & Xn) << 8) >>> 1;
+  var io = eo(Xn, 2);
+  var ro = io[1];
+  io[0][28] = 258, ro[258] = 28;
+  for (so = eo(Zn, 0)[1], no = new Yn(32768), oo = 0; 32768 > oo; ++oo) {
+    ao = (43690 & oo) >>> 1 | (21845 & oo) << 1;
+    no[oo] = ((65280 & (ao = (61680 & (ao = (52428 & ao) >>> 2 | (13107 & ao) << 2)) >>> 4 | (3855 & ao) << 4)) >>> 8 | (255 & ao) << 8) >>> 1;
   }
-  var Xn;
-  var Kn;
-  var Jn;
-  var Qn;
-  var Zn = function(t4, e4, i4) {
-    for (var r4 = t4.length, s4 = 0, n3 = new Bn(e4); r4 > s4; ++s4) ++n3[t4[s4] - 1];
-    var o4, a4 = new Bn(e4);
+  var ao;
+  var so;
+  var no;
+  var oo;
+  var lo = function(t4, e4, i4) {
+    for (var r4 = t4.length, s4 = 0, n3 = new Yn(e4); r4 > s4; ++s4) ++n3[t4[s4] - 1];
+    var o4, a4 = new Yn(e4);
     for (s4 = 0; e4 > s4; ++s4) a4[s4] = a4[s4 - 1] + n3[s4 - 1] << 1;
     if (i4) {
-      o4 = new Bn(1 << e4);
+      o4 = new Yn(1 << e4);
       var l4 = 15 - e4;
-      for (s4 = 0; r4 > s4; ++s4) if (t4[s4]) for (var u5 = s4 << 4 | t4[s4], h4 = e4 - t4[s4], d4 = a4[t4[s4] - 1]++ << h4, v4 = d4 | (1 << h4) - 1; v4 >= d4; ++d4) o4[Jn[d4] >>> l4] = u5;
-    } else for (o4 = new Bn(r4), s4 = 0; r4 > s4; ++s4) o4[s4] = Jn[a4[t4[s4] - 1]++] >>> 15 - t4[s4];
+      for (s4 = 0; r4 > s4; ++s4) if (t4[s4]) for (var u5 = s4 << 4 | t4[s4], h4 = e4 - t4[s4], d4 = a4[t4[s4] - 1]++ << h4, v4 = d4 | (1 << h4) - 1; v4 >= d4; ++d4) o4[no[d4] >>> l4] = u5;
+    } else for (o4 = new Yn(r4), s4 = 0; r4 > s4; ++s4) o4[s4] = no[a4[t4[s4] - 1]++] >>> 15 - t4[s4];
     return o4;
   };
-  var to = new jn(288);
-  for (Qn = 0; 144 > Qn; ++Qn) to[Qn] = 8;
-  for (Qn = 144; 256 > Qn; ++Qn) to[Qn] = 9;
-  for (Qn = 256; 280 > Qn; ++Qn) to[Qn] = 7;
-  for (Qn = 280; 288 > Qn; ++Qn) to[Qn] = 8;
-  var eo = new jn(32);
-  for (Qn = 0; 32 > Qn; ++Qn) eo[Qn] = 5;
-  var io = Zn(to, 9, 0);
-  var ro = Zn(eo, 5, 0);
-  var so = function(t4) {
+  var uo = new Kn(288);
+  for (oo = 0; 144 > oo; ++oo) uo[oo] = 8;
+  for (oo = 144; 256 > oo; ++oo) uo[oo] = 9;
+  for (oo = 256; 280 > oo; ++oo) uo[oo] = 7;
+  for (oo = 280; 288 > oo; ++oo) uo[oo] = 8;
+  var ho = new Kn(32);
+  for (oo = 0; 32 > oo; ++oo) ho[oo] = 5;
+  var vo = lo(uo, 9, 0);
+  var co = lo(ho, 5, 0);
+  var fo = function(t4) {
     return (t4 / 8 >> 0) + (7 & t4 && 1);
   };
-  var no = function(t4, e4, i4) {
+  var po = function(t4, e4, i4) {
     (null == i4 || i4 > t4.length) && (i4 = t4.length);
-    var r4 = new (t4 instanceof Bn ? Bn : t4 instanceof zn ? zn : jn)(i4 - e4);
+    var r4 = new (t4 instanceof Yn ? Yn : t4 instanceof Qn ? Qn : Kn)(i4 - e4);
     return r4.set(t4.subarray(e4, i4)), r4;
   };
-  var oo = function(t4, e4, i4) {
+  var _o = function(t4, e4, i4) {
     var r4 = e4 / 8 >> 0;
     t4[r4] |= i4 <<= 7 & e4, t4[r4 + 1] |= i4 >>> 8;
   };
-  var ao = function(t4, e4, i4) {
+  var go = function(t4, e4, i4) {
     var r4 = e4 / 8 >> 0;
     t4[r4] |= i4 <<= 7 & e4, t4[r4 + 1] |= i4 >>> 8, t4[r4 + 2] |= i4 >>> 16;
   };
-  var lo = function(t4, e4) {
+  var mo = function(t4, e4) {
     for (var i4 = [], r4 = 0; t4.length > r4; ++r4) t4[r4] && i4.push({ s: r4, f: t4[r4] });
     var s4 = i4.length, n3 = i4.slice();
-    if (!s4) return [new jn(0), 0];
+    if (!s4) return [new Kn(0), 0];
     if (1 == s4) {
-      var o4 = new jn(i4[0].s + 1);
+      var o4 = new Kn(i4[0].s + 1);
       return o4[i4[0].s] = 1, [o4, 1];
     }
     i4.sort((function(t5, e5) {
@@ -7685,35 +7875,35 @@
     for (i4[0] = { s: -1, f: a4.f + l4.f, l: a4, r: l4 }; h4 != s4 - 1; ) a4 = i4[i4[d4].f > i4[u5].f ? u5++ : d4++], l4 = i4[u5 != h4 && i4[d4].f > i4[u5].f ? u5++ : d4++], i4[h4++] = { s: -1, f: a4.f + l4.f, l: a4, r: l4 };
     var v4 = n3[0].s;
     for (r4 = 1; s4 > r4; ++r4) n3[r4].s > v4 && (v4 = n3[r4].s);
-    var c4 = new Bn(v4 + 1), p4 = uo(i4[h4 - 1], c4, 0);
-    if (p4 > e4) {
+    var c4 = new Yn(v4 + 1), f5 = bo(i4[h4 - 1], c4, 0);
+    if (f5 > e4) {
       r4 = 0;
-      var f5 = 0, _3 = p4 - e4, g3 = 1 << _3;
+      var p4 = 0, _3 = f5 - e4, g3 = 1 << _3;
       for (n3.sort((function(t5, e5) {
         return c4[e5.s] - c4[t5.s] || t5.f - e5.f;
       })); s4 > r4; ++r4) {
         var m4 = n3[r4].s;
         if (e4 >= c4[m4]) break;
-        f5 += g3 - (1 << p4 - c4[m4]), c4[m4] = e4;
+        p4 += g3 - (1 << f5 - c4[m4]), c4[m4] = e4;
       }
-      for (f5 >>>= _3; f5 > 0; ) {
-        var y4 = n3[r4].s;
-        e4 > c4[y4] ? f5 -= 1 << e4 - c4[y4]++ - 1 : ++r4;
-      }
-      for (; r4 >= 0 && f5; --r4) {
+      for (p4 >>>= _3; p4 > 0; ) {
         var b3 = n3[r4].s;
-        c4[b3] == e4 && (--c4[b3], ++f5);
+        e4 > c4[b3] ? p4 -= 1 << e4 - c4[b3]++ - 1 : ++r4;
       }
-      p4 = e4;
+      for (; r4 >= 0 && p4; --r4) {
+        var y4 = n3[r4].s;
+        c4[y4] == e4 && (--c4[y4], ++p4);
+      }
+      f5 = e4;
     }
-    return [new jn(c4), p4];
+    return [new Kn(c4), f5];
   };
-  var uo = function(t4, e4, i4) {
-    return -1 == t4.s ? Math.max(uo(t4.l, e4, i4 + 1), uo(t4.r, e4, i4 + 1)) : e4[t4.s] = i4;
+  var bo = function(t4, e4, i4) {
+    return -1 == t4.s ? Math.max(bo(t4.l, e4, i4 + 1), bo(t4.r, e4, i4 + 1)) : e4[t4.s] = i4;
   };
-  var ho = function(t4) {
+  var yo = function(t4) {
     for (var e4 = t4.length; e4 && !t4[--e4]; ) ;
-    for (var i4 = new Bn(++e4), r4 = 0, s4 = t4[0], n3 = 1, o4 = function(t5) {
+    for (var i4 = new Yn(++e4), r4 = 0, s4 = t4[0], n3 = 1, o4 = function(t5) {
       i4[r4++] = t5;
     }, a4 = 1; e4 >= a4; ++a4) if (t4[a4] == s4 && a4 != e4) ++n3;
     else {
@@ -7729,58 +7919,58 @@
     }
     return [i4.subarray(0, r4), e4];
   };
-  var vo = function(t4, e4) {
+  var wo = function(t4, e4) {
     for (var i4 = 0, r4 = 0; e4.length > r4; ++r4) i4 += t4[r4] * e4[r4];
     return i4;
   };
-  var co = function(t4, e4, i4) {
-    var r4 = i4.length, s4 = so(e4 + 2);
+  var Eo = function(t4, e4, i4) {
+    var r4 = i4.length, s4 = fo(e4 + 2);
     t4[s4] = 255 & r4, t4[s4 + 1] = r4 >>> 8, t4[s4 + 2] = 255 ^ t4[s4], t4[s4 + 3] = 255 ^ t4[s4 + 1];
     for (var n3 = 0; r4 > n3; ++n3) t4[s4 + n3 + 4] = i4[n3];
     return 8 * (s4 + 4 + r4);
   };
-  var po = function(t4, e4, i4, r4, s4, n3, o4, a4, l4, u5, h4) {
-    oo(e4, h4++, i4), ++s4[256];
-    for (var d4 = lo(s4, 15), v4 = d4[0], c4 = d4[1], p4 = lo(n3, 15), f5 = p4[0], _3 = p4[1], g3 = ho(v4), m4 = g3[0], y4 = g3[1], b3 = ho(f5), w4 = b3[0], E3 = b3[1], x3 = new Bn(19), S3 = 0; m4.length > S3; ++S3) x3[31 & m4[S3]]++;
+  var xo = function(t4, e4, i4, r4, s4, n3, o4, a4, l4, u5, h4) {
+    _o(e4, h4++, i4), ++s4[256];
+    for (var d4 = mo(s4, 15), v4 = d4[0], c4 = d4[1], f5 = mo(n3, 15), p4 = f5[0], _3 = f5[1], g3 = yo(v4), m4 = g3[0], b3 = g3[1], y4 = yo(p4), w4 = y4[0], E3 = y4[1], x3 = new Yn(19), S3 = 0; m4.length > S3; ++S3) x3[31 & m4[S3]]++;
     for (S3 = 0; w4.length > S3; ++S3) x3[31 & w4[S3]]++;
-    for (var T4 = lo(x3, 7), k4 = T4[0], R4 = T4[1], P3 = 19; P3 > 4 && !k4[Vn[P3 - 1]]; --P3) ;
-    var I3, O3, C4, A4, F2 = u5 + 5 << 3, M2 = vo(s4, to) + vo(n3, eo) + o4, D4 = vo(s4, v4) + vo(n3, f5) + o4 + 14 + 3 * P3 + vo(x3, k4) + (2 * x3[16] + 3 * x3[17] + 7 * x3[18]);
-    if (M2 >= F2 && D4 >= F2) return co(e4, h4, t4.subarray(l4, l4 + u5));
-    if (oo(e4, h4, 1 + (M2 > D4)), h4 += 2, M2 > D4) {
-      I3 = Zn(v4, c4, 0), O3 = v4, C4 = Zn(f5, _3, 0), A4 = f5;
-      var L3 = Zn(k4, R4, 0);
-      for (oo(e4, h4, y4 - 257), oo(e4, h4 + 5, E3 - 1), oo(e4, h4 + 10, P3 - 4), h4 += 14, S3 = 0; P3 > S3; ++S3) oo(e4, h4 + 3 * S3, k4[Vn[S3]]);
+    for (var k4 = mo(x3, 7), T4 = k4[0], R4 = k4[1], P3 = 19; P3 > 4 && !T4[to[P3 - 1]]; --P3) ;
+    var O3, I3, C4, M2, A4 = u5 + 5 << 3, F2 = wo(s4, uo) + wo(n3, ho) + o4, D4 = wo(s4, v4) + wo(n3, p4) + o4 + 14 + 3 * P3 + wo(x3, T4) + (2 * x3[16] + 3 * x3[17] + 7 * x3[18]);
+    if (F2 >= A4 && D4 >= A4) return Eo(e4, h4, t4.subarray(l4, l4 + u5));
+    if (_o(e4, h4, 1 + (F2 > D4)), h4 += 2, F2 > D4) {
+      O3 = lo(v4, c4, 0), I3 = v4, C4 = lo(p4, _3, 0), M2 = p4;
+      var N3 = lo(T4, R4, 0);
+      for (_o(e4, h4, b3 - 257), _o(e4, h4 + 5, E3 - 1), _o(e4, h4 + 10, P3 - 4), h4 += 14, S3 = 0; P3 > S3; ++S3) _o(e4, h4 + 3 * S3, T4[to[S3]]);
       h4 += 3 * P3;
-      for (var N3 = [m4, w4], U2 = 0; 2 > U2; ++U2) {
-        var j4 = N3[U2];
-        for (S3 = 0; j4.length > S3; ++S3) oo(e4, h4, L3[B4 = 31 & j4[S3]]), h4 += k4[B4], B4 > 15 && (oo(e4, h4, j4[S3] >>> 5 & 127), h4 += j4[S3] >>> 12);
+      for (var U2 = [m4, w4], L3 = 0; 2 > L3; ++L3) {
+        var j4 = U2[L3];
+        for (S3 = 0; j4.length > S3; ++S3) _o(e4, h4, N3[B4 = 31 & j4[S3]]), h4 += T4[B4], B4 > 15 && (_o(e4, h4, j4[S3] >>> 5 & 127), h4 += j4[S3] >>> 12);
       }
-    } else I3 = io, O3 = to, C4 = ro, A4 = eo;
+    } else O3 = vo, I3 = uo, C4 = co, M2 = ho;
     for (S3 = 0; a4 > S3; ++S3) if (r4[S3] > 255) {
       var B4;
-      ao(e4, h4, I3[257 + (B4 = r4[S3] >>> 18 & 31)]), h4 += O3[B4 + 257], B4 > 7 && (oo(e4, h4, r4[S3] >>> 23 & 31), h4 += Hn[B4]);
+      go(e4, h4, O3[257 + (B4 = r4[S3] >>> 18 & 31)]), h4 += I3[B4 + 257], B4 > 7 && (_o(e4, h4, r4[S3] >>> 23 & 31), h4 += Xn[B4]);
       var z4 = 31 & r4[S3];
-      ao(e4, h4, C4[z4]), h4 += A4[z4], z4 > 3 && (ao(e4, h4, r4[S3] >>> 5 & 8191), h4 += qn[z4]);
-    } else ao(e4, h4, I3[r4[S3]]), h4 += O3[r4[S3]];
-    return ao(e4, h4, I3[256]), h4 + O3[256];
+      go(e4, h4, C4[z4]), h4 += M2[z4], z4 > 3 && (go(e4, h4, r4[S3] >>> 5 & 8191), h4 += Zn[z4]);
+    } else go(e4, h4, O3[r4[S3]]), h4 += I3[r4[S3]];
+    return go(e4, h4, O3[256]), h4 + I3[256];
   };
-  var fo = new zn([65540, 131080, 131088, 131104, 262176, 1048704, 1048832, 2114560, 2117632]);
-  var _o = (function() {
-    for (var t4 = new zn(256), e4 = 0; 256 > e4; ++e4) {
+  var So = new Qn([65540, 131080, 131088, 131104, 262176, 1048704, 1048832, 2114560, 2117632]);
+  var ko = (function() {
+    for (var t4 = new Qn(256), e4 = 0; 256 > e4; ++e4) {
       for (var i4 = e4, r4 = 9; --r4; ) i4 = (1 & i4 && 3988292384) ^ i4 >>> 1;
       t4[e4] = i4;
     }
     return t4;
   })();
-  var go = function(t4, e4, i4) {
+  var To = function(t4, e4, i4) {
     for (; i4; ++e4) t4[e4] = i4, i4 >>>= 8;
   };
-  function mo(t4, e4) {
+  function $o(t4, e4) {
     void 0 === e4 && (e4 = {});
     var i4 = /* @__PURE__ */ (function() {
       var t5 = 4294967295;
       return { p(e5) {
-        for (var i5 = t5, r5 = 0; e5.length > r5; ++r5) i5 = _o[255 & i5 ^ e5[r5]] ^ i5 >>> 8;
+        for (var i5 = t5, r5 = 0; e5.length > r5; ++r5) i5 = ko[255 & i5 ^ e5[r5]] ^ i5 >>> 8;
         t5 = i5;
       }, d() {
         return 4294967295 ^ t5;
@@ -7788,181 +7978,220 @@
     })(), r4 = t4.length;
     i4.p(t4);
     var s4, n3, o4, a4, l4, u5 = (a4 = 10 + ((s4 = e4).filename && s4.filename.length + 1 || 0), l4 = 8, (function(t5, e5, i5, r5, s5, n4) {
-      var o5 = t5.length, a5 = new jn(r5 + o5 + 5 * (1 + Math.floor(o5 / 7e3)) + s5), l5 = a5.subarray(r5, a5.length - s5), u6 = 0;
+      var o5 = t5.length, a5 = new Kn(r5 + o5 + 5 * (1 + Math.floor(o5 / 7e3)) + s5), l5 = a5.subarray(r5, a5.length - s5), u6 = 0;
       if (!e5 || 8 > o5) for (var h5 = 0; o5 >= h5; h5 += 65535) {
         var d4 = h5 + 65535;
-        o5 > d4 ? u6 = co(l5, u6, t5.subarray(h5, d4)) : (l5[h5] = true, u6 = co(l5, u6, t5.subarray(h5, o5)));
+        o5 > d4 ? u6 = Eo(l5, u6, t5.subarray(h5, d4)) : (l5[h5] = true, u6 = Eo(l5, u6, t5.subarray(h5, o5)));
       }
       else {
-        for (var v4 = fo[e5 - 1], c4 = v4 >>> 13, p4 = 8191 & v4, f5 = (1 << i5) - 1, _3 = new Bn(32768), g3 = new Bn(f5 + 1), m4 = Math.ceil(i5 / 3), y4 = 2 * m4, b3 = function(e6) {
-          return (t5[e6] ^ t5[e6 + 1] << m4 ^ t5[e6 + 2] << y4) & f5;
-        }, w4 = new zn(25e3), E3 = new Bn(288), x3 = new Bn(32), S3 = 0, T4 = 0, k4 = (h5 = 0, 0), R4 = 0, P3 = 0; o5 > h5; ++h5) {
-          var I3 = b3(h5), O3 = 32767 & h5, C4 = g3[I3];
-          if (_3[O3] = C4, g3[I3] = O3, h5 >= R4) {
-            var A4 = o5 - h5;
-            if ((S3 > 7e3 || k4 > 24576) && A4 > 423) {
-              u6 = po(t5, l5, 0, w4, E3, x3, T4, k4, P3, h5 - P3, u6), k4 = S3 = T4 = 0, P3 = h5;
-              for (var F2 = 0; 286 > F2; ++F2) E3[F2] = 0;
-              for (F2 = 0; 30 > F2; ++F2) x3[F2] = 0;
+        for (var v4 = So[e5 - 1], c4 = v4 >>> 13, f5 = 8191 & v4, p4 = (1 << i5) - 1, _3 = new Yn(32768), g3 = new Yn(p4 + 1), m4 = Math.ceil(i5 / 3), b3 = 2 * m4, y4 = function(e6) {
+          return (t5[e6] ^ t5[e6 + 1] << m4 ^ t5[e6 + 2] << b3) & p4;
+        }, w4 = new Qn(25e3), E3 = new Yn(288), x3 = new Yn(32), S3 = 0, k4 = 0, T4 = (h5 = 0, 0), R4 = 0, P3 = 0; o5 > h5; ++h5) {
+          var O3 = y4(h5), I3 = 32767 & h5, C4 = g3[O3];
+          if (_3[I3] = C4, g3[O3] = I3, h5 >= R4) {
+            var M2 = o5 - h5;
+            if ((S3 > 7e3 || T4 > 24576) && M2 > 423) {
+              u6 = xo(t5, l5, 0, w4, E3, x3, k4, T4, P3, h5 - P3, u6), T4 = S3 = k4 = 0, P3 = h5;
+              for (var A4 = 0; 286 > A4; ++A4) E3[A4] = 0;
+              for (A4 = 0; 30 > A4; ++A4) x3[A4] = 0;
             }
-            var M2 = 2, D4 = 0, L3 = p4, N3 = O3 - C4 & 32767;
-            if (A4 > 2 && I3 == b3(h5 - N3)) for (var U2 = Math.min(c4, A4) - 1, j4 = Math.min(32767, h5), B4 = Math.min(258, A4); j4 >= N3 && --L3 && O3 != C4; ) {
-              if (t5[h5 + M2] == t5[h5 + M2 - N3]) {
-                for (var z4 = 0; B4 > z4 && t5[h5 + z4] == t5[h5 + z4 - N3]; ++z4) ;
-                if (z4 > M2) {
-                  if (M2 = z4, D4 = N3, z4 > U2) break;
-                  var H3 = Math.min(N3, z4 - 2), q3 = 0;
-                  for (F2 = 0; H3 > F2; ++F2) {
-                    var V3 = h5 - N3 + F2 + 32768 & 32767, G3 = V3 - _3[V3] + 32768 & 32767;
+            var F2 = 2, D4 = 0, N3 = f5, U2 = I3 - C4 & 32767;
+            if (M2 > 2 && O3 == y4(h5 - U2)) for (var L3 = Math.min(c4, M2) - 1, j4 = Math.min(32767, h5), B4 = Math.min(258, M2); j4 >= U2 && --N3 && I3 != C4; ) {
+              if (t5[h5 + F2] == t5[h5 + F2 - U2]) {
+                for (var z4 = 0; B4 > z4 && t5[h5 + z4] == t5[h5 + z4 - U2]; ++z4) ;
+                if (z4 > F2) {
+                  if (F2 = z4, D4 = U2, z4 > L3) break;
+                  var H3 = Math.min(U2, z4 - 2), q3 = 0;
+                  for (A4 = 0; H3 > A4; ++A4) {
+                    var V3 = h5 - U2 + A4 + 32768 & 32767, G3 = V3 - _3[V3] + 32768 & 32767;
                     G3 > q3 && (q3 = G3, C4 = V3);
                   }
                 }
               }
-              N3 += (O3 = C4) - (C4 = _3[O3]) + 32768 & 32767;
+              U2 += (I3 = C4) - (C4 = _3[I3]) + 32768 & 32767;
             }
             if (D4) {
-              w4[k4++] = 268435456 | Yn[M2] << 18 | Kn[D4];
-              var W2 = 31 & Yn[M2], Y2 = 31 & Kn[D4];
-              T4 += Hn[W2] + qn[Y2], ++E3[257 + W2], ++x3[Y2], R4 = h5 + M2, ++S3;
-            } else w4[k4++] = t5[h5], ++E3[t5[h5]];
+              w4[T4++] = 268435456 | ro[F2] << 18 | so[D4];
+              var W2 = 31 & ro[F2], J3 = 31 & so[D4];
+              k4 += Xn[W2] + Zn[J3], ++E3[257 + W2], ++x3[J3], R4 = h5 + F2, ++S3;
+            } else w4[T4++] = t5[h5], ++E3[t5[h5]];
           }
         }
-        u6 = po(t5, l5, true, w4, E3, x3, T4, k4, P3, h5 - P3, u6);
+        u6 = xo(t5, l5, true, w4, E3, x3, k4, T4, P3, h5 - P3, u6);
       }
-      return no(a5, 0, r5 + so(u6) + s5);
+      return po(a5, 0, r5 + fo(u6) + s5);
     })(n3 = t4, null == (o4 = e4).level ? 6 : o4.level, null == o4.mem ? Math.ceil(1.5 * Math.max(8, Math.min(13, Math.log(n3.length)))) : 12 + o4.mem, a4, l4)), h4 = u5.length;
     return (function(t5, e5) {
       var i5 = e5.filename;
-      if (t5[0] = 31, t5[1] = 139, t5[2] = 8, t5[8] = 2 > e5.level ? 4 : 9 == e5.level ? 2 : 0, t5[9] = 3, 0 != e5.mtime && go(t5, 4, Math.floor(new Date(e5.mtime || Date.now()) / 1e3)), i5) {
+      if (t5[0] = 31, t5[1] = 139, t5[2] = 8, t5[8] = 2 > e5.level ? 4 : 9 == e5.level ? 2 : 0, t5[9] = 3, 0 != e5.mtime && To(t5, 4, Math.floor(new Date(e5.mtime || Date.now()) / 1e3)), i5) {
         t5[3] = 8;
         for (var r5 = 0; i5.length >= r5; ++r5) t5[r5 + 10] = i5.charCodeAt(r5);
       }
-    })(u5, e4), go(u5, h4 - 8, i4.d()), go(u5, h4 - 4, r4), u5;
+    })(u5, e4), To(u5, h4 - 8, i4.d()), To(u5, h4 - 4, r4), u5;
   }
-  var yo = !!o3 || !!n2;
-  var bo = "text/plain";
-  var wo = false;
-  var Eo = (t4, e4) => {
-    var [i4, r4] = t4.split("#"), [s4, n3] = i4.split("?");
-    if (!n3) return t4;
-    var o4 = n3.split("&").filter(((t5) => t5.split("=")[0] !== e4)).join("&");
-    return s4 + (o4 ? "?" + o4 : "") + (r4 ? "#" + r4 : "");
+  var Ro = !!o3 || !!n2;
+  var Po = "text/plain";
+  var Oo = false;
+  var Io = (t4, e4) => {
+    var i4 = t4.split("#"), r4 = i4[1], s4 = i4[0].split("?"), n3 = s4[0], o4 = s4[1];
+    if (!o4) return t4;
+    var a4 = o4.split("&").filter(((t5) => t5.split("=")[0] !== e4)).join("&");
+    return n3 + (a4 ? "?" + a4 : "") + (r4 ? "#" + r4 : "");
   };
-  var xo = function(t4, e4, i4) {
+  var Co = function(t4, e4, i4) {
     var r4;
     void 0 === i4 && (i4 = true);
-    var [s4, n3] = t4.split("?"), o4 = f4({}, e4), a4 = null !== (r4 = null == n3 ? void 0 : n3.split("&").map(((t5) => {
-      var e5, [r5, s5] = t5.split("="), n4 = i4 && null !== (e5 = o4[r5]) && void 0 !== e5 ? e5 : s5;
-      return delete o4[r5], r5 + "=" + n4;
-    }))) && void 0 !== r4 ? r4 : [], l4 = (function(t5, e5) {
+    var s4 = t4.split("?"), n3 = s4[0], o4 = s4[1], a4 = _2({}, e4), l4 = null !== (r4 = null == o4 ? void 0 : o4.split("&").map(((t5) => {
+      var e5, r5 = t5.split("="), s5 = r5[0], n4 = i4 && null !== (e5 = a4[s5]) && void 0 !== e5 ? e5 : r5[1];
+      return delete a4[s5], s5 + "=" + n4;
+    }))) && void 0 !== r4 ? r4 : [], u5 = (function(t5, e5) {
       var i5, r5;
       void 0 === e5 && (e5 = "&");
       var s5 = [];
-      return xr(t5, (function(t6, e6) {
-        V2(t6) || V2(e6) || "undefined" === e6 || (i5 = encodeURIComponent(((t7) => t7 instanceof File)(t6) ? t6.name : t6.toString()), r5 = encodeURIComponent(e6), s5[s5.length] = r5 + "=" + i5);
+      return Pr(t5, (function(t6, e6) {
+        W(t6) || W(e6) || "undefined" === e6 || (i5 = encodeURIComponent(((t7) => t7 instanceof File)(t6) ? t6.name : t6.toString()), r5 = encodeURIComponent(e6), s5[s5.length] = r5 + "=" + i5);
       })), s5.join(e5);
-    })(o4);
-    return l4 && a4.push(l4), s4 + "?" + a4.join("&");
+    })(a4);
+    return u5 && l4.push(u5), n3 + "?" + l4.join("&");
   };
-  var So = (t4, e4) => JSON.stringify(t4, ((t5, e5) => "bigint" == typeof e5 ? e5.toString() : e5), e4);
-  var To = (t4) => {
-    if (t4.xt) return t4.xt;
-    var { data: e4, compression: i4 } = t4;
+  var Mo = (t4, e4) => {
+    try {
+      return JSON.stringify(t4, ((t5, e5) => "bigint" == typeof e5 ? e5.toString() : e5), e4);
+    } catch (e5) {
+      return L2(t4);
+    }
+  };
+  var Ao = (t4) => {
+    if (t4.Ge) return t4.Ge;
+    var e4 = t4.data, i4 = t4.compression;
     if (e4) {
-      if (i4 === Un.GZipJS) {
-        var r4 = mo((function(t5, e5) {
+      if (i4 === Jn.GZipJS) {
+        var r4 = $o((function(t5, e5) {
           var i5 = t5.length;
           if ("undefined" != typeof TextEncoder) return new TextEncoder().encode(t5);
-          for (var r5 = new jn(t5.length + (t5.length >>> 1)), s5 = 0, n4 = function(t6) {
+          for (var r5 = new Kn(t5.length + (t5.length >>> 1)), s5 = 0, n4 = function(t6) {
             r5[s5++] = t6;
           }, o5 = 0; i5 > o5; ++o5) {
             if (s5 + 5 > r5.length) {
-              var a4 = new jn(s5 + 8 + (i5 - o5 << 1));
+              var a4 = new Kn(s5 + 8 + (i5 - o5 << 1));
               a4.set(r5), r5 = a4;
             }
             var l4 = t5.charCodeAt(o5);
             128 > l4 ? n4(l4) : 2048 > l4 ? (n4(192 | l4 >>> 6), n4(128 | 63 & l4)) : l4 > 55295 && 57344 > l4 ? (n4(240 | (l4 = 65536 + (1047552 & l4) | 1023 & t5.charCodeAt(++o5)) >>> 18), n4(128 | l4 >>> 12 & 63), n4(128 | l4 >>> 6 & 63), n4(128 | 63 & l4)) : (n4(224 | l4 >>> 12), n4(128 | l4 >>> 6 & 63), n4(128 | 63 & l4));
           }
-          return no(r5, 0, s5);
-        })(So(e4)), { mtime: 0 });
-        return { contentType: bo, body: r4.buffer.slice(r4.byteOffset, r4.byteOffset + r4.byteLength), estimatedSize: r4.byteLength };
+          return po(r5, 0, s5);
+        })(Mo(e4)), { mtime: 0 });
+        return { contentType: Po, body: r4.buffer.slice(r4.byteOffset, r4.byteOffset + r4.byteLength), estimatedSize: r4.byteLength };
       }
-      if (i4 === Un.Base64) {
+      if (i4 === Jn.Base64) {
         var s4 = (function(t5) {
           return t5 ? btoa(encodeURIComponent(t5).replace(/%([0-9A-F]{2})/g, ((t6, e5) => String.fromCharCode(parseInt(e5, 16))))) : t5;
-        })(So(e4)), n3 = ((t5) => "data=" + encodeURIComponent("string" == typeof t5 ? t5 : So(t5)))(s4);
+        })(Mo(e4)), n3 = ((t5) => "data=" + encodeURIComponent("string" == typeof t5 ? t5 : Mo(t5)))(s4);
         return { contentType: "application/x-www-form-urlencoded", body: n3, estimatedSize: new Blob([n3]).size };
       }
-      var o4 = So(e4);
+      var o4 = Mo(e4);
       return { contentType: "application/json", body: o4, estimatedSize: new Blob([o4]).size };
     }
   };
-  var $o = (t4) => {
-    var e4, i4, r4 = () => ({ url: Eo(t4.url, "compression"), encodedBody: To(f4({}, t4, { compression: void 0, xt: void 0 })) });
+  var Fo = (t4) => {
+    var e4, i4, r4 = () => "sendBeacon" === t4.transport ? { url: Co(t4.url, { compression: Jn.Base64 }), encodedBody: Ao(_2({}, t4, { compression: Jn.Base64, Ge: void 0 })) } : { url: Io(t4.url, "compression"), encodedBody: Ao(_2({}, t4, { compression: void 0, Ge: void 0 })) };
     try {
-      e4 = To(t4);
+      e4 = Ao(t4);
     } catch (e5) {
-      if (R3(t4.compression, Qs(t4.url, "compression"))) return li.error("Failed to gzip request body, sending uncompressed payload", e5), r4();
+      if (P2(t4.compression, nn(t4.url, "compression"))) return fi.error("Failed to gzip request body, sending uncompressed payload", e5), r4();
       throw e5;
     }
-    return e4 && R3(t4.compression, Qs(t4.url, "compression")) && !((i4 = e4.body) instanceof ArrayBuffer ? k3(new Uint8Array(i4)) : ArrayBuffer.isView(i4) && k3(new Uint8Array(i4.buffer, i4.byteOffset, i4.byteLength))) ? (wo = true, r4()) : { url: t4.url, encodedBody: e4 };
+    return e4 && P2(t4.compression, nn(t4.url, "compression")) && !((i4 = e4.body) instanceof ArrayBuffer ? R3(new Uint8Array(i4)) : ArrayBuffer.isView(i4) && R3(new Uint8Array(i4.buffer, i4.byteOffset, i4.byteLength))) ? (Oo = true, r4()) : { url: t4.url, encodedBody: e4 };
   };
-  var ko = (t4) => {
+  var Do = (t4) => {
     try {
-      return $o(t4);
+      return Fo(t4);
     } catch (e4) {
-      return li.error(e4), void (null == t4.callback || t4.callback({ statusCode: 0, error: e4 }));
+      return fi.error(e4), void (null == t4.callback || t4.callback({ statusCode: 0, error: e4 }));
     }
   };
-  var Ro = (function() {
+  var No = (function() {
     var t4 = p3((function* (t5) {
-      var e4 = So(t5.data), i4 = yield (function(t6, e5, i5) {
-        return C3.apply(this, arguments);
-      })(e4, v3.DEBUG, { rethrow: true });
+      var e4 = Mo(t5.data), i4 = yield (function(t6, e5, i5) {
+        return M.apply(this, arguments);
+      })(e4, c3.DEBUG, { rethrow: true });
       if (!i4) return t5;
       var r4 = yield i4.arrayBuffer();
-      return f4({}, t5, { xt: { contentType: bo, body: r4, estimatedSize: r4.byteLength } });
+      return _2({}, t5, { Ge: { contentType: Po, body: r4, estimatedSize: r4.byteLength } });
     }));
     return function(e4) {
       return t4.apply(this, arguments);
     };
   })();
-  var Po = (t4, e4) => xo(t4, { _: (/* @__PURE__ */ new Date()).getTime().toString(), ver: v3.JS_SDK_VERSION, compression: e4 });
-  var Io = [];
-  n2 && Io.push({ transport: "fetch", method(t4) {
-    var e4, i4 = ko(t4);
-    if (i4) {
-      var { url: r4, encodedBody: s4 } = i4, { contentType: o4, body: l4, estimatedSize: u5 } = null != s4 ? s4 : {}, h4 = new Headers();
-      xr(t4.headers, (function(t5, e5) {
+  var Uo = /Failed to fetch|NetworkError|Load failed/i;
+  var Lo = (t4) => {
+    var e4 = Do(t4);
+    if (e4) {
+      var i4 = e4.url, r4 = e4.encodedBody, s4 = null != r4 ? r4 : {}, o4 = s4.contentType, l4 = s4.body, u5 = s4.estimatedSize, h4 = new Headers();
+      Pr(t4.headers, (function(t5, e5) {
         h4.append(e5, t5);
       })), o4 && h4.append("Content-Type", o4);
-      var d4 = null, v4 = null;
+      var d4 = null, v4 = false;
       if (a3) {
         var c4 = new a3();
         d4 = { signal: c4.signal, timeout: setTimeout((() => {
           var e5, i5;
-          e5 = t4.timeout, (i5 = new Error("PostHog request timed out" + (e5 ? " after " + e5 + "ms" : ""))).name = "AbortError", c4.abort(v4 = i5);
+          v4 = true, c4.abort((e5 = t4.timeout, (i5 = new Error("PostHog request timed out" + (e5 ? " after " + e5 + "ms" : ""))).name = "AbortError", i5));
         }), t4.timeout) };
       }
-      n2(r4, f4({ method: (null == t4 ? void 0 : t4.method) || "GET", headers: h4, keepalive: "POST" === t4.method && 52428.8 > (u5 || 0), body: l4, signal: null == (e4 = d4) ? void 0 : e4.signal }, t4.fetchOptions)).then(((e5) => e5.text().then(((i5) => {
-        var r5 = { statusCode: e5.status, text: i5 };
-        if (200 === e5.status) try {
-          r5.json = JSON.parse(i5);
-        } catch (t5) {
-          li.error(t5);
-        }
-        null == t4.callback || t4.callback(r5);
-      })))).catch(((e5) => {
-        e5 === v4 ? li.warn(e5) : li.error(e5), null == t4.callback || t4.callback({ statusCode: 0, error: e5 });
-      })).finally((() => d4 ? clearTimeout(d4.timeout) : null));
+      var f5 = (e5) => {
+        v4 && "AbortError" === (null == e5 ? void 0 : e5.name) || ((t5) => "TypeError" === (null == t5 ? void 0 : t5.name) && Uo.test((null == t5 ? void 0 : t5.message) || ""))(e5) ? fi.warn(e5) : fi.error(e5), null == t4.callback || t4.callback({ statusCode: 0, error: e5 });
+      };
+      try {
+        var p4;
+        n2(i4, _2({ method: (null == t4 ? void 0 : t4.method) || "GET", headers: h4, keepalive: "POST" === t4.method && !t4.Qe && 52428.8 > (u5 || 0), body: l4, signal: null == (p4 = d4) ? void 0 : p4.signal }, t4.fetchOptions)).then(((e5) => e5.text().then(((i5) => {
+          var r5 = { statusCode: e5.status, text: i5 };
+          if (200 === e5.status) try {
+            r5.json = JSON.parse(i5);
+          } catch (t5) {
+            fi.error(t5);
+          }
+          null == t4.callback || t4.callback(r5);
+        })))).catch(f5).finally((() => d4 ? clearTimeout(d4.timeout) : null));
+      } catch (t5) {
+        d4 && clearTimeout(d4.timeout), f5(t5);
+      }
     }
-  } }), o3 && Io.push({ transport: "XHR", method(t4) {
-    var e4 = ko(t4);
+  };
+  var jo = (t4) => {
+    try {
+      var e4 = Fo(t4), r4 = e4.url, s4 = e4.encodedBody, n3 = null != s4 ? s4 : {}, o4 = n3.body, a4 = n3.estimatedSize;
+      if (!o4) return;
+      var l4 = o4 instanceof Blob ? o4 : new Blob([o4], { type: n3.contentType });
+      if (i3.sendBeacon(r4, l4)) return;
+      if (H2(t4.data) && t4.data.length > 1 && (null != a4 ? a4 : 0) > 16384) {
+        var u5 = Math.ceil(t4.data.length / 2);
+        return jo(_2({}, t4, { data: t4.data.slice(0, u5) })), void jo(_2({}, t4, { data: t4.data.slice(u5) }));
+      }
+      fi.warn("Beacon of ~" + (null != a4 ? a4 : 0) + " bytes was rejected by the browser, falling back to fetch"), Lo(_2({}, t4, { Qe: true }));
+    } catch (t5) {
+      fi.warn("Beacon send failed", t5);
+    }
+  };
+  var Bo = ["/e/", "/s/"];
+  var zo = (t4, e4) => {
+    var i4 = ((t5) => {
+      var e5 = ((t6) => {
+        var e6 = sn(t6), i5 = (null == e6 ? void 0 : e6.pathname) || t6.split(/[?#]/)[0];
+        return i5 ? "/" === i5[0] ? i5 : "/" + i5 : "/";
+      })(t5);
+      return Bo.some(((t6) => ((t7, e6) => t7.slice(t7.length - e6.length) === e6)(e5, t6)));
+    })(t4), r4 = i4 ? Io(t4, "ver") : t4;
+    return Co(e4 === Jn.GZipJS ? Io(r4, "compression") : r4, _2({ _: (/* @__PURE__ */ new Date()).getTime().toString() }, i4 ? {} : { ver: c3.JS_SDK_VERSION }, e4 === Jn.GZipJS ? {} : { compression: e4 }));
+  };
+  var Ho = [];
+  n2 && Ho.push({ transport: "fetch", method: Lo }), o3 && Ho.push({ transport: "XHR", method(t4) {
+    var e4 = Do(t4);
     if (e4) {
-      var i4 = new o3(), { url: r4, encodedBody: s4 } = e4;
-      i4.open(t4.method || "GET", r4, true);
-      var { contentType: n3, body: a4 } = null != s4 ? s4 : {};
-      xr(t4.headers, (function(t5, e5) {
+      var i4 = new o3(), r4 = e4.encodedBody;
+      i4.open(t4.method || "GET", e4.url, true);
+      var s4 = null != r4 ? r4 : {}, n3 = s4.contentType, a4 = s4.body;
+      Pr(t4.headers, (function(t5, e5) {
         i4.setRequestHeader(e5, t5);
       })), n3 && i4.setRequestHeader("Content-Type", n3), t4.timeout && (i4.timeout = t4.timeout), i4.onreadystatechange = () => {
         if (4 === i4.readyState) {
@@ -7975,310 +8204,310 @@
         }
       }, i4.send(a4);
     }
-  } }), null != i3 && i3.sendBeacon && Io.push({ transport: "sendBeacon", method(t4) {
-    try {
-      var { url: e4, encodedBody: r4 } = $o(t4), { contentType: s4, body: n3 } = null != r4 ? r4 : {};
-      if (!n3) return;
-      var o4 = n3 instanceof Blob ? n3 : new Blob([n3], { type: s4 });
-      i3.sendBeacon(e4, o4);
-    } catch (t5) {
-    }
-  } });
-  var Oo = 3e3;
-  var Co = class {
+  } }), null != i3 && i3.sendBeacon && Ho.push({ transport: "sendBeacon", method: jo });
+  var qo = 3e3;
+  var Vo = class {
     constructor(t4, e4) {
-      this.br = true, this._r = [], this.wr = lt((null == e4 ? void 0 : e4.flush_interval_ms) || Oo, 250, 5e3, li.createLogger("flush interval"), Oo), this.kr = t4;
+      this.Zr = true, this.Gr = [], this.Qr = ht((null == e4 ? void 0 : e4.flush_interval_ms) || qo, 250, 5e3, fi.createLogger("flush interval"), qo), this.Jr = t4;
     }
     enqueue(t4) {
-      this._r.push(t4), this.Sr || this.Cr();
+      this.Gr.push(t4), this.Kr || this.Yr();
     }
     unload() {
-      this.Ir();
-      var t4 = this._r.length > 0 ? this.Tr() : {}, e4 = Object.values(t4);
+      this.Xr();
+      var t4 = this.Gr.length > 0 ? this.ti() : {}, e4 = Object.values(t4);
       [...e4.filter(((t5) => 0 === t5.url.indexOf("/e"))), ...e4.filter(((t5) => 0 !== t5.url.indexOf("/e")))].map(((t5) => {
-        this.Er(f4({}, t5, { transport: "sendBeacon" }));
+        this.ei(_2({}, t5, { transport: "sendBeacon" }));
       }));
     }
     enable() {
-      this.br = false, this.Cr();
+      this.Zr = false, this.Yr();
     }
-    Cr() {
+    Yr() {
       var t4 = this;
-      this.br || (this.Sr = setTimeout((() => {
-        if (this.Ir(), this._r.length > 0) {
-          var e4 = this.Tr(), i4 = function() {
+      this.Zr || (this.Kr = setTimeout((() => {
+        if (this.Xr(), this.Gr.length > 0) {
+          var e4 = this.ti(), i4 = function() {
             var i5 = e4[r4], s4 = (/* @__PURE__ */ new Date()).getTime();
-            i5.data && B3(i5.data) && xr(i5.data, ((t5) => {
+            i5.data && H2(i5.data) && Pr(i5.data, ((t5) => {
               t5.offset = Math.abs(t5.timestamp - s4), delete t5.timestamp;
-            })), t4.Er(i5);
+            })), t4.ei(i5);
           };
           for (var r4 in e4) i4();
         }
-      }), this.wr));
+      }), this.Qr));
     }
-    Er(t4) {
+    ei(t4) {
       try {
-        this.kr(t4);
+        this.Jr(t4);
       } catch (t5) {
-        li.error(t5);
+        fi.error(t5);
       }
     }
-    Ir() {
-      clearTimeout(this.Sr), this.Sr = void 0;
+    Xr() {
+      clearTimeout(this.Kr), this.Kr = void 0;
     }
-    Tr() {
+    ti() {
       var t4 = {};
-      return xr(this._r, ((e4) => {
+      return Pr(this.Gr, ((e4) => {
         var i4, r4 = e4, s4 = (r4 ? r4.batchKey : null) || r4.url;
-        V2(t4[s4]) && (t4[s4] = f4({}, r4, { data: [] })), null == (i4 = t4[s4].data) || i4.push(r4.data);
-      })), this._r = [], t4;
+        W(t4[s4]) && (t4[s4] = _2({}, r4, { data: [] })), null == (i4 = t4[s4].data) || i4.push(r4.data);
+      })), this.Gr = [], t4;
     }
   };
-  var Ao = ["retriesPerformedSoFar"];
-  var Fo = class {
+  var Go = ["retriesPerformedSoFar"];
+  var Wo = class {
     constructor(e4) {
-      this.Mr = false, this.Pr = 3e3, this._r = [], this._instance = e4, this._r = [], this.Rr = true, !V2(t3) && "onLine" in t3.navigator && (this.Rr = t3.navigator.onLine, this.Or = () => {
-        this.Rr = true, this.Lr();
-      }, this.Fr = () => {
-        this.Rr = false;
-      }, Or(t3, "online", this.Or), Or(t3, "offline", this.Fr));
+      this.ri = false, this.ii = 3e3, this.Gr = [], this._instance = e4, this.Gr = [], this.ni = true, !W(t3) && "onLine" in t3.navigator && (this.ni = t3.navigator.onLine, this.si = () => {
+        this.ni = true, this.oi();
+      }, this.ai = () => {
+        this.ni = false;
+      }, Nr(t3, "online", this.si), Nr(t3, "offline", this.ai));
     }
     get length() {
-      return this._r.length;
+      return this.Gr.length;
     }
     retriableRequest(t4) {
-      var { retriesPerformedSoFar: e4 } = t4, i4 = _2(t4, Ao);
-      Q2(e4) && (i4.url = xo(i4.url, { retry_count: e4 })), this._instance._send_request(f4({}, i4, { callback: (t5) => {
+      var e4 = t4.retriesPerformedSoFar, i4 = g2(t4, Go);
+      Z(e4) && (i4.url = Co(i4.url, { retry_count: e4 })), this._instance._send_request(_2({}, i4, { callback: (t5) => {
         if (200 !== t5.statusCode && (400 > t5.statusCode || t5.statusCode >= 500)) {
-          if ((0 === t5.statusCode ? 3 : 10) > (null != e4 ? e4 : 0)) return void this.st(f4({ retriesPerformedSoFar: e4 }, i4));
-          0 === t5.statusCode && li.warn("Request failed before receiving an HTTP response; this can happen due to network issues, CORS, browser blocking, or ad blockers. Stopped retrying after " + (null != e4 ? e4 : 0) + " retries.");
+          if ((0 === t5.statusCode ? 3 : 10) > (null != e4 ? e4 : 0)) return void this.Ot(_2({ retriesPerformedSoFar: e4 }, i4));
+          0 === t5.statusCode && fi.warn("Request failed before receiving an HTTP response; this can happen due to network issues, CORS, browser blocking, or ad blockers. Stopped retrying after " + (null != e4 ? e4 : 0) + " retries.");
         }
         null == i4.callback || i4.callback(t5);
       } }));
     }
-    st(t4) {
+    Ot(t4) {
       var e4 = t4.retriesPerformedSoFar || 0;
       t4.retriesPerformedSoFar = e4 + 1;
       var i4 = (function(t5) {
         var e5 = 3e3 * Math.pow(2, t5), i5 = e5 / 2, r5 = Math.min(18e5, e5), s5 = Math.random() - 0.5;
         return Math.ceil(r5 + s5 * (r5 - i5));
       })(e4), r4 = Date.now() + i4;
-      this._r.push({ retryAt: r4, requestOptions: t4 });
+      this.Gr.push({ retryAt: r4, requestOptions: t4 });
       var s4 = "Enqueued failed request for retry in " + i4;
-      navigator.onLine || (s4 += " (Browser is offline)"), li.warn(s4), this.Mr || (this.Mr = true, this.Ar());
+      navigator.onLine || (s4 += " (Browser is offline)"), fi.warn(s4), this.ri || (this.ri = true, this.li());
     }
-    Ar() {
-      if (this.$r && clearTimeout(this.$r), 0 === this._r.length) return this.Mr = false, void (this.$r = void 0);
-      this.$r = setTimeout((() => {
-        this.Rr && this._r.length > 0 && this.Lr(), this.Ar();
-      }), this.Pr);
+    li() {
+      if (this.ui && clearTimeout(this.ui), 0 === this.Gr.length) return this.ri = false, void (this.ui = void 0);
+      this.ui = setTimeout((() => {
+        this.ni && this.Gr.length > 0 && this.oi(), this.li();
+      }), this.ii);
     }
-    Lr() {
-      var t4 = Date.now(), e4 = [], i4 = this._r.filter(((i5) => t4 > i5.retryAt || (e4.push(i5), false)));
-      if (this._r = e4, i4.length > 0) for (var { requestOptions: r4 } of i4) this.retriableRequest(r4);
+    oi() {
+      var t4 = Date.now(), e4 = [], i4 = this.Gr.filter(((i5) => t4 > i5.retryAt || (e4.push(i5), false)));
+      if (this.Gr = e4, i4.length > 0) for (var r4 of i4) this.retriableRequest(r4.requestOptions);
     }
     unload() {
-      for (var { requestOptions: e4 } of (this.$r && (clearTimeout(this.$r), this.$r = void 0), this.Mr = false, V2(t3) || (this.Or && (t3.removeEventListener("online", this.Or), this.Or = void 0), this.Fr && (t3.removeEventListener("offline", this.Fr), this.Fr = void 0)), this._r)) try {
-        this._instance._send_request(f4({}, e4, { transport: "sendBeacon" }));
-      } catch (t4) {
-        li.error(t4);
+      for (var e4 of (this.ui && (clearTimeout(this.ui), this.ui = void 0), this.ri = false, W(t3) || (this.si && (t3.removeEventListener("online", this.si), this.si = void 0), this.ai && (t3.removeEventListener("offline", this.ai), this.ai = void 0)), this.Gr)) {
+        var i4 = e4.requestOptions;
+        try {
+          this._instance._send_request(_2({}, i4, { transport: "sendBeacon" }));
+        } catch (t4) {
+          fi.error(t4);
+        }
       }
-      this._r = [];
+      this.Gr = [];
     }
   };
-  var Mo = class {
+  var Jo = class {
     constructor(t4) {
-      this.Dr = () => {
+      this.hi = () => {
         var t5, e4, i4, r4;
-        this.Nr || (this.Nr = {});
+        this.di || (this.di = {});
         var s4 = this.scrollElement(), n3 = this.scrollY(), o4 = s4 ? Math.max(0, s4.scrollHeight - s4.clientHeight) : 0, a4 = n3 + ((null == s4 ? void 0 : s4.clientHeight) || 0), l4 = (null == s4 ? void 0 : s4.scrollHeight) || 0;
-        this.Nr.lastScrollY = Math.ceil(n3), this.Nr.maxScrollY = Math.max(n3, null !== (t5 = this.Nr.maxScrollY) && void 0 !== t5 ? t5 : 0), this.Nr.maxScrollHeight = Math.max(o4, null !== (e4 = this.Nr.maxScrollHeight) && void 0 !== e4 ? e4 : 0), this.Nr.lastContentY = a4, this.Nr.maxContentY = Math.max(a4, null !== (i4 = this.Nr.maxContentY) && void 0 !== i4 ? i4 : 0), this.Nr.maxContentHeight = Math.max(l4, null !== (r4 = this.Nr.maxContentHeight) && void 0 !== r4 ? r4 : 0);
+        this.di.lastScrollY = Math.ceil(n3), this.di.maxScrollY = Math.max(n3, null !== (t5 = this.di.maxScrollY) && void 0 !== t5 ? t5 : 0), this.di.maxScrollHeight = Math.max(o4, null !== (e4 = this.di.maxScrollHeight) && void 0 !== e4 ? e4 : 0), this.di.lastContentY = a4, this.di.maxContentY = Math.max(a4, null !== (i4 = this.di.maxContentY) && void 0 !== i4 ? i4 : 0), this.di.maxContentHeight = Math.max(l4, null !== (r4 = this.di.maxContentHeight) && void 0 !== r4 ? r4 : 0);
       }, this._instance = t4;
     }
-    get qr() {
+    get ci() {
       return this._instance.config.scroll_root_selector;
     }
     getContext() {
-      return this.Nr;
+      return this.di;
     }
     resetContext() {
-      var t4 = this.Nr;
-      return setTimeout(this.Dr, 0), t4;
+      var t4 = this.di;
+      return setTimeout(this.hi, 0), t4;
     }
     startMeasuringScrollPosition() {
-      Or(t3, "scroll", this.Dr, { capture: true }), Or(t3, "scrollend", this.Dr, { capture: true }), Or(t3, "resize", this.Dr);
+      Nr(t3, "scroll", this.hi, { capture: true }), Nr(t3, "scrollend", this.hi, { capture: true }), Nr(t3, "resize", this.hi);
     }
     scrollElement() {
-      if (!this.qr) return null == t3 ? void 0 : t3.document.documentElement;
-      var e4 = B3(this.qr) ? this.qr : [this.qr];
+      if (!this.ci) return null == t3 ? void 0 : t3.document.documentElement;
+      var e4 = H2(this.ci) ? this.ci : [this.ci];
       for (var i4 of e4) {
         var r4 = null == t3 ? void 0 : t3.document.querySelector(i4);
         if (r4) return r4;
       }
     }
-    jr(e4) {
+    vi(e4) {
       var i4 = "y" === e4 ? "scrollTop" : "scrollLeft";
-      if (this.qr) {
+      if (this.ci) {
         var r4 = this.scrollElement();
         return r4 && r4[i4] || 0;
       }
       return t3 ? "y" === e4 ? t3.scrollY || t3.pageYOffset || t3.document.documentElement.scrollTop || 0 : t3.scrollX || t3.pageXOffset || t3.document.documentElement.scrollLeft || 0 : 0;
     }
     scrollY() {
-      return this.jr("y");
+      return this.vi("y");
     }
     scrollX() {
-      return this.jr("x");
+      return this.vi("x");
     }
   };
-  var Do = (t4) => vn(null == t4 ? void 0 : t4.config.mask_personal_data_properties, null == t4 ? void 0 : t4.config.custom_personal_data_properties, null == t4 ? void 0 : t4.config.disable_capture_url_hashes);
-  var Lo = class {
+  var Ko = (t4) => wn(null == t4 ? void 0 : t4.config.mask_personal_data_properties, null == t4 ? void 0 : t4.config.custom_personal_data_properties, null == t4 ? void 0 : t4.config.disable_capture_url_hashes);
+  var Yo = class {
     constructor(t4, e4, i4, r4) {
-      this.Br = (t5) => {
-        var e5 = this.Hr();
+      this.fi = (t5) => {
+        var e5 = this.pi();
         if (!e5 || e5.sessionId !== t5) {
-          var i5 = { sessionId: t5, props: this.Ur(this._instance) };
-          this.zr.register({ [Zi]: i5 });
+          var i5 = { sessionId: t5, props: this.gi(this._instance) };
+          this.mi.register({ [nr]: i5 });
         }
-      }, this._instance = t4, this.Vr = e4, this.zr = i4, this.Ur = r4 || Do, this.Vr.onSessionId(this.Br);
+      }, this._instance = t4, this.yi = e4, this.mi = i4, this.gi = r4 || Ko, this.yi.onSessionId(this.fi);
     }
-    Hr() {
-      return this.zr.props[Zi];
+    pi() {
+      return this.mi.props[nr];
     }
     getSetOnceProps() {
-      var t4, e4 = null == (t4 = this.Hr()) ? void 0 : t4.props;
-      return e4 ? "r" in e4 ? cn(e4, this._instance.config.disable_capture_url_hashes) : { $referring_domain: e4.referringDomain, $pathname: e4.initialPathName, utm_source: e4.utm_source, utm_campaign: e4.utm_campaign, utm_medium: e4.utm_medium, utm_content: e4.utm_content, utm_term: e4.utm_term } : {};
+      var t4, e4 = null == (t4 = this.pi()) ? void 0 : t4.props;
+      return e4 ? "r" in e4 ? En(e4, this._instance.config.disable_capture_url_hashes) : { $referring_domain: e4.referringDomain, $pathname: e4.initialPathName, utm_source: e4.utm_source, utm_campaign: e4.utm_campaign, utm_medium: e4.utm_medium, utm_content: e4.utm_content, utm_term: e4.utm_term } : {};
     }
     getSessionProps() {
       var t4 = {};
-      return xr(Rr(this.getSetOnceProps()), ((e4, i4) => {
-        "$current_url" === i4 && (i4 = "url"), t4["$session_entry_" + L2(i4)] = e4;
+      return Pr(Ar(this.getSetOnceProps()), ((e4, i4) => {
+        "$current_url" === i4 && (i4 = "url"), t4["$session_entry_" + U(i4)] = e4;
       })), t4;
     }
   };
-  var No = class {
+  var Qo = class {
     constructor() {
-      this.Wr = {};
+      this.bi = {};
     }
     on(t4, e4) {
-      return this.Wr[t4] || (this.Wr[t4] = []), this.Wr[t4].push(e4), () => {
-        this.Wr[t4] = this.Wr[t4].filter(((t5) => t5 !== e4));
+      return this.bi[t4] || (this.bi[t4] = []), this.bi[t4].push(e4), () => {
+        this.bi[t4] = this.bi[t4].filter(((t5) => t5 !== e4));
       };
     }
     emit(t4, e4) {
-      for (var i4 of this.Wr[t4] || []) i4(e4);
-      for (var r4 of this.Wr["*"] || []) r4(t4, e4);
+      for (var i4 of this.bi[t4] || []) i4(e4);
+      for (var r4 of this.bi["*"] || []) r4(t4, e4);
     }
   };
-  var Uo = ui("[SessionId]");
-  var jo = class {
+  var Xo = pi("[SessionId]");
+  var Zo = class {
     on(t4, e4) {
-      return this.Gr.on(t4, e4);
+      return this.wi.on(t4, e4);
     }
     constructor(t4, e4, i4) {
       var r4;
-      if (this.Zr = null, this.Qr = [], this.Jr = void 0, this.Yr = false, this.Gr = new No(), this.Kr = (t5, e5) => !(!Q2(t5) || !Q2(e5)) && Math.abs(t5 - e5) > this.sessionTimeoutMs, !t4.persistence) throw new Error("SessionIdManager requires a PostHogPersistence instance");
-      if (t4.config.cookieless_mode === vr) throw new Error('SessionIdManager cannot be used with cookieless_mode="always"');
-      this.Se = t4.config, this.zr = t4.persistence, this.Xr = void 0, this.ei = void 0, this._sessionStartTimestamp = null, this._sessionActivityTimestamp = null, this.ti = e4 || Nr, this.ri = i4 || Nr;
-      var s4 = this.Se.persistence_name || this.Se.token;
-      if (this._sessionTimeoutMs = 1e3 * lt(this.Se.session_idle_timeout_seconds || 1800, 60, 36e3, Uo.createLogger("session_idle_timeout_seconds"), 1800), t4.register({ $configured_session_timeout_ms: this._sessionTimeoutMs }), this.ii(), this.ni = "ph_" + s4 + "_window_id", this.si = "ph_" + s4 + "_primary_window_exists", this.oi()) {
-        var n3 = Kr.F(this.ni), o4 = Kr.F(this.si);
-        n3 && !o4 ? this.Xr = n3 : Kr.P(this.ni), Kr.q(this.si, true);
+      if (this.xi = null, this.ki = [], this.Si = void 0, this.Ci = false, this.wi = new Qo(), this.Ii = (t5, e5) => !(!Z(t5) || !Z(e5)) && Math.abs(t5 - e5) > this.sessionTimeoutMs, !t4.persistence) throw new Error("SessionIdManager requires a PostHogPersistence instance");
+      if (t4.config.cookieless_mode === mr) throw new Error('SessionIdManager cannot be used with cookieless_mode="always"');
+      this.Te = t4.config, this.mi = t4.persistence, this.Ti = void 0, this.Mi = void 0, this._sessionStartTimestamp = null, this._sessionActivityTimestamp = null, this.Ei = e4 || qr, this.Ri = i4 || qr;
+      var s4 = this.Te.persistence_name || this.Te.token;
+      if (this._sessionTimeoutMs = 1e3 * ht(this.Te.session_idle_timeout_seconds || 1800, 60, 36e3, Xo.createLogger("session_idle_timeout_seconds"), 1800), t4.register({ $configured_session_timeout_ms: this._sessionTimeoutMs }), this.Pi(), this.Oi = "ph_" + s4 + "_window_id", this.Fi = "ph_" + s4 + "_primary_window_exists", this.Li()) {
+        var n3 = es2.F(this.Oi), o4 = es2.F(this.Fi);
+        n3 && !o4 ? this.Ti = n3 : es2.P(this.Oi), es2.q(this.Fi, true);
       }
-      if (null != (r4 = this.Se.bootstrap) && r4.sessionID) try {
+      if (null != (r4 = this.Te.bootstrap) && r4.sessionID) try {
         var a4 = ((t5) => {
-          var e5 = this.Se.bootstrap.sessionID.replace(/-/g, "");
+          var e5 = this.Te.bootstrap.sessionID.replace(/-/g, "");
           if (32 !== e5.length) throw new Error("Not a valid UUID");
           if ("7" !== e5[12]) throw new Error("Not a UUIDv7");
           return parseInt(e5.substring(0, 12), 16);
         })();
-        this.ai(this.Se.bootstrap.sessionID, (/* @__PURE__ */ new Date()).getTime(), a4);
+        this.Ai(this.Te.bootstrap.sessionID, (/* @__PURE__ */ new Date()).getTime(), a4);
       } catch (t5) {
-        Uo.error("Invalid sessionID in bootstrap", t5);
+        Xo.error("Invalid sessionID in bootstrap", t5);
       }
-      this.li();
+      this.$i();
     }
     get sessionTimeoutMs() {
       return this._sessionTimeoutMs;
     }
     onSessionId(t4) {
-      return V2(this.Qr) && (this.Qr = []), this.Qr.push(t4), this.ei && t4(this.ei, this.Xr), () => {
-        this.Qr = this.Qr.filter(((e4) => e4 !== t4));
+      return W(this.ki) && (this.ki = []), this.ki.push(t4), this.Mi && t4(this.Mi, this.Ti), () => {
+        this.ki = this.ki.filter(((e4) => e4 !== t4));
       };
     }
-    oi() {
-      return "memory" !== this.Se.persistence && !this.zr.Vt && Kr.N();
+    Li() {
+      return "memory" !== this.Te.persistence && !this.mi._r && es2.N();
     }
-    ui(t4) {
-      t4 !== this.Xr && (this.Xr = t4, this.oi() && Kr.q(this.ni, t4));
+    Ni(t4) {
+      t4 !== this.Ti && (this.Ti = t4, this.Li() && es2.q(this.Oi, t4));
     }
-    hi() {
-      return this.Xr ? this.Xr : this.oi() ? Kr.F(this.ni) : null;
+    Di() {
+      return this.Ti ? this.Ti : this.Li() ? es2.F(this.Oi) : null;
     }
-    di(t4) {
-      var e4 = this.Zr;
+    qi(t4) {
+      var e4 = this.xi;
       return !Y(e4) && !Y(t4) && 5e3 > Math.abs(t4 - e4);
     }
-    ai(t4, e4, i4) {
-      var r4 = e4 !== this._sessionActivityTimestamp, s4 = !(t4 !== this.ei || i4 !== this._sessionStartTimestamp);
-      this._sessionStartTimestamp = i4, this._sessionActivityTimestamp = e4, this.ei = t4, s4 && !r4 || s4 && this.di(e4) || (this.Zr = e4, this.zr.register({ [Ci]: [e4, t4, i4] }));
+    Ai(t4, e4, i4) {
+      var r4 = e4 !== this._sessionActivityTimestamp, s4 = !(t4 !== this.Mi || i4 !== this._sessionStartTimestamp);
+      this._sessionStartTimestamp = i4, this._sessionActivityTimestamp = e4, this.Mi = t4, s4 && !r4 || s4 && this.qi(e4) || (this.xi = e4, this.mi.register({ [Ui]: [e4, t4, i4] }));
     }
-    ci() {
-      var t4, e4 = null == (t4 = this.Se) ? void 0 : t4.persistence_save_debounce_ms;
-      return Q2(e4) && e4 > 0;
+    ji() {
+      var t4, e4 = null == (t4 = this.Te) ? void 0 : t4.persistence_save_debounce_ms;
+      return Z(e4) && e4 > 0;
     }
-    vi() {
-      this.ci() ? this.zr.refreshKey(Ci) : (this.zr.flush(), this.zr.load());
+    Hi() {
+      this.ji() ? this.mi.refreshKey(Ui) : (this.mi.flush(), this.mi.load());
     }
-    fi() {
+    Bi() {
       var t4;
-      if (!Y(this._sessionActivityTimestamp) && this._sessionActivityTimestamp !== this.Zr) {
-        this.vi();
-        var [, e4, i4] = this.pi();
-        e4 === this.ei && i4 === this._sessionStartTimestamp && (this.Zr = this._sessionActivityTimestamp, this.zr.register({ [Ci]: [this._sessionActivityTimestamp, null !== (t4 = this.ei) && void 0 !== t4 ? t4 : null, this._sessionStartTimestamp] }), this.zr.flush());
+      if (!Y(this._sessionActivityTimestamp) && this._sessionActivityTimestamp !== this.xi) {
+        this.Hi();
+        var e4 = this.Ui();
+        e4[1] === this.Mi && e4[2] === this._sessionStartTimestamp && (this.xi = this._sessionActivityTimestamp, this.mi.register({ [Ui]: [this._sessionActivityTimestamp, null !== (t4 = this.Mi) && void 0 !== t4 ? t4 : null, this._sessionStartTimestamp] }), this.mi.flush());
       }
     }
-    gi() {
-      var [t4] = this.pi(), e4 = Q2(t4) ? t4 : 0, i4 = Q2(this._sessionActivityTimestamp) ? this._sessionActivityTimestamp : 0;
+    zi() {
+      var t4 = this.Ui()[0], e4 = Z(t4) ? t4 : 0, i4 = Z(this._sessionActivityTimestamp) ? this._sessionActivityTimestamp : 0;
       return Math.max(e4, i4);
     }
-    mi(t4) {
-      return this.vi(), this.Kr(t4, this.gi());
+    Vi(t4) {
+      return this.Hi(), this.Ii(t4, this.zi());
     }
-    pi() {
-      var t4 = this.zr.props[Ci];
-      return B3(t4) && 2 === t4.length && t4.push(t4[0]), t4 || [0, null, 0];
+    Ui() {
+      var t4 = this.mi.props[Ui];
+      return H2(t4) && 2 === t4.length && t4.push(t4[0]), t4 || [0, null, 0];
     }
     resetSessionId() {
-      this.Zr = null, clearTimeout(this.yi), this.yi = void 0, this.ai(null, null, null);
+      this.xi = null, clearTimeout(this.Wi), this.Wi = void 0, this.Ai(null, null, null);
     }
     destroy() {
-      this.Yr = true, this.fi(), clearTimeout(this.yi), this.yi = void 0, this.Jr && t3 && (t3.removeEventListener(gr, this.Jr, { capture: false }), this.Jr = void 0), this.Qr = [];
+      this.Ci = true, this.Bi(), clearTimeout(this.Wi), this.Wi = void 0, this.Si && t3 && (t3.removeEventListener(xr, this.Si, { capture: false }), this.Si = void 0), this.ki = [];
     }
-    li() {
-      this.Jr = () => {
-        this.fi(), this.oi() && Kr.P(this.si);
-      }, Or(t3, gr, this.Jr, { capture: false });
+    $i() {
+      this.Si = () => {
+        this.Bi(), this.Li() && es2.P(this.Fi);
+      }, Nr(t3, xr, this.Si, { capture: false });
     }
     checkAndGetSessionAndWindowId(t4, e4) {
-      if (void 0 === t4 && (t4 = false), void 0 === e4 && (e4 = null), this.Se.cookieless_mode === vr) throw new Error('checkAndGetSessionAndWindowId should not be called with cookieless_mode="always"');
-      var i4 = e4 || (/* @__PURE__ */ new Date()).getTime(), [, r4, s4] = this.pi(), n3 = this.gi(), o4 = this.hi(), a4 = Q2(s4) && Math.abs(i4 - s4) > 864e5, l4 = false, u5 = false, h4 = !r4, d4 = r4, v4 = !h4 && !t4 && this.Kr(i4, n3);
-      v4 && ((v4 = this.mi(i4)) || Uo.info("cross-tab refresh kept the session alive", { sessionId: r4 }), [, r4, s4] = this.pi()), h4 || v4 || a4 ? (r4 = this.ti(), o4 = this.ri(), Uo.info("new session ID generated", { sessionId: r4, windowId: o4, changeReason: { noSessionId: h4, activityTimeout: v4, sessionPastMaximumLength: a4 } }), s4 = i4, l4 = true) : (o4 || (o4 = this.ri(), l4 = true), (u5 = r4 !== d4) && (Uo.info("adopted cross-tab session id", { sessionId: r4, windowId: o4 }), l4 = true));
-      var c4 = Q2(n3) && t4 && !a4 ? n3 : i4, p4 = Q2(s4) ? s4 : (/* @__PURE__ */ new Date()).getTime();
-      this.ui(o4), this.ai(r4, c4, p4), t4 || this.ii();
-      var f5 = { noSessionId: h4, activityTimeout: v4, sessionPastMaximumLength: a4, crossTabAdoption: u5 };
-      return l4 && this.Qr.forEach(((t5) => t5(r4, o4, f5))), { sessionId: r4, windowId: o4, sessionStartTimestamp: p4, changeReason: l4 ? f5 : void 0, lastActivityTimestamp: n3 };
+      if (void 0 === t4 && (t4 = false), void 0 === e4 && (e4 = null), this.Te.cookieless_mode === mr) throw new Error('checkAndGetSessionAndWindowId should not be called with cookieless_mode="always"');
+      var i4 = e4 || (/* @__PURE__ */ new Date()).getTime(), r4 = this.Ui(), s4 = r4[1], n3 = r4[2], o4 = this.zi(), a4 = this.Di(), l4 = Z(n3) && Math.abs(i4 - n3) > 864e5, u5 = false, h4 = false, d4 = !s4, v4 = s4, c4 = !d4 && !t4 && this.Ii(i4, o4);
+      if (c4) {
+        (c4 = this.Vi(i4)) || Xo.info("cross-tab refresh kept the session alive", { sessionId: s4 });
+        var f5 = this.Ui();
+        s4 = f5[1], n3 = f5[2];
+      }
+      d4 || c4 || l4 ? (s4 = this.Ei(), a4 = this.Ri(), Xo.info("new session ID generated", { sessionId: s4, windowId: a4, changeReason: { noSessionId: d4, activityTimeout: c4, sessionPastMaximumLength: l4 } }), n3 = i4, u5 = true) : (a4 || (a4 = this.Ri(), u5 = true), (h4 = s4 !== v4) && (Xo.info("adopted cross-tab session id", { sessionId: s4, windowId: a4 }), u5 = true));
+      var p4 = Z(o4) && t4 && !l4 ? o4 : i4, _3 = Z(n3) ? n3 : (/* @__PURE__ */ new Date()).getTime();
+      this.Ni(a4), this.Ai(s4, p4, _3), t4 || this.Pi();
+      var g3 = { noSessionId: d4, activityTimeout: c4, sessionPastMaximumLength: l4, crossTabAdoption: h4 };
+      return u5 && this.ki.forEach(((t5) => t5(s4, a4, g3))), { sessionId: s4, windowId: a4, sessionStartTimestamp: _3, changeReason: u5 ? g3 : void 0, lastActivityTimestamp: o4 };
     }
-    ii() {
-      this.Yr || (clearTimeout(this.yi), this.yi = setTimeout((() => {
-        if (!this.Yr) if (this.mi((/* @__PURE__ */ new Date()).getTime())) {
-          var t4 = this.ei;
-          this.resetSessionId(), this.Gr.emit("forcedIdleReset", { idleSessionId: t4 });
-        } else this.ii();
+    Pi() {
+      this.Ci || (clearTimeout(this.Wi), this.Wi = setTimeout((() => {
+        if (!this.Ci) if (this.Vi((/* @__PURE__ */ new Date()).getTime())) {
+          var t4 = this.Mi;
+          this.resetSessionId(), this.wi.emit("forcedIdleReset", { idleSessionId: t4 });
+        } else this.Pi();
       }), 1.1 * this.sessionTimeoutMs));
     }
   };
-  var Bo = function(t4, e4) {
+  var ta = function(t4, e4) {
     if (!t4) return false;
     var i4 = t4.userAgent;
     if (i4 && F(i4, e4)) return true;
@@ -8289,18 +8518,18 @@
     }
     return !!t4.webdriver;
   };
-  function zo() {
-    return (zo = p3((function* () {
+  function ea() {
+    return (ea = p3((function* () {
       var t4 = null == i3 ? void 0 : i3.userAgentData;
       if (null != t4 && t4.getHighEntropyValues) try {
         var e4 = yield t4.getHighEntropyValues(["model"]), r4 = null == e4 ? void 0 : e4.model;
-        return G2(r4) && r4.length > 0 ? r4 : void 0;
+        return J2(r4) && r4.length > 0 ? r4 : void 0;
       } catch (t5) {
-        return void li.info("Unable to resolve $device_model from userAgentData.getHighEntropyValues", t5);
+        return void fi.info("Unable to resolve $device_model from userAgentData.getHighEntropyValues", t5);
       }
     }))).apply(this, arguments);
   }
-  var Ho = function(t4, e4) {
+  var ia = function(t4, e4) {
     if (!(function(t5) {
       try {
         new RegExp(t5);
@@ -8315,31 +8544,31 @@
       return false;
     }
   };
-  function qo(t4, e4, i4) {
-    return So({ distinct_id: t4, userPropertiesToSet: e4, userPropertiesToSetOnce: i4 });
+  function ra(t4, e4, i4) {
+    return Mo({ distinct_id: t4, userPropertiesToSet: e4, userPropertiesToSetOnce: i4 });
   }
-  var Vo = { exact: (t4, e4) => e4.some(((e5) => t4.some(((t5) => e5 === t5)))), is_not: (t4, e4) => e4.every(((e5) => t4.every(((t5) => e5 !== t5)))), regex: (t4, e4) => e4.some(((e5) => t4.some(((t5) => Ho(e5, t5))))), not_regex: (t4, e4) => e4.every(((e5) => t4.every(((t5) => !Ho(e5, t5))))), icontains: (t4, e4) => e4.map(Go).some(((e5) => t4.map(Go).some(((t5) => e5.includes(t5))))), not_icontains: (t4, e4) => e4.map(Go).every(((e5) => t4.map(Go).every(((t5) => !e5.includes(t5))))), gt: (t4, e4) => e4.some(((e5) => {
+  var sa = { exact: (t4, e4) => e4.some(((e5) => t4.some(((t5) => e5 === t5)))), is_not: (t4, e4) => e4.every(((e5) => t4.every(((t5) => e5 !== t5)))), regex: (t4, e4) => e4.some(((e5) => t4.some(((t5) => ia(e5, t5))))), not_regex: (t4, e4) => e4.every(((e5) => t4.every(((t5) => !ia(e5, t5))))), icontains: (t4, e4) => e4.map(na).some(((e5) => t4.map(na).some(((t5) => e5.includes(t5))))), not_icontains: (t4, e4) => e4.map(na).every(((e5) => t4.map(na).every(((t5) => !e5.includes(t5))))), gt: (t4, e4) => e4.some(((e5) => {
     var i4 = parseFloat(e5);
     return !isNaN(i4) && t4.some(((t5) => i4 > parseFloat(t5)));
   })), lt: (t4, e4) => e4.some(((e5) => {
     var i4 = parseFloat(e5);
     return !isNaN(i4) && t4.some(((t5) => i4 < parseFloat(t5)));
   })) };
-  var Go = (t4) => t4.toLowerCase();
-  function Wo(t4, e4) {
+  var na = (t4) => t4.toLowerCase();
+  function oa(t4, e4) {
     return !t4 || Object.entries(t4).every(((t5) => {
-      var [i4, r4] = t5, s4 = null == e4 ? void 0 : e4[i4];
-      if (V2(s4) || Y(s4)) return false;
-      var n3 = [String(s4)], o4 = Vo[r4.operator];
-      return !!o4 && o4(r4.values, n3);
+      var i4 = t5[1], r4 = null == e4 ? void 0 : e4[t5[0]];
+      if (W(r4) || Y(r4)) return false;
+      var s4 = [String(r4)], n3 = sa[i4.operator];
+      return !!n3 && n3(i4.values, s4);
     }));
   }
-  var Yo = "custom";
-  var Ko = "i.posthog.com";
-  var Jo = /^\/static\//;
-  var Qo = class {
+  var aa = "custom";
+  var la = "i.posthog.com";
+  var ua = /^\/static\//;
+  var ha = class {
     constructor(t4) {
-      this.bi = {}, this.instance = t4;
+      this.Zi = {}, this.instance = t4;
     }
     get apiHost() {
       var t4 = this.instance.config.api_host.trim().replace(/\/$/, "");
@@ -8351,13 +8580,13 @@
     }
     get uiHost() {
       var t4, e4 = null == (t4 = this.instance.config.ui_host) ? void 0 : t4.replace(/\/$/, "");
-      return e4 || (e4 = this.apiHost.replace("." + Ko, ".posthog.com")), "https://app.posthog.com" === e4 ? "https://us.posthog.com" : e4;
+      return e4 || (e4 = this.apiHost.replace("." + la, ".posthog.com")), "https://app.posthog.com" === e4 ? "https://us.posthog.com" : e4;
     }
     get region() {
-      return this.bi[this.apiHost] || (this.bi[this.apiHost] = /https:\/\/(app|us|us-assets)(\.i)?\.posthog\.com/i.test(this.apiHost) ? "us" : /https:\/\/(eu|eu-assets)(\.i)?\.posthog\.com/i.test(this.apiHost) ? "eu" : Yo), this.bi[this.apiHost];
+      return this.Zi[this.apiHost] || (this.Zi[this.apiHost] = /https:\/\/(app|us|us-assets)(\.i)?\.posthog\.com/i.test(this.apiHost) ? "us" : /https:\/\/(eu|eu-assets)(\.i)?\.posthog\.com/i.test(this.apiHost) ? "eu" : aa), this.Zi[this.apiHost];
     }
-    wi(t4) {
-      if (Jo.test(t4)) {
+    Gi(t4) {
+      if (ua.test(t4)) {
         var e4 = this.instance.config.asset_host;
         if ("string" == typeof e4) return e4.trim().replace(/\/$/, "") || void 0;
       }
@@ -8366,11 +8595,11 @@
       if (void 0 === e4 && (e4 = ""), e4 && (e4 = "/" === e4[0] ? e4 : "/" + e4), "ui" === t4) return this.uiHost + e4;
       if ("flags" === t4) return this.flagsApiHost + e4;
       if ("assets" === t4) {
-        var i4 = this.wi(e4);
+        var i4 = this.Gi(e4);
         if (i4) return "" + i4 + e4;
       }
-      if (this.region === Yo) return this.apiHost + e4;
-      var r4 = Ko + e4;
+      if (this.region === aa) return this.apiHost + e4;
+      var r4 = la + e4;
       switch (t4) {
         case "assets":
           return "https://" + this.region + "-assets." + r4;
@@ -8379,82 +8608,99 @@
       }
     }
   };
-  var Xo = ui("[Surveys]");
-  var Zo = "seenSurvey_";
-  var ta = [Sn.Popover, Sn.Widget, Sn.API];
-  var ea = { ignoreConditions: false, ignoreDelay: false, displayType: In.Popover };
-  var ia = ui("[PostHog ExternalIntegrations]");
-  var ra = { intercom: "intercom-integration", crispChat: "crisp-chat-integration" };
-  var sa = class {
+  function da(t4) {
+    var e4;
+    return !(null == (e4 = t4.conditions) || null == (e4 = e4.events) || null == (e4 = e4.values) || !e4.length);
+  }
+  var va = pi("[Surveys]");
+  var ca = "seenSurvey_";
+  var fa = (t4) => {
+    try {
+      var e4 = ((t5) => ((t6, e5) => "" + ca + (function(t7) {
+        return t7.current_iteration && t7.current_iteration > 0 ? t7.id + "_" + t7.current_iteration : t7.id;
+      })(e5))(0, t5))(t4);
+      if (localStorage.getItem(e4)) return;
+      localStorage.setItem(e4, "true");
+    } catch (t5) {
+      va.error("Failed to persist survey seen state", t5);
+    }
+  };
+  var pa = [Mn.Popover, Mn.Widget, Mn.API];
+  var _a = { ignoreConditions: false, ignoreDelay: false, displayType: Ln.Popover };
+  var ga = pi("[PostHog ExternalIntegrations]");
+  var ma = { intercom: "intercom-integration", crispChat: "crisp-chat-integration" };
+  var ba = class {
     constructor(t4) {
       this._instance = t4;
     }
-    Mt(t4, e4) {
+    rr(t4, e4) {
       var i4;
       null == (i4 = h3.__PosthogExtensions__) || null == i4.loadExternalDependency || i4.loadExternalDependency(this._instance, t4, ((t5) => {
-        if (t5) return ia.error("failed to load script", t5);
+        if (t5) return ga.error("failed to load script", t5);
         e4();
       }));
     }
     startIfEnabledOrStop() {
-      var t4 = this, e4 = function(e5) {
-        var i5, s5, n3;
-        !r4 || null != (i5 = h3.__PosthogExtensions__) && null != (i5 = i5.integrations) && i5[e5] || t4.Mt(ra[e5], (() => {
-          var i6;
-          null == (i6 = h3.__PosthogExtensions__) || null == (i6 = i6.integrations) || null == (i6 = i6[e5]) || i6.start(t4._instance);
-        })), !r4 && null != (s5 = h3.__PosthogExtensions__) && null != (s5 = s5.integrations) && s5[e5] && (null == (n3 = h3.__PosthogExtensions__) || null == (n3 = n3.integrations) || null == (n3 = n3[e5]) || n3.stop());
+      var t4 = this, e4 = function() {
+        var e5, r5, s4, n3 = i4[0], o4 = i4[1];
+        !o4 || null != (e5 = h3.__PosthogExtensions__) && null != (e5 = e5.integrations) && e5[n3] || t4.rr(ma[n3], (() => {
+          var e6;
+          null == (e6 = h3.__PosthogExtensions__) || null == (e6 = e6.integrations) || null == (e6 = e6[n3]) || e6.start(t4._instance);
+        })), !o4 && null != (r5 = h3.__PosthogExtensions__) && null != (r5 = r5.integrations) && r5[n3] && (null == (s4 = h3.__PosthogExtensions__) || null == (s4 = s4.integrations) || null == (s4 = s4[n3]) || s4.stop());
       };
-      for (var [i4, r4] of Object.entries(null !== (s4 = this._instance.config.integrations) && void 0 !== s4 ? s4 : {})) {
-        var s4;
-        e4(i4);
+      for (var i4 of Object.entries(null !== (r4 = this._instance.config.integrations) && void 0 !== r4 ? r4 : {})) {
+        var r4;
+        e4();
       }
     }
   };
-  var na;
-  var oa = {};
-  var aa = 0;
-  var la = () => {
+  var ya = {};
+  var wa = 0;
+  var Ea = () => {
   };
-  var ua = 'Consent opt in/out is not valid with cookieless_mode="always" and will be ignored';
-  var ha = "Surveys module not available";
-  var da = "sanitize_properties is deprecated. Use before_send instead";
-  var va = "Invalid value for property_denylist config: ";
-  var ca = "posthog";
-  var pa = !yo && -1 === (null == u4 ? void 0 : u4.indexOf("MSIE")) && -1 === (null == u4 ? void 0 : u4.indexOf("Mozilla"));
-  var fa = (e4) => {
+  var xa = 'Consent opt in/out is not valid with cookieless_mode="always" and will be ignored';
+  var Sa = "Surveys module not available";
+  var ka = "sanitize_properties is deprecated. Use before_send instead";
+  var Ta = "Invalid value for property_denylist config: ";
+  var $a = "posthog";
+  var Ra = !Ro && -1 === (null == u4 ? void 0 : u4.indexOf("MSIE")) && -1 === (null == u4 ? void 0 : u4.indexOf("Mozilla"));
+  var Pa = (e4) => {
     var i4;
-    return f4({ api_host: "https://us.i.posthog.com", flags_api_host: null, ui_host: null, asset_host: null, token: "", autocapture: true, cross_subdomain_cookie: Ir(null == r3 ? void 0 : r3.location), persistence: "localStorage+cookie", persistence_name: "", cookie_persisted_properties: [], loaded: la, save_campaign_params: true, custom_campaign_params: [], custom_blocked_useragents: [], save_referrer: true, capture_pageleave: "if_capture_pageview", defaults: null != e4 ? e4 : "unset", __preview_deferred_init_extensions: false, __preview_external_dependency_versioned_paths: false, __preview_cookie_wins_on_conflict: false, debug: s3 && G2(null == s3 ? void 0 : s3.search) && -1 !== s3.search.indexOf("__posthog_debug=true") || false, cookie_expiration: 365, upgrade: false, disable_session_recording: false, disable_persistence: false, disable_web_experiments: true, disable_surveys: false, disable_surveys_automatic_display: false, disable_conversations: false, disable_product_tours: false, disableDeviceModel: false, disable_external_dependency_loading: false, strict_script_versioning: false, enable_recording_console_log: void 0, secure_cookie: "https:" === (null == t3 || null == (i4 = t3.location) ? void 0 : i4.protocol), ip: false, opt_out_capturing_by_default: false, opt_out_persistence_by_default: false, opt_out_useragent_filter: false, opt_out_capturing_persistence_type: "localStorage", consent_persistence_name: null, opt_out_capturing_cookie_prefix: null, opt_in_site_apps: false, property_denylist: [], respect_dnt: false, sanitize_properties: null, request_headers: {}, request_batching: true, properties_string_max_length: 65535, mask_all_element_attributes: false, mask_all_text: false, mask_personal_data_properties: false, custom_personal_data_properties: [], advanced_disable_flags: false, advanced_disable_decide: false, advanced_disable_feature_flags: false, advanced_disable_feature_flags_on_first_load: false, advanced_only_evaluate_survey_feature_flags: false, advanced_feature_flags_dedup_per_session: false, advanced_enable_surveys: false, advanced_disable_toolbar_metrics: false, feature_flag_request_timeout_ms: 3e3, surveys_request_timeout_ms: 1e4, on_request_error(t4) {
-      li.error("Bad HTTP status: " + t4.statusCode + " " + t4.text);
-    }, get_device_id: (t4) => t4, capture_performance: void 0, name: "posthog", bootstrap: {}, disable_compression: false, session_idle_timeout_seconds: 1800, person_profiles: fr, before_send: void 0, get_current_url: void 0, request_queue_config: { flush_interval_ms: Oo }, error_tracking: {}, _onCapture: la }, ((t4) => ({ rageclick: t4 && t4 >= "2026-05-30" ? { content_ignorelist: gs, ignore_text_selection: true } : !t4 || "2025-11-30" > t4 || { content_ignorelist: true }, capture_pageview: !t4 || "2025-05-24" > t4 || "history_change", session_recording: t4 && t4 >= "2026-06-25" ? { strictMinimumDuration: true, canvasCapture: { resolutionScale: 0.6 }, streamNetworkBody: true } : t4 && t4 >= "2026-05-30" ? { strictMinimumDuration: true, canvasCapture: { resolutionScale: 0.6 } } : t4 && t4 >= "2025-11-30" ? { strictMinimumDuration: true } : {}, external_scripts_inject_target: t4 && t4 >= "2026-01-30" ? "head" : "body", internal_or_test_user_hostname: t4 && t4 >= "2026-01-30" ? /^(localhost|127\.0\.0\.1)$/ : void 0, persistence_save_debounce_ms: t4 && t4 >= "2026-05-30" ? 250 : 0, split_storage: !(!t4 || "2026-05-30" > t4), detect_google_search_app: !(!t4 || "2026-05-30" > t4), disable_capture_url_hashes: !(!t4 || "2026-06-25" > t4) }))(e4));
+    return _2({ api_host: "https://us.i.posthog.com", flags_api_host: null, ui_host: null, asset_host: null, token: "", autocapture: true, cross_subdomain_cookie: Dr(null == r3 ? void 0 : r3.location), persistence: "localStorage+cookie", persistence_name: "", cookie_persisted_properties: [], loaded: Ea, save_campaign_params: true, custom_campaign_params: [], custom_blocked_useragents: [], save_referrer: true, capture_pageleave: "if_capture_pageview", defaults: null != e4 ? e4 : "unset", __preview_deferred_init_extensions: false, __preview_external_dependency_versioned_paths: false, __preview_cookie_wins_on_conflict: false, debug: s3 && J2(null == s3 ? void 0 : s3.search) && -1 !== s3.search.indexOf("__posthog_debug=true") || false, cookie_expiration: 365, upgrade: false, disable_session_recording: false, disable_persistence: false, disable_web_experiments: true, disable_surveys: false, disable_surveys_automatic_display: false, disable_conversations: false, disable_product_tours: false, disableDeviceModel: false, disable_external_dependency_loading: false, strict_script_versioning: false, enable_recording_console_log: void 0, secure_cookie: "https:" === (null == t3 || null == (i4 = t3.location) ? void 0 : i4.protocol), ip: false, opt_out_capturing_by_default: false, opt_out_persistence_by_default: false, opt_out_useragent_filter: false, opt_out_capturing_persistence_type: "localStorage", consent_persistence_name: null, opt_out_capturing_cookie_prefix: null, opt_in_site_apps: false, property_denylist: [], respect_dnt: false, sanitize_properties: null, request_headers: {}, request_batching: true, properties_string_max_length: 65535, mask_all_element_attributes: false, mask_all_text: false, mask_personal_data_properties: false, custom_personal_data_properties: [], advanced_disable_flags: false, advanced_disable_decide: false, advanced_disable_feature_flags: false, advanced_disable_feature_flags_on_first_load: false, advanced_only_evaluate_survey_feature_flags: false, advanced_feature_flags_dedup_per_session: false, advanced_enable_surveys: false, advanced_disable_toolbar_metrics: false, feature_flag_request_timeout_ms: 3e3, surveys_request_timeout_ms: 1e4, on_request_error(t4) {
+      fi.error("Bad HTTP status: " + t4.statusCode + " " + t4.text);
+    }, get_device_id: (t4) => t4, capture_performance: void 0, name: "posthog", bootstrap: {}, disable_compression: false, session_idle_timeout_seconds: 1800, person_profiles: wr, before_send: void 0, get_current_url: void 0, request_queue_config: { flush_interval_ms: qo }, error_tracking: {}, _onCapture: Ea }, ((t4) => ({ rageclick: t4 && t4 >= "2026-05-30" ? { content_ignorelist: Ss, ignore_text_selection: true } : !t4 || "2025-11-30" > t4 || { content_ignorelist: true }, capture_pageview: !t4 || "2025-05-24" > t4 || "history_change", session_recording: t4 && t4 >= "2026-06-25" ? { strictMinimumDuration: true, canvasCapture: { resolutionScale: 0.6 }, streamNetworkBody: true } : t4 && t4 >= "2026-05-30" ? { strictMinimumDuration: true, canvasCapture: { resolutionScale: 0.6 } } : t4 && t4 >= "2025-11-30" ? { strictMinimumDuration: true } : {}, external_scripts_inject_target: t4 && t4 >= "2026-01-30" ? "head" : "body", internal_or_test_user_hostname: t4 && t4 >= "2026-01-30" ? /^(localhost|127\.0\.0\.1)$/ : void 0, persistence_save_debounce_ms: t4 && t4 >= "2026-05-30" ? 250 : 0, split_storage: !(!t4 || "2026-05-30" > t4), detect_google_search_app: !(!t4 || "2026-05-30" > t4), disable_capture_url_hashes: !(!t4 || "2026-06-25" > t4) }))(e4));
   };
-  var _a = [["process_person", "person_profiles"], ["xhr_headers", "request_headers"], ["cookie_name", "persistence_name"], ["disable_cookie", "disable_persistence"], ["__preview_disable_beacon", "disable_beacon"], ["store_google", "save_campaign_params"], ["verbose", "debug"]];
-  var ga = (t4) => {
+  var Oa = [["process_person", "person_profiles"], ["xhr_headers", "request_headers"], ["cookie_name", "persistence_name"], ["disable_cookie", "disable_persistence"], ["__preview_disable_beacon", "disable_beacon"], ["store_google", "save_campaign_params"], ["verbose", "debug"]];
+  var Ia = (t4) => {
     var e4 = {};
-    for (var [i4, r4] of _a) V2(t4[i4]) || (e4[r4] = t4[i4]);
-    var s4 = Sr({}, e4, t4), n3 = t4.__preview_external_dependency_versioned_paths;
-    return V2(n3) || (V2(t4.strict_script_versioning) && (s4.strict_script_versioning = !!n3), G2(n3) && V2(t4.asset_host) && (s4.asset_host = n3)), B3(t4.property_blacklist) && (V2(t4.property_denylist) ? s4.property_denylist = t4.property_blacklist : B3(t4.property_denylist) ? s4.property_denylist = [...t4.property_blacklist, ...t4.property_denylist] : li.error(va + t4.property_denylist)), s4;
+    for (var i4 of Oa) {
+      var r4 = i4[0], s4 = i4[1];
+      W(t4[r4]) || (e4[s4] = t4[r4]);
+    }
+    var n3 = Or({}, e4, t4), o4 = t4.__preview_external_dependency_versioned_paths;
+    return W(o4) || (W(t4.strict_script_versioning) && (n3.strict_script_versioning = !!o4), J2(o4) && W(t4.asset_host) && (n3.asset_host = o4)), H2(t4.property_blacklist) && (W(t4.property_denylist) ? n3.property_denylist = t4.property_blacklist : H2(t4.property_denylist) ? n3.property_denylist = [...t4.property_blacklist, ...t4.property_denylist] : fi.error(Ta + t4.property_denylist)), n3;
   };
-  var ma = class {
+  var Ca = class {
     constructor() {
       this.__forceAllowLocalhost = false;
     }
-    get xi() {
+    get Qi() {
       return this.__forceAllowLocalhost;
     }
-    set xi(t4) {
-      li.error("WebPerformanceObserver is deprecated and has no impact on network capture. Use `_forceAllowLocalhostNetworkCapture` on `posthog.sessionRecording`"), this.__forceAllowLocalhost = t4;
+    set Qi(t4) {
+      fi.error("WebPerformanceObserver is deprecated and has no impact on network capture. Use `_forceAllowLocalhostNetworkCapture` on `posthog.sessionRecording`"), this.__forceAllowLocalhost = t4;
     }
   };
-  var ya = class _ya {
-    ki(t4, e4) {
+  var Ma = class _Ma {
+    Ji(t4, e4) {
       if (t4) {
-        var i4 = this.Si.indexOf(t4);
-        -1 !== i4 && this.Si.splice(i4, 1);
+        var i4 = this.Ki.indexOf(t4);
+        -1 !== i4 && this.Ki.splice(i4, 1);
       }
-      return this.Si.push(e4), null == e4.initialize || e4.initialize(), e4;
+      return this.Ki.push(e4), null == e4.initialize || e4.initialize(), e4;
     }
-    Ci() {
-      return this.config.cookieless_mode === vr || this.config.cookieless_mode === dr && this.consent.isRejected();
+    Yi() {
+      return this.config.cookieless_mode === mr || this.config.cookieless_mode === gr && this.consent.isRejected();
     }
     get decideEndpointWasHit() {
       var t4, e4;
@@ -8466,319 +8712,322 @@
     }
     constructor() {
       var t4;
-      this.webPerformance = new ma(), this.Ii = false, this.version = v3.LIB_VERSION, this.Ti = new No(), this.Si = [], this._calculate_event_properties = this.calculateEventProperties.bind(this), this.config = fa(), this.SentryIntegration = qs, this.sentryIntegration = (t5) => (function(t6, e5) {
-        var i4 = Hs(t6, e5);
-        return { name: zs, processEvent: (t7) => i4(t7) };
-      })(this, t5), this.__request_queue = [], this.__loaded = false, this.analyticsDefaultEndpoint = "/e/", this.Ei = false, this.Mi = null, this.Pi = null, this.Ri = null, this.scrollManager = new Mo(this), this.pageViewManager = new Vs(this), this.rateLimiter = new Mn(this), this.requestRouter = new Qo(this), this.consent = new Jr(this), this.externalIntegrations = new sa(this);
-      var e4 = null !== (t4 = _ya.__defaultExtensionClasses) && void 0 !== t4 ? t4 : {};
-      this.featureFlags = e4.featureFlags && new e4.featureFlags(this), this.toolbar = e4.toolbar && new e4.toolbar(this), this.surveys = e4.surveys && new e4.surveys(this), this.conversations = e4.conversations && new e4.conversations(this), this.logs = e4.logs && new e4.logs(this), this.experiments = e4.experiments && new e4.experiments(this), this.exceptions = e4.exceptions && new e4.exceptions(this), this.people = { set: (t5, e5, i4) => {
-        var r4 = G2(t5) ? { [t5]: e5 } : t5;
+      this.webPerformance = new Ca(), this.Xi = false, this.version = c3.LIB_VERSION, this.tn = new Qo(), this.Ki = [], this._calculate_event_properties = this.calculateEventProperties.bind(this), this.config = Pa(), this.SentryIntegration = Qs, this.sentryIntegration = (t5) => (function(t6, e5) {
+        var i4 = Ys(t6, e5);
+        return { name: Ks, processEvent: (t7) => i4(t7) };
+      })(this, t5), this.__request_queue = [], this.__loaded = false, this.analyticsDefaultEndpoint = "/e/", this.en = false, this.rn = null, this.nn = null, this.sn = null, this.scrollManager = new Jo(this), this.pageViewManager = new Xs(this), this.rateLimiter = new qn(this), this.requestRouter = new ha(this), this.consent = new is(this), this.externalIntegrations = new ba(this);
+      var e4 = null !== (t4 = _Ma.__defaultExtensionClasses) && void 0 !== t4 ? t4 : {};
+      this.featureFlags = e4.featureFlags && new e4.featureFlags(this), this.toolbar = e4.toolbar && new e4.toolbar(this), this.surveys = e4.surveys && new e4.surveys(this), this.conversations = e4.conversations && new e4.conversations(this), this.logs = e4.logs && new e4.logs(this), this.metrics = e4.metrics && new e4.metrics(this), this.experiments = e4.experiments && new e4.experiments(this), this.exceptions = e4.exceptions && new e4.exceptions(this), this.people = { set: (t5, e5, i4) => {
+        var r4 = J2(t5) ? { [t5]: e5 } : t5;
         this.setPersonProperties(r4), null == i4 || i4({});
       }, set_once: (t5, e5, i4) => {
-        var r4 = G2(t5) ? { [t5]: e5 } : t5;
+        var r4 = J2(t5) ? { [t5]: e5 } : t5;
         this.setPersonProperties(void 0, r4), null == i4 || i4({});
-      } }, this.on("eventCaptured", ((t5) => li.info('send "' + (null == t5 ? void 0 : t5.event) + '"', t5)));
+      } }, this.on("eventCaptured", ((t5) => fi.info('send "' + (null == t5 ? void 0 : t5.event) + '"', t5)));
     }
     init(t4, e4, i4) {
-      if (i4 && i4 !== ca) {
-        var r4, s4 = null !== (r4 = oa[i4]) && void 0 !== r4 ? r4 : new _ya();
-        return s4._init(t4, e4, i4), oa[i4] = s4, oa[ca][i4] = s4, s4;
+      if (i4 && i4 !== $a) {
+        var r4, s4 = null !== (r4 = ya[i4]) && void 0 !== r4 ? r4 : new _Ma();
+        return s4._init(t4, e4, i4), ya[i4] = s4, ya[$a][i4] = s4, s4;
       }
       return this._init(t4, e4, i4);
     }
     _init(e4, i4, r4) {
       var s4, n3;
       void 0 === i4 && (i4 = {});
-      var o4 = G2(e4) ? e4.trim() : "";
-      if (!o4) return li.critical("PostHog was initialized without a token. This likely indicates a misconfiguration. Please check the first argument passed to posthog.init()"), this;
+      var o4 = J2(e4) ? e4.trim() : "";
+      if (!o4) return fi.critical("PostHog was initialized without a token. This likely indicates a misconfiguration. Please check the first argument passed to posthog.init()"), this;
       if (this.__loaded) return console.warn("[PostHog.js]", "You have already initialized PostHog! Re-initializing is a no-op"), this;
-      this.__loaded = true, this.config = {}, i4.debug = this.Oi(i4.debug), this.Li = i4, this.Fi = [], i4.person_profiles ? this.Pi = i4.person_profiles : i4.process_person && (this.Pi = i4.process_person);
-      var a4 = fa(i4.defaults), l4 = ga(i4), u5 = Sr({}, a4, l4, { name: r4, token: o4 });
-      H2(a4.rageclick) && H2(l4.rageclick) && (u5.rageclick = Sr({}, a4.rageclick, l4.rageclick)), H2(a4.session_recording) && H2(l4.session_recording) && (u5.session_recording = Sr({}, a4.session_recording, l4.session_recording)), this.set_config(u5), this.config.on_xhr_error && li.error("on_xhr_error is deprecated. Use on_request_error instead"), this.compression = i4.disable_compression ? void 0 : Un.GZipJS;
-      var h4 = this.Ai();
-      this.persistence = new yn(this.config, h4), this.sessionPersistence = "sessionStorage" === this.config.persistence || "memory" === this.config.persistence ? this.persistence : new yn(f4({}, this.config, { persistence: "sessionStorage" }), h4, false);
-      var d4 = f4({}, this.persistence.props), c4 = f4({}, this.sessionPersistence.props);
-      this.register({ $initialization_time: (/* @__PURE__ */ new Date()).toISOString() }), this.$i = new Co(((t4) => this.Di(t4)), this.config.request_queue_config), this.Ni = new Fo(this), this.__request_queue = [];
-      var p4 = this.Ci();
-      if (p4 || (this.sessionManager = new jo(this), this.sessionPropsManager = new Lo(this, this.sessionManager, this.persistence)), this.config.__preview_deferred_init_extensions ? (li.info("Deferring extension initialization to improve startup performance"), setTimeout((() => {
-        this.qi(p4);
-      }), 0)) : (li.info("Initializing extensions synchronously"), this.qi(p4)), v3.DEBUG = v3.DEBUG || this.config.debug, v3.DEBUG && li.info("Starting in debug mode", { this: this, config: i4, thisC: f4({}, this.config), p: d4, s: c4 }), !this.config.identity_distinct_id || null != (s4 = i4.bootstrap) && s4.distinctID || (i4.bootstrap = f4({}, i4.bootstrap, { distinctID: this.config.identity_distinct_id, isIdentifiedID: true })), void 0 !== (null == (n3 = i4.bootstrap) ? void 0 : n3.distinctID)) {
-        var _3 = i4.bootstrap.distinctID, g3 = this.get_distinct_id(), m4 = this.persistence.get_property(Xi);
-        if (i4.bootstrap.isIdentifiedID && null != g3 && g3 !== _3 && m4 === cr) this.identify(_3);
-        else if (i4.bootstrap.isIdentifiedID && null != g3 && g3 !== _3 && m4 === pr) li.warn("Bootstrap distinctID differs from an already-identified user. The existing identity is preserved. Call reset() before reinitializing if you intend to switch users.");
+      this.__loaded = true, this.config = Pa(i4.defaults), i4.debug = this.an(i4.debug), this.ln = i4, this.un = [], i4.person_profiles ? this.nn = i4.person_profiles : i4.process_person && (this.nn = i4.process_person);
+      var a4 = Pa(i4.defaults), l4 = Ia(i4), u5 = Or({}, a4, l4, { name: r4, token: o4 });
+      V2(a4.rageclick) && V2(l4.rageclick) && (u5.rageclick = Or({}, a4.rageclick, l4.rageclick)), V2(a4.session_recording) && V2(l4.session_recording) && (u5.session_recording = Or({}, a4.session_recording, l4.session_recording)), this.set_config(u5), this.config.on_xhr_error && fi.error("on_xhr_error is deprecated. Use on_request_error instead"), this.compression = i4.disable_compression ? void 0 : Jn.GZipJS;
+      var h4 = this.hn();
+      this.persistence = new Rn(this.config, h4), this.sessionPersistence = "sessionStorage" === this.config.persistence || "memory" === this.config.persistence ? this.persistence : new Rn(_2({}, this.config, { persistence: "sessionStorage" }), h4, false);
+      var d4 = _2({}, this.persistence.props), v4 = _2({}, this.sessionPersistence.props);
+      this.register({ $initialization_time: (/* @__PURE__ */ new Date()).toISOString() }), this.dn = new Vo(((t4) => this.cn(t4)), this.config.request_queue_config), this.vn = new Wo(this), this.__request_queue = [];
+      var f5 = this.Yi();
+      if (f5 || (this.sessionManager = new Zo(this), this.sessionPropsManager = new Yo(this, this.sessionManager, this.persistence)), this.config.__preview_deferred_init_extensions ? (fi.info("Deferring extension initialization to improve startup performance"), setTimeout((() => {
+        this.fn(f5);
+      }), 0)) : (fi.info("Initializing extensions synchronously"), this.fn(f5)), c3.DEBUG = c3.DEBUG || this.config.debug, c3.DEBUG && fi.info("Starting in debug mode", { this: this, config: i4, thisC: _2({}, this.config), p: d4, s: v4 }), !this.config.identity_distinct_id || null != (s4 = i4.bootstrap) && s4.distinctID || (i4.bootstrap = _2({}, i4.bootstrap, { distinctID: this.config.identity_distinct_id, isIdentifiedID: true })), void 0 !== (null == (n3 = i4.bootstrap) ? void 0 : n3.distinctID)) {
+        var p4 = i4.bootstrap.distinctID, g3 = this.get_distinct_id(), m4 = this.persistence.get_property(sr);
+        if (i4.bootstrap.isIdentifiedID && null != g3 && g3 !== p4 && m4 === br) this.identify(p4);
+        else if (i4.bootstrap.isIdentifiedID && null != g3 && g3 !== p4 && m4 === yr) fi.warn("Bootstrap distinctID differs from an already-identified user. The existing identity is preserved. Call reset() before reinitializing if you intend to switch users.");
         else {
-          var y4 = this.config.get_device_id(Nr()), b3 = i4.bootstrap.isIdentifiedID ? y4 : _3;
-          this.persistence.set_property(Xi, i4.bootstrap.isIdentifiedID ? pr : cr), this.register({ distinct_id: _3, $device_id: b3 });
+          var b3 = this.config.get_device_id(qr()), y4 = i4.bootstrap.isIdentifiedID ? b3 : p4;
+          this.persistence.set_property(sr, i4.bootstrap.isIdentifiedID ? yr : br), this.register({ distinct_id: p4, $device_id: y4 });
         }
       }
-      if (p4) this.register_once({ distinct_id: or, $device_id: null }, "");
+      if (f5) this.register_once({ distinct_id: vr, $device_id: null }, "");
       else if (!this.get_distinct_id()) {
-        var w4 = this.config.get_device_id(Nr());
-        this.register_once({ distinct_id: w4, $device_id: w4 }, ""), this.persistence.set_property(Xi, cr);
+        var w4 = this.config.get_device_id(qr());
+        this.register_once({ distinct_id: w4, $device_id: w4 }, ""), this.persistence.set_property(sr, br);
       }
-      return Or(t3, "onpagehide" in self ? "pagehide" : "unload", this._handle_unload.bind(this), { passive: false }), i4.segment ? (function(t4, e5) {
+      return Nr(t3, "onpagehide" in self ? "pagehide" : "unload", this._handle_unload.bind(this), { passive: false }), i4.segment ? (function(t4, e5) {
         var i5 = t4.config.segment;
         if (!i5) return e5();
         !(function(t5, e6) {
           var i6 = t5.config.segment;
           if (!i6) return e6();
           var r5 = (i7) => {
-            var r6 = () => i7.anonymousId() || Nr();
-            t5.config.get_device_id = r6, i7.id() && (t5.register({ distinct_id: i7.id(), $device_id: r6() }), t5.persistence.set_property(Xi, pr)), e6();
+            var r6 = () => i7.anonymousId() || qr();
+            t5.config.get_device_id = r6, i7.id() && (t5.register({ distinct_id: i7.id(), $device_id: r6() }), t5.persistence.set_property(sr, yr)), e6();
           }, s5 = i6.user();
-          "then" in s5 && z3(s5.then) ? s5.then(r5) : r5(s5);
+          "then" in s5 && q2(s5.then) ? s5.then(r5) : r5(s5);
         })(t4, (() => {
           i5.register(((t5) => {
-            "undefined" != typeof Promise && Promise.resolve || Bs.warn("This browser does not have Promise support, and can not use the segment integration");
+            "undefined" != typeof Promise && Promise.resolve || Js.warn("This browser does not have Promise support, and can not use the segment integration");
             var e6 = (e7, i6) => {
               if (!i6) return e7;
-              e7.event.userId || e7.event.anonymousId === t5.get_distinct_id() || (Bs.info("No userId set, resetting PostHog"), t5.reset()), e7.event.userId && e7.event.userId !== t5.get_distinct_id() && (Bs.info("UserId set, identifying with PostHog"), t5.identify(e7.event.userId));
+              e7.event.userId || e7.event.anonymousId === t5.get_distinct_id() || (Js.info("No userId set, resetting PostHog"), t5.reset()), e7.event.userId && e7.event.userId !== t5.get_distinct_id() && (Js.info("UserId set, identifying with PostHog"), t5.identify(e7.event.userId));
               var r5 = t5.calculateEventProperties(i6, e7.event.properties);
               return e7.event.properties = Object.assign({}, r5, e7.event.properties), e7;
             };
-            return { name: "PostHog JS", type: "enrichment", version: "1.0.0", isLoaded: () => true, load: () => Promise.resolve(), track: (t6) => e6(t6, t6.event.event), page: (t6) => e6(t6, mr), identify: (t6) => e6(t6, br), screen: (t6) => e6(t6, "$screen") };
+            return { name: "PostHog JS", type: "enrichment", version: "1.0.0", isLoaded: () => true, load: () => Promise.resolve(), track: (t6) => e6(t6, t6.event.event), page: (t6) => e6(t6, Sr), identify: (t6) => e6(t6, Tr), screen: (t6) => e6(t6, "$screen") };
           })(t4)).then((() => {
             e5();
           }));
         }));
-      })(this, (() => this.ji())) : this.ji(), z3(this.config._onCapture) && this.config._onCapture !== la && (li.warn("onCapture is deprecated. Please use `before_send` instead"), this.on("eventCaptured", ((t4) => this.config._onCapture(t4.event, t4)))), this.config.ip && li.warn('The `ip` config option has NO EFFECT AT ALL and has been deprecated. Use a custom transformation or "Discard IP data" project setting instead. See https://posthog.com/tutorials/web-redact-properties#hiding-customer-ip-address for more information.'), this.config.disableDeviceModel || (function() {
-        return zo.apply(this, arguments);
+      })(this, (() => this.pn())) : this.pn(), q2(this.config._onCapture) && this.config._onCapture !== Ea && (fi.warn("onCapture is deprecated. Please use `before_send` instead"), this.on("eventCaptured", ((t4) => this.config._onCapture(t4.event, t4)))), this.config.ip && fi.warn('The `ip` config option has NO EFFECT AT ALL and has been deprecated. Use a custom transformation or "Discard IP data" project setting instead. See https://posthog.com/tutorials/web-redact-properties#hiding-customer-ip-address for more information.'), this.config.disableDeviceModel || (function() {
+        return ea.apply(this, arguments);
       })().then(((t4) => {
-        t4 && this.register({ [pi]: t4 });
-      })).catch(la), this;
+        t4 && this.register({ [yi]: t4 });
+      })).catch(Ea), this;
     }
-    qi(t4) {
-      var e4, i4, r4, s4, n3, o4, a4, l4 = performance.now(), u5 = f4({}, _ya.__defaultExtensionClasses, this.config.__extensionClasses), h4 = [];
-      u5.featureFlags && this.Si.push(this.featureFlags = null !== (e4 = this.featureFlags) && void 0 !== e4 ? e4 : new u5.featureFlags(this)), u5.exceptions && this.Si.push(this.exceptions = null !== (i4 = this.exceptions) && void 0 !== i4 ? i4 : new u5.exceptions(this)), u5.historyAutocapture && this.Si.push(this.historyAutocapture = new u5.historyAutocapture(this)), u5.tracingHeaders && this.Si.push(this.tracingHeaders = new u5.tracingHeaders(this)), u5.siteApps && this.Si.push(this.siteApps = new u5.siteApps(this)), u5.sessionRecording && !t4 && this.Si.push(this.sessionRecording = new u5.sessionRecording(this)), this.config.disable_scroll_properties || h4.push((() => {
+    fn(t4) {
+      var e4, i4, r4, s4, n3, o4, a4, l4, u5 = performance.now(), h4 = _2({}, _Ma.__defaultExtensionClasses, this.config.__extensionClasses), d4 = [];
+      h4.featureFlags && this.Ki.push(this.featureFlags = null !== (e4 = this.featureFlags) && void 0 !== e4 ? e4 : new h4.featureFlags(this)), h4.exceptions && this.Ki.push(this.exceptions = null !== (i4 = this.exceptions) && void 0 !== i4 ? i4 : new h4.exceptions(this)), h4.historyAutocapture && this.Ki.push(this.historyAutocapture = new h4.historyAutocapture(this)), h4.tracingHeaders && this.Ki.push(this.tracingHeaders = new h4.tracingHeaders(this)), h4.siteApps && this.Ki.push(this.siteApps = new h4.siteApps(this)), h4.sessionRecording && !t4 && this.Ki.push(this.sessionRecording = new h4.sessionRecording(this)), this.config.disable_scroll_properties || d4.push((() => {
         this.scrollManager.startMeasuringScrollPosition();
-      })), u5.autocapture && this.Si.push(this.autocapture = new u5.autocapture(this)), u5.surveys && this.Si.push(this.surveys = null !== (r4 = this.surveys) && void 0 !== r4 ? r4 : new u5.surveys(this)), u5.logs && this.Si.push(this.logs = null !== (s4 = this.logs) && void 0 !== s4 ? s4 : new u5.logs(this)), u5.conversations && this.Si.push(this.conversations = null !== (n3 = this.conversations) && void 0 !== n3 ? n3 : new u5.conversations(this)), u5.productTours && this.Si.push(this.productTours = new u5.productTours(this)), u5.heatmaps && this.Si.push(this.heatmaps = new u5.heatmaps(this)), u5.webVitalsAutocapture && this.Si.push(this.webVitalsAutocapture = new u5.webVitalsAutocapture(this)), u5.exceptionObserver && this.Si.push(this.exceptionObserver = new u5.exceptionObserver(this)), u5.deadClicksAutocapture && this.Si.push(this.deadClicksAutocapture = new u5.deadClicksAutocapture(this, Us)), u5.toolbar && this.Si.push(this.toolbar = null !== (o4 = this.toolbar) && void 0 !== o4 ? o4 : new u5.toolbar(this)), u5.experiments && this.Si.push(this.experiments = null !== (a4 = this.experiments) && void 0 !== a4 ? a4 : new u5.experiments(this)), this.Si.forEach(((t5) => {
-        t5.initialize && h4.push((() => {
+      })), h4.autocapture && this.Ki.push(this.autocapture = new h4.autocapture(this)), h4.surveys && this.Ki.push(this.surveys = null !== (r4 = this.surveys) && void 0 !== r4 ? r4 : new h4.surveys(this)), h4.logs && this.Ki.push(this.logs = null !== (s4 = this.logs) && void 0 !== s4 ? s4 : new h4.logs(this)), h4.metrics && this.Ki.push(this.metrics = null !== (n3 = this.metrics) && void 0 !== n3 ? n3 : new h4.metrics(this)), h4.conversations && this.Ki.push(this.conversations = null !== (o4 = this.conversations) && void 0 !== o4 ? o4 : new h4.conversations(this)), h4.productTours && this.Ki.push(this.productTours = new h4.productTours(this)), h4.heatmaps && this.Ki.push(this.heatmaps = new h4.heatmaps(this)), h4.webVitalsAutocapture && this.Ki.push(this.webVitalsAutocapture = new h4.webVitalsAutocapture(this)), h4.exceptionObserver && this.Ki.push(this.exceptionObserver = new h4.exceptionObserver(this)), h4.deadClicksAutocapture && this.Ki.push(this.deadClicksAutocapture = new h4.deadClicksAutocapture(this, Gs)), h4.toolbar && this.Ki.push(this.toolbar = null !== (a4 = this.toolbar) && void 0 !== a4 ? a4 : new h4.toolbar(this)), h4.experiments && this.Ki.push(this.experiments = null !== (l4 = this.experiments) && void 0 !== l4 ? l4 : new h4.experiments(this)), this.Ki.forEach(((t5) => {
+        t5.initialize && d4.push((() => {
           null == t5.initialize || t5.initialize();
         }));
-      })), h4.push((() => {
-        if (this.Bi) {
-          var t5 = this.Bi;
-          this.Bi = void 0, this.pr(t5);
+      })), d4.push((() => {
+        if (this.gn) {
+          var t5 = this.gn;
+          this.gn = void 0, this.Ur(t5);
         }
-      })), this.Hi(h4, l4);
+      })), this.mn(d4, u5);
     }
-    Hi(t4, e4) {
+    mn(t4, e4) {
       for (; t4.length > 0; ) {
         if (this.config.__preview_deferred_init_extensions && performance.now() - e4 >= 30 && t4.length > 0) return void setTimeout((() => {
-          this.Hi(t4, e4);
+          this.mn(t4, e4);
         }), 0);
         var i4 = t4.shift();
         if (i4) try {
           i4();
         } catch (t5) {
-          li.error("Error initializing extension:", t5);
+          fi.error("Error initializing extension:", t5);
         }
       }
       var r4 = Math.round(performance.now() - e4);
-      this.register_for_session({ [ar]: this.config.__preview_deferred_init_extensions ? "deferred" : "synchronous", [lr]: r4 }), this.config.__preview_deferred_init_extensions && li.info("PostHog extensions initialized (" + r4 + "ms)");
+      this.register_for_session({ [cr]: this.config.__preview_deferred_init_extensions ? "deferred" : "synchronous", [fr]: r4 }), this.config.__preview_deferred_init_extensions && fi.info("PostHog extensions initialized (" + r4 + "ms)");
     }
-    pr(t4) {
+    Ur(t4) {
       var e4;
-      if (!r3 || !r3.body) return li.info("document not ready yet, trying again in 500 milliseconds..."), void setTimeout((() => {
-        this.pr(t4);
+      if (!r3 || !r3.body) return fi.info("document not ready yet, trying again in 500 milliseconds..."), void setTimeout((() => {
+        this.Ur(t4);
       }), 500);
-      this.config.__preview_deferred_init_extensions && (this.Bi = t4), this.Ui = t4, this.compression = void 0, t4.supportedCompression && !this.config.disable_compression && (this.compression = M(t4.supportedCompression, Un.GZipJS) ? Un.GZipJS : M(t4.supportedCompression, Un.Base64) ? Un.Base64 : void 0), null != (e4 = t4.analytics) && e4.endpoint && (this.analyticsDefaultEndpoint = t4.analytics.endpoint), this.set_config({ person_profiles: this.Pi ? this.Pi : fr }), this.Si.forEach(((e5) => null == e5.onRemoteConfig ? void 0 : e5.onRemoteConfig(t4)));
+      this.config.__preview_deferred_init_extensions && (this.gn = t4);
+      var i4 = t4.ok ? t4.config : { supportedCompression: [], toolbarParams: {}, toolbarVersion: "toolbar", isAuthenticated: false, siteApps: [] };
+      this.yn = i4, this.compression = void 0, i4.supportedCompression && !this.config.disable_compression && (this.compression = D3(i4.supportedCompression, Jn.GZipJS) ? Jn.GZipJS : D3(i4.supportedCompression, Jn.Base64) ? Jn.Base64 : void 0), null != (e4 = i4.analytics) && e4.endpoint && (this.analyticsDefaultEndpoint = i4.analytics.endpoint), this.set_config({ person_profiles: this.nn ? this.nn : wr }), this.Ki.forEach(((e5) => {
+        !t4.ok && e5.onRemoteConfigFailed ? e5.onRemoteConfigFailed() : null == e5.onRemoteConfig || e5.onRemoteConfig(i4);
+      }));
     }
-    ji() {
+    pn() {
       try {
         this.config.loaded(this);
       } catch (t5) {
-        li.critical("`loaded` function failed", t5);
+        fi.critical("`loaded` function failed", t5);
       }
-      if (this.zi(), this.config.internal_or_test_user_hostname && null != s3 && s3.hostname) {
+      if (this.bn(), this.config.internal_or_test_user_hostname && null != s3 && s3.hostname) {
         var t4 = s3.hostname, e4 = this.config.internal_or_test_user_hostname;
         ("string" == typeof e4 ? t4 === e4 : e4.test(t4)) && this.setInternalOrTestUser();
       }
       this.config.capture_pageview && setTimeout((() => {
-        (this.consent.isOptedIn() || this.Ci()) && this.Vi();
-      }), 1), this.Wi = new Ln(this), this.Wi.load();
+        (this.consent.isOptedIn() || this.Yi()) && this._n();
+      }), 1), this.wn = new Gn(this), this.wn.load();
     }
-    zi() {
+    bn() {
       var t4;
-      this.is_capturing() && this.config.request_batching && (null == (t4 = this.$i) || t4.enable());
+      this.is_capturing() && this.config.request_batching && (null == (t4 = this.dn) || t4.enable());
     }
     _dom_loaded() {
-      this.is_capturing() && Er(this.__request_queue, ((t4) => this.Di(t4))), this.__request_queue = [], this.zi();
+      this.is_capturing() && Rr(this.__request_queue, ((t4) => this.cn(t4))), this.__request_queue = [], this.bn();
     }
     _handle_unload() {
-      var t4, e4, i4, r4;
-      null == (t4 = this.surveys) || null == t4.handlePageUnload || t4.handlePageUnload(), this.config.request_batching ? (this.Gi() && this.capture(yr), null == (e4 = this.logs) || e4.flushLogs("sendBeacon"), null == (i4 = this.$i) || i4.unload(), null == (r4 = this.Ni) || r4.unload()) : this.Gi() && this.capture(yr, null, { transport: "sendBeacon" });
+      var t4, e4, i4, r4, s4;
+      null == (t4 = this.surveys) || null == t4.handlePageUnload || t4.handlePageUnload(), null == (e4 = this.metrics) || e4.flush("sendBeacon"), this.config.request_batching ? (this.xn() && this.capture(kr), null == (i4 = this.logs) || i4.flushLogs("sendBeacon"), null == (r4 = this.dn) || r4.unload(), null == (s4 = this.vn) || s4.unload()) : this.xn() && this.capture(kr, null, { transport: "sendBeacon" });
     }
     _send_request(t4) {
-      this.__loaded ? pa ? this.__request_queue.push(t4) : this.rateLimiter.isServerRateLimited(t4.batchKey) ? t4.fireCallbackOnDrop && (null == t4.callback || t4.callback({ statusCode: 429 })) : (t4.transport = t4.transport || this.config.api_transport, t4.headers = f4({}, this.config.request_headers, t4.headers), t4.compression = "best-available" === t4.compression ? this.compression : t4.compression, (V2(this.config.disable_beacon) ? this.config.__preview_disable_beacon : this.config.disable_beacon) && (t4.disableTransport = ["sendBeacon"]), t4.fetchOptions = t4.fetchOptions || this.config.fetch_options, ((t5) => {
-        var e4, i4, r4, s4 = f4({}, t5);
-        s4.timeout = s4.timeout || 6e4, s4.url = Po(s4.url, s4.compression);
-        var n3 = null !== (e4 = s4.transport) && void 0 !== e4 ? e4 : "fetch", o4 = Io.filter(((t6) => !s4.disableTransport || !t6.transport || !s4.disableTransport.includes(t6.transport))), a4 = null !== (i4 = null == (r4 = (function(t6, e5) {
+      this.__loaded ? Ra ? this.__request_queue.push(t4) : this.rateLimiter.isServerRateLimited(t4.batchKey) ? t4.fireCallbackOnDrop && (null == t4.callback || t4.callback({ statusCode: 429 })) : (t4.transport = t4.transport || this.config.api_transport, t4.headers = _2({}, this.config.request_headers, t4.headers), t4.compression = "best-available" === t4.compression ? this.compression : t4.compression, (W(this.config.disable_beacon) ? this.config.__preview_disable_beacon : this.config.disable_beacon) && (t4.disableTransport = ["sendBeacon"]), t4.fetchOptions = t4.fetchOptions || this.config.fetch_options, ((t5) => {
+        var e4, i4, r4, s4 = _2({}, t5);
+        s4.timeout = s4.timeout || 6e4;
+        var n3 = null !== (e4 = s4.transport) && void 0 !== e4 ? e4 : "fetch";
+        "sendBeacon" === n3 && W(s4.compression) && s4.data && (s4.compression = Jn.Base64), s4.url = zo(s4.url, s4.compression);
+        var o4 = Ho.filter(((t6) => !s4.disableTransport || !t6.transport || !s4.disableTransport.includes(t6.transport))), a4 = null !== (i4 = null == (r4 = (function(t6, e5) {
           for (var i5 = 0; t6.length > i5; i5++) if (t6[i5].transport === n3) return t6[i5];
         })(o4)) ? void 0 : r4.method) && void 0 !== i4 ? i4 : o4[0].method;
         if (!a4) throw new Error("No available transport method");
-        "sendBeacon" !== n3 && s4.data && s4.compression === Un.GZipJS && l3 && "undefined" != typeof Promise && !wo ? Ro(s4).then(((t6) => {
+        "sendBeacon" !== n3 && s4.data && s4.compression === Jn.GZipJS && l3 && "undefined" != typeof Promise && !Oo ? No(s4).then(((t6) => {
           a4(t6);
         })).catch(((e5) => {
-          if (P2(e5)) return wo = true, void a4(f4({}, s4, { compression: void 0, url: Po(t5.url, void 0) }));
+          if (O2(e5)) return Oo = true, void a4(_2({}, s4, { compression: void 0, url: zo(t5.url, void 0) }));
           ((t6) => {
             if (!t6 || "object" != typeof t6) return false;
             var e6 = "name" in t6 ? String(t6.name) : "";
-            return P2(t6) || e6 === T3;
-          })(e5) && (wo = true), a4(s4);
+            return O2(t6) || e6 === T3;
+          })(e5) && (Oo = true), a4(s4);
         })) : a4(s4);
-      })(f4({}, t4, { callback: (e4) => {
+      })(_2({}, t4, { callback: (e4) => {
         var i4, r4;
         this.rateLimiter.checkForLimiting(e4), 400 > e4.statusCode || null == (i4 = (r4 = this.config).on_request_error) || i4.call(r4, e4), null == t4.callback || t4.callback(e4);
       } }))) : t4.fireCallbackOnDrop && (null == t4.callback || t4.callback({ statusCode: 0 }));
     }
-    Di(t4) {
-      this.Ni ? this.Ni.retriableRequest(t4) : this._send_request(t4);
+    cn(t4) {
+      this.vn ? this.vn.retriableRequest(t4) : this._send_request(t4);
     }
     _execute_array(t4) {
-      aa++;
+      wa++;
       try {
         var e4, i4 = [], r4 = [], s4 = [];
-        Er(t4, ((t5) => {
-          if (t5) if (B3(e4 = t5[0])) s4.push(t5);
-          else if (z3(t5)) try {
+        Rr(t4, ((t5) => {
+          if (t5) if (H2(e4 = t5[0])) s4.push(t5);
+          else if (q2(t5)) try {
             t5.call(this);
           } catch (e5) {
-            li.error("Error executing queued PostHog call", t5, e5);
+            fi.error("Error executing queued PostHog call", t5, e5);
           }
-          else B3(t5) && "alias" === e4 ? i4.push(t5) : B3(t5) && -1 !== e4.indexOf("capture") && z3(this[e4]) ? s4.push(t5) : r4.push(t5);
+          else H2(t5) && "alias" === e4 ? i4.push(t5) : H2(t5) && -1 !== e4.indexOf("capture") && q2(this[e4]) ? s4.push(t5) : r4.push(t5);
         }));
         var n3 = function(t5, e5) {
-          Er(t5, (function(t6) {
+          Rr(t5, (function(t6) {
             try {
-              if (B3(t6[0])) {
+              if (H2(t6[0])) {
                 var i5 = e5;
-                xr(t6, (function(t7) {
+                Pr(t6, (function(t7) {
                   i5 = i5[t7[0]].apply(i5, t7.slice(1));
                 }));
               } else e5[t6[0]].apply(e5, t6.slice(1));
             } catch (e6) {
-              li.error("Error executing queued PostHog call", t6, e6);
+              fi.error("Error executing queued PostHog call", t6, e6);
             }
           }));
         };
         n3(i4, this), n3(r4, this), n3(s4, this);
       } finally {
-        aa--;
+        wa--;
       }
     }
     push(t4) {
-      if (aa > 0 && B3(t4) && G2(t4[0])) {
-        var e4 = _ya.prototype[t4[0]];
-        z3(e4) && e4.apply(this, t4.slice(1));
+      if (wa > 0 && H2(t4) && J2(t4[0])) {
+        var e4 = _Ma.prototype[t4[0]];
+        q2(e4) && e4.apply(this, t4.slice(1));
       } else this._execute_array([t4]);
     }
     capture(t4, e4, i4) {
       var r4, s4, n3, o4, a4;
-      if (this.__loaded && this.persistence && this.sessionPersistence && this.$i) {
-        if (this.is_capturing()) if (!V2(t4) && G2(t4)) {
+      if (this.__loaded && this.persistence && this.sessionPersistence && this.dn) {
+        if (this.is_capturing()) if (!W(t4) && J2(t4)) {
           var l4 = !this.config.opt_out_useragent_filter && this._is_bot();
           if (!l4 || this.config.__preview_capture_bot_pageviews) {
             var u5 = null != i4 && i4.skip_client_rate_limiting ? void 0 : this.rateLimiter.clientRateLimitContext();
             if (null == u5 || !u5.isRateLimited) {
-              null != e4 && e4.$current_url && !G2(null == e4 ? void 0 : e4.$current_url) && (li.error("Invalid `$current_url` property provided to `posthog.capture`. Input must be a string. Ignoring provided value."), null == e4 || delete e4.$current_url), "$exception" !== t4 || null != i4 && i4.Zi || li.warn("Using `posthog.capture('$exception')` is unreliable because it does not attach required metadata. Use `posthog.captureException(error)` instead, which attaches required metadata automatically."), this.sessionPersistence.update_search_keyword(), this.config.save_campaign_params && this.sessionPersistence.update_campaign_params(), this.config.save_referrer && this.sessionPersistence.update_referrer_info(), (this.config.save_campaign_params || this.config.save_referrer) && this.persistence.set_initial_person_info();
-              var h4 = /* @__PURE__ */ new Date(), d4 = (null == i4 ? void 0 : i4.timestamp) || h4, v4 = fe(null == i4 ? void 0 : i4.uuid, Nr), c4 = { uuid: v4, event: t4, properties: this.calculateEventProperties(t4, e4 || {}, d4, v4) };
-              t4 === mr && this.config.__preview_capture_bot_pageviews && l4 && (c4.event = "$bot_pageview", c4.properties.$browser_type = "bot"), u5 && (c4.properties.$lib_rate_limit_remaining_tokens = u5.remainingTokens), (null == i4 ? void 0 : i4.$set) && (c4.$set = null == i4 ? void 0 : i4.$set);
-              var p4 = null == i4 ? void 0 : i4.$unset;
-              p4 && (c4.$unset = p4);
-              var _3, g3, m4, y4 = this.Qi(null == i4 ? void 0 : i4.$set_once, t4 !== wr, t4 === br);
-              if (y4 && (c4.$set_once = y4), null != i4 && i4._noTruncate || (s4 = this.config.properties_string_max_length, n3 = c4, o4 = (t5) => G2(t5) ? t5.slice(0, s4) : t5, a4 = /* @__PURE__ */ new Set(), c4 = (function t5(e5, i5) {
-                return e5 !== Object(e5) ? o4 ? o4(e5) : e5 : a4.has(e5) ? void 0 : (a4.add(e5), B3(e5) ? (r5 = [], Er(e5, ((e6) => {
-                  r5.push(t5(e6));
-                }))) : (r5 = {}, xr(e5, ((e6, i6) => {
-                  a4.has(e6) || (r5[i6] = t5(e6, i6));
-                }))), r5);
-                var r5;
-              })(n3)), c4.timestamp = d4, V2(null == i4 ? void 0 : i4.timestamp) || (c4.properties.$event_time_override_provided = true, c4.properties.$event_time_override_system_time = h4), t4 === Rn.DISMISSED || t4 === Rn.SENT) {
-                var b3 = null == e4 ? void 0 : e4[Pn.SURVEY_ID], w4 = null == e4 ? void 0 : e4[Pn.SURVEY_ITERATION];
-                ((t5) => {
-                  try {
-                    var e5 = ((t6) => ((t7, e6) => {
-                      var i5 = "" + Zo + e6.id;
-                      return e6.current_iteration && e6.current_iteration > 0 && (i5 = "" + Zo + e6.id + "_" + e6.current_iteration), i5;
-                    })(0, t6))(t5);
-                    if (localStorage.getItem(e5)) return;
-                    localStorage.setItem(e5, "true");
-                  } catch (t6) {
-                    Xo.error("Failed to persist survey seen state", t6);
+              null != e4 && e4.$current_url && !J2(null == e4 ? void 0 : e4.$current_url) && (fi.error("Invalid `$current_url` property provided to `posthog.capture`. Input must be a string. Ignoring provided value."), null == e4 || delete e4.$current_url), "$exception" !== t4 || null != i4 && i4.kn || fi.warn("Using `posthog.capture('$exception')` is unreliable because it does not attach required metadata. Use `posthog.captureException(error)` instead, which attaches required metadata automatically."), this.sessionPersistence.update_search_keyword(), this.config.save_campaign_params && this.sessionPersistence.update_campaign_params(), this.config.save_referrer && this.sessionPersistence.update_referrer_info(), (this.config.save_campaign_params || this.config.save_referrer) && this.persistence.set_initial_person_info();
+              var h4 = /* @__PURE__ */ new Date(), d4 = (null == i4 ? void 0 : i4.timestamp) || h4, v4 = ge(null == i4 ? void 0 : i4.uuid, qr), c4 = { uuid: v4, event: t4, properties: this.calculateEventProperties(t4, e4 || {}, d4, v4) };
+              t4 === Sr && this.config.__preview_capture_bot_pageviews && l4 && (c4.event = "$bot_pageview", c4.properties.$browser_type = "bot"), u5 && (c4.properties.$lib_rate_limit_remaining_tokens = u5.remainingTokens), (null == i4 ? void 0 : i4.$set) && (c4.$set = null == i4 ? void 0 : i4.$set);
+              var f5 = null == i4 ? void 0 : i4.$unset;
+              f5 && (c4.$unset = f5);
+              var p4, g3, m4, b3 = this.Sn(null == i4 ? void 0 : i4.$set_once, t4 !== $r, t4 === Tr);
+              if (b3 && (c4.$set_once = b3), null != i4 && i4._noTruncate || (s4 = this.config.properties_string_max_length, n3 = c4, o4 = (t5) => J2(t5) ? t5.slice(0, s4) : t5, a4 = /* @__PURE__ */ new Set(), c4 = (function t5(e5, i5) {
+                if (e5 !== Object(e5)) return o4 ? o4(e5) : e5;
+                if (!a4.has(e5)) {
+                  var r5;
+                  if (a4.add(e5), H2(e5)) r5 = [], Rr(e5, ((e6) => {
+                    r5.push(t5(e6));
+                  }));
+                  else {
+                    var s5 = {};
+                    Pr(e5, ((e6, i6) => {
+                      a4.has(e6) || (s5[i6] = t5(e6, i6));
+                    })), r5 = s5;
                   }
-                })({ id: b3, current_iteration: w4 }), c4.$set = f4({}, c4.$set, { [(_3 = { id: b3, current_iteration: w4 }, g3 = t4 === Rn.SENT ? "responded" : "dismissed", m4 = "$survey_" + g3 + "/" + _3.id, _3.current_iteration && _3.current_iteration > 0 && (m4 = "$survey_" + g3 + "/" + _3.id + "/" + _3.current_iteration), m4)]: true });
-              } else t4 === Rn.SHOWN && (c4.$set = f4({}, c4.$set, { [Pn.SURVEY_LAST_SEEN_DATE]: (/* @__PURE__ */ new Date()).toISOString() }));
-              if (t4 === Cn.SHOWN) {
-                var E3 = null == e4 ? void 0 : e4[An.TOUR_TYPE];
-                E3 && (c4.$set = f4({}, c4.$set, { [An.TOUR_LAST_SEEN_DATE + "/" + E3]: (/* @__PURE__ */ new Date()).toISOString() }));
+                  return r5;
+                }
+              })(n3)), c4.timestamp = d4, W(null == i4 ? void 0 : i4.timestamp) || (c4.properties.$event_time_override_provided = true, c4.properties.$event_time_override_system_time = h4), t4 === Nn.DISMISSED || t4 === Nn.SENT) {
+                var y4 = null == e4 ? void 0 : e4[Un.SURVEY_ID], w4 = null == e4 ? void 0 : e4[Un.SURVEY_ITERATION];
+                fa({ id: y4, current_iteration: w4 }), c4.$set = _2({}, c4.$set, { [(p4 = { id: y4, current_iteration: w4 }, g3 = t4 === Nn.SENT ? "responded" : "dismissed", m4 = "$survey_" + g3 + "/" + p4.id, p4.current_iteration && p4.current_iteration > 0 && (m4 = "$survey_" + g3 + "/" + p4.id + "/" + p4.current_iteration), m4)]: true });
+              } else t4 === Nn.SHOWN && (c4.$set = _2({}, c4.$set, { [Un.SURVEY_LAST_SEEN_DATE]: (/* @__PURE__ */ new Date()).toISOString() }));
+              if (t4 === Bn.SHOWN) {
+                var E3 = null == e4 ? void 0 : e4[zn.TOUR_TYPE];
+                E3 && (c4.$set = _2({}, c4.$set, { [zn.TOUR_LAST_SEEN_DATE + "/" + E3]: (/* @__PURE__ */ new Date()).toISOString() }));
               }
-              var x3 = f4({}, c4.properties.$set, c4.$set);
-              if (q2(x3) || this.setPersonPropertiesForFlags(x3), !K2(this.config.before_send)) {
-                var S3 = this.it(c4);
+              var x3 = _2({}, c4.properties.$set, c4.$set);
+              if (G2(x3) || this.setPersonPropertiesForFlags(x3), !Q2(this.config.before_send)) {
+                var S3 = this.Rt(c4);
                 if (!S3) return;
-                (c4 = S3).uuid = fe(c4.uuid, Nr);
+                (c4 = S3).uuid = ge(c4.uuid, qr);
               }
-              this.Ti.emit("eventCaptured", c4);
-              var T4 = { method: "POST", url: null !== (r4 = null == i4 ? void 0 : i4._url) && void 0 !== r4 ? r4 : this.requestRouter.endpointFor("api", this.analyticsDefaultEndpoint), data: c4, compression: "best-available", batchKey: null == i4 ? void 0 : i4._batchKey, transport: null == i4 ? void 0 : i4.transport };
-              return !this.config.request_batching || i4 && (null == i4 || !i4._batchKey) || null != i4 && i4.send_instantly ? this.Di(T4) : this.$i.enqueue(T4), c4;
+              this.tn.emit("eventCaptured", c4);
+              var k4 = { method: "POST", url: null !== (r4 = null == i4 ? void 0 : i4._url) && void 0 !== r4 ? r4 : this.requestRouter.endpointFor("api", this.analyticsDefaultEndpoint), data: c4, compression: "best-available", batchKey: null == i4 ? void 0 : i4._batchKey, transport: null == i4 ? void 0 : i4.transport };
+              return !this.config.request_batching || i4 && (null == i4 || !i4._batchKey) || null != i4 && i4.send_instantly ? this.cn(k4) : this.dn.enqueue(k4), c4;
             }
-            li.critical("This capture call is ignored due to client rate limiting.");
+            fi.critical("This capture call is ignored due to client rate limiting.");
           }
-        } else li.error("No event name provided to posthog.capture");
-      } else li.uninitializedWarning("posthog.capture");
+        } else fi.error("No event name provided to posthog.capture");
+      } else fi.uninitializedWarning("posthog.capture");
     }
     _addCaptureHook(t4) {
       return this.on("eventCaptured", ((e4) => t4(e4.event, e4)));
     }
     calculateEventProperties(e4, i4, n3, o4, a4) {
       if (n3 = n3 || /* @__PURE__ */ new Date(), !this.persistence || !this.sessionPersistence) return i4;
-      var l4 = a4 ? void 0 : this.persistence.remove_event_timer(e4), h4 = f4({}, i4);
-      if (h4.token = this.config.token, h4.$config_defaults = this.config.defaults, this.Ci() && (h4.$cookieless_mode = true), "$snapshot" === e4) {
-        var d4 = f4({}, this.persistence.properties(), this.sessionPersistence.properties());
-        return h4.distinct_id = d4.distinct_id, (!G2(h4.distinct_id) && !J2(h4.distinct_id) || W(h4.distinct_id)) && li.error("Invalid distinct_id for replay event. This indicates a bug in your implementation"), h4;
+      var l4 = a4 ? void 0 : this.persistence.remove_event_timer(e4), h4 = _2({}, i4);
+      if (h4.token = this.config.token, h4.$config_defaults = this.config.defaults, this.Yi() && (h4.$cookieless_mode = true), "$snapshot" === e4) {
+        var d4 = _2({}, this.persistence.properties(), this.sessionPersistence.properties());
+        return h4.distinct_id = d4.distinct_id, (!J2(h4.distinct_id) && !X(h4.distinct_id) || K2(h4.distinct_id)) && fi.error("Invalid distinct_id for replay event. This indicates a bug in your implementation"), h4;
       }
-      var c4, p4 = (function(e5, i5, r4, n4) {
+      var v4, f5 = (function(e5, i5, r4, n4) {
         var o5, a5, l5, h5;
         if (void 0 === n4 && (n4 = false), !u4) return {};
-        var d5, c5, p5, f5, _4, g4, m5, y5, b4, w5 = e5 ? [...en2, ...i5 || []] : [], [E3, x3] = (function(t4) {
-          for (var e6 = 0; ve.length > e6; e6++) {
-            var [i6, r5] = ve[e6], s4 = i6.exec(t4), n5 = s4 && (z3(r5) ? r5(s4, t4) : r5);
+        var d5, v5, f6, p5, _3, g4, m5, b4, y5, w5 = e5 ? [...dn, ...i5 || []] : [], E3 = (function(t4) {
+          for (var e6 = 0; fe.length > e6; e6++) {
+            var i6 = fe[e6], r5 = i6[1], s4 = i6[0].exec(t4), n5 = s4 && (q2(r5) ? r5(s4, t4) : r5);
             if (n5) return n5;
           }
           return ["", ""];
-        })(u4), S3 = null != (d5 = "undefined" != typeof navigator ? navigator : void 0) && d5.brave ? { brave: true } : {}, T4 = { detectGoogleSearchApp: r4 }, k4 = Sr(Rr({ $os: E3, $os_version: x3, $browser: ue(u4, navigator.vendor, S3, T4), $device: ce(u4), $device_type: (p5 = u4, f5 = { userAgentDataPlatform: null == (o5 = navigator) || null == (o5 = o5.userAgentData) ? void 0 : o5.platform, maxTouchPoints: null == (a5 = navigator) ? void 0 : a5.maxTouchPoints, screenWidth: null == t3 || null == (l5 = t3.screen) ? void 0 : l5.width, screenHeight: null == t3 || null == (h5 = t3.screen) ? void 0 : h5.height, devicePixelRatio: null == t3 ? void 0 : t3.devicePixelRatio }, b4 = ce(p5), b4 === ft || b4 === pt || "Kobo" === b4 || "Kindle Fire" === b4 || b4 === Vt ? ct : b4 === Ft || b4 === Dt || b4 === Mt || b4 === zt ? "Console" : b4 === gt ? "Wearable" : b4 ? ht : "Android" === (null == f5 ? void 0 : f5.userAgentDataPlatform) && (null !== (_4 = null == f5 ? void 0 : f5.maxTouchPoints) && void 0 !== _4 ? _4 : 0) > 0 ? 600 > Math.min(null !== (g4 = null == f5 ? void 0 : f5.screenWidth) && void 0 !== g4 ? g4 : 0, null !== (m5 = null == f5 ? void 0 : f5.screenHeight) && void 0 !== m5 ? m5 : 0) / (null !== (y5 = null == f5 ? void 0 : f5.devicePixelRatio) && void 0 !== y5 ? y5 : 1) ? ht : ct : "Desktop"), $timezone: pn(), $timezone_offset: fn() }), { $current_url: Xs(n4 ? _e(null == s3 ? void 0 : s3.href) : null == s3 ? void 0 : s3.href, w5, sn), $host: null == s3 ? void 0 : s3.host, $pathname: null == s3 ? void 0 : s3.pathname, $raw_user_agent: u4.length > 1e3 ? u4.substring(0, 997) + "..." : u4, $browser_version: de(u4, navigator.vendor, S3, T4), $browser_language: un(), $browser_language_prefix: (c5 = un(), "string" == typeof c5 ? c5.split("-")[0] : void 0), $screen_height: null == t3 ? void 0 : t3.screen.height, $screen_width: null == t3 ? void 0 : t3.screen.width, $viewport_height: null == t3 ? void 0 : t3.innerHeight, $viewport_width: null == t3 ? void 0 : t3.innerWidth, $lib: v3.LIB_NAME, $lib_version: v3.LIB_VERSION, $insert_id: Math.random().toString(36).substring(2, 10) + Math.random().toString(36).substring(2, 10), $time: Date.now() / 1e3 });
-        return v3.SDK_DIST_CHANNEL && (k4.$sdk_dist_channel = v3.SDK_DIST_CHANNEL), k4;
+        })(u4), x3 = null != (d5 = "undefined" != typeof navigator ? navigator : void 0) && d5.brave ? { brave: true } : {}, S3 = { detectGoogleSearchApp: r4 }, k4 = Or(Ar({ $os: E3[0], $os_version: E3[1], $browser: de(u4, navigator.vendor, x3, S3), $device: pe(u4), $device_type: (f6 = u4, p5 = { userAgentDataPlatform: null == (o5 = navigator) || null == (o5 = o5.userAgentData) ? void 0 : o5.platform, maxTouchPoints: null == (a5 = navigator) ? void 0 : a5.maxTouchPoints, screenWidth: null == t3 || null == (l5 = t3.screen) ? void 0 : l5.width, screenHeight: null == t3 || null == (h5 = t3.screen) ? void 0 : h5.height, devicePixelRatio: null == t3 ? void 0 : t3.devicePixelRatio }, y5 = pe(f6), y5 === gt || y5 === _t || "Kobo" === y5 || "Kindle Fire" === y5 || y5 === Wt ? pt : y5 === Dt || y5 === Ut || y5 === Nt || y5 === qt ? "Console" : y5 === bt ? "Wearable" : y5 ? vt : "Android" === (null == p5 ? void 0 : p5.userAgentDataPlatform) && (null !== (_3 = null == p5 ? void 0 : p5.maxTouchPoints) && void 0 !== _3 ? _3 : 0) > 0 ? 600 > Math.min(null !== (g4 = null == p5 ? void 0 : p5.screenWidth) && void 0 !== g4 ? g4 : 0, null !== (m5 = null == p5 ? void 0 : p5.screenHeight) && void 0 !== m5 ? m5 : 0) / (null !== (b4 = null == p5 ? void 0 : p5.devicePixelRatio) && void 0 !== b4 ? b4 : 1) ? vt : pt : "Desktop"), $timezone: xn(), $timezone_offset: Sn() }), { $current_url: on2(n4 ? me(null == s3 ? void 0 : s3.href) : null == s3 ? void 0 : s3.href, w5, cn), $host: null == s3 ? void 0 : s3.host, $pathname: null == s3 ? void 0 : s3.pathname, $raw_user_agent: u4.length > 1e3 ? u4.substring(0, 997) + "..." : u4, $browser_version: ce(u4, navigator.vendor, x3, S3), $browser_language: mn(), $browser_language_prefix: (v5 = mn(), "string" == typeof v5 ? v5.split("-")[0] : void 0), $screen_height: null == t3 ? void 0 : t3.screen.height, $screen_width: null == t3 ? void 0 : t3.screen.width, $viewport_height: null == t3 ? void 0 : t3.innerHeight, $viewport_width: null == t3 ? void 0 : t3.innerWidth, $lib: c3.LIB_NAME, $lib_version: c3.LIB_VERSION, $insert_id: Math.random().toString(36).substring(2, 10) + Math.random().toString(36).substring(2, 10), $time: Date.now() / 1e3 });
+        return c3.SDK_DIST_CHANNEL && (k4.$sdk_dist_channel = c3.SDK_DIST_CHANNEL), k4;
       })(this.config.mask_personal_data_properties, this.config.custom_personal_data_properties, this.config.detect_google_search_app, this.config.disable_capture_url_hashes);
       if (this.sessionManager) {
-        var { sessionId: _3, windowId: g3 } = this.sessionManager.checkAndGetSessionAndWindowId(a4, n3.getTime());
-        h4.$session_id = _3, h4.$window_id = g3;
+        var p4 = this.sessionManager.checkAndGetSessionAndWindowId(a4, n3.getTime()), g3 = p4.windowId;
+        h4.$session_id = p4.sessionId, h4.$window_id = g3;
       }
-      this.sessionPropsManager && Sr(h4, this.sessionPropsManager.getSessionProps());
+      this.sessionPropsManager && Or(h4, this.sessionPropsManager.getSessionProps());
       try {
         var m4;
-        this.sessionRecording && Sr(h4, this.sessionRecording.sdkDebugProperties), h4.$sdk_debug_retry_queue_size = null == (m4 = this.Ni) ? void 0 : m4.length;
+        this.sessionRecording && Or(h4, this.sessionRecording.sdkDebugProperties), h4.$sdk_debug_retry_queue_size = null == (m4 = this.vn) ? void 0 : m4.length;
       } catch (t4) {
         h4.$sdk_debug_error_capturing_properties = String(t4);
       }
-      if (this.requestRouter.region === Yo && (h4.$lib_custom_api_host = this.config.api_host), c4 = e4 !== mr || a4 ? e4 !== yr || a4 ? this.pageViewManager.doEvent() : this.pageViewManager.doPageLeave(n3) : this.pageViewManager.doPageView(n3, o4), h4 = Sr(h4, c4), e4 === mr && r3 && (h4.title = r3.title), !V2(l4)) {
-        var y4 = n3.getTime() - l4;
-        h4.$duration = parseFloat((y4 / 1e3).toFixed(3));
+      if (this.requestRouter.region === aa && (h4.$lib_custom_api_host = this.config.api_host), v4 = e4 !== Sr || a4 ? e4 !== kr || a4 ? this.pageViewManager.doEvent() : this.pageViewManager.doPageLeave(n3) : this.pageViewManager.doPageView(n3, o4), h4 = Or(h4, v4), e4 === Sr && r3 && (h4.title = r3.title), !W(l4)) {
+        var b3 = n3.getTime() - l4;
+        h4.$duration = parseFloat((b3 / 1e3).toFixed(3));
       }
-      u4 && this.config.opt_out_useragent_filter && (h4.$browser_type = this._is_bot() ? "bot" : "browser"), (h4 = Sr({}, p4, this.persistence.properties(), this.sessionPersistence.properties(), h4)).$is_identified = this._isIdentified(), B3(this.config.property_denylist) ? xr(this.config.property_denylist, (function(t4) {
+      u4 && this.config.opt_out_useragent_filter && (h4.$browser_type = this._is_bot() ? "bot" : "browser"), (h4 = Or({}, f5, this.persistence.properties(), this.sessionPersistence.properties(), h4)).$is_identified = this._isIdentified(), H2(this.config.property_denylist) ? Pr(this.config.property_denylist, (function(t4) {
         delete h4[t4];
-      })) : li.error(va + this.config.property_denylist + " or property_blacklist config: " + this.config.property_blacklist);
-      var b3 = this.config.sanitize_properties;
-      b3 && (li.error(da), h4 = b3(h4, e4));
-      var w4 = this.Ji();
-      return h4.$process_person_profile = w4, w4 && !a4 && this.Yi("_calculate_event_properties"), h4;
+      })) : fi.error(Ta + this.config.property_denylist + " or property_blacklist config: " + this.config.property_blacklist);
+      var y4 = this.config.sanitize_properties;
+      y4 && (fi.error(ka), h4 = y4(h4, e4));
+      var w4 = this.Cn();
+      return h4.$process_person_profile = w4, w4 && !a4 && this.In("_calculate_event_properties"), h4;
     }
-    Qi(t4, e4, i4) {
+    Sn(t4, e4, i4) {
       var r4;
-      if (void 0 === e4 && (e4 = true), void 0 === i4 && (i4 = false), !this.persistence || !this.Ji()) return t4;
-      if (this.Ii && !i4) return t4;
-      var s4 = this.persistence.get_initial_props(), n3 = null == (r4 = this.sessionPropsManager) ? void 0 : r4.getSetOnceProps(), o4 = Sr({}, s4, n3 || {}, t4 || {}), a4 = this.config.sanitize_properties;
-      return a4 && (li.error(da), o4 = a4(o4, "$set_once")), e4 && (this.Ii = true), q2(o4) ? void 0 : o4;
+      if (void 0 === e4 && (e4 = true), void 0 === i4 && (i4 = false), !this.persistence || !this.Cn()) return t4;
+      if (this.Xi && !i4) return t4;
+      var s4 = this.persistence.get_initial_props(), n3 = null == (r4 = this.sessionPropsManager) ? void 0 : r4.getSetOnceProps(), o4 = Or({}, s4, n3 || {}, t4 || {}), a4 = this.config.sanitize_properties;
+      return a4 && (fi.error(ka), o4 = a4(o4, "$set_once")), e4 && (this.Xi = true), G2(o4) ? void 0 : o4;
     }
     register(t4, e4) {
       var i4;
@@ -8800,7 +9049,7 @@
       var e4;
       null == (e4 = this.sessionPersistence) || e4.unregister(t4);
     }
-    Ki(t4, e4) {
+    Tn(t4, e4) {
       this.register({ [t4]: e4 });
     }
     getFeatureFlag(t4, e4) {
@@ -8840,14 +9089,14 @@
       return void 0 === e4 && (e4 = false), null == (r4 = this.featureFlags) ? void 0 : r4.getEarlyAccessFeatures(t4, e4, i4);
     }
     on(t4, e4) {
-      return this.Ti.on(t4, e4);
+      return this.tn.on(t4, e4);
     }
     onFeatureFlags(t4) {
       return this.featureFlags ? this.featureFlags.onFeatureFlags(t4) : (t4([], {}, { errorsLoading: true }), () => {
       });
     }
     onSurveysLoaded(t4) {
-      return this.surveys ? this.surveys.onSurveysLoaded(t4) : (t4([], { isLoaded: false, error: ha }), () => {
+      return this.surveys ? this.surveys.onSurveysLoaded(t4) : (t4([], { isLoaded: false, error: Sa }), () => {
       });
     }
     onSessionId(t4) {
@@ -8856,10 +9105,10 @@
       };
     }
     getSurveys(t4, e4) {
-      void 0 === e4 && (e4 = false), this.surveys ? this.surveys.getSurveys(t4, e4) : t4([], { isLoaded: false, error: ha });
+      void 0 === e4 && (e4 = false), this.surveys ? this.surveys.getSurveys(t4, e4) : t4([], { isLoaded: false, error: Sa });
     }
     getActiveMatchingSurveys(t4, e4) {
-      void 0 === e4 && (e4 = false), this.surveys ? this.surveys.getActiveMatchingSurveys(t4, e4) : t4([], { isLoaded: false, error: ha });
+      void 0 === e4 && (e4 = false), this.surveys ? this.surveys.getActiveMatchingSurveys(t4, e4) : t4([], { isLoaded: false, error: Sa });
     }
     renderSurvey(t4, e4) {
       var i4;
@@ -8867,7 +9116,7 @@
     }
     displaySurvey(t4, e4) {
       var i4;
-      void 0 === e4 && (e4 = ea), null == (i4 = this.surveys) || i4.displaySurvey(t4, e4);
+      void 0 === e4 && (e4 = _a), null == (i4 = this.surveys) || i4.displaySurvey(t4, e4);
     }
     cancelPendingSurvey(t4) {
       var e4;
@@ -8875,43 +9124,43 @@
     }
     canRenderSurvey(t4) {
       var e4, i4;
-      return null !== (e4 = null == (i4 = this.surveys) ? void 0 : i4.canRenderSurvey(t4)) && void 0 !== e4 ? e4 : { visible: false, disabledReason: ha };
+      return null !== (e4 = null == (i4 = this.surveys) ? void 0 : i4.canRenderSurvey(t4)) && void 0 !== e4 ? e4 : { visible: false, disabledReason: Sa };
     }
     canRenderSurveyAsync(t4, e4) {
       var i4, r4;
-      return void 0 === e4 && (e4 = false), null !== (i4 = null == (r4 = this.surveys) ? void 0 : r4.canRenderSurveyAsync(t4, e4)) && void 0 !== i4 ? i4 : Promise.resolve({ visible: false, disabledReason: ha });
+      return void 0 === e4 && (e4 = false), null !== (i4 = null == (r4 = this.surveys) ? void 0 : r4.canRenderSurveyAsync(t4, e4)) && void 0 !== i4 ? i4 : Promise.resolve({ visible: false, disabledReason: Sa });
     }
-    Xi(t4) {
-      return !t4 || W(t4) ? (li.critical("Unique user id has not been set in posthog.identify"), false) : t4 === or ? (li.critical('The string "' + t4 + '" was set in posthog.identify which indicates an error. This ID is only used as a sentinel value.'), false) : !["distinct_id", "distinctid"].includes(t4.toLowerCase()) && !["undefined", "null"].includes(t4.toLowerCase()) || (li.critical('The string "' + t4 + '" was set in posthog.identify which indicates an error. This ID should be unique to the user and not a hardcoded string.'), false);
+    Mn(t4) {
+      return !t4 || K2(t4) ? (fi.critical("Unique user id has not been set in posthog.identify"), false) : t4 === vr ? (fi.critical('The string "' + t4 + '" was set in posthog.identify which indicates an error. This ID is only used as a sentinel value.'), false) : !["distinct_id", "distinctid"].includes(t4.toLowerCase()) && !["undefined", "null"].includes(t4.toLowerCase()) || (fi.critical('The string "' + t4 + '" was set in posthog.identify which indicates an error. This ID should be unique to the user and not a hardcoded string.'), false);
     }
     identify(t4, e4, i4) {
-      if (!this.__loaded || !this.persistence) return li.uninitializedWarning("posthog.identify");
-      if (J2(t4) && (t4 = t4.toString(), li.warn("The first argument to posthog.identify was a number, but it should be a string. It has been converted to a string.")), this.Xi(t4) && this.Yi("posthog.identify")) {
+      if (!this.__loaded || !this.persistence) return fi.uninitializedWarning("posthog.identify");
+      if (X(t4) && (t4 = t4.toString(), fi.warn("The first argument to posthog.identify was a number, but it should be a string. It has been converted to a string.")), this.Mn(t4) && this.In("posthog.identify")) {
         var r4 = this.get_distinct_id();
-        this.register({ $user_id: t4 }), this.get_property(ci) || this.register_once({ $had_persisted_distinct_id: true, $device_id: r4 }, ""), t4 !== r4 && t4 !== this.get_property(fi) && (this.unregister(fi), this.register({ distinct_id: t4 }));
-        var s4, n3 = (this.persistence.get_property(Xi) || cr) === cr;
-        t4 !== r4 && n3 ? (this.persistence.set_property(Xi, pr), this.setPersonPropertiesForFlags({ $set: e4 || {}, $set_once: i4 || {} }, false), this.capture(br, { distinct_id: t4, $anon_distinct_id: r4 }, { $set: e4 || {}, $set_once: i4 || {} }), this.Ri = qo(t4, e4, i4), null == (s4 = this.featureFlags) || s4.setAnonymousDistinctId(r4)) : (e4 || i4) && this.setPersonProperties(e4, i4), t4 !== r4 && (this.reloadFeatureFlags(), this.unregister(Yi));
+        this.register({ $user_id: t4 }), this.get_property(bi) || this.register_once({ $had_persisted_distinct_id: true, $device_id: r4 }, ""), t4 !== r4 && t4 !== this.get_property(wi) && (this.unregister(wi), this.register({ distinct_id: t4 }));
+        var s4, n3 = (this.persistence.get_property(sr) || br) === br;
+        t4 !== r4 && n3 ? (this.persistence.set_property(sr, yr), this.setPersonPropertiesForFlags({ $set: e4 || {}, $set_once: i4 || {} }, false), this.capture(Tr, { distinct_id: t4, $anon_distinct_id: r4 }, { $set: e4 || {}, $set_once: i4 || {} }), this.sn = ra(t4, e4, i4), null == (s4 = this.featureFlags) || s4.setAnonymousDistinctId(r4)) : (e4 || i4) && this.setPersonProperties(e4, i4), t4 !== r4 && (this.reloadFeatureFlags(), this.unregister(tr));
       }
     }
     setPersonProperties(t4, e4) {
-      if ((t4 || e4) && this.Yi("posthog.setPersonProperties")) {
-        var i4 = qo(this.get_distinct_id(), t4, e4);
-        this.Ri !== i4 ? (this.setPersonPropertiesForFlags({ $set: t4 || {}, $set_once: e4 || {} }, true), this.capture("$set", { $set: t4 || {}, $set_once: e4 || {} }), this.Ri = i4) : li.info("A duplicate setPersonProperties call was made with the same properties. It has been ignored.");
+      if ((t4 || e4) && this.In("posthog.setPersonProperties")) {
+        var i4 = ra(this.get_distinct_id(), t4, e4);
+        this.sn !== i4 ? (this.setPersonPropertiesForFlags({ $set: t4 || {}, $set_once: e4 || {} }, true), this.capture("$set", { $set: t4 || {}, $set_once: e4 || {} }), this.sn = i4) : fi.info("A duplicate setPersonProperties call was made with the same properties. It has been ignored.");
       }
     }
     unsetPersonProperties(t4) {
-      var e4, i4 = (B3(t4) ? t4 : [t4]).filter(((t5) => G2(t5) && t5.length > 0));
-      0 !== i4.length && this.Yi("posthog.unsetPersonProperties") && (null == (e4 = this.featureFlags) || e4.unsetPersonPropertiesForFlags(i4, true), this.capture("$set", { $unset: i4 }), this.Ri = null);
+      var e4, i4 = (H2(t4) ? t4 : [t4]).filter(((t5) => J2(t5) && t5.length > 0));
+      0 !== i4.length && this.In("posthog.unsetPersonProperties") && (null == (e4 = this.featureFlags) || e4.unsetPersonPropertiesForFlags(i4, true), this.capture("$set", { $unset: i4 }), this.sn = null);
     }
     group(t4, e4, i4) {
       if (t4 && e4) {
         var r4 = this.getGroups(), s4 = r4[t4] !== e4;
-        if (s4 && this.resetGroupPropertiesForFlags(t4), this.register({ $groups: f4({}, r4, { [t4]: e4 }) }), s4 || i4) {
+        if (s4 && this.resetGroupPropertiesForFlags(t4), this.register({ $groups: _2({}, r4, { [t4]: e4 }) }), s4 || i4) {
           var n3 = { $group_type: t4, $group_key: e4 };
-          i4 && (n3.$group_set = i4), this.capture(wr, n3);
+          i4 && (n3.$group_set = i4), this.capture($r, n3);
         }
         i4 && this.setGroupPropertiesForFlags({ [t4]: i4 }), s4 && !i4 && this.reloadFeatureFlags();
-      } else li.error("posthog.group requires a group type and group key");
+      } else fi.error("posthog.group requires a group type and group key");
     }
     resetGroups() {
       this.register({ $groups: {} }), this.resetGroupPropertiesForFlags(), this.reloadFeatureFlags();
@@ -8926,30 +9175,37 @@
     }
     setGroupPropertiesForFlags(t4, e4) {
       var i4;
-      void 0 === e4 && (e4 = true), this.Yi("posthog.setGroupPropertiesForFlags") && (null == (i4 = this.featureFlags) || i4.setGroupPropertiesForFlags(t4, e4));
+      void 0 === e4 && (e4 = true), this.In("posthog.setGroupPropertiesForFlags") && (null == (i4 = this.featureFlags) || i4.setGroupPropertiesForFlags(t4, e4));
     }
     resetGroupPropertiesForFlags(t4) {
       var e4;
       null == (e4 = this.featureFlags) || e4.resetGroupPropertiesForFlags(t4);
     }
     reset(t4) {
-      var e4, i4, r4, s4, n3, o4, a4, l4, u5;
-      if (li.info("reset"), !this.__loaded) return li.uninitializedWarning("posthog.reset");
-      var h4, d4 = this.get_property(ci), v4 = this.get_property(pi), c4 = this.get_property($i);
-      if (this.consent.reset(), null == (e4 = this.persistence) || e4.clear(), null == (i4 = this.sessionPersistence) || i4.clear(), V2(c4) || null == (h4 = this.persistence) || h4.register({ [$i]: c4 }), null == (r4 = this.surveys) || r4.reset(), null == (s4 = this.Wi) || s4.stop(), null == (n3 = this.featureFlags) || n3.reset(), null == (o4 = this.conversations) || o4.reset(), null == (a4 = this.logs) || a4.reset(), null == (l4 = this.persistence) || l4.set_property(Xi, cr), null == (u5 = this.sessionManager) || u5.resetSessionId(), this.Ri = null, this.config.cookieless_mode === vr) this.register_once({ distinct_id: or, $device_id: null }, "");
+      var e4, i4, r4, s4, n3, o4, a4, l4, u5, h4;
+      if (fi.info("reset"), !this.__loaded) return fi.uninitializedWarning("posthog.reset");
+      var d4, v4 = this.get_property(bi), c4 = this.get_property(yi), f5 = this.get_property(Ci);
+      if (this.consent.reset(), null == (e4 = this.persistence) || e4.clear(), null == (i4 = this.sessionPersistence) || i4.clear(), W(f5) || null == (d4 = this.persistence) || d4.register({ [Ci]: f5 }), null == (r4 = this.surveys) || r4.reset(), null == (s4 = this.wn) || s4.stop(), null == (n3 = this.featureFlags) || n3.reset(), null == (o4 = this.conversations) || o4.reset(), null == (a4 = this.logs) || a4.reset(), null == (l4 = this.metrics) || l4.reset(), null == (u5 = this.persistence) || u5.set_property(sr, br), null == (h4 = this.sessionManager) || h4.resetSessionId(), this.sn = null, this.config.cookieless_mode === mr) this.register_once({ distinct_id: vr, $device_id: null }, "");
       else {
-        var p4 = this.config.get_device_id(Nr());
-        this.register_once({ distinct_id: p4, $device_id: t4 ? p4 : d4 }, ""), t4 || V2(v4) || this.register({ [pi]: v4 });
+        var p4 = this.config.get_device_id(qr());
+        this.register_once({ distinct_id: p4, $device_id: t4 ? p4 : v4 }, ""), t4 || W(c4) || this.register({ [yi]: c4 });
       }
       this.register({ $last_posthog_reset: (/* @__PURE__ */ new Date()).toISOString() }, 1), delete this.config.identity_distinct_id, delete this.config.identity_hash, this.reloadFeatureFlags();
     }
+    shutdown(t4) {
+      var e4 = this;
+      return p3((function* () {
+        var t5, i4, r4, s4, n3;
+        e4.__loaded ? (null == (t5 = e4.logs) || t5.flushLogs("sendBeacon"), null == (i4 = e4.metrics) || i4.flush("sendBeacon"), null == (r4 = e4.dn) || r4.unload(), null == (s4 = e4.vn) || s4.unload(), null == (n3 = e4.featureFlags) || n3.destroy()) : fi.uninitializedWarning("posthog.shutdown");
+      }))();
+    }
     setIdentity(t4, e4) {
       var i4;
-      this.config.identity_distinct_id = t4, this.config.identity_hash = e4, this.alias(t4), null == (i4 = this.conversations) || i4.en();
+      this.config.identity_distinct_id = t4, this.config.identity_hash = e4, this.alias(t4), null == (i4 = this.conversations) || i4.En();
     }
     clearIdentity() {
       var t4;
-      delete this.config.identity_distinct_id, delete this.config.identity_hash, null == (t4 = this.conversations) || t4.tn();
+      delete this.config.identity_distinct_id, delete this.config.identity_hash, null == (t4 = this.conversations) || t4.Rn();
     }
     get_distinct_id() {
       return this.get_property("distinct_id");
@@ -8963,7 +9219,7 @@
     }
     get_session_replay_url(t4) {
       if (!this.sessionManager) return "";
-      var { sessionId: e4, sessionStartTimestamp: i4 } = this.sessionManager.checkAndGetSessionAndWindowId(true), r4 = this.requestRouter.endpointFor("ui", "/project/" + this.config.token + "/replay/" + e4);
+      var e4 = this.sessionManager.checkAndGetSessionAndWindowId(true), i4 = e4.sessionStartTimestamp, r4 = this.requestRouter.endpointFor("ui", "/project/" + this.config.token + "/replay/" + e4.sessionId);
       if (null != t4 && t4.withTimestamp && i4) {
         var s4, n3 = null !== (s4 = t4.timestampLookBack) && void 0 !== s4 ? s4 : 10;
         if (!i4) return r4;
@@ -8972,21 +9228,21 @@
       return r4;
     }
     alias(t4, e4) {
-      return t4 === this.get_property(vi) ? (li.critical("Attempting to create alias for existing People user - aborting."), -2) : this.Yi("posthog.alias") ? (V2(e4) && (e4 = this.get_distinct_id()), t4 !== e4 ? (this.Ki(fi, t4), this.capture("$create_alias", { alias: t4, distinct_id: e4 })) : (li.warn("alias matches current distinct_id - skipping api call."), this.identify(t4), -1)) : void 0;
+      return t4 === this.get_property(mi) ? (fi.critical("Attempting to create alias for existing People user - aborting."), -2) : this.In("posthog.alias") ? (W(e4) && (e4 = this.get_distinct_id()), t4 !== e4 ? (this.Tn(wi, t4), this.capture("$create_alias", { alias: t4, distinct_id: e4 })) : (fi.warn("alias matches current distinct_id - skipping api call."), this.identify(t4), -1)) : void 0;
     }
     set_config(t4) {
-      var e4 = f4({}, this.config);
-      if (H2(t4)) {
-        var i4, r4, s4, n3, o4, a4, l4, u5, h4, d4, c4;
-        Sr(this.config, ga(t4));
-        var p4 = this.Ai();
-        null == (i4 = this.persistence) || i4.update_config(this.config, e4, p4), this.sessionPersistence = "sessionStorage" === this.config.persistence || "memory" === this.config.persistence ? this.persistence : new yn(f4({}, this.config, { persistence: "sessionStorage" }), p4, false);
-        var _3 = this.Oi(this.config.debug);
-        X(_3) && (this.config.debug = _3), X(this.config.debug) && (this.config.debug ? (v3.DEBUG = true, qr.N() && qr.q("ph_debug", true), li.info("set_config", { config: t4, oldConfig: e4, newConfig: f4({}, this.config) })) : (v3.DEBUG = false, qr.N() && qr.P("ph_debug"))), null == (r4 = this.exceptionObserver) || r4.onConfigChange(), null == (s4 = this.exceptions) || s4.onConfigChange(), null == (n3 = this.sessionRecording) || n3.startIfEnabledOrStop(), null == (o4 = this.tracingHeaders) || o4.startIfEnabledOrStop(), null == (a4 = this.autocapture) || a4.startIfEnabled(), null == (l4 = this.heatmaps) || l4.startIfEnabled(), null == (u5 = this.exceptionObserver) || u5.startIfEnabledOrStop(), null == (h4 = this.deadClicksAutocapture) || h4.startIfEnabledOrStop(), null == (d4 = this.surveys) || d4.loadIfEnabled(), this.rn(), null == (c4 = this.externalIntegrations) || c4.startIfEnabledOrStop();
+      var e4 = _2({}, this.config);
+      if (V2(t4)) {
+        var i4, r4, s4, n3, o4, a4, l4, u5, h4, d4, v4;
+        Or(this.config, Ia(t4));
+        var f5 = this.hn();
+        null == (i4 = this.persistence) || i4.update_config(this.config, e4, f5), this.sessionPersistence = "sessionStorage" === this.config.persistence || "memory" === this.config.persistence ? this.persistence : new Rn(_2({}, this.config, { persistence: "sessionStorage" }), f5, false);
+        var p4 = this.an(this.config.debug);
+        tt(p4) && (this.config.debug = p4), tt(this.config.debug) && (this.config.debug ? (c3.DEBUG = true, Yr.N() && Yr.q("ph_debug", true), fi.info("set_config", { config: t4, oldConfig: e4, newConfig: _2({}, this.config) })) : (c3.DEBUG = false, Yr.N() && Yr.P("ph_debug"))), null == (r4 = this.exceptionObserver) || r4.onConfigChange(), null == (s4 = this.exceptions) || s4.onConfigChange(), null == (n3 = this.sessionRecording) || n3.startIfEnabledOrStop(), null == (o4 = this.tracingHeaders) || o4.startIfEnabledOrStop(), null == (a4 = this.autocapture) || a4.startIfEnabled(), null == (l4 = this.heatmaps) || l4.startIfEnabled(), null == (u5 = this.exceptionObserver) || u5.startIfEnabledOrStop(), null == (h4 = this.deadClicksAutocapture) || h4.startIfEnabledOrStop(), null == (d4 = this.surveys) || d4.loadIfEnabled(), this.Pn(), null == (v4 = this.externalIntegrations) || v4.startIfEnabledOrStop();
       }
     }
     _overrideSDKInfo(t4, e4) {
-      v3.LIB_NAME = t4, v3.LIB_VERSION = e4;
+      c3.LIB_NAME = t4, c3.LIB_VERSION = e4;
     }
     startSessionRecording(t4) {
       var e4, i4, r4, s4, n3, o4 = true === t4, a4 = { sampling: o4 || !(null == t4 || !t4.sampling), linked_flag: o4 || !(null == t4 || !t4.linked_flag), url_trigger: o4 || !(null == t4 || !t4.url_trigger), event_trigger: o4 || !(null == t4 || !t4.event_trigger) };
@@ -9003,7 +9259,7 @@
     captureException(t4, e4) {
       if (this.exceptions) {
         var i4 = new Error("PostHog syntheticException"), r4 = this.exceptions.buildProperties(t4, { handled: true, syntheticException: i4 });
-        return this.exceptions.sendExceptionEvent(f4({}, r4, e4));
+        return this.exceptions.sendExceptionEvent(_2({}, r4, e4));
       }
     }
     addExceptionStep(t4, e4) {
@@ -9016,7 +9272,7 @@
     }
     get logger() {
       var t4, e4;
-      return null !== (t4 = null == (e4 = this.logs) ? void 0 : e4.logger) && void 0 !== t4 ? t4 : _ya.nn;
+      return null !== (t4 = null == (e4 = this.logs) ? void 0 : e4.logger) && void 0 !== t4 ? t4 : _Ma.On;
     }
     startExceptionAutocapture(t4) {
       this.set_config({ capture_exceptions: null == t4 || t4 });
@@ -9037,54 +9293,54 @@
       return null == (e4 = this.sessionPersistence) ? void 0 : e4.props[t4];
     }
     toString() {
-      var t4, e4 = null !== (t4 = this.config.name) && void 0 !== t4 ? t4 : ca;
-      return e4 !== ca && (e4 = ca + "." + e4), e4;
+      var t4, e4 = null !== (t4 = this.config.name) && void 0 !== t4 ? t4 : $a;
+      return e4 !== $a && (e4 = $a + "." + e4), e4;
     }
     _isIdentified() {
       var t4, e4;
-      return (null == (t4 = this.persistence) ? void 0 : t4.get_property(Xi)) === pr || (null == (e4 = this.sessionPersistence) ? void 0 : e4.get_property(Xi)) === pr;
+      return (null == (t4 = this.persistence) ? void 0 : t4.get_property(sr)) === yr || (null == (e4 = this.sessionPersistence) ? void 0 : e4.get_property(sr)) === yr;
     }
-    Ji() {
+    Cn() {
       var t4, e4;
-      return !("never" === this.config.person_profiles || this.config.person_profiles === fr && !this._isIdentified() && q2(this.getGroups()) && (null == (t4 = this.persistence) || null == (t4 = t4.props) || !t4[fi]) && (null == (e4 = this.persistence) || null == (e4 = e4.props) || !e4[sr]));
+      return !("never" === this.config.person_profiles || this.config.person_profiles === wr && !this._isIdentified() && G2(this.getGroups()) && (null == (t4 = this.persistence) || null == (t4 = t4.props) || !t4[wi]) && (null == (e4 = this.persistence) || null == (e4 = e4.props) || !e4[hr]));
     }
-    Gi() {
+    xn() {
       return true === this.config.capture_pageleave || "if_capture_pageview" === this.config.capture_pageleave && (true === this.config.capture_pageview || "history_change" === this.config.capture_pageview);
     }
     createPersonProfile() {
-      this.Ji() || this.Yi("posthog.createPersonProfile") && this.setPersonProperties({}, {});
+      this.Cn() || this.In("posthog.createPersonProfile") && this.setPersonProperties({}, {});
     }
     setInternalOrTestUser() {
-      this.Yi("posthog.setInternalOrTestUser") && this.setPersonProperties({ $internal_or_test_user: true });
+      this.In("posthog.setInternalOrTestUser") && this.setPersonProperties({ $internal_or_test_user: true });
     }
-    Yi(t4) {
-      return "never" === this.config.person_profiles ? (li.error(t4 + ' was called, but process_person is set to "never". This call will be ignored.'), false) : (this.Ki(sr, true), true);
+    In(t4) {
+      return "never" === this.config.person_profiles ? (fi.error(t4 + ' was called, but process_person is set to "never". This call will be ignored.'), false) : (this.Tn(hr, true), true);
     }
-    Ai() {
+    hn() {
       if ("always" === this.config.cookieless_mode) return true;
       var t4 = this.consent.isOptedOut();
-      return this.config.disable_persistence || t4 && !(!this.config.opt_out_persistence_by_default && this.config.cookieless_mode !== dr);
+      return this.config.disable_persistence || t4 && !(!this.config.opt_out_persistence_by_default && this.config.cookieless_mode !== gr);
     }
-    rn() {
-      var t4, e4, i4, r4, s4 = this.Ai();
-      return (null == (t4 = this.persistence) ? void 0 : t4.Vt) !== s4 && (null == (i4 = this.persistence) || i4.set_disabled(s4)), (null == (e4 = this.sessionPersistence) ? void 0 : e4.Vt) !== s4 && (null == (r4 = this.sessionPersistence) || r4.set_disabled(s4)), s4;
+    Pn() {
+      var t4, e4, i4, r4, s4 = this.hn();
+      return (null == (t4 = this.persistence) ? void 0 : t4._r) !== s4 && (null == (i4 = this.persistence) || i4.set_disabled(s4)), (null == (e4 = this.sessionPersistence) ? void 0 : e4._r) !== s4 && (null == (r4 = this.sessionPersistence) || r4.set_disabled(s4)), s4;
     }
     opt_in_capturing(t4) {
       var e4;
-      if (this.config.cookieless_mode !== vr) {
-        if (this.Ci()) {
+      if (this.config.cookieless_mode !== mr) {
+        if (this.Yi()) {
           var i4, r4, s4, n3, o4;
-          this.reset(true), null == (i4 = this.sessionManager) || i4.destroy(), null == (r4 = this.pageViewManager) || r4.destroy(), this.sessionManager = new jo(this), this.pageViewManager = new Vs(this), this.persistence && (this.sessionPropsManager = new Lo(this, this.sessionManager, this.persistence));
-          var a4, l4 = null !== (s4 = null == (n3 = this.config.__extensionClasses) ? void 0 : n3.sessionRecording) && void 0 !== s4 ? s4 : null == (o4 = _ya.__defaultExtensionClasses) ? void 0 : o4.sessionRecording;
-          l4 && (this.sessionRecording = this.ki(this.sessionRecording, new l4(this)), this.Ui && (null == (a4 = this.sessionRecording) || null == a4.onRemoteConfig || a4.onRemoteConfig(this.Ui)));
+          this.reset(true), null == (i4 = this.sessionManager) || i4.destroy(), null == (r4 = this.pageViewManager) || r4.destroy(), this.sessionManager = new Zo(this), this.pageViewManager = new Xs(this), this.persistence && (this.sessionPropsManager = new Yo(this, this.sessionManager, this.persistence));
+          var a4, l4 = null !== (s4 = null == (n3 = this.config.__extensionClasses) ? void 0 : n3.sessionRecording) && void 0 !== s4 ? s4 : null == (o4 = _Ma.__defaultExtensionClasses) ? void 0 : o4.sessionRecording;
+          l4 && (this.sessionRecording = this.Ji(this.sessionRecording, new l4(this)), this.yn && (null == (a4 = this.sessionRecording) || null == a4.onRemoteConfig || a4.onRemoteConfig(this.yn)));
         }
         var u5, h4;
-        this.consent.optInOut(true), this.rn(), this.zi(), null == (e4 = this.sessionRecording) || e4.startIfEnabledOrStop(), this.config.cookieless_mode == dr && (null == (u5 = this.surveys) || u5.loadIfEnabled()), (V2(null == t4 ? void 0 : t4.captureEventName) || null != t4 && t4.captureEventName) && this.capture(null !== (h4 = null == t4 ? void 0 : t4.captureEventName) && void 0 !== h4 ? h4 : "$opt_in", null == t4 ? void 0 : t4.captureProperties, { send_instantly: true }), this.config.capture_pageview && this.Vi();
-      } else li.warn(ua);
+        this.consent.optInOut(true), this.Pn(), this.bn(), null == (e4 = this.sessionRecording) || e4.startIfEnabledOrStop(), this.config.cookieless_mode == gr && (null == (u5 = this.surveys) || u5.loadIfEnabled()), (W(null == t4 ? void 0 : t4.captureEventName) || null != t4 && t4.captureEventName) && this.capture(null !== (h4 = null == t4 ? void 0 : t4.captureEventName) && void 0 !== h4 ? h4 : "$opt_in", null == t4 ? void 0 : t4.captureProperties, { send_instantly: true }), this.config.capture_pageview && this._n();
+      } else fi.warn(xa);
     }
     opt_out_capturing() {
       var t4, e4, i4;
-      this.config.cookieless_mode !== vr ? (this.config.cookieless_mode === dr && this.consent.isOptedIn() && this.reset(true), this.consent.optInOut(false), this.rn(), this.config.cookieless_mode === dr && (this.register({ distinct_id: or, $device_id: null }), null == (t4 = this.sessionRecording) || t4.stopRecording(), this.sessionRecording = void 0, null == (e4 = this.sessionManager) || e4.destroy(), null == (i4 = this.pageViewManager) || i4.destroy(), this.sessionManager = void 0, this.sessionPropsManager = void 0, this.config.capture_pageview && this.Vi(), this.zi())) : li.warn(ua);
+      this.config.cookieless_mode !== mr ? (this.config.cookieless_mode === gr && this.consent.isOptedIn() && this.reset(true), this.consent.optInOut(false), this.Pn(), this.config.cookieless_mode === gr && (this.register({ distinct_id: vr, $device_id: null }), null == (t4 = this.sessionRecording) || t4.stopRecording(), this.sessionRecording = void 0, null == (e4 = this.sessionManager) || e4.destroy(), null == (i4 = this.pageViewManager) || i4.destroy(), this.sessionManager = void 0, this.sessionPropsManager = void 0, this.config.capture_pageview && this._n(), this.bn())) : fi.warn(xa);
     }
     has_opted_in_capturing() {
       return this.consent.isOptedIn();
@@ -9097,41 +9353,41 @@
       return 1 === t4 ? "granted" : 0 === t4 ? "denied" : "pending";
     }
     is_capturing() {
-      return this.config.cookieless_mode === vr || (this.config.cookieless_mode === dr ? this.consent.isRejected() || this.consent.isOptedIn() : !this.has_opted_out_capturing());
+      return this.config.cookieless_mode === mr || (this.config.cookieless_mode === gr ? this.consent.isRejected() || this.consent.isOptedIn() : !this.has_opted_out_capturing());
     }
     clear_opt_in_out_capturing() {
-      this.consent.reset(), this.rn();
+      this.consent.reset(), this.Pn();
     }
     _is_bot() {
-      return i3 ? Bo(i3, this.config.custom_blocked_useragents) : void 0;
+      return i3 ? ta(i3, this.config.custom_blocked_useragents) : void 0;
     }
-    Vi() {
-      r3 && ("visible" === r3.visibilityState ? this.Ei || (this.Ei = true, this.capture(mr, { title: r3.title }, { send_instantly: true }), this.Mi && (r3.removeEventListener(_r, this.Mi), this.Mi = null)) : this.Mi || (this.Mi = this.Vi.bind(this), Or(r3, _r, this.Mi)));
+    _n() {
+      r3 && ("visible" === r3.visibilityState ? this.en || (this.en = true, this.capture(Sr, { title: r3.title }, { send_instantly: true }), this.rn && (r3.removeEventListener(Er, this.rn), this.rn = null)) : this.rn || (this.rn = this._n.bind(this), Nr(r3, Er, this.rn)));
     }
     debug(e4) {
       false === e4 ? (null == t3 || t3.console.log("You've disabled debug mode."), this.set_config({ debug: false })) : (null == t3 || t3.console.log("You're now in debug mode. All calls to PostHog will be logged in your console.\nYou can disable this with `posthog.debug(false)`."), this.set_config({ debug: true }));
     }
-    mr() {
-      var t4, e4, i4, r4, s4, n3, o4 = this.Li || {};
-      return "advanced_disable_flags" in o4 ? !!o4.advanced_disable_flags : false !== this.config.advanced_disable_flags ? !!this.config.advanced_disable_flags : true === this.config.advanced_disable_decide ? (li.warn("Config field 'advanced_disable_decide' is deprecated. Please use 'advanced_disable_flags' instead. The old field will be removed in a future major version."), true) : (i4 = "advanced_disable_decide", false, r4 = li, s4 = (e4 = "advanced_disable_flags") in (t4 = o4) && !K2(t4[e4]), n3 = i4 in t4 && !K2(t4[i4]), s4 ? t4[e4] : !!n3 && (r4 && r4.warn("Config field '" + i4 + "' is deprecated. Please use '" + e4 + "' instead. The old field will be removed in a future major version."), t4[i4]));
+    Vr() {
+      var t4, e4, i4, r4, s4, n3, o4 = this.ln || {};
+      return "advanced_disable_flags" in o4 ? !!o4.advanced_disable_flags : false !== this.config.advanced_disable_flags ? !!this.config.advanced_disable_flags : true === this.config.advanced_disable_decide ? (fi.warn("Config field 'advanced_disable_decide' is deprecated. Please use 'advanced_disable_flags' instead. The old field will be removed in a future major version."), true) : (i4 = "advanced_disable_decide", false, r4 = fi, s4 = (e4 = "advanced_disable_flags") in (t4 = o4) && !Q2(t4[e4]), n3 = i4 in t4 && !Q2(t4[i4]), s4 ? t4[e4] : !!n3 && (r4 && r4.warn("Config field '" + i4 + "' is deprecated. Please use '" + e4 + "' instead. The old field will be removed in a future major version."), t4[i4]));
     }
-    it(t4) {
+    Rt(t4) {
       var e4;
-      if (K2(this.config.before_send)) return t4;
-      var i4 = Object.keys(null !== (e4 = t4.properties) && void 0 !== e4 ? e4 : {}).filter(et), r4 = B3(this.config.before_send) ? this.config.before_send : [this.config.before_send], s4 = t4;
+      if (Q2(this.config.before_send)) return t4;
+      var i4 = Object.keys(null !== (e4 = t4.properties) && void 0 !== e4 ? e4 : {}).filter(rt), r4 = H2(this.config.before_send) ? this.config.before_send : [this.config.before_send], s4 = t4;
       for (var n3 of r4) {
-        if (s4 = n3(s4), K2(s4)) {
+        if (s4 = n3(s4), Q2(s4)) {
           var o4 = "Event '" + t4.event + "' was rejected in beforeSend function";
-          return tt(t4.event) ? li.warn(o4 + ". This can cause unexpected behavior.") : li.info(o4), null;
+          return it(t4.event) ? fi.warn(o4 + ". This can cause unexpected behavior.") : fi.info(o4), null;
         }
-        s4.properties && !q2(s4.properties) || li.warn("Event '" + t4.event + "' has no properties after beforeSend function, this is likely an error.");
+        s4.properties && !G2(s4.properties) || fi.warn("Event '" + t4.event + "' has no properties after beforeSend function, this is likely an error.");
       }
-      for (var a4 of i4) if (s4.properties && K2(s4.properties[a4])) return li.warn("Event '" + t4.event + "' had its '" + a4 + "' property removed in a beforeSend function. This property is required for ingestion, so the event will be dropped."), null;
+      for (var a4 of i4) if (s4.properties && Q2(s4.properties[a4])) return fi.warn("Event '" + t4.event + "' had its '" + a4 + "' property removed in a beforeSend function. This property is required for ingestion, so the event will be dropped."), null;
       return s4;
     }
     getPageViewId() {
       var t4;
-      return null == (t4 = this.pageViewManager.Ot) ? void 0 : t4.pageViewId;
+      return null == (t4 = this.pageViewManager.sr) ? void 0 : t4.pageViewId;
     }
     captureTraceFeedback(t4, e4) {
       this.capture("$ai_feedback", { $ai_trace_id: String(t4), $ai_feedback_text: e4 });
@@ -9139,19 +9395,22 @@
     captureTraceMetric(t4, e4, i4) {
       this.capture("$ai_metric", { $ai_trace_id: String(t4), $ai_metric_name: e4, $ai_metric_value: String(i4) });
     }
-    Oi(t4) {
-      var e4 = X(t4) && !t4, i4 = qr.N() && "true" === qr.A("ph_debug");
+    an(t4) {
+      var e4 = tt(t4) && !t4, i4 = Yr.N() && "true" === Yr.A("ph_debug");
       return !e4 && (!!i4 || t4);
     }
   };
-  ya.__defaultExtensionClasses = {}, ya.nn = { trace: na = () => {
-  }, debug: na, info: na, warn: na, error: na, fatal: na }, (function(t4, e4) {
-    for (var i4 = 0; e4.length > i4; i4++) t4.prototype[e4[i4]] = kr(t4.prototype[e4[i4]]);
-  })(ya, ["identify"]);
-  var ba = class {
+  Ma.__defaultExtensionClasses = {}, Ma.On = /* @__PURE__ */ (() => {
+    var t4 = () => {
+    };
+    return { trace: t4, debug: t4, info: t4, warn: t4, error: t4, fatal: t4 };
+  })(), (function(t4, e4) {
+    for (var i4 = 0; e4.length > i4; i4++) t4.prototype[e4[i4]] = Mr(t4.prototype[e4[i4]]);
+  })(Ma, ["identify"]);
+  var Aa = class {
     constructor(t4) {
       this.disabled = false === t4;
-      var e4 = H2(t4) ? t4 : {};
+      var e4 = V2(t4) ? t4 : {};
       this.thresholdPx = e4.threshold_px || 30, this.timeoutMs = e4.timeout_ms || 1e3, this.clickCount = e4.click_count || 3, this.clicks = [];
     }
     isRageClick(t4, e4, i4) {
@@ -9163,123 +9422,117 @@
       return false;
     }
   };
-  var wa = "$copy_autocapture";
-  var Ea = ui("[AutoCapture]");
-  function xa(t4, e4) {
+  var Fa = "$copy_autocapture";
+  var Da = pi("[AutoCapture]");
+  function Na(t4, e4) {
     return e4.length > t4 ? e4.slice(0, t4) + "..." : e4;
   }
-  function Sa(t4) {
+  function Ua(t4) {
     if (t4.previousElementSibling) return t4.previousElementSibling;
     var e4 = t4;
     do {
       e4 = e4.previousSibling;
-    } while (e4 && !is(e4));
+    } while (e4 && !ls(e4));
     return e4;
   }
-  function Ta(e4, i4) {
-    var r4, s4, { e: n3, maskAllElementAttributes: o4, maskAllText: a4, elementAttributeIgnoreList: l4, elementsChainAsString: u5, disableCaptureUrlHashes: h4 } = i4;
-    if (!is(e4)) return { props: {} };
-    for (var d4 = [e4], v4 = e4; v4.parentNode && !rs(v4, "body"); ) if (ns(v4.parentNode)) d4.push(v4.parentNode.host), v4 = v4.parentNode.host;
-    else {
-      if (!is(v4.parentNode)) break;
-      d4.push(v4.parentNode), v4 = v4.parentNode;
+  function La(e4, i4) {
+    var r4, s4, n3 = i4.e, o4 = i4.maskAllElementAttributes, a4 = i4.maskAllText, l4 = i4.elementAttributeIgnoreList, u5 = i4.elementsChainAsString, h4 = i4.disableCaptureUrlHashes;
+    if (!ls(e4)) return { props: {} };
+    for (var d4 = [e4], v4 = /* @__PURE__ */ new Set([e4]), c4 = e4; c4.parentNode && !us(c4, "body") && vs > d4.length; ) if (ds(c4.parentNode)) {
+      var f5 = c4.parentNode.host;
+      if (v4.has(f5)) break;
+      v4.add(f5), d4.push(f5), c4 = f5;
+    } else {
+      if (!ls(c4.parentNode)) break;
+      if (v4.has(c4.parentNode)) break;
+      v4.add(c4.parentNode), d4.push(c4.parentNode), c4 = c4.parentNode;
     }
-    var c4, p4, _3 = [], g3 = {}, m4 = false, y4 = false;
-    if (xr(d4, ((t4) => {
-      var e5 = Ss(t4);
-      if (rs(t4, "a")) {
+    var p4, g3, m4 = [], b3 = {}, y4 = false, w4 = false;
+    if (Pr(d4, ((t4) => {
+      var e5 = Is(t4);
+      if (us(t4, "a")) {
         var i5 = t4.getAttribute("href");
-        m4 = !!(e5 && i5 && Cs(i5)) && (h4 ? _e(i5) : i5);
+        y4 = !!(e5 && i5 && Ls(i5)) && (h4 ? me(i5) : i5);
       }
-      M(ls(t4), "ph-no-capture") && (y4 = true), _3.push((function(t5, e6, i6, r6, s5) {
+      D3(ps(t4), "ph-no-capture") && (w4 = true), m4.push((function(t5, e6, i6, r6, s5) {
         void 0 === s5 && (s5 = false);
         var n4 = t5.tagName.toLowerCase(), o5 = { tag_name: n4 };
-        vs.indexOf(n4) > -1 && !i6 && (o5.$el_text = "a" === n4.toLowerCase() || "button" === n4.toLowerCase() ? xa(1024, As(t5)) : xa(1024, hs(t5)));
-        var a5 = ls(t5);
+        bs.indexOf(n4) > -1 && !i6 && (o5.$el_text = "a" === n4.toLowerCase() || "button" === n4.toLowerCase() ? Na(1024, js(t5)) : Na(1024, gs(t5)));
+        var a5 = ps(t5);
         a5.length > 0 && (o5.classes = a5.filter((function(t6) {
           return "" !== t6;
-        }))), xr(t5.attributes, (function(i7) {
+        }))), Pr(t5.attributes, (function(i7) {
           var n5;
-          if ((!Ts(t5) || -1 !== ["name", "id", "class", "aria-label"].indexOf(i7.name)) && (null == r6 || !r6.includes(i7.name)) && !e6 && Cs(i7.value) && (!G2(n5 = i7.name) || "_ngcontent" !== n5.substring(0, 10) && "_nghost" !== n5.substring(0, 7))) {
+          if ((!Cs(t5) || -1 !== ["name", "id", "class", "aria-label"].indexOf(i7.name)) && (null == r6 || !r6.includes(i7.name)) && !e6 && Ls(i7.value) && (!J2(n5 = i7.name) || "_ngcontent" !== n5.substring(0, 10) && "_nghost" !== n5.substring(0, 7))) {
             var a6 = i7.value;
-            "class" === i7.name && (a6 = os(a6).join(" ")), o5["attr__" + i7.name] = xa(1024, "href" === i7.name && s5 ? _e(a6) : a6);
+            "class" === i7.name && (a6 = cs(a6).join(" ")), o5["attr__" + i7.name] = Na(1024, "href" === i7.name && s5 ? me(a6) : a6);
           }
         }));
-        for (var l5 = 1, u6 = 1, h5 = t5; h5 = Sa(h5); ) l5++, h5.tagName === t5.tagName && u6++;
+        for (var l5 = 1, u6 = 1, h5 = t5; h5 = Ua(h5); ) l5++, h5.tagName === t5.tagName && u6++;
         return o5.nth_child = l5, o5.nth_of_type = u6, o5;
       })(t4, o4, a4, l4, h4));
       var r5 = (function(t5) {
-        if (!Ss(t5)) return {};
+        if (!Is(t5)) return {};
         var e6 = {};
-        return xr(t5.attributes, (function(t6) {
+        return Pr(t5.attributes, (function(t6) {
           if (t6.name && 0 === t6.name.indexOf("data-ph-capture-attribute")) {
             var i6 = t6.name.replace("data-ph-capture-attribute-", ""), r6 = t6.value;
-            i6 && r6 && Cs(r6) && (e6[i6] = r6);
+            i6 && r6 && Ls(r6) && (e6[i6] = r6);
           }
         })), e6;
       })(t4);
-      Sr(g3, r5);
-    })), y4) return { props: {}, explicitNoCapture: y4 };
-    if (a4 || (_3[0].$el_text = rs(e4, "a") || rs(e4, "button") ? As(e4) : hs(e4)), m4) {
-      var b3, w4;
-      _3[0].attr__href = m4;
-      var E3 = null == (b3 = Js(m4)) ? void 0 : b3.host, x3 = null == t3 || null == (w4 = t3.location) ? void 0 : w4.host;
-      E3 && x3 && E3 !== x3 && (c4 = m4);
+      Or(b3, r5);
+    })), w4) return { props: {}, explicitNoCapture: w4 };
+    if (a4 || (m4[0].$el_text = us(e4, "a") || us(e4, "button") ? js(e4) : gs(e4)), y4) {
+      var E3, x3;
+      m4[0].attr__href = y4;
+      var S3 = null == (E3 = sn(y4)) ? void 0 : E3.host, k4 = null == t3 || null == (x3 = t3.location) ? void 0 : x3.host;
+      S3 && k4 && S3 !== k4 && (p4 = y4);
     }
-    return { props: Sr({ $event_type: n3.type, $ce_version: 1 }, u5 ? {} : { $elements: _3 }, { $elements_chain: (p4 = _3, (function(t4) {
+    return { props: Or({ $event_type: n3.type, $ce_version: 1 }, u5 ? {} : { $elements: m4 }, { $elements_chain: (g3 = m4, (function(t4) {
       return t4.map(((t5) => {
         var e5, i5, r5 = "";
         if (t5.tag_name && (r5 += t5.tag_name), t5.attr_class) for (var s5 of (t5.attr_class.sort(), t5.attr_class)) r5 += "." + s5.replace(/"/g, "");
-        var n4 = f4({}, t5.text ? { text: t5.text } : {}, { "nth-child": null !== (e5 = t5.nth_child) && void 0 !== e5 ? e5 : 0, "nth-of-type": null !== (i5 = t5.nth_of_type) && void 0 !== i5 ? i5 : 0 }, t5.href ? { href: t5.href } : {}, t5.attr_id ? { attr_id: t5.attr_id } : {}, t5.attributes), o5 = {};
-        return Tr(n4).sort(((t6, e6) => {
-          var [i6] = t6, [r6] = e6;
-          return i6.localeCompare(r6);
-        })).forEach(((t6) => {
-          var [e6, i6] = t6;
-          return o5[Ms(e6.toString())] = Ms(i6.toString());
-        })), (r5 += ":") + Tr(o5).map(((t6) => {
-          var [e6, i6] = t6;
-          return e6 + '="' + i6 + '"';
-        })).join("");
+        var n4 = _2({}, t5.text ? { text: t5.text } : {}, { "nth-child": null !== (e5 = t5.nth_child) && void 0 !== e5 ? e5 : 0, "nth-of-type": null !== (i5 = t5.nth_of_type) && void 0 !== i5 ? i5 : 0 }, t5.href ? { href: t5.href } : {}, t5.attr_id ? { attr_id: t5.attr_id } : {}, t5.attributes), o5 = {};
+        return Ir(n4).sort(((t6, e6) => t6[0].localeCompare(e6[0]))).forEach(((t6) => {
+          var e6 = t6[1];
+          return o5[zs(t6[0].toString())] = zs(e6.toString());
+        })), (r5 += ":") + Ir(o5).map(((t6) => t6[0] + '="' + t6[1] + '"')).join("");
       })).join(";");
     })((function(t4) {
       return t4.map(((t5) => {
-        var e5, i5, r5 = { text: null == (e5 = t5.$el_text) ? void 0 : e5.slice(0, 400), tag_name: t5.tag_name, href: null == (i5 = t5.attr__href) ? void 0 : i5.slice(0, 2048), attr_class: Ds(t5), attr_id: t5.attr__id, nth_child: t5.nth_child, nth_of_type: t5.nth_of_type, attributes: {} };
-        return Tr(t5).filter(((t6) => {
-          var [e6] = t6;
-          return 0 === e6.indexOf("attr__");
-        })).forEach(((t6) => {
-          var [e6, i6] = t6;
-          return r5.attributes[e6] = i6;
-        })), r5;
+        var e5, i5, r5 = { text: null == (e5 = t5.$el_text) ? void 0 : e5.slice(0, 400), tag_name: t5.tag_name, href: null == (i5 = t5.attr__href) ? void 0 : i5.slice(0, 2048), attr_class: Hs(t5), attr_id: t5.attr__id, nth_child: t5.nth_child, nth_of_type: t5.nth_of_type, attributes: {} };
+        return Ir(t5).filter(((t6) => 0 === t6[0].indexOf("attr__"))).forEach(((t6) => r5.attributes[t6[0]] = t6[1])), r5;
       }));
-    })(p4))) }, null != (r4 = _3[0]) && r4.$el_text ? { $el_text: null == (s4 = _3[0]) ? void 0 : s4.$el_text } : {}, c4 && "click" === n3.type ? { $external_click_url: c4 } : {}, g3) };
+    })(g3))) }, null != (r4 = m4[0]) && r4.$el_text ? { $el_text: null == (s4 = m4[0]) ? void 0 : s4.$el_text } : {}, p4 && "click" === n3.type ? { $external_click_url: p4 } : {}, b3) };
   }
-  var $a = ui("[ExceptionAutocapture]");
-  var ka = ui("[TracingHeaders]");
-  var Ra = ui("[Web Vitals]");
-  var Pa = 9e5;
-  var Ia = "disabled";
-  var Oa = "lazy_loading";
-  var Ca = "awaiting_config";
-  var Aa = "missing_config";
-  ui("[SessionRecording]"), ui("[SessionRecording]");
-  var Fa = "[SessionRecording]";
-  var Ma = ui(Fa);
-  var Da = ui("[Heatmaps]");
-  function La(t4) {
-    return H2(t4) && "clientX" in t4 && "clientY" in t4 && J2(t4.clientX) && J2(t4.clientY);
-  }
-  var Na = ui("[Product Tours]");
-  var Ua = (t4) => {
-    var e4;
-    return !t4.config.disable_product_tours && !(null == (e4 = t4.persistence) || !e4.get_property(Si));
+  var ja = pi("[ExceptionAutocapture]");
+  var Ba = () => {
   };
-  var ja = ["$set_once", "$set"];
-  var Ba = ui("[SiteApps]");
-  var za = "Error while initializing PostHog app with config id ";
-  function Ha(t4, e4, i4) {
-    if (K2(t4)) return false;
+  var za = pi("[TracingHeaders]");
+  var Ha = pi("[Web Vitals]");
+  var qa = 9e5;
+  var Va = "disabled";
+  var Ga = "lazy_loading";
+  var Wa = "awaiting_config";
+  var Ja = "missing_config";
+  pi("[SessionRecording]"), pi("[SessionRecording]");
+  var Ka = "[SessionRecording]";
+  var Ya = pi(Ka);
+  var Qa = pi("[Heatmaps]");
+  function Xa(t4) {
+    return V2(t4) && "clientX" in t4 && "clientY" in t4 && X(t4.clientX) && X(t4.clientY);
+  }
+  var Za = pi("[Product Tours]");
+  var tl = (t4) => {
+    var e4;
+    return !t4.config.disable_product_tours && !(null == (e4 = t4.persistence) || !e4.get_property(Oi));
+  };
+  var el = ["$set_once", "$set"];
+  var il = pi("[SiteApps]");
+  var rl = "Error while initializing PostHog app with config id ";
+  function sl(t4, e4, i4) {
+    if (Q2(t4)) return false;
     switch (i4) {
       case "exact":
         return t4 === e4;
@@ -9296,23 +9549,23 @@
         return false;
     }
   }
-  var qa = class {
+  var nl = class {
     constructor(t4) {
-      this.sn = new No(), this.an = (t5, e4) => this.ln(t5, e4) && this.un(t5, e4) && this.hn(t5, e4) && this.dn(t5, e4), this.ln = (t5, e4) => null == e4 || !e4.event || (null == t5 ? void 0 : t5.event) === (null == e4 ? void 0 : e4.event), this._instance = t4, this.cn = /* @__PURE__ */ new Set(), this.vn = /* @__PURE__ */ new Set();
+      this.Fn = new Qo(), this.Ln = (t5, e4) => this.An(t5, e4) && this.$n(t5, e4) && this.Nn(t5, e4) && this.Dn(t5, e4), this.An = (t5, e4) => null == e4 || !e4.event || (null == t5 ? void 0 : t5.event) === (null == e4 ? void 0 : e4.event), this._instance = t4, this.qn = /* @__PURE__ */ new Set(), this.jn = /* @__PURE__ */ new Set();
     }
     init() {
       var t4, e4;
-      V2(null == (t4 = this._instance) ? void 0 : t4._addCaptureHook) || (null == (e4 = this._instance) || e4._addCaptureHook(((t5, e5) => {
+      W(null == (t4 = this._instance) ? void 0 : t4._addCaptureHook) || (null == (e4 = this._instance) || e4._addCaptureHook(((t5, e5) => {
         this.on(t5, e5);
       })));
     }
     register(t4) {
       var e4, i4;
-      if (!V2(null == (e4 = this._instance) ? void 0 : e4._addCaptureHook) && (t4.forEach(((t5) => {
+      if (!W(null == (e4 = this._instance) ? void 0 : e4._addCaptureHook) && (t4.forEach(((t5) => {
         var e5, i5;
-        null == (e5 = this.vn) || e5.add(t5), null == (i5 = t5.steps) || i5.forEach(((t6) => {
+        null == (e5 = this.jn) || e5.add(t5), null == (i5 = t5.steps) || i5.forEach(((t6) => {
           var e6;
-          null == (e6 = this.cn) || e6.add((null == t6 ? void 0 : t6.event) || "");
+          null == (e6 = this.qn) || e6.add((null == t6 ? void 0 : t6.event) || "");
         }));
       })), null != (i4 = this._instance) && i4.autocapture)) {
         var r4, s4 = /* @__PURE__ */ new Set();
@@ -9326,52 +9579,52 @@
     }
     on(t4, e4) {
       var i4;
-      null != e4 && 0 != t4.length && (this.cn.has(t4) || this.cn.has(null == e4 ? void 0 : e4.event)) && this.vn && (null == (i4 = this.vn) ? void 0 : i4.size) > 0 && this.vn.forEach(((t5) => {
-        this.fn(e4, t5) && this.sn.emit("actionCaptured", t5.name);
+      null != e4 && 0 != t4.length && (this.qn.has(t4) || this.qn.has(e4.event)) && this.jn && (null == (i4 = this.jn) ? void 0 : i4.size) > 0 && this.jn.forEach(((t5) => {
+        this.Hn(e4, t5) && this.Fn.emit("actionCaptured", t5.name);
       }));
     }
-    pn(t4) {
+    Bn(t4) {
       this.onAction("actionCaptured", ((e4) => t4(e4)));
     }
-    fn(t4, e4) {
+    Hn(t4, e4) {
       if (null == (null == e4 ? void 0 : e4.steps)) return false;
-      for (var i4 of e4.steps) if (this.an(t4, i4)) return true;
+      for (var i4 of e4.steps) if (this.Ln(t4, i4)) return true;
       return false;
     }
     onAction(t4, e4) {
-      return this.sn.on(t4, e4);
+      return this.Fn.on(t4, e4);
     }
-    un(t4, e4) {
+    $n(t4, e4) {
       if (null != e4 && e4.url) {
         var i4, r4 = null == t4 || null == (i4 = t4.properties) ? void 0 : i4.$current_url;
         if (!r4 || "string" != typeof r4) return false;
-        if (!Ha(r4, e4.url, e4.url_matching || "contains")) return false;
+        if (!sl(r4, e4.url, e4.url_matching || "contains")) return false;
       }
       return true;
     }
-    hn(t4, e4) {
-      return !!this.gn(t4, e4) && !!this.mn(t4, e4) && !!this.yn(t4, e4);
+    Nn(t4, e4) {
+      return !!this.Un(t4, e4) && !!this.zn(t4, e4) && !!this.Vn(t4, e4);
     }
-    gn(t4, e4) {
+    Un(t4, e4) {
       var i4;
       if (null == e4 || !e4.href) return true;
-      var r4 = this.bn(t4);
-      if (r4.length > 0) return r4.some(((t5) => Ha(t5.href, e4.href, e4.href_matching || "exact")));
+      var r4 = this.Wn(t4);
+      if (r4.length > 0) return r4.some(((t5) => sl(t5.href, e4.href, e4.href_matching || "exact")));
       var s4, n3 = (null == t4 || null == (i4 = t4.properties) ? void 0 : i4.$elements_chain) || "";
-      return !!n3 && Ha((s4 = n3.match(/(?::|")href="(.*?)"/)) ? s4[1] : "", e4.href, e4.href_matching || "exact");
+      return !!n3 && sl((s4 = n3.match(/(?::|")href="(.*?)"/)) ? s4[1] : "", e4.href, e4.href_matching || "exact");
     }
-    mn(t4, e4) {
+    zn(t4, e4) {
       var i4;
       if (null == e4 || !e4.text) return true;
-      var r4 = this.bn(t4);
-      if (r4.length > 0) return r4.some(((t5) => Ha(t5.text, e4.text, e4.text_matching || "exact") || Ha(t5.$el_text, e4.text, e4.text_matching || "exact")));
+      var r4 = this.Wn(t4);
+      if (r4.length > 0) return r4.some(((t5) => sl(t5.text, e4.text, e4.text_matching || "exact") || sl(t5.$el_text, e4.text, e4.text_matching || "exact")));
       var s4, n3, o4, a4 = (null == t4 || null == (i4 = t4.properties) ? void 0 : i4.$elements_chain) || "";
       return !!a4 && (s4 = (function(t5) {
-        for (var e5, i5 = [], r5 = /(?::|")text="(.*?)"/g; !K2(e5 = r5.exec(t5)); ) i5.includes(e5[1]) || i5.push(e5[1]);
+        for (var e5, i5 = [], r5 = /(?::|")text="(.*?)"/g; !Q2(e5 = r5.exec(t5)); ) i5.includes(e5[1]) || i5.push(e5[1]);
         return i5;
-      })(a4), n3 = e4.text, o4 = e4.text_matching || "exact", s4.some(((t5) => Ha(t5, n3, o4))));
+      })(a4), n3 = e4.text, o4 = e4.text_matching || "exact", s4.some(((t5) => sl(t5, n3, o4))));
     }
-    yn(t4, e4) {
+    Vn(t4, e4) {
       var i4, r4;
       if (null == e4 || !e4.selector) return true;
       var s4 = null == t4 || null == (i4 = t4.properties) ? void 0 : i4.$element_selectors;
@@ -9384,25 +9637,25 @@
       }
       return false;
     }
-    bn(t4) {
+    Wn(t4) {
       var e4;
       return null == (null == t4 || null == (e4 = t4.properties) ? void 0 : e4.$elements) ? [] : null == t4 ? void 0 : t4.properties.$elements;
     }
-    dn(t4, e4) {
-      return null == e4 || !e4.properties || 0 === e4.properties.length || Wo(e4.properties.reduce(((t5, e5) => {
-        var i4 = B3(e5.value) ? e5.value.map(String) : null != e5.value ? [String(e5.value)] : [];
+    Dn(t4, e4) {
+      return null == e4 || !e4.properties || 0 === e4.properties.length || oa(e4.properties.reduce(((t5, e5) => {
+        var i4 = H2(e5.value) ? e5.value.map(String) : null != e5.value ? [String(e5.value)] : [];
         return t5[e5.key] = { values: i4, operator: e5.operator || "exact" }, t5;
       }), {}), null == t4 ? void 0 : t4.properties);
     }
   };
-  var Va = class {
+  var ol = class {
     constructor(t4) {
-      this._n = [], this._instance = t4, this.wn = /* @__PURE__ */ new Map(), this.xn = /* @__PURE__ */ new Map(), this.kn = /* @__PURE__ */ new Map();
+      this.Zn = [], this._instance = t4, this.Gn = /* @__PURE__ */ new Map(), this.Qn = /* @__PURE__ */ new Map(), this.Jn = /* @__PURE__ */ new Map();
     }
-    Sn(t4, e4) {
-      return !!t4 && Wo(t4.propertyFilters, null == e4 ? void 0 : e4.properties);
+    Kn(t4, e4) {
+      return !!t4 && oa(t4.propertyFilters, null == e4 ? void 0 : e4.properties);
     }
-    Cn(t4, e4) {
+    Yn(t4, e4) {
       var i4 = /* @__PURE__ */ new Map();
       return t4.forEach(((t5) => {
         var r4;
@@ -9414,37 +9667,37 @@
         }));
       })), i4;
     }
-    In(t4, e4, i4) {
-      var r4 = (i4 === bn.Activation ? this.wn : this.xn).get(t4), s4 = [];
-      return this.Tn(((t5) => {
+    Xn(t4, e4, i4) {
+      var r4 = (i4 === Pn.Activation ? this.Gn : this.Qn).get(t4), s4 = [];
+      return this.ts(((t5) => {
         s4 = t5.filter(((t6) => null == r4 ? void 0 : r4.includes(t6.id)));
       })), s4.filter(((r5) => {
         var s5, n3 = null == (s5 = r5.conditions) || null == (s5 = s5[i4]) || null == (s5 = s5.values) ? void 0 : s5.find(((e5) => e5.name === t4));
-        return this.Sn(n3, e4);
+        return this.Kn(n3, e4);
       }));
     }
     register(t4) {
       var e4;
-      V2(null == (e4 = this._instance) ? void 0 : e4._addCaptureHook) || (this.En(t4), this.Mn(t4));
+      W(null == (e4 = this._instance) ? void 0 : e4._addCaptureHook) || (this.es(t4), this.rs(t4));
     }
-    Mn(t4) {
+    rs(t4) {
       var e4 = t4.filter(((t5) => {
         var e5, i4;
         return (null == (e5 = t5.conditions) ? void 0 : e5.actions) && (null == (i4 = t5.conditions) || null == (i4 = i4.actions) || null == (i4 = i4.values) ? void 0 : i4.length) > 0;
       }));
-      0 !== e4.length && (null == this.Pn && (this.Pn = new qa(this._instance), this.Pn.init(), this.Pn.pn(((t5) => {
+      0 !== e4.length && (null == this.ns && (this.ns = new nl(this._instance), this.ns.init(), this.ns.Bn(((t5) => {
         this.onAction(t5);
       }))), e4.forEach(((t5) => {
         var e5, i4, r4, s4, n3;
-        t5.conditions && null != (e5 = t5.conditions) && e5.actions && null != (i4 = t5.conditions) && null != (i4 = i4.actions) && i4.values && (null == (r4 = t5.conditions) || null == (r4 = r4.actions) || null == (r4 = r4.values) ? void 0 : r4.length) > 0 && (null == (s4 = this.Pn) || s4.register(t5.conditions.actions.values), null == (n3 = t5.conditions) || null == (n3 = n3.actions) || null == (n3 = n3.values) || n3.forEach(((e6) => {
+        t5.conditions && null != (e5 = t5.conditions) && e5.actions && null != (i4 = t5.conditions) && null != (i4 = i4.actions) && i4.values && (null == (r4 = t5.conditions) || null == (r4 = r4.actions) || null == (r4 = r4.values) ? void 0 : r4.length) > 0 && (null == (s4 = this.ns) || s4.register(t5.conditions.actions.values), null == (n3 = t5.conditions) || null == (n3 = n3.actions) || null == (n3 = n3.values) || n3.forEach(((e6) => {
           if (e6 && e6.name) {
-            var i5 = this.kn.get(e6.name);
-            i5 && i5.push(t5.id), this.kn.set(e6.name, i5 || [t5.id]);
+            var i5 = this.Jn.get(e6.name);
+            i5 && i5.push(t5.id), this.Jn.set(e6.name, i5 || [t5.id]);
           }
         })));
       })));
     }
-    En(t4) {
+    es(t4) {
       var e4, i4 = t4.filter(((t5) => {
         var e5, i5;
         return (null == (e5 = t5.conditions) ? void 0 : e5.events) && (null == (i5 = t5.conditions) || null == (i5 = i5.events) || null == (i5 = i5.values) ? void 0 : i5.length) > 0;
@@ -9454,97 +9707,97 @@
       }));
       0 === i4.length && 0 === r4.length || (null == (e4 = this._instance) || e4._addCaptureHook(((t5, e5) => {
         this.onEvent(t5, e5);
-      })), this.wn = this.Cn(t4, bn.Activation), this.xn = this.Cn(t4, bn.Cancellation));
+      })), this.Gn = this.Yn(t4, Pn.Activation), this.Qn = this.Yn(t4, Pn.Cancellation));
     }
     onEvent(t4, e4) {
-      var i4, r4, s4 = this.Rn(), n3 = (null == e4 || null == (i4 = e4.properties) ? void 0 : i4.$survey_id) || (null == e4 || null == (r4 = e4.properties) ? void 0 : r4.$product_tour_id);
+      var i4, r4, s4 = this.ss(), n3 = (null == e4 || null == (i4 = e4.properties) ? void 0 : i4.$survey_id) || (null == e4 || null == (r4 = e4.properties) ? void 0 : r4.$product_tour_id);
       if (n3 && this.getActivatedIds().includes(n3)) {
-        var o4 = this.On(t4, n3);
-        if ("consume" === o4) return s4.info("event consumed activated item, removing it", { event: t4, itemId: n3 }), void this.Ln([n3]);
-        if ("persist" === o4) return s4.info("shown item promoted to persisted activation", { event: t4, itemId: n3 }), void this.Fn(n3);
+        var o4 = this.os(t4, n3);
+        if ("consume" === o4) return s4.info("event consumed activated item, removing it", { event: t4, itemId: n3 }), void this.ls([n3]);
+        if ("persist" === o4) return s4.info("shown item promoted to persisted activation", { event: t4, itemId: n3 }), void this.us(n3);
       }
-      if (this.xn.has(t4)) {
-        var a4 = this.In(t4, e4, bn.Cancellation);
-        a4.length > 0 && (s4.info("cancel event matched, cancelling items", { event: t4, itemsToCancel: a4.map(((t5) => t5.id)) }), this.Ln(a4.map(((t5) => t5.id))), a4.forEach(((t5) => this.An(t5.id))));
+      if (this.Qn.has(t4)) {
+        var a4 = this.Xn(t4, e4, Pn.Cancellation);
+        a4.length > 0 && (s4.info("cancel event matched, cancelling items", { event: t4, itemsToCancel: a4.map(((t5) => t5.id)) }), this.ls(a4.map(((t5) => t5.id))), a4.forEach(((t5) => this.hs(t5.id))));
       }
-      if (this.wn.has(t4)) {
-        s4.info("event name matched", { event: t4, eventPayload: e4, items: this.wn.get(t4) });
-        var l4 = this.In(t4, e4, bn.Activation);
-        this.$n(l4.map(((t5) => t5.id)));
+      if (this.Gn.has(t4)) {
+        s4.info("event name matched", { event: t4, eventPayload: e4, items: this.Gn.get(t4) });
+        var l4 = this.Xn(t4, e4, Pn.Activation);
+        this.ds(l4.map(((t5) => t5.id)));
       }
     }
     onAction(t4) {
-      this.kn.has(t4) && this.$n(this.kn.get(t4) || []);
+      this.Jn.has(t4) && this.ds(this.Jn.get(t4) || []);
     }
-    $n(t4) {
-      0 !== t4.length && (this._n = [.../* @__PURE__ */ new Set([...this._n, ...t4])], this.Rn().info("updating activated items", { activatedItems: this.getActivatedIds() }));
+    ds(t4) {
+      0 !== t4.length && (this.Zn = [.../* @__PURE__ */ new Set([...this.Zn, ...t4])], this.ss().info("updating activated items", { activatedItems: this.getActivatedIds() }));
     }
-    Fn(t4) {
-      this._n = this._n.filter(((e5) => e5 !== t4));
-      var e4 = this.Dn();
-      e4.includes(t4) || this.Nn([...e4, t4]);
+    us(t4) {
+      this.Zn = this.Zn.filter(((e5) => e5 !== t4));
+      var e4 = this.cs();
+      e4.includes(t4) || this.vs([...e4, t4]);
     }
-    Ln(t4) {
+    ls(t4) {
       var e4 = new Set(t4);
-      this._n = this._n.filter(((t5) => !e4.has(t5)));
-      var i4 = this.Dn(), r4 = i4.filter(((t5) => !e4.has(t5)));
-      r4.length !== i4.length && this.Nn(r4);
+      this.Zn = this.Zn.filter(((t5) => !e4.has(t5)));
+      var i4 = this.cs(), r4 = i4.filter(((t5) => !e4.has(t5)));
+      r4.length !== i4.length && this.vs(r4);
     }
-    Dn() {
-      var t4, e4 = this.qn();
+    cs() {
+      var t4, e4 = this.fs();
       return (null == (t4 = this._instance) || null == (t4 = t4.persistence) ? void 0 : t4.props[e4]) || [];
     }
     getActivatedIds() {
-      return [.../* @__PURE__ */ new Set([...this.Dn(), ...this._n])].filter(((t4) => !this.jn(t4)));
+      return [.../* @__PURE__ */ new Set([...this.cs(), ...this.Zn])].filter(((t4) => !this.ps(t4)));
     }
     reset() {
-      this._n = [], this.Dn().length > 0 && this.Nn([]);
+      this.Zn = [], this.cs().length > 0 && this.vs([]);
     }
     getEventToItemsMap() {
-      return this.wn;
+      return this.Gn;
     }
-    Bn() {
-      return this.Pn;
+    gs() {
+      return this.ns;
     }
   };
-  var Ga = class extends Va {
+  var al = class extends ol {
     constructor(t4) {
       super(t4);
     }
-    qn() {
-      return Gi;
+    fs() {
+      return Xi;
     }
-    Hn() {
-      return Rn.SHOWN;
+    ys() {
+      return Nn.SHOWN;
     }
-    Tn(t4) {
+    ts(t4) {
       var e4;
       null == (e4 = this._instance) || e4.getSurveys(t4);
     }
-    An(t4) {
+    hs(t4) {
       var e4;
       null == (e4 = this._instance) || e4.cancelPendingSurvey(t4);
     }
-    Rn() {
-      return Xo;
+    ss() {
+      return va;
     }
-    Nn(t4) {
+    vs(t4) {
       var e4;
-      null == (e4 = this._instance) || null == (e4 = e4.persistence) || e4.register({ [Gi]: t4 });
+      null == (e4 = this._instance) || null == (e4 = e4.persistence) || e4.register({ [Xi]: t4 });
     }
-    jn() {
+    ps() {
       return false;
     }
-    On(t4, e4) {
+    os(t4, e4) {
       var i4;
-      this.Tn(((t5) => {
+      this.ts(((t5) => {
         i4 = t5.find(((t6) => t6.id === e4));
       }));
       var r4 = !i4 || (function(t5) {
-        var e5, i5, r5, s4 = (null !== (e5 = null == (i5 = t5.conditions) || null == (i5 = i5.events) || null == (i5 = i5.values) ? void 0 : i5.length) && void 0 !== e5 ? e5 : 0) > 0;
-        return t5.schedule === kn.Always || !(null == (r5 = t5.conditions) || null == (r5 = r5.events) || !r5.repeatedActivation || !s4);
+        var e5;
+        return da(t5) && !(null == (e5 = t5.conditions) || null == (e5 = e5.events) || !e5.repeatedActivation) || "always" === t5.schedule;
       })(i4);
-      return r4 ? t4 === Rn.SHOWN ? "consume" : "ignore" : t4 === Rn.SHOWN ? "persist" : t4 === Rn.DISMISSED || t4 === Rn.SENT ? "consume" : "ignore";
+      return r4 ? t4 === Nn.SHOWN ? "consume" : "ignore" : t4 === Nn.SHOWN ? "persist" : t4 === Nn.DISMISSED || t4 === Nn.SENT ? "consume" : "ignore";
     }
     getSurveys() {
       return this.getActivatedIds();
@@ -9553,43 +9806,46 @@
       return this.getEventToItemsMap();
     }
   };
-  var Wa = "SDK is not enabled or survey functionality is not yet loaded";
-  var Ya = "Disabled. Not loading surveys.";
-  var Ka = null != t3 && t3.location ? Zs(t3.location.hash, "__posthog") || Zs(location.hash, "state") : null;
-  var Ja = "_postHogToolbarParams";
-  var Qa = ui("[Toolbar]");
-  var Xa = ui("[FeatureFlags]");
-  var Za = ui("[FeatureFlags]", { debugEnabled: true });
-  var tl = `" failed. Feature flags didn't load in time.`;
-  var el = (t4) => {
+  var ll = "SDK is not enabled or survey functionality is not yet loaded";
+  var ul = "Disabled. Not loading surveys.";
+  var hl = null != t3 && t3.location ? an(t3.location.hash, "__posthog") || an(location.hash, "state") : null;
+  var dl = "_postHogToolbarParams";
+  var vl = pi("[Toolbar]");
+  var cl = pi("[FeatureFlags]");
+  var fl = pi("[FeatureFlags]", { debugEnabled: true });
+  var pl = `" failed. Feature flags didn't load in time.`;
+  var _l = (t4) => {
     for (var e4 = {}, i4 = 0; t4.length > i4; i4++) e4[t4[i4]] = true;
     return e4;
   };
-  var il = (t4) => {
+  var gl = (t4) => {
     var e4 = {};
-    for (var [i4, r4] of Tr(t4 || {})) r4 && (e4[i4] = r4);
+    for (var i4 of Ir(t4 || {})) {
+      var r4 = i4[1];
+      r4 && (e4[i4[0]] = r4);
+    }
     return e4;
   };
-  var rl = ui("[Error tracking]");
-  var sl = "Refusing to render web experiment since the viewer is a likely bot";
-  var nl = { icontains: (t4, e4) => e4.toLowerCase().indexOf(t4.toLowerCase()) > -1, not_icontains: (t4, e4) => -1 === e4.toLowerCase().indexOf(t4.toLowerCase()), regex: (t4, e4) => Ho(e4, t4), not_regex: (t4, e4) => !Ho(e4, t4), exact: (t4, e4) => e4 === t4, is_not: (t4, e4) => e4 !== t4 };
-  var ol = class _ol {
-    get Se() {
+  var ml = pi("[Error tracking]");
+  var bl = "Refusing to render web experiment since the viewer is a likely bot";
+  var yl = { icontains: (t4, e4) => e4.toLowerCase().indexOf(t4.toLowerCase()) > -1, not_icontains: (t4, e4) => -1 === e4.toLowerCase().indexOf(t4.toLowerCase()), regex: (t4, e4) => ia(e4, t4), not_regex: (t4, e4) => !ia(e4, t4), exact: (t4, e4) => e4 === t4, is_not: (t4, e4) => e4 !== t4 };
+  var wl = class _wl {
+    get Te() {
       return this._instance.config;
     }
     constructor(t4) {
       var e4 = this;
       this.getWebExperimentsAndEvaluateDisplayLogic = function(t5) {
         void 0 === t5 && (t5 = false), e4.getWebExperiments(((t6) => {
-          _ol.Un("retrieved web experiments from the server"), e4.zn = /* @__PURE__ */ new Map(), t6.forEach(((t7) => {
+          _wl.bs("retrieved web experiments from the server"), e4._s = /* @__PURE__ */ new Map(), t6.forEach(((t7) => {
             if (t7.feature_flag_key) {
               var i4;
-              e4.zn && (_ol.Un("setting flag key ", t7.feature_flag_key, " to web experiment ", t7), null == (i4 = e4.zn) || i4.set(t7.feature_flag_key, t7));
+              e4._s && (_wl.bs("setting flag key ", t7.feature_flag_key, " to web experiment ", t7), null == (i4 = e4._s) || i4.set(t7.feature_flag_key, t7));
               var r4 = e4._instance.getFeatureFlag(t7.feature_flag_key);
-              G2(r4) && t7.variants[r4] && e4.Vn(t7.name, r4, t7.variants[r4].transforms);
+              J2(r4) && t7.variants[r4] && e4.ws(t7.name, r4, t7.variants[r4].transforms);
             } else if (t7.variants) for (var s4 in t7.variants) {
               var n3 = t7.variants[s4];
-              _ol.Wn(n3, e4._instance) && e4.Vn(t7.name, s4, n3.transforms);
+              _wl.xs(n3, e4._instance) && e4.ws(t7.name, s4, n3.transforms);
             }
           }));
         }), t5);
@@ -9600,224 +9856,239 @@
     initialize() {
     }
     onFeatureFlags(t4) {
-      if (this._is_bot()) _ol.Un(sl);
-      else if (!this.Se.disable_web_experiments) {
-        if (K2(this.zn)) return this.zn = /* @__PURE__ */ new Map(), this.loadIfEnabled(), void this.previewWebExperiment();
-        _ol.Un("applying feature flags", t4), t4.forEach(((t5) => {
+      if (this._is_bot()) _wl.bs(bl);
+      else if (!this.Te.disable_web_experiments) {
+        if (Q2(this._s)) return this._s = /* @__PURE__ */ new Map(), this.loadIfEnabled(), void this.previewWebExperiment();
+        _wl.bs("applying feature flags", t4), t4.forEach(((t5) => {
           var e4;
-          if (this.zn && null != (e4 = this.zn) && e4.has(t5)) {
-            var i4, r4 = this._instance.getFeatureFlag(t5), s4 = null == (i4 = this.zn) ? void 0 : i4.get(t5);
-            r4 && null != s4 && s4.variants[r4] && this.Vn(s4.name, r4, s4.variants[r4].transforms);
+          if (this._s && null != (e4 = this._s) && e4.has(t5)) {
+            var i4, r4 = this._instance.getFeatureFlag(t5), s4 = null == (i4 = this._s) ? void 0 : i4.get(t5);
+            r4 && null != s4 && s4.variants[r4] && this.ws(s4.name, r4, s4.variants[r4].transforms);
           }
         }));
       }
     }
     previewWebExperiment() {
-      var t4 = _ol.getWindowLocation();
+      var t4 = _wl.getWindowLocation();
       if (null != t4 && t4.search) {
-        var e4 = Qs(null == t4 ? void 0 : t4.search, "__experiment_id"), i4 = Qs(null == t4 ? void 0 : t4.search, "__experiment_variant");
-        e4 && i4 && (_ol.Un("previewing web experiments " + e4 + " && " + i4), this.getWebExperiments(((t5) => {
-          this.Gn(parseInt(e4), i4, t5);
+        var e4 = nn(null == t4 ? void 0 : t4.search, "__experiment_id"), i4 = nn(null == t4 ? void 0 : t4.search, "__experiment_variant");
+        e4 && i4 && (_wl.bs("previewing web experiments " + e4 + " && " + i4), this.getWebExperiments(((t5) => {
+          this.ks(parseInt(e4), i4, t5);
         }), false, true));
       }
     }
     loadIfEnabled() {
-      this.Se.disable_web_experiments || this.getWebExperimentsAndEvaluateDisplayLogic();
+      this.Te.disable_web_experiments || this.getWebExperimentsAndEvaluateDisplayLogic();
     }
     getWebExperiments(t4, e4, i4) {
-      if (this.Se.disable_web_experiments && !i4) return t4([]);
+      if (this.Te.disable_web_experiments && !i4) return t4([]);
       var r4 = this._instance.get_property("$web_experiments");
       if (r4 && !e4) return t4(r4);
-      this._instance._send_request({ url: this._instance.requestRouter.endpointFor("api", "/api/web_experiments/?token=" + this.Se.token), method: "GET", callback: (e5) => t4(200 === e5.statusCode && e5.json && e5.json.experiments || []) });
+      this._instance._send_request({ url: this._instance.requestRouter.endpointFor("api", "/api/web_experiments/?token=" + this.Te.token), method: "GET", callback: (e5) => t4(200 === e5.statusCode && e5.json && e5.json.experiments || []) });
     }
-    Gn(t4, e4, i4) {
+    ks(t4, e4, i4) {
       var r4 = i4.filter(((e5) => e5.id === t4));
-      r4 && r4.length > 0 && (_ol.Un("Previewing web experiment [" + r4[0].name + "] with variant [" + e4 + "]"), this.Vn(r4[0].name, e4, r4[0].variants[e4].transforms));
+      r4 && r4.length > 0 && (_wl.bs("Previewing web experiment [" + r4[0].name + "] with variant [" + e4 + "]"), this.ws(r4[0].name, e4, r4[0].variants[e4].transforms));
     }
-    static Wn(t4, e4) {
-      return !K2(t4.conditions) && _ol.Zn(t4, e4) && _ol.Qn(t4);
+    static xs(t4, e4) {
+      return !Q2(t4.conditions) && _wl.Ss(t4, e4) && _wl.Cs(t4);
     }
-    static Zn(t4, e4) {
+    static Ss(t4, e4) {
       var i4;
-      if (K2(t4.conditions) || K2(null == (i4 = t4.conditions) ? void 0 : i4.url)) return true;
-      var r4 = _ol.getWindowLocation();
+      if (Q2(t4.conditions) || Q2(null == (i4 = t4.conditions) ? void 0 : i4.url)) return true;
+      var r4 = _wl.getWindowLocation();
       if (r4) {
-        var s4, n3, o4, a4 = Qr(e4, r4.href);
-        return null == (s4 = t4.conditions) || !s4.url || nl[null !== (n3 = null == (o4 = t4.conditions) ? void 0 : o4.urlMatchType) && void 0 !== n3 ? n3 : "icontains"](t4.conditions.url, a4);
+        var s4, n3, o4, a4 = rs(e4, r4.href);
+        return null == (s4 = t4.conditions) || !s4.url || yl[null !== (n3 = null == (o4 = t4.conditions) ? void 0 : o4.urlMatchType) && void 0 !== n3 ? n3 : "icontains"](t4.conditions.url, a4);
       }
       return false;
     }
     static getWindowLocation() {
       return null == t3 ? void 0 : t3.location;
     }
-    static Qn(t4) {
+    static Cs(t4) {
       var e4;
-      if (K2(t4.conditions) || K2(null == (e4 = t4.conditions) ? void 0 : e4.utm)) return true;
-      var i4 = on2();
+      if (Q2(t4.conditions) || Q2(null == (e4 = t4.conditions) ? void 0 : e4.utm)) return true;
+      var i4 = pn();
       if (i4.utm_source) {
-        var r4, s4, n3, o4, a4, l4, u5, h4, d4 = null == (r4 = t4.conditions) || null == (r4 = r4.utm) || !r4.utm_campaign || (null == (s4 = t4.conditions) || null == (s4 = s4.utm) ? void 0 : s4.utm_campaign) == i4.utm_campaign, v4 = null == (n3 = t4.conditions) || null == (n3 = n3.utm) || !n3.utm_source || (null == (o4 = t4.conditions) || null == (o4 = o4.utm) ? void 0 : o4.utm_source) == i4.utm_source, c4 = null == (a4 = t4.conditions) || null == (a4 = a4.utm) || !a4.utm_medium || (null == (l4 = t4.conditions) || null == (l4 = l4.utm) ? void 0 : l4.utm_medium) == i4.utm_medium, p4 = null == (u5 = t4.conditions) || null == (u5 = u5.utm) || !u5.utm_term || (null == (h4 = t4.conditions) || null == (h4 = h4.utm) ? void 0 : h4.utm_term) == i4.utm_term;
-        return d4 && c4 && p4 && v4;
+        var r4, s4, n3, o4, a4, l4, u5, h4, d4 = null == (r4 = t4.conditions) || null == (r4 = r4.utm) || !r4.utm_campaign || (null == (s4 = t4.conditions) || null == (s4 = s4.utm) ? void 0 : s4.utm_campaign) == i4.utm_campaign, v4 = null == (n3 = t4.conditions) || null == (n3 = n3.utm) || !n3.utm_source || (null == (o4 = t4.conditions) || null == (o4 = o4.utm) ? void 0 : o4.utm_source) == i4.utm_source, c4 = null == (a4 = t4.conditions) || null == (a4 = a4.utm) || !a4.utm_medium || (null == (l4 = t4.conditions) || null == (l4 = l4.utm) ? void 0 : l4.utm_medium) == i4.utm_medium, f5 = null == (u5 = t4.conditions) || null == (u5 = u5.utm) || !u5.utm_term || (null == (h4 = t4.conditions) || null == (h4 = h4.utm) ? void 0 : h4.utm_term) == i4.utm_term;
+        return d4 && c4 && f5 && v4;
       }
       return false;
     }
-    static Un(t4) {
+    static bs(t4) {
       for (var e4 = arguments.length, i4 = new Array(e4 > 1 ? e4 - 1 : 0), r4 = 1; e4 > r4; r4++) i4[r4 - 1] = arguments[r4];
-      li.info("[WebExperiments] " + t4, i4);
+      fi.info("[WebExperiments] " + t4, i4);
     }
-    Vn(t4, e4, i4) {
-      this._is_bot() ? _ol.Un(sl) : "control" !== e4 ? i4.forEach(((i5) => {
+    ws(t4, e4, i4) {
+      this._is_bot() ? _wl.bs(bl) : "control" !== e4 ? i4.forEach(((i5) => {
         if (i5.selector) {
           var r4;
-          _ol.Un("applying transform of variant " + e4 + " for experiment " + t4 + " ", i5);
+          _wl.bs("applying transform of variant " + e4 + " for experiment " + t4 + " ", i5);
           var s4 = null == (r4 = document) ? void 0 : r4.querySelectorAll(i5.selector);
           null == s4 || s4.forEach(((t5) => {
             var e5 = t5;
             i5.html && (e5.innerHTML = i5.html), i5.css && e5.setAttribute("style", i5.css);
           }));
         }
-      })) : _ol.Un("Control variants leave the page unmodified.");
+      })) : _wl.bs("Control variants leave the page unmodified.");
     }
     _is_bot() {
-      return i3 && this._instance ? Bo(i3, this.Se.custom_blocked_useragents) : void 0;
+      return i3 && this._instance ? ta(i3, this.Te.custom_blocked_useragents) : void 0;
     }
   };
-  var al = ui("[Conversations]");
-  var ll = "Conversations not available yet.";
-  var ul = "console";
-  var hl = { featureFlags: class {
-    constructor(t4) {
-      this.Jn = false, this.Yn = false, this.Kn = false, this.Xn = false, this.es = false, this.ts = false, this.rs = false, this.ns = false, this._instance = t4, this.featureFlagEventHandlers = [];
+  var El = pi("[Conversations]");
+  var xl = "Conversations not available yet.";
+  var Sl = "console";
+  var kl = { featureFlags: class {
+    constructor(e4) {
+      this.Is = false, this.Ts = false, this.Ms = false, this.Es = false, this.Rs = false, this.Ps = false, this.Os = false, this.Fs = false, this.Ls = 0, this.As = () => {
+        var t4 = this.$s();
+        this.Ls = 0, t4 && this.reloadFeatureFlags();
+      }, this._instance = e4, this.featureFlagEventHandlers = [], t3 && Nr(t3, "online", this.As);
     }
-    get Se() {
+    destroy() {
+      null == t3 || t3.removeEventListener("online", this.As);
+    }
+    get Te() {
       return this._instance.config;
     }
-    get zr() {
+    get mi() {
       return this._instance.persistence;
     }
-    ss(t4) {
+    Ns(t4) {
       return this._instance.get_property(t4);
     }
-    os() {
+    Ds() {
       var t4, e4;
-      return null !== (t4 = null == (e4 = this.zr) ? void 0 : e4.Gt(this.Se.feature_flag_cache_ttl_ms)) && void 0 !== t4 && t4;
+      return null !== (t4 = null == (e4 = this.mi) ? void 0 : e4.kr(this.Te.feature_flag_cache_ttl_ms)) && void 0 !== t4 && t4;
     }
-    ls() {
-      return !!this.os() && (this.ns || this.Kn || (this.ns = true, Xa.warn("Feature flag cache is stale, triggering refresh..."), this.reloadFeatureFlags()), true);
+    qs() {
+      return !!this.Ds() && (this.Fs || this.Ms || (this.Fs = true, cl.warn("Feature flag cache is stale, triggering refresh..."), this.reloadFeatureFlags()), true);
     }
-    us() {
-      var t4, e4 = null !== (t4 = this.Se.evaluation_contexts) && void 0 !== t4 ? t4 : this.Se.evaluation_environments;
-      return !this.Se.evaluation_environments || this.Se.evaluation_contexts || this.rs || (Xa.warn("evaluation_environments is deprecated. Use evaluation_contexts instead. evaluation_environments will be removed in a future version."), this.rs = true), null != e4 && e4.length ? e4.filter(((t5) => {
+    js() {
+      var t4, e4 = null !== (t4 = this.Te.evaluation_contexts) && void 0 !== t4 ? t4 : this.Te.evaluation_environments;
+      return !this.Te.evaluation_environments || this.Te.evaluation_contexts || this.Os || (cl.warn("evaluation_environments is deprecated. Use evaluation_contexts instead. evaluation_environments will be removed in a future version."), this.Os = true), null != e4 && e4.length ? e4.filter(((t5) => {
         var e5 = t5 && "string" == typeof t5 && t5.trim().length > 0;
-        return e5 || Xa.error("Invalid evaluation context found:", t5, "Expected non-empty string"), e5;
+        return e5 || cl.error("Invalid evaluation context found:", t5, "Expected non-empty string"), e5;
       })) : [];
     }
-    hs() {
-      return this.us().length > 0;
+    Hs() {
+      return this.js().length > 0;
     }
-    ds() {
-      var t4 = this.Se.flag_keys;
-      if (!V2(t4)) {
-        if (B3(t4)) return t4.filter(((t5) => {
+    Bs() {
+      var t4 = this.Te.flag_keys;
+      if (!W(t4)) {
+        if (H2(t4)) return t4.filter(((t5) => {
           var e4 = t5 && "string" == typeof t5 && t5.trim().length > 0;
-          return e4 || Xa.error("Invalid flag key found:", t5, "Expected non-empty string"), e4;
+          return e4 || cl.error("Invalid flag key found:", t5, "Expected non-empty string"), e4;
         }));
-        Xa.error("Invalid flag_keys found:", t4, "Expected array of non-empty strings");
+        cl.error("Invalid flag_keys found:", t4, "Expected array of non-empty strings");
       }
     }
     initialize() {
-      var t4, e4, { config: i4 } = this._instance, r4 = null !== (t4 = null == (e4 = i4.bootstrap) ? void 0 : e4.featureFlags) && void 0 !== t4 ? t4 : {};
+      var t4, e4, i4 = this._instance.config, r4 = null !== (t4 = null == (e4 = i4.bootstrap) ? void 0 : e4.featureFlags) && void 0 !== t4 ? t4 : {};
       if (Object.keys(r4).length) {
         var s4, n3, o4 = null !== (s4 = null == (n3 = i4.bootstrap) ? void 0 : n3.featureFlagPayloads) && void 0 !== s4 ? s4 : {}, a4 = Object.keys(r4).filter(((t5) => !!r4[t5])).reduce(((t5, e5) => (t5[e5] = r4[e5] || false, t5)), {}), l4 = Object.keys(o4).filter(((t5) => a4[t5])).reduce(((t5, e5) => (o4[e5] && (t5[e5] = o4[e5]), t5)), {});
         this.receivedFeatureFlags({ featureFlags: a4, featureFlagPayloads: l4 });
       }
     }
     updateFlags(t4, e4, i4) {
-      var r4, s4, n3 = null != i4 && i4.merge && null !== (r4 = this.ss(Fi)) && void 0 !== r4 ? r4 : {}, o4 = null != i4 && i4.merge && null !== (s4 = this.ss(Ni)) && void 0 !== s4 ? s4 : {}, a4 = f4({}, n3, t4), l4 = f4({}, o4, e4), u5 = {};
-      for (var [h4, d4] of Object.entries(a4)) u5[h4] = { key: h4, enabled: m3(d4), variant: y3(d4), reason: void 0, metadata: V2(null == l4 ? void 0 : l4[h4]) ? void 0 : { id: 0, version: void 0, description: void 0, payload: l4[h4] } };
+      var r4, s4, n3 = null != i4 && i4.merge && null !== (r4 = this.Ns(ji)) && void 0 !== r4 ? r4 : {}, o4 = null != i4 && i4.merge && null !== (s4 = this.Ns(qi)) && void 0 !== s4 ? s4 : {}, a4 = _2({}, n3, t4), l4 = _2({}, o4, e4), u5 = {};
+      for (var h4 of Object.entries(a4)) {
+        var d4 = h4[0], v4 = h4[1];
+        u5[d4] = { key: d4, enabled: b2(v4), variant: y3(v4), reason: void 0, metadata: W(null == l4 ? void 0 : l4[d4]) ? void 0 : { id: 0, version: void 0, description: void 0, payload: l4[d4] } };
+      }
       this.receivedFeatureFlags({ flags: u5 });
     }
     get hasLoadedFlags() {
-      return this.Yn;
+      return this.Ts;
     }
     getFlags() {
       return Object.keys(this.getFlagVariants());
     }
     getFlagsWithDetails() {
-      var t4 = this.ss(Li), e4 = this.ss(ji), i4 = this.ss(Bi);
+      var t4 = this.Ns(Hi), e4 = this.Ns(Gi), i4 = this.Ns(Wi);
       if (!i4 && !e4) return t4 || {};
-      var r4 = Sr({}, t4 || {}), s4 = [.../* @__PURE__ */ new Set([...Object.keys(i4 || {}), ...Object.keys(e4 || {})])];
+      var r4 = Or({}, t4 || {}), s4 = [.../* @__PURE__ */ new Set([...Object.keys(i4 || {}), ...Object.keys(e4 || {})])];
       for (var n3 of s4) {
-        var o4, a4, l4 = r4[n3], u5 = null == e4 ? void 0 : e4[n3], h4 = V2(u5) ? null !== (o4 = null == l4 ? void 0 : l4.enabled) && void 0 !== o4 && o4 : !!u5, d4 = V2(u5) ? l4.variant : "string" == typeof u5 ? u5 : void 0, v4 = null == i4 ? void 0 : i4[n3], c4 = f4({}, l4, { enabled: h4, variant: h4 ? null != d4 ? d4 : null == l4 ? void 0 : l4.variant : void 0 });
-        h4 !== (null == l4 ? void 0 : l4.enabled) && (c4.original_enabled = null == l4 ? void 0 : l4.enabled), d4 !== (null == l4 ? void 0 : l4.variant) && (c4.original_variant = null == l4 ? void 0 : l4.variant), v4 && (c4.metadata = f4({}, null == l4 ? void 0 : l4.metadata, { payload: v4, original_payload: null == l4 || null == (a4 = l4.metadata) ? void 0 : a4.payload })), r4[n3] = c4;
+        var o4, a4, l4 = r4[n3], u5 = null == e4 ? void 0 : e4[n3], h4 = W(u5) ? null !== (o4 = null == l4 ? void 0 : l4.enabled) && void 0 !== o4 && o4 : !!u5, d4 = W(u5) ? l4.variant : "string" == typeof u5 ? u5 : void 0, v4 = null == i4 ? void 0 : i4[n3], c4 = _2({}, l4, { enabled: h4, variant: h4 ? null != d4 ? d4 : null == l4 ? void 0 : l4.variant : void 0 });
+        h4 !== (null == l4 ? void 0 : l4.enabled) && (c4.original_enabled = null == l4 ? void 0 : l4.enabled), d4 !== (null == l4 ? void 0 : l4.variant) && (c4.original_variant = null == l4 ? void 0 : l4.variant), v4 && (c4.metadata = _2({}, null == l4 ? void 0 : l4.metadata, { payload: v4, original_payload: null == l4 || null == (a4 = l4.metadata) ? void 0 : a4.payload })), r4[n3] = c4;
       }
-      return this.Jn || (Xa.warn(" Overriding feature flag details!", { flagDetails: t4, overriddenPayloads: i4, finalDetails: r4 }), this.Jn = true), r4;
+      return this.Is || (cl.warn(" Overriding feature flag details!", { flagDetails: t4, overriddenPayloads: i4, finalDetails: r4 }), this.Is = true), r4;
     }
     getAllFeatureFlags() {
       var t4 = this.getFlagVariants(), e4 = this.getFlagPayloads();
       return Object.keys(t4).map(((i4) => {
         var r4 = t4[i4];
-        return { key: i4, enabled: m3(r4), variant: y3(r4), payload: g2(e4[i4]) };
+        return { key: i4, enabled: b2(r4), variant: y3(r4), payload: m3(e4[i4]) };
       }));
     }
     getFlagVariants() {
-      var t4 = this.ss(Fi), e4 = this.ss(ji);
+      var t4 = this.Ns(ji), e4 = this.Ns(Gi);
       if (!e4) return t4 || {};
-      for (var i4 = Sr({}, t4), r4 = Object.keys(e4), s4 = 0; r4.length > s4; s4++) i4[r4[s4]] = e4[r4[s4]];
-      return this.Jn || (Xa.warn(" Overriding feature flags!", { enabledFlags: t4, overriddenFlags: e4, finalFlags: i4 }), this.Jn = true), i4;
+      for (var i4 = Or({}, t4), r4 = Object.keys(e4), s4 = 0; r4.length > s4; s4++) i4[r4[s4]] = e4[r4[s4]];
+      return this.Is || (cl.warn(" Overriding feature flags!", { enabledFlags: t4, overriddenFlags: e4, finalFlags: i4 }), this.Is = true), i4;
     }
     getFlagPayloads() {
-      var t4 = this.ss(Ni), e4 = this.ss(Bi);
+      var t4 = this.Ns(qi), e4 = this.Ns(Wi);
       if (!e4) return t4 || {};
-      for (var i4 = Sr({}, t4 || {}), r4 = Object.keys(e4), s4 = 0; r4.length > s4; s4++) i4[r4[s4]] = e4[r4[s4]];
-      return this.Jn || (Xa.warn(" Overriding feature flag payloads!", { flagPayloads: t4, overriddenPayloads: e4, finalPayloads: i4 }), this.Jn = true), i4;
+      for (var i4 = Or({}, t4 || {}), r4 = Object.keys(e4), s4 = 0; r4.length > s4; s4++) i4[r4[s4]] = e4[r4[s4]];
+      return this.Is || (cl.warn(" Overriding feature flag payloads!", { flagPayloads: t4, overriddenPayloads: e4, finalPayloads: i4 }), this.Is = true), i4;
     }
     reloadFeatureFlags() {
-      this.Xn || this.Se.advanced_disable_feature_flags || this.cs || (this._instance.Ti.emit("featureFlagsReloading", true), this.cs = setTimeout((() => {
-        this.vs();
+      this.Es || this.Te.advanced_disable_feature_flags || this.$s() || this.Us || (this._instance.tn.emit("featureFlagsReloading", true), this.Us = setTimeout((() => {
+        this.zs();
       }), 5));
     }
-    fs() {
-      clearTimeout(this.cs), this.cs = void 0;
+    Vs() {
+      clearTimeout(this.Us), this.Us = void 0;
     }
     ensureFlagsLoaded() {
-      this.Yn || this.Kn || this.cs || this.reloadFeatureFlags();
+      this.Ts || this.Ms || this.Us || this.reloadFeatureFlags();
     }
     setAnonymousDistinctId(t4) {
       this.$anon_distinct_id = t4;
     }
     setReloadingPaused(t4) {
-      this.Xn = t4;
+      this.Es = t4;
     }
-    vs(t4) {
+    zs(t4) {
       var e4;
-      if (this.fs(), !this._instance.mr()) if (this.Kn) this.es = true;
+      if (this.Vs(), !this._instance.Vr() && !this.$s()) if (this.Ms) this.Rs = true;
       else {
-        var i4 = this.Se.token, r4 = this.ss(ci), s4 = { token: i4, distinct_id: this._instance.get_distinct_id(), groups: this._instance.getGroups(), $anon_distinct_id: this.$anon_distinct_id, person_properties: f4({}, (null == (e4 = this.zr) ? void 0 : e4.get_initial_props()) || {}, this.ss(zi) || {}), group_properties: this.ss(Hi), timezone: pn() };
-        Y(r4) || V2(r4) || (s4.$device_id = r4), (null != t4 && t4.disableFlags || this.Se.advanced_disable_feature_flags) && (s4.disable_flags = true), this.hs() && (s4.evaluation_contexts = this.us());
-        var n3 = this.ds();
-        V2(n3) || (s4.flag_keys = n3);
-        var o4 = !!this.Se.advanced_only_evaluate_survey_feature_flags, a4 = this._instance.requestRouter.endpointFor("flags", "/flags/?v=2" + (this.Se.advanced_only_evaluate_survey_feature_flags ? "&only_evaluate_survey_feature_flags=true" : ""));
-        this.Kn = true, this._instance._send_request({ method: "POST", url: a4, data: s4, compression: this.Se.disable_compression ? void 0 : Un.Base64, timeout: this.Se.feature_flag_request_timeout_ms, callback: (t5) => {
+        var i4 = this.Te.token, r4 = this.Ns(bi), s4 = { token: i4, distinct_id: this._instance.get_distinct_id(), groups: this._instance.getGroups(), $anon_distinct_id: this.$anon_distinct_id, person_properties: _2({}, (null == (e4 = this.mi) ? void 0 : e4.get_initial_props()) || {}, this.Ns(Ji) || {}), group_properties: this.Ns(Ki), timezone: xn() };
+        Y(r4) || W(r4) || (s4.$device_id = r4), (null != t4 && t4.disableFlags || this.Te.advanced_disable_feature_flags) && (s4.disable_flags = true), this.Hs() && (s4.evaluation_contexts = this.js());
+        var n3 = this.Bs();
+        W(n3) || (s4.flag_keys = n3);
+        var o4 = !!this.Te.advanced_only_evaluate_survey_feature_flags, a4 = this._instance.requestRouter.endpointFor("flags", "/flags/?v=2" + (this.Te.advanced_only_evaluate_survey_feature_flags ? "&only_evaluate_survey_feature_flags=true" : ""));
+        this.Ms = true, this._instance._send_request({ method: "POST", url: a4, data: s4, compression: this.Te.disable_compression ? void 0 : Jn.Base64, timeout: this.Te.feature_flag_request_timeout_ms, callback: (t5) => {
           var e5, i5, r5, n4 = true;
-          if (200 === t5.statusCode && (this.es || (this.$anon_distinct_id = void 0), n4 = false), this.Kn = false, !s4.disable_flags || this.es) {
-            this.ts = !n4;
+          if (this.Ws(t5.statusCode), 200 === t5.statusCode && (this.Rs || (this.$anon_distinct_id = void 0), n4 = false), this.Ms = false, !s4.disable_flags || this.Rs) {
+            this.Ps = !n4;
             var a5 = [];
             t5.error ? t5.error instanceof Error ? a5.push("AbortError" === t5.error.name ? "timeout" : "connection_error") : a5.push("unknown_error") : 200 !== t5.statusCode && a5.push("api_error_" + t5.statusCode), null != (e5 = t5.json) && e5.errorsWhileComputingFlags && a5.push("errors_while_computing_flags");
             var l4, u5 = !(null == (i5 = t5.json) || null == (i5 = i5.quotaLimited) || !i5.includes("feature_flags"));
-            if (u5 && a5.push("quota_limited"), null == (r5 = this.zr) || r5.register({ [Ji]: a5 }), u5) Xa.warn("You have hit your feature flags quota limit, and will not be able to load feature flags until the quota is reset.  Please visit https://posthog.com/docs/billing/limits-alerts to learn more.");
-            else s4.disable_flags || this.receivedFeatureFlags(null !== (l4 = t5.json) && void 0 !== l4 ? l4 : {}, n4, { partialResponse: o4 }), this.es && (this.es = false, this.vs());
+            if (u5 && a5.push("quota_limited"), null == (r5 = this.mi) || r5.register({ [ir]: a5 }), u5) cl.warn("You have hit your feature flags quota limit, and will not be able to load feature flags until the quota is reset.  Please visit https://posthog.com/docs/billing/limits-alerts to learn more.");
+            else s4.disable_flags || this.receivedFeatureFlags(null !== (l4 = t5.json) && void 0 !== l4 ? l4 : {}, n4, { partialResponse: o4 }), this.Rs && (this.Rs = false, this.zs());
           }
         } });
       }
     }
+    $s() {
+      return ln(this.Ls, 3);
+    }
+    Ws(t4) {
+      this.Ls = un(t4, this.Ls, 3, (() => cl.warn("Feature flag requests are failing before receiving an HTTP response; this can happen due to network issues, CORS, browser blocking, or ad blockers. Stopped refreshing feature flags; will try again when connectivity changes.")));
+    }
     getFeatureFlag(t4, e4) {
       var i4;
-      if (void 0 === e4 && (e4 = {}), !e4.fresh || this.ts) if (this.Yn || this.getFlags() && this.getFlags().length > 0) {
-        if (!this.ls()) {
+      if (void 0 === e4 && (e4 = {}), !e4.fresh || this.Ps) if (this.Ts || this.getFlags() && this.getFlags().length > 0) {
+        if (!this.qs()) {
           var r4 = this.getFeatureFlagResult(t4, e4);
           return null !== (i4 = null == r4 ? void 0 : r4.variant) && void 0 !== i4 ? i4 : null == r4 ? void 0 : r4.enabled;
         }
-      } else Xa.warn('getFeatureFlag for key "' + t4 + tl);
+      } else cl.warn('getFeatureFlag for key "' + t4 + pl);
     }
     getFeatureFlagDetails(t4) {
       return this.getFlagsWithDetails()[t4];
@@ -9827,43 +10098,43 @@
       return null == e4 ? void 0 : e4.payload;
     }
     getFeatureFlagResult(t4, e4) {
-      if (void 0 === e4 && (e4 = {}), !e4.fresh || this.ts) if (this.Yn || this.getFlags() && this.getFlags().length > 0) {
-        if (!this.ls()) {
-          var i4 = this.getFlagVariants(), r4 = t4 in i4, s4 = i4[t4], n3 = this.getFlagPayloads()[t4], o4 = String(s4), a4 = this.ss(Ui) || void 0, l4 = this.ss(Qi) || void 0, u5 = this.ss(Yi) || {};
-          if (this.Se.advanced_feature_flags_dedup_per_session) {
-            var h4, d4 = this._instance.get_session_id(), v4 = this.ss(Ki);
-            d4 && d4 !== v4 && (u5 = {}, null == (h4 = this.zr) || h4.register({ [Yi]: u5, [Ki]: d4 }));
+      if (void 0 === e4 && (e4 = {}), !e4.fresh || this.Ps) if (this.Ts || this.getFlags() && this.getFlags().length > 0) {
+        if (!this.qs()) {
+          var i4 = this.getFlagVariants(), r4 = t4 in i4, s4 = i4[t4], n3 = this.getFlagPayloads()[t4], o4 = String(s4), a4 = this.Ns(Vi) || void 0, l4 = this.Ns(rr) || void 0, u5 = this.Ns(tr) || {};
+          if (this.Te.advanced_feature_flags_dedup_per_session) {
+            var h4, d4 = this._instance.get_session_id(), v4 = this.Ns(er);
+            d4 && d4 !== v4 && (u5 = {}, null == (h4 = this.mi) || h4.register({ [tr]: u5, [er]: d4 }));
           }
           if ((e4.send_event || !("send_event" in e4)) && (!(t4 in u5) || !u5[t4].includes(o4))) {
-            var c4, p4, f5, _3, m4, y4, b3, w4, E3, x3;
-            B3(u5[t4]) ? u5[t4].push(o4) : u5[t4] = [o4], null == (c4 = this.zr) || c4.register({ [Yi]: u5 });
-            var S3 = this.getFeatureFlagDetails(t4), T4 = [...null !== (p4 = this.ss(Ji)) && void 0 !== p4 ? p4 : []];
-            V2(s4) && T4.push("flag_missing");
-            var k4 = { $feature_flag: t4, $feature_flag_response: s4, $feature_flag_payload: n3 || null, $feature_flag_request_id: a4, $feature_flag_evaluated_at: l4, $feature_flag_bootstrapped_response: (null == (f5 = this.Se.bootstrap) || null == (f5 = f5.featureFlags) ? void 0 : f5[t4]) || null, $feature_flag_bootstrapped_payload: (null == (_3 = this.Se.bootstrap) || null == (_3 = _3.featureFlagPayloads) ? void 0 : _3[t4]) || null, $used_bootstrap_value: !this.ts };
-            V2(null == S3 || null == (m4 = S3.metadata) ? void 0 : m4.version) || (k4.$feature_flag_version = S3.metadata.version);
-            var R4, P3 = null !== (y4 = null == S3 || null == (b3 = S3.reason) ? void 0 : b3.description) && void 0 !== y4 ? y4 : null == S3 || null == (w4 = S3.reason) ? void 0 : w4.code;
-            P3 && (k4.$feature_flag_reason = P3), null != S3 && null != (E3 = S3.metadata) && E3.id && (k4.$feature_flag_id = S3.metadata.id), V2(null == S3 ? void 0 : S3.original_variant) && V2(null == S3 ? void 0 : S3.original_enabled) || (k4.$feature_flag_original_response = V2(S3.original_variant) ? S3.original_enabled : S3.original_variant), null != S3 && null != (x3 = S3.metadata) && x3.original_payload && (k4.$feature_flag_original_payload = null == S3 || null == (R4 = S3.metadata) ? void 0 : R4.original_payload), T4.length && (k4.$feature_flag_error = T4.join(",")), this._instance.capture("$feature_flag_called", k4);
+            var c4, f5, p4, _3, g3, b3, y4, w4, E3, x3, S3;
+            H2(u5[t4]) ? u5[t4].push(o4) : u5[t4] = [o4], null == (c4 = this.mi) || c4.register({ [tr]: u5 });
+            var k4 = this.getFeatureFlagDetails(t4), T4 = [...null !== (f5 = this.Ns(ir)) && void 0 !== f5 ? f5 : []];
+            W(s4) && T4.push("flag_missing");
+            var R4 = { $feature_flag: t4, $feature_flag_response: s4, $feature_flag_payload: n3 || null, $feature_flag_request_id: a4, $feature_flag_evaluated_at: l4, $feature_flag_bootstrapped_response: (null == (p4 = this.Te.bootstrap) || null == (p4 = p4.featureFlags) ? void 0 : p4[t4]) || null, $feature_flag_bootstrapped_payload: (null == (_3 = this.Te.bootstrap) || null == (_3 = _3.featureFlagPayloads) ? void 0 : _3[t4]) || null, $used_bootstrap_value: !this.Ps };
+            W(null == k4 || null == (g3 = k4.metadata) ? void 0 : g3.has_experiment) || (R4.$feature_flag_has_experiment = k4.metadata.has_experiment), W(null == k4 || null == (b3 = k4.metadata) ? void 0 : b3.version) || (R4.$feature_flag_version = k4.metadata.version);
+            var P3, O3 = null !== (y4 = null == k4 || null == (w4 = k4.reason) ? void 0 : w4.description) && void 0 !== y4 ? y4 : null == k4 || null == (E3 = k4.reason) ? void 0 : E3.code;
+            O3 && (R4.$feature_flag_reason = O3), null != k4 && null != (x3 = k4.metadata) && x3.id && (R4.$feature_flag_id = k4.metadata.id), W(null == k4 ? void 0 : k4.original_variant) && W(null == k4 ? void 0 : k4.original_enabled) || (R4.$feature_flag_original_response = W(k4.original_variant) ? k4.original_enabled : k4.original_variant), null != k4 && null != (S3 = k4.metadata) && S3.original_payload && (R4.$feature_flag_original_payload = null == k4 || null == (P3 = k4.metadata) ? void 0 : P3.original_payload), T4.length && (R4.$feature_flag_error = T4.join(",")), this._instance.capture("$feature_flag_called", R4);
           }
-          if (r4) return { key: t4, enabled: !!s4, variant: "string" == typeof s4 ? s4 : void 0, payload: g2(n3) };
+          if (r4) return { key: t4, enabled: !!s4, variant: "string" == typeof s4 ? s4 : void 0, payload: m3(n3) };
         }
-      } else Xa.warn('getFeatureFlagResult for key "' + t4 + tl);
+      } else cl.warn('getFeatureFlagResult for key "' + t4 + pl);
     }
     getRemoteConfigPayload(t4, e4) {
-      var i4 = this.Se.token, r4 = { distinct_id: this._instance.get_distinct_id(), token: i4 };
-      this.hs() && (r4.evaluation_contexts = this.us());
-      var s4 = this.ds();
-      V2(s4) || (r4.flag_keys = s4), this._instance._send_request({ method: "POST", url: this._instance.requestRouter.endpointFor("flags", "/flags/?v=2"), data: r4, compression: this.Se.disable_compression ? void 0 : Un.Base64, timeout: this.Se.feature_flag_request_timeout_ms, callback(i5) {
+      var i4 = this.Te.token, r4 = { distinct_id: this._instance.get_distinct_id(), token: i4 };
+      this.Hs() && (r4.evaluation_contexts = this.js());
+      var s4 = this.Bs();
+      W(s4) || (r4.flag_keys = s4), this._instance._send_request({ method: "POST", url: this._instance.requestRouter.endpointFor("flags", "/flags/?v=2"), data: r4, compression: this.Te.disable_compression ? void 0 : Jn.Base64, timeout: this.Te.feature_flag_request_timeout_ms, callback(i5) {
         var r5, s5 = null == (r5 = i5.json) ? void 0 : r5.featureFlagPayloads;
         e4((null == s5 ? void 0 : s5[t4]) || void 0);
       } });
     }
     isFeatureEnabled(t4, e4) {
-      if (void 0 === e4 && (e4 = {}), !e4.fresh || this.ts) {
-        if (this.Yn || this.getFlags() && this.getFlags().length > 0) {
+      if (void 0 === e4 && (e4 = {}), !e4.fresh || this.Ps) {
+        if (this.Ts || this.getFlags() && this.getFlags().length > 0) {
           var i4 = this.getFeatureFlag(t4, e4);
-          return V2(i4) ? void 0 : !!i4;
+          return W(i4) ? void 0 : !!i4;
         }
-        Xa.warn('isFeatureEnabled for key "' + t4 + tl);
+        cl.warn('isFeatureEnabled for key "' + t4 + pl);
       }
     }
     addFeatureFlagsHandler(t4) {
@@ -9873,8 +10144,8 @@
       this.featureFlagEventHandlers = this.featureFlagEventHandlers.filter(((e4) => e4 !== t4));
     }
     receivedFeatureFlags(t4, e4, i4) {
-      if (this.zr) {
-        this.Yn = true;
+      if (this.mi) {
+        this.Ts = true;
         var r4 = this.getFlagVariants(), s4 = this.getFlagPayloads(), n3 = this.getFlagsWithDetails();
         !(function(t5, e5, i5, r5, s5, n4) {
           void 0 === i5 && (i5 = {}), void 0 === r5 && (r5 = {}), void 0 === s5 && (s5 = {});
@@ -9889,315 +10160,309 @@
             })).map(((t7) => {
               var i6;
               return [t7, null == (i6 = e6[t7].metadata) ? void 0 : i6.payload];
-            })))) : t6.featureFlags && Xa.warn("Using an older version of the feature flags endpoint. Please upgrade your PostHog server to the latest version"), t6;
+            })))) : t6.featureFlags && cl.warn("Using an older version of the feature flags endpoint. Please upgrade your PostHog server to the latest version"), t6;
           })(t5), a4 = o4.flags, l4 = o4.featureFlags, u5 = o4.featureFlagPayloads;
           if (l4) {
             var h4 = t5.requestId, d4 = t5.evaluatedAt;
-            if (B3(l4)) {
-              Xa.warn("v1 of the feature flags endpoint is deprecated. Please use the latest version.");
+            if (H2(l4)) {
+              cl.warn("v1 of the feature flags endpoint is deprecated. Please use the latest version.");
               var v4 = {};
               if (l4) for (var c4 = 0; l4.length > c4; c4++) v4[l4[c4]] = true;
-              e5 && e5.register({ [Mi]: l4, [Fi]: v4 });
+              e5 && e5.register({ [Bi]: l4, [ji]: v4 });
             } else {
-              var p4 = l4, _3 = u5, g3 = a4;
-              if (null != n4 && n4.partialResponse) p4 = f4({}, i5, p4), _3 = f4({}, r5, _3), g3 = f4({}, s5, g3);
+              var f5 = l4, p4 = u5, g3 = a4;
+              if (null != n4 && n4.partialResponse) f5 = _2({}, i5, f5), p4 = _2({}, r5, p4), g3 = _2({}, s5, g3);
               else if (t5.errorsWhileComputingFlags) if (a4) {
                 var m4 = new Set(Object.keys(a4).filter(((t6) => {
                   var e6;
                   return !(null != (e6 = a4[t6]) && e6.failed);
                 })));
-                p4 = f4({}, i5, Object.fromEntries(Object.entries(p4).filter(((t6) => {
-                  var [e6] = t6;
-                  return m4.has(e6);
-                })))), _3 = f4({}, r5, Object.fromEntries(Object.entries(_3 || {}).filter(((t6) => {
-                  var [e6] = t6;
-                  return m4.has(e6);
-                })))), g3 = f4({}, s5, Object.fromEntries(Object.entries(g3 || {}).filter(((t6) => {
-                  var [e6] = t6;
-                  return m4.has(e6);
-                }))));
-              } else p4 = f4({}, i5, p4), _3 = f4({}, r5, _3), g3 = f4({}, s5, g3);
-              e5 && e5.register(f4({ [Mi]: Object.keys(il(p4)), [Fi]: p4 || {}, [Ni]: _3 || {}, [Li]: g3 || {} }, h4 ? { [Ui]: h4 } : {}, d4 ? { [Qi]: d4 } : {}));
+                f5 = _2({}, i5, Object.fromEntries(Object.entries(f5).filter(((t6) => m4.has(t6[0]))))), p4 = _2({}, r5, Object.fromEntries(Object.entries(p4 || {}).filter(((t6) => m4.has(t6[0]))))), g3 = _2({}, s5, Object.fromEntries(Object.entries(g3 || {}).filter(((t6) => m4.has(t6[0])))));
+              } else f5 = _2({}, i5, f5), p4 = _2({}, r5, p4), g3 = _2({}, s5, g3);
+              e5 && e5.register(_2({ [Bi]: Object.keys(gl(f5)), [ji]: f5 || {}, [qi]: p4 || {}, [Hi]: g3 || {} }, h4 ? { [Vi]: h4 } : {}, d4 ? { [rr]: d4 } : {}));
             }
           }
-        })(t4, this.zr, r4, s4, n3, i4), e4 || (this.ns = false), this.ps(e4);
+        })(t4, this.mi, r4, s4, n3, i4), e4 || (this.Fs = false), this.Zs(e4);
       }
     }
     override(t4, e4) {
-      void 0 === e4 && (e4 = false), Xa.warn("override is deprecated. Please use overrideFeatureFlags instead."), this.overrideFeatureFlags({ flags: t4, suppressWarning: e4 });
+      void 0 === e4 && (e4 = false), cl.warn("override is deprecated. Please use overrideFeatureFlags instead."), this.overrideFeatureFlags({ flags: t4, suppressWarning: e4 });
     }
     overrideFeatureFlags(t4) {
-      if (!this._instance.__loaded || !this.zr) return Xa.uninitializedWarning("posthog.featureFlags.overrideFeatureFlags");
-      if (false === t4) return this.zr.unregister(ji), this.zr.unregister(Bi), this.ps(), Za.info("All overrides cleared");
-      if (B3(t4)) {
-        var e4 = el(t4);
-        return this.zr.register({ [ji]: e4 }), this.ps(), Za.info("Flag overrides set", { flags: t4 });
+      if (!this._instance.__loaded || !this.mi) return cl.uninitializedWarning("posthog.featureFlags.overrideFeatureFlags");
+      if (false === t4) return this.mi.unregister(Gi), this.mi.unregister(Wi), this.Zs(), fl.info("All overrides cleared");
+      if (H2(t4)) {
+        var e4 = _l(t4);
+        return this.mi.register({ [Gi]: e4 }), this.Zs(), fl.info("Flag overrides set", { flags: t4 });
       }
       if (t4 && "object" == typeof t4 && ("flags" in t4 || "payloads" in t4)) {
         var i4, r4 = t4;
-        if (this.Jn = Boolean(null !== (i4 = r4.suppressWarning) && void 0 !== i4 && i4), "flags" in r4) {
-          if (false === r4.flags) this.zr.unregister(ji), Za.info("Flag overrides cleared");
+        if (this.Is = Boolean(null !== (i4 = r4.suppressWarning) && void 0 !== i4 && i4), "flags" in r4) {
+          if (false === r4.flags) this.mi.unregister(Gi), fl.info("Flag overrides cleared");
           else if (r4.flags) {
-            if (B3(r4.flags)) {
-              var s4 = el(r4.flags);
-              this.zr.register({ [ji]: s4 });
-            } else this.zr.register({ [ji]: r4.flags });
-            Za.info("Flag overrides set", { flags: r4.flags });
+            if (H2(r4.flags)) {
+              var s4 = _l(r4.flags);
+              this.mi.register({ [Gi]: s4 });
+            } else this.mi.register({ [Gi]: r4.flags });
+            fl.info("Flag overrides set", { flags: r4.flags });
           }
         }
-        return "payloads" in r4 && (false === r4.payloads ? (this.zr.unregister(Bi), Za.info("Payload overrides cleared")) : r4.payloads && (this.zr.register({ [Bi]: r4.payloads }), Za.info("Payload overrides set", { payloads: r4.payloads }))), void this.ps();
+        return "payloads" in r4 && (false === r4.payloads ? (this.mi.unregister(Wi), fl.info("Payload overrides cleared")) : r4.payloads && (this.mi.register({ [Wi]: r4.payloads }), fl.info("Payload overrides set", { payloads: r4.payloads }))), void this.Zs();
       }
-      if (t4 && "object" == typeof t4) return this.zr.register({ [ji]: t4 }), this.ps(), Za.info("Flag overrides set", { flags: t4 });
-      Xa.warn("Invalid overrideOptions provided to overrideFeatureFlags", { overrideOptions: t4 });
+      if (t4 && "object" == typeof t4) return this.mi.register({ [Gi]: t4 }), this.Zs(), fl.info("Flag overrides set", { flags: t4 });
+      cl.warn("Invalid overrideOptions provided to overrideFeatureFlags", { overrideOptions: t4 });
     }
     onFeatureFlags(t4) {
-      if (this.addFeatureFlagsHandler(t4), this.Yn) {
-        var { flags: e4, flagVariants: i4 } = this.gs();
+      if (this.addFeatureFlagsHandler(t4), this.Ts) {
+        var e4 = this.Gs(), i4 = e4.flags, r4 = e4.flagVariants;
         try {
-          t4(e4, i4);
+          t4(i4, r4);
         } catch (t5) {
-          Xa.error("Error while running feature flags callback", t5);
+          cl.error("Error while running feature flags callback", t5);
         }
       }
       return () => this.removeFeatureFlagsHandler(t4);
     }
     updateEarlyAccessFeatureEnrollment(t4, e4, i4) {
-      var r4, s4 = (this.ss(Di) || []).find(((e5) => e5.flagKey === t4)), n3 = { ["$feature_enrollment/" + t4]: e4 }, o4 = { $feature_flag: t4, $feature_enrollment: e4, $set: n3 };
+      var r4, s4 = (this.Ns(zi) || []).find(((e5) => e5.flagKey === t4)), n3 = { ["$feature_enrollment/" + t4]: e4 }, o4 = { $feature_flag: t4, $feature_enrollment: e4, $set: n3 };
       s4 && (o4.$early_access_feature_name = s4.name), i4 && (o4.$feature_enrollment_stage = i4), this._instance.capture("$feature_enrollment_update", o4), this.setPersonPropertiesForFlags(n3, false);
-      var a4 = f4({}, this.getFlagVariants(), { [t4]: e4 });
-      null == (r4 = this.zr) || r4.register({ [Mi]: Object.keys(il(a4)), [Fi]: a4 }), this.ps();
+      var a4 = _2({}, this.getFlagVariants(), { [t4]: e4 });
+      null == (r4 = this.mi) || r4.register({ [Bi]: Object.keys(gl(a4)), [ji]: a4 }), this.Zs();
     }
     getEarlyAccessFeatures(t4, e4, i4) {
       void 0 === e4 && (e4 = false);
-      var r4 = this.ss(Di), s4 = i4 ? "&" + i4.map(((t5) => "stage=" + t5)).join("&") : "";
+      var r4 = this.Ns(zi), s4 = i4 ? "&" + i4.map(((t5) => "stage=" + t5)).join("&") : "";
       if (r4 && !e4) return t4(r4);
-      this._instance._send_request({ url: this._instance.requestRouter.endpointFor("api", "/api/early_access_features/?token=" + this.Se.token + s4), method: "GET", callback: (e5) => {
+      this._instance._send_request({ url: this._instance.requestRouter.endpointFor("api", "/api/early_access_features/?token=" + this.Te.token + s4), method: "GET", callback: (e5) => {
         var i5, r5;
         if (e5.json) {
           var s5 = e5.json.earlyAccessFeatures;
-          return null == (i5 = this.zr) || i5.unregister(Di), null == (r5 = this.zr) || r5.register({ [Di]: s5 }), t4(s5);
+          return null == (i5 = this.mi) || i5.unregister(zi), null == (r5 = this.mi) || r5.register({ [zi]: s5 }), t4(s5);
         }
       } });
     }
-    gs() {
+    Gs() {
       var t4 = this.getFlags(), e4 = this.getFlagVariants();
       return { flags: t4.filter(((t5) => e4[t5])), flagVariants: Object.keys(e4).filter(((t5) => e4[t5])).reduce(((t5, i4) => (t5[i4] = e4[i4], t5)), {}) };
     }
-    ps(t4) {
-      var { flags: e4, flagVariants: i4 } = this.gs();
-      this.featureFlagEventHandlers.forEach(((r4) => {
+    Zs(t4) {
+      var e4 = this.Gs(), i4 = e4.flags, r4 = e4.flagVariants;
+      this.featureFlagEventHandlers.forEach(((e5) => {
         try {
-          r4(e4, i4, { errorsLoading: t4 });
+          e5(i4, r4, { errorsLoading: t4 });
         } catch (t5) {
-          Xa.error("Error while running feature flags callback", t5);
+          cl.error("Error while running feature flags callback", t5);
         }
       }));
     }
     setPersonPropertiesForFlags(t4, e4) {
       void 0 === e4 && (e4 = true);
-      var i4 = this.ss(zi) || {}, r4 = (null == t4 ? void 0 : t4.$set) || (null != t4 && t4.$set_once ? {} : t4), s4 = null == t4 ? void 0 : t4.$set_once, n3 = {};
+      var i4 = this.Ns(Ji) || {}, r4 = (null == t4 ? void 0 : t4.$set) || (null != t4 && t4.$set_once ? {} : t4), s4 = null == t4 ? void 0 : t4.$set_once, n3 = {};
       if (s4) for (var o4 in s4) ({}).hasOwnProperty.call(s4, o4) && (o4 in i4 || (n3[o4] = s4[o4]));
-      this._instance.register({ [zi]: f4({}, i4, n3, r4) }), e4 && this._instance.reloadFeatureFlags();
+      this._instance.register({ [Ji]: _2({}, i4, n3, r4) }), e4 && this._instance.reloadFeatureFlags();
     }
     unsetPersonPropertiesForFlags(t4, e4) {
       void 0 === e4 && (e4 = true);
-      var i4 = f4({}, this.ss(zi) || {});
+      var i4 = _2({}, this.Ns(Ji) || {});
       t4.forEach(((t5) => {
         delete i4[t5];
-      })), this._instance.register({ [zi]: i4 }), e4 && this._instance.reloadFeatureFlags();
+      })), this._instance.register({ [Ji]: i4 }), e4 && this._instance.reloadFeatureFlags();
     }
     resetPersonPropertiesForFlags(t4) {
-      void 0 === t4 && (t4 = true), this._instance.unregister(zi), t4 && this._instance.reloadFeatureFlags();
+      void 0 === t4 && (t4 = true), this._instance.unregister(Ji), t4 && this._instance.reloadFeatureFlags();
     }
     setGroupPropertiesForFlags(t4, e4) {
       void 0 === e4 && (e4 = true);
-      var i4 = this.ss(Hi) || {};
+      var i4 = this.Ns(Ki) || {};
       0 !== Object.keys(i4).length && Object.keys(i4).forEach(((e5) => {
-        i4[e5] = f4({}, i4[e5], t4[e5]), delete t4[e5];
-      })), this._instance.register({ [Hi]: f4({}, i4, t4) }), e4 && this._instance.reloadFeatureFlags();
+        i4[e5] = _2({}, i4[e5], t4[e5]), delete t4[e5];
+      })), this._instance.register({ [Ki]: _2({}, i4, t4) }), e4 && this._instance.reloadFeatureFlags();
     }
     resetGroupPropertiesForFlags(t4) {
       if (t4) {
-        var e4 = this.ss(Hi) || {};
-        this._instance.register({ [Hi]: f4({}, e4, { [t4]: {} }) });
-      } else this._instance.unregister(Hi);
+        var e4 = this.Ns(Ki) || {};
+        this._instance.register({ [Ki]: _2({}, e4, { [t4]: {} }) });
+      } else this._instance.unregister(Ki);
     }
     reset() {
-      this.Yn = false, this.Kn = false, this.Xn = false, this.es = false, this.ts = false, this.$anon_distinct_id = void 0, this.fs(), this.Jn = false;
+      this.Ts = false, this.Ms = false, this.Es = false, this.Rs = false, this.Ps = false, this.$anon_distinct_id = void 0, this.Vs(), this.Is = false, this.Ls = 0;
     }
   } };
-  var dl = { sessionRecording: class {
-    get Se() {
+  var Tl = { sessionRecording: class {
+    get Te() {
       return this._instance.config;
     }
-    get zr() {
+    get mi() {
       return this._instance.persistence;
     }
     get started() {
       var t4;
-      return !(null == (t4 = this.ys) || !t4.isStarted);
+      return !(null == (t4 = this.Qs) || !t4.isStarted);
     }
     get status() {
       var t4, e4;
-      return this.bs === Ca || this.bs === Aa ? this.bs : null !== (t4 = null == (e4 = this.ys) ? void 0 : e4.status) && void 0 !== t4 ? t4 : this.bs;
+      return this.Js === Wa || this.Js === Ja ? this.Js : null !== (t4 = null == (e4 = this.Qs) ? void 0 : e4.status) && void 0 !== t4 ? t4 : this.Js;
     }
     constructor(t4) {
-      if (this._forceAllowLocalhostNetworkCapture = false, this.bs = Ia, this._s = void 0, this._instance = t4, !this._instance.sessionManager) throw Ma.error("started without valid sessionManager"), new Error(Fa + " started without valid sessionManager. This is a bug.");
-      if (this.Se.cookieless_mode === vr) throw new Error(Fa + ' cannot be used with cookieless_mode="always"');
+      if (this._forceAllowLocalhostNetworkCapture = false, this.Js = Va, this.Ks = void 0, this._instance = t4, !this._instance.sessionManager) throw Ya.error("started without valid sessionManager"), new Error(Ka + " started without valid sessionManager. This is a bug.");
+      if (this.Te.cookieless_mode === mr) throw new Error(Ka + ' cannot be used with cookieless_mode="always"');
     }
     initialize() {
       this.startIfEnabledOrStop();
     }
-    get ws() {
-      var e4, i4 = !(null == (e4 = this._instance.get_property($i)) || !e4.enabled), r4 = !this.Se.disable_session_recording, s4 = this.Se.disable_session_recording || this._instance.consent.isOptedOut();
+    get Ys() {
+      var e4, i4 = !(null == (e4 = this._instance.get_property(Ci)) || !e4.enabled), r4 = !this.Te.disable_session_recording, s4 = this.Te.disable_session_recording || this._instance.consent.isOptedOut();
       return t3 && i4 && r4 && !s4;
     }
     startIfEnabledOrStop(t4) {
       var e4;
-      if (!this.ws || null == (e4 = this.ys) || !e4.isStarted) {
-        var i4 = !V2(Object.assign) && !V2(Array.from);
-        this.ws && i4 ? (this.xs(t4), Ma.info("starting")) : (this.bs = Ia, this.stopRecording());
+      if (!this.Ys || null == (e4 = this.Qs) || !e4.isStarted) {
+        var i4 = !W(Object.assign) && !W(Array.from);
+        this.Ys && i4 ? (this.Xs(t4), Ya.info("starting")) : (this.Js = Va, this.stopRecording());
       }
     }
-    xs(t4) {
+    Xs(t4) {
       var e4, i4, r4;
-      this.ws && (this.bs !== Ca && this.bs !== Aa && (this.bs = Oa), null != h3 && null != (e4 = h3.__PosthogExtensions__) && null != (e4 = e4.rrweb) && e4.record && null != (i4 = h3.__PosthogExtensions__) && i4.initSessionRecording ? this.ks(t4) : null == (r4 = h3.__PosthogExtensions__) || null == r4.loadExternalDependency || r4.loadExternalDependency(this._instance, this.Ss, ((e5) => {
-        if (e5) return Ma.error("could not load recorder", e5);
-        this.ks(t4);
+      this.Ys && (this.Js !== Wa && this.Js !== Ja && (this.Js = Ga), null != h3 && null != (e4 = h3.__PosthogExtensions__) && null != (e4 = e4.rrweb) && e4.record && null != (i4 = h3.__PosthogExtensions__) && i4.initSessionRecording ? this.eo(t4) : null == (r4 = h3.__PosthogExtensions__) || null == r4.loadExternalDependency || r4.loadExternalDependency(this._instance, this.ro, ((e5) => {
+        if (e5) return Ya.error("could not load recorder", e5);
+        this.eo(t4);
       })));
     }
     stopRecording() {
       var t4, e4;
-      null == (t4 = this._s) || t4.call(this), this._s = void 0, null == (e4 = this.ys) || e4.stop();
+      null == (t4 = this.Ks) || t4.call(this), this.Ks = void 0, null == (e4 = this.Qs) || e4.stop();
     }
-    Cs() {
+    io() {
       var t4, e4;
-      null == (t4 = this._s) || t4.call(this), this._s = void 0, null == (e4 = this.ys) || e4.discard();
+      null == (t4 = this.Ks) || t4.call(this), this.Ks = void 0, null == (e4 = this.Qs) || e4.discard();
     }
-    Is() {
+    no() {
       var t4, e4;
-      null == (t4 = this.zr) || t4.unregister(Ai), null == (e4 = this.zr) || e4.unregister(ki);
+      null == (t4 = this.mi) || t4.unregister(Li), null == (e4 = this.mi) || e4.unregister(Mi);
     }
-    Ts(t4, e4) {
-      if (K2(t4)) return null;
-      var i4, r4 = J2(t4) ? t4 : parseFloat(t4);
-      return "number" != typeof (i4 = r4) || !Number.isFinite(i4) || 0 > i4 || i4 > 1 ? (Ma.warn(e4 + " must be between 0 and 1. Ignoring invalid value:", t4), null) : r4;
+    so(t4, e4) {
+      if (Q2(t4)) return null;
+      var i4, r4 = X(t4) ? t4 : parseFloat(t4);
+      return "number" != typeof (i4 = r4) || !Number.isFinite(i4) || 0 > i4 || i4 > 1 ? (Ya.warn(e4 + " must be between 0 and 1. Ignoring invalid value:", t4), null) : r4;
     }
-    Es(t4) {
-      if (this.zr) {
-        var e4, i4, r4 = this.zr, s4 = () => {
-          var e5, i5 = false === t4.sessionRecording ? void 0 : t4.sessionRecording, s5 = this.Ts(null == (e5 = this.Se.session_recording) ? void 0 : e5.sampleRate, "session_recording.sampleRate"), n3 = this.Ts(null == i5 ? void 0 : i5.sampleRate, "remote config sampleRate"), o4 = null != s5 ? s5 : n3;
-          K2(o4) && this.Is();
+    oo(t4) {
+      if (this.mi) {
+        var e4, i4, r4 = this.mi, s4 = () => {
+          var e5, i5 = false === t4.sessionRecording ? void 0 : t4.sessionRecording, s5 = this.so(null == (e5 = this.Te.session_recording) ? void 0 : e5.sampleRate, "session_recording.sampleRate"), n3 = this.so(null == i5 ? void 0 : i5.sampleRate, "remote config sampleRate"), o4 = null != s5 ? s5 : n3;
+          Q2(o4) && this.no();
           var a4 = null == i5 ? void 0 : i5.minimumDurationMilliseconds;
-          r4.register({ [$i]: f4({ cache_timestamp: Date.now(), enabled: !!i5 }, i5, { networkPayloadCapture: f4({ capturePerformance: t4.capturePerformance }, null == i5 ? void 0 : i5.networkPayloadCapture), canvasRecording: { enabled: null == i5 ? void 0 : i5.recordCanvas, fps: null == i5 ? void 0 : i5.canvasFps, quality: null == i5 ? void 0 : i5.canvasQuality }, sampleRate: o4, minimumDurationMilliseconds: V2(a4) ? null : a4, endpoint: null == i5 ? void 0 : i5.endpoint, triggerMatchType: null == i5 ? void 0 : i5.triggerMatchType, masking: null == i5 ? void 0 : i5.masking, urlTriggers: null == i5 ? void 0 : i5.urlTriggers, version: null == i5 ? void 0 : i5.version, triggerGroups: null == i5 ? void 0 : i5.triggerGroups }) });
+          r4.register({ [Ci]: _2({ cache_timestamp: Date.now(), enabled: !!i5 }, i5, { networkPayloadCapture: _2({ capturePerformance: t4.capturePerformance }, null == i5 ? void 0 : i5.networkPayloadCapture), canvasRecording: { enabled: null == i5 ? void 0 : i5.recordCanvas, fps: null == i5 ? void 0 : i5.canvasFps, quality: null == i5 ? void 0 : i5.canvasQuality }, sampleRate: o4, minimumDurationMilliseconds: W(a4) ? null : a4, endpoint: null == i5 ? void 0 : i5.endpoint, triggerMatchType: null == i5 ? void 0 : i5.triggerMatchType, masking: null == i5 ? void 0 : i5.masking, urlTriggers: null == i5 ? void 0 : i5.urlTriggers, version: null == i5 ? void 0 : i5.version, triggerGroups: null == i5 ? void 0 : i5.triggerGroups }) });
         };
-        s4(), null == (e4 = this._s) || e4.call(this), this._s = null == (i4 = this._instance.sessionManager) ? void 0 : i4.onSessionId(s4);
+        s4(), null == (e4 = this.Ks) || e4.call(this), this.Ks = null == (i4 = this._instance.sessionManager) ? void 0 : i4.onSessionId(s4);
       }
     }
     onRemoteConfig(t4) {
-      return "sessionRecording" in t4 ? false === t4.sessionRecording ? (this.Es(t4), void this.Cs()) : (this.Es(t4), void this.startIfEnabledOrStop()) : (this.bs === Ca && (this.bs = Aa, Ma.warn("config refresh failed, recording will not start until page reload")), void this.startIfEnabledOrStop());
+      return "sessionRecording" in t4 ? false === t4.sessionRecording ? (this.oo(t4), void this.io()) : (this.oo(t4), void this.startIfEnabledOrStop()) : (this.Js === Wa && (this.Js = Ja, Ya.warn("config refresh failed, recording will not start until page reload")), void this.startIfEnabledOrStop());
     }
     log(t4, e4) {
       var i4;
-      void 0 === e4 && (e4 = "log"), null != (i4 = this.ys) && i4.log ? this.ys.log(t4, e4) : Ma.warn("log called before recorder was ready");
+      void 0 === e4 && (e4 = "log"), null != (i4 = this.Qs) && i4.log ? this.Qs.log(t4, e4) : Ya.warn("log called before recorder was ready");
     }
-    get Ss() {
-      var t4, e4, i4 = null == (t4 = this._instance) || null == (t4 = t4.persistence) ? void 0 : t4.get_property($i);
+    get ro() {
+      var t4, e4, i4 = null == (t4 = this._instance) || null == (t4 = t4.persistence) ? void 0 : t4.get_property(Ci);
       return (null == i4 || null == (e4 = i4.scriptConfig) ? void 0 : e4.script) || "lazy-recorder";
     }
-    Ms() {
-      var t4, e4, i4 = this._instance.get_property($i);
+    ao() {
+      var t4, e4, i4 = this._instance.get_property(Ci);
       if (!i4) return false;
       try {
         e4 = "object" == typeof i4 ? i4 : JSON.parse(i4);
       } catch (t5) {
-        return Ma.warn("persisted remote config for session recording is invalid and will be ignored", t5), false;
+        return Ya.warn("persisted remote config for session recording is invalid and will be ignored", t5), false;
       }
       var r4 = null !== (t4 = e4.cache_timestamp) && void 0 !== t4 ? t4 : Date.now();
       return 36e5 >= Date.now() - r4;
     }
-    ks(t4) {
+    eo(t4) {
       var e4, i4;
-      if (null == (e4 = h3.__PosthogExtensions__) || !e4.initSessionRecording) return Ma.warn("Called on script loaded before session recording is available. This can be caused by adblockers."), void this._instance.register_for_session({ [ur]: true });
-      if (this.ys || (this.ys = null == (i4 = h3.__PosthogExtensions__) ? void 0 : i4.initSessionRecording(this._instance), this.ys._forceAllowLocalhostNetworkCapture = this._forceAllowLocalhostNetworkCapture), !this.Ms()) {
-        if (this.bs === Aa || this.bs === Ca) return;
-        return this.bs = Ca, Ma.info("persisted remote config is stale, requesting fresh config before starting"), void new Ln(this._instance).load();
+      if (null == (e4 = h3.__PosthogExtensions__) || !e4.initSessionRecording) return Ya.warn("Called on script loaded before session recording is available. This can be caused by adblockers."), void this._instance.register_for_session({ [pr]: true });
+      if (this.Qs || (this.Qs = null == (i4 = h3.__PosthogExtensions__) ? void 0 : i4.initSessionRecording(this._instance), this.Qs._forceAllowLocalhostNetworkCapture = this._forceAllowLocalhostNetworkCapture), !this.ao()) {
+        if (this.Js === Ja || this.Js === Wa) return;
+        return this.Js = Wa, Ya.info("persisted remote config is stale, requesting fresh config before starting"), void new Gn(this._instance).load();
       }
-      this.bs = Oa, this.ys.start(t4);
+      this.Js = Ga, this.Qs.start(t4);
     }
     onRRwebEmit(t4) {
       var e4;
-      null == (e4 = this.ys) || null == e4.onRRwebEmit || e4.onRRwebEmit(t4);
+      null == (e4 = this.Qs) || null == e4.onRRwebEmit || e4.onRRwebEmit(t4);
     }
     overrideLinkedFlag() {
       var t4, e4;
-      this.ys || null == (e4 = this.zr) || e4.register({ [Pi]: true }), null == (t4 = this.ys) || t4.overrideLinkedFlag();
+      this.Qs || null == (e4 = this.mi) || e4.register({ [Fi]: true }), null == (t4 = this.Qs) || t4.overrideLinkedFlag();
     }
     overrideSampling() {
       var t4, e4;
-      this.ys || null == (e4 = this.zr) || e4.register({ [Ri]: true }), null == (t4 = this.ys) || t4.overrideSampling();
+      this.Qs || null == (e4 = this.mi) || e4.register({ [Ai]: true }), null == (t4 = this.Qs) || t4.overrideSampling();
     }
     overrideTrigger(t4) {
       var e4, i4;
-      this.ys || null == (i4 = this.zr) || i4.register({ ["url" === t4 ? Ii : Oi]: true }), null == (e4 = this.ys) || e4.overrideTrigger(t4);
+      this.Qs || null == (i4 = this.mi) || i4.register({ ["url" === t4 ? Di : Ni]: true }), null == (e4 = this.Qs) || e4.overrideTrigger(t4);
     }
     get sdkDebugProperties() {
       var t4;
-      return (null == (t4 = this.ys) ? void 0 : t4.sdkDebugProperties) || { $recording_status: this.status };
+      return (null == (t4 = this.Qs) ? void 0 : t4.sdkDebugProperties) || { $recording_status: this.status };
     }
     tryAddCustomEvent(t4, e4) {
       var i4;
-      return !(null == (i4 = this.ys) || !i4.tryAddCustomEvent(t4, e4));
+      return !(null == (i4 = this.Qs) || !i4.tryAddCustomEvent(t4, e4));
     }
   } };
-  var vl = { autocapture: class {
+  var $l = { autocapture: class {
     constructor(t4) {
-      this.Ps = false, this.Rs = null, this.Os = false, this.instance = t4, this.rageclicks = new ba(t4.config.rageclick), this.Ls = null;
+      this.lo = false, this.uo = null, this.ho = false, this.instance = t4, this.rageclicks = new Aa(t4.config.rageclick), this.do = null;
     }
     initialize() {
       this.startIfEnabled();
     }
-    get Se() {
-      var t4, e4, i4 = H2(this.instance.config.autocapture) ? this.instance.config.autocapture : {};
+    get Te() {
+      var t4, e4, i4 = V2(this.instance.config.autocapture) ? this.instance.config.autocapture : {};
       return i4.url_allowlist = null == (t4 = i4.url_allowlist) ? void 0 : t4.map(((t5) => new RegExp(t5))), i4.url_ignorelist = null == (e4 = i4.url_ignorelist) ? void 0 : e4.map(((t5) => new RegExp(t5))), i4;
     }
-    Fs() {
+    co() {
       if (this.isBrowserSupported()) {
         if (t3 && r3) {
           var e4 = (e5) => {
             e5 = e5 || (null == t3 ? void 0 : t3.event);
             try {
-              this.As(e5);
+              this.vo(e5);
             } catch (t4) {
-              Ea.error("Failed to capture event", t4);
+              Da.error("Failed to capture event", t4);
             }
           };
-          if (Or(r3, "submit", e4, { capture: true }), Or(r3, "change", e4, { capture: true }), Or(r3, "click", e4, { capture: true }), this.Se.capture_copied_text) {
+          if (Nr(r3, "submit", e4, { capture: true }), Nr(r3, "change", e4, { capture: true }), Nr(r3, "click", e4, { capture: true }), this.Te.capture_copied_text) {
             var i4 = (e5) => {
               e5 = e5 || (null == t3 ? void 0 : t3.event);
               try {
-                this.As(e5, wa);
+                this.vo(e5, Fa);
               } catch (t4) {
-                Ea.error("Failed to capture copy/cut event", t4);
+                Da.error("Failed to capture copy/cut event", t4);
               }
             };
-            Or(r3, "copy", i4, { capture: true }), Or(r3, "cut", i4, { capture: true });
+            Nr(r3, "copy", i4, { capture: true }), Nr(r3, "cut", i4, { capture: true });
           }
         }
-      } else Ea.info("Disabling Automatic Event Collection because this browser is not supported");
+      } else Da.info("Disabling Automatic Event Collection because this browser is not supported");
     }
     startIfEnabled() {
-      this.isEnabled && !this.Ps && (this.Fs(), this.Ps = true);
+      this.isEnabled && !this.lo && (this.co(), this.lo = true);
+    }
+    onRemoteConfigFailed() {
+      this.startIfEnabled();
     }
     onRemoteConfig(t4) {
-      t4.elementsChainAsString && (this.Os = t4.elementsChainAsString), this.instance.persistence && this.instance.persistence.register({ [gi]: !!t4.autocapture_opt_out }), this.Rs = !!t4.autocapture_opt_out, this.startIfEnabled();
+      t4.elementsChainAsString && (this.ho = t4.elementsChainAsString), this.instance.persistence && this.instance.persistence.register({ [xi]: !!t4.autocapture_opt_out }), this.uo = !!t4.autocapture_opt_out, this.startIfEnabled();
     }
     setElementSelectors(t4) {
-      this.Ls = t4;
+      this.do = t4;
     }
     getElementSelectors(t4) {
       var e4, i4 = [];
-      return null == (e4 = this.Ls) || e4.forEach(((e5) => {
+      return null == (e4 = this.do) || e4.forEach(((e5) => {
         var s4 = null == r3 ? void 0 : r3.querySelectorAll(e5);
         null == s4 || s4.forEach(((r4) => {
           t4 === r4 && i4.push(e5);
@@ -10205,41 +10470,44 @@
       })), i4;
     }
     get isEnabled() {
-      var t4, e4, i4 = null == (t4 = this.instance.persistence) ? void 0 : t4.props[gi];
-      if (Y(this.Rs) && !X(i4) && !this.instance.mr()) return false;
-      var r4 = null !== (e4 = this.Rs) && void 0 !== e4 ? e4 : !!i4;
+      var t4, e4, i4 = null == (t4 = this.instance.persistence) ? void 0 : t4.props[xi];
+      if (Y(this.uo) && !tt(i4) && !this.instance.Vr()) return false;
+      var r4 = null !== (e4 = this.uo) && void 0 !== e4 ? e4 : !!i4;
       return !!this.instance.config.autocapture && !r4;
     }
-    As(e4, i4) {
+    vo(e4, i4) {
       if (void 0 === i4 && (i4 = "$autocapture"), this.isEnabled) {
-        var r4, s4 = ds(e4);
-        ss(s4) && (s4 = s4.parentNode || null), "$autocapture" === i4 && "click" === e4.type && e4 instanceof MouseEvent && this.instance.config.rageclick && null != (r4 = this.rageclicks) && r4.isRageClick(e4.clientX, e4.clientY, e4.timeStamp || (/* @__PURE__ */ new Date()).getTime()) && ws(s4, this.instance.config.rageclick) && this.As(e4, "$rageclick");
-        var n3 = i4 === wa;
+        var r4, s4 = ms(e4);
+        hs(s4) && (s4 = s4.parentNode || null), "$autocapture" === i4 && "click" === e4.type && e4 instanceof MouseEvent && this.instance.config.rageclick && null != (r4 = this.rageclicks) && r4.isRageClick(e4.clientX, e4.clientY, e4.timeStamp || (/* @__PURE__ */ new Date()).getTime()) && Rs(s4, this.instance.config.rageclick) && this.vo(e4, "$rageclick");
+        var n3 = i4 === Fa;
         if (s4 && (function(e5, i5, r5, s5, n4, o5) {
           var a5, l5, u6, h5, d5, v4;
-          if (void 0 === r5 && (r5 = void 0), !t3 || Es(e5)) return false;
-          if (null != (a5 = r5) && a5.url_allowlist && !as(r5.url_allowlist, o5)) return false;
-          if (null != (l5 = r5) && l5.url_ignorelist && as(r5.url_ignorelist, o5)) return false;
+          if (void 0 === r5 && (r5 = void 0), !t3 || Ps(e5)) return false;
+          if (null != (a5 = r5) && a5.url_allowlist && !fs(r5.url_allowlist, o5)) return false;
+          if (null != (l5 = r5) && l5.url_ignorelist && fs(r5.url_ignorelist, o5)) return false;
           if (null != (u6 = r5) && u6.dom_event_allowlist) {
             var c4 = r5.dom_event_allowlist;
             if (c4 && !c4.some(((t4) => i5.type === t4))) return false;
           }
-          var { parentIsUsefulElement: p4, targetElementList: f5 } = xs(e5, s5);
+          var f5 = Os(e5, s5), p4 = f5.parentIsUsefulElement, _3 = f5.targetElementList;
           if (!(function(t4, e6) {
             var i6 = null == e6 ? void 0 : e6.element_allowlist;
-            if (V2(i6)) return true;
+            if (W(i6)) return true;
             var r6, s6 = function(t5) {
               if (i6.some(((e7) => t5.tagName.toLowerCase() === e7))) return { v: true };
             };
             for (var n5 of t4) if (r6 = s6(n5)) return r6.v;
             return false;
-          })(f5, r5)) return false;
-          if (!cs(f5, null == (h5 = r5) ? void 0 : h5.css_selector_allowlist)) return false;
-          if (cs(f5, null !== (d5 = null == (v4 = r5) ? void 0 : v4.css_selector_ignorelist) && void 0 !== d5 ? d5 : fs)) return false;
-          var _3 = t3.getComputedStyle(e5);
-          if (_3 && "pointer" === _3.getPropertyValue("cursor") && "click" === i5.type) return true;
-          var g3 = e5.tagName.toLowerCase();
-          switch (g3) {
+          })(_3, r5)) return false;
+          if (!ys(_3, null == (h5 = r5) ? void 0 : h5.css_selector_allowlist)) return false;
+          if (ys(_3, null !== (d5 = null == (v4 = r5) ? void 0 : v4.css_selector_ignorelist) && void 0 !== d5 ? d5 : Es)) return false;
+          try {
+            var g3 = t3.getComputedStyle(e5);
+            if (g3 && "pointer" === g3.getPropertyValue("cursor") && "click" === i5.type) return true;
+          } catch (t4) {
+          }
+          var m4 = e5.tagName.toLowerCase();
+          switch (m4) {
             case "html":
               return false;
             case "form":
@@ -10249,28 +10517,28 @@
             case "textarea":
               return (n4 || ["change", "click"]).indexOf(i5.type) >= 0;
             default:
-              return p4 ? (n4 || ["click"]).indexOf(i5.type) >= 0 : (n4 || ["click"]).indexOf(i5.type) >= 0 && (vs.indexOf(g3) > -1 || "true" === e5.getAttribute("contenteditable"));
+              return p4 ? (n4 || ["click"]).indexOf(i5.type) >= 0 : (n4 || ["click"]).indexOf(i5.type) >= 0 && (bs.indexOf(m4) > -1 || "true" === e5.getAttribute("contenteditable"));
           }
-        })(s4, e4, this.Se, n3, n3 ? ["copy", "cut"] : void 0, this.instance)) {
-          var { props: o4, explicitNoCapture: a4 } = Ta(s4, { e: e4, maskAllElementAttributes: this.instance.config.mask_all_element_attributes, maskAllText: this.instance.config.mask_all_text, elementAttributeIgnoreList: this.Se.element_attribute_ignorelist, elementsChainAsString: this.Os, disableCaptureUrlHashes: this.instance.config.disable_capture_url_hashes });
-          if (a4) return false;
+        })(s4, e4, this.Te, n3, n3 ? ["copy", "cut"] : void 0, this.instance)) {
+          var o4 = La(s4, { e: e4, maskAllElementAttributes: this.instance.config.mask_all_element_attributes, maskAllText: this.instance.config.mask_all_text, elementAttributeIgnoreList: this.Te.element_attribute_ignorelist, elementsChainAsString: this.ho, disableCaptureUrlHashes: this.instance.config.disable_capture_url_hashes }), a4 = o4.props;
+          if (o4.explicitNoCapture) return false;
           var l4 = this.getElementSelectors(s4);
-          if (l4 && l4.length > 0 && (o4.$element_selectors = l4), i4 === wa) {
-            var u5, h4 = us(null == t3 || null == (u5 = t3.getSelection()) ? void 0 : u5.toString()), d4 = e4.type || "clipboard";
+          if (l4 && l4.length > 0 && (a4.$element_selectors = l4), i4 === Fa) {
+            var u5, h4 = _s(null == t3 || null == (u5 = t3.getSelection()) ? void 0 : u5.toString()), d4 = e4.type || "clipboard";
             if (!h4) return false;
-            o4.$selected_content = h4, o4.$copy_type = d4;
+            a4.$selected_content = h4, a4.$copy_type = d4;
           }
-          return this.instance.capture(i4, o4), true;
+          return this.instance.capture(i4, a4), true;
         }
       }
     }
     isBrowserSupported() {
-      return z3(null == r3 ? void 0 : r3.querySelectorAll);
+      return q2(null == r3 ? void 0 : r3.querySelectorAll);
     }
   }, historyAutocapture: class {
     constructor(e4) {
       var i4;
-      this._instance = e4, this.$s = (null == t3 || null == (i4 = t3.location) ? void 0 : i4.pathname) || "";
+      this._instance = e4, this.fo = (null == t3 || null == (i4 = t3.location) ? void 0 : i4.pathname) || "";
     }
     initialize() {
       this.startIfEnabled();
@@ -10279,263 +10547,280 @@
       return "history_change" === this._instance.config.capture_pageview;
     }
     startIfEnabled() {
-      this.isEnabled && (li.info("History API monitoring enabled, starting..."), this.monitorHistoryChanges());
+      this.isEnabled && (fi.info("History API monitoring enabled, starting..."), this.monitorHistoryChanges());
     }
     stop() {
-      this.Ds && this.Ds(), this.Ds = void 0, li.info("History API monitoring stopped");
+      this.po && this.po(), this.po = void 0, fi.info("History API monitoring stopped");
     }
     monitorHistoryChanges() {
-      t3 && t3.history && (this.Ns("pushState"), this.Ns("replaceState"), this.qs());
+      t3 && t3.history && (this.mo("pushState"), this.mo("replaceState"), this.yo());
     }
-    Ns(e4) {
+    mo(e4) {
       var i4;
       if (t3 && (null == (i4 = t3.history[e4]) || !i4.__posthog_wrapped__)) {
         var r4 = this;
         !(function(t4, e5, i5) {
           try {
-            if (!(e5 in t4)) return () => {
-            };
-            var r5 = t4[e5], s4 = i5(r5);
-            return z3(s4) && (s4.prototype = s4.prototype || {}, Object.defineProperties(s4, { __posthog_wrapped__: { enumerable: false, value: true } })), t4[e5] = s4, () => {
-              t4[e5] === s4 && (t4[e5] = r5);
+            if (!(e5 in t4)) return Ba;
+            var r5 = { next: t4[e5] }, s4 = i5((function() {
+              for (var t5 = arguments.length, e6 = new Array(t5), i6 = 0; t5 > i6; i6++) e6[i6] = arguments[i6];
+              return r5.next.apply(this, e6);
+            }));
+            return q2(s4) && (s4.prototype = s4.prototype || {}, Object.defineProperties(s4, { __posthog_wrapped__: { enumerable: false, value: true }, __posthog_layer__: { enumerable: false, value: r5 } })), t4[e5] = s4, () => {
+              if (t4[e5] !== s4) for (var i6 = t4[e5]; q2(i6) && i6.__posthog_layer__; ) {
+                var n3 = i6.__posthog_layer__;
+                if (n3.next === s4) return void (n3.next = r5.next);
+                i6 = n3.next;
+              }
+              else t4[e5] = r5.next;
             };
           } catch (t5) {
-            return () => {
-            };
+            return Ba;
           }
         })(t3.history, e4, ((t4) => function(i5, s4, n3) {
-          t4.call(this, i5, s4, n3), r4.js(e4);
+          t4.call(this, i5, s4, n3), r4.bo(e4);
         }));
       }
     }
-    js(e4) {
+    bo(e4) {
       try {
         var i4, r4 = null == t3 || null == (i4 = t3.location) ? void 0 : i4.pathname;
         if (!r4) return;
-        r4 !== this.$s && this.isEnabled && this._instance.capture(mr, { navigation_type: e4 }), this.$s = r4;
+        r4 !== this.fo && this.isEnabled && this._instance.capture(Sr, { navigation_type: e4 }), this.fo = r4;
       } catch (t4) {
-        li.error("Error capturing " + e4 + " pageview", t4);
+        fi.error("Error capturing " + e4 + " pageview", t4);
       }
     }
-    qs() {
-      if (!this.Ds) {
+    yo() {
+      if (!this.po) {
         var e4 = () => {
-          this.js("popstate");
+          this.bo("popstate");
         };
-        Or(t3, "popstate", e4), this.Ds = () => {
+        Nr(t3, "popstate", e4), this.po = () => {
           t3 && t3.removeEventListener("popstate", e4);
         };
       }
     }
   }, heatmaps: class {
-    get Se() {
+    get Te() {
       return this.instance.config;
     }
     constructor(t4) {
       var e4;
-      this.Bs = false, this.Ps = false, this.Hs = null, this.instance = t4, this.Bs = !(null == (e4 = this.instance.persistence) || !e4.props[mi]), this.rageclicks = new ba(t4.config.rageclick);
+      this._o = false, this.lo = false, this.wo = null, this.instance = t4, this._o = !(null == (e4 = this.instance.persistence) || !e4.props[Si]), this.rageclicks = new Aa(t4.config.rageclick);
     }
     initialize() {
       this.startIfEnabled();
     }
     get flushIntervalMilliseconds() {
       var t4 = 5e3;
-      return H2(this.Se.capture_heatmaps) && this.Se.capture_heatmaps.flush_interval_milliseconds && (t4 = this.Se.capture_heatmaps.flush_interval_milliseconds), t4;
+      return V2(this.Te.capture_heatmaps) && this.Te.capture_heatmaps.flush_interval_milliseconds && (t4 = this.Te.capture_heatmaps.flush_interval_milliseconds), t4;
     }
     get isEnabled() {
-      return K2(this.Se.capture_heatmaps) ? K2(this.Se.enable_heatmaps) ? this.Bs : this.Se.enable_heatmaps : false !== this.Se.capture_heatmaps;
+      return Q2(this.Te.capture_heatmaps) ? Q2(this.Te.enable_heatmaps) ? this._o : this.Te.enable_heatmaps : false !== this.Te.capture_heatmaps;
     }
     startIfEnabled() {
       if (this.isEnabled) {
-        if (this.Ps) return;
-        Da.info("starting..."), this.Us(), this.ke();
+        if (this.lo) return;
+        Qa.info("starting..."), this.xo(), this.ke();
       } else {
         var t4;
-        clearInterval(null !== (t4 = this.Hs) && void 0 !== t4 ? t4 : void 0), this.zs(), this.getAndClearBuffer();
+        clearInterval(null !== (t4 = this.wo) && void 0 !== t4 ? t4 : void 0), this.ko(), this.getAndClearBuffer();
       }
     }
     onRemoteConfig(t4) {
       if ("heatmaps" in t4) {
         var e4 = !!t4.heatmaps;
-        this.instance.persistence && this.instance.persistence.register({ [mi]: e4 }), this.Bs = e4, this.startIfEnabled();
+        this.instance.persistence && this.instance.persistence.register({ [Si]: e4 }), this._o = e4, this.startIfEnabled();
       }
     }
     getAndClearBuffer() {
       var t4 = this.R;
       return this.R = void 0, t4;
     }
-    Vs(t4) {
-      this.fe(t4.originalEvent, "deadclick");
+    So(t4) {
+      Xa(t4.originalEvent) && this.pe(t4.originalEvent, "deadclick");
     }
     ke() {
-      this.Hs && clearInterval(this.Hs), this.Hs = "visible" === (null == r3 ? void 0 : r3.visibilityState) ? setInterval(this.Lr.bind(this), this.flushIntervalMilliseconds) : null;
+      this.wo && clearInterval(this.wo), this.wo = "visible" === (null == r3 ? void 0 : r3.visibilityState) ? setInterval(this.oi.bind(this), this.flushIntervalMilliseconds) : null;
     }
-    Us() {
-      t3 && r3 && (this.Ws = this.Lr.bind(this), Or(t3, gr, this.Ws), this.Gs = (e4) => this.fe(e4 || (null == t3 ? void 0 : t3.event)), Or(r3, "click", this.Gs, { capture: true }), this.Zs = (e4) => this.Qs(e4 || (null == t3 ? void 0 : t3.event)), Or(r3, "mousemove", this.Zs, { capture: true }), this.Js = new js(this.instance, Ns, this.Vs.bind(this)), this.Js.startIfEnabledOrStop(), this.Ys = this.ke.bind(this), Or(r3, _r, this.Ys), this.Ps = true);
+    xo() {
+      t3 && r3 && (this.Co = this.oi.bind(this), Nr(t3, xr, this.Co), this.Io = (e4) => this.pe(e4 || (null == t3 ? void 0 : t3.event)), Nr(r3, "click", this.Io, { capture: true }), this.To = (e4) => this.Mo(e4 || (null == t3 ? void 0 : t3.event)), Nr(r3, "mousemove", this.To, { capture: true }), this.Eo = new Ws(this.instance, Vs, this.So.bind(this)), this.Eo.startIfEnabledOrStop(), this.Ro = this.ke.bind(this), Nr(r3, Er, this.Ro), this.lo = true);
     }
-    zs() {
+    ko() {
       var e4;
-      t3 && r3 && (this.Ws && t3.removeEventListener(gr, this.Ws), this.Gs && r3.removeEventListener("click", this.Gs, { capture: true }), this.Zs && r3.removeEventListener("mousemove", this.Zs, { capture: true }), this.Ys && r3.removeEventListener(_r, this.Ys), clearTimeout(this.Ks), null == (e4 = this.Js) || e4.stop(), this.Ps = false);
+      t3 && r3 && (this.Co && t3.removeEventListener(xr, this.Co), this.Io && r3.removeEventListener("click", this.Io, { capture: true }), this.To && r3.removeEventListener("mousemove", this.To, { capture: true }), this.Ro && r3.removeEventListener(Er, this.Ro), clearTimeout(this.Po), null == (e4 = this.Eo) || e4.stop(), this.lo = false);
     }
-    Xs(e4, i4) {
+    Oo(e4, i4) {
       var r4 = this.instance.scrollManager.scrollY(), s4 = this.instance.scrollManager.scrollX(), n3 = this.instance.scrollManager.scrollElement(), o4 = (function(e5, i5, r5) {
-        for (var s5 = e5; s5 && is(s5) && !rs(s5, "body"); ) {
+        for (var s5 = e5; s5 && ls(s5) && !us(s5, "body"); ) {
           if (s5 === r5) return false;
-          if (M(i5, null == t3 ? void 0 : t3.getComputedStyle(s5).position)) return true;
-          s5 = ps(s5);
+          var n4 = void 0;
+          try {
+            var o5, a4, l4;
+            n4 = null == (o5 = null !== (a4 = null == (l4 = s5.ownerDocument) ? void 0 : l4.defaultView) && void 0 !== a4 ? a4 : t3) ? void 0 : o5.getComputedStyle(s5).position;
+          } catch (t4) {
+            return false;
+          }
+          if (D3(i5, n4)) return true;
+          s5 = ws(s5);
         }
         return false;
-      })(ds(e4), ["fixed", "sticky"], n3);
+      })(ms(e4), ["fixed", "sticky"], n3);
       return { x: e4.clientX + (o4 ? 0 : s4), y: e4.clientY + (o4 ? 0 : r4), target_fixed: o4, type: i4 };
     }
-    fe(t4, e4) {
+    pe(t4, e4) {
       var i4;
-      if (void 0 === e4 && (e4 = "click"), !es2(t4.target) && La(t4)) {
-        var r4 = this.Xs(t4, e4);
-        null != (i4 = this.rageclicks) && i4.isRageClick(t4.clientX, t4.clientY, (/* @__PURE__ */ new Date()).getTime()) && ws(ds(t4), this.instance.config.rageclick) && this.eo(f4({}, r4, { type: "rageclick" })), this.eo(r4);
+      if (void 0 === e4 && (e4 = "click"), !as(t4.target) && Xa(t4)) {
+        var r4 = this.Oo(t4, e4);
+        null != (i4 = this.rageclicks) && i4.isRageClick(t4.clientX, t4.clientY, (/* @__PURE__ */ new Date()).getTime()) && Rs(ms(t4), this.instance.config.rageclick) && this.Wt(_2({}, r4, { type: "rageclick" })), this.Wt(r4);
       }
     }
-    Qs(t4) {
-      !es2(t4.target) && La(t4) && (clearTimeout(this.Ks), this.Ks = setTimeout((() => {
-        this.eo(this.Xs(t4, "mousemove"));
+    Mo(t4) {
+      !as(t4.target) && Xa(t4) && (clearTimeout(this.Po), this.Po = setTimeout((() => {
+        this.Wt(this.Oo(t4, "mousemove"));
       }), 500));
     }
-    eo(e4) {
+    Wt(e4) {
       if (t3) {
-        var i4 = this.Se.disable_capture_url_hashes ? _e(t3.location.href) : t3.location.href, r4 = this.Se.custom_personal_data_properties, s4 = this.Se.mask_personal_data_properties ? [...en2, ...r4 || []] : [], n3 = Xs(i4, s4, sn);
+        var i4 = this.Te.disable_capture_url_hashes ? me(t3.location.href) : t3.location.href, r4 = this.Te.custom_personal_data_properties, s4 = this.Te.mask_personal_data_properties ? [...dn, ...r4 || []] : [], n3 = on2(i4, s4, cn);
         this.R = this.R || {}, this.R[n3] || (this.R[n3] = []), this.R[n3].push(e4);
       }
     }
-    Lr() {
-      this.R && !q2(this.R) && this.instance.capture("$$heatmap", { $heatmap_data: this.getAndClearBuffer() });
+    oi() {
+      this.R && !G2(this.R) && this.instance.capture("$$heatmap", { $heatmap_data: this.getAndClearBuffer() });
     }
-  }, deadClicksAutocapture: js, webVitalsAutocapture: class {
+  }, deadClicksAutocapture: Ws, webVitalsAutocapture: class {
     constructor(t4) {
       var e4;
-      this.Bs = false, this.Ps = false, this.R = { url: void 0, metrics: [], firstMetricTimestamp: void 0 }, this.ro = () => {
-        clearTimeout(this.io), 0 !== this.R.metrics.length && (this._instance.capture("$web_vitals", this.R.metrics.reduce(((t5, e5) => f4({}, t5, { ["$web_vitals_" + e5.name + "_event"]: f4({}, e5), ["$web_vitals_" + e5.name + "_value"]: e5.value })), {})), this.R = { url: void 0, metrics: [], firstMetricTimestamp: void 0 });
-      }, this.no = (t5) => {
+      this._o = false, this.lo = false, this.R = { url: void 0, metrics: [], firstMetricTimestamp: void 0 }, this.Fo = () => {
+        clearTimeout(this.Lo), 0 !== this.R.metrics.length && (this._instance.capture("$web_vitals", this.R.metrics.reduce(((t5, e5) => _2({}, t5, { ["$web_vitals_" + e5.name + "_event"]: _2({}, e5), ["$web_vitals_" + e5.name + "_value"]: e5.value })), {})), this.R = { url: void 0, metrics: [], firstMetricTimestamp: void 0 });
+      }, this.Ao = (t5) => {
         var e5;
         this.R = this.R || { url: void 0, metrics: [], firstMetricTimestamp: void 0 };
-        var i4 = this.so();
-        if (!V2(i4)) if (K2(null == t5 ? void 0 : t5.name) || K2(null == t5 ? void 0 : t5.value)) Ra.error("Invalid metric received", t5);
-        else if (!this.oo || this.oo > t5.value) {
-          this.R.url !== i4 && (this.ro(), this.io = setTimeout(this.ro, this.flushToCaptureTimeoutMs)), V2(this.R.url) && (this.R.url = i4), this.R.firstMetricTimestamp = V2(this.R.firstMetricTimestamp) ? Date.now() : this.R.firstMetricTimestamp, t5.attribution && t5.attribution.interactionTargetElement && (t5.attribution.interactionTargetElement = void 0);
-          var r4 = null == (e5 = this._instance.sessionManager) ? void 0 : e5.checkAndGetSessionAndWindowId(true), s4 = f4({}, t5, { $current_url: i4, timestamp: Date.now() });
-          V2(r4) || (s4.$session_id = r4.sessionId, s4.$window_id = r4.windowId), this.R.metrics.push(s4), this.R.metrics.length === this.allowedMetrics.length && this.ro();
-        } else Ra.error("Ignoring metric with value >= " + this.oo, t5);
-      }, this.ao = () => {
-        if (!this.Ps) {
+        var i4 = this.$o();
+        if (!W(i4)) if (Q2(null == t5 ? void 0 : t5.name) || Q2(null == t5 ? void 0 : t5.value)) Ha.error("Invalid metric received", t5);
+        else if (!this.No || this.No > t5.value) {
+          this.R.url !== i4 && (this.Fo(), this.Lo = setTimeout(this.Fo, this.flushToCaptureTimeoutMs)), W(this.R.url) && (this.R.url = i4), this.R.firstMetricTimestamp = W(this.R.firstMetricTimestamp) ? Date.now() : this.R.firstMetricTimestamp, t5.attribution && t5.attribution.interactionTargetElement && (t5.attribution.interactionTargetElement = void 0);
+          var r4 = null == (e5 = this._instance.sessionManager) ? void 0 : e5.checkAndGetSessionAndWindowId(true), s4 = _2({}, t5, { $current_url: i4, timestamp: Date.now() });
+          W(r4) || (s4.$session_id = r4.sessionId, s4.$window_id = r4.windowId), this.R.metrics.push(s4), this.R.metrics.length === this.allowedMetrics.length && this.Fo();
+        } else Ha.error("Ignoring metric with value >= " + this.No, t5);
+      }, this.Do = () => {
+        if (!this.lo) {
           var t5, e5, i4, r4, s4 = h3.__PosthogExtensions__;
-          V2(s4) || V2(s4.postHogWebVitalsCallbacks) || ({ onLCP: t5, onCLS: e5, onFCP: i4, onINP: r4 } = s4.postHogWebVitalsCallbacks), t5 && e5 && i4 && r4 ? (this.allowedMetrics.indexOf("LCP") > -1 && t5(this.no.bind(this)), this.allowedMetrics.indexOf("CLS") > -1 && e5(this.no.bind(this)), this.allowedMetrics.indexOf("FCP") > -1 && i4(this.no.bind(this)), this.allowedMetrics.indexOf("INP") > -1 && r4(this.no.bind(this)), this.Ps = true) : Ra.error("web vitals callbacks not loaded - not starting");
+          if (!W(s4) && !W(s4.postHogWebVitalsCallbacks)) {
+            var n3 = s4.postHogWebVitalsCallbacks;
+            t5 = n3.onLCP, e5 = n3.onCLS, i4 = n3.onFCP, r4 = n3.onINP;
+          }
+          t5 && e5 && i4 && r4 ? (this.allowedMetrics.indexOf("LCP") > -1 && t5(this.Ao.bind(this)), this.allowedMetrics.indexOf("CLS") > -1 && e5(this.Ao.bind(this)), this.allowedMetrics.indexOf("FCP") > -1 && i4(this.Ao.bind(this)), this.allowedMetrics.indexOf("INP") > -1 && r4(this.Ao.bind(this)), this.lo = true) : Ha.error("web vitals callbacks not loaded - not starting");
         }
-      }, this._instance = t4, this.Bs = !(null == (e4 = this._instance.persistence) || !e4.props[Ei]), this.startIfEnabled();
+      }, this._instance = t4, this._o = !(null == (e4 = this._instance.persistence) || !e4.props[Ri]), this.startIfEnabled();
     }
-    get lo() {
+    get qo() {
       return this._instance.config.capture_performance;
     }
     get allowedMetrics() {
-      var t4, e4, i4 = H2(this.lo) ? null == (t4 = this.lo) ? void 0 : t4.web_vitals_allowed_metrics : void 0;
-      return K2(i4) ? (null == (e4 = this._instance.persistence) ? void 0 : e4.props[Ti]) || ["CLS", "FCP", "INP", "LCP"] : i4;
+      var t4, e4, i4 = V2(this.qo) ? null == (t4 = this.qo) ? void 0 : t4.web_vitals_allowed_metrics : void 0;
+      return Q2(i4) ? (null == (e4 = this._instance.persistence) ? void 0 : e4.props[Ii]) || ["CLS", "FCP", "INP", "LCP"] : i4;
     }
     get flushToCaptureTimeoutMs() {
-      return (H2(this.lo) ? this.lo.web_vitals_delayed_flush_ms : void 0) || 5e3;
+      return (V2(this.qo) ? this.qo.web_vitals_delayed_flush_ms : void 0) || 5e3;
     }
     get useAttribution() {
-      var t4 = H2(this.lo) ? this.lo.web_vitals_attribution : void 0;
+      var t4 = V2(this.qo) ? this.qo.web_vitals_attribution : void 0;
       return null != t4 && t4;
     }
-    get oo() {
-      var t4 = H2(this.lo) && J2(this.lo.__web_vitals_max_value) ? this.lo.__web_vitals_max_value : Pa;
-      return t4 > 0 && 6e4 >= t4 ? Pa : t4;
+    get No() {
+      var t4 = V2(this.qo) && X(this.qo.__web_vitals_max_value) ? this.qo.__web_vitals_max_value : qa;
+      return t4 > 0 && 6e4 >= t4 ? qa : t4;
     }
     get isEnabled() {
       var t4 = null == s3 ? void 0 : s3.protocol;
-      if ("http:" !== t4 && "https:" !== t4) return Ra.info("Web Vitals are disabled on non-http/https protocols"), false;
-      var e4 = H2(this.lo) ? this.lo.web_vitals : X(this.lo) ? this.lo : void 0;
-      return X(e4) ? e4 : this.Bs;
+      if ("http:" !== t4 && "https:" !== t4) return Ha.info("Web Vitals are disabled on non-http/https protocols"), false;
+      var e4 = V2(this.qo) ? this.qo.web_vitals : tt(this.qo) ? this.qo : void 0;
+      return tt(e4) ? e4 : this._o;
     }
     startIfEnabled() {
-      this.isEnabled && !this.Ps && (Ra.info("enabled, starting..."), this.Mt(this.ao));
+      this.isEnabled && !this.lo && (Ha.info("enabled, starting..."), this.rr(this.Do));
     }
     onRemoteConfig(t4) {
       if ("capturePerformance" in t4) {
-        var e4 = H2(t4.capturePerformance) && !!t4.capturePerformance.web_vitals, i4 = H2(t4.capturePerformance) ? t4.capturePerformance.web_vitals_allowed_metrics : void 0;
-        this._instance.persistence && (this._instance.persistence.register({ [Ei]: e4 }), this._instance.persistence.register({ [Ti]: i4 })), this.Bs = e4, this.startIfEnabled();
+        var e4 = V2(t4.capturePerformance) && !!t4.capturePerformance.web_vitals, i4 = V2(t4.capturePerformance) ? t4.capturePerformance.web_vitals_allowed_metrics : void 0;
+        this._instance.persistence && (this._instance.persistence.register({ [Ri]: e4 }), this._instance.persistence.register({ [Ii]: i4 })), this._o = e4, this.startIfEnabled();
       }
     }
-    Mt(t4) {
+    rr(t4) {
       var e4, i4;
       null != (e4 = h3.__PosthogExtensions__) && e4.postHogWebVitalsCallbacks ? t4() : null == (i4 = h3.__PosthogExtensions__) || null == i4.loadExternalDependency || i4.loadExternalDependency(this._instance, this.useAttribution ? "web-vitals-with-attribution" : "web-vitals", ((e5) => {
-        e5 ? Ra.error("failed to load script", e5) : t4();
+        e5 ? Ha.error("failed to load script", e5) : t4();
       }));
     }
-    so() {
-      var e4 = t3 ? this._instance.config.disable_capture_url_hashes ? _e(t3.location.href) : t3.location.href : void 0;
+    $o() {
+      var e4 = t3 ? this._instance.config.disable_capture_url_hashes ? me(t3.location.href) : t3.location.href : void 0;
       if (e4) {
-        var i4 = this._instance.config.custom_personal_data_properties, r4 = this._instance.config.mask_personal_data_properties ? [...en2, ...i4 || []] : [];
-        return Xs(e4, r4, sn);
+        var i4 = this._instance.config.custom_personal_data_properties, r4 = this._instance.config.mask_personal_data_properties ? [...dn, ...i4 || []] : [];
+        return on2(e4, r4, cn);
       }
-      Ra.error("Could not determine current URL");
+      Ha.error("Could not determine current URL");
     }
   } };
-  var cl = { exceptionObserver: class {
+  var Rl = { exceptionObserver: class {
     constructor(e4) {
-      var i4, r4, s4;
-      this.ao = () => {
+      var i4, r4, s4, n3, o4, a4;
+      this.Do = () => {
         var e5;
         if (t3 && this.isEnabled && null != (e5 = h3.__PosthogExtensions__) && e5.errorWrappingFunctions) {
           var i5 = h3.__PosthogExtensions__.errorWrappingFunctions.wrapOnError, r5 = h3.__PosthogExtensions__.errorWrappingFunctions.wrapUnhandledRejection, s5 = h3.__PosthogExtensions__.errorWrappingFunctions.wrapConsoleError;
           try {
-            !this.uo && this.Se.capture_unhandled_errors && (this.uo = i5(this.captureException.bind(this))), !this.ho && this.Se.capture_unhandled_rejections && (this.ho = r5(this.captureException.bind(this))), !this.do && this.Se.capture_console_errors && (this.do = s5(this.captureException.bind(this)));
+            !this.jo && this.Te.capture_unhandled_errors && (this.jo = i5(this.captureException.bind(this))), !this.Ho && this.Te.capture_unhandled_rejections && (this.Ho = r5(this.captureException.bind(this))), !this.Bo && this.Te.capture_console_errors && (this.Bo = s5(this.captureException.bind(this)));
           } catch (t4) {
-            $a.error("failed to start", t4), this.co();
+            ja.error("failed to start", t4), this.Uo();
           }
         }
-      }, this._instance = e4, this.vo = !(null == (i4 = this._instance.persistence) || !i4.props[yi]), this.fo = new ut({ refillRate: null !== (r4 = this._instance.config.error_tracking.__exceptionRateLimiterRefillRate) && void 0 !== r4 ? r4 : 1, bucketSize: null !== (s4 = this._instance.config.error_tracking.__exceptionRateLimiterBucketSize) && void 0 !== s4 ? s4 : 10, refillInterval: 1e4, Ae: $a }), this.Se = this.po(), this.startIfEnabledOrStop();
+      }, this._instance = e4, this.zo = !(null == (i4 = this._instance.persistence) || !i4.props[ki]), this.Vo = new dt(_2({}, (void 0 === (r4 = this._instance.config.error_tracking) && (r4 = {}), { refillRate: null !== (s4 = null !== (n3 = r4.exceptionRateLimiterRefillRate) && void 0 !== n3 ? n3 : r4.__exceptionRateLimiterRefillRate) && void 0 !== s4 ? s4 : 1, bucketSize: null !== (o4 = null !== (a4 = r4.exceptionRateLimiterBucketSize) && void 0 !== a4 ? a4 : r4.__exceptionRateLimiterBucketSize) && void 0 !== o4 ? o4 : 10 }), { refillInterval: 1e4, it: ja })), this.Te = this.Wo(), this.startIfEnabledOrStop();
     }
-    po() {
+    Wo() {
       var t4 = this._instance.config.capture_exceptions, e4 = { capture_unhandled_errors: false, capture_unhandled_rejections: false, capture_console_errors: false };
-      return H2(t4) ? e4 = f4({}, e4, t4) : (V2(t4) ? this.vo : t4) && (e4 = f4({}, e4, { capture_unhandled_errors: true, capture_unhandled_rejections: true })), e4;
+      return V2(t4) ? e4 = _2({}, e4, t4) : (W(t4) ? this.zo : t4) && (e4 = _2({}, e4, { capture_unhandled_errors: true, capture_unhandled_rejections: true })), e4;
     }
     get isEnabled() {
-      return this.Se.capture_console_errors || this.Se.capture_unhandled_errors || this.Se.capture_unhandled_rejections;
+      return this.Te.capture_console_errors || this.Te.capture_unhandled_errors || this.Te.capture_unhandled_rejections;
     }
     startIfEnabledOrStop() {
-      this.isEnabled ? ($a.info("enabled"), this.co(), this.Mt(this.ao)) : this.co();
+      this.isEnabled ? (ja.info("enabled"), this.Uo(), this.rr(this.Do)) : this.Uo();
     }
-    Mt(t4) {
+    rr(t4) {
       var e4, i4;
       null != (e4 = h3.__PosthogExtensions__) && e4.errorWrappingFunctions ? t4() : null == (i4 = h3.__PosthogExtensions__) || null == i4.loadExternalDependency || i4.loadExternalDependency(this._instance, "exception-autocapture", ((e5) => {
-        if (e5) return $a.error("failed to load script", e5);
+        if (e5) return ja.error("failed to load script", e5);
         t4();
       }));
     }
-    co() {
+    Uo() {
       var t4, e4, i4;
-      null == (t4 = this.uo) || t4.call(this), this.uo = void 0, null == (e4 = this.ho) || e4.call(this), this.ho = void 0, null == (i4 = this.do) || i4.call(this), this.do = void 0;
+      null == (t4 = this.jo) || t4.call(this), this.jo = void 0, null == (e4 = this.Ho) || e4.call(this), this.Ho = void 0, null == (i4 = this.Bo) || i4.call(this), this.Bo = void 0;
     }
     onRemoteConfig(t4) {
-      "autocaptureExceptions" in t4 && (this.vo = !!t4.autocaptureExceptions || false, this._instance.persistence && this._instance.persistence.register({ [yi]: this.vo }), this.Se = this.po(), this.startIfEnabledOrStop());
+      "autocaptureExceptions" in t4 && (this.zo = !!t4.autocaptureExceptions || false, this._instance.persistence && this._instance.persistence.register({ [ki]: this.zo }), this.Te = this.Wo(), this.startIfEnabledOrStop());
     }
     onConfigChange() {
-      this.Se = this.po();
+      this.Te = this.Wo();
     }
     captureException(t4) {
       var e4, i4, r4, s4 = null !== (e4 = null == t4 || null == (i4 = t4.$exception_list) || null == (i4 = i4[0]) ? void 0 : i4.type) && void 0 !== e4 ? e4 : "Exception";
-      this.fo.consumeRateLimit(s4) ? $a.info("Skipping exception capture because of client rate limiting.", { exception: s4 }) : null == (r4 = this._instance.exceptions) || r4.sendExceptionEvent(t4);
+      this.Vo.consumeRateLimit(s4) ? ja.info("Skipping exception capture because of client rate limiting.", { exception: s4 }) : null == (r4 = this._instance.exceptions) || r4.sendExceptionEvent(t4);
     }
   }, exceptions: class {
     constructor(t4) {
       var e4, i4;
-      this.mo = [], this.yo = new Oe([new He(), new Ze(), new Ve(), new qe(), new Qe(), new Je(), new We(), new Xe()], (function(t5) {
+      this.Zo = [], this.Go = new Ne([new Ke(), new ni(), new Qe(), new Ye(), new ri(), new ii(), new Ze(), new si()], (function(t5) {
         for (var e5 = arguments.length, i5 = new Array(e5 > 1 ? e5 - 1 : 0), r4 = 1; e5 > r4; r4++) i5[r4 - 1] = arguments[r4];
         return function(e6, r5) {
           void 0 === r5 && (r5 = 0);
           for (var s4 = [], n3 = e6.split("\n"), o4 = r5; n3.length > o4; o4++) {
             var a4 = n3[o4];
             if (1024 >= a4.length) {
-              var l4 = ze.test(a4) ? a4.replace(ze, "$1") : a4;
+              var l4 = Je.test(a4) ? a4.replace(Je, "$1") : a4;
               if (!l4.match(/\S*Error: /)) {
                 for (var u5 of i5) {
                   var h4 = u5(l4, t5);
@@ -10552,117 +10837,117 @@
             if (!t6.length) return [];
             var e7 = Array.from(t6);
             return e7.reverse(), e7.slice(0, 50).map(((t7) => {
-              return f4({}, t7, { filename: t7.filename || (i6 = e7, i6[i6.length - 1] || {}).filename, function: t7.function || Ce });
+              return _2({}, t7, { filename: t7.filename || (i6 = e7, i6[i6.length - 1] || {}).filename, function: t7.function || Ue });
               var i6;
             }));
           })(s4);
         };
-      })("web:javascript", Ne, Be)), this._instance = t4, this.mo = null !== (e4 = null == (i4 = this._instance.persistence) ? void 0 : i4.get_property(bi)) && void 0 !== e4 ? e4 : [], this.bo = si(this._o()), this.wo = new ni(this.bo);
+      })("web:javascript", qe, We)), this._instance = t4, this.Zo = null !== (e4 = null == (i4 = this._instance.persistence) ? void 0 : i4.get_property(Ti)) && void 0 !== e4 ? e4 : [], this.Qo = hi(this.Jo()), this.Ko = new di(this.Qo);
     }
     onConfigChange() {
-      this.bo = si(this._o()), this.wo.setConfig(this.bo);
+      this.Qo = hi(this.Jo()), this.Ko.setConfig(this.Qo);
     }
     onRemoteConfig(t4) {
       var e4, i4, r4;
       if ("errorTracking" in t4) {
         var s4 = null !== (e4 = null == (i4 = t4.errorTracking) ? void 0 : i4.suppressionRules) && void 0 !== e4 ? e4 : [], n3 = null == (r4 = t4.errorTracking) ? void 0 : r4.captureExtensionExceptions;
-        this.mo = s4, this._instance.persistence && this._instance.persistence.register({ [bi]: this.mo, [wi]: n3 });
+        this.Zo = s4, this._instance.persistence && this._instance.persistence.register({ [Ti]: this.Zo, [$i]: n3 });
       }
     }
-    get xo() {
-      var t4, e4 = !!this._instance.get_property(wi), i4 = this._instance.config.error_tracking.captureExtensionExceptions;
+    get Yo() {
+      var t4, e4 = !!this._instance.get_property($i), i4 = this._instance.config.error_tracking.captureExtensionExceptions;
       return null !== (t4 = null != i4 ? i4 : e4) && void 0 !== t4 && t4;
     }
     buildProperties(t4, e4) {
-      return this.yo.buildFromUnknown(t4, { syntheticException: null == e4 ? void 0 : e4.syntheticException, mechanism: { handled: null == e4 ? void 0 : e4.handled } });
+      return this.Go.buildFromUnknown(t4, { syntheticException: null == e4 ? void 0 : e4.syntheticException, mechanism: { handled: null == e4 ? void 0 : e4.handled } });
     }
     addExceptionStep(t4, e4) {
-      if (this.bo.enabled) try {
-        if (!G2(t4) || 0 === t4.trim().length) return void rl.warn("Ignoring exception step because message must be a non-empty string");
-        var i4 = this.ko(e4), { sanitizedProperties: r4, droppedKeys: s4 } = (function(t5) {
+      if (this.Qo.enabled) try {
+        if (!J2(t4) || 0 === t4.trim().length) return void ml.warn("Ignoring exception step because message must be a non-empty string");
+        var i4 = (function(t5) {
           if (!t5) return { sanitizedProperties: {}, droppedKeys: [] };
           var e5 = [];
-          return { sanitizedProperties: Object.keys(t5).reduce(((i5, r5) => ii.has(r5) ? (e5.push(r5), i5) : (i5[r5] = t5[r5], i5)), {}), droppedKeys: e5 };
-        })(i4);
-        s4.length > 0 && rl.warn("Ignoring reserved exception step fields", { droppedKeys: s4 }), this.wo.add(f4({ [ti]: t4, [ei]: (/* @__PURE__ */ new Date()).toISOString() }, r4));
+          return { sanitizedProperties: Object.keys(t5).reduce(((i5, r5) => li.has(r5) ? (e5.push(r5), i5) : (i5[r5] = t5[r5], i5)), {}), droppedKeys: e5 };
+        })(this.Xo(e4)), r4 = i4.sanitizedProperties, s4 = i4.droppedKeys;
+        s4.length > 0 && ml.warn("Ignoring reserved exception step fields", { droppedKeys: s4 }), this.Ko.add(_2({ [oi]: t4, [ai]: (/* @__PURE__ */ new Date()).toISOString() }, r4));
       } catch (t5) {
-        rl.error("Failed to add exception step. Ignoring breadcrumb.", t5);
+        ml.error("Failed to add exception step. Ignoring breadcrumb.", t5);
       }
     }
     sendExceptionEvent(t4) {
       try {
         var e4 = t4.$exception_list;
-        if (this.So(e4)) {
-          if (this.Co(e4)) return this.Io("Exception dropped: matched a suppression rule"), void rl.info("Skipping exception capture because a suppression rule matched");
-          if (!this.xo && this.To(e4)) return this.Io("Exception dropped: thrown by a browser extension"), void rl.info("Skipping exception capture because it was thrown by an extension");
-          if (!this._instance.config.error_tracking.__capturePostHogExceptions && this.Eo(e4)) return this.Io("Exception dropped: thrown by the PostHog SDK"), void rl.info("Skipping exception capture because it was thrown by the PostHog SDK");
+        if (this.ta(e4)) {
+          if (this.ea(e4)) return this.ra("Exception dropped: matched a suppression rule"), void ml.info("Skipping exception capture because a suppression rule matched");
+          if (!this.Yo && this.ia(e4)) return this.ra("Exception dropped: thrown by a browser extension"), void ml.info("Skipping exception capture because it was thrown by an extension");
+          if (!this._instance.config.error_tracking.__capturePostHogExceptions && this.na(e4)) return this.ra("Exception dropped: thrown by the PostHog SDK"), void ml.info("Skipping exception capture because it was thrown by the PostHog SDK");
         }
-        var i4 = this.bo.enabled && K2(t4.$exception_steps) ? this.Mo(t4) : t4;
+        var i4 = this.Qo.enabled && Q2(t4.$exception_steps) ? this.sa(t4) : t4;
         try {
-          var r4 = this._instance.capture("$exception", i4, { _noTruncate: true, _batchKey: "exceptionEvent", Zi: true });
-          return r4 && this.wo.clear(), r4;
+          var r4 = this._instance.capture("$exception", i4, { _noTruncate: true, _batchKey: "exceptionEvent", kn: true });
+          return r4 && this.Ko.clear(), r4;
         } catch (t5) {
-          return rl.error("Failed to capture exception event. Dropping this exception.", t5), void this.wo.clear();
+          return ml.error("Failed to capture exception event. Dropping this exception.", t5), void this.Ko.clear();
         }
       } catch (t5) {
-        return void rl.error("Failed to process exception event. Ignoring this exception.", t5);
+        return void ml.error("Failed to process exception event. Ignoring this exception.", t5);
       }
     }
-    Mo(t4) {
+    sa(t4) {
       try {
-        var e4 = this.wo.getAttachable();
-        return 0 === e4.length ? t4 : f4({}, t4, { $exception_steps: e4 });
+        var e4 = this.Ko.getAttachable();
+        return 0 === e4.length ? t4 : _2({}, t4, { $exception_steps: e4 });
       } catch (e5) {
-        return rl.error("Failed to read buffered exception steps. Capturing exception without steps.", e5), t4;
+        return ml.error("Failed to read buffered exception steps. Capturing exception without steps.", e5), t4;
       }
     }
-    Io(t4) {
-      this.bo.enabled && this.wo.add({ [ti]: t4, [ei]: (/* @__PURE__ */ new Date()).toISOString() });
+    ra(t4) {
+      this.Qo.enabled && this.Ko.add({ [oi]: t4, [ai]: (/* @__PURE__ */ new Date()).toISOString() });
     }
-    ko(t4) {
-      return H2(t4) ? f4({}, t4) : {};
+    Xo(t4) {
+      return V2(t4) ? _2({}, t4) : {};
     }
-    _o() {
+    Jo() {
       var t4, e4;
       return null !== (t4 = null == (e4 = this._instance.config.error_tracking) ? void 0 : e4.exception_steps) && void 0 !== t4 ? t4 : {};
     }
-    Co(t4) {
+    ea(t4) {
       if (0 === t4.length) return false;
       var e4 = t4.reduce(((t5, e5) => {
-        var { type: i4, value: r4 } = e5;
-        return G2(i4) && i4.length > 0 && t5.$exception_types.push(i4), G2(r4) && r4.length > 0 && t5.$exception_values.push(r4), t5;
+        var i4 = e5.type, r4 = e5.value;
+        return J2(i4) && i4.length > 0 && t5.$exception_types.push(i4), J2(r4) && r4.length > 0 && t5.$exception_values.push(r4), t5;
       }), { $exception_types: [], $exception_values: [] });
-      return this.mo.some(((t5) => {
+      return this.Zo.some(((t5) => {
         var i4 = t5.values.map(((t6) => {
-          var i5, r4 = Vo[t6.operator], s4 = B3(t6.value) ? t6.value : [t6.value], n3 = null !== (i5 = e4[t6.key]) && void 0 !== i5 ? i5 : [];
+          var i5, r4 = sa[t6.operator], s4 = H2(t6.value) ? t6.value : [t6.value], n3 = null !== (i5 = e4[t6.key]) && void 0 !== i5 ? i5 : [];
           return s4.length > 0 && r4(s4, n3);
         }));
         return "OR" === t5.type ? i4.some(Boolean) : i4.every(Boolean);
       }));
     }
-    To(t4) {
+    ia(t4) {
       return t4.flatMap(((t5) => {
         var e4, i4;
         return null !== (e4 = null == (i4 = t5.stacktrace) ? void 0 : i4.frames) && void 0 !== e4 ? e4 : [];
       })).some(((t5) => t5.filename && t5.filename.startsWith("chrome-extension://")));
     }
-    Eo(t4) {
+    na(t4) {
       if (t4.length > 0) {
         var e4, i4, r4, s4, n3 = null !== (e4 = null == (i4 = t4[0].stacktrace) ? void 0 : i4.frames) && void 0 !== e4 ? e4 : [], o4 = n3[n3.length - 1];
         return null !== (r4 = null == o4 || null == (s4 = o4.filename) ? void 0 : s4.includes("posthog.com/static")) && void 0 !== r4 && r4;
       }
       return false;
     }
-    So(t4) {
-      return !K2(t4) && B3(t4);
+    ta(t4) {
+      return !Q2(t4) && H2(t4);
     }
   } };
-  var pl = f4({ productTours: class {
-    get zr() {
+  var Pl = _2({ productTours: class {
+    get mi() {
       return this._instance.persistence;
     }
     constructor(t4) {
-      this.Po = null, this.Ro = null, this._instance = t4;
+      this.oa = null, this.aa = null, this._instance = t4;
     }
     initialize() {
       this.loadIfEnabled();
@@ -10670,96 +10955,96 @@
     onRemoteConfig(t4) {
       if ("productTours" in t4) {
         var e4, i4;
-        if (this.zr && this.zr.register({ [Si]: !!t4.productTours }), !Ua(this._instance)) return !this.Po && K2(null == (e4 = this.zr) ? void 0 : e4.props[Wi]) || Na.info("product tours disabled; stopping and clearing cached tours"), null == (i4 = this.Po) || i4.stop(), this.Po = null, void this.clearCache();
+        if (this.mi && this.mi.register({ [Oi]: !!t4.productTours }), !tl(this._instance)) return !this.oa && Q2(null == (e4 = this.mi) ? void 0 : e4.props[Zi]) || Za.info("product tours disabled; stopping and clearing cached tours"), null == (i4 = this.oa) || i4.stop(), this.oa = null, void this.clearCache();
         this.loadIfEnabled();
       }
     }
     loadIfEnabled() {
-      !this.Po && Ua(this._instance) && this.Mt((() => this.Oo()));
+      !this.oa && tl(this._instance) && this.rr((() => this.la()));
     }
-    Mt(t4) {
+    rr(t4) {
       var e4, i4;
       null != (e4 = h3.__PosthogExtensions__) && e4.generateProductTours ? t4() : null == (i4 = h3.__PosthogExtensions__) || null == i4.loadExternalDependency || i4.loadExternalDependency(this._instance, "product-tours", ((e5) => {
-        e5 ? Na.error("Could not load product tours script", e5) : t4();
+        e5 ? Za.error("Could not load product tours script", e5) : t4();
       }));
     }
-    Oo() {
+    la() {
       var t4;
-      !this.Po && null != (t4 = h3.__PosthogExtensions__) && t4.generateProductTours && (this.Po = h3.__PosthogExtensions__.generateProductTours(this._instance, true));
+      !this.oa && null != (t4 = h3.__PosthogExtensions__) && t4.generateProductTours && (this.oa = h3.__PosthogExtensions__.generateProductTours(this._instance, true));
     }
     getProductTours(t4, e4) {
-      if (void 0 === e4 && (e4 = false), !B3(this.Ro) || e4) {
-        var i4 = this.zr;
+      if (void 0 === e4 && (e4 = false), !H2(this.aa) || e4) {
+        var i4 = this.mi;
         if (i4) {
-          var r4 = i4.props[Wi];
-          if (B3(r4) && !e4) return this.Ro = r4, void t4(r4, { isLoaded: true });
+          var r4 = i4.props[Zi];
+          if (H2(r4) && !e4) return this.aa = r4, void t4(r4, { isLoaded: true });
         }
         this._instance._send_request({ url: this._instance.requestRouter.endpointFor("api", "/api/product_tours/?token=" + this._instance.config.token), method: "GET", callback: (e5) => {
-          if (Ua(this._instance)) {
+          if (tl(this._instance)) {
             var r5 = e5.statusCode;
             if (200 !== r5 || !e5.json) {
               var s4 = "Product Tours API could not be loaded, status: " + r5;
-              return Na.error(s4), void t4([], { isLoaded: false, error: s4 });
+              return Za.error(s4), void t4([], { isLoaded: false, error: s4 });
             }
-            var n3 = B3(e5.json.product_tours) ? e5.json.product_tours : [];
-            this.Ro = n3, i4 && i4.register({ [Wi]: n3 }), t4(n3, { isLoaded: true });
+            var n3 = H2(e5.json.product_tours) ? e5.json.product_tours : [];
+            this.aa = n3, i4 && i4.register({ [Zi]: n3 }), t4(n3, { isLoaded: true });
           } else t4([], { isLoaded: true });
         } });
-      } else t4(this.Ro, { isLoaded: true });
+      } else t4(this.aa, { isLoaded: true });
     }
     getActiveProductTours(t4) {
-      K2(this.Po) ? t4([], { isLoaded: false, error: "Product tours not loaded" }) : this.Po.getActiveProductTours(t4);
+      Q2(this.oa) ? t4([], { isLoaded: false, error: "Product tours not loaded" }) : this.oa.getActiveProductTours(t4);
     }
     showProductTour(t4) {
       var e4;
-      null == (e4 = this.Po) || e4.showTourById(t4);
+      null == (e4 = this.oa) || e4.showTourById(t4);
     }
     previewTour(t4) {
-      this.Po ? this.Po.previewTour(t4) : this.Mt((() => {
+      this.oa ? this.oa.previewTour(t4) : this.rr((() => {
         var e4;
-        this.Oo(), null == (e4 = this.Po) || e4.previewTour(t4);
+        this.la(), null == (e4 = this.oa) || e4.previewTour(t4);
       }));
     }
     dismissProductTour() {
       var t4;
-      null == (t4 = this.Po) || t4.dismissTour("user_clicked_skip");
+      null == (t4 = this.oa) || t4.dismissTour("user_clicked_skip");
     }
     nextStep() {
       var t4;
-      null == (t4 = this.Po) || t4.nextStep();
+      null == (t4 = this.oa) || t4.nextStep();
     }
     previousStep() {
       var t4;
-      null == (t4 = this.Po) || t4.previousStep();
+      null == (t4 = this.oa) || t4.previousStep();
     }
     clearCache() {
       var t4;
-      this.Ro = null, null == (t4 = this.zr) || t4.unregister(Wi);
+      this.aa = null, null == (t4 = this.mi) || t4.unregister(Zi);
     }
     resetTour(t4) {
       var e4;
-      null == (e4 = this.Po) || e4.resetTour(t4);
+      null == (e4 = this.oa) || e4.resetTour(t4);
     }
     resetAllTours() {
       var t4;
-      null == (t4 = this.Po) || t4.resetAllTours();
+      null == (t4 = this.oa) || t4.resetAllTours();
     }
     cancelPendingTour(t4) {
       var e4;
-      null == (e4 = this.Po) || e4.cancelPendingTour(t4);
+      null == (e4 = this.oa) || e4.cancelPendingTour(t4);
     }
-  } }, hl);
-  var fl = { siteApps: class {
+  } }, kl);
+  var Ol = { siteApps: class {
     constructor(t4) {
-      this.Lo = 0, this._instance = t4, this.Fo = [], this.apps = {};
+      this.ua = 0, this._instance = t4, this.ha = [], this.apps = {};
     }
     get isEnabled() {
       return !!this._instance.config.opt_in_site_apps;
     }
-    Ao(t4, e4) {
+    da(t4, e4) {
       if (e4) {
         var i4 = this.globalsForEvent(e4);
-        this.Fo.push(i4), this.Fo.length > 1e3 && (this.Fo = this.Fo.slice(10));
+        this.ha.push(i4), this.ha.length > 1e3 && (this.ha = this.ha.slice(10));
       }
     }
     get siteAppLoaders() {
@@ -10768,9 +11053,9 @@
     }
     initialize() {
       if (this.isEnabled) {
-        var t4 = this._instance._addCaptureHook(this.Ao.bind(this));
-        this.$o = () => {
-          t4(), this.Fo = [], this.$o = void 0;
+        var t4 = this._instance._addCaptureHook(this.da.bind(this));
+        this.ca = () => {
+          t4(), this.ha = [], this.ca = void 0;
         };
       }
     }
@@ -10778,80 +11063,83 @@
       var e4, i4, r4, s4, n3, o4, a4;
       if (!t4) throw new Error("Event payload is required");
       var l4 = {}, u5 = this._instance.get_property("$groups") || [], h4 = this._instance.get_property("$stored_group_properties") || {};
-      for (var [d4, v4] of Object.entries(h4)) l4[d4] = { id: u5[d4], type: d4, properties: v4 };
-      var { $set_once: c4, $set: p4 } = t4;
-      return { event: f4({}, _2(t4, ja), { properties: f4({}, t4.properties, p4 ? { $set: f4({}, null !== (e4 = null == (i4 = t4.properties) ? void 0 : i4.$set) && void 0 !== e4 ? e4 : {}, p4) } : {}, c4 ? { $set_once: f4({}, null !== (r4 = null == (s4 = t4.properties) ? void 0 : s4.$set_once) && void 0 !== r4 ? r4 : {}, c4) } : {}), elements_chain: null !== (n3 = null == (o4 = t4.properties) ? void 0 : o4.$elements_chain) && void 0 !== n3 ? n3 : "", distinct_id: null == (a4 = t4.properties) ? void 0 : a4.distinct_id }), person: { properties: this._instance.get_property("$stored_person_properties") }, groups: l4 };
+      for (var d4 of Object.entries(h4)) {
+        var v4 = d4[0];
+        l4[v4] = { id: u5[v4], type: v4, properties: d4[1] };
+      }
+      var c4 = t4.$set_once, f5 = t4.$set;
+      return { event: _2({}, g2(t4, el), { properties: _2({}, t4.properties, f5 ? { $set: _2({}, null !== (e4 = null == (i4 = t4.properties) ? void 0 : i4.$set) && void 0 !== e4 ? e4 : {}, f5) } : {}, c4 ? { $set_once: _2({}, null !== (r4 = null == (s4 = t4.properties) ? void 0 : s4.$set_once) && void 0 !== r4 ? r4 : {}, c4) } : {}), elements_chain: null !== (n3 = null == (o4 = t4.properties) ? void 0 : o4.$elements_chain) && void 0 !== n3 ? n3 : "", distinct_id: null == (a4 = t4.properties) ? void 0 : a4.distinct_id }), person: { properties: this._instance.get_property("$stored_person_properties") }, groups: l4 };
     }
-    Do(t4) {
+    va(t4) {
       var e4, i4 = null == (e4 = t4.tagName) ? void 0 : e4.toLowerCase();
-      return "style" === i4 && this._instance.config.prepare_external_dependency_stylesheet ? this._instance.config.prepare_external_dependency_stylesheet(t4) || (Ba.error("prepare_external_dependency_stylesheet returned null"), null) : "script" === i4 && this._instance.config.prepare_external_dependency_script ? this._instance.config.prepare_external_dependency_script(t4) || (Ba.error("prepare_external_dependency_script returned null"), null) : t4;
+      return "style" === i4 && this._instance.config.prepare_external_dependency_stylesheet ? this._instance.config.prepare_external_dependency_stylesheet(t4) || (il.error("prepare_external_dependency_stylesheet returned null"), null) : "script" === i4 && this._instance.config.prepare_external_dependency_script ? this._instance.config.prepare_external_dependency_script(t4) || (il.error("prepare_external_dependency_script returned null"), null) : t4;
     }
-    No() {
+    fa() {
       var t4, e4, i4, s4, n3, o4, a4, l4;
       if (!this._instance.config.prepare_external_dependency_stylesheet && !this._instance.config.prepare_external_dependency_script) return () => {
       };
       var u5 = null == r3 ? void 0 : r3.defaultView, h4 = null == u5 || null == (t4 = u5.Node) ? void 0 : t4.prototype;
       if (!u5 || !h4) return () => {
       };
-      if (this.Lo++, this.qo) return this.jo();
-      var d4 = [], v4 = this, c4 = /* @__PURE__ */ new WeakSet(), p4 = (t5, e5, i5) => {
+      if (this.ua++, this.pa) return this.ga();
+      var d4 = [], v4 = this, c4 = /* @__PURE__ */ new WeakSet(), f5 = (t5, e5, i5) => {
         if (null != t5 && t5[e5]) {
           var r4 = t5[e5];
           t5[e5] = i5(r4), d4.push((() => {
             t5[e5] = r4;
           }));
         }
-      }, f5 = (t5) => {
+      }, p4 = (t5) => {
         if (c4.has(t5)) return t5;
-        var e5 = v4.Do(t5);
+        var e5 = v4.va(t5);
         return e5 && c4.add(e5), e5;
-      }, _3 = (t5) => t5.map(((t6) => "string" == typeof t6 ? t6 : f5(t6))).filter(((t6) => !Y(t6)));
-      return p4(h4, "appendChild", ((t5) => function(e5) {
-        var i5 = f5(e5);
+      }, _3 = (t5) => t5.map(((t6) => "string" == typeof t6 ? t6 : p4(t6))).filter(((t6) => !Y(t6)));
+      return f5(h4, "appendChild", ((t5) => function(e5) {
+        var i5 = p4(e5);
         return i5 ? t5.call(this, i5) : e5;
-      })), p4(h4, "insertBefore", ((t5) => function(e5, i5) {
-        var r4 = f5(e5);
+      })), f5(h4, "insertBefore", ((t5) => function(e5, i5) {
+        var r4 = p4(e5);
         return r4 ? t5.call(this, r4, i5) : e5;
-      })), p4(h4, "replaceChild", ((t5) => function(e5, i5) {
-        var r4 = f5(e5);
+      })), f5(h4, "replaceChild", ((t5) => function(e5, i5) {
+        var r4 = p4(e5);
         return r4 ? t5.call(this, r4, i5) : i5;
       })), [null == (e4 = u5.Element) ? void 0 : e4.prototype, null == (i4 = u5.Document) ? void 0 : i4.prototype, null == (s4 = u5.DocumentFragment) ? void 0 : s4.prototype].forEach(((t5) => {
-        p4(t5, "append", ((t6) => function() {
+        f5(t5, "append", ((t6) => function() {
           for (var e5 = arguments.length, i5 = new Array(e5), r4 = 0; e5 > r4; r4++) i5[r4] = arguments[r4];
           return t6.apply(this, _3(i5));
-        })), p4(t5, "prepend", ((t6) => function() {
+        })), f5(t5, "prepend", ((t6) => function() {
           for (var e5 = arguments.length, i5 = new Array(e5), r4 = 0; e5 > r4; r4++) i5[r4] = arguments[r4];
           return t6.apply(this, _3(i5));
         }));
       })), [null == (n3 = u5.Element) ? void 0 : n3.prototype, null == (o4 = u5.CharacterData) ? void 0 : o4.prototype, null == (a4 = u5.DocumentType) ? void 0 : a4.prototype].forEach(((t5) => {
-        p4(t5, "before", ((t6) => function() {
+        f5(t5, "before", ((t6) => function() {
           for (var e5 = arguments.length, i5 = new Array(e5), r4 = 0; e5 > r4; r4++) i5[r4] = arguments[r4];
           return t6.apply(this, _3(i5));
-        })), p4(t5, "after", ((t6) => function() {
+        })), f5(t5, "after", ((t6) => function() {
           for (var e5 = arguments.length, i5 = new Array(e5), r4 = 0; e5 > r4; r4++) i5[r4] = arguments[r4];
           return t6.apply(this, _3(i5));
-        })), p4(t5, "replaceWith", ((t6) => function() {
+        })), f5(t5, "replaceWith", ((t6) => function() {
           for (var e5 = arguments.length, i5 = new Array(e5), r4 = 0; e5 > r4; r4++) i5[r4] = arguments[r4];
           var s5 = _3(i5);
           return i5.length && !s5.length ? void 0 : t6.apply(this, s5);
         }));
-      })), p4(null == (l4 = u5.Element) ? void 0 : l4.prototype, "insertAdjacentElement", ((t5) => function(e5, i5) {
-        var r4 = f5(i5);
+      })), f5(null == (l4 = u5.Element) ? void 0 : l4.prototype, "insertAdjacentElement", ((t5) => function(e5, i5) {
+        var r4 = p4(i5);
         return r4 ? t5.call(this, e5, r4) : null;
-      })), this.qo = () => {
-        d4.forEach(((t5) => t5())), this.qo = void 0;
-      }, this.jo();
+      })), this.pa = () => {
+        d4.forEach(((t5) => t5())), this.pa = void 0;
+      }, this.ga();
     }
-    jo() {
+    ga() {
       var t4 = false;
       return () => {
         var e4;
-        t4 || (t4 = true, this.Lo--, 0 === this.Lo && (null == (e4 = this.qo) || e4.call(this)));
+        t4 || (t4 = true, this.ua--, 0 === this.ua && (null == (e4 = this.pa) || e4.call(this)));
       };
     }
-    Bo(t4, e4) {
+    ma(t4, e4) {
       void 0 === e4 && (e4 = true);
-      var i4 = this.No();
+      var i4 = this.fa();
       try {
         var r4 = t4(i4);
         return e4 && i4(), r4;
@@ -10862,37 +11150,37 @@
     setupSiteApp(t4) {
       var e4 = this.apps[t4.id], i4 = () => {
         var i5;
-        !e4.errored && this.Fo.length && (Ba.info("Processing " + this.Fo.length + " events for site app with id " + t4.id), this.Fo.forEach(((t5) => this.Bo((() => null == e4.processEvent ? void 0 : e4.processEvent(t5))))), e4.processedBuffer = true), Object.values(this.apps).every(((t5) => t5.processedBuffer || t5.errored)) && (null == (i5 = this.$o) || i5.call(this));
+        !e4.errored && this.ha.length && (il.info("Processing " + this.ha.length + " events for site app with id " + t4.id), this.ha.forEach(((t5) => this.ma((() => null == e4.processEvent ? void 0 : e4.processEvent(t5))))), e4.processedBuffer = true), Object.values(this.apps).every(((t5) => t5.processedBuffer || t5.errored)) && (null == (i5 = this.ca) || i5.call(this));
       }, r4 = false, s4 = (s5) => {
-        e4.errored = !s5, e4.loaded = true, Ba.info("Site app with id " + t4.id + " " + (s5 ? "loaded" : "errored")), r4 && i4();
+        e4.errored = !s5, e4.loaded = true, il.info("Site app with id " + t4.id + " " + (s5 ? "loaded" : "errored")), r4 && i4();
       };
       try {
-        var { processEvent: n3 } = this.Bo(((e5) => t4.init({ posthog: this._instance, callback(t5) {
+        var n3 = this.ma(((e5) => t4.init({ posthog: this._instance, callback(t5) {
           e5(), s4(t5);
-        } })), false);
+        } })), false).processEvent;
         n3 && (e4.processEvent = n3), r4 = true;
       } catch (e5) {
-        Ba.error(za + t4.id, e5), s4(false);
+        il.error(rl + t4.id, e5), s4(false);
       }
       if (r4 && e4.loaded) try {
         i4();
       } catch (i5) {
-        Ba.error("Error while processing buffered events PostHog app with config id " + t4.id, i5), e4.errored = true;
+        il.error("Error while processing buffered events PostHog app with config id " + t4.id, i5), e4.errored = true;
       }
     }
-    Ho() {
+    ya() {
       var t4 = this.siteAppLoaders || [];
       for (var e4 of t4) this.apps[e4.id] = { id: e4.id, loaded: false, errored: false, processedBuffer: false };
       for (var i4 of t4) this.setupSiteApp(i4);
     }
-    Uo(t4) {
+    ba(t4) {
       var e4 = this;
       if (0 !== Object.keys(this.apps).length) {
         var i4 = this.globalsForEvent(t4), r4 = function(r5) {
           try {
-            e4.Bo((() => null == r5.processEvent ? void 0 : r5.processEvent(i4)));
+            e4.ma((() => null == r5.processEvent ? void 0 : r5.processEvent(i4)));
           } catch (e5) {
-            Ba.error("Error while processing event " + t4.event + " for site app " + r5.id, e5);
+            il.error("Error while processing event " + t4.event + " for site app " + r5.id, e5);
           }
         };
         for (var s4 of Object.values(this.apps)) r4(s4);
@@ -10900,67 +11188,67 @@
     }
     onRemoteConfig(t4) {
       var e4, i4, r4, s4 = this;
-      if (null != (e4 = this.siteAppLoaders) && e4.length) return this.isEnabled ? (this.Ho(), void this._instance.on("eventCaptured", ((t5) => this.Uo(t5)))) : void Ba.error('PostHog site apps are disabled. Enable the "opt_in_site_apps" config to proceed.');
-      if (null == (i4 = this.$o) || i4.call(this), null != (r4 = t4.siteApps) && r4.length) if (this.isEnabled) {
-        var n3 = function(t5) {
-          var e5;
-          h3["__$$ph_site_app_" + t5] = s4._instance, null == (e5 = h3.__PosthogExtensions__) || null == e5.loadSiteApp || e5.loadSiteApp(s4._instance, a4, ((e6) => {
-            if (e6) return Ba.error(za + t5, e6);
+      if (null != (e4 = this.siteAppLoaders) && e4.length) return this.isEnabled ? (this.ya(), void this._instance.on("eventCaptured", ((t5) => this.ba(t5)))) : void il.error('PostHog site apps are disabled. Enable the "opt_in_site_apps" config to proceed.');
+      if (null == (i4 = this.ca) || i4.call(this), null != (r4 = t4.siteApps) && r4.length) if (this.isEnabled) {
+        var n3 = function() {
+          var t5, e5 = o4.id, i5 = o4.url;
+          h3["__$$ph_site_app_" + e5] = s4._instance, null == (t5 = h3.__PosthogExtensions__) || null == t5.loadSiteApp || t5.loadSiteApp(s4._instance, i5, ((t6) => {
+            if (t6) return il.error(rl + e5, t6);
           }));
         };
-        for (var { id: o4, url: a4 } of t4.siteApps) n3(o4);
-      } else Ba.error('PostHog site apps are disabled. Enable the "opt_in_site_apps" config to proceed.');
+        for (var o4 of t4.siteApps) n3();
+      } else il.error('PostHog site apps are disabled. Enable the "opt_in_site_apps" config to proceed.');
     }
   } };
-  var _l = { tracingHeaders: class {
+  var Il = { tracingHeaders: class {
     constructor(t4) {
-      this.zo = void 0, this.Vo = void 0, this.Wo = void 0, this.ao = () => {
-        var t5, e4, i4 = this.Go();
-        i4 ? (V2(this.zo) && (this.zo = null == (t5 = h3.__PosthogExtensions__) || null == (t5 = t5.tracingHeadersPatchFns) ? void 0 : t5._patchXHR(i4, (() => this._instance.get_distinct_id()), this._instance.sessionManager)), V2(this.Vo) && (this.Vo = null == (e4 = h3.__PosthogExtensions__) || null == (e4 = e4.tracingHeadersPatchFns) ? void 0 : e4._patchFetch(i4, (() => this._instance.get_distinct_id()), this._instance.sessionManager))) : this.co();
+      this._a = void 0, this.wa = void 0, this.xa = void 0, this.Do = () => {
+        var t5, e4, i4 = this.ka();
+        i4 ? (W(this._a) && (this._a = null == (t5 = h3.__PosthogExtensions__) || null == (t5 = t5.tracingHeadersPatchFns) ? void 0 : t5._patchXHR(i4, (() => this._instance.get_distinct_id()), this._instance.sessionManager)), W(this.wa) && (this.wa = null == (e4 = h3.__PosthogExtensions__) || null == (e4 = e4.tracingHeadersPatchFns) ? void 0 : e4._patchFetch(i4, (() => this._instance.get_distinct_id()), this._instance.sessionManager))) : this.Uo();
       }, this._instance = t4;
     }
     initialize() {
       this.startIfEnabledOrStop();
     }
-    Mt(t4) {
+    rr(t4) {
       var e4, i4;
       null != (e4 = h3.__PosthogExtensions__) && e4.tracingHeadersPatchFns ? t4() : null == (i4 = h3.__PosthogExtensions__) || null == i4.loadExternalDependency || i4.loadExternalDependency(this._instance, "tracing-headers", ((e5) => {
-        if (e5) return ka.error("failed to load script", e5);
+        if (e5) return za.error("failed to load script", e5);
         t4();
       }));
     }
-    Zo() {
+    Sa() {
       var t4, e4;
       return null !== (t4 = null !== (e4 = this._instance.config.tracing_headers) && void 0 !== e4 ? e4 : this._instance.config.addTracingHeaders) && void 0 !== t4 ? t4 : this._instance.config.__add_tracing_headers;
     }
-    Go() {
-      var t4 = this.Zo();
-      return B3(t4) ? (B3(this.Wo) ? this.Wo.splice(0, this.Wo.length, ...t4) : this.Wo = [...t4], t4.length > 0 ? this.Wo : void 0) : (B3(this.Wo) && this.Wo.splice(0), this.Wo = t4 || void 0, this.Wo);
+    ka() {
+      var t4 = this.Sa();
+      return H2(t4) ? (H2(this.xa) ? this.xa.splice(0, this.xa.length, ...t4) : this.xa = [...t4], t4.length > 0 ? this.xa : void 0) : (H2(this.xa) && this.xa.splice(0), this.xa = t4 || void 0, this.xa);
     }
-    co() {
+    Uo() {
       var t4, e4;
-      null == (t4 = this.zo) || t4.call(this), null == (e4 = this.Vo) || e4.call(this), this.zo = void 0, this.Vo = void 0;
+      null == (t4 = this._a) || t4.call(this), null == (e4 = this.wa) || e4.call(this), this._a = void 0, this.wa = void 0;
     }
     startIfEnabledOrStop() {
-      this.Go() ? this.Mt(this.ao) : this.co();
+      this.ka() ? this.rr(this.Do) : this.Uo();
     }
   } };
-  var gl = f4({ surveys: class {
-    get Se() {
+  var Cl = _2({ surveys: class {
+    get Te() {
       return this._instance.config;
     }
     constructor(t4) {
-      this.Qo = void 0, this._surveyManager = null, this.Jo = false, this.Yo = [], this.Ko = null, this._instance = t4, this._surveyEventReceiver = null;
+      this.Ca = void 0, this._surveyManager = null, this.Ia = false, this.Ta = [], this.Ma = null, this.Ea = null, this._instance = t4, this._surveyEventReceiver = null;
     }
     initialize() {
       this.loadIfEnabled();
     }
     onRemoteConfig(t4) {
-      if (!this.Se.disable_surveys) {
+      if (!this.Te.disable_surveys) {
         var e4 = t4.surveys;
-        if (K2(e4)) return Xo.warn("Flags not loaded yet. Not loading surveys.");
-        var i4 = B3(e4);
-        this.Qo = i4 ? e4.length > 0 : e4, Xo.info("flags response received, isSurveysEnabled: " + this.Qo), this.loadIfEnabled();
+        if (Q2(e4)) return va.warn("Flags not loaded yet. Not loading surveys.");
+        var i4 = H2(e4);
+        this.Ca = i4 ? e4.length > 0 : e4, va.info("flags response received, isSurveysEnabled: " + this.Ca), this.loadIfEnabled();
       }
     }
     reset() {
@@ -10969,118 +11257,132 @@
         null == (t4 = this._surveyEventReceiver) || t4.reset(), localStorage.removeItem("lastSeenSurveyDate");
         for (var e4 = [], i4 = 0; i4 < localStorage.length; i4++) {
           var r4 = localStorage.key(i4);
-          (null != r4 && r4.startsWith(Zo) || null != r4 && r4.startsWith("inProgressSurvey_")) && e4.push(r4);
+          (null != r4 && r4.startsWith(ca) || null != r4 && r4.startsWith("inProgressSurvey_")) && e4.push(r4);
         }
         e4.forEach(((t5) => localStorage.removeItem(t5)));
       } catch (t5) {
       }
     }
     loadIfEnabled() {
-      if (!this._surveyManager) if (this.Jo) Xo.info("Already initializing surveys, skipping...");
-      else if (this.Se.disable_surveys) Xo.info(Ya);
-      else if (this.Se.cookieless_mode && this._instance.consent.isOptedOut()) Xo.info("Not loading surveys in cookieless mode without consent.");
+      if (!this._surveyManager) if (this.Ia) va.info("Already initializing surveys, skipping...");
+      else if (this.Te.disable_surveys) va.info(ul);
+      else if (this.Te.cookieless_mode && this._instance.consent.isOptedOut()) va.info("Not loading surveys in cookieless mode without consent.");
       else {
         var t4 = null == h3 ? void 0 : h3.__PosthogExtensions__;
         if (t4) {
-          if (!V2(this.Qo) || this.Se.advanced_enable_surveys) {
-            var e4 = this.Qo || this.Se.advanced_enable_surveys;
-            this.Jo = true;
+          if (!W(this.Ca) || this.Te.advanced_enable_surveys) {
+            var e4 = this.Ca || this.Te.advanced_enable_surveys;
+            this.Ia = true;
             try {
               var i4 = t4.generateSurveys;
-              if (i4) return void this.Xo(i4, e4);
+              if (i4) return void this.Ra(i4, e4);
               var r4 = t4.loadExternalDependency;
-              if (!r4) return void this.ea(hr);
+              if (!r4) return void this.Pa(_r);
               r4(this._instance, "surveys", ((i5) => {
-                i5 || !t4.generateSurveys ? this.ea("Could not load surveys script", i5) : this.Xo(t4.generateSurveys, e4);
+                i5 || !t4.generateSurveys ? this.Pa("Could not load surveys script", i5) : this.Ra(t4.generateSurveys, e4);
               }));
             } catch (t5) {
-              throw this.ea("Error initializing surveys", t5), t5;
+              throw this.Pa("Error initializing surveys", t5), t5;
             } finally {
-              this.Jo = false;
+              this.Ia = false;
             }
           }
-        } else Xo.error("PostHog Extensions not found.");
+        } else va.error("PostHog Extensions not found.");
       }
     }
-    Xo(t4, e4) {
-      this._surveyManager = t4(this._instance, e4), this._surveyEventReceiver = new Ga(this._instance), Xo.info("Surveys loaded successfully"), this.ta({ isLoaded: true });
+    Ra(t4, e4) {
+      this._surveyManager = t4(this._instance, e4), this._surveyEventReceiver = new al(this._instance), va.info("Surveys loaded successfully"), this.Oa({ isLoaded: true });
     }
-    ea(t4, e4) {
-      Xo.error(t4, e4), this.ta({ isLoaded: false, error: t4 });
+    Pa(t4, e4) {
+      va.error(t4, e4), this.Oa({ isLoaded: false, error: t4 });
     }
     onSurveysLoaded(t4) {
-      return this.Yo.push(t4), this._surveyManager && this.ta({ isLoaded: true }), () => {
-        this.Yo = this.Yo.filter(((e4) => e4 !== t4));
+      return this.Ta.push(t4), this._surveyManager && this.Oa({ isLoaded: true }), () => {
+        this.Ta = this.Ta.filter(((e4) => e4 !== t4));
       };
     }
     getSurveys(t4, e4) {
-      if (void 0 === e4 && (e4 = false), this.Se.disable_surveys) return Xo.info(Ya), t4([]);
-      var i4, r4 = this._instance.get_property(qi);
-      if (r4 && !e4) return t4(r4, { isLoaded: true });
-      "undefined" != typeof Promise && this.Ko ? this.Ko.then(((e5) => {
-        var { surveys: i5, context: r5 } = e5;
-        return t4(i5, r5);
-      })) : ("undefined" != typeof Promise && (this.Ko = new Promise(((t5) => {
+      if (void 0 === e4 && (e4 = false), this.Te.disable_surveys) return va.info(ul), t4([]);
+      var i4, r4 = this._instance.get_property(Yi);
+      if (r4 && !e4) return t4(r4, { isLoaded: true }), void (this.Fa() && this.getSurveys((() => {
+      }), true));
+      "undefined" != typeof Promise && this.Ma ? this.Ma.then(((e5) => t4(e5.surveys, e5.context))) : ("undefined" != typeof Promise && (this.Ma = new Promise(((t5) => {
         i4 = t5;
-      }))), this._instance._send_request({ url: this._instance.requestRouter.endpointFor("api", "/api/surveys/?token=" + this.Se.token), method: "GET", timeout: this.Se.surveys_request_timeout_ms, callback: (e5) => {
+      }))), this._instance._send_request({ url: this._instance.requestRouter.endpointFor("api", "/api/surveys/?token=" + this.Te.token), method: "GET", timeout: this.Te.surveys_request_timeout_ms, callback: (e5) => {
         var r5;
-        this.Ko = null;
+        this.Ma = null;
         var s4 = e5.statusCode;
         if (200 !== s4 || !e5.json) {
           var n3 = "Surveys API could not be loaded, status: " + s4;
-          Xo.error(n3);
+          va.error(n3), this.Ea = Date.now();
           var o4 = { isLoaded: false, error: n3 };
           return t4([], o4), void (null == i4 || i4({ surveys: [], context: o4 }));
         }
+        this.Ea = null;
         var a4, l4 = e5.json.surveys || [], u5 = l4.filter(((t5) => (function(t6) {
           return !(!t6.start_date || t6.end_date);
-        })(t5) && ((function(t6) {
-          var e6;
-          return !(null == (e6 = t6.conditions) || null == (e6 = e6.events) || null == (e6 = e6.values) || !e6.length);
-        })(t5) || (function(t6) {
+        })(t5) && (da(t5) || (function(t6) {
           var e6;
           return !(null == (e6 = t6.conditions) || null == (e6 = e6.actions) || null == (e6 = e6.values) || !e6.length);
         })(t5))));
-        u5.length > 0 && (null == (a4 = this._surveyEventReceiver) || a4.register(u5)), null == (r5 = this._instance.persistence) || r5.register({ [qi]: l4, [Vi]: Date.now() });
+        u5.length > 0 && (null == (a4 = this._surveyEventReceiver) || a4.register(u5)), null == (r5 = this._instance.persistence) || r5.register({ [Yi]: l4, [Qi]: Date.now() });
         var h4 = { isLoaded: true };
         t4(l4, h4), null == i4 || i4({ surveys: l4, context: h4 });
       } }));
     }
-    ta(t4) {
-      for (var e4 of this.Yo) try {
+    Fa() {
+      return this.La() && !this.Ma && !this.Aa();
+    }
+    La() {
+      var t4 = this._instance.get_property(Qi);
+      return X(t4) && Date.now() - t4 > 3e5;
+    }
+    Aa() {
+      return X(this.Ea) && 3e5 > Date.now() - this.Ea;
+    }
+    markSurveyAsSeen(t4, e4) {
+      var i4, r4 = { id: t4, current_iteration: null !== (i4 = null == e4 ? void 0 : e4.iteration) && void 0 !== i4 ? i4 : null };
+      fa(r4);
+      try {
+        localStorage.setItem("lastSeenSurveyDate", (/* @__PURE__ */ new Date()).toISOString());
+      } catch (t5) {
+      }
+    }
+    Oa(t4) {
+      for (var e4 of this.Ta) try {
         if (!t4.isLoaded) return e4([], t4);
         this.getSurveys(e4);
       } catch (t5) {
-        Xo.error("Error in survey callback", t5);
+        va.error("Error in survey callback", t5);
       }
     }
     getActiveMatchingSurveys(t4, e4) {
-      if (void 0 === e4 && (e4 = false), !K2(this._surveyManager)) return this._surveyManager.getActiveMatchingSurveys(t4, e4);
-      Xo.warn("init was not called");
+      if (void 0 === e4 && (e4 = false), !Q2(this._surveyManager)) return this._surveyManager.getActiveMatchingSurveys(t4, e4);
+      va.warn("init was not called");
     }
-    ra(t4) {
+    $a(t4) {
       var e4 = null;
       return this.getSurveys(((i4) => {
         var r4;
         e4 = null !== (r4 = i4.find(((e5) => e5.id === t4))) && void 0 !== r4 ? r4 : null;
       })), e4;
     }
-    ia(t4) {
-      if (K2(this._surveyManager)) return { eligible: false, reason: Wa };
-      var e4 = "string" == typeof t4 ? this.ra(t4) : t4;
+    Na(t4) {
+      if (Q2(this._surveyManager)) return { eligible: false, reason: ll };
+      var e4 = "string" == typeof t4 ? this.$a(t4) : t4;
       return e4 ? this._surveyManager.checkSurveyEligibility(e4) : { eligible: false, reason: "Survey not found" };
     }
     canRenderSurvey(t4) {
-      if (K2(this._surveyManager)) return Xo.warn("init was not called"), { visible: false, disabledReason: Wa };
-      var e4 = this.ia(t4);
+      if (Q2(this._surveyManager)) return va.warn("init was not called"), { visible: false, disabledReason: ll };
+      var e4 = this.Na(t4);
       return { visible: e4.eligible, disabledReason: e4.reason };
     }
     canRenderSurveyAsync(t4, e4) {
-      return K2(this._surveyManager) ? (Xo.warn("init was not called"), Promise.resolve({ visible: false, disabledReason: Wa })) : new Promise(((i4) => {
+      return Q2(this._surveyManager) ? (va.warn("init was not called"), Promise.resolve({ visible: false, disabledReason: ll })) : new Promise(((i4) => {
         this.getSurveys(((e5) => {
           var r4, s4 = null !== (r4 = e5.find(((e6) => e6.id === t4))) && void 0 !== r4 ? r4 : null;
           if (s4) {
-            var n3 = this.ia(s4);
+            var n3 = this.Na(s4);
             i4({ visible: n3.eligible, disabledReason: n3.reason });
           } else i4({ visible: false, disabledReason: "Survey not found" });
         }), e4);
@@ -11088,51 +11390,51 @@
     }
     renderSurvey(t4, e4, i4) {
       var s4;
-      if (K2(this._surveyManager)) Xo.warn("init was not called");
+      if (Q2(this._surveyManager)) va.warn("init was not called");
       else {
-        var n3 = "string" == typeof t4 ? this.ra(t4) : t4;
-        if (null != n3 && n3.id) if (ta.includes(n3.type)) {
+        var n3 = "string" == typeof t4 ? this.$a(t4) : t4;
+        if (null != n3 && n3.id) if (pa.includes(n3.type)) {
           var o4 = null == r3 ? void 0 : r3.querySelector(e4);
-          if (o4) return null != (s4 = n3.appearance) && s4.surveyPopupDelaySeconds ? (Xo.info("Rendering survey " + n3.id + " with delay of " + n3.appearance.surveyPopupDelaySeconds + " seconds"), void setTimeout((() => {
+          if (o4) return null != (s4 = n3.appearance) && s4.surveyPopupDelaySeconds ? (va.info("Rendering survey " + n3.id + " with delay of " + n3.appearance.surveyPopupDelaySeconds + " seconds"), void setTimeout((() => {
             var t5, e5;
-            Xo.info("Rendering survey " + n3.id + " with delay of " + (null == (t5 = n3.appearance) ? void 0 : t5.surveyPopupDelaySeconds) + " seconds"), null == (e5 = this._surveyManager) || e5.renderSurvey(n3, o4, i4), Xo.info("Survey " + n3.id + " rendered");
+            va.info("Rendering survey " + n3.id + " with delay of " + (null == (t5 = n3.appearance) ? void 0 : t5.surveyPopupDelaySeconds) + " seconds"), null == (e5 = this._surveyManager) || e5.renderSurvey(n3, o4, i4), va.info("Survey " + n3.id + " rendered");
           }), 1e3 * n3.appearance.surveyPopupDelaySeconds)) : void this._surveyManager.renderSurvey(n3, o4, i4);
-          Xo.warn("Survey element not found");
-        } else Xo.warn("Surveys of type " + n3.type + " cannot be rendered in the app");
-        else Xo.warn("Survey not found");
+          va.warn("Survey element not found");
+        } else va.warn("Surveys of type " + n3.type + " cannot be rendered in the app");
+        else va.warn("Survey not found");
       }
     }
     displaySurvey(t4, e4) {
       var i4;
-      if (K2(this._surveyManager)) Xo.warn("init was not called");
+      if (Q2(this._surveyManager)) va.warn("init was not called");
       else {
-        var r4 = this.ra(t4);
+        var r4 = this.$a(t4);
         if (r4) {
           var s4 = r4;
-          if (null != (i4 = r4.appearance) && i4.surveyPopupDelaySeconds && e4.ignoreDelay && (s4 = f4({}, r4, { appearance: f4({}, r4.appearance, { surveyPopupDelaySeconds: 0 }) })), e4.displayType !== In.Popover && e4.initialResponses && Xo.warn("initialResponses is only supported for popover surveys. prefill will not be applied."), false === e4.ignoreConditions) {
+          if (null != (i4 = r4.appearance) && i4.surveyPopupDelaySeconds && e4.ignoreDelay && (s4 = _2({}, r4, { appearance: _2({}, r4.appearance, { surveyPopupDelaySeconds: 0 }) })), e4.displayType !== Ln.Popover && e4.initialResponses && va.warn("initialResponses is only supported for popover surveys. prefill will not be applied."), false === e4.ignoreConditions) {
             var n3 = this.canRenderSurvey(r4);
-            if (!n3.visible) return void Xo.warn("Survey is not eligible to be displayed: ", n3.disabledReason);
+            if (!n3.visible) return void va.warn("Survey is not eligible to be displayed: ", n3.disabledReason);
           }
-          e4.displayType !== In.Inline ? this._surveyManager.handlePopoverSurvey(s4, e4) : this.renderSurvey(s4, e4.selector, e4.properties);
-        } else Xo.warn("Survey not found");
+          e4.displayType !== Ln.Inline ? this._surveyManager.handlePopoverSurvey(s4, e4) : this.renderSurvey(s4, e4.selector, e4.properties);
+        } else va.warn("Survey not found");
       }
     }
     cancelPendingSurvey(t4) {
-      K2(this._surveyManager) ? Xo.warn("init was not called") : this._surveyManager.cancelSurvey(t4);
+      Q2(this._surveyManager) ? va.warn("init was not called") : this._surveyManager.cancelSurvey(t4);
     }
     handlePageUnload() {
       var t4;
-      null == (t4 = this._surveyManager) || t4.handlePageUnload();
+      null == (t4 = this._surveyManager) || null == t4.handlePageUnload || t4.handlePageUnload();
     }
-  } }, hl);
-  var ml = { toolbar: class {
+  } }, kl);
+  var Ml = { toolbar: class {
     constructor(t4) {
       this.instance = t4;
     }
-    na(t4) {
+    Da(t4) {
       h3.ph_toolbar_state = t4;
     }
-    sa() {
+    qa() {
       var t4;
       return null !== (t4 = h3.ph_toolbar_state) && void 0 !== t4 ? t4 : 0;
     }
@@ -11140,7 +11442,7 @@
       return this.maybeLoadToolbar();
     }
     maybeLoadToolbar(e4, i4, s4) {
-      if (void 0 === e4 && (e4 = void 0), void 0 === i4 && (i4 = void 0), void 0 === s4 && (s4 = void 0), Cr(this.instance.config)) return false;
+      if (void 0 === e4 && (e4 = void 0), void 0 === i4 && (i4 = void 0), void 0 === s4 && (s4 = void 0), Ur(this.instance.config)) return false;
       if (!t3 || !r3) return false;
       e4 = null != e4 ? e4 : t3.location, s4 = null != s4 ? s4 : t3.history;
       try {
@@ -11152,43 +11454,43 @@
           }
           i4 = null == t3 ? void 0 : t3.localStorage;
         }
-        var n3, o4 = Ka || Zs(e4.hash, "__posthog") || Zs(e4.hash, "state"), a4 = o4 ? $r((() => JSON.parse(atob(decodeURIComponent(o4))))) || $r((() => JSON.parse(decodeURIComponent(o4)))) : null;
-        return a4 && "ph_authorize" === a4.action ? ((n3 = a4).source = "url", n3 && Object.keys(n3).length > 0 && (a4.desiredHash ? e4.hash = a4.desiredHash : s4 ? s4.replaceState(s4.state, "", e4.pathname + e4.search) : e4.hash = "")) : ((n3 = JSON.parse(i4.getItem(Ja) || "{}")).source = "localstorage", delete n3.userIntent), !(!n3.token || this.instance.config.token !== n3.token || (this.loadToolbar(n3), 0));
+        var n3, o4 = hl || an(e4.hash, "__posthog") || an(e4.hash, "state"), a4 = o4 ? Cr((() => JSON.parse(atob(decodeURIComponent(o4))))) || Cr((() => JSON.parse(decodeURIComponent(o4)))) : null;
+        return a4 && "ph_authorize" === a4.action ? ((n3 = a4).source = "url", n3 && Object.keys(n3).length > 0 && (a4.desiredHash ? e4.hash = a4.desiredHash : s4 ? s4.replaceState(s4.state, "", e4.pathname + e4.search) : e4.hash = "")) : ((n3 = JSON.parse(i4.getItem(dl) || "{}")).source = "localstorage", delete n3.userIntent), !(!n3.token || this.instance.config.token !== n3.token || (this.loadToolbar(n3), 0));
       } catch (t4) {
         return false;
       }
     }
-    oa(t4) {
+    ja(t4) {
       var e4 = h3.ph_load_toolbar || h3.ph_load_editor;
-      !K2(e4) && z3(e4) ? e4(t4, this.instance) : Qa.warn("No toolbar load function found");
+      !Q2(e4) && q2(e4) ? e4(t4, this.instance) : vl.warn("No toolbar load function found");
     }
     loadToolbar(e4) {
-      var i4 = !(null == r3 || !r3.getElementById(nr));
+      var i4 = !(null == r3 || !r3.getElementById(dr));
       if (!t3 || i4) return false;
-      var s4 = "custom" === this.instance.requestRouter.region && this.instance.config.advanced_disable_toolbar_metrics, n3 = f4({ token: this.instance.config.token }, e4, { apiURL: this.instance.requestRouter.endpointFor("ui") }, s4 ? { instrument: false } : {});
-      if (t3.localStorage.setItem(Ja, JSON.stringify(f4({}, n3, { source: void 0 }))), 2 === this.sa()) this.oa(n3);
-      else if (0 === this.sa()) {
+      var s4 = "custom" === this.instance.requestRouter.region && this.instance.config.advanced_disable_toolbar_metrics, n3 = _2({ token: this.instance.config.token }, e4, { apiURL: this.instance.requestRouter.endpointFor("ui") }, s4 ? { instrument: false } : {});
+      if (t3.localStorage.setItem(dl, JSON.stringify(_2({}, n3, { source: void 0 }))), 2 === this.qa()) this.ja(n3);
+      else if (0 === this.qa()) {
         var o4;
-        this.na(1), null == (o4 = h3.__PosthogExtensions__) || null == o4.loadExternalDependency || o4.loadExternalDependency(this.instance, "toolbar", ((t4) => {
-          if (t4) return Qa.error("[Toolbar] Failed to load", t4), void this.na(0);
-          this.na(2), this.oa(n3);
-        })), Or(t3, "turbolinks:load", (() => {
-          this.na(0), this.loadToolbar(n3);
+        this.Da(1), null == (o4 = h3.__PosthogExtensions__) || null == o4.loadExternalDependency || o4.loadExternalDependency(this.instance, "toolbar", ((t4) => {
+          if (t4) return vl.error("[Toolbar] Failed to load", t4), void this.Da(0);
+          this.Da(2), this.ja(n3);
+        })), Nr(t3, "turbolinks:load", (() => {
+          this.Da(0), this.loadToolbar(n3);
         }));
       }
       return true;
     }
-    aa(t4) {
+    Ha(t4) {
       return this.loadToolbar(t4);
     }
     maybeLoadEditor(t4, e4, i4) {
       return void 0 === t4 && (t4 = void 0), void 0 === e4 && (e4 = void 0), void 0 === i4 && (i4 = void 0), this.maybeLoadToolbar(t4, e4, i4);
     }
   } };
-  var yl = f4({ experiments: ol }, hl);
-  var bl = f4({}, hl, dl, vl, cl, pl, fl, gl, _l, ml, yl, { conversations: class {
+  var Al = _2({ experiments: wl }, kl);
+  var Fl = { conversations: class {
     constructor(t4) {
-      this.la = void 0, this._conversationsManager = null, this.ua = false, this.ha = null, this._instance = t4;
+      this.Ba = void 0, this._conversationsManager = null, this.Ua = false, this.za = null, this._instance = t4;
     }
     initialize() {
       this.loadIfEnabled();
@@ -11196,51 +11498,51 @@
     onRemoteConfig(t4) {
       if (!this._instance.config.disable_conversations) {
         var e4 = t4.conversations;
-        K2(e4) || (X(e4) ? this.la = e4 : (this.la = e4.enabled, this.ha = e4), this.loadIfEnabled());
+        Q2(e4) || (tt(e4) ? this.Ba = e4 : (this.Ba = e4.enabled, this.za = e4), this.loadIfEnabled());
       }
     }
     reset() {
       var t4;
-      null == (t4 = this._conversationsManager) || t4.reset(), this._conversationsManager = null, this.la = void 0, this.ha = null;
+      null == (t4 = this._conversationsManager) || t4.reset(), this._conversationsManager = null, this.Ba = void 0, this.za = null;
     }
     loadIfEnabled() {
-      if (!(this._conversationsManager || this.ua || this._instance.config.disable_conversations || Cr(this._instance.config) || this._instance.config.cookieless_mode && this._instance.consent.isOptedOut())) {
+      if (!(this._conversationsManager || this.Ua || this._instance.config.disable_conversations || Ur(this._instance.config) || this._instance.config.cookieless_mode && this._instance.consent.isOptedOut())) {
         var t4 = null == h3 ? void 0 : h3.__PosthogExtensions__;
-        if (t4 && !V2(this.la) && this.la) if (this.ha && this.ha.token) {
-          this.ua = true;
+        if (t4 && !W(this.Ba) && this.Ba) if (this.za && this.za.token) {
+          this.Ua = true;
           try {
             var e4 = t4.initConversations;
-            if (e4) return this.da(e4), void (this.ua = false);
+            if (e4) return this.Va(e4), void (this.Ua = false);
             var i4 = t4.loadExternalDependency;
-            if (!i4) return void this.ca(hr);
+            if (!i4) return void this.Wa(_r);
             i4(this._instance, "conversations", ((e5) => {
-              e5 || !t4.initConversations ? this.ca("Could not load conversations script", e5) : this.da(t4.initConversations), this.ua = false;
+              e5 || !t4.initConversations ? this.Wa("Could not load conversations script", e5) : this.Va(t4.initConversations), this.Ua = false;
             }));
           } catch (t5) {
-            this.ca("Error initializing conversations", t5), this.ua = false;
+            this.Wa("Error initializing conversations", t5), this.Ua = false;
           }
-        } else al.error("Conversations enabled but missing token in remote config.");
+        } else El.error("Conversations enabled but missing token in remote config.");
       }
     }
-    da(t4) {
-      if (this.ha) try {
-        this._conversationsManager = t4(this.ha, this._instance), al.info("Conversations loaded successfully");
+    Va(t4) {
+      if (this.za) try {
+        this._conversationsManager = t4(this.za, this._instance), El.info("Conversations loaded successfully");
       } catch (t5) {
-        this.ca("Error completing conversations initialization", t5);
+        this.Wa("Error completing conversations initialization", t5);
       }
-      else al.error("Cannot complete initialization: remote config is null");
+      else El.error("Cannot complete initialization: remote config is null");
     }
-    ca(t4, e4) {
-      al.error(t4, e4), this._conversationsManager = null, this.ua = false;
+    Wa(t4, e4) {
+      El.error(t4, e4), this._conversationsManager = null, this.Ua = false;
     }
     show() {
-      this._conversationsManager ? this._conversationsManager.show() : al.warn("Conversations not loaded yet.");
+      this._conversationsManager ? this._conversationsManager.show() : El.warn("Conversations not loaded yet.");
     }
     hide() {
       this._conversationsManager && this._conversationsManager.hide();
     }
     isAvailable() {
-      return true === this.la && !Y(this._conversationsManager);
+      return true === this.Ba && !Y(this._conversationsManager);
     }
     isVisible() {
       var t4, e4;
@@ -11249,43 +11551,43 @@
     sendMessage(t4, e4, i4) {
       var r4 = this;
       return p3((function* () {
-        return r4._conversationsManager ? r4._conversationsManager.sendMessage(t4, e4, i4) : (al.warn(ll), null);
+        return r4._conversationsManager ? r4._conversationsManager.sendMessage(t4, e4, i4) : (El.warn(xl), null);
       }))();
     }
     getMessages(t4, e4) {
       var i4 = this;
       return p3((function* () {
-        return i4._conversationsManager ? i4._conversationsManager.getMessages(t4, e4) : (al.warn(ll), null);
+        return i4._conversationsManager ? i4._conversationsManager.getMessages(t4, e4) : (El.warn(xl), null);
       }))();
     }
     markAsRead(t4) {
       var e4 = this;
       return p3((function* () {
-        return e4._conversationsManager ? e4._conversationsManager.markAsRead(t4) : (al.warn(ll), null);
+        return e4._conversationsManager ? e4._conversationsManager.markAsRead(t4) : (El.warn(xl), null);
       }))();
     }
     getTickets(t4) {
       var e4 = this;
       return p3((function* () {
-        return e4._conversationsManager ? e4._conversationsManager.getTickets(t4) : (al.warn(ll), null);
+        return e4._conversationsManager ? e4._conversationsManager.getTickets(t4) : (El.warn(xl), null);
       }))();
     }
     requestRestoreLink(t4) {
       var e4 = this;
       return p3((function* () {
-        return e4._conversationsManager ? e4._conversationsManager.requestRestoreLink(t4) : (al.warn(ll), null);
+        return e4._conversationsManager ? e4._conversationsManager.requestRestoreLink(t4) : (El.warn(xl), null);
       }))();
     }
     restoreFromToken(t4) {
       var e4 = this;
       return p3((function* () {
-        return e4._conversationsManager ? e4._conversationsManager.restoreFromToken(t4) : (al.warn(ll), null);
+        return e4._conversationsManager ? e4._conversationsManager.restoreFromToken(t4) : (El.warn(xl), null);
       }))();
     }
     restoreFromUrlToken() {
       var t4 = this;
       return p3((function* () {
-        return t4._conversationsManager ? t4._conversationsManager.restoreFromUrlToken() : (al.warn(ll), null);
+        return t4._conversationsManager ? t4._conversationsManager.restoreFromUrlToken() : (El.warn(xl), null);
       }))();
     }
     getCurrentTicketId() {
@@ -11296,146 +11598,226 @@
       var t4, e4;
       return null !== (t4 = null == (e4 = this._conversationsManager) ? void 0 : e4.getWidgetSessionId()) && void 0 !== t4 ? t4 : null;
     }
-    en() {
+    En() {
       var t4;
       null == (t4 = this._conversationsManager) || t4.setIdentity();
     }
-    tn() {
+    Rn() {
       var t4;
       null == (t4 = this._conversationsManager) || t4.clearIdentity();
     }
-  } }, { logs: class {
+  } };
+  var Dl = { logs: class {
     constructor(e4) {
       var i4;
-      this.va = false, this.fa = false, this.Ae = ui("[logs]"), this._r = [], this.pa = [], this.ga = () => {
+      this.Za = false, this.Ga = false, this.it = pi("[logs]"), this.Gr = [], this.Qa = [], this.Ls = 0, this.Ja = () => {
         var t4, e5;
-        null == (t4 = this.ma) || t4.onReconnect(), null == (e5 = this.ya) || e5.onReconnect();
-      }, this._instance = e4, this._instance && null != (i4 = this._instance.config.logs) && i4.captureConsoleLogs && (this.va = true), t3 && Or(t3, "online", this.ga);
+        this.Ls = 0, null == (t4 = this.Ka) || t4.onReconnect(), null == (e5 = this.Ya) || e5.onReconnect();
+      }, this._instance = e4, this._instance && null != (i4 = this._instance.config.logs) && i4.captureConsoleLogs && (this.Za = true), t3 && Nr(t3, "online", this.Ja);
     }
-    ba(t4, e4, i4, r4) {
+    Xa(t4, e4, i4, r4) {
       var s4, n3 = (function(t5, e5) {
-        var i5, r5, s5, n4, o4, a4, l4, u5 = null !== (i5 = null == t5 ? void 0 : t5.flushIntervalMs) && void 0 !== i5 ? i5 : 3e3, h4 = null !== (r5 = null == t5 ? void 0 : t5.maxBufferSize) && void 0 !== r5 ? r5 : 100, d4 = null != e5 && e5.consoleCapture ? void 0 : null !== (s5 = null == t5 ? void 0 : t5.maxLogsPerInterval) && void 0 !== s5 ? s5 : 1e3, v4 = V2(d4) ? Math.max(h4, 2048) : Math.max(h4, d4), c4 = null == t5 ? void 0 : t5.resourceAttributes;
+        var i5, r5, s5, n4, o4, a4, l4, u5 = null !== (i5 = null == t5 ? void 0 : t5.flushIntervalMs) && void 0 !== i5 ? i5 : 3e3, h4 = null !== (r5 = null == t5 ? void 0 : t5.maxBufferSize) && void 0 !== r5 ? r5 : 100, d4 = null != e5 && e5.consoleCapture ? void 0 : null !== (s5 = null == t5 ? void 0 : t5.maxLogsPerInterval) && void 0 !== s5 ? s5 : 1e3, v4 = W(d4) ? Math.max(h4, 2048) : Math.max(h4, d4), c4 = null == t5 ? void 0 : t5.resourceAttributes;
         return { serviceName: null !== (n4 = null !== (o4 = null == c4 ? void 0 : c4["service.name"]) && void 0 !== o4 ? o4 : null == t5 ? void 0 : t5.serviceName) && void 0 !== n4 ? n4 : null == e5 ? void 0 : e5.serviceNameDefault, serviceVersion: null !== (a4 = null == c4 ? void 0 : c4["service.version"]) && void 0 !== a4 ? a4 : null == t5 ? void 0 : t5.serviceVersion, environment: null !== (l4 = null == c4 ? void 0 : c4["deployment.environment"]) && void 0 !== l4 ? l4 : null == t5 ? void 0 : t5.environment, resourceAttributes: c4, beforeSend: null == t5 ? void 0 : t5.beforeSend, flushIntervalMs: u5, maxBufferSize: h4, maxQueueSize: v4, maxBatchRecordsPerPost: 100, rateCapWindowMs: u5, maxLogsPerInterval: d4, backgroundFlushBudgetMs: 0, terminationFlushBudgetMs: 0 };
       })(null == (s4 = this._instance) || null == (s4 = s4.config) ? void 0 : s4.logs, i4);
-      return [new $e(this._a(t4, e4), n3, this.Ae, (() => this.wa()), ((t5) => t5()), void 0, r4), n3];
+      return [new Re(this.tl(t4, e4), n3, this.it, (() => this.el()), ((t5) => t5()), void 0, r4), n3];
     }
-    xa() {
-      var t4, e4, i4 = null == (t4 = this._instance) || null == (t4 = t4.config) ? void 0 : t4.logs;
-      return this.ma && this.ka === i4 || (null == (e4 = this.ma) || e4.reset(), this.ka = i4, [this.ma, this.Sa] = this.ba((() => this._r), ((t5) => {
-        this._r = t5;
-      }))), this.ma;
+    rl() {
+      var t4, e4 = null == (t4 = this._instance) || null == (t4 = t4.config) ? void 0 : t4.logs;
+      if (!this.Ka || this.il !== e4) {
+        var i4;
+        null == (i4 = this.Ka) || i4.reset(), this.il = e4;
+        var r4 = this.Xa((() => this.Gr), ((t5) => {
+          this.Gr = t5;
+        }));
+        this.Ka = r4[0], this.nl = r4[1];
+      }
+      return this.Ka;
     }
-    Ca() {
-      var t4, e4, i4 = null == (t4 = this._instance) || null == (t4 = t4.config) ? void 0 : t4.logs;
-      return this.ya && this.Ia === i4 || (null == (e4 = this.ya) || e4.reset(), this.Ia = i4, [this.ya, this.Ta] = this.ba((() => this.pa), ((t5) => {
-        this.pa = t5;
-      }), { serviceNameDefault: "posthog-browser-logs", consoleCapture: true }, ul)), this.ya;
+    sl() {
+      var t4, e4 = null == (t4 = this._instance) || null == (t4 = t4.config) ? void 0 : t4.logs;
+      if (!this.Ya || this.ol !== e4) {
+        var i4;
+        null == (i4 = this.Ya) || i4.reset(), this.ol = e4;
+        var r4 = this.Xa((() => this.Qa), ((t5) => {
+          this.Qa = t5;
+        }), { serviceNameDefault: "posthog-browser-logs", consoleCapture: true }, Sl);
+        this.Ya = r4[0], this.al = r4[1];
+      }
+      return this.Ya;
     }
     initialize() {
       this.loadIfEnabled();
     }
     onRemoteConfig(t4) {
       var e4, i4 = null == (e4 = t4.logs) ? void 0 : e4.captureConsoleLogs;
-      !K2(i4) && i4 && (this.va = true, this.loadIfEnabled());
+      !Q2(i4) && i4 && (this.Za = true, this.loadIfEnabled());
     }
     reset() {
       var t4, e4;
-      this._r = [], null == (t4 = this.ma) || t4.reset(), this.pa = [], null == (e4 = this.ya) || e4.reset();
+      this.Gr = [], null == (t4 = this.Ka) || t4.reset(), this.Qa = [], null == (e4 = this.Ya) || e4.reset(), this.Ls = 0;
     }
     captureLog(t4) {
-      this.xa().captureLog(t4);
+      this.rl().captureLog(t4);
     }
     le(t4) {
-      this.Ca().captureLog(t4);
+      this.sl().captureLog(t4);
     }
     get logger() {
-      return this.Ea || (this.Ea = { trace: (t4, e4) => this.captureLog({ body: t4, level: "trace", attributes: e4 }), debug: (t4, e4) => this.captureLog({ body: t4, level: "debug", attributes: e4 }), info: (t4, e4) => this.captureLog({ body: t4, level: "info", attributes: e4 }), warn: (t4, e4) => this.captureLog({ body: t4, level: "warn", attributes: e4 }), error: (t4, e4) => this.captureLog({ body: t4, level: "error", attributes: e4 }), fatal: (t4, e4) => this.captureLog({ body: t4, level: "fatal", attributes: e4 }) }), this.Ea;
+      return this.ll || (this.ll = { trace: (t4, e4) => this.captureLog({ body: t4, level: "trace", attributes: e4 }), debug: (t4, e4) => this.captureLog({ body: t4, level: "debug", attributes: e4 }), info: (t4, e4) => this.captureLog({ body: t4, level: "info", attributes: e4 }), warn: (t4, e4) => this.captureLog({ body: t4, level: "warn", attributes: e4 }), error: (t4, e4) => this.captureLog({ body: t4, level: "error", attributes: e4 }), fatal: (t4, e4) => this.captureLog({ body: t4, level: "fatal", attributes: e4 }) }), this.ll;
     }
     flushLogs(t4) {
-      t4 ? this.Ma(t4) : (this.ma && this.ma.flush().catch(((t5) => this.Ae.error("PostHog logs flush failed:", t5))), this.ya && this.ya.flush().catch(((t5) => this.Ae.error("PostHog logs flush failed:", t5))));
+      t4 ? this.ul(t4) : (this.Ka && this.Ka.flush().catch(((t5) => this.it.error("PostHog logs flush failed:", t5))), this.Ya && this.Ya.flush().catch(((t5) => this.it.error("PostHog logs flush failed:", t5))));
     }
     loadIfEnabled() {
-      if (this.va && !this.fa) {
+      if (this.Za && !this.Ga) {
         var t4 = null == h3 ? void 0 : h3.__PosthogExtensions__;
         if (t4) {
           var e4 = t4.loadExternalDependency;
           e4 ? e4(this._instance, "logs", ((e5) => {
             var i4;
-            e5 || null == (i4 = t4.logs) || !i4.initializeLogs ? this.Ae.error("Could not load logs script", e5) : (t4.logs.initializeLogs(this._instance), this.fa = true);
-          })) : this.Ae.error(hr);
-        } else this.Ae.error("PostHog Extensions not found.");
+            e5 || null == (i4 = t4.logs) || !i4.initializeLogs ? this.it.error("Could not load logs script", e5) : (t4.logs.initializeLogs(this._instance), this.Ga = true);
+          })) : this.it.error(_r);
+        } else this.it.error("PostHog Extensions not found.");
       }
     }
-    _a(t4, e4) {
+    tl(t4, e4) {
       var i4 = this._instance;
       return { get isDisabled() {
         return false;
       }, get optedOut() {
         return !i4.is_capturing();
-      }, getPersistedProperty: (e5) => e5 === w3.LogsQueue ? t4() : void 0, setPersistedProperty(t5, i5) {
+      }, getPersistedProperty: (e5) => e5 === E2.LogsQueue ? t4() : void 0, setPersistedProperty(t5, i5) {
         var r4;
-        t5 === w3.LogsQueue && e4(null !== (r4 = i5) && void 0 !== r4 ? r4 : []);
-      }, ht: (t5) => this.ht(t5), getLibraryId: () => v3.LIB_NAME, getLibraryVersion: () => v3.LIB_VERSION };
+        t5 === E2.LogsQueue && e4(null !== (r4 = i5) && void 0 !== r4 ? r4 : []);
+      }, At: (t5) => this.At(t5), getLibraryId: () => c3.LIB_NAME, getLibraryVersion: () => c3.LIB_VERSION };
     }
-    ht(t4) {
+    At(t4) {
       return new Promise(((e4) => {
-        var i4 = false, r4 = (t5) => {
-          i4 || (i4 = true, clearTimeout(s4), e4(t5));
-        }, s4 = setTimeout((() => r4({ kind: "retry-later", error: new Error("logs request timed out") })), 9e4);
-        this._instance._send_request({ method: "POST", url: this.Pa(), data: t4, compression: "best-available", batchKey: "logs", fireCallbackOnDrop: true, callback(t5) {
-          var e5 = t5.statusCode;
-          if (e5 >= 200 && 300 > e5) r4({ kind: "ok" });
-          else if (413 === e5) r4({ kind: "too-large" });
-          else if (0 !== e5 && 429 !== e5 && 500 > e5) r4({ kind: "fatal", error: new Error("logs request failed with status " + e5) });
-          else {
-            var i5;
-            r4({ kind: "retry-later", error: null !== (i5 = t5.error) && void 0 !== i5 ? i5 : new Error("logs request failed with status " + e5) });
-          }
-        } });
+        if (ln(this.Ls, 3)) e4({ kind: "fatal", error: new Error("logs endpoint is unreachable, dropping batch") });
+        else {
+          var i4 = false, r4 = (t5) => {
+            i4 || (i4 = true, clearTimeout(s4), e4(t5));
+          }, s4 = setTimeout((() => r4({ kind: "retry-later", error: new Error("logs request timed out") })), 9e4);
+          this._instance._send_request({ method: "POST", url: this.hl(), data: t4, compression: "best-available", batchKey: "logs", fireCallbackOnDrop: true, callback: (t5) => {
+            var e5 = t5.statusCode;
+            if (this.dl(e5), e5 >= 200 && 300 > e5) r4({ kind: "ok" });
+            else if (413 === e5) r4({ kind: "too-large" });
+            else if (0 !== e5 && 429 !== e5 && 500 > e5) r4({ kind: "fatal", error: new Error("logs request failed with status " + e5) });
+            else {
+              var i5;
+              r4({ kind: "retry-later", error: null !== (i5 = t5.error) && void 0 !== i5 ? i5 : new Error("logs request failed with status " + e5) });
+            }
+          } });
+        }
       }));
     }
-    Ma(t4) {
-      this._r.length > 0 && this.Ra(t4, this._r, this.Sa, v3.LIB_NAME, ((t5) => {
-        this._r = t5;
-      })), this.pa.length > 0 && this.Ra(t4, this.pa, this.Ta, ul, ((t5) => {
-        this.pa = t5;
+    dl(t4) {
+      (0 !== t4 || this._instance.__loaded) && (this.Ls = un(t4, this.Ls, 3, (() => this.it.warn("Log requests are failing before receiving an HTTP response; this can happen due to network issues, CORS, browser blocking, or ad blockers. Stopped sending logs; will try again when connectivity changes."))));
+    }
+    ul(t4) {
+      this.Gr.length > 0 && this.cl(t4, this.Gr, this.nl, c3.LIB_NAME, ((t5) => {
+        this.Gr = t5;
+      })), this.Qa.length > 0 && this.cl(t4, this.Qa, this.al, Sl, ((t5) => {
+        this.Qa = t5;
       }));
     }
-    Ra(t4, e4, i4, r4, s4) {
+    cl(t4, e4, i4, r4, s4) {
       if (0 !== e4.length) {
         var n3 = e4.map(((t5) => t5.record));
         s4([]);
-        var o4 = Te(n3, Se(i4, v3.LIB_NAME, v3.LIB_VERSION), r4, v3.LIB_VERSION);
-        this._instance._send_request({ method: "POST", url: this.Pa(), data: o4, compression: "best-available", batchKey: "logs", transport: t4 });
+        var o4 = $e(n3, Te(i4, c3.LIB_NAME, c3.LIB_VERSION), r4, c3.LIB_VERSION);
+        this._instance._send_request({ method: "POST", url: this.hl(), data: o4, compression: "best-available", batchKey: "logs", transport: t4 });
       }
     }
-    Pa() {
+    hl() {
       return this._instance.requestRouter.endpointFor("api", "/i/v1/logs") + "?token=" + encodeURIComponent(this._instance.config.token);
     }
-    wa() {
+    el() {
       var t4, e4 = {};
       if (e4.distinctId = this._instance.get_distinct_id(), this._instance.sessionManager) {
-        var { sessionId: i4, windowId: r4, sessionStartTimestamp: s4, lastActivityTimestamp: n3 } = this._instance.sessionManager.checkAndGetSessionAndWindowId(true);
-        e4.sessionId = i4, e4.windowId = r4, K2(s4) || (e4.sessionStartTimestamp = s4), K2(n3) || (e4.lastActivityTimestamp = n3);
+        var i4 = this._instance.sessionManager.checkAndGetSessionAndWindowId(true), r4 = i4.windowId, s4 = i4.sessionStartTimestamp, n3 = i4.lastActivityTimestamp;
+        e4.sessionId = i4.sessionId, e4.windowId = r4, Q2(s4) || (e4.sessionStartTimestamp = s4), Q2(n3) || (e4.lastActivityTimestamp = n3);
       }
-      if (null != h3 && null != (t4 = h3.location) && t4.href && (e4.currentUrl = this._instance.config.disable_capture_url_hashes ? _e(h3.location.href) : h3.location.href), this._instance.featureFlags) {
+      if (null != h3 && null != (t4 = h3.location) && t4.href && (e4.currentUrl = this._instance.config.disable_capture_url_hashes ? me(h3.location.href) : h3.location.href), this._instance.featureFlags) {
         var o4 = this._instance.featureFlags.getFlags();
         o4 && o4.length > 0 && (e4.activeFeatureFlags = o4);
       }
       return e4;
     }
-  } });
-  ya.__defaultExtensionClasses = f4({}, bl);
-  var wl = (function() {
-    v3.SDK_DIST_CHANNEL = "npm";
-    var e4 = oa[ca] = new ya();
+  } };
+  var Nl = { metrics: class {
+    constructor(t4) {
+      this.it = pi("[metrics]"), this._instance = t4;
+    }
+    initialize() {
+    }
+    rl() {
+      var t4, e4, i4, r4, s4, n3, o4, a4, l4, u5 = null == (t4 = this._instance) || null == (t4 = t4.config) ? void 0 : t4.metrics;
+      return this.Ka && this.il === u5 || (null == (e4 = this.Ka) || e4.reset(), this.il = u5, this.Ka = new Ce(this.tl(), { serviceName: null !== (r4 = null == (l4 = null == (i4 = u5) ? void 0 : i4.resourceAttributes) ? void 0 : l4["service.name"]) && void 0 !== r4 ? r4 : null == i4 ? void 0 : i4.serviceName, serviceVersion: null !== (s4 = null == l4 ? void 0 : l4["service.version"]) && void 0 !== s4 ? s4 : null == i4 ? void 0 : i4.serviceVersion, environment: null !== (n3 = null == l4 ? void 0 : l4["deployment.environment"]) && void 0 !== n3 ? n3 : null == i4 ? void 0 : i4.environment, resourceAttributes: l4, beforeSend: null == i4 ? void 0 : i4.beforeSend, flushIntervalMs: null !== (o4 = null == i4 ? void 0 : i4.flushIntervalMs) && void 0 !== o4 ? o4 : 1e4, maxSeriesPerFlush: null !== (a4 = null == i4 ? void 0 : i4.maxSeriesPerFlush) && void 0 !== a4 ? a4 : 1e3 }, this.it)), this.Ka;
+    }
+    count(t4, e4, i4) {
+      void 0 === e4 && (e4 = 1), this.rl().count(t4, e4, i4);
+    }
+    gauge(t4, e4, i4) {
+      this.rl().gauge(t4, e4, i4);
+    }
+    histogram(t4, e4, i4) {
+      this.rl().histogram(t4, e4, i4);
+    }
+    flush(t4) {
+      if (!this.Ka) return Promise.resolve();
+      if (t4) {
+        var e4 = this.Ka.drainWindow();
+        return e4 && this.Kt(e4, t4), Promise.resolve();
+      }
+      return this.Ka.flush().catch(((t5) => this.it.error("PostHog metrics flush failed:", t5)));
+    }
+    reset() {
+      var t4;
+      null == (t4 = this.Ka) || t4.reset();
+    }
+    tl() {
+      var t4 = this._instance, e4 = this;
+      return { get isDisabled() {
+        return false;
+      }, get optedOut() {
+        return !t4.is_capturing();
+      }, Kt: (t5) => e4.Kt(t5), getLibraryId: () => c3.LIB_NAME, getLibraryVersion: () => c3.LIB_VERSION };
+    }
+    Kt(t4, e4) {
+      return new Promise(((i4) => {
+        var r4 = false, s4 = (t5) => {
+          r4 || (r4 = true, clearTimeout(n3), i4(t5));
+        }, n3 = setTimeout((() => s4({ kind: "retry-later", error: new Error("metrics request timed out") })), 9e4);
+        this._instance._send_request(_2({ method: "POST", url: this.vl(), data: t4, compression: "best-available", batchKey: "metrics" }, e4 && { transport: e4 }, { fireCallbackOnDrop: true, callback(t5) {
+          var e5 = t5.statusCode;
+          if (e5 >= 200 && 300 > e5) s4({ kind: "ok" });
+          else if (413 === e5) s4({ kind: "too-large" });
+          else if (0 !== e5 && 429 !== e5 && 500 > e5) s4({ kind: "fatal", error: new Error("metrics request failed with status " + e5) });
+          else {
+            var i5;
+            s4({ kind: "retry-later", error: null !== (i5 = t5.error) && void 0 !== i5 ? i5 : new Error("metrics request failed with status " + e5) });
+          }
+        } }));
+      }));
+    }
+    vl() {
+      return this._instance.requestRouter.endpointFor("api", "/i/v1/metrics") + "?token=" + encodeURIComponent(this._instance.config.token);
+    }
+  } };
+  var Ul = _2({}, kl, Tl, $l, Rl, Pl, Ol, Cl, Il, Ml, Al, Fl, Dl, Nl);
+  Ma.__defaultExtensionClasses = _2({}, Ul);
+  var Ll = (function() {
+    c3.SDK_DIST_CHANNEL = "npm";
+    var e4 = ya[$a] = new Ma();
     return (function() {
       function e5() {
-        e5.done || (e5.done = true, pa = false, xr(oa, (function(t4) {
+        e5.done || (e5.done = true, Ra = false, Pr(ya, (function(t4) {
           t4._dom_loaded();
         })));
       }
-      null != r3 && r3.addEventListener ? "complete" === r3.readyState ? e5() : Or(r3, "DOMContentLoaded", e5, { capture: false }) : t3 && li.error("Browser doesn't support `document.addEventListener` so PostHog couldn't be initialized");
+      null != r3 && r3.addEventListener ? "complete" === r3.readyState ? e5() : Nr(r3, "DOMContentLoaded", e5, { capture: false }) : t3 && fi.error("Browser doesn't support `document.addEventListener` so PostHog couldn't be initialized");
     })(), e4;
   })();
 
@@ -11484,7 +11866,7 @@
   function initAnalytics() {
     if (!isEnabled || !apiKey || !host) return;
     if (!isAllowedByCsp(host)) return;
-    wl.init(apiKey, {
+    Ll.init(apiKey, {
       api_host: host,
       person_profiles: "identified_only",
       capture_pageview: false,
@@ -11494,7 +11876,7 @@
   }
   function capture(event, properties) {
     if (!isInitialized) return;
-    wl.capture(event, properties);
+    Ll.capture(event, properties);
   }
 
   // node_modules/tslib/tslib.es6.mjs
@@ -11653,7 +12035,9 @@
      * @category Edge Functions
      *
      * @remarks
-     * - Requires an Authorization header.
+     * - The API key is sent in the `apikey` header. The `Authorization` header is reserved
+     *   for the signed-in user's JWT (or a custom auth token) — when there is no session, a
+     *   new-format API key (`sb_publishable_…` / `sb_secret_…`) is not sent as a Bearer token.
      * - Invoke params generally match the [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) spec.
      * - When you pass in a body to your function, we automatically attach the Content-Type header for `Blob`, `ArrayBuffer`, `File`, `FormData` and `String`. If it doesn't match any of these types we assume the payload is `json`, serialize it and attach the `Content-Type` header as `application/json`. You can override this behavior by passing in a `Content-Type` header of your own.
      * - Responses are automatically parsed as `json`, `blob` and `form-data` depending on the `Content-Type` header sent by your function. Responses are parsed as `text` by default.
@@ -15744,7 +16128,7 @@ Suggested solution: ${env4.workaround}`;
   var websocket_factory_default = WebSocketFactory;
 
   // node_modules/@supabase/realtime-js/dist/module/lib/version.js
-  var version = "2.110.0";
+  var version = "2.110.7";
 
   // node_modules/@supabase/realtime-js/dist/module/lib/constants.js
   var DEFAULT_VERSION = `realtime-js/${version}`;
@@ -15816,12 +16200,13 @@ Suggested solution: ${env4.workaround}`;
     }
     _encodeUserBroadcastPush(message, encodingType, encodedPayload) {
       var _a2, _b;
-      const topic = message.topic;
-      const ref = (_a2 = message.ref) !== null && _a2 !== void 0 ? _a2 : "";
-      const joinRef = (_b = message.join_ref) !== null && _b !== void 0 ? _b : "";
-      const userEvent = message.payload.event;
+      const encoder = new TextEncoder();
+      const topic = encoder.encode(message.topic);
+      const ref = encoder.encode((_a2 = message.ref) !== null && _a2 !== void 0 ? _a2 : "");
+      const joinRef = encoder.encode((_b = message.join_ref) !== null && _b !== void 0 ? _b : "");
+      const userEvent = encoder.encode(message.payload.event);
       const rest = this.allowedMetadataKeys ? this._pick(message.payload, this.allowedMetadataKeys) : {};
-      const metadata = Object.keys(rest).length === 0 ? "" : JSON.stringify(rest);
+      const metadata = encoder.encode(Object.keys(rest).length === 0 ? "" : JSON.stringify(rest));
       if (joinRef.length > 255) {
         throw new Error(`joinRef length ${joinRef.length} exceeds maximum of 255`);
       }
@@ -15839,7 +16224,8 @@ Suggested solution: ${env4.workaround}`;
       }
       const metaLength = this.USER_BROADCAST_PUSH_META_LENGTH + joinRef.length + ref.length + topic.length + userEvent.length + metadata.length;
       const header = new ArrayBuffer(this.HEADER_LENGTH + metaLength);
-      let view = new DataView(header);
+      const view = new DataView(header);
+      const bytes = new Uint8Array(header);
       let offset = 0;
       view.setUint8(offset++, this.KINDS.userBroadcastPush);
       view.setUint8(offset++, joinRef.length);
@@ -15848,11 +16234,16 @@ Suggested solution: ${env4.workaround}`;
       view.setUint8(offset++, userEvent.length);
       view.setUint8(offset++, metadata.length);
       view.setUint8(offset++, encodingType);
-      Array.from(joinRef, (char) => view.setUint8(offset++, char.charCodeAt(0)));
-      Array.from(ref, (char) => view.setUint8(offset++, char.charCodeAt(0)));
-      Array.from(topic, (char) => view.setUint8(offset++, char.charCodeAt(0)));
-      Array.from(userEvent, (char) => view.setUint8(offset++, char.charCodeAt(0)));
-      Array.from(metadata, (char) => view.setUint8(offset++, char.charCodeAt(0)));
+      bytes.set(joinRef, offset);
+      offset += joinRef.length;
+      bytes.set(ref, offset);
+      offset += ref.length;
+      bytes.set(topic, offset);
+      offset += topic.length;
+      bytes.set(userEvent, offset);
+      offset += userEvent.length;
+      bytes.set(metadata, offset);
+      offset += metadata.length;
       var combined = new Uint8Array(header.byteLength + encodedPayload.byteLength);
       combined.set(new Uint8Array(header), 0);
       combined.set(new Uint8Array(encodedPayload), header.byteLength);
@@ -16098,6 +16489,7 @@ Suggested solution: ${env4.workaround}`;
   var DEFAULT_VSN2 = "2.0.0";
   var DEFAULT_TIMEOUT2 = 1e4;
   var WS_CLOSE_NORMAL = 1e3;
+  var MAX_LONGPOLL_BATCH_SIZE = 100;
   var SOCKET_STATES = (
     /** @type {const} */
     { connecting: 0, open: 1, closing: 2, closed: 3 }
@@ -16816,16 +17208,22 @@ Suggested solution: ${env4.workaround}`;
         }, 0);
       }
     }
-    batchSend(messages) {
+    batchSend(messages, offset = 0) {
       this.awaitingBatchAck = true;
-      this.ajax("POST", { "Content-Type": "application/x-ndjson" }, messages.join("\n"), () => this.onerror("timeout"), (resp) => {
-        this.awaitingBatchAck = false;
+      const next = offset + MAX_LONGPOLL_BATCH_SIZE;
+      const batch = messages.slice(offset, next);
+      this.ajax("POST", { "Content-Type": "application/x-ndjson" }, batch.join("\n"), () => this.onerror("timeout"), (resp) => {
         if (!resp || resp.status !== 200) {
+          this.awaitingBatchAck = false;
           this.onerror(resp && resp.status);
           this.closeAndRetry(1011, "internal server error", false);
+        } else if (next < messages.length) {
+          this.batchSend(messages, next);
         } else if (this.batchBuffer.length > 0) {
           this.batchSend(this.batchBuffer);
           this.batchBuffer = [];
+        } else {
+          this.awaitingBatchAck = false;
         }
       });
     }
@@ -16868,7 +17266,7 @@ Suggested solution: ${env4.workaround}`;
     constructor(channel, opts = {}) {
       let events = opts.events || /** @type {PresenceEvents} */
       { state: "presence_state", diff: "presence_diff" };
-      this.state = {};
+      this.state = /* @__PURE__ */ Object.create(null);
       this.pendingDiffs = [];
       this.channel = channel;
       this.joinRef = null;
@@ -16947,9 +17345,10 @@ Suggested solution: ${env4.workaround}`;
      * @returns {Record<string, PresenceState>}
      */
     static syncState(currentState, newState, onJoin, onLeave) {
-      let state = this.clone(currentState);
-      let joins = {};
-      let leaves = {};
+      let state = this.toNullProtoObj(this.clone(currentState));
+      newState = this.toNullProtoObj(newState);
+      let joins = /* @__PURE__ */ Object.create(null);
+      let leaves = /* @__PURE__ */ Object.create(null);
       this.map(state, (key, presence) => {
         if (!newState[key]) {
           leaves[key] = presence;
@@ -16991,6 +17390,7 @@ Suggested solution: ${env4.workaround}`;
      * @returns {Record<string, PresenceState>}
      */
     static syncDiff(state, diff, onJoin, onLeave) {
+      state = this.toNullProtoObj(state);
       let { joins, leaves } = this.clone(diff);
       if (!onJoin) {
         onJoin = function() {
@@ -17054,6 +17454,22 @@ Suggested solution: ${env4.workaround}`;
     static map(obj, func) {
       return Object.getOwnPropertyNames(obj).map((key) => func(key, obj[key]));
     }
+    // Presence keys are chosen on the server and may collide with
+    // Object.prototype properties ("__proto__", "constructor", ...), so any
+    // object indexed by presence key must not have a prototype chain
+    //
+    // TODO: replace the null-prototype objects with Maps in Phoenix 2.0
+    // (breaking change for the lower-level static API)
+    static toNullProtoObj(obj) {
+      if (Object.getPrototypeOf(obj) === null) {
+        return obj;
+      }
+      let cleaned = /* @__PURE__ */ Object.create(null);
+      Object.getOwnPropertyNames(obj).forEach((key) => {
+        cleaned[key] = obj[key];
+      });
+      return cleaned;
+    }
     /**
     * @template T
     * @param {T} obj
@@ -17098,23 +17514,42 @@ Suggested solution: ${env4.workaround}`;
     /** @private */
     binaryEncode(message) {
       let { join_ref, ref, event, topic, payload } = message;
-      let metaLength = this.META_LENGTH + join_ref.length + ref.length + topic.length + event.length;
+      let encoder = new TextEncoder();
+      let joinRefBytes = encoder.encode(join_ref);
+      let refBytes = encoder.encode(ref);
+      let topicBytes = encoder.encode(topic);
+      let eventBytes = encoder.encode(event);
+      this.assertFieldSize(joinRefBytes.byteLength, "join_ref");
+      this.assertFieldSize(refBytes.byteLength, "ref");
+      this.assertFieldSize(topicBytes.byteLength, "topic");
+      this.assertFieldSize(eventBytes.byteLength, "event");
+      let metaLength = this.META_LENGTH + joinRefBytes.byteLength + refBytes.byteLength + topicBytes.byteLength + eventBytes.byteLength;
       let header = new ArrayBuffer(this.HEADER_LENGTH + metaLength);
+      let headerBytes = new Uint8Array(header);
       let view = new DataView(header);
       let offset = 0;
       view.setUint8(offset++, this.KINDS.push);
-      view.setUint8(offset++, join_ref.length);
-      view.setUint8(offset++, ref.length);
-      view.setUint8(offset++, topic.length);
-      view.setUint8(offset++, event.length);
-      Array.from(join_ref, (char) => view.setUint8(offset++, char.charCodeAt(0)));
-      Array.from(ref, (char) => view.setUint8(offset++, char.charCodeAt(0)));
-      Array.from(topic, (char) => view.setUint8(offset++, char.charCodeAt(0)));
-      Array.from(event, (char) => view.setUint8(offset++, char.charCodeAt(0)));
+      view.setUint8(offset++, joinRefBytes.byteLength);
+      view.setUint8(offset++, refBytes.byteLength);
+      view.setUint8(offset++, topicBytes.byteLength);
+      view.setUint8(offset++, eventBytes.byteLength);
+      headerBytes.set(joinRefBytes, offset);
+      offset += joinRefBytes.byteLength;
+      headerBytes.set(refBytes, offset);
+      offset += refBytes.byteLength;
+      headerBytes.set(topicBytes, offset);
+      offset += topicBytes.byteLength;
+      headerBytes.set(eventBytes, offset);
+      offset += eventBytes.byteLength;
       var combined = new Uint8Array(header.byteLength + payload.byteLength);
-      combined.set(new Uint8Array(header), 0);
+      combined.set(headerBytes, 0);
       combined.set(new Uint8Array(payload), header.byteLength);
       return combined.buffer;
+    },
+    assertFieldSize(size, name) {
+      if (size > 255) {
+        throw new Error(`unable to convert ${name} to binary: must be less than or equal to 255 bytes, but is ${size} bytes`);
+      }
     },
     /**
     * @private
@@ -17293,7 +17728,7 @@ Suggested solution: ${env4.workaround}`;
           this.connect();
         });
       }, this.reconnectAfterMs);
-      this.authToken = opts.authToken;
+      this.authToken = opts.authToken && closure(opts.authToken);
     }
     /**
      * Returns the LongPoll transport reference
@@ -17494,7 +17929,7 @@ Suggested solution: ${env4.workaround}`;
       this.closeWasClean = false;
       let protocols = void 0;
       if (this.authToken) {
-        protocols = ["phoenix", `${AUTH_TOKEN_PREFIX}${btoa(this.authToken).replace(/=/g, "")}`];
+        protocols = ["phoenix", `${AUTH_TOKEN_PREFIX}${btoa(this.authToken()).replace(/=/g, "")}`];
       }
       this.conn = new this.transport(this.endPointURL(), protocols);
       this.conn.binaryType = this.binaryType;
@@ -18404,6 +18839,11 @@ Suggested solution: ${env4.workaround}`;
      * Sends the supplied payload to the presence tracker so other subscribers can see that this
      * client is online. Use `untrack` to stop broadcasting presence for the same key.
      *
+     * Tracking makes this client visible to other subscribers immediately, regardless of this
+     * channel's `config.presence.enabled` setting or whether it has a `presence` listener — that
+     * flag only affects whether *this* client receives presence updates from others (and, on
+     * RLS-protected channels, whether it's authorized to do so).
+     *
      * @category Realtime
      */
     async track(payload, opts = {}) {
@@ -18411,7 +18851,7 @@ Suggested solution: ${env4.workaround}`;
         type: "presence",
         event: "track",
         payload
-      }, opts.timeout || this.timeout);
+      }, opts);
     }
     /**
      * Removes the current presence state for this client.
@@ -19120,7 +19560,6 @@ Suggested solution: ${env4.workaround}`;
      * Initializes the Socket.
      *
      * @param endPoint The string WebSocket endpoint, ie, "ws://example.com/socket", "wss://example.com", "/socket" (inherited host & protocol)
-     * @param httpEndpoint The string HTTP endpoint, ie, "https://example.com", "/" (inherited host & protocol)
      * @param options.transport The Websocket Transport, for example WebSocket. This can be a custom implementation
      * @param options.timeout The default timeout in milliseconds to trigger push timeouts.
      * @param options.params The optional params to pass when connecting.
@@ -19396,7 +19835,7 @@ Suggested solution: ${env4.workaround}`;
     }
     /**
      * Sets a callback that receives lifecycle events for internal heartbeat messages.
-     * Useful for instrumenting connection health (e.g. sent/ok/timeout/disconnected).
+     * Useful for instrumenting connection health (e.g. sent/ok/timeout).
      *
      * @category Realtime
      */
@@ -19542,6 +19981,8 @@ Suggested solution: ${env4.workaround}`;
     /** @internal */
     _wrapHeartbeatCallback(heartbeatCallback) {
       return (status, latency) => {
+        if (status === "disconnected")
+          return;
         if (status == "sent")
           this._setAuthSafely();
         if (heartbeatCallback)
@@ -21103,8 +21544,7 @@ Suggested solution: ${env4.workaround}`;
     * @category Storage
     * @subcategory File Buckets
     * @param path The full path and file name of the file to be downloaded. For example `folder/image.png`.
-    * @param options.transform Transform the asset before serving it to the client.
-    * @param options.cacheNonce Append a cache nonce parameter to the URL to invalidate the cache.
+    * @param options Optional settings: `transform` to transform the asset before serving it to the client, and `cacheNonce` to append a cache nonce parameter to the URL to invalidate the cache.
     * @param parameters Additional fetch parameters like signal for cancellation. Supports standard fetch options including cache control.
     * @returns BlobDownloadBuilder instance for downloading the file
     *
@@ -21583,7 +22023,7 @@ Suggested solution: ${env4.workaround}`;
       return query;
     }
   };
-  var version2 = "2.110.0";
+  var version2 = "2.110.7";
   var DEFAULT_HEADERS = { "X-Client-Info": `storage-js/${version2}` };
   var StorageBucketApi = class extends BaseApiClient {
     constructor(url, headers = {}, fetch$1, opts) {
@@ -22985,7 +23425,7 @@ Suggested solution: ${env4.workaround}`;
   };
 
   // node_modules/@supabase/auth-js/dist/module/lib/version.js
-  var version3 = "2.110.0";
+  var version3 = "2.110.7";
 
   // node_modules/@supabase/auth-js/dist/module/lib/constants.js
   var AUTO_REFRESH_TICK_DURATION_MS = 30 * 1e3;
@@ -23906,10 +24346,7 @@ Suggested solution: ${env4.workaround}`;
     }
     /**
      * Generates email links and OTPs to be sent via a custom email provider.
-     * @param email The user's email.
-     * @param options.password User password. For signup only.
-     * @param options.data Optional user metadata. For signup only.
-     * @param options.redirectTo The redirect url which should be appended to the generated link
+     * @param params The parameters for generating the link, including the link `type`, the user's `email`, and type-specific options such as `password`, `data`, and `redirectTo`.
      *
      * @category Auth
      * @subcategory Auth Admin
@@ -25710,6 +26147,7 @@ ${suffix}`;
       this.lastRefreshFailure = null;
       this._sessionRemovalEpoch = 0;
       this.initializePromise = null;
+      this._pendingInitNotifications = null;
       this.detectSessionInUrl = true;
       this.hasCustomAuthorizationHeader = false;
       this.suppressGetSessionWarning = false;
@@ -25870,9 +26308,11 @@ ${suffix}`;
      * @category Auth
      */
     async initialize() {
+      var _a2;
       if (this.initializePromise) {
         return await this.initializePromise;
       }
+      this._pendingInitNotifications = [];
       this.initializePromise = (async () => {
         if (this.lock != null) {
           return await this._acquireLock(this.lockAcquireTimeout, async () => {
@@ -25881,7 +26321,13 @@ ${suffix}`;
         }
         return await this._initialize();
       })();
-      return await this.initializePromise;
+      const result = await this.initializePromise;
+      const queue = (_a2 = this._pendingInitNotifications) !== null && _a2 !== void 0 ? _a2 : [];
+      this._pendingInitNotifications = null;
+      for (const n3 of queue) {
+        await this._notifyAllSubscribers(n3.event, n3.session, n3.broadcast);
+      }
+      return result;
     }
     /**
      * IMPORTANT:
@@ -27718,7 +28164,7 @@ ${suffix}`;
      * to the client. If that storage is based on request cookies for example,
      * the values in it may not be authentic and therefore it's strongly advised
      * against using this method and its results in such circumstances. A warning
-     * will be emitted if this is detected. Use {@link #getUser()} instead.
+     * will be emitted if this is detected. Use {@link GoTrueClient.getUser} instead.
      *
      * @category Auth
      *
@@ -27859,7 +28305,7 @@ ${suffix}`;
       }
     }
     /**
-     * Use instead of {@link #getSession} inside the library. Loads the session
+     * Use instead of {@link GoTrueClient.getSession} inside the library. Loads the session
      * via `__loadSession` (which may trigger a refresh if the access token is
      * within the expiry margin) and runs `fn` with the result.
      */
@@ -27875,7 +28321,7 @@ ${suffix}`;
     /**
      * NEVER USE DIRECTLY!
      *
-     * Always use {@link #_useSession}.
+     * Always use `_useSession`.
      */
     async __loadSession() {
       this._debug("#__loadSession()", "begin");
@@ -28727,6 +29173,10 @@ ${suffix}`;
     async _signOut({ scope } = { scope: "global" }) {
       return await this._useSession(async (result) => {
         var _a2;
+        const removeCurrentSession = async () => {
+          await this._removeSession();
+          await removeItemAsync(this.storage, `${this.storageKey}-code-verifier`);
+        };
         const { data, error: sessionError } = result;
         if (sessionError && !isAuthSessionMissingError(sessionError)) {
           return this._returnResult({ error: sessionError });
@@ -28736,13 +29186,15 @@ ${suffix}`;
           const { error } = await this.admin.signOut(accessToken, scope);
           if (error) {
             if (!(isAuthApiError(error) && (error.status === 404 || error.status === 401 || error.status === 403) || isAuthSessionMissingError(error))) {
+              if (scope !== "others") {
+                await removeCurrentSession();
+              }
               return this._returnResult({ error });
             }
           }
         }
         if (scope !== "others") {
-          await this._removeSession();
-          await removeItemAsync(this.storage, `${this.storageKey}-code-verifier`);
+          await removeCurrentSession();
         }
         return this._returnResult({ error: null });
       });
@@ -29489,6 +29941,10 @@ ${suffix}`;
       }
     }
     async _notifyAllSubscribers(event, session, broadcast = true) {
+      if (this._pendingInitNotifications !== null && broadcast) {
+        this._pendingInitNotifications.push({ event, session, broadcast });
+        return;
+      }
       const debugName = `#_notifyAllSubscribers(${event})`;
       this._debug(debugName, "begin", session, `broadcast = ${broadcast}`);
       try {
@@ -29521,7 +29977,6 @@ ${suffix}`;
     async _saveSession(session) {
       this._debug("#_saveSession()", session);
       this.suppressGetSessionWarning = true;
-      await removeItemAsync(this.storage, `${this.storageKey}-code-verifier`);
       const sessionToProcess = Object.assign({}, session);
       const userIsProxy = sessionToProcess.user && sessionToProcess.user.__isUserNotAvailableProxy === true;
       if (this.userStorage) {
@@ -29556,8 +30011,8 @@ ${suffix}`;
     /**
      * Removes any registered visibilitychange callback.
      *
-     * {@see #startAutoRefresh}
-     * {@see #stopAutoRefresh}
+     * {@link GoTrueClient.startAutoRefresh}
+     * {@link GoTrueClient.stopAutoRefresh}
      */
     _removeVisibilityChangedCallback() {
       this._debug("#_removeVisibilityChangedCallback()");
@@ -29572,7 +30027,7 @@ ${suffix}`;
       }
     }
     /**
-     * This is the private implementation of {@link #startAutoRefresh}. Use this
+     * This is the private implementation of {@link GoTrueClient.startAutoRefresh}. Use this
      * within the library.
      */
     async _startAutoRefresh() {
@@ -29597,7 +30052,7 @@ ${suffix}`;
       }
     }
     /**
-     * This is the private implementation of {@link #stopAutoRefresh}. Use this
+     * This is the private implementation of {@link GoTrueClient.stopAutoRefresh}. Use this
      * within the library.
      */
     async _stopAutoRefresh() {
@@ -29633,7 +30088,7 @@ ${suffix}`;
      * platform's foreground indication mechanism and call these methods
      * appropriately to conserve resources.
      *
-     * {@see #stopAutoRefresh}
+     * {@link GoTrueClient.stopAutoRefresh}
      *
      * @category Auth
      *
@@ -29667,7 +30122,7 @@ ${suffix}`;
      * If you call this method any managed visibility change callback will be
      * removed and you must manage visibility changes on your own.
      *
-     * See {@link #startAutoRefresh} for more details.
+     * See {@link GoTrueClient.startAutoRefresh} for more details.
      *
      * @category Auth
      *
@@ -30022,7 +30477,7 @@ ${suffix}`;
       return run();
     }
     /**
-     * {@see GoTrueMFAApi#challengeAndVerify}
+     * {@link GoTrueMFAApi#challengeAndVerify}
      */
     async _challengeAndVerify(params) {
       const { data: challengeData, error: challengeError } = await this._challenge({
@@ -30038,7 +30493,7 @@ ${suffix}`;
       });
     }
     /**
-     * {@see GoTrueMFAApi#listFactors}
+     * {@link GoTrueMFAApi#listFactors}
      */
     async _listFactors() {
       var _a2;
@@ -30065,7 +30520,7 @@ ${suffix}`;
       };
     }
     /**
-     * {@see GoTrueMFAApi#getAuthenticatorAssuranceLevel}
+     * {@link GoTrueMFAApi#getAuthenticatorAssuranceLevel}
      */
     async _getAuthenticatorAssuranceLevel(jwt) {
       var _a2, _b, _c, _d;
@@ -30303,15 +30758,15 @@ ${suffix}`;
      * Extracts the JWT claims present in the access token by first verifying the
      * JWT against the server's JSON Web Key Set endpoint
      * `/.well-known/jwks.json` which is often cached, resulting in significantly
-     * faster responses. Prefer this method over {@link #getUser} which always
+     * faster responses. Prefer this method over {@link GoTrueClient.getUser} which always
      * sends a request to the Auth server for each JWT.
      *
      * If the project is not using an asymmetric JWT signing key (like ECC or
-     * RSA) it always sends a request to the Auth server (similar to {@link
-     * #getUser}) to verify the JWT.
+     * RSA) it always sends a request to the Auth server (similar to
+     * {@link GoTrueClient.getUser}) to verify the JWT.
      *
      * @param jwt An optional specific JWT you wish to verify, not the one you
-     *            can obtain from {@link #getSession}.
+     *            can obtain from {@link GoTrueClient.getSession}.
      * @param options Various additional options that allow you to customize the
      *                behavior of this method.
      *
@@ -30743,7 +31198,7 @@ ${suffix}`;
   var AuthClient_default = AuthClient;
 
   // node_modules/@supabase/supabase-js/dist/index.mjs
-  var version4 = "2.110.0";
+  var version4 = "2.110.7";
   var JS_ENV = "";
   var JS_RUNTIME_VERSION;
   if (typeof Deno !== "undefined") {
@@ -30753,7 +31208,8 @@ ${suffix}`;
   else if (typeof navigator !== "undefined" && navigator.product === "ReactNative") JS_ENV = "react-native";
   else {
     JS_ENV = "node";
-    JS_RUNTIME_VERSION = typeof process !== "undefined" ? (_process$version = process.version) === null || _process$version === void 0 ? void 0 : _process$version.replace(/^v/, "") : void 0;
+    const _process = globalThis["process"];
+    JS_RUNTIME_VERSION = _process === null || _process === void 0 || (_process$version = _process["version"]) === null || _process$version === void 0 ? void 0 : _process$version.replace(/^v/, "");
   }
   var _Deno$version;
   var _process$version;
@@ -30948,18 +31404,32 @@ ${suffix}`;
   var resolveHeadersConstructor = () => {
     return Headers;
   };
-  var fetchWithAuth = (supabaseKey, supabaseUrl, getAccessToken, customFetch, tracePropagationOptions) => {
+  var isNewApiKey = (key) => key.startsWith("sb_publishable_") || key.startsWith("sb_secret_");
+  var TEMP_KEY_PREFIX = "sb_temp_";
+  var warnedKeySubtypes = /* @__PURE__ */ new Set();
+  var checkApiKeyFormat = (key) => {
+    var _key$match$, _key$match;
+    if (!key.startsWith("sb_") || isNewApiKey(key) || key.startsWith(TEMP_KEY_PREFIX)) return;
+    const subtype = (_key$match$ = (_key$match = key.match(/^sb_[a-zA-Z0-9]+_/)) === null || _key$match === void 0 ? void 0 : _key$match[0]) !== null && _key$match$ !== void 0 ? _key$match$ : "unknown";
+    if (warnedKeySubtypes.has(subtype)) return;
+    warnedKeySubtypes.add(subtype);
+    console.warn("@supabase/supabase-js: Unrecognized Supabase API key format. The client will proceed and send this key as-is; if you see authentication errors you may need to upgrade @supabase/supabase-js to a version that recognizes this key type.");
+  };
+  var fetchWithAuth = (supabaseKey, supabaseUrl, getAccessToken, customFetch, tracePropagationOptions, options) => {
     const fetch$1 = resolveFetch4(customFetch);
     const HeadersConstructor = resolveHeadersConstructor();
     const traceEnabled = (tracePropagationOptions === null || tracePropagationOptions === void 0 ? void 0 : tracePropagationOptions.enabled) === true;
     const respectSampling = (tracePropagationOptions === null || tracePropagationOptions === void 0 ? void 0 : tracePropagationOptions.respectSamplingDecision) !== false;
     const traceTargets = traceEnabled ? getDefaultPropagationTargets(supabaseUrl) : null;
+    const allowKeyAsBearer = !((options === null || options === void 0 ? void 0 : options.omitApiKeyAsBearer) && isNewApiKey(supabaseKey));
     return async (input, init) => {
-      var _await$getAccessToken;
-      const accessToken = (_await$getAccessToken = await getAccessToken()) !== null && _await$getAccessToken !== void 0 ? _await$getAccessToken : supabaseKey;
+      const realToken = await getAccessToken();
       let headers = new HeadersConstructor(init === null || init === void 0 ? void 0 : init.headers);
       if (!headers.has("apikey")) headers.set("apikey", supabaseKey);
-      if (!headers.has("Authorization")) headers.set("Authorization", `Bearer ${accessToken}`);
+      if (!headers.has("Authorization")) {
+        const bearer = realToken !== null && realToken !== void 0 ? realToken : allowKeyAsBearer ? supabaseKey : null;
+        if (bearer) headers.set("Authorization", `Bearer ${bearer}`);
+      }
       if (traceTargets) {
         const traceHeaders = await getTraceHeaders(input, traceTargets, respectSampling);
         if (traceHeaders) {
@@ -31032,14 +31502,15 @@ ${suffix}`;
     *
     * @param supabaseUrl The unique Supabase URL which is supplied when you create a new project in your project dashboard.
     * @param supabaseKey The unique Supabase Key which is supplied when you create a new project in your project dashboard.
-    * @param options.db.schema You can switch in between schemas. The schema needs to be on the list of exposed schemas inside Supabase.
-    * @param options.auth.autoRefreshToken Set to "true" if you want to automatically refresh the token before expiring.
-    * @param options.auth.persistSession Set to "true" if you want to automatically save the user session into local storage.
-    * @param options.auth.detectSessionInUrl Set to "true" if you want to automatically detects OAuth grants in the URL and signs in the user.
-    * @param options.realtime Options passed along to realtime-js constructor.
-    * @param options.storage Options passed along to the storage-js constructor.
-    * @param options.global.fetch A custom fetch implementation.
-    * @param options.global.headers Any additional headers to send with each network request.
+    * @param options Optional configuration for the client:
+    * - `db.schema` — You can switch in between schemas. The schema needs to be on the list of exposed schemas inside Supabase.
+    * - `auth.autoRefreshToken` — Set to `true` if you want to automatically refresh the token before expiring.
+    * - `auth.persistSession` — Set to `true` if you want to automatically save the user session into local storage.
+    * - `auth.detectSessionInUrl` — Set to `true` if you want to automatically detect OAuth grants in the URL and sign in the user.
+    * - `realtime` — Options passed along to the realtime-js constructor.
+    * - `storage` — Options passed along to the storage-js constructor.
+    * - `global.fetch` — A custom fetch implementation.
+    * - `global.headers` — Any additional headers to send with each network request.
     *
     * @example Creating a client
     * ```js
@@ -31094,9 +31565,9 @@ ${suffix}`;
     * ```
     *
     * @exampleDescription Custom fetch implementation
-    * `supabase-js` uses the [`cross-fetch`](https://www.npmjs.com/package/cross-fetch) library to make HTTP requests,
+    * `supabase-js` uses the runtime's global `fetch` to make HTTP requests,
     * but an alternative `fetch` implementation can be provided as an option.
-    * This is most useful in environments where `cross-fetch` is not compatible (for instance Cloudflare Workers).
+    * This is useful in environments where the global `fetch` is unavailable or where you want to customize request behavior.
     *
     * @example Custom fetch implementation
     * ```js
@@ -31242,6 +31713,7 @@ ${suffix}`;
       this.supabaseKey = supabaseKey;
       const baseUrl = validateSupabaseUrl(supabaseUrl);
       if (!supabaseKey) throw new Error("supabaseKey is required.");
+      checkApiKeyFormat(supabaseKey);
       this.realtimeUrl = new URL("realtime/v1", baseUrl);
       this.realtimeUrl.protocol = this.realtimeUrl.protocol.replace("http", "ws");
       this.authUrl = new URL("auth/v1", baseUrl);
@@ -31268,7 +31740,8 @@ ${suffix}`;
           throw new Error(`@supabase/supabase-js: Supabase Client is configured with the accessToken option, accessing supabase.auth.${String(prop)} is not possible`);
         } });
       }
-      this.fetch = fetchWithAuth(supabaseKey, supabaseUrl, this._getAccessToken.bind(this), settings.global.fetch, settings.tracePropagation);
+      this.fetch = fetchWithAuth(supabaseKey, supabaseUrl, this._getSessionToken.bind(this), settings.global.fetch, settings.tracePropagation);
+      this.functionsFetch = fetchWithAuth(supabaseKey, supabaseUrl, this._getSessionToken.bind(this), settings.global.fetch, settings.tracePropagation, { omitApiKeyAsBearer: true });
       this.realtime = this._initRealtimeClient(_objectSpread23({
         headers: this.headers,
         accessToken: this._getAccessToken.bind(this),
@@ -31291,7 +31764,7 @@ ${suffix}`;
     get functions() {
       return new FunctionsClient(this.functionsUrl.href, {
         headers: this.headers,
-        customFetch: this.fetch
+        customFetch: this.functionsFetch
       });
     }
     /**
@@ -31401,12 +31874,22 @@ ${suffix}`;
     removeAllChannels() {
       return this.realtime.removeAllChannels();
     }
-    async _getAccessToken() {
+    /**
+    * The raw session token — the custom `accessToken` result or the signed-in user's JWT —
+    * or `null` when there is no session. Unlike {@link _getAccessToken} it does not fall back
+    * to `supabaseKey`, so callers can distinguish "no session" from "has session".
+    */
+    async _getSessionToken() {
       var _this = this;
       var _data$session$access_, _data$session;
       if (_this.accessToken) return await _this.accessToken();
       const { data } = await _this.auth.getSession();
-      return (_data$session$access_ = (_data$session = data.session) === null || _data$session === void 0 ? void 0 : _data$session.access_token) !== null && _data$session$access_ !== void 0 ? _data$session$access_ : _this.supabaseKey;
+      return (_data$session$access_ = (_data$session = data.session) === null || _data$session === void 0 ? void 0 : _data$session.access_token) !== null && _data$session$access_ !== void 0 ? _data$session$access_ : null;
+    }
+    async _getAccessToken() {
+      var _this2 = this;
+      var _await$this$_getSessi;
+      return (_await$this$_getSessi = await _this2._getSessionToken()) !== null && _await$this$_getSessi !== void 0 ? _await$this$_getSessi : _this2.supabaseKey;
     }
     _initSupabaseAuthClient({ autoRefreshToken, persistSession, detectSessionInUrl, storage, userStorage, storageKey, flowType, lock, debug, throwOnError, experimental, lockAcquireTimeout, skipAutoInitialize }, headers, fetch$1) {
       const authHeaders = {
@@ -31442,7 +31925,7 @@ ${suffix}`;
       });
     }
     _handleTokenChanged(event, source, token) {
-      if ((event === "TOKEN_REFRESHED" || event === "SIGNED_IN") && this.changedAccessToken !== token) {
+      if ((event === "TOKEN_REFRESHED" || event === "SIGNED_IN" || event === "INITIAL_SESSION") && this.changedAccessToken !== token) {
         this.changedAccessToken = token;
         this.realtime.setAuth(token);
       } else if (event === "SIGNED_OUT") {
