@@ -82,11 +82,18 @@ function migrateToV1() {
 
     let theme = localStorage.getItem(THEME_KEY);
     if (!theme) {
-        const legacyTheme = localStorage.getItem(LEGACY_THEME_KEY);
-        if (legacyTheme) {
-            theme = legacyTheme;
-            localStorage.setItem(THEME_KEY, legacyTheme);
-            localStorage.removeItem(LEGACY_THEME_KEY);
+        const typoTheme = localStorage.getItem("brujulaThema");
+        if (typoTheme) {
+            theme = typoTheme;
+            localStorage.setItem(THEME_KEY, typoTheme);
+            localStorage.removeItem("brujulaThema");
+        } else {
+            const legacyTheme = localStorage.getItem(LEGACY_THEME_KEY);
+            if (legacyTheme) {
+                theme = legacyTheme;
+                localStorage.setItem(THEME_KEY, legacyTheme);
+                localStorage.removeItem(LEGACY_THEME_KEY);
+            }
         }
     }
     if (theme && !VALID_THEMES.has(theme)) {

@@ -2,7 +2,7 @@
 // Storage keys and app config
 /** @type {string} */ export const RECENT_KEY = "brujulaRecientes";
 /** @type {string} */ export const LANGUAGE_KEY = "brujulaIdioma";
-/** @type {string} */ export const THEME_KEY = "brujulaThema";
+/** @type {string} */ export const THEME_KEY = "brujulaTema";
 /** @type {string} */ export const DIARY_KEY = "brujulaDiario";
 /** @type {string} */ export const DIARY_CLOUD_USER_KEY = "brujulaDiarioCloudUserId";
 /** @type {string} */ export const OFFLINE_QUEUE_KEY = "brujulaOfflineQueue";

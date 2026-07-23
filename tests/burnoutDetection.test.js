@@ -3,6 +3,7 @@ import {
     isFatigueEmotion,
     isStressEmotion,
     isNegativeEmotion,
+    splitPeriods,
     detectFatiguePattern,
     detectEmotionalNumbness,
     detectIrritabilitySpike,
@@ -52,7 +53,7 @@ describe("emotion classifiers", () => {
 describe("detectFatiguePattern", () => {
     it("devuelve score 0 con menos de 3 entradas recientes", () => {
         const entries = [entry("Tristeza", 1), entry("Soledad", 2)];
-        expect(detectFatiguePattern(entries).score).toBe(0);
+        expect(detectFatiguePattern(splitPeriods(entries).current).score).toBe(0);
     });
 
     it("detecta patrón de fatiga cuando ratio ≥ 0.6", () => {
@@ -60,14 +61,14 @@ describe("detectFatiguePattern", () => {
             entry("Tristeza", 1), entry("Tristeza", 2), entry("Soledad", 3),
             entry("Angustia", 4), entry("Alegría", 5),
         ];
-        const { score, ratio } = detectFatiguePattern(entries);
+        const { score, ratio } = detectFatiguePattern(splitPeriods(entries).current);
         expect(ratio).toBeCloseTo(0.8);
         expect(score).toBe(25);
     });
 
     it("no detecta fatiga con emociones positivas", () => {
         const entries = Array.from({ length: 5 }, (_, i) => entry("Alegría", i + 1));
-        expect(detectFatiguePattern(entries).score).toBe(0);
+        expect(detectFatiguePattern(splitPeriods(entries).current).score).toBe(0);
     });
 
     it("ignora entradas fuera de la ventana de 30 días", () => {
@@ -78,7 +79,7 @@ describe("detectFatiguePattern", () => {
             entry("Calma", 3),
         ];
         // solo hay 3 entradas en los últimos 30 días: Tristeza, Alegría, Calma → ratio ~0.33
-        const { score } = detectFatiguePattern(entries);
+        const { score } = detectFatiguePattern(splitPeriods(entries).current);
         expect(score).toBe(5);
     });
 });
@@ -86,13 +87,13 @@ describe("detectFatiguePattern", () => {
 describe("detectEmotionalNumbness", () => {
     it("devuelve score 0 con menos de 5 entradas", () => {
         const entries = [entry("Tristeza", 1), entry("Tristeza", 2)];
-        expect(detectEmotionalNumbness(entries).score).toBe(0);
+        expect(detectEmotionalNumbness(splitPeriods(entries).current).score).toBe(0);
     });
 
     it("detecta baja variedad emocional (ratio ≤ 0.15)", () => {
         // 10 entradas, solo 1 emoción distinta → ratio = 0.1
         const entries = Array.from({ length: 10 }, (_, i) => entry("Tristeza", i + 1));
-        const { score, distinctRatio } = detectEmotionalNumbness(entries);
+        const { score, distinctRatio } = detectEmotionalNumbness(splitPeriods(entries).current);
         expect(distinctRatio).toBeCloseTo(0.1);
         expect(score).toBe(25);
     });
@@ -100,7 +101,7 @@ describe("detectEmotionalNumbness", () => {
     it("no detecta adormecimiento con alta variedad emocional", () => {
         const emotions = ["Alegría", "Calma", "Tristeza", "Enojo", "Ansiedad", "Gratitud", "Orgullo", "Ternura", "Miedo", "Felicidad"];
         const entries = emotions.map((e, i) => entry(e, i + 1));
-        const { score } = detectEmotionalNumbness(entries);
+        const { score } = detectEmotionalNumbness(splitPeriods(entries).current);
         expect(score).toBe(0);
     });
 });
@@ -108,7 +109,7 @@ describe("detectEmotionalNumbness", () => {
 describe("detectIrritabilitySpike", () => {
     it("devuelve score 0 con menos de 3 entradas recientes", () => {
         const entries = [entry("Irritabilidad", 1)];
-        expect(detectIrritabilitySpike(entries).score).toBe(0);
+        expect(detectIrritabilitySpike(splitPeriods(entries).current, splitPeriods(entries).previous).score).toBe(0);
     });
 
     it("detecta aumento de estrés respecto al período anterior", () => {
@@ -117,7 +118,7 @@ describe("detectIrritabilitySpike", () => {
         current.push(entry("Alegría", 5));
         // Período anterior (31-60 días): 0/4 son estrés → 0
         const previous = Array.from({ length: 4 }, (_, i) => entry("Alegría", 35 + i));
-        const { score, delta } = detectIrritabilitySpike([...current, ...previous]);
+        const { score, delta } = detectIrritabilitySpike(current, previous);
         expect(delta).toBeCloseTo(0.8);
         expect(score).toBe(25);
     });
@@ -125,7 +126,7 @@ describe("detectIrritabilitySpike", () => {
     it("no detecta pico si el estrés se mantuvo estable", () => {
         const current  = Array.from({ length: 5 }, (_, i) => entry("Enojo", i + 1));
         const previous = Array.from({ length: 5 }, (_, i) => entry("Enojo", 35 + i));
-        const { score } = detectIrritabilitySpike([...current, ...previous]);
+        const { score } = detectIrritabilitySpike(current, previous);
         expect(score).toBe(0);
     });
 });
@@ -133,7 +134,7 @@ describe("detectIrritabilitySpike", () => {
 describe("detectNegativityDominance", () => {
     it("devuelve score 0 con menos de 5 entradas", () => {
         const entries = [entry("Tristeza", 1)];
-        expect(detectNegativityDominance(entries).score).toBe(0);
+        expect(detectNegativityDominance(splitPeriods(entries).current).score).toBe(0);
     });
 
     it("detecta predominio negativo cuando ratio ≥ 0.8", () => {
@@ -142,14 +143,14 @@ describe("detectNegativityDominance", () => {
             entry("Alegría", 9),
             entry("Calma", 10),
         ];
-        const { score, negativeRatio } = detectNegativityDominance(entries);
+        const { score, negativeRatio } = detectNegativityDominance(splitPeriods(entries).current);
         expect(negativeRatio).toBeCloseTo(0.8);
         expect(score).toBe(25);
     });
 
     it("no detecta problema cuando las emociones son mayormente positivas", () => {
         const entries = Array.from({ length: 8 }, (_, i) => entry("Alegría", i + 1));
-        expect(detectNegativityDominance(entries).score).toBe(0);
+        expect(detectNegativityDominance(splitPeriods(entries).current).score).toBe(0);
     });
 });
 

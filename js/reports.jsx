@@ -1,6 +1,6 @@
 // @ts-check
 import { render } from "preact";
-import { useState } from "preact/hooks";
+import { useState, useMemo } from "preact/hooks";
 import { DIARY_TAGS } from "./constants.js";
 import { getDiaryEntries } from "./persistence.js";
 import { get } from "./store.js";
@@ -351,7 +351,7 @@ function MotivationalNote({ total, t }) {
 
 /** @param {{ entries: DiaryEntry[], t: TFn }} props */
 function BurnoutCard({ entries, t }) {
-    const assessment = assessBurnoutRisk(entries);
+    const assessment = useMemo(() => assessBurnoutRisk(entries), [entries]);
 
     const levelColors = {
         low:      { bg: "bg-emerald-50",  border: "border-emerald-200", dot: "bg-emerald-400", text: "text-emerald-700" },
@@ -449,43 +449,51 @@ function ReportsPanel({ entries, t, getDisplayName, emociones, onGoToEntries }) 
         return <EmptyState t={t} onGoToEntries={onGoToEntries} />;
     }
 
-    const filtered        = filterByPeriod(entries, period);
-    const streak          = calcStreak(entries);
-    const trend           = calcTrend(entries, period);
-    const distinctEmotions = new Set(filtered.map((e) => e.emotion)).size;
+    const filtered = useMemo(() => filterByPeriod(entries, period), [entries, period]);
+    const streak   = useMemo(() => calcStreak(entries), [entries]);
+    const trend    = useMemo(() => calcTrend(entries, period), [entries, period]);
+    const distinctEmotions = useMemo(() => new Set(filtered.map((e) => e.emotion)).size, [filtered]);
 
     // Emotion frequency — top 8 in filtered period
-    const emotionCounts = countByEmotion(filtered);
-    const topEmotions   = Array.from(emotionCounts.entries()).sort((a, b) => b[1] - a[1]).slice(0, 8);
-    const emotionItems  = topEmotions.map(([nombre, count]) => {
-        const emocion = emociones.find((e) => e.nombre === nombre);
-        return { label: getDisplayName(nombre), count, color: emocion?.color ?? "#7C5CFC" };
-    });
-    const [topNombre] = topEmotions[0] ?? ["", 0];
+    const { emotionItems, topNombre } = useMemo(() => {
+        const emotionCounts = countByEmotion(filtered);
+        const topEmotions   = Array.from(emotionCounts.entries()).sort((a, b) => b[1] - a[1]).slice(0, 8);
+        const items = topEmotions.map(([nombre, count]) => {
+            const emocion = emociones.find((e) => e.nombre === nombre);
+            return { label: getDisplayName(nombre), count, color: emocion?.color ?? "#7C5CFC" };
+        });
+        const [name] = topEmotions[0] ?? ["", 0];
+        return { emotionItems: items, topNombre: name };
+    }, [filtered, emociones, getDisplayName]);
 
     // Top tag for narrative (most used tag in filtered period)
-    const tagCounts  = countByTag(filtered);
-    const topTagEntry = Array.from(tagCounts.entries())
-        .filter(([, c]) => c > 0)
-        .sort((a, b) => b[1] - a[1])[0];
-    const topTag = topTagEntry?.[0] ?? "";
+    const { topTag, tagItems, tagMax } = useMemo(() => {
+        const tagCounts  = countByTag(filtered);
+        const topTagEntry = Array.from(tagCounts.entries())
+            .filter(([, c]) => c > 0)
+            .sort((a, b) => b[1] - a[1])[0];
+        const top = topTagEntry?.[0] ?? "";
 
-    // Tags — only show used ones
-    const tagItems = DIARY_TAGS
-        .map((tag) => ({
-            label: t(`diary.tag${tag.charAt(0).toUpperCase()}${tag.slice(1)}`),
-            count: tagCounts.get(tag) ?? 0,
-        }))
-        .filter((item) => item.count > 0);
-    const tagMax = Math.max(...tagItems.map((i) => i.count), 1);
+        const items = DIARY_TAGS
+            .map((tag) => ({
+                label: t(`diary.tag${tag.charAt(0).toUpperCase()}${tag.slice(1)}`),
+                count: tagCounts.get(tag) ?? 0,
+            }))
+            .filter((item) => item.count > 0);
+        const max = Math.max(...items.map((i) => i.count), 1);
+
+        return { topTag: top, tagItems: items, tagMax: max };
+    }, [filtered, t]);
 
     // Weekly chart — always last 8 weeks, independent of period filter
     const lang           = /** @type {string} */ (get("currentLang") || "es");
-    const currentWeekKey = isoWeekKey(new Date().toISOString());
-    const weeks          = last8Weeks(entries, lang);
-    const weekItems  = weeks.map((w) => ({ label: w.label, count: w.count, key: w.key }));
+    const currentWeekKey = useMemo(() => isoWeekKey(new Date().toISOString()), []);
+    const weekItems = useMemo(() => {
+        const weeks = last8Weeks(entries, lang);
+        return weeks.map((w) => ({ label: w.label, count: w.count, key: w.key }));
+    }, [entries, lang]);
 
-    const timeOfDay = countByTimeOfDay(filtered);
+    const timeOfDay = useMemo(() => countByTimeOfDay(filtered), [filtered]);
 
     return (
         <div>

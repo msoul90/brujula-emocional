@@ -22,6 +22,7 @@ esbuild
     bundle: true,
     format: "iife",
     outfile: "dist/app.bundle.js",
+    minify: true,
     jsx: "automatic",
     jsxImportSource: "preact",
     define: {

@@ -1,5 +1,5 @@
 (function () {
-    const t = localStorage.getItem("brujulaThema") || "auto";
+    const t = localStorage.getItem("brujulaTema") || localStorage.getItem("brujulaThema") || "auto";
     if (t === "dark" || (t === "auto" && matchMedia("(prefers-color-scheme: dark)").matches)) {
         document.documentElement.classList.add("dark");
     }

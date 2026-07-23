@@ -27,20 +27,25 @@ export function splitPeriods(entries, windowDays = 30) {
     const now         = Date.now();
     const cutCurrent  = now - windowDays * 86400000;
     const cutPrevious = now - 2 * windowDays * 86400000;
-    const current  = entries.filter((e) => new Date(e.date).getTime() >= cutCurrent);
-    const previous = entries.filter((e) => {
+    const current  = [];
+    const previous = [];
+    for (let i = 0; i < entries.length; i++) {
+        const e = entries[i];
         const t = new Date(e.date).getTime();
-        return t >= cutPrevious && t < cutCurrent;
-    });
+        if (t >= cutCurrent) {
+            current.push(e);
+        } else if (t >= cutPrevious) {
+            previous.push(e);
+        }
+    }
     return { current, previous };
 }
 
 /**
  * High frequency of fatigue-related emotions in the current period.
- * @param {DiaryEntry[]} entries @returns {{ score: number, ratio: number }}
+ * @param {DiaryEntry[]} current @returns {{ score: number, ratio: number }}
  */
-export function detectFatiguePattern(entries) {
-    const { current } = splitPeriods(entries);
+export function detectFatiguePattern(current) {
     if (current.length < 3) return { score: 0, ratio: 0 };
     const count = current.filter((e) => isFatigueEmotion(e.emotion)).length;
     const ratio = count / current.length;
@@ -50,10 +55,9 @@ export function detectFatiguePattern(entries) {
 
 /**
  * Low emotional variety despite many entries (emotional numbness / apathy).
- * @param {DiaryEntry[]} entries @returns {{ score: number, distinctRatio: number }}
+ * @param {DiaryEntry[]} current @returns {{ score: number, distinctRatio: number }}
  */
-export function detectEmotionalNumbness(entries) {
-    const { current } = splitPeriods(entries);
+export function detectEmotionalNumbness(current) {
     if (current.length < 5) return { score: 0, distinctRatio: 1 };
     const distinct      = new Set(current.map((e) => e.emotion)).size;
     const distinctRatio = distinct / current.length;
@@ -63,10 +67,11 @@ export function detectEmotionalNumbness(entries) {
 
 /**
  * Stress emotions increased compared to the previous period.
- * @param {DiaryEntry[]} entries @returns {{ score: number, delta: number }}
+ * @param {DiaryEntry[]} current
+ * @param {DiaryEntry[]} previous
+ * @returns {{ score: number, delta: number }}
  */
-export function detectIrritabilitySpike(entries) {
-    const { current, previous } = splitPeriods(entries);
+export function detectIrritabilitySpike(current, previous) {
     if (current.length < 3) return { score: 0, delta: 0 };
     const currentRatio  = current.filter((e)  => isStressEmotion(e.emotion)).length  / current.length;
     const previousRatio = previous.length > 0
@@ -79,10 +84,9 @@ export function detectIrritabilitySpike(entries) {
 
 /**
  * Negative emotions dominate recent entries.
- * @param {DiaryEntry[]} entries @returns {{ score: number, negativeRatio: number }}
+ * @param {DiaryEntry[]} current @returns {{ score: number, negativeRatio: number }}
  */
-export function detectNegativityDominance(entries) {
-    const { current } = splitPeriods(entries);
+export function detectNegativityDominance(current) {
     if (current.length < 5) return { score: 0, negativeRatio: 0 };
     const negCount       = current.filter((e) => isNegativeEmotion(e.emotion)).length;
     const negativeRatio  = negCount / current.length;
@@ -113,15 +117,15 @@ export const BURNOUT_MIN_ENTRIES = 10;
  * @returns {BurnoutAssessment}
  */
 export function assessBurnoutRisk(entries) {
-    const { current } = splitPeriods(entries);
+    const { current, previous } = splitPeriods(entries);
     if (current.length < BURNOUT_MIN_ENTRIES) {
         return { totalScore: 0, level: "low", signals: [], hasEnoughData: false };
     }
 
-    const fatigue      = detectFatiguePattern(entries);
-    const numbness     = detectEmotionalNumbness(entries);
-    const irritability = detectIrritabilitySpike(entries);
-    const negativity   = detectNegativityDominance(entries);
+    const fatigue      = detectFatiguePattern(current);
+    const numbness     = detectEmotionalNumbness(current);
+    const irritability = detectIrritabilitySpike(current, previous);
+    const negativity   = detectNegativityDominance(current);
 
     /** @type {BurnoutSignal[]} */
     const allSignals = [
