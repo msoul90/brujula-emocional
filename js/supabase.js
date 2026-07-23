@@ -1,10 +1,15 @@
 import { createClient } from "@supabase/supabase-js";
 
 /**
- * Typed env access for browser code without requiring Node typings.
+ * Referencing `process.env.X` directly (rather than through a `globalThis.process`
+ * indirection) is required so esbuild's `define` can statically replace each
+ * value at build time — see scripts/build-js.js.
  * @type {{ SUPABASE_URL?: string, SUPABASE_ANON_KEY?: string }}
  */
-const env = /** @type {any} */ (globalThis).process?.env ?? {};
+const env = {
+  SUPABASE_URL: process.env.SUPABASE_URL,
+  SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY,
+};
 
 let client = null;
 
