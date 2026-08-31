@@ -44,6 +44,31 @@ function sanitizeRecent(value) {
     return out;
 }
 
+/**
+ * @param {unknown} entry
+ * @param {number} fallbackId  id to use when the entry has no usable one
+ * @returns {{ id: number, date: string, emotion: string, note: string, tags: string[] } | null}
+ */
+function sanitizeDiaryEntry(entry, fallbackId) {
+    if (!isRecord(entry)) return null;
+
+    const emotion = typeof entry.emotion === "string" ? entry.emotion.trim() : "";
+    if (!emotion) return null;
+
+    const idNum = Number(entry.id);
+    const id = Number.isFinite(idNum) ? idNum : fallbackId;
+
+    const dateRaw = typeof entry.date === "string" ? entry.date : "";
+    const date = Number.isNaN(Date.parse(dateRaw)) ? new Date(id).toISOString() : dateRaw;
+
+    const note = typeof entry.note === "string" ? entry.note.trim() : "";
+    const tags = Array.isArray(entry.tags)
+        ? entry.tags.filter((tag) => typeof tag === "string" && DIARY_TAGS.includes(tag))
+        : [];
+
+    return { id, date, emotion, note, tags };
+}
+
 /** @param {unknown} value @returns {Array<{ id: number, date: string, emotion: string, note: string, tags: string[] }>} */
 function sanitizeDiary(value) {
     if (!Array.isArray(value)) return [];
@@ -51,24 +76,8 @@ function sanitizeDiary(value) {
     const out = [];
 
     for (let i = 0; i < value.length; i++) {
-        const entry = value[i];
-        if (!isRecord(entry)) continue;
-
-        const emotion = typeof entry.emotion === "string" ? entry.emotion.trim() : "";
-        if (!emotion) continue;
-
-        const idNum = Number(entry.id);
-        const id = Number.isFinite(idNum) ? idNum : now + i;
-
-        const dateRaw = typeof entry.date === "string" ? entry.date : "";
-        const date = Number.isNaN(Date.parse(dateRaw)) ? new Date(id).toISOString() : dateRaw;
-
-        const note = typeof entry.note === "string" ? entry.note.trim() : "";
-        const tags = Array.isArray(entry.tags)
-            ? entry.tags.filter((tag) => typeof tag === "string" && DIARY_TAGS.includes(tag))
-            : [];
-
-        out.push({ id, date, emotion, note, tags });
+        const sanitized = sanitizeDiaryEntry(value[i], now + i);
+        if (sanitized) out.push(sanitized);
     }
 
     return out;

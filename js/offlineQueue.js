@@ -35,8 +35,71 @@ export function enqueueDelete(id) {
     setOfflineQueue(deduped);
 }
 
+/** @typedef {{ syncOnCreate: (e: any) => Promise<void>, syncOnDelete: (id: number) => Promise<void>, syncOnClearAll?: () => Promise<void>, syncEntriesToCloud?: (entries: any[]) => Promise<void>, syncOnDeleteBatch?: (ids: number[]) => Promise<void> }} CloudSync */
+
+/** @param {CloudSync} cloudSync */
+async function flushClear(cloudSync) {
+    try {
+        await cloudSync.syncOnClearAll?.();
+        setOfflineQueue([]);
+    } catch (error) {
+        console.warn("Batch clear failed", error);
+        // keep all operations in the queue
+    }
+}
+
 /**
- * @param {{ syncOnCreate: (e: any) => Promise<void>, syncOnDelete: (id: number) => Promise<void>, syncOnClearAll?: () => Promise<void>, syncEntriesToCloud?: (entries: any[]) => Promise<void>, syncOnDeleteBatch?: (ids: number[]) => Promise<void> }} cloudSync
+ * @param {any[]} q
+ * @param {CloudSync} cloudSync
+ */
+async function flushBatched(q, cloudSync) {
+    const creates = q.filter((op) => op.type === "create");
+    const deletes = q.filter((op) => op.type === "delete");
+    const failed = [];
+
+    if (creates.length > 0) {
+        try {
+            await cloudSync.syncEntriesToCloud?.(creates.map((op) => op.entry));
+        } catch (error) {
+            console.warn("Batch create sync failed", error);
+            failed.push(...creates);
+        }
+    }
+
+    if (deletes.length > 0) {
+        try {
+            await cloudSync.syncOnDeleteBatch?.(deletes.map((op) => op.id));
+        } catch (error) {
+            console.warn("Batch delete sync failed", error);
+            failed.push(...deletes);
+        }
+    }
+
+    setOfflineQueue(failed);
+}
+
+/**
+ * @param {any[]} q
+ * @param {CloudSync} cloudSync
+ */
+async function flushSequential(q, cloudSync) {
+    const failed = [];
+    for (const op of q) {
+        try {
+            if (op.type === "create") {
+                await cloudSync.syncOnCreate(op.entry);
+            } else if (op.type === "delete") {
+                await cloudSync.syncOnDelete(op.id);
+            }
+        } catch {
+            failed.push(op);
+        }
+    }
+    setOfflineQueue(failed);
+}
+
+/**
+ * @param {CloudSync} cloudSync
  * @param {() => Promise<any>} getSession
  */
 export async function flushQueue(cloudSync, getSession) {
@@ -45,62 +108,17 @@ export async function flushQueue(cloudSync, getSession) {
     const session = await getSession();
     if (!session) return;
 
-    // Handle clear operation (typically alone in queue)
-    const clearOp = q.find((op) => op.type === "clear");
-    if (clearOp) {
-        try {
-            await cloudSync.syncOnClearAll?.();
-            setOfflineQueue([]);
-        } catch (error) {
-            console.warn("Batch clear failed", error);
-            // keep all operations in the queue
-        }
+    // A clear op is typically alone in the queue and supersedes everything else.
+    if (q.some((op) => op.type === "clear")) {
+        await flushClear(cloudSync);
         return;
     }
 
-    // Check if batch capabilities are provided
-    if (typeof cloudSync.syncEntriesToCloud === "function" && typeof cloudSync.syncOnDeleteBatch === "function") {
-        const creates = q.filter((op) => op.type === "create");
-        const deletes = q.filter((op) => op.type === "delete");
-        const failed = [];
-
-        // 1. Process batch creates
-        if (creates.length > 0) {
-            try {
-                const entries = creates.map((op) => op.entry);
-                await cloudSync.syncEntriesToCloud(entries);
-            } catch (error) {
-                console.warn("Batch create sync failed", error);
-                failed.push(...creates);
-            }
-        }
-
-        // 2. Process batch deletes
-        if (deletes.length > 0) {
-            try {
-                const ids = deletes.map((op) => op.id);
-                await cloudSync.syncOnDeleteBatch(ids);
-            } catch (error) {
-                console.warn("Batch delete sync failed", error);
-                failed.push(...deletes);
-            }
-        }
-
-        setOfflineQueue(failed);
+    const canBatch = typeof cloudSync.syncEntriesToCloud === "function"
+        && typeof cloudSync.syncOnDeleteBatch === "function";
+    if (canBatch) {
+        await flushBatched(q, cloudSync);
     } else {
-        // Fallback to sequential individual requests
-        const failed = [];
-        for (const op of q) {
-            try {
-                if (op.type === "create") {
-                    await cloudSync.syncOnCreate(op.entry);
-                } else if (op.type === "delete") {
-                    await cloudSync.syncOnDelete(op.id);
-                }
-            } catch {
-                failed.push(op);
-            }
-        }
-        setOfflineQueue(failed);
+        await flushSequential(q, cloudSync);
     }
 }

@@ -49,7 +49,8 @@ if (fs.existsSync('pwa/fonts')) {
 // Sort the list to make sure we hash files in a deterministic order
 filesToHash.sort((a, b) => a.localeCompare(b));
 
-const hash = crypto.createHash('md5');
+// sha256 is used purely as a content fingerprint for cache-busting, not for security.
+const hash = crypto.createHash('sha256');
 
 for (const file of filesToHash) {
   if (fs.existsSync(file)) {

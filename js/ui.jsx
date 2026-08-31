@@ -492,7 +492,7 @@ export function createUI({
         const bodyTop = document.body.style.top;
         document.body.style.top = "";
         document.body.classList.remove("modal-open");
-        if (bodyTop) window.scrollTo(0, parseInt(bodyTop) * -1);
+        if (bodyTop) window.scrollTo(0, Number.parseInt(bodyTop, 10) * -1);
 
         setTimeout(() => {
             modal.close();

@@ -20,7 +20,8 @@ const listeners = {};
  * @param {Function} fn
  */
 export function on(event, fn) {
-    (listeners[event] ??= []).push(fn);
+    listeners[event] ??= [];
+    listeners[event].push(fn);
 }
 
 /**
