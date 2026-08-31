@@ -19,6 +19,34 @@ export function isStressEmotion(nombre) { return STRESS_EMOTIONS.has(nombre); }
 export function isNegativeEmotion(nombre) { return NEGATIVE_EMOTIONS.has(nombre); }
 
 /**
+ * Map a metric to a score by walking descending `[threshold, score]` steps.
+ * Returns the score of the first step whose threshold is met, or 0.
+ * @param {number} value
+ * @param {Array<[number, number]>} steps
+ * @returns {number}
+ */
+function bucketScore(value, steps) {
+    for (const [threshold, score] of steps) {
+        if (value >= threshold) return score;
+    }
+    return 0;
+}
+
+/**
+ * Like `bucketScore`, but matches the first step whose threshold is not exceeded
+ * (ascending `[threshold, score]` steps). Used for "lower is worse" metrics.
+ * @param {number} value
+ * @param {Array<[number, number]>} steps
+ * @returns {number}
+ */
+function bucketScoreAtMost(value, steps) {
+    for (const [threshold, score] of steps) {
+        if (value <= threshold) return score;
+    }
+    return 0;
+}
+
+/**
  * @param {DiaryEntry[]} entries
  * @param {number} windowDays
  * @returns {{ current: DiaryEntry[], previous: DiaryEntry[] }}
@@ -29,8 +57,7 @@ export function splitPeriods(entries, windowDays = 30) {
     const cutPrevious = now - 2 * windowDays * 86400000;
     const current  = [];
     const previous = [];
-    for (let i = 0; i < entries.length; i++) {
-        const e = entries[i];
+    for (const e of entries) {
         const t = new Date(e.date).getTime();
         if (t >= cutCurrent) {
             current.push(e);
@@ -49,7 +76,7 @@ export function detectFatiguePattern(current) {
     if (current.length < 3) return { score: 0, ratio: 0 };
     const count = current.filter((e) => isFatigueEmotion(e.emotion)).length;
     const ratio = count / current.length;
-    const score = ratio >= 0.6 ? 25 : ratio >= 0.4 ? 15 : ratio >= 0.25 ? 5 : 0;
+    const score = bucketScore(ratio, [[0.6, 25], [0.4, 15], [0.25, 5]]);
     return { score, ratio };
 }
 
@@ -61,7 +88,7 @@ export function detectEmotionalNumbness(current) {
     if (current.length < 5) return { score: 0, distinctRatio: 1 };
     const distinct      = new Set(current.map((e) => e.emotion)).size;
     const distinctRatio = distinct / current.length;
-    const score = distinctRatio <= 0.15 ? 25 : distinctRatio <= 0.25 ? 15 : distinctRatio <= 0.35 ? 5 : 0;
+    const score = bucketScoreAtMost(distinctRatio, [[0.15, 25], [0.25, 15], [0.35, 5]]);
     return { score, distinctRatio };
 }
 
@@ -78,7 +105,7 @@ export function detectIrritabilitySpike(current, previous) {
         ? previous.filter((e) => isStressEmotion(e.emotion)).length / previous.length
         : 0;
     const delta = currentRatio - previousRatio;
-    const score = delta >= 0.3 ? 25 : delta >= 0.2 ? 15 : delta >= 0.1 ? 5 : 0;
+    const score = bucketScore(delta, [[0.3, 25], [0.2, 15], [0.1, 5]]);
     return { score, delta };
 }
 
@@ -90,7 +117,7 @@ export function detectNegativityDominance(current) {
     if (current.length < 5) return { score: 0, negativeRatio: 0 };
     const negCount       = current.filter((e) => isNegativeEmotion(e.emotion)).length;
     const negativeRatio  = negCount / current.length;
-    const score = negativeRatio >= 0.8 ? 25 : negativeRatio >= 0.65 ? 15 : negativeRatio >= 0.5 ? 5 : 0;
+    const score = bucketScore(negativeRatio, [[0.8, 25], [0.65, 15], [0.5, 5]]);
     return { score, negativeRatio };
 }
 
@@ -137,7 +164,10 @@ export function assessBurnoutRisk(entries) {
 
     const signals    = allSignals.filter((s) => s.score > 0);
     const totalScore = Math.min(100, allSignals.reduce((sum, s) => sum + s.score, 0));
-    const level      = totalScore >= 60 ? "high" : totalScore >= 30 ? "moderate" : "low";
+    /** @type {"low"|"moderate"|"high"} */
+    let level = "low";
+    if (totalScore >= 60) level = "high";
+    else if (totalScore >= 30) level = "moderate";
 
     return { totalScore, level, signals, hasEnoughData: true };
 }

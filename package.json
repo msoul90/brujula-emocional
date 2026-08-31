@@ -2,6 +2,9 @@
   "name": "brujula-emocional",
   "version": "1.3.3",
   "private": true,
+  "engines": {
+    "node": "^22.22.2 || ^24.15.0 || >=26"
+  },
   "scripts": {
     "build:js": "node scripts/build-js.js",
     "build:css": "npx tailwindcss@3 -i input.css -o dist/tailwind.css --minify",

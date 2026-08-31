@@ -6,8 +6,10 @@ import { useState, useEffect, useRef } from "preact/hooks";
 /** @typedef {"light" | "auto" | "dark"} Theme */
 /** @typedef {"es" | "en"} Language */
 
-const THEMES = ["light", "auto", "dark"];
-const LANGUAGES = ["es", "en"];
+/** @type {Set<string>} */
+const THEMES = new Set(["light", "auto", "dark"]);
+/** @type {Set<string>} */
+const LANGUAGES = new Set(["es", "en"]);
 
 /**
  * Referencing `process.env.X` directly (rather than through a `globalThis.process`
@@ -24,7 +26,7 @@ const env = {
  * @returns {theme is Theme}
  */
 function isTheme(theme) {
-    return typeof theme === "string" && THEMES.includes(theme);
+    return typeof theme === "string" && THEMES.has(theme);
 }
 
 /**
@@ -32,7 +34,7 @@ function isTheme(theme) {
  * @returns {lang is Language}
  */
 function isLanguage(lang) {
-    return typeof lang === "string" && LANGUAGES.includes(lang);
+    return typeof lang === "string" && LANGUAGES.has(lang);
 }
 
 /** @returns {Theme} */
