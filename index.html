@@ -2,6 +2,15 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
+    <!--
+      CSP notes (reviewed — see SonarCloud hotspots):
+      - style-src 'unsafe-inline': required. Preact components render data-driven
+        inline style attributes (emotion colours, chart bar widths, force-layout
+        node coordinates) that cannot be hashed or nonced. script-src stays 'self'.
+      - connect-src https://*.supabase.co: the Supabase project host is injected at
+        build time and not known when this static file is authored; the wildcard is
+        scoped to Supabase-owned domains only.
+    -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; frame-src https://challenges.cloudflare.com; connect-src 'self' https://us.i.posthog.com https://*.supabase.co wss://*.supabase.co;">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brújula Emocional</title>
