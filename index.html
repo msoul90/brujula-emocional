@@ -6,7 +6,9 @@
       CSP notes (reviewed — see SonarCloud hotspots):
       - style-src 'unsafe-inline': required. Preact components render data-driven
         inline style attributes (emotion colours, chart bar widths, force-layout
-        node coordinates) that cannot be hashed or nonced. script-src stays 'self'.
+                node coordinates) that cannot be hashed or nonced. These values come only
+                from curated application data or bounded numeric calculations; user diary
+                content never influences a style attribute. script-src stays 'self'.
       - connect-src https://*.supabase.co: the Supabase project host is injected at
         build time and not known when this static file is authored; the wildcard is
         scoped to Supabase-owned domains only.

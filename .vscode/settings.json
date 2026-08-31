@@ -3,5 +3,9 @@
     "search.exclude": {
         "dist/**": true,
         "node_modules/**": true
+    },
+    "sonarlint.connectedMode.project": {
+        "connectionId": "msoul90",
+        "projectKey": "msoul90_brujula-emocional"
     }
 }
