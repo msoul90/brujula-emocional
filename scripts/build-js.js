@@ -16,6 +16,28 @@ if (fs.existsSync(envFile)) {
 }
 const env = { ...envFromFile, ...process.env };
 
+function getSupabaseCspOrigins(url) {
+  if (!url) return "";
+  const parsed = new URL(url);
+  if (parsed.protocol !== "https:" || !parsed.hostname.endsWith(".supabase.co")) {
+    throw new Error("SUPABASE_URL must be an HTTPS Supabase project URL.");
+  }
+  return ` https://${parsed.hostname} wss://${parsed.hostname}`;
+}
+
+const cspOrigins = getSupabaseCspOrigins(env.SUPABASE_URL);
+const indexPath = path.join(__dirname, "../index.html");
+const index = fs.readFileSync(indexPath, "utf8");
+const connectSrcPattern = /; connect-src[^;]*;/;
+if (!connectSrcPattern.test(index)) {
+  throw new Error("Could not find the CSP connect-src directive.");
+}
+const updatedIndex = index.replace(
+  connectSrcPattern,
+  `; connect-src 'self' https://us.i.posthog.com${cspOrigins};`
+);
+fs.writeFileSync(indexPath, updatedIndex);
+
 esbuild
   .build({
     entryPoints: ["app.js"],

@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <!--
-      CSP notes (reviewed — see SonarCloud hotspots):
-      - style-src 'unsafe-inline': required. Preact components render data-driven
+            CSP notes (reviewed — see SonarCloud hotspots):
+            - style-src 'unsafe-inline': required. Preact components render data-driven
         inline style attributes (emotion colours, chart bar widths, force-layout
                 node coordinates) that cannot be hashed or nonced. These values come only
                 from curated application data or bounded numeric calculations; user diary
                 content never influences a style attribute. script-src stays 'self'.
-      - connect-src https://*.supabase.co: the Supabase project host is injected at
-        build time and not known when this static file is authored; the wildcard is
-        scoped to Supabase-owned domains only.
-    -->
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; frame-src https://challenges.cloudflare.com; connect-src 'self' https://us.i.posthog.com https://*.supabase.co wss://*.supabase.co;">
+            - connect-src: the Supabase project host is injected as an exact, validated
+                origin by scripts/build-js.js. It is omitted when Supabase is disabled.
+        -->
+        <!-- NOSONAR: Required for Preact's curated, runtime color and layout styles; see CSP notes above. -->
+        <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' https://challenges.cloudflare.com; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self'; frame-src https://challenges.cloudflare.com; connect-src 'self' https://us.i.posthog.com;">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Brújula Emocional</title>
     <meta name="description" content="Encuentra claridad en lo que sientes. 28 emociones con función, mensaje y respuesta sugerida.">
@@ -126,7 +126,7 @@
 
     <!-- Tab: Check-in -->
     <div id="tab-checkin" class="tab-panel hidden px-4 pt-2">
-        <div class="w-full mb-4 py-4 px-5 rounded-2xl shadow-sm flex items-center justify-between gap-3" style="background-color:#FFF1F2; border-left: 6px solid #FB7185">
+        <div class="crisis-trigger w-full mb-4 py-4 px-5 rounded-2xl shadow-sm flex items-center justify-between gap-3">
             <div>
                 <p id="crisis-trigger-title" class="font-bold text-rose-700 text-sm">¿Estás desbordado/a?</p>
                 <p id="crisis-trigger-sub" class="text-rose-400 text-xs mt-1">Tres pasos para recuperar el piso</p>
@@ -137,7 +137,7 @@
             </button>
         </div>
 
-        <button id="quiz-trigger" type="button" class="w-full mb-6 text-left py-4 px-5 bg-white rounded-2xl shadow-sm flex items-center justify-between gap-3 hover:shadow-md transition-all" style="border-left: 6px solid #818cf8">
+        <button id="quiz-trigger" type="button" class="quiz-trigger w-full mb-6 text-left py-4 px-5 bg-white rounded-2xl shadow-sm flex items-center justify-between gap-3 hover:shadow-md transition-all">
             <div>
                 <p id="quiz-trigger-title" class="font-bold text-slate-700 text-sm">¿No sabes lo que sientes?</p>
                 <p id="quiz-trigger-sub" class="text-slate-400 text-xs mt-1">Descúbrelo en 3 preguntas</p>

@@ -22,6 +22,8 @@ body        { background-color: #f1f5f9; font-family: 'Inter', -apple-system, Bl
 .safe-area-bottom { padding-bottom: env(safe-area-inset-bottom, 0); }
 body.modal-open  { overflow: hidden; position: fixed; width: 100%; }
 .hide-scroll::-webkit-scrollbar { display: none; }
+.crisis-trigger { background-color: #fff1f2; border-left: 6px solid #fb7185; }
+.quiz-trigger { border-left: 6px solid #818cf8; }
 
 /* ── EMOTION CARDS ───────────────────────────────────────────────────────── */
 
