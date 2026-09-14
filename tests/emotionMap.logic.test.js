@@ -4,7 +4,10 @@ import {
     graphHeightFor,
     hasNodeMatch,
     buildGroupedRelations,
+    wheelSizeFor,
+    buildWheelData,
 } from "../js/emotionMap.logic.js";
+import { emociones, MOOD_CATEGORIES } from "../js/data/emotions.js";
 
 describe("escHtml", () => {
     it("escapa & < >", () => {
@@ -126,5 +129,68 @@ describe("buildGroupedRelations", () => {
         const isolatedNodes = [{ nombre: "Solo", label: "Solo", color: "#000", x: 0, y: 0 }];
         const result = buildGroupedRelations("Solo", isolatedNodes, []);
         expect(result).toEqual({});
+    });
+});
+
+describe("wheelSizeFor", () => {
+    it("respeta el mínimo de 260", () => {
+        expect(wheelSizeFor(100)).toBe(260);
+    });
+
+    it("respeta el máximo de 420", () => {
+        expect(wheelSizeFor(900)).toBe(420);
+    });
+
+    it("devuelve el ancho tal cual dentro del rango", () => {
+        expect(wheelSizeFor(340)).toBe(340);
+    });
+});
+
+const identity = (nombre) => nombre;
+
+describe("buildWheelData", () => {
+    it("incluye un nodo por cada emoción", () => {
+        const data = buildWheelData(emociones, identity, 340);
+        expect(data.nodes).toHaveLength(emociones.length);
+    });
+
+    it("crea una categoría por cada MOOD_CATEGORIES", () => {
+        const data = buildWheelData(emociones, identity, 340);
+        expect(data.categories).toHaveLength(MOOD_CATEGORIES.length);
+    });
+
+    it("asigna a cada nodo el catIndex de su categoría", () => {
+        const data = buildWheelData(emociones, identity, 340);
+        const catIdxByName = {};
+        MOOD_CATEGORIES.forEach((cat, ci) => cat.emotions.forEach((n) => { catIdxByName[n] = ci; }));
+        for (const n of data.nodes) {
+            expect(n.catIndex).toBe(catIdxByName[n.nombre]);
+        }
+    });
+
+    it("las categorías cubren un giro completo sin superponerse", () => {
+        const data = buildWheelData(emociones, identity, 340);
+        const sorted = [...data.categories].sort((a, b) => a.startAngle - b.startAngle);
+        for (let i = 1; i < sorted.length; i++) {
+            expect(sorted[i].startAngle).toBeCloseTo(sorted[i - 1].endAngle, 5);
+        }
+        expect(sorted[0].endAngle - sorted[0].startAngle).toBeCloseTo((2 * Math.PI) / MOOD_CATEGORIES.length, 5);
+    });
+
+    it("cada nodo cae dentro del rango angular de su categoría", () => {
+        const data = buildWheelData(emociones, identity, 340);
+        for (const n of data.nodes) {
+            const cat = data.categories[n.catIndex];
+            expect(n.startAngle).toBeGreaterThanOrEqual(cat.startAngle - 1e-6);
+            expect(n.endAngle).toBeLessThanOrEqual(cat.endAngle + 1e-6);
+        }
+    });
+
+    it("genera edges consistentes con EMOTION_RELATIONS vía nameToIdx", () => {
+        const data = buildWheelData(emociones, identity, 340);
+        for (const e of data.edges) {
+            expect(data.nodes[e.ai]).toBeDefined();
+            expect(data.nodes[e.bi]).toBeDefined();
+        }
     });
 });

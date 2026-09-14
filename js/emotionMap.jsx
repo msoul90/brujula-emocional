@@ -5,9 +5,11 @@ import {
     RELS,
     buildForceData,
     buildQuadData,
+    buildWheelData,
     escAttr,
     escHtml,
     graphHeightFor,
+    wheelSizeFor,
 } from "./emotionMap.logic.js";
 import { EmotionMapPanel } from "./emotionMap.view.jsx";
 import { emit } from "./bus.js";
@@ -42,6 +44,8 @@ export function createEmotionMap({ emociones, getDisplayName, t }) {
     let forceData = null;
     /** @type {(GraphData & { H: number }) | null} */
     let quadData = null;
+    /** @type {(import('./emotionMap.logic.js').WheelData & { H: number }) | null} */
+    let wheelData = null;
     let lastW = 0;
     /** @type {number | null} */
     let searchDebounce = null;
@@ -53,9 +57,14 @@ export function createEmotionMap({ emociones, getDisplayName, t }) {
             const gH = graphHeightFor(W, emociones.length, forceData?.edges.length ?? 35);
             forceData = { ...buildForceData(emociones, getDisplayName, W, gH), H: gH };
             quadData = null;
+            wheelData = null;
         }
         if (!quadData) {
             quadData = buildQuadData(emociones, getDisplayName, containerW());
+        }
+        if (!wheelData) {
+            const size = wheelSizeFor(containerW());
+            wheelData = { ...buildWheelData(emociones, getDisplayName, size), H: size };
         }
     }
 
@@ -69,10 +78,10 @@ export function createEmotionMap({ emociones, getDisplayName, t }) {
         if (!wrap) return;
         ensureData();
 
-        const currentData = view === "graph" ? forceData : quadData;
+        const currentData = view === "graph" ? forceData : view === "quad" ? quadData : wheelData;
         if (!currentData) return;
         const { nodes, edges, H } = currentData;
-        const W = containerW();
+        const W = view === "wheel" ? currentData.H : containerW();
         const dark = document.documentElement.classList.contains("dark");
 
         /** @type {SvgEventHandler} */
@@ -127,6 +136,12 @@ export function createEmotionMap({ emociones, getDisplayName, t }) {
                     selected = null;
                     render_();
                 }}
+                onWheelView={() => {
+                    view = "wheel";
+                    selected = null;
+                    render_();
+                }}
+                wheelExtras={view === "wheel" ? wheelData : null}
                 onRelTypeToggle={(type) => {
                     if (activeTypes.has(type)) activeTypes.delete(type);
                     else activeTypes.add(type);
@@ -221,6 +236,7 @@ export function createEmotionMap({ emociones, getDisplayName, t }) {
         nameFilter = "";
         if (forceData) for (const n of forceData.nodes) n.label = getDisplayName(n.nombre);
         if (quadData) for (const n of quadData.nodes) n.label = getDisplayName(n.nombre);
+        if (wheelData) for (const n of wheelData.nodes) n.label = getDisplayName(n.nombre);
         if (document.getElementById("map-content")) render_();
     }
 

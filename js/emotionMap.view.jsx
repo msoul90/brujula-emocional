@@ -6,13 +6,15 @@ import {
     buildGroupedRelations,
     buildNeighborhoodData,
     buildSvgBody,
+    buildWheelSvgBody,
     hasNodeMatch,
 } from "./emotionMap.logic.js";
 
 /** @typedef {{ nombre: string, label: string, color: string, x: number, y: number, fx?: number, fy?: number }} ForceNode */
 /** @typedef {import('./data/emotions.js').EmotionRelation['type']} RelationType */
 /** @typedef {{ ai: number, bi: number, type: RelationType }} ForceEdge */
-/** @typedef {'graph'|'quad'} MapView */
+/** @typedef {import('./emotionMap.logic.js').WheelData} WheelData */
+/** @typedef {'graph'|'quad'|'wheel'} MapView */
 /** @typedef {{ click: (ev: MouseEvent) => void, keydown: (ev: KeyboardEvent) => void }} SvgEventHandler */
 
 /**
@@ -31,6 +33,8 @@ import {
  *   canvasBg: string,
  *   onGraphView: () => void,
  *   onQuadView: () => void,
+ *   onWheelView: () => void,
+ *   wheelExtras: WheelData | null,
  *   onRelTypeToggle: (type: RelationType) => void,
  *   onQuadrantChange: (q: number | null) => void,
  *   onOpenDetail: () => void,
@@ -176,6 +180,8 @@ export function EmotionMapPanel({
     canvasBg,
     onGraphView,
     onQuadView,
+    onWheelView,
+    wheelExtras,
     onRelTypeToggle,
     onQuadrantChange,
     onOpenDetail,
@@ -188,6 +194,12 @@ export function EmotionMapPanel({
     useEffect(() => {
         const svg = svgRef.current;
         if (!svg) return;
+        if (view === "wheel" && wheelExtras) {
+            svg.innerHTML = buildWheelSvgBody(wheelExtras, selected, { t, activeTypes, activeQuadrant, nameFilter });
+            svg.onclick = svgEventHandler.click;
+            svg.onkeydown = svgEventHandler.keydown;
+            return;
+        }
         const isNeighborhood = view === "graph" && selected !== null;
         /** @type {ForceNode[]} */
         let svgNodes;
@@ -244,6 +256,13 @@ export function EmotionMapPanel({
                     class={`flex-1 py-2 text-sm font-bold rounded-xl border transition-colors ${view === "quad" ? activeC : inactiveC}`}
                 >
                     {t("map.viewQuad")}
+                </button>
+                <button
+                    id="map-wheel-btn"
+                    onClick={onWheelView}
+                    class={`flex-1 py-2 text-sm font-bold rounded-xl border transition-colors ${view === "wheel" ? activeC : inactiveC}`}
+                >
+                    {t("map.viewWheel")}
                 </button>
             </div>
 
