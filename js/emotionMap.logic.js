@@ -1,6 +1,6 @@
 // @ts-check
 import { MOOD_CATEGORIES, EMOTION_RELATIONS } from "./constants.js";
-import { normalizeText } from "./utils.js";
+import { getReadableTextColor, normalizeText } from "./utils.js";
 
 /** @typedef {{ nombre: string, label: string, color: string, x: number, y: number, fx?: number, fy?: number }} ForceNode */
 /** @typedef {import('./data/emotions.js').EmotionRelation['type']} RelationType */
@@ -35,11 +35,13 @@ const GRAPH_MAX_BOOST = 80;
 const QUAD_MAP = [0, 2, 3, 1];
 
 const WHEEL_MIN_SIZE = 260;
-const WHEEL_MAX_SIZE = 420;
+const WHEEL_MAX_SIZE = 460;
 const WHEEL_PAD = 6;
-const WHEEL_CAT_RING_RATIO = 0.15;
-const WHEEL_HUB_RATIO = 0.17;
+const WHEEL_CAT_RING_RATIO = 0.11;
+const WHEEL_HUB_RATIO = 0.14;
 const WHEEL_GAP_RAD = (1.4 * Math.PI) / 180;
+const WHEEL_LABEL_MIN_FONT = 6.5;
+const WHEEL_LABEL_MAX_FONT = 12;
 
 /** @type {Record<RelationType, RelationStyle>} */
 export const RELS = {
@@ -528,6 +530,23 @@ function radialLabel(cx, cy, midAngle, rInner, rOuter, text, fontSize, fill) {
     return `<text x="${x.toFixed(1)}" y="${y.toFixed(1)}" transform="rotate(${rotate.toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)})" text-anchor="${anchor}" dominant-baseline="middle" font-size="${fontSize}" font-weight="700" fill="${fill}" pointer-events="none">${escHtml(text)}</text>`;
 }
 
+/**
+ * Picks the largest font size (never above the angular cap, so letters don't
+ * bleed into neighboring wedges) that still fits the full label within the
+ * available radial thickness; only truncates once the floor size still doesn't fit.
+ * @param {string} text @param {number} ringThickness @param {number} angularCap @returns {{ fontSize: number, label: string }}
+ */
+export function fitWedgeLabel(text, ringThickness, angularCap) {
+    const maxFont = clamp(angularCap, WHEEL_LABEL_MIN_FONT, WHEEL_LABEL_MAX_FONT);
+    for (let fontSize = maxFont; fontSize >= WHEEL_LABEL_MIN_FONT; fontSize -= 0.5) {
+        const maxChars = Math.floor((ringThickness - 10) / (fontSize * 0.58));
+        if (text.length <= maxChars) return { fontSize, label: text };
+    }
+    const maxChars = Math.max(2, Math.floor((ringThickness - 10) / (WHEEL_LABEL_MIN_FONT * 0.58)));
+    const label = text.length > maxChars ? text.slice(0, Math.max(1, maxChars - 1)) + "…" : text;
+    return { fontSize: WHEEL_LABEL_MIN_FONT, label };
+}
+
 /** @param {number} cx @param {number} cy @param {number} r @param {boolean} dark @returns {string} */
 function compassGlyph(cx, cy, r, dark) {
     const tickColor = dark ? "#475569" : "#cbd5e1";
@@ -567,9 +586,10 @@ export function buildWheelSvgBody(wheelData, sel, { t, activeTypes, activeQuadra
         .map((cat) => {
             const bgC = dark ? cat.ink + "33" : cat.color + "66";
             const strokeC = dark ? "#0f172a" : "#ffffff";
+            const catTextC = dark ? "#f1f5f9" : cat.ink;
             const [lx, ly] = polarPoint(cx, cy, (catRingInner + catRingOuter) / 2, cat.midAngle);
             return `<path d="${donutSegmentPath(cx, cy, catRingInner, catRingOuter, cat.startAngle, cat.endAngle)}" fill="${bgC}" stroke="${strokeC}" stroke-width="1.5"/>
-            <text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="800" fill="${labelFill}">${escHtml(t(cat.labelKey).toUpperCase())}</text>`;
+            <text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="800" fill="${catTextC}">${escHtml(t(cat.labelKey).toUpperCase())}</text>`;
         })
         .join("");
 
@@ -607,13 +627,13 @@ export function buildWheelSvgBody(wheelData, sel, { t, activeTypes, activeQuadra
             const path = donutSegmentPath(cx, cy, emotionRingInner, emotionRingOuter, n.startAngle, n.endAngle);
             const midAngle = (n.startAngle + n.endAngle) / 2;
             const arcPx = ((emotionRingInner + emotionRingOuter) / 2) * (n.endAngle - n.startAngle);
-            const fontSize = clamp(Math.round(arcPx * 0.72), 6, 10);
-            const maxChars = Math.max(2, Math.floor((ringThickness - 10) / (fontSize * 0.62)));
-            const lbl = n.label.length > maxChars ? n.label.slice(0, Math.max(1, maxChars - 1)) + "…" : n.label;
+            const angularCap = arcPx * 0.75;
+            const { fontSize, label: lbl } = fitWedgeLabel(n.label, ringThickness, angularCap);
+            const wedgeTextC = getReadableTextColor(n.color);
             return `<g class="map-node" data-nombre="${escAttr(n.nombre)}" tabindex="0" role="button" aria-label="${escAttr(n.label)}" style="cursor:pointer" opacity="${nodeOp}" ${hide ? 'pointer-events="none"' : ""}>
             <title>${escHtml(n.label)}</title>
             <path d="${path}" fill="${n.color}" stroke="${strokeC}" stroke-width="${strokeW}"/>
-            ${radialLabel(cx, cy, midAngle, emotionRingInner, emotionRingOuter, lbl, fontSize, labelFill)}
+            ${radialLabel(cx, cy, midAngle, emotionRingInner, emotionRingOuter, lbl, fontSize, wedgeTextC)}
         </g>`;
         })
         .join("");

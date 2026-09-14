@@ -6,6 +6,7 @@ import {
     buildGroupedRelations,
     wheelSizeFor,
     buildWheelData,
+    fitWedgeLabel,
 } from "../js/emotionMap.logic.js";
 import { emociones, MOOD_CATEGORIES } from "../js/data/emotions.js";
 
@@ -137,8 +138,8 @@ describe("wheelSizeFor", () => {
         expect(wheelSizeFor(100)).toBe(260);
     });
 
-    it("respeta el máximo de 420", () => {
-        expect(wheelSizeFor(900)).toBe(420);
+    it("respeta el máximo de 460", () => {
+        expect(wheelSizeFor(900)).toBe(460);
     });
 
     it("devuelve el ancho tal cual dentro del rango", () => {
@@ -192,5 +193,36 @@ describe("buildWheelData", () => {
             expect(data.nodes[e.ai]).toBeDefined();
             expect(data.nodes[e.bi]).toBeDefined();
         }
+    });
+});
+
+describe("fitWedgeLabel", () => {
+    it("mantiene el texto completo cuando hay espacio de sobra", () => {
+        const { label, fontSize } = fitWedgeLabel("Calma", 90, 12);
+        expect(label).toBe("Calma");
+        expect(fontSize).toBeGreaterThan(0);
+    });
+
+    it("nunca devuelve una fuente mayor que el tope angular", () => {
+        const { fontSize } = fitWedgeLabel("Calma", 90, 8);
+        expect(fontSize).toBeLessThanOrEqual(8);
+    });
+
+    it("reduce la fuente antes de truncar cuando el ancho es limitado", () => {
+        const wide = fitWedgeLabel("Frustración", 90, 12);
+        const narrow = fitWedgeLabel("Frustración", 40, 12);
+        expect(narrow.fontSize).toBeLessThan(wide.fontSize);
+    });
+
+    it("trunca con elipsis solo si ni la fuente mínima entra", () => {
+        const { label, fontSize } = fitWedgeLabel("Frustración", 12, 12);
+        expect(label.endsWith("…")).toBe(true);
+        expect(label.length).toBeLessThan("Frustración".length);
+        expect(fontSize).toBe(6.5);
+    });
+
+    it("no trunca por debajo de 2 caracteres visibles", () => {
+        const { label } = fitWedgeLabel("Aburrimiento", 1, 12);
+        expect(label.length).toBeGreaterThanOrEqual(2);
     });
 });
