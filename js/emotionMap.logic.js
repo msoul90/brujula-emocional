@@ -1,6 +1,6 @@
 // @ts-check
 import { MOOD_CATEGORIES, EMOTION_RELATIONS } from "./constants.js";
-import { normalizeText } from "./utils.js";
+import { getReadableTextColor, normalizeText } from "./utils.js";
 
 /** @typedef {{ nombre: string, label: string, color: string, x: number, y: number, fx?: number, fy?: number }} ForceNode */
 /** @typedef {import('./data/emotions.js').EmotionRelation['type']} RelationType */
@@ -8,7 +8,10 @@ import { normalizeText } from "./utils.js";
 /** @typedef {{ color: string, dash: string, labelKey: string }} RelationStyle */
 /** @typedef {{ inQuadrant: Set<string>, neighbors: Set<string> }} QuadrantFilter */
 /** @typedef {{ nodes: ForceNode[], edges: ForceEdge[], nameToIdx: Record<string, number>, H?: number }} GraphData */
-/** @typedef {'graph'|'quad'} MapView */
+/** @typedef {ForceNode & { catIndex: number, startAngle: number, endAngle: number }} WheelNode */
+/** @typedef {{ key: string, labelKey: string, color: string, ink: string, startAngle: number, endAngle: number, midAngle: number }} WheelCategory */
+/** @typedef {{ nodes: WheelNode[], edges: ForceEdge[], nameToIdx: Record<string, number>, categories: WheelCategory[], size: number, cx: number, cy: number, hubRadius: number, emotionRingInner: number, emotionRingOuter: number, catRingInner: number, catRingOuter: number }} WheelData */
+/** @typedef {'graph'|'quad'|'wheel'} MapView */
 /** @typedef {{ t: import('./types.js').TFn, activeTypes: Set<RelationType>, activeQuadrant: number | null, nameFilter: string }} SvgBuildOptions */
 
 const R = 18;
@@ -30,6 +33,15 @@ const GRAPH_EDGE_BOOST = 1;
 const GRAPH_MAX_BOOST = 80;
 
 const QUAD_MAP = [0, 2, 3, 1];
+
+const WHEEL_MIN_SIZE = 260;
+const WHEEL_MAX_SIZE = 460;
+const WHEEL_PAD = 6;
+const WHEEL_CAT_RING_RATIO = 0.11;
+const WHEEL_HUB_RATIO = 0.14;
+const WHEEL_GAP_RAD = (1.4 * Math.PI) / 180;
+const WHEEL_LABEL_MIN_FONT = 6.5;
+const WHEEL_LABEL_MAX_FONT = 12;
 
 /** @type {Record<RelationType, RelationStyle>} */
 export const RELS = {
@@ -161,7 +173,7 @@ export function graphHeightFor(width, nodeCount, edgeCount) {
 }
 
 /** @param {Record<string, number>} nameToIdx @returns {ForceEdge[]} */
-function buildEdges(nameToIdx) {
+export function buildEdges(nameToIdx) {
     return EMOTION_RELATIONS.flatMap((r) => {
         const ai = nameToIdx[r.from];
         const bi = nameToIdx[r.to];
@@ -242,6 +254,89 @@ export function buildQuadData(emociones, getDisplayName, W) {
         });
     });
     return { nodes, edges: buildEdges(nameToIdx), nameToIdx, H };
+}
+
+/** @param {number} width @returns {number} */
+export function wheelSizeFor(width) {
+    return clamp(width, WHEEL_MIN_SIZE, WHEEL_MAX_SIZE);
+}
+
+/**
+ * Builds the geometry for a compass-style wheel: one full turn split into
+ * one arc per mood category, each subdivided into one wedge per emotion.
+ * @param {import('./data/emotions.js').Emotion[]} emociones
+ * @param {import('./types.js').GetDisplayNameFn} getDisplayName
+ * @param {number} size
+ * @returns {WheelData}
+ */
+export function buildWheelData(emociones, getDisplayName, size) {
+    const cx = size / 2;
+    const cy = size / 2;
+    const catRingOuter = size / 2 - WHEEL_PAD;
+    const catRingInner = catRingOuter - size * WHEEL_CAT_RING_RATIO;
+    const emotionRingOuter = catRingInner - 4;
+    const hubRadius = size * WHEEL_HUB_RATIO;
+    const emotionRingInner = hubRadius + 4;
+    const midR = (emotionRingInner + emotionRingOuter) / 2;
+
+    const catAngle = (2 * Math.PI) / MOOD_CATEGORIES.length;
+    let angleCursor = -Math.PI / 2;
+    /** @type {Record<string, number>} */
+    const nameToIdx = {};
+    /** @type {WheelNode[]} */
+    const nodes = [];
+    /** @type {WheelCategory[]} */
+    const categories = [];
+
+    MOOD_CATEGORIES.forEach((cat, ci) => {
+        const catStart = angleCursor;
+        const catEnd = catStart + catAngle;
+        const catEmotions = cat.emotions
+            .map((nombre) => emociones.find((e) => e.nombre === nombre))
+            .filter((e) => Boolean(e));
+        const segAngle = catAngle / Math.max(catEmotions.length, 1);
+        catEmotions.forEach((e, i) => {
+            const start = catStart + i * segAngle;
+            const end = start + segAngle - WHEEL_GAP_RAD;
+            const mid = (start + end) / 2;
+            nameToIdx[e.nombre] = nodes.length;
+            nodes.push({
+                nombre: e.nombre,
+                label: getDisplayName(e.nombre),
+                color: e.color,
+                catIndex: ci,
+                startAngle: start,
+                endAngle: end,
+                x: cx + midR * Math.cos(mid),
+                y: cy + midR * Math.sin(mid),
+            });
+        });
+        categories.push({
+            key: cat.key,
+            labelKey: cat.labelKey,
+            color: cat.color,
+            ink: cat.ink,
+            startAngle: catStart,
+            endAngle: catEnd,
+            midAngle: (catStart + catEnd) / 2,
+        });
+        angleCursor = catEnd;
+    });
+
+    return {
+        nodes,
+        edges: buildEdges(nameToIdx),
+        nameToIdx,
+        categories,
+        size,
+        cx,
+        cy,
+        hubRadius,
+        emotionRingInner,
+        emotionRingOuter,
+        catRingInner,
+        catRingOuter,
+    };
 }
 
 /** @param {number | null} catIdx @param {ForceEdge[]} visibleEdges @param {ForceNode[]} nodes @returns {QuadrantFilter | null} */
@@ -402,6 +497,165 @@ export function buildSvgBody(nodes, edges, W, H, sel, view, { t, activeTypes, ac
         .join("");
 
     return `${bg}<g>${eStr}</g><g>${nStr}</g>`;
+}
+
+/** @param {number} cx @param {number} cy @param {number} r @param {number} angle @returns {[number, number]} */
+function polarPoint(cx, cy, r, angle) {
+    return [cx + r * Math.cos(angle), cy + r * Math.sin(angle)];
+}
+
+/** @param {number} cx @param {number} cy @param {number} rInner @param {number} rOuter @param {number} startAngle @param {number} endAngle @returns {string} */
+function donutSegmentPath(cx, cy, rInner, rOuter, startAngle, endAngle) {
+    const largeArc = endAngle - startAngle > Math.PI ? 1 : 0;
+    const [x1, y1] = polarPoint(cx, cy, rOuter, startAngle);
+    const [x2, y2] = polarPoint(cx, cy, rOuter, endAngle);
+    const [x3, y3] = polarPoint(cx, cy, rInner, endAngle);
+    const [x4, y4] = polarPoint(cx, cy, rInner, startAngle);
+    return `M${x1.toFixed(2)},${y1.toFixed(2)} A${rOuter.toFixed(2)},${rOuter.toFixed(2)} 0 ${largeArc} 1 ${x2.toFixed(2)},${y2.toFixed(2)} L${x3.toFixed(2)},${y3.toFixed(2)} A${rInner.toFixed(2)},${rInner.toFixed(2)} 0 ${largeArc} 0 ${x4.toFixed(2)},${y4.toFixed(2)} Z`;
+}
+
+/**
+ * Radial label: reads outward from the hub. On the left half the text is
+ * rotated 180° so it never renders upside down; since text always grows
+ * from its anchor toward increasing local x, that anchor has to sit at the
+ * OUTER edge there (growth then runs back toward the hub) instead of the
+ * inner edge used on the right half — anchor="start" in both cases.
+ * @param {number} cx @param {number} cy @param {number} midAngle @param {number} rInner @param {number} rOuter
+ * @param {string} text @param {number} fontSize @param {string} fill @returns {string}
+ */
+function radialLabel(cx, cy, midAngle, rInner, rOuter, text, fontSize, fill) {
+    const deg = (midAngle * 180) / Math.PI;
+    const flip = Math.cos(midAngle) < 0;
+    const rotate = flip ? deg + 180 : deg;
+    const r = flip ? rOuter - 6 : rInner + 6;
+    const [x, y] = polarPoint(cx, cy, r, midAngle);
+    return `<text x="${x.toFixed(1)}" y="${y.toFixed(1)}" transform="rotate(${rotate.toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)})" text-anchor="start" dominant-baseline="middle" font-size="${fontSize}" font-weight="700" fill="${fill}" pointer-events="none">${escHtml(text)}</text>`;
+}
+
+/**
+ * Picks the largest font size (never above the angular cap, so letters don't
+ * bleed into neighboring wedges) that still fits the full label within the
+ * available radial thickness; only truncates once the floor size still doesn't fit.
+ * @param {string} text @param {number} ringThickness @param {number} angularCap @returns {{ fontSize: number, label: string }}
+ */
+export function fitWedgeLabel(text, ringThickness, angularCap) {
+    const maxFont = clamp(angularCap, WHEEL_LABEL_MIN_FONT, WHEEL_LABEL_MAX_FONT);
+    for (let fontSize = maxFont; fontSize >= WHEEL_LABEL_MIN_FONT; fontSize -= 0.5) {
+        const maxChars = Math.floor((ringThickness - 10) / (fontSize * 0.58));
+        if (text.length <= maxChars) return { fontSize, label: text };
+    }
+    const maxChars = Math.max(2, Math.floor((ringThickness - 10) / (WHEEL_LABEL_MIN_FONT * 0.58)));
+    const label = text.length > maxChars ? text.slice(0, Math.max(1, maxChars - 1)) + "…" : text;
+    return { fontSize: WHEEL_LABEL_MIN_FONT, label };
+}
+
+/** @param {number} cx @param {number} cy @param {number} r @param {boolean} dark @returns {string} */
+function compassGlyph(cx, cy, r, dark) {
+    const tickColor = dark ? "#475569" : "#cbd5e1";
+    const inner = r * 0.4;
+    let s = `<circle cx="${cx}" cy="${cy}" r="${inner.toFixed(1)}" fill="none" stroke="${tickColor}" stroke-width="1.5"/>`;
+    for (const deg of [0, 90, 180, 270]) {
+        const rad = (deg * Math.PI) / 180;
+        const [x1, y1] = polarPoint(cx, cy, inner * 0.55, rad);
+        const [x2, y2] = polarPoint(cx, cy, inner * 1.2, rad);
+        s += `<line x1="${x1.toFixed(1)}" y1="${y1.toFixed(1)}" x2="${x2.toFixed(1)}" y2="${y2.toFixed(1)}" stroke="${tickColor}" stroke-width="2" stroke-linecap="round"/>`;
+    }
+    return s;
+}
+
+/**
+ * @param {WheelData} wheelData
+ * @param {string | null} sel
+ * @param {SvgBuildOptions} options
+ * @returns {string}
+ */
+export function buildWheelSvgBody(wheelData, sel, { t, activeTypes, activeQuadrant, nameFilter }) {
+    const { nodes, edges, categories, cx, cy, hubRadius, emotionRingInner, emotionRingOuter, catRingInner, catRingOuter } = wheelData;
+    const dark = document.documentElement.classList.contains("dark");
+    const labelFill = dark ? "#e2e8f0" : "#1e293b";
+    const visibleEdges = edges.filter((e) => activeTypes.has(e.type));
+    const quadrantFilter = buildQuadrantFilter(activeQuadrant, visibleEdges, nodes);
+    const normalizedFilter = nameFilter ? normalizeText(nameFilter) : "";
+    const connectedNames = sel
+        ? new Set(
+              visibleEdges
+                  .filter((e) => nodes[e.ai].nombre === sel || nodes[e.bi].nombre === sel)
+                  .flatMap((e) => [nodes[e.ai].nombre, nodes[e.bi].nombre])
+          )
+        : null;
+
+    const catStr = categories
+        .map((cat) => {
+            const bgC = dark ? cat.ink + "33" : cat.color + "66";
+            const strokeC = dark ? "#0f172a" : "#ffffff";
+            const catTextC = dark ? "#f1f5f9" : cat.ink;
+            const [lx, ly] = polarPoint(cx, cy, (catRingInner + catRingOuter) / 2, cat.midAngle);
+            return `<path d="${donutSegmentPath(cx, cy, catRingInner, catRingOuter, cat.startAngle, cat.endAngle)}" fill="${bgC}" stroke="${strokeC}" stroke-width="1.5"/>
+            <text x="${lx.toFixed(1)}" y="${ly.toFixed(1)}" text-anchor="middle" dominant-baseline="middle" font-size="10" font-weight="800" fill="${catTextC}">${escHtml(t(cat.labelKey).toUpperCase())}</text>`;
+        })
+        .join("");
+
+    const eStr = visibleEdges
+        .map((e) => {
+            const a = nodes[e.ai];
+            const b = nodes[e.bi];
+            let op = 0;
+            if (sel) {
+                op = sel === a.nombre || sel === b.nombre ? 0.9 : 0;
+            } else if (quadrantFilter) {
+                const aIn = quadrantFilter.inQuadrant.has(a.nombre);
+                const bIn = quadrantFilter.inQuadrant.has(b.nombre);
+                if (aIn && bIn) op = 0.75;
+                else if (aIn || bIn) op = 0.35;
+            } else if (normalizedFilter) {
+                const aMatch = normalizeText(a.label).includes(normalizedFilter);
+                const bMatch = normalizeText(b.label).includes(normalizedFilter);
+                op = aMatch || bMatch ? 0.3 : 0;
+            }
+            const rel = RELS[e.type];
+            return `<line x1="${a.x.toFixed(1)}" y1="${a.y.toFixed(1)}" x2="${b.x.toFixed(1)}" y2="${b.y.toFixed(1)}" stroke="${rel.color}" stroke-width="2" opacity="${op}" stroke-dasharray="${rel.dash}"/>`;
+        })
+        .join("");
+
+    const ringThickness = emotionRingOuter - emotionRingInner;
+    const wedgeStr = nodes
+        .map((n) => {
+            const isSel = sel === n.nombre;
+            const isConn = connectedNames ? connectedNames.has(n.nombre) : true;
+            const nodeOp = calcNodeOpacity(n, sel, isSel, isConn, quadrantFilter, normalizedFilter);
+            const hide = nodeOp === 0;
+            const strokeC = isSel ? (dark ? "#93c5fd" : "#2563eb") : dark ? "#0f172a" : "#ffffff";
+            const strokeW = isSel ? 3 : 1.5;
+            const path = donutSegmentPath(cx, cy, emotionRingInner, emotionRingOuter, n.startAngle, n.endAngle);
+            const midAngle = (n.startAngle + n.endAngle) / 2;
+            const arcPx = ((emotionRingInner + emotionRingOuter) / 2) * (n.endAngle - n.startAngle);
+            const angularCap = arcPx * 0.75;
+            const { fontSize, label: lbl } = fitWedgeLabel(n.label, ringThickness, angularCap);
+            const wedgeTextC = getReadableTextColor(n.color);
+            return `<g class="map-node" data-nombre="${escAttr(n.nombre)}" tabindex="0" role="button" aria-label="${escAttr(n.label)}" style="cursor:pointer" opacity="${nodeOp}" ${hide ? 'pointer-events="none"' : ""}>
+            <title>${escHtml(n.label)}</title>
+            <path d="${path}" fill="${n.color}" stroke="${strokeC}" stroke-width="${strokeW}"/>
+            ${radialLabel(cx, cy, midAngle, emotionRingInner, emotionRingOuter, lbl, fontSize, wedgeTextC)}
+        </g>`;
+        })
+        .join("");
+
+    const hubFill = dark ? "#1e293b" : "#f8fafc";
+    const hubStroke = dark ? "#334155" : "#e2e8f0";
+    let hubStr = `<circle cx="${cx}" cy="${cy}" r="${hubRadius.toFixed(1)}" fill="${hubFill}" stroke="${hubStroke}" stroke-width="1.5"/>`;
+    const selNode = sel ? nodes.find((n) => n.nombre === sel) : undefined;
+    if (selNode) {
+        const midAngle = (selNode.startAngle + selNode.endAngle) / 2;
+        const [nx, ny] = polarPoint(cx, cy, hubRadius - 10, midAngle);
+        const hubLbl = selNode.label.length > 14 ? selNode.label.slice(0, 13) + "…" : selNode.label;
+        hubStr += `<line x1="${cx}" y1="${cy}" x2="${nx.toFixed(1)}" y2="${ny.toFixed(1)}" stroke="${selNode.color}" stroke-width="3" stroke-linecap="round"/>
+        <circle cx="${cx}" cy="${cy}" r="5" fill="${selNode.color}"/>
+        <text x="${cx}" y="${(cy + hubRadius * 0.55).toFixed(1)}" text-anchor="middle" font-size="11" font-weight="800" fill="${labelFill}">${escHtml(hubLbl)}</text>`;
+    } else {
+        hubStr += compassGlyph(cx, cy, hubRadius, dark);
+    }
+
+    return `${catStr}<g>${eStr}</g><g>${wedgeStr}</g>${hubStr}`;
 }
 
 /** @param {ForceNode[]} nodes @param {string} nameFilter @param {string | null} selected @returns {boolean} */

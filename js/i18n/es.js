@@ -143,6 +143,7 @@ export const es = {
     map: {
         viewGraph:       "Grafo",
         viewQuad:        "Cuadrantes",
+        viewWheel:       "Rueda",
         relCoexiste:     "A menudo coexisten",
         relEscalaA:      "Puede escalar a",
         relEnmascara:    "Puede enmascarar",
