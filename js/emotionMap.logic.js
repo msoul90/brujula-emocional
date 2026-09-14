@@ -515,8 +515,11 @@ function donutSegmentPath(cx, cy, rInner, rOuter, startAngle, endAngle) {
 }
 
 /**
- * Radial label: reads outward from the hub. Flips 180° in the left half so
- * it never renders upside down.
+ * Radial label: reads outward from the hub. On the left half the text is
+ * rotated 180° so it never renders upside down; since text always grows
+ * from its anchor toward increasing local x, that anchor has to sit at the
+ * OUTER edge there (growth then runs back toward the hub) instead of the
+ * inner edge used on the right half — anchor="start" in both cases.
  * @param {number} cx @param {number} cy @param {number} midAngle @param {number} rInner @param {number} rOuter
  * @param {string} text @param {number} fontSize @param {string} fill @returns {string}
  */
@@ -524,10 +527,9 @@ function radialLabel(cx, cy, midAngle, rInner, rOuter, text, fontSize, fill) {
     const deg = (midAngle * 180) / Math.PI;
     const flip = Math.cos(midAngle) < 0;
     const rotate = flip ? deg + 180 : deg;
-    const r = flip ? rOuter - 4 : rInner + 6;
-    const anchor = flip ? "end" : "start";
+    const r = flip ? rOuter - 6 : rInner + 6;
     const [x, y] = polarPoint(cx, cy, r, midAngle);
-    return `<text x="${x.toFixed(1)}" y="${y.toFixed(1)}" transform="rotate(${rotate.toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)})" text-anchor="${anchor}" dominant-baseline="middle" font-size="${fontSize}" font-weight="700" fill="${fill}" pointer-events="none">${escHtml(text)}</text>`;
+    return `<text x="${x.toFixed(1)}" y="${y.toFixed(1)}" transform="rotate(${rotate.toFixed(1)} ${x.toFixed(1)} ${y.toFixed(1)})" text-anchor="start" dominant-baseline="middle" font-size="${fontSize}" font-weight="700" fill="${fill}" pointer-events="none">${escHtml(text)}</text>`;
 }
 
 /**
