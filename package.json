@@ -19,7 +19,7 @@
     "esbuild": "^0.28.1",
     "jsdom": "^30.0.1",
     "typescript": "^7.0.2",
-    "vitest": "^4.1.8"
+    "vitest": "^4.1.12"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2",
